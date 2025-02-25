@@ -3,6 +3,7 @@ lockfileVersion: '9.0'
 settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
+  injectWorkspacePackages: true
 
 importers:
 
@@ -29,9 +30,9 @@ importers:
       eslint-config-godaddy:
         specifier: ^7.1.1
         version: 7.1.1(eslint@8.57.1)
-      eslint-plugin-json:
-        specifier: ^3.1.0
-        version: 3.1.0
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
@@ -57,37 +58,37 @@ importers:
   packages/create-gasket-app:
     dependencies:
       '@gasket/core':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-core
       '@gasket/plugin-command':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-command
       '@gasket/plugin-docs':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../gasket-plugin-docs
       '@gasket/plugin-docusaurus':
-        specifier: ^7.2.1
-        version: 7.2.2(@gasket/plugin-logger@7.2.2)
+        specifier: workspace:^
+        version: link:../gasket-plugin-docusaurus
       '@gasket/plugin-dynamic-plugins':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../gasket-plugin-dynamic-plugins
       '@gasket/plugin-git':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-git
       '@gasket/plugin-logger':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../gasket-plugin-logger
       '@gasket/plugin-metadata':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-metadata
       '@gasket/request':
-        specifier: ^7.2.0
-        version: 7.2.0
+        specifier: workspace:^
+        version: link:../gasket-request
       '@gasket/utils':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../gasket-utils
       commander:
-        specifier: ^12.0.0
+        specifier: ^12.1.0
         version: 12.1.0
       deepmerge:
         specifier: ^4.3.1
@@ -114,7 +115,7 @@ importers:
         specifier: 3.4.0
         version: 3.4.0
       semver:
-        specifier: ^7.6.3
+        specifier: ^7.7.1
         version: 7.7.1
     devDependencies:
       '@types/inquirer':
@@ -124,43 +125,43 @@ importers:
         specifier: ^7.0.3
         version: 7.0.3
       dotenv:
-        specifier: ^16.4.5
+        specifier: ^16.4.7
         version: 16.4.7
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy:
         specifier: ^7.1.1
         version: 7.1.1(eslint@8.57.1)
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
-        specifier: ^28.6.0
-        version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@20.17.19)(typescript@5.7.3)))(typescript@5.7.3)
-      eslint-plugin-json:
-        specifier: ^3.1.0
-        version: 3.1.0
+        specifier: ^28.11.0
+        version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
       jest:
         specifier: ^29.7.0
-        version: 29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@20.17.19)(typescript@5.7.3))
+        version: 29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3))
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.7.3
         version: 5.7.3
 
   packages/gasket-assets:
     devDependencies:
       '@babel/core':
-        specifier: ^7.23.7
+        specifier: ^7.26.9
         version: 7.26.9
       '@babel/node':
-        specifier: ^7.22.19
+        specifier: ^7.26.0
         version: 7.26.0(@babel/core@7.26.9)
       '@babel/preset-env':
-        specifier: ^7.23.8
+        specifier: ^7.26.9
         version: 7.26.9(@babel/core@7.26.9)
       '@babel/preset-react':
-        specifier: ^7.23.3
+        specifier: ^7.26.3
         version: 7.26.3(@babel/core@7.26.9)
       '@svgr/core':
         specifier: ^6.5.1
@@ -169,14 +170,14 @@ importers:
         specifier: ^1.0.4
         version: 1.0.4
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy:
         specifier: ^7.1.1
         version: 7.1.1(eslint@8.57.1)
-      eslint-plugin-json:
-        specifier: ^3.1.0
-        version: 3.1.0
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
@@ -184,7 +185,7 @@ importers:
         specifier: ^1.0.4
         version: 1.0.4
       react:
-        specifier: ^18.2.0
+        specifier: ^18.3.1
         version: 18.3.1
       recursive-readdir:
         specifier: ^2.2.3
@@ -192,46 +193,49 @@ importers:
       rimraf:
         specifier: ^3.0.2
         version: 3.0.2
+      typescript:
+        specifier: ^5.7.3
+        version: 5.7.3
 
   packages/gasket-core:
     dependencies:
       '@gasket/utils':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../gasket-utils
       debug:
-        specifier: ^4.3.4
+        specifier: ^4.4.0
         version: 4.4.0(supports-color@5.5.0)
     devDependencies:
       '@jest/globals':
         specifier: ^29.7.0
         version: 29.7.0
       '@swc/cli':
-        specifier: ^0.3.12
+        specifier: ^0.3.14
         version: 0.3.14(@swc/core@1.10.18(@swc/helpers@0.5.5))(chokidar@3.6.0)
       '@swc/core':
-        specifier: ^1.5.3
+        specifier: ^1.10.18
         version: 1.10.18(@swc/helpers@0.5.5)
       '@types/jest':
-        specifier: ^29.5.12
+        specifier: ^29.5.14
         version: 29.5.14
       '@types/node':
-        specifier: ^20.12.5
+        specifier: ^20.17.19
         version: 20.17.19
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy:
         specifier: ^7.1.1
         version: 7.1.1(eslint@8.57.1)
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
-        specifier: ^28.6.0
+        specifier: ^28.11.0
         version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@20.17.19)(typescript@5.7.3)))(typescript@5.7.3)
-      eslint-plugin-json:
-        specifier: ^3.1.0
-        version: 3.1.0
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
@@ -239,45 +243,45 @@ importers:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@20.17.19)(typescript@5.7.3))
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.7.3
         version: 5.7.3
 
   packages/gasket-data:
     dependencies:
       '@gasket/request':
-        specifier: ^7.2.0
-        version: 7.2.0
+        specifier: workspace:^
+        version: link:../gasket-request
     devDependencies:
       '@gasket/plugin-data':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-data
       '@jest/globals':
         specifier: ^29.7.0
         version: 29.7.0
       '@swc/cli':
-        specifier: ^0.3.12
+        specifier: ^0.3.14
         version: 0.3.14(@swc/core@1.10.18(@swc/helpers@0.5.5))(chokidar@3.6.0)
       '@swc/core':
-        specifier: ^1.5.3
+        specifier: ^1.10.18
         version: 1.10.18(@swc/helpers@0.5.5)
       '@types/jest':
-        specifier: ^29.5.12
+        specifier: ^29.5.14
         version: 29.5.14
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy:
         specifier: ^7.1.1
         version: 7.1.1(eslint@8.57.1)
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
-        specifier: ^28.6.0
+        specifier: ^28.11.0
         version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
-      eslint-plugin-json:
-        specifier: ^3.1.0
-        version: 3.1.0
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
@@ -285,10 +289,10 @@ importers:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3))
       jsdom:
-        specifier: ^20.0.0
+        specifier: ^20.0.3
         version: 20.0.3
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.7.3
         version: 5.7.3
 
   packages/gasket-fetch:
@@ -297,39 +301,39 @@ importers:
         specifier: ^3.0.0
         version: 3.0.0
       node-fetch:
-        specifier: ^2.6.7
+        specifier: ^2.7.0
         version: 2.7.0
     devDependencies:
       '@babel/core':
-        specifier: ^7.23.7
+        specifier: ^7.26.9
         version: 7.26.9
       '@babel/plugin-transform-runtime':
-        specifier: ^7.23.7
+        specifier: ^7.26.9
         version: 7.26.9(@babel/core@7.26.9)
       '@babel/preset-env':
-        specifier: ^7.23.8
+        specifier: ^7.26.9
         version: 7.26.9(@babel/core@7.26.9)
       '@babel/register':
-        specifier: ^7.23.7
+        specifier: ^7.25.9
         version: 7.25.9(@babel/core@7.26.9)
       core-js:
-        specifier: ^3.35.0
+        specifier: ^3.40.0
         version: 3.40.0
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy:
         specifier: ^7.1.1
         version: 7.1.1(eslint@8.57.1)
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
-        specifier: ^28.6.0
+        specifier: ^28.11.0
         version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
-      eslint-plugin-json:
-        specifier: ^3.1.0
-        version: 3.1.0
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
@@ -337,13 +341,13 @@ importers:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3))
       jsdom:
-        specifier: ^20.0.0
+        specifier: ^20.0.3
         version: 20.0.3
       regenerator-runtime:
         specifier: ^0.14.1
         version: 0.14.1
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.7.3
         version: 5.7.3
       whatwg-fetch:
         specifier: 3.6.20
@@ -358,178 +362,7 @@ importers:
         specifier: ^7.0.3
         version: 7.0.3
       eslint:
-        specifier: ^8.56.0
-        version: 8.57.1
-      eslint-config-godaddy:
-        specifier: ^7.1.1
-        version: 7.1.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^28.6.0
-        version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
-      eslint-plugin-json:
-        specifier: ^3.1.0
-        version: 3.1.0
-      eslint-plugin-unicorn:
-        specifier: ^55.0.0
-        version: 55.0.0(eslint@8.57.1)
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3))
-      typescript:
-        specifier: ^5.4.5
-        version: 5.7.3
-
-  packages/gasket-nextjs:
-    dependencies:
-      '@gasket/data':
-        specifier: ^7.2.0
-        version: 7.2.0
-      '@gasket/request':
-        specifier: ^7.2.0
-        version: 7.2.0
-      hoist-non-react-statics:
-        specifier: ^3.3.2
-        version: 3.3.2
-      htmlescape:
-        specifier: ^1.1.1
-        version: 1.1.1
-    devDependencies:
-      '@gasket/plugin-data':
-        specifier: ^7.2.1
-        version: 7.2.2
-      '@gasket/plugin-intl':
-        specifier: ^7.2.2
-        version: 7.2.2
-      '@jest/globals':
-        specifier: ^29.7.0
-        version: 29.7.0
-      '@testing-library/react':
-        specifier: ^13.4.0
-        version: 13.4.0(@types/react@19.0.10)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      cross-env:
-        specifier: ^7.0.3
-        version: 7.0.3
-      eslint:
-        specifier: ^8.56.0
-        version: 8.57.1
-      eslint-config-godaddy-react:
-        specifier: ^9.1.0
-        version: 9.1.0(@babel/core@7.26.9)(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^28.6.0
-        version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
-      eslint-plugin-json:
-        specifier: ^3.1.0
-        version: 3.1.0
-      eslint-plugin-jsx-a11y:
-        specifier: ^6.8.0
-        version: 6.10.2(eslint@8.57.1)
-      eslint-plugin-react:
-        specifier: ^7.35.0
-        version: 7.37.4(eslint@8.57.1)
-      eslint-plugin-unicorn:
-        specifier: ^55.0.0
-        version: 55.0.0(eslint@8.57.1)
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3))
-      jsdom:
-        specifier: ^20.0.0
-        version: 20.0.3
-      next:
-        specifier: ^14.0.0
-        version: 14.2.24(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      react:
-        specifier: ^18.2.0
-        version: 18.3.1
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.3.1(react@18.3.1)
-      typescript:
-        specifier: ^5.4.5
-        version: 5.7.3
-
-  packages/gasket-plugin-analyze:
-    dependencies:
-      '@types/webpack-bundle-analyzer':
-        specifier: ^4.6.3
-        version: 4.7.0(@swc/core@1.10.18(@swc/helpers@0.5.5))
-      deepmerge:
-        specifier: ^4.3.1
-        version: 4.3.1
-      webpack-bundle-analyzer:
-        specifier: ^4.10.1
-        version: 4.10.2
-    devDependencies:
-      '@gasket/core':
-        specifier: ^7.2.2
-        version: 7.2.2
-      '@gasket/plugin-metadata':
-        specifier: ^7.2.2
-        version: 7.2.2
-      '@gasket/plugin-webpack':
-        specifier: ^7.2.1
-        version: 7.2.2
-      '@types/jest':
-        specifier: ^29.5.12
-        version: 29.5.14
-      create-gasket-app:
-        specifier: ^7.2.2
-        version: 7.2.2
-      cross-env:
-        specifier: ^7.0.3
-        version: 7.0.3
-      eslint:
-        specifier: ^8.56.0
-        version: 8.57.1
-      eslint-config-godaddy:
-        specifier: ^7.1.1
-        version: 7.1.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^28.6.0
-        version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
-      eslint-plugin-json:
-        specifier: ^3.1.0
-        version: 3.1.0
-      eslint-plugin-unicorn:
-        specifier: ^55.0.0
-        version: 55.0.0(eslint@8.57.1)
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3))
-      typescript:
-        specifier: ^5.4.5
-        version: 5.7.3
-
-  packages/gasket-plugin-command:
-    dependencies:
-      '@gasket/core':
-        specifier: ^7.2.1
-        version: 7.2.2
-      commander:
-        specifier: ^12.0.0
-        version: 12.1.0
-    devDependencies:
-      '@gasket/plugin-metadata':
-        specifier: ^7.2.2
-        version: 7.2.2
-      '@jest/globals':
-        specifier: ^29.7.0
-        version: 29.7.0
-      '@types/jest':
-        specifier: ^29.5.12
-        version: 29.5.14
-      '@types/node':
-        specifier: ^20.12.5
-        version: 20.17.19
-      create-gasket-app:
-        specifier: ^7.2.2
-        version: 7.2.2
-      cross-env:
-        specifier: ^7.0.3
-        version: 7.0.3
-      eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy:
         specifier: ^7.1.1
@@ -538,11 +371,179 @@ importers:
         specifier: ^4.0.3
         version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
-        specifier: ^28.6.0
-        version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@20.17.19)(typescript@5.7.3)))(typescript@5.7.3)
-      eslint-plugin-jsdoc:
-        specifier: ^48.2.3
-        version: 48.11.0(eslint@8.57.1)
+        specifier: ^28.11.0
+        version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
+      eslint-plugin-unicorn:
+        specifier: ^55.0.0
+        version: 55.0.0(eslint@8.57.1)
+      jest:
+        specifier: ^29.7.0
+        version: 29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3))
+      typescript:
+        specifier: ^5.7.3
+        version: 5.7.3
+
+  packages/gasket-nextjs:
+    dependencies:
+      '@gasket/data':
+        specifier: workspace:^
+        version: file:packages/gasket-data
+      '@gasket/request':
+        specifier: workspace:^
+        version: link:../gasket-request
+      hoist-non-react-statics:
+        specifier: ^3.3.2
+        version: 3.3.2
+      htmlescape:
+        specifier: ^1.1.1
+        version: 1.1.1
+    devDependencies:
+      '@gasket/plugin-data':
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-data
+      '@gasket/plugin-intl':
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-intl
+      '@jest/globals':
+        specifier: ^29.7.0
+        version: 29.7.0
+      '@testing-library/react':
+        specifier: ^13.4.0
+        version: 13.4.0(@types/react@19.0.10)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      cross-env:
+        specifier: ^7.0.3
+        version: 7.0.3
+      eslint:
+        specifier: ^8.57.1
+        version: 8.57.1
+      eslint-config-godaddy-react:
+        specifier: ^9.1.0
+        version: 9.1.0(@babel/core@7.26.9)(eslint@8.57.1)
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
+      eslint-plugin-jest:
+        specifier: ^28.11.0
+        version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
+      eslint-plugin-jsx-a11y:
+        specifier: ^6.10.2
+        version: 6.10.2(eslint@8.57.1)
+      eslint-plugin-react:
+        specifier: ^7.37.4
+        version: 7.37.4(eslint@8.57.1)
+      eslint-plugin-unicorn:
+        specifier: ^55.0.0
+        version: 55.0.0(eslint@8.57.1)
+      jest:
+        specifier: ^29.7.0
+        version: 29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3))
+      jsdom:
+        specifier: ^20.0.3
+        version: 20.0.3
+      next:
+        specifier: ^14.2.24
+        version: 14.2.24(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.3.1
+        version: 18.3.1(react@18.3.1)
+      typescript:
+        specifier: ^5.7.3
+        version: 5.7.3
+
+  packages/gasket-plugin-analyze:
+    dependencies:
+      '@types/webpack-bundle-analyzer':
+        specifier: ^4.7.0
+        version: 4.7.0(@swc/core@1.10.18(@swc/helpers@0.5.5))
+      deepmerge:
+        specifier: ^4.3.1
+        version: 4.3.1
+      webpack-bundle-analyzer:
+        specifier: ^4.10.2
+        version: 4.10.2
+    devDependencies:
+      '@gasket/core':
+        specifier: workspace:^
+        version: file:packages/gasket-core
+      '@gasket/plugin-metadata':
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-metadata
+      '@gasket/plugin-webpack':
+        specifier: workspace:^
+        version: link:../gasket-plugin-webpack
+      '@types/jest':
+        specifier: ^29.5.14
+        version: 29.5.14
+      create-gasket-app:
+        specifier: workspace:^
+        version: link:../create-gasket-app
+      cross-env:
+        specifier: ^7.0.3
+        version: 7.0.3
+      eslint:
+        specifier: ^8.57.1
+        version: 8.57.1
+      eslint-config-godaddy:
+        specifier: ^7.1.1
+        version: 7.1.1(eslint@8.57.1)
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
+      eslint-plugin-jest:
+        specifier: ^28.11.0
+        version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
+      eslint-plugin-unicorn:
+        specifier: ^55.0.0
+        version: 55.0.0(eslint@8.57.1)
+      jest:
+        specifier: ^29.7.0
+        version: 29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3))
+      typescript:
+        specifier: ^5.7.3
+        version: 5.7.3
+
+  packages/gasket-plugin-command:
+    dependencies:
+      '@gasket/core':
+        specifier: workspace:^
+        version: file:packages/gasket-core
+      commander:
+        specifier: ^12.1.0
+        version: 12.1.0
+    devDependencies:
+      '@gasket/plugin-metadata':
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-metadata
+      '@jest/globals':
+        specifier: ^29.7.0
+        version: 29.7.0
+      '@types/jest':
+        specifier: ^29.5.14
+        version: 29.5.14
+      '@types/node':
+        specifier: ^20.17.19
+        version: 20.17.19
+      create-gasket-app:
+        specifier: workspace:^
+        version: link:../create-gasket-app
+      cross-env:
+        specifier: ^7.0.3
+        version: 7.0.3
+      eslint:
+        specifier: ^8.57.1
+        version: 8.57.1
+      eslint-config-godaddy:
+        specifier: ^7.1.1
+        version: 7.1.1(eslint@8.57.1)
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
+      eslint-plugin-jest:
+        specifier: ^28.11.0
+        version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@20.17.19)(typescript@5.7.3)))(typescript@5.7.3)
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
@@ -550,43 +551,46 @@ importers:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@20.17.19)(typescript@5.7.3))
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.7.3
         version: 5.7.3
 
   packages/gasket-plugin-cypress:
     devDependencies:
       '@babel/core':
-        specifier: ^7.23.7
+        specifier: ^7.26.9
         version: 7.26.9
       '@gasket/core':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-core
       '@gasket/plugin-metadata':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-metadata
       '@testing-library/react':
         specifier: ^13.4.0
         version: 13.4.0(@types/react@19.0.10)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@types/jest':
-        specifier: ^29.5.12
+        specifier: ^29.5.14
         version: 29.5.14
       create-gasket-app:
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
       cypress:
-        specifier: ^13.6.6
+        specifier: ^13.17.0
         version: 13.17.0
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy:
         specifier: ^7.1.1
         version: 7.1.1(eslint@8.57.1)
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
-        specifier: ^28.6.0
+        specifier: ^28.11.0
         version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
       eslint-plugin-unicorn:
         specifier: ^55.0.0
@@ -595,63 +599,63 @@ importers:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3))
       react:
-        specifier: ^18.2.0
+        specifier: ^18.3.1
         version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
+        specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
       start-server-and-test:
-        specifier: ^1.14.0
+        specifier: ^1.15.4
         version: 1.15.4
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.7.3
         version: 5.7.3
 
   packages/gasket-plugin-data:
     dependencies:
       '@gasket/request':
-        specifier: ^7.2.0
-        version: 7.2.0
+        specifier: workspace:^
+        version: link:../gasket-request
       '@gasket/utils':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../gasket-utils
       lodash.merge:
         specifier: ^4.6.2
         version: 4.6.2
     devDependencies:
       '@gasket/core':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-core
       '@gasket/data':
-        specifier: ^7.2.0
-        version: 7.2.0
+        specifier: workspace:^
+        version: file:packages/gasket-data
       '@gasket/plugin-command':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-command
       '@gasket/plugin-metadata':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-metadata
       '@gasket/plugin-redux':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../gasket-plugin-redux
       create-gasket-app:
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy:
         specifier: ^7.1.1
         version: 7.1.1(eslint@8.57.1)
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
-        specifier: ^28.6.0
+        specifier: ^28.11.0
         version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
-      eslint-plugin-json:
-        specifier: ^3.1.0
-        version: 3.1.0
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
@@ -659,14 +663,14 @@ importers:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3))
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.7.3
         version: 5.7.3
 
   packages/gasket-plugin-docs:
     dependencies:
       '@gasket/plugin-command':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-command
       glob:
         specifier: ^8.1.0
         version: 8.1.0
@@ -684,38 +688,38 @@ importers:
         version: 3.0.2
     devDependencies:
       '@gasket/core':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-core
       '@gasket/plugin-git':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-git
       '@gasket/plugin-metadata':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-metadata
       '@gasket/plugin-webpack':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../gasket-plugin-webpack
       '@godaddy/dmd':
         specifier: ^1.0.4
         version: 1.0.4
       create-gasket-app:
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy:
         specifier: ^7.1.1
         version: 7.1.1(eslint@8.57.1)
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
-        specifier: ^28.6.0
+        specifier: ^28.11.0
         version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
-      eslint-plugin-json:
-        specifier: ^3.1.0
-        version: 3.1.0
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
@@ -723,38 +727,38 @@ importers:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3))
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.7.3
         version: 5.7.3
 
   packages/gasket-plugin-docs-graphs:
     devDependencies:
       '@gasket/core':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-core
       '@gasket/plugin-docs':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../gasket-plugin-docs
       '@gasket/plugin-metadata':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-metadata
       create-gasket-app:
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy:
         specifier: ^7.1.1
         version: 7.1.1(eslint@8.57.1)
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
-        specifier: ^28.6.0
+        specifier: ^28.11.0
         version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
-      eslint-plugin-json:
-        specifier: ^3.1.0
-        version: 3.1.0
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
@@ -762,14 +766,14 @@ importers:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3))
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.7.3
         version: 5.7.3
 
   packages/gasket-plugin-docusaurus:
     dependencies:
       '@gasket/plugin-logger':
         specifier: ^7.1
-        version: 7.2.2
+        version: link:../gasket-plugin-logger
       lodash.defaultsdeep:
         specifier: ^4.6.1
         version: 4.6.1
@@ -781,38 +785,38 @@ importers:
         specifier: ^3.7.0
         version: 3.7.0(@algolia/client-search@5.20.3)(@mdx-js/react@3.1.0(@types/react@19.0.10)(react@18.3.1))(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/react@19.0.10)(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(search-insights@2.17.3)(typescript@5.7.3)
       '@gasket/core':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-core
       '@gasket/plugin-docs':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../gasket-plugin-docs
       '@gasket/plugin-metadata':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-metadata
       '@gasket/plugin-webpack':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../gasket-plugin-webpack
       ajv:
         specifier: ^8.17.1
         version: 8.17.1
       create-gasket-app:
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy:
         specifier: ^7.1.1
         version: 7.1.1(eslint@8.57.1)
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
-        specifier: ^28.6.0
+        specifier: ^28.11.0
         version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
-      eslint-plugin-json:
-        specifier: ^3.1.0
-        version: 3.1.0
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
@@ -820,16 +824,16 @@ importers:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3))
       react:
-        specifier: ^18.2.0
+        specifier: ^18.3.1
         version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
+        specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
       search-insights:
-        specifier: ^2.13.0
+        specifier: ^2.17.3
         version: 2.17.3
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.7.3
         version: 5.7.3
 
   packages/gasket-plugin-dynamic-plugins:
@@ -839,29 +843,29 @@ importers:
         version: 5.4.1
     devDependencies:
       '@gasket/core':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-core
       '@gasket/plugin-metadata':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-metadata
       create-gasket-app:
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy:
         specifier: ^7.1.1
         version: 7.1.1(eslint@8.57.1)
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
-        specifier: ^28.6.0
+        specifier: ^28.11.0
         version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
-      eslint-plugin-json:
-        specifier: ^3.1.0
-        version: 3.1.0
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
@@ -869,45 +873,45 @@ importers:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3))
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.7.3
         version: 5.7.3
 
   packages/gasket-plugin-elastic-apm:
     dependencies:
       '@gasket/request':
-        specifier: ^7.2.0
-        version: 7.2.0
+        specifier: workspace:^
+        version: link:../gasket-request
     devDependencies:
       '@gasket/core':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-core
       '@gasket/plugin-metadata':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-metadata
       create-gasket-app:
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
       dotenv:
-        specifier: ^16.4.5
+        specifier: ^16.4.7
         version: 16.4.7
       elastic-apm-node:
-        specifier: ^4.4.1
+        specifier: ^4.11.0
         version: 4.11.0
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy:
         specifier: ^7.1.1
         version: 7.1.1(eslint@8.57.1)
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
-        specifier: ^28.6.0
+        specifier: ^28.11.0
         version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
-      eslint-plugin-json:
-        specifier: ^3.1.0
-        version: 3.1.0
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
@@ -918,7 +922,7 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.7.3
         version: 5.7.3
 
   packages/gasket-plugin-express:
@@ -927,13 +931,13 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       '@types/jest':
-        specifier: ^29.5.12
+        specifier: ^29.5.14
         version: 29.5.14
       compression:
-        specifier: ^1.7.4
+        specifier: ^1.8.0
         version: 1.8.0
       cookie-parser:
-        specifier: ^1.4.6
+        specifier: ^1.4.7
         version: 1.4.7
       diagnostics:
         specifier: ^2.0.2
@@ -942,76 +946,76 @@ importers:
         specifier: ^8.1.0
         version: 8.1.0
       http2-express:
-        specifier: ^1.0.0
+        specifier: ^1.0.1
         version: 1.0.1
     devDependencies:
       '@gasket/core':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-core
       '@gasket/plugin-metadata':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-metadata
       create-gasket-app:
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy:
         specifier: ^7.1.1
         version: 7.1.1(eslint@8.57.1)
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
-        specifier: ^28.6.0
+        specifier: ^28.11.0
         version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
-      eslint-plugin-json:
-        specifier: ^3.1.0
-        version: 3.1.0
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
       express:
-        specifier: ^4.21.0
+        specifier: ^4.21.2
         version: 4.21.2
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3))
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.7.3
         version: 5.7.3
 
   packages/gasket-plugin-fastify:
     dependencies:
       fastify:
-        specifier: ^4.28.1
+        specifier: ^4.29.0
         version: 4.29.0
     devDependencies:
       '@gasket/core':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-core
       '@gasket/plugin-metadata':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-metadata
       create-gasket-app:
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy:
         specifier: ^7.1.1
         version: 7.1.1(eslint@8.57.1)
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
-        specifier: ^28.6.0
+        specifier: ^28.11.0
         version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
-      eslint-plugin-json:
-        specifier: ^3.1.0
-        version: 3.1.0
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
@@ -1019,39 +1023,39 @@ importers:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3))
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.7.3
         version: 5.7.3
 
   packages/gasket-plugin-git:
     dependencies:
       '@gasket/utils':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../gasket-utils
     devDependencies:
       '@gasket/core':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-core
       '@gasket/plugin-metadata':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-metadata
       create-gasket-app:
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy:
         specifier: ^7.1.1
         version: 7.1.1(eslint@8.57.1)
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
-        specifier: ^28.6.0
+        specifier: ^28.11.0
         version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
-      eslint-plugin-json:
-        specifier: ^3.1.0
-        version: 3.1.0
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
@@ -1059,7 +1063,7 @@ importers:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3))
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.7.3
         version: 5.7.3
 
   packages/gasket-plugin-happyfeet:
@@ -1069,35 +1073,35 @@ importers:
         version: 2.2.0
     devDependencies:
       '@gasket/core':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-core
       '@gasket/plugin-metadata':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-metadata
       '@godaddy/terminus':
         specifier: ^4.12.1
         version: 4.12.1
       '@types/jest':
-        specifier: ^29.5.12
+        specifier: ^29.5.14
         version: 29.5.14
       create-gasket-app:
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy:
         specifier: ^7.1.1
         version: 7.1.1(eslint@8.57.1)
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
-        specifier: ^28.6.0
+        specifier: ^28.11.0
         version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
-      eslint-plugin-json:
-        specifier: ^3.1.0
-        version: 3.1.0
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
@@ -1105,7 +1109,7 @@ importers:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3))
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.7.3
         version: 5.7.3
 
   packages/gasket-plugin-https:
@@ -1114,7 +1118,7 @@ importers:
         specifier: ^4.12.1
         version: 4.12.1
       '@types/http-proxy':
-        specifier: ^1.17.14
+        specifier: ^1.17.16
         version: 1.17.16
       create-servers:
         specifier: ^3.3.0
@@ -1133,32 +1137,32 @@ importers:
         version: 1.0.0
     devDependencies:
       '@gasket/core':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-core
       '@gasket/plugin-metadata':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-metadata
       '@types/jest':
-        specifier: ^29.5.12
+        specifier: ^29.5.14
         version: 29.5.14
       create-gasket-app:
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy:
         specifier: ^7.1.1
         version: 7.1.1(eslint@8.57.1)
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
-        specifier: ^28.6.0
+        specifier: ^28.11.0
         version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
-      eslint-plugin-json:
-        specifier: ^3.1.0
-        version: 3.1.0
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
@@ -1166,7 +1170,7 @@ importers:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3))
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.7.3
         version: 5.7.3
 
   packages/gasket-plugin-https-proxy:
@@ -1176,52 +1180,52 @@ importers:
         version: 1.18.1
     devDependencies:
       '@gasket/core':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-core
       '@gasket/plugin-logger':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../gasket-plugin-logger
       '@gasket/plugin-metadata':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-metadata
       '@types/node':
-        specifier: ^20.12.5
+        specifier: ^20.17.19
         version: 20.17.19
       create-gasket-app:
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../create-gasket-app
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy:
         specifier: ^7.1.1
         version: 7.1.1(eslint@8.57.1)
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
-        specifier: ^28.6.0
+        specifier: ^28.11.0
         version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@20.17.19)(typescript@5.7.3)))(typescript@5.7.3)
-      eslint-plugin-json:
-        specifier: ^3.1.0
-        version: 3.1.0
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.7.3
         version: 5.7.3
       vitest:
-        specifier: ^2.1.5
+        specifier: ^2.1.9
         version: 2.1.9(@types/node@20.17.19)(jsdom@20.0.3)(terser@5.39.0)
 
   packages/gasket-plugin-intl:
     dependencies:
       '@gasket/request':
-        specifier: ^7.2.0
-        version: 7.2.0
+        specifier: workspace:^
+        version: link:../gasket-request
       debug:
-        specifier: ^4.3.4
+        specifier: ^4.4.0
         version: 4.4.0(supports-color@5.5.0)
       fs-extra:
-        specifier: ^10.0.0
+        specifier: ^10.1.0
         version: 10.1.0
       glob:
         specifier: ^8.1.0
@@ -1233,51 +1237,54 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0
       semver:
-        specifier: ^7.6.3
+        specifier: ^7.7.1
         version: 7.7.1
     devDependencies:
       '@gasket/core':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-core
       '@gasket/intl':
-        specifier: ^7.2.0
-        version: 7.2.0
+        specifier: workspace:^
+        version: link:../gasket-intl
+      '@gasket/plugin-command':
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-command
       '@gasket/plugin-data':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-data
       '@gasket/plugin-elastic-apm':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-elastic-apm
       '@gasket/plugin-metadata':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-metadata
       '@gasket/plugin-nextjs':
-        specifier: ^7.2.1
-        version: 7.2.2(@gasket/plugin-webpack@7.2.2)(next@14.2.24(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: workspace:^
+        version: link:../gasket-plugin-nextjs
       '@gasket/plugin-service-worker':
-        specifier: ^7.2.1
-        version: 7.2.2(webpack@5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5)))
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-service-worker(webpack@5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5)))
       '@gasket/react-intl':
-        specifier: ^7.2.0
-        version: 7.2.0(@gasket/plugin-intl@7.2.2)
+        specifier: workspace:^
+        version: file:packages/gasket-react-intl(@gasket/plugin-intl@file:packages/gasket-plugin-intl)
       create-gasket-app:
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy:
         specifier: ^7.1.1
         version: 7.1.1(eslint@8.57.1)
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
-        specifier: ^28.6.0
+        specifier: ^28.11.0
         version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
-      eslint-plugin-json:
-        specifier: ^3.1.0
-        version: 3.1.0
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
@@ -1288,58 +1295,58 @@ importers:
         specifier: ~6.6.8
         version: 6.6.8(react@18.3.1)(typescript@5.7.3)
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.7.3
         version: 5.7.3
       webpack:
-        specifier: ^5.94.0
+        specifier: ^5.98.0
         version: 5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5))
 
   packages/gasket-plugin-jest:
     devDependencies:
       '@gasket/core':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-core
       '@gasket/plugin-express':
-        specifier: ^7.2.1
-        version: 7.2.2(express@4.21.2)
+        specifier: workspace:^
+        version: link:../gasket-plugin-express
       '@gasket/plugin-metadata':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-metadata
       '@testing-library/jest-dom':
-        specifier: ^5.16.1
+        specifier: ^5.17.0
         version: 5.17.0
       '@testing-library/react':
         specifier: ^13.4.0
         version: 13.4.0(@types/react@19.0.10)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@types/jest':
-        specifier: ^29.5.12
+        specifier: ^29.5.14
         version: 29.5.14
       babel-eslint:
         specifier: ^10.1.0
         version: 10.1.0(eslint@8.57.1)
       create-gasket-app:
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy:
         specifier: ^7.1.1
         version: 7.1.1(eslint@8.57.1)
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
-        specifier: ^28.6.0
+        specifier: ^28.11.0
         version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
-      eslint-plugin-json:
-        specifier: ^3.1.0
-        version: 3.1.0
       eslint-plugin-jsx-a11y:
-        specifier: ^6.8.0
+        specifier: ^6.10.2
         version: 6.10.2(eslint@8.57.1)
       eslint-plugin-react:
-        specifier: ^7.35.0
+        specifier: ^7.37.4
         version: 7.37.4(eslint@8.57.1)
       eslint-plugin-unicorn:
         specifier: ^55.0.0
@@ -1351,13 +1358,13 @@ importers:
         specifier: ^29.7.0
         version: 29.7.0
       next:
-        specifier: ^14.0.0
+        specifier: ^14.2.24
         version: 14.2.24(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react:
-        specifier: ^18.2.0
+        specifier: ^18.3.1
         version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
+        specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
       ts-jest:
         specifier: ^29.2.5
@@ -1366,45 +1373,45 @@ importers:
         specifier: ^10.9.2
         version: 10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.7.3
         version: 5.7.3
 
   packages/gasket-plugin-lint:
     dependencies:
       semver:
-        specifier: ^7.6.3
+        specifier: ^7.7.1
         version: 7.7.1
     devDependencies:
       '@gasket/core':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-core
       '@gasket/plugin-metadata':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-metadata
       '@typescript-eslint/parser':
-        specifier: ^8.18.1
+        specifier: ^8.24.1
         version: 8.24.1(eslint@8.57.1)(typescript@5.7.3)
       create-gasket-app:
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy:
         specifier: ^7.1.1
         version: 7.1.1(eslint@8.57.1)
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-config-next:
-        specifier: ^13.4.19
+        specifier: ^13.5.8
         version: 13.5.8(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
-        specifier: ^28.6.0
+        specifier: ^28.11.0
         version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
-      eslint-plugin-json:
-        specifier: ^3.1.0
-        version: 3.1.0
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
@@ -1412,28 +1419,28 @@ importers:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3))
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.7.3
         version: 5.7.3
 
   packages/gasket-plugin-logger:
     devDependencies:
       '@gasket/core':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-core
       '@gasket/plugin-https':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../gasket-plugin-https
       '@gasket/plugin-metadata':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-metadata
       create-gasket-app:
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy:
         specifier: ^7.1.1
@@ -1442,7 +1449,7 @@ importers:
         specifier: ^4.0.3
         version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
-        specifier: ^28.6.0
+        specifier: ^28.11.0
         version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
       eslint-plugin-unicorn:
         specifier: ^55.0.0
@@ -1451,7 +1458,7 @@ importers:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3))
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.7.3
         version: 5.7.3
 
   packages/gasket-plugin-manifest:
@@ -1467,35 +1474,35 @@ importers:
         version: 1.0.4
     devDependencies:
       '@gasket/core':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-core
       '@gasket/plugin-command':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-command
       '@gasket/plugin-metadata':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-metadata
       '@gasket/plugin-service-worker':
-        specifier: ^7.2.1
-        version: 7.2.2(webpack@5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5)))
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-service-worker(webpack@5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5)))
       create-gasket-app:
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy:
         specifier: ^7.1.1
         version: 7.1.1(eslint@8.57.1)
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
-        specifier: ^28.6.0
+        specifier: ^28.11.0
         version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
-      eslint-plugin-json:
-        specifier: ^3.1.0
-        version: 3.1.0
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
@@ -1503,53 +1510,53 @@ importers:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3))
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.7.3
         version: 5.7.3
 
   packages/gasket-plugin-metadata:
     dependencies:
       '@gasket/core':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-core
       '@gasket/plugin-logger':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../gasket-plugin-logger
     devDependencies:
       '@gasket/plugin-metadata':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-metadata
       '@gasket/plugin-webpack':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../gasket-plugin-webpack
       '@godaddy/dmd':
         specifier: ^1.0.4
         version: 1.0.4
       '@types/node':
-        specifier: ^20.12.5
+        specifier: ^20.17.19
         version: 20.17.19
       create-gasket-app:
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../create-gasket-app
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy:
         specifier: ^7.1.1
         version: 7.1.1(eslint@8.57.1)
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
-        specifier: ^28.6.0
+        specifier: ^28.11.0
         version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@20.17.19)(typescript@5.7.3)))(typescript@5.7.3)
-      eslint-plugin-json:
-        specifier: ^3.1.0
-        version: 3.1.0
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.7.3
         version: 5.7.3
       vitest:
-        specifier: ^2.1.5
+        specifier: ^2.1.9
         version: 2.1.9(@types/node@20.17.19)(jsdom@20.0.3)(terser@5.39.0)
 
   packages/gasket-plugin-middleware:
@@ -1558,45 +1565,45 @@ importers:
         specifier: ^3.0.0
         version: 3.0.0
       compression:
-        specifier: ^1.7.4
+        specifier: ^1.8.0
         version: 1.8.0
       cookie-parser:
-        specifier: ^1.4.6
+        specifier: ^1.4.7
         version: 1.4.7
       diagnostics:
         specifier: ^2.0.2
         version: 2.0.2
     devDependencies:
       '@gasket/core':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-core
       '@gasket/plugin-metadata':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-metadata
       '@types/compression':
         specifier: ^1.7.5
         version: 1.7.5
       '@types/cookie-parser':
-        specifier: ^1.4.7
+        specifier: ^1.4.8
         version: 1.4.8(@types/express@5.0.0)
       create-gasket-app:
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy:
         specifier: ^7.1.1
         version: 7.1.1(eslint@8.57.1)
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
-        specifier: ^28.6.0
+        specifier: ^28.11.0
         version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
-      eslint-plugin-json:
-        specifier: ^3.1.0
-        version: 3.1.0
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
@@ -1604,98 +1611,98 @@ importers:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3))
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.7.3
         version: 5.7.3
 
   packages/gasket-plugin-mocha:
     devDependencies:
       '@babel/core':
-        specifier: ^7.23.7
+        specifier: ^7.26.9
         version: 7.26.9
       '@babel/plugin-transform-runtime':
-        specifier: ^7.23.7
+        specifier: ^7.26.9
         version: 7.26.9(@babel/core@7.26.9)
       '@babel/preset-env':
-        specifier: ^7.23.8
+        specifier: ^7.26.9
         version: 7.26.9(@babel/core@7.26.9)
       '@babel/preset-react':
-        specifier: ^7.23.3
+        specifier: ^7.26.3
         version: 7.26.3(@babel/core@7.26.9)
       '@babel/preset-typescript':
-        specifier: ^7.24.7
+        specifier: ^7.26.0
         version: 7.26.0(@babel/core@7.26.9)
       '@gasket/core':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-core
       '@gasket/plugin-express':
-        specifier: ^7.2.1
-        version: 7.2.2(express@4.21.2)
+        specifier: workspace:^
+        version: link:../gasket-plugin-express
       '@gasket/plugin-metadata':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-metadata
       '@testing-library/react':
         specifier: ^13.4.0
         version: 13.4.0(@types/react@19.0.10)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@types/jest':
-        specifier: ^29.5.12
+        specifier: ^29.5.14
         version: 29.5.14
       '@types/mocha':
-        specifier: ^10.0.7
+        specifier: ^10.0.10
         version: 10.0.10
       babel-eslint:
         specifier: ^10.1.0
         version: 10.1.0(eslint@8.57.1)
       create-gasket-app:
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy:
         specifier: ^7.1.1
         version: 7.1.1(eslint@8.57.1)
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
-        specifier: ^28.6.0
+        specifier: ^28.11.0
         version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
-      eslint-plugin-json:
-        specifier: ^3.1.0
-        version: 3.1.0
       eslint-plugin-react:
-        specifier: ^7.35.0
+        specifier: ^7.37.4
         version: 7.37.4(eslint@8.57.1)
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
       global-jsdom:
-        specifier: ^8.4.0
+        specifier: ^8.8.0
         version: 8.8.0(jsdom@20.0.3)
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3))
       jsdom:
-        specifier: ^20.0.0
+        specifier: ^20.0.3
         version: 20.0.3
       react:
-        specifier: ^18.2.0
+        specifier: ^18.3.1
         version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
+        specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
       ts-node:
         specifier: ^10.9.2
         version: 10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.7.3
         version: 5.7.3
 
   packages/gasket-plugin-morgan:
     dependencies:
       '@gasket/plugin-logger':
         specifier: ^7.1
-        version: 7.2.2
+        version: link:../gasket-plugin-logger
       express:
         specifier: ^4.21.0
         version: 4.21.2
@@ -1707,35 +1714,35 @@ importers:
         version: 1.0.1
     devDependencies:
       '@gasket/core':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-core
       '@gasket/plugin-metadata':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-metadata
       '@types/jest':
-        specifier: ^29.5.12
+        specifier: ^29.5.14
         version: 29.5.14
       '@types/morgan':
         specifier: ^1.9.9
         version: 1.9.9
       create-gasket-app:
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy:
         specifier: ^7.1.1
         version: 7.1.1(eslint@8.57.1)
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
-        specifier: ^28.6.0
+        specifier: ^28.11.0
         version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
-      eslint-plugin-json:
-        specifier: ^3.1.0
-        version: 3.1.0
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
@@ -1743,65 +1750,65 @@ importers:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3))
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.7.3
         version: 5.7.3
 
   packages/gasket-plugin-nextjs:
     dependencies:
       '@gasket/plugin-webpack':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../gasket-plugin-webpack
       fastify:
-        specifier: ^4.28.1
+        specifier: ^4.29.0
         version: 4.29.0
     devDependencies:
       '@babel/preset-react':
-        specifier: ^7.23.3
+        specifier: ^7.26.3
         version: 7.26.3(@babel/core@7.26.9)
       '@gasket/assets':
-        specifier: ^7.2.0
-        version: 7.2.0
+        specifier: workspace:^
+        version: link:../gasket-assets
       '@gasket/core':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-core
       '@gasket/intl':
-        specifier: ^7.2.0
-        version: 7.2.0
+        specifier: workspace:^
+        version: link:../gasket-intl
       '@gasket/nextjs':
-        specifier: ^7.2.0
-        version: 7.2.0(next@14.2.24(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
+        specifier: workspace:^
+        version: file:packages/gasket-nextjs(next@14.2.24(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       '@gasket/plugin-elastic-apm':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-elastic-apm
       '@gasket/plugin-intl':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-intl
       '@gasket/plugin-metadata':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-metadata
       '@gasket/plugin-nextjs':
-        specifier: ^7.2.1
-        version: 7.2.2(@gasket/plugin-webpack@7.2.2)(next@14.2.24(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: workspace:^
+        version: 'link:'
       '@gasket/plugin-service-worker':
-        specifier: ^7.2.1
-        version: 7.2.2(webpack@5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5)))
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-service-worker(webpack@5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5)))
       '@gasket/plugin-workbox':
-        specifier: ^7.2.1
-        version: 7.2.2(@types/babel__core@7.20.5)
+        specifier: workspace:^
+        version: link:../gasket-plugin-workbox
       '@types/react':
-        specifier: ^18.2.0
+        specifier: ^18.3.18
         version: 18.3.18
       babel-eslint:
         specifier: ^10.1.0
         version: 10.1.0(eslint@8.57.1)
       create-gasket-app:
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy:
         specifier: ^7.1.1
@@ -1809,12 +1816,12 @@ importers:
       eslint-config-godaddy-react:
         specifier: ^9.1.0
         version: 9.1.0(@babel/core@7.26.9)(eslint@8.57.1)
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
-        specifier: ^28.6.0
+        specifier: ^28.11.0
         version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
-      eslint-plugin-json:
-        specifier: ^3.1.0
-        version: 3.1.0
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
@@ -1825,56 +1832,59 @@ importers:
         specifier: ^4.6.2
         version: 4.6.2
       next:
-        specifier: ^14.0.0
+        specifier: ^14.2.24
         version: 14.2.24(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       nodemon:
-        specifier: ^3.1.0
+        specifier: ^3.1.9
         version: 3.1.9
       react:
-        specifier: ^18.2.0
+        specifier: ^18.3.1
         version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
+        specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.7.3
         version: 5.7.3
 
   packages/gasket-plugin-redux:
     devDependencies:
       '@gasket/core':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-core
       '@gasket/plugin-metadata':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-metadata
+      '@gasket/plugin-middleware':
+        specifier: workspace:^
+        version: link:../gasket-plugin-middleware
       '@gasket/plugin-webpack':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../gasket-plugin-webpack
       '@gasket/redux':
-        specifier: ^7.2.0
-        version: 7.2.2(redux@4.2.1)
+        specifier: workspace:^
+        version: link:../gasket-redux
       acorn:
-        specifier: ^8.11.3
+        specifier: ^8.14.0
         version: 8.14.0
       create-gasket-app:
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy:
         specifier: ^7.1.1
         version: 7.1.1(eslint@8.57.1)
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
-        specifier: ^28.6.0
+        specifier: ^28.11.0
         version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
-      eslint-plugin-json:
-        specifier: ^3.1.0
-        version: 3.1.0
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
@@ -1882,22 +1892,22 @@ importers:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3))
       react:
-        specifier: ^18.2.0
+        specifier: ^18.3.1
         version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
+        specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
       react-redux:
-        specifier: ^8.0.0
+        specifier: ^8.1.3
         version: 8.1.3(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(redux@4.2.1)
       redux:
-        specifier: ^4.0.5
+        specifier: ^4.2.1
         version: 4.2.1
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.7.3
         version: 5.7.3
       webpack:
-        specifier: ^5.94.0
+        specifier: ^5.98.0
         version: 5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5))
 
   packages/gasket-plugin-service-worker:
@@ -1906,7 +1916,7 @@ importers:
         specifier: ^5.1.1
         version: 5.1.1
       '@types/uglify-js':
-        specifier: ^3.17.4
+        specifier: ^3.17.5
         version: 3.17.5
       deepmerge:
         specifier: ^4.3.1
@@ -1918,42 +1928,42 @@ importers:
         specifier: ^1.0.4
         version: 1.0.4
       uglify-js:
-        specifier: ^3.17.4
+        specifier: ^3.19.3
         version: 3.19.3
       webpack-inject-plugin:
         specifier: ^1.5.5
         version: 1.5.5(webpack@5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5))(uglify-js@3.19.3))
     devDependencies:
       '@gasket/core':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-core
       '@gasket/plugin-command':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-command
       '@gasket/plugin-metadata':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-metadata
       '@gasket/plugin-webpack':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../gasket-plugin-webpack
       create-gasket-app:
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy:
         specifier: ^7.1.1
         version: 7.1.1(eslint@8.57.1)
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
-        specifier: ^28.6.0
+        specifier: ^28.11.0
         version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
-      eslint-plugin-json:
-        specifier: ^3.1.0
-        version: 3.1.0
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
@@ -1961,138 +1971,141 @@ importers:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3))
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.7.3
         version: 5.7.3
 
   packages/gasket-plugin-swagger:
     dependencies:
       '@fastify/swagger':
-        specifier: ^8.14.0
+        specifier: ^8.15.0
         version: 8.15.0
       '@fastify/swagger-ui':
-        specifier: ^4.0.1
+        specifier: ^4.2.0
         version: 4.2.0
       '@types/swagger-ui-express':
-        specifier: ^4.1.6
+        specifier: ^4.1.7
         version: 4.1.7
       express:
-        specifier: ^4.21.0
+        specifier: ^4.21.2
         version: 4.21.2
       swagger-jsdoc:
-        specifier: ^4.0.0
+        specifier: ^4.3.2
         version: 4.3.2(openapi-types@12.1.3)
       swagger-ui-express:
-        specifier: ^4.1.4
+        specifier: ^4.6.3
         version: 4.6.3(express@4.21.2)
     devDependencies:
       '@gasket/core':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-core
       '@gasket/plugin-command':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-command
       '@gasket/plugin-metadata':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-metadata
       create-gasket-app:
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy:
         specifier: ^7.1.1
         version: 7.1.1(eslint@8.57.1)
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
-        specifier: ^28.6.0
+        specifier: ^28.11.0
         version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
-      eslint-plugin-json:
-        specifier: ^3.1.0
-        version: 3.1.0
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
       fastify:
-        specifier: ^4.28.1
+        specifier: ^4.29.0
         version: 4.29.0
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3))
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.7.3
         version: 5.7.3
 
   packages/gasket-plugin-typescript:
     devDependencies:
       '@gasket/core':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-core
       '@gasket/plugin-metadata':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-metadata
       '@types/jest':
-        specifier: ^29.5.12
+        specifier: ^29.5.14
         version: 29.5.14
       '@types/node':
-        specifier: ^20.12.5
+        specifier: ^20.17.19
         version: 20.17.19
       concurrently:
-        specifier: ^9.1.0
+        specifier: ^9.1.2
         version: 9.1.2
       create-gasket-app:
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy:
         specifier: ^7.1.1
         version: 7.1.1(eslint@8.57.1)
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
-        specifier: ^28.6.0
+        specifier: ^28.11.0
         version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@20.17.19)(typescript@5.7.3)))(typescript@5.7.3)
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@20.17.19)(typescript@5.7.3))
       tsx:
-        specifier: ^4.11.0
+        specifier: ^4.19.3
         version: 4.19.3
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.7.3
         version: 5.7.3
 
   packages/gasket-plugin-webpack:
     devDependencies:
       '@gasket/core':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-core
       '@gasket/plugin-metadata':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-metadata
       create-gasket-app:
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy:
         specifier: ^7.1.1
         version: 7.1.1(eslint@8.57.1)
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
-        specifier: ^28.6.0
+        specifier: ^28.11.0
         version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
-      eslint-plugin-json:
-        specifier: ^3.1.0
-        version: 3.1.0
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
@@ -2103,48 +2116,48 @@ importers:
         specifier: ^3.0.3
         version: 3.0.3
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.7.3
         version: 5.7.3
       webpack:
-        specifier: ^5.94.0
+        specifier: ^5.98.0
         version: 5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5))
 
   packages/gasket-plugin-winston:
     dependencies:
       '@gasket/plugin-logger':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../gasket-plugin-logger
       winston:
-        specifier: ^3.11.0
+        specifier: ^3.17.0
         version: 3.17.0
     devDependencies:
       '@gasket/core':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-core
       '@gasket/plugin-metadata':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-metadata
       babel-eslint:
         specifier: ^10.1.0
         version: 10.1.0(eslint@8.57.1)
       create-gasket-app:
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy:
         specifier: ^7.1.1
         version: 7.1.1(eslint@8.57.1)
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
-        specifier: ^28.6.0
+        specifier: ^28.11.0
         version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
-      eslint-plugin-json:
-        specifier: ^3.1.0
-        version: 3.1.0
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
@@ -2155,14 +2168,14 @@ importers:
         specifier: ^1.4.1
         version: 1.4.1
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.7.3
         version: 5.7.3
 
   packages/gasket-plugin-workbox:
     dependencies:
       '@types/workbox-build':
-        specifier: ^5.0.1
-        version: 5.1.0(@types/babel__core@7.20.5)
+        specifier: ^5.1.0
+        version: 5.1.0
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
@@ -2170,105 +2183,23 @@ importers:
         specifier: ^1.16.2
         version: 1.16.2
       workbox-build:
-        specifier: ^4.1.0
+        specifier: ^4.3.1
         version: 4.3.1
     devDependencies:
       '@gasket/core':
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-core
       '@gasket/plugin-metadata':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-metadata
       create-gasket-app:
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
       eslint:
-        specifier: ^8.56.0
-        version: 8.57.1
-      eslint-config-godaddy:
-        specifier: ^7.1.1
-        version: 7.1.1(eslint@8.57.1)
-      eslint-plugin-jest:
-        specifier: ^28.6.0
-        version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
-      eslint-plugin-json:
-        specifier: ^3.1.0
-        version: 3.1.0
-      eslint-plugin-unicorn:
-        specifier: ^55.0.0
-        version: 55.0.0(eslint@8.57.1)
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3))
-      typescript:
-        specifier: ^5.4.5
-        version: 5.7.3
-
-  packages/gasket-preset-api:
-    dependencies:
-      '@gasket/plugin-command':
-        specifier: ^7.2.1
-        version: 7.2.2
-      '@gasket/plugin-cypress':
-        specifier: ^7.2.1
-        version: 7.2.2
-      '@gasket/plugin-docs':
-        specifier: ^7.2.1
-        version: 7.2.2
-      '@gasket/plugin-docusaurus':
-        specifier: ^7.2.1
-        version: 7.2.2(@gasket/plugin-logger@7.2.2)
-      '@gasket/plugin-dynamic-plugins':
-        specifier: ^7.2.1
-        version: 7.2.2
-      '@gasket/plugin-express':
-        specifier: ^7.2.1
-        version: 7.2.2(express@4.21.2)
-      '@gasket/plugin-fastify':
-        specifier: ^7.2.1
-        version: 7.2.2(fastify@4.29.0)
-      '@gasket/plugin-git':
-        specifier: ^7.2.1
-        version: 7.2.2
-      '@gasket/plugin-https':
-        specifier: ^7.2.1
-        version: 7.2.2
-      '@gasket/plugin-jest':
-        specifier: ^7.2.0
-        version: 7.2.0
-      '@gasket/plugin-lint':
-        specifier: ^7.2.0
-        version: 7.2.2
-      '@gasket/plugin-logger':
-        specifier: ^7.2.1
-        version: 7.2.2
-      '@gasket/plugin-mocha':
-        specifier: ^7.2.0
-        version: 7.2.0
-      '@gasket/plugin-swagger':
-        specifier: ^7.2.1
-        version: 7.2.2
-      '@gasket/plugin-typescript':
-        specifier: ^7.2.0
-        version: 7.2.0
-      '@gasket/plugin-winston':
-        specifier: ^7.2.1
-        version: 7.2.2(@gasket/plugin-logger@7.2.2)
-    devDependencies:
-      '@gasket/plugin-metadata':
-        specifier: ^7.2.1
-        version: 7.2.2
-      create-gasket-app:
-        specifier: ^7.2.2
-        version: 7.2.2
-      cross-env:
-        specifier: ^7.0.3
-        version: 7.0.3
-      eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy:
         specifier: ^7.1.1
@@ -2277,7 +2208,89 @@ importers:
         specifier: ^4.0.3
         version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
-        specifier: ^28.6.0
+        specifier: ^28.11.0
+        version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
+      eslint-plugin-unicorn:
+        specifier: ^55.0.0
+        version: 55.0.0(eslint@8.57.1)
+      jest:
+        specifier: ^29.7.0
+        version: 29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3))
+      typescript:
+        specifier: ^5.7.3
+        version: 5.7.3
+
+  packages/gasket-preset-api:
+    dependencies:
+      '@gasket/plugin-command':
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-command
+      '@gasket/plugin-cypress':
+        specifier: workspace:^
+        version: link:../gasket-plugin-cypress
+      '@gasket/plugin-docs':
+        specifier: workspace:^
+        version: link:../gasket-plugin-docs
+      '@gasket/plugin-docusaurus':
+        specifier: workspace:^
+        version: link:../gasket-plugin-docusaurus
+      '@gasket/plugin-dynamic-plugins':
+        specifier: workspace:^
+        version: link:../gasket-plugin-dynamic-plugins
+      '@gasket/plugin-express':
+        specifier: workspace:^
+        version: link:../gasket-plugin-express
+      '@gasket/plugin-fastify':
+        specifier: workspace:^
+        version: link:../gasket-plugin-fastify
+      '@gasket/plugin-git':
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-git
+      '@gasket/plugin-https':
+        specifier: workspace:^
+        version: link:../gasket-plugin-https
+      '@gasket/plugin-jest':
+        specifier: workspace:^
+        version: link:../gasket-plugin-jest
+      '@gasket/plugin-lint':
+        specifier: workspace:^
+        version: link:../gasket-plugin-lint
+      '@gasket/plugin-logger':
+        specifier: workspace:^
+        version: link:../gasket-plugin-logger
+      '@gasket/plugin-mocha':
+        specifier: workspace:^
+        version: link:../gasket-plugin-mocha
+      '@gasket/plugin-swagger':
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-swagger
+      '@gasket/plugin-typescript':
+        specifier: workspace:^
+        version: link:../gasket-plugin-typescript
+      '@gasket/plugin-winston':
+        specifier: workspace:^
+        version: link:../gasket-plugin-winston
+    devDependencies:
+      '@gasket/plugin-metadata':
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-metadata
+      create-gasket-app:
+        specifier: workspace:^
+        version: link:../create-gasket-app
+      cross-env:
+        specifier: ^7.0.3
+        version: 7.0.3
+      eslint:
+        specifier: ^8.57.1
+        version: 8.57.1
+      eslint-config-godaddy:
+        specifier: ^7.1.1
+        version: 7.1.1(eslint@8.57.1)
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
+      eslint-plugin-jest:
+        specifier: ^28.11.0
         version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
       eslint-plugin-unicorn:
         specifier: ^55.0.0
@@ -2286,83 +2299,86 @@ importers:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3))
       nodemon:
-        specifier: ^3.1.0
+        specifier: ^3.1.9
         version: 3.1.9
+      typescript:
+        specifier: ^5.7.3
+        version: 5.7.3
 
   packages/gasket-preset-nextjs:
     dependencies:
       '@gasket/plugin-command':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-command
       '@gasket/plugin-cypress':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../gasket-plugin-cypress
       '@gasket/plugin-docs':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../gasket-plugin-docs
       '@gasket/plugin-docusaurus':
-        specifier: ^7.2.1
-        version: 7.2.2(@gasket/plugin-logger@7.2.2)
+        specifier: workspace:^
+        version: link:../gasket-plugin-docusaurus
       '@gasket/plugin-dynamic-plugins':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../gasket-plugin-dynamic-plugins
       '@gasket/plugin-express':
-        specifier: ^7.2.1
-        version: 7.2.2(express@4.21.2)
+        specifier: workspace:^
+        version: link:../gasket-plugin-express
       '@gasket/plugin-git':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-git
       '@gasket/plugin-https':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../gasket-plugin-https
       '@gasket/plugin-https-proxy':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../gasket-plugin-https-proxy
       '@gasket/plugin-intl':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-intl
       '@gasket/plugin-jest':
-        specifier: ^7.2.0
-        version: 7.2.0
+        specifier: workspace:^
+        version: link:../gasket-plugin-jest
       '@gasket/plugin-lint':
-        specifier: ^7.2.0
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../gasket-plugin-lint
       '@gasket/plugin-logger':
-        specifier: ^7.2.1
-        version: 7.2.2
-      '@gasket/plugin-metadata':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../gasket-plugin-logger
       '@gasket/plugin-mocha':
-        specifier: ^7.2.0
-        version: 7.2.0
+        specifier: workspace:^
+        version: link:../gasket-plugin-mocha
       '@gasket/plugin-nextjs':
-        specifier: ^7.2.1
-        version: 7.2.2(@gasket/plugin-webpack@7.2.2)(next@14.2.24(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: workspace:^
+        version: link:../gasket-plugin-nextjs
       '@gasket/plugin-typescript':
-        specifier: ^7.2.0
-        version: 7.2.0
+        specifier: workspace:^
+        version: link:../gasket-plugin-typescript
       '@gasket/plugin-webpack':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../gasket-plugin-webpack
       '@gasket/plugin-winston':
-        specifier: ^7.2.1
-        version: 7.2.2(@gasket/plugin-logger@7.2.2)
+        specifier: workspace:^
+        version: link:../gasket-plugin-winston
       '@gasket/utils':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../gasket-utils
     devDependencies:
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy:
         specifier: ^7.1.1
         version: 7.1.1(eslint@8.57.1)
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
-        specifier: ^28.6.0
+        specifier: ^28.11.0
         version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
       eslint-plugin-unicorn:
         specifier: ^55.0.0
@@ -2370,21 +2386,24 @@ importers:
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3))
+      typescript:
+        specifier: ^5.7.3
+        version: 5.7.3
 
   packages/gasket-react-intl:
     dependencies:
       '@gasket/data':
-        specifier: ^7.2.0
-        version: 7.2.0
+        specifier: workspace:^
+        version: file:packages/gasket-data
       '@gasket/fetch':
-        specifier: ^7.2.0
-        version: 7.2.0
+        specifier: workspace:^
+        version: link:../gasket-fetch
       '@gasket/intl':
-        specifier: ^7.2.0
-        version: 7.2.0
+        specifier: workspace:^
+        version: link:../gasket-intl
       '@gasket/plugin-intl':
         specifier: ^7.1
-        version: 7.2.2
+        version: file:packages/gasket-plugin-intl
       hoist-non-react-statics:
         specifier: ^3.3.2
         version: 3.3.2
@@ -2402,22 +2421,22 @@ importers:
         specifier: ^7.0.3
         version: 7.0.3
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy-react:
         specifier: ^9.1.0
         version: 9.1.0(@babel/core@7.26.9)(eslint@8.57.1)
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
-        specifier: ^28.6.0
+        specifier: ^28.11.0
         version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
-      eslint-plugin-json:
-        specifier: ^3.1.0
-        version: 3.1.0
       eslint-plugin-jsx-a11y:
-        specifier: ^6.8.0
+        specifier: ^6.10.2
         version: 6.10.2(eslint@8.57.1)
       eslint-plugin-react:
-        specifier: ^7.35.0
+        specifier: ^7.37.4
         version: 7.37.4(eslint@8.57.1)
       eslint-plugin-unicorn:
         specifier: ^55.0.0
@@ -2432,53 +2451,53 @@ importers:
         specifier: ^29.7.0
         version: 29.7.0
       jsdom:
-        specifier: ^20.0.0
+        specifier: ^20.0.3
         version: 20.0.3
       react:
-        specifier: ^18.2.0
+        specifier: ^18.3.1
         version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
+        specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
       react-intl:
         specifier: ~6.6.8
         version: 6.6.8(react@18.3.1)(typescript@5.7.3)
       react-redux:
-        specifier: ^8.0.0
+        specifier: ^8.1.3
         version: 8.1.3(@types/react-dom@18.3.5(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(redux@4.2.1)
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.7.3
         version: 5.7.3
 
   packages/gasket-redux:
     dependencies:
       '@babel/runtime':
-        specifier: ^7.23.8
+        specifier: ^7.26.9
         version: 7.26.9
       redux-logger:
         specifier: ^3.0.6
         version: 3.0.6
       redux-thunk:
-        specifier: ^2.2.0
+        specifier: ^2.4.2
         version: 2.4.2(redux@4.2.1)
     devDependencies:
       '@babel/cli':
-        specifier: ^7.23.4
+        specifier: ^7.26.4
         version: 7.26.4(@babel/core@7.26.9)
       '@babel/core':
-        specifier: ^7.23.7
+        specifier: ^7.26.9
         version: 7.26.9
       '@babel/plugin-proposal-object-rest-spread':
-        specifier: ^7.0.0
+        specifier: ^7.20.7
         version: 7.20.7(@babel/core@7.26.9)
       '@babel/plugin-transform-runtime':
-        specifier: ^7.23.7
+        specifier: ^7.26.9
         version: 7.26.9(@babel/core@7.26.9)
       '@babel/preset-env':
-        specifier: ^7.23.8
+        specifier: ^7.26.9
         version: 7.26.9(@babel/core@7.26.9)
       babel-core:
-        specifier: ^7.0.0-bridge.0
+        specifier: 7.0.0-bridge.0
         version: 7.0.0-bridge.0(@babel/core@7.26.9)
       babel-eslint:
         specifier: ^10.1.0
@@ -2490,19 +2509,19 @@ importers:
         specifier: ^7.0.3
         version: 7.0.3
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy:
         specifier: ^7.1.1
         version: 7.1.1(eslint@8.57.1)
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
-        specifier: ^28.6.0
+        specifier: ^28.11.0
         version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
-      eslint-plugin-json:
-        specifier: ^3.1.0
-        version: 3.1.0
       eslint-plugin-jsx-a11y:
-        specifier: ^6.8.0
+        specifier: ^6.10.2
         version: 6.10.2(eslint@8.57.1)
       eslint-plugin-unicorn:
         specifier: ^55.0.0
@@ -2514,48 +2533,48 @@ importers:
         specifier: ^29.7.0
         version: 29.7.0
       redux:
-        specifier: ^4.0.5
+        specifier: ^4.2.1
         version: 4.2.1
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.7.3
         version: 5.7.3
 
   packages/gasket-request:
     dependencies:
       debug:
-        specifier: ^4.3.4
+        specifier: ^4.4.0
         version: 4.4.0(supports-color@5.5.0)
     devDependencies:
       '@jest/globals':
         specifier: ^29.7.0
         version: 29.7.0
       '@swc/cli':
-        specifier: ^0.3.12
+        specifier: ^0.3.14
         version: 0.3.14(@swc/core@1.10.18(@swc/helpers@0.5.5))(chokidar@3.6.0)
       '@swc/core':
-        specifier: ^1.5.3
+        specifier: ^1.10.18
         version: 1.10.18(@swc/helpers@0.5.5)
       '@types/jest':
-        specifier: ^29.5.12
+        specifier: ^29.5.14
         version: 29.5.14
       '@types/node':
-        specifier: ^20.12.5
+        specifier: ^20.17.19
         version: 20.17.19
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy:
         specifier: ^7.1.1
         version: 7.1.1(eslint@8.57.1)
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
-        specifier: ^28.6.0
+        specifier: ^28.11.0
         version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@20.17.19)(typescript@5.7.3)))(typescript@5.7.3)
-      eslint-plugin-json:
-        specifier: ^3.1.0
-        version: 3.1.0
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
@@ -2566,151 +2585,154 @@ importers:
         specifier: ^1.2.2
         version: 1.2.2
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.7.3
         version: 5.7.3
 
   packages/gasket-typescript-tests:
     devDependencies:
       '@gasket/assets':
-        specifier: ^7.2.0
-        version: 7.2.0
+        specifier: workspace:^
+        version: link:../gasket-assets
       '@gasket/core':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-core
       '@gasket/data':
-        specifier: ^7.2.0
-        version: 7.2.0
+        specifier: workspace:^
+        version: file:packages/gasket-data
       '@gasket/fetch':
-        specifier: ^7.2.0
-        version: 7.2.0
+        specifier: workspace:^
+        version: link:../gasket-fetch
       '@gasket/intl':
-        specifier: ^7.2.0
-        version: 7.2.0
+        specifier: workspace:^
+        version: link:../gasket-intl
       '@gasket/nextjs':
-        specifier: ^7.2.0
-        version: 7.2.0(next@14.2.24(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
+        specifier: workspace:^
+        version: file:packages/gasket-nextjs(next@14.2.24(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       '@gasket/plugin-analyze':
-        specifier: ^7.2.1
-        version: 7.2.2(@swc/core@1.10.18(@swc/helpers@0.5.5))
+        specifier: workspace:^
+        version: link:../gasket-plugin-analyze
       '@gasket/plugin-command':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-command
       '@gasket/plugin-cypress':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../gasket-plugin-cypress
       '@gasket/plugin-data':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-data
       '@gasket/plugin-docs':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../gasket-plugin-docs
       '@gasket/plugin-docs-graphs':
-        specifier: ^7.2.0
-        version: 7.2.0
+        specifier: workspace:^
+        version: link:../gasket-plugin-docs-graphs
       '@gasket/plugin-docusaurus':
-        specifier: ^7.2.1
-        version: 7.2.2(@gasket/plugin-logger@7.2.2)
+        specifier: workspace:^
+        version: link:../gasket-plugin-docusaurus
       '@gasket/plugin-elastic-apm':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-elastic-apm
       '@gasket/plugin-express':
-        specifier: ^7.2.1
-        version: 7.2.2(express@4.21.2)
+        specifier: workspace:^
+        version: link:../gasket-plugin-express
       '@gasket/plugin-fastify':
-        specifier: ^7.2.1
-        version: 7.2.2(fastify@4.29.0)
+        specifier: workspace:^
+        version: link:../gasket-plugin-fastify
       '@gasket/plugin-git':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-git
       '@gasket/plugin-happyfeet':
-        specifier: ^7.2.0
-        version: 7.2.0
+        specifier: workspace:^
+        version: link:../gasket-plugin-happyfeet
       '@gasket/plugin-https':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../gasket-plugin-https
       '@gasket/plugin-intl':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-intl
       '@gasket/plugin-jest':
-        specifier: ^7.2.0
-        version: 7.2.0
+        specifier: workspace:^
+        version: link:../gasket-plugin-jest
       '@gasket/plugin-logger':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../gasket-plugin-logger
       '@gasket/plugin-manifest':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../gasket-plugin-manifest
       '@gasket/plugin-metadata':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-metadata
       '@gasket/plugin-mocha':
-        specifier: ^7.2.0
-        version: 7.2.0
+        specifier: workspace:^
+        version: link:../gasket-plugin-mocha
       '@gasket/plugin-morgan':
-        specifier: ^7.2.1
-        version: 7.2.2(@gasket/plugin-logger@7.2.2)(express@4.21.2)
+        specifier: workspace:^
+        version: link:../gasket-plugin-morgan
       '@gasket/plugin-nextjs':
-        specifier: ^7.2.1
-        version: 7.2.2(@gasket/plugin-webpack@7.2.2)(next@14.2.24(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: workspace:^
+        version: link:../gasket-plugin-nextjs
       '@gasket/plugin-redux':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../gasket-plugin-redux
       '@gasket/plugin-service-worker':
-        specifier: ^7.2.1
-        version: 7.2.2(webpack@5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5)))
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-service-worker(webpack@5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5)))
       '@gasket/plugin-swagger':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-plugin-swagger
       '@gasket/plugin-typescript':
-        specifier: ^7.2.0
-        version: 7.2.0
+        specifier: workspace:^
+        version: link:../gasket-plugin-typescript
       '@gasket/plugin-webpack':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../gasket-plugin-webpack
       '@gasket/plugin-winston':
-        specifier: ^7.2.1
-        version: 7.2.2(@gasket/plugin-logger@7.2.2)
+        specifier: workspace:^
+        version: link:../gasket-plugin-winston
       '@gasket/plugin-workbox':
-        specifier: ^7.2.1
-        version: 7.2.2(@types/babel__core@7.20.5)
+        specifier: workspace:^
+        version: link:../gasket-plugin-workbox
       '@gasket/preset-api':
-        specifier: ^7.2.2
-        version: 7.2.2(express@4.21.2)(fastify@4.29.0)
+        specifier: workspace:^
+        version: file:packages/gasket-preset-api(express@4.21.2)(fastify@4.29.0)
       '@gasket/preset-nextjs':
-        specifier: ^7.2.2
-        version: 7.2.2(express@4.21.2)(next@14.2.24(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: workspace:^
+        version: file:packages/gasket-preset-nextjs(express@4.21.2)(next@14.2.24(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@gasket/react-intl':
-        specifier: ^7.2.0
-        version: 7.2.0(@gasket/plugin-intl@7.2.2)
+        specifier: workspace:^
+        version: file:packages/gasket-react-intl(@gasket/plugin-intl@file:packages/gasket-plugin-intl)
       '@gasket/redux':
-        specifier: ^7.2.0
-        version: 7.2.2(redux@4.2.1)
+        specifier: workspace:^
+        version: link:../gasket-redux
       '@gasket/request':
-        specifier: ^7.2.0
-        version: 7.2.0
+        specifier: workspace:^
+        version: link:../gasket-request
       '@gasket/utils':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../gasket-utils
       '@types/express':
         specifier: ^4.17.21
         version: 4.17.21
       '@types/jest':
-        specifier: ^29.5.12
+        specifier: ^29.5.14
         version: 29.5.14
       create-gasket-app:
-        specifier: ^7.2.2
-        version: 7.2.2
+        specifier: workspace:^
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy-react-typescript:
-        specifier: ^4.0.2
+        specifier: ^4.0.3
         version: 4.0.3(@babel/core@7.26.9)(eslint@8.57.1)(typescript@5.7.3)
+      eslint-config-godaddy-typescript:
+        specifier: ^4.0.3
+        version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
-        specifier: ^28.6.0
+        specifier: ^28.11.0
         version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
       eslint-plugin-unicorn:
         specifier: ^55.0.0
@@ -2719,16 +2741,16 @@ importers:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3))
       redux:
-        specifier: ^4.0.5
+        specifier: ^4.2.1
         version: 4.2.1
       ts-jest:
-        specifier: ^29.1.2
+        specifier: ^29.2.5
         version: 29.2.5(@babel/core@7.26.9)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.26.9))(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.7.3
         version: 5.7.3
       workbox-build:
-        specifier: ^7.1.0
+        specifier: ^7.3.0
         version: 7.3.0(@types/babel__core@7.20.5)
 
   packages/gasket-utils:
@@ -2749,12 +2771,12 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0
       semver:
-        specifier: ^7.6.3
+        specifier: ^7.7.1
         version: 7.7.1
     devDependencies:
       '@gasket/core':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-core
       '@types/concat-stream':
         specifier: ^2.0.3
         version: 2.0.3
@@ -2768,7 +2790,7 @@ importers:
         specifier: ^7.0.3
         version: 7.0.3
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-godaddy:
         specifier: ^7.1.1
@@ -2777,11 +2799,8 @@ importers:
         specifier: ^4.0.3
         version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
-        specifier: ^28.6.0
+        specifier: ^28.11.0
         version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3)
-      eslint-plugin-json:
-        specifier: ^3.1.0
-        version: 3.1.0
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
@@ -2789,20 +2808,20 @@ importers:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3))
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.7.3
         version: 5.7.3
 
   scripts/generate-docs-index:
     dependencies:
       '@gasket/core':
-        specifier: ^7.2.1
-        version: 7.2.2
+        specifier: workspace:^
+        version: file:packages/gasket-core
     devDependencies:
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-plugin-unicorn:
-        specifier: ^44.0.0
+        specifier: ^44.0.2
         version: 44.0.2(eslint@8.57.1)
 
 packages:
@@ -4514,14 +4533,17 @@ packages:
       typescript:
         optional: true
 
-  '@gasket/assets@7.2.0':
-    resolution: {integrity: sha512-wdDTYQauh1l/f6/yqjSl6PG/Y3pjrr6EUpXHioOCeKBG0zqnsfwmYBfdoLkcWKrM+C/V5zRiFyiiHX5XuynY0A==}
-
   '@gasket/core@7.2.2':
     resolution: {integrity: sha512-5a+FQL8qAAnRfEsb2tzT0/RVbqpTqz0ATAH0++jVy9pYY5oQmg3IPLM0sa92PHBrHf3sqAxyg0Ls4h2DnCVgVg==}
 
+  '@gasket/core@file:packages/gasket-core':
+    resolution: {directory: packages/gasket-core, type: directory}
+
   '@gasket/data@7.2.0':
     resolution: {integrity: sha512-PGs5ME5sgjBaRhVnecj6N98fCu0UU7x/diSJU7dfE5Zn/XNeR9WcIXInWveV0ClQLoV9JGFJM76fFGZt3sM0ww==}
+
+  '@gasket/data@file:packages/gasket-data':
+    resolution: {directory: packages/gasket-data, type: directory}
 
   '@gasket/fetch@7.2.0':
     resolution: {integrity: sha512-Kg3ei6LOLdGrMUEqnFeuEtmEKAzQ9UDKzywYRNS0L5PJz3Hy3gvwxc3y/fFoGG69zBp5DyVTDDuPArh6J4pS/g==}
@@ -4529,40 +4551,38 @@ packages:
   '@gasket/intl@7.2.0':
     resolution: {integrity: sha512-xkCsCLnKfqMnAcePGOH7gBNyoBPRmVSS+Gd9C8acweV2ZrOuDGTWR/U7jAVJouqLd7INgfcw6N7MjgsYXqAUig==}
 
-  '@gasket/nextjs@7.2.0':
-    resolution: {integrity: sha512-Gbry1q03aGfAktsRHyxdN7TZt9fRDbdt4zHoQl8Nm2O+zQta6ms5kPTFWpmMqsyZbcrRNi9S+Z3FEouno8eQUA==}
+  '@gasket/nextjs@file:packages/gasket-nextjs':
+    resolution: {directory: packages/gasket-nextjs, type: directory}
     peerDependencies:
       next: ^14
       react: ^18
 
-  '@gasket/plugin-analyze@7.2.2':
-    resolution: {integrity: sha512-aelurcNFMKyLJOHy7whM5AtnSIeEkxFFY9QI0R8aUEK5xZi8dT3GjnELF8UJEWbZ5xHTluxSYBTZPJOAdhP7/A==}
-
   '@gasket/plugin-command@7.2.2':
     resolution: {integrity: sha512-fZ3Q8FxeRyx8fN2/Tkfi9SB5XL3GFHxNYn5KnssYQjo1rm6zddPCDuzBqXYUgSkaw1/9ZsRBYDH+wgrHMmXzEA==}
+
+  '@gasket/plugin-command@file:packages/gasket-plugin-command':
+    resolution: {directory: packages/gasket-plugin-command, type: directory}
 
   '@gasket/plugin-cypress@7.2.2':
     resolution: {integrity: sha512-ujD3df7g4YwGW0DbtsW1FkH8uCJb0xXo1dPFl6DyQZSBPoktmjs03mYsbJoBzMQSv/D1Pq/KuSLLrCfCAekAJQ==}
 
-  '@gasket/plugin-data@7.2.2':
-    resolution: {integrity: sha512-PqqabgCQ6BVkFRZd1GGWs0XcoWyfGySrS2LvLQ0jTT17XE98+ndZ72l2LxSe4k0/S1pe6m+zaWt0+2Js5/VXhw==}
-
-  '@gasket/plugin-docs-graphs@7.2.0':
-    resolution: {integrity: sha512-FfTdpBVAW0hXnnYbbbKViONuBEvYbf78fUGFFLdxVSp9Bct14pkO8r/Am/bAj03GgWOVMJ7r6OxnXBTpADnD9A==}
+  '@gasket/plugin-data@file:packages/gasket-plugin-data':
+    resolution: {directory: packages/gasket-plugin-data, type: directory}
 
   '@gasket/plugin-docs@7.2.2':
     resolution: {integrity: sha512-e0BFFYo7OFCa0pXRXLTAMl0rM9PLaFpJqXglLwDmpPeHu9zZIiOT99coLn7r7Q/crAac78VvU3uUuldCDeT1aQ==}
 
   '@gasket/plugin-docusaurus@7.2.2':
     resolution: {integrity: sha512-nkQm5AsRxNBuqo1hqJ7pz/SU5+RwPxVVPgOz06VAMiQu7GzFVPqdlEDDwZvuSsExfhHijqFsX60K0yFXZ2m8Ag==}
+    version: 7.2.2
     peerDependencies:
       '@gasket/plugin-logger': ^7.1
 
   '@gasket/plugin-dynamic-plugins@7.2.2':
     resolution: {integrity: sha512-qLSlapOrLxzuraCyssQFZJ0Fb8PH1te6r9diEIQGx1OHqhwwVQN3W1Hz6CLhc5i4fPtZPWPGgLzndYJBtahrgw==}
 
-  '@gasket/plugin-elastic-apm@7.2.2':
-    resolution: {integrity: sha512-RZ/wwxzGAqY6wg6alqdADKS1v+InQxjlBC4z9ZaV6q1jf5hLEsfVCTKwYuN2OtYcqysQ/huBD7gv7jIYG1aBTw==}
+  '@gasket/plugin-elastic-apm@file:packages/gasket-plugin-elastic-apm':
+    resolution: {directory: packages/gasket-plugin-elastic-apm, type: directory}
 
   '@gasket/plugin-express@7.2.2':
     resolution: {integrity: sha512-n+31/KANG9ixLnBSVmK05cflDb7QcS+MWXBLUJZ874r+BD+KhC2M0Pvr56O8heo9N8FPT28PBLukPiOqnrqHaQ==}
@@ -4577,8 +4597,8 @@ packages:
   '@gasket/plugin-git@7.2.2':
     resolution: {integrity: sha512-tziTkzOiUP3DML2AiV1HuHKyMVuaWg2m1sNrCsr9u5wbAtf8GBYwivo/AWDUhueGygQpVzuoNmjBvHpiLsVKhg==}
 
-  '@gasket/plugin-happyfeet@7.2.0':
-    resolution: {integrity: sha512-rC6ipsjgvq1uFfR2MfSx/gZ0Ru3tMejUhJhiAxcNki1l3TI+z91jIbQqgPSK864w5snvzW7J5kWUUjWa3icJhQ==}
+  '@gasket/plugin-git@file:packages/gasket-plugin-git':
+    resolution: {directory: packages/gasket-plugin-git, type: directory}
 
   '@gasket/plugin-https-proxy@7.2.2':
     resolution: {integrity: sha512-8Y8Haua0aTp01hURb2luluBPjjjelwWLWo2RqQbrkqpH/E1o5FPYgjnhEO2VFuqfS+PIebCmcSAFlbB81zM/eA==}
@@ -4589,6 +4609,9 @@ packages:
   '@gasket/plugin-intl@7.2.2':
     resolution: {integrity: sha512-Cs1kznMIelvZeSwy9ysGLroHitFzD0J1KQWcIPEjaVWrKhOeBC/a67oxOxcLq61VZinTC7zxxkARmYoiqyLlEQ==}
 
+  '@gasket/plugin-intl@file:packages/gasket-plugin-intl':
+    resolution: {directory: packages/gasket-plugin-intl, type: directory}
+
   '@gasket/plugin-jest@7.2.0':
     resolution: {integrity: sha512-9tbqSzOBjRdgsjfXLkAMnXGlVvXpKsPy90YK3r9OmX3R5jXONeJv9bkAdO0jwF5jkXHUJ5vE8kuh4Idr33FbtA==}
 
@@ -4598,38 +4621,32 @@ packages:
   '@gasket/plugin-logger@7.2.2':
     resolution: {integrity: sha512-t4CxQ9fNxptXkQxa3AtmwPL93Vcy1XSQzFSHUTQDiTfN3e/RTsoISnUFnwaGP5kSLY7b88vA+57vKflVhrzQ9w==}
 
-  '@gasket/plugin-manifest@7.2.2':
-    resolution: {integrity: sha512-HX+MSQ76zpTjkbO6copLgwxOMnW1c6ulAeBXST8Ya0gYjYCKrMjUGkHa1d6zxGrsh0nFk0Mj5DWiL/TK7ttewA==}
+  '@gasket/plugin-logger@file:packages/gasket-plugin-logger':
+    resolution: {directory: packages/gasket-plugin-logger, type: directory}
 
-  '@gasket/plugin-metadata@7.2.2':
-    resolution: {integrity: sha512-qZPVT+TtEo19ElmDuHEkyfFFotH2h8Aw0JaAe7DNEvb+2tM5vWq+Jhma4rWr4TOV2cMrUcCa9tLNMYbHYvnWdg==}
+  '@gasket/plugin-metadata@file:packages/gasket-plugin-metadata':
+    resolution: {directory: packages/gasket-plugin-metadata, type: directory}
 
   '@gasket/plugin-mocha@7.2.0':
     resolution: {integrity: sha512-zmkLVfUMnAmWj6/UkGXtraaOyXgicCCTY+GND+dO0I+k52sCbTJZN8uKaLW3rYJJ+N7Dm1ggXR5PDK1KIIUXNg==}
 
-  '@gasket/plugin-morgan@7.2.2':
-    resolution: {integrity: sha512-WWG/W6jshRGA4Pt3d+bjeafoZpXG3/5Gtn7OATkfXxouM9J2qcQo/ztWZxd5gETCAveyD6DbstLTIQJDwpijTQ==}
-    peerDependencies:
-      '@gasket/plugin-logger': ^7.1
-      express: ^4.21.0
-
   '@gasket/plugin-nextjs@7.2.2':
     resolution: {integrity: sha512-wksfKtc0ETNNxvDos9uGi56UfD1TROLdljnUF+PG+A43lOxMwZoOVXryPUUvJ4CH60EOCrVVAoRJFUnDROb8zg==}
+    version: 7.2.2
     peerDependencies:
       '@gasket/plugin-webpack': ^7.1
       next: ^14
       react: ^18
       react-dom: ^18
 
-  '@gasket/plugin-redux@7.2.2':
-    resolution: {integrity: sha512-cpqEmkS7Cw+TQBrbGc6Oyag14+dtNeStw81St0Zt50mj+/HL1o2YuC2OvcyGqReJc9FbGrcMT1PWtGOqrwHgcg==}
-    deprecated: Package deprecated and will be removed in future major release.
-
-  '@gasket/plugin-service-worker@7.2.2':
-    resolution: {integrity: sha512-9mwvpD31SiU4MRQAIntvtShwlLL5r1VPXOo2IHn+Fioa1J3NzdePRW0yODbTZba8tXGfxxRxOwk7g3KfK627hQ==}
+  '@gasket/plugin-service-worker@file:packages/gasket-plugin-service-worker':
+    resolution: {directory: packages/gasket-plugin-service-worker, type: directory}
 
   '@gasket/plugin-swagger@7.2.2':
     resolution: {integrity: sha512-QxlztQY/Z7QbILRRwByJQdt1rOkFlznONvt4bUXK4/sQi+ZoRHgd+3t9j9RWnH7jSN6BVVcZuI8fjq4MQFwPXg==}
+
+  '@gasket/plugin-swagger@file:packages/gasket-plugin-swagger':
+    resolution: {directory: packages/gasket-plugin-swagger, type: directory}
 
   '@gasket/plugin-typescript@7.2.0':
     resolution: {integrity: sha512-wv7wv4X48OetZ3bacg4ziJcklzDt18sAMnNrFyzzNTzDKE7bBBojvvpRu2OetKF5WVs81eFOpBp3qhr97222jw==}
@@ -4637,29 +4654,25 @@ packages:
   '@gasket/plugin-webpack@7.2.2':
     resolution: {integrity: sha512-HgnSnahywKs57WbMi6U+RbNi05PQskhU4diHZpE/mLKqYaqlb+iH0xeC8ub4t8TTUpGzy5rXzQOy9Q4zjKaNcg==}
 
+  '@gasket/plugin-webpack@file:packages/gasket-plugin-webpack':
+    resolution: {directory: packages/gasket-plugin-webpack, type: directory}
+
   '@gasket/plugin-winston@7.2.2':
     resolution: {integrity: sha512-hILVKJrxiJPOMSQKan3n1N29bEqkMZxmddpAPgud3axYPE+QvwPEXCuzkUan8Ci1c+Ie57I7nQ+ALvWf54W2SQ==}
+    version: 7.2.2
     peerDependencies:
       '@gasket/plugin-logger': ^7.1
 
-  '@gasket/plugin-workbox@7.2.2':
-    resolution: {integrity: sha512-NnzAf2sfC7Fcx3TCo9hk/JnOYIOIyefBayBvwAgvujM7SswiAnaxdBe2afevkszTBJ2y5zXESUiDW1TFu5vMEA==}
+  '@gasket/preset-api@file:packages/gasket-preset-api':
+    resolution: {directory: packages/gasket-preset-api, type: directory}
 
-  '@gasket/preset-api@7.2.2':
-    resolution: {integrity: sha512-L3fqMEF7/zrKWLZigiGdrPnSWEEG9bJMQc7SSEc0tXtzIRbPN8hy8etgFlt//j3RXAxbjsUbiP0ViPSDkwY5cA==}
+  '@gasket/preset-nextjs@file:packages/gasket-preset-nextjs':
+    resolution: {directory: packages/gasket-preset-nextjs, type: directory}
 
-  '@gasket/preset-nextjs@7.2.2':
-    resolution: {integrity: sha512-seYaSC79EUDSkHtmfW4VzKGtm5DYSgWVmwMQmHwuljQyJ/wwnJ+/eeBrLBEcXLpCP0XYQKTE7gnXX/C23gXZ+Q==}
-
-  '@gasket/react-intl@7.2.0':
-    resolution: {integrity: sha512-Crd3iitBemMc4YvEBZPfojjmJWg80AZEmBYBQGp4Y6ZbTYqhUZhH9uw/2oyUGnloBIDohkk2cK4DXgsKalMLAw==}
+  '@gasket/react-intl@file:packages/gasket-react-intl':
+    resolution: {directory: packages/gasket-react-intl, type: directory}
     peerDependencies:
       '@gasket/plugin-intl': ^7.1
-
-  '@gasket/redux@7.2.2':
-    resolution: {integrity: sha512-eKcPEoRJ9wtQVd+VFts1vmH55yq/Rjq3jV2Iwo20MN6EXXVOk4FeSkxs8XXpSCSjaqZU60EV3H/hdbuT8QEGYA==}
-    peerDependencies:
-      redux: '>=3.7.2 || ^4.0.1 || ^5'
 
   '@gasket/request@7.2.0':
     resolution: {integrity: sha512-QzS9V/SpmVNG8NHU3QVrwZzDYyqI3NxYBt2HWjVTeTHjpU9IrYvtZ6hd59+MlZk7vx3IfIiHfv2FKUGra/MliQ==}
@@ -7210,10 +7223,6 @@ packages:
     peerDependenciesMeta:
       typescript:
         optional: true
-
-  create-gasket-app@7.2.2:
-    resolution: {integrity: sha512-HpLRiyAa7o74u3ubbhEo0AQ/wOD6O8NJFujT5RPfU5sm+yNiKzZnrRvxo955DhGDb6cSSR65Juy0Vc/f70QGtA==}
-    hasBin: true
 
   create-jest@29.7.0:
     resolution: {integrity: sha512-Adz2bdH0Vq3F53KEMJOoftQFutWCukm6J24wbPWRO4k1kMY7gS7ds/uoJkNuV8wDCtWWnuwGcJwpWcih+zEW1Q==}
@@ -15117,7 +15126,7 @@ snapshots:
     dependencies:
       '@docusaurus/types': 3.7.0(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@types/history': 4.7.11
-      '@types/react': 18.3.18
+      '@types/react': 19.0.10
       '@types/react-router-config': 5.0.11
       '@types/react-router-dom': 5.3.3
       react: 18.3.1
@@ -15481,7 +15490,7 @@ snapshots:
 
   '@docusaurus/react-loadable@6.0.0(react@18.3.1)':
     dependencies:
-      '@types/react': 18.3.18
+      '@types/react': 19.0.10
       react: 18.3.1
 
   '@docusaurus/theme-classic@3.7.0(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/react@19.0.10)(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)':
@@ -15543,7 +15552,7 @@ snapshots:
       '@docusaurus/utils': 3.7.0(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@docusaurus/utils-common': 3.7.0(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@types/history': 4.7.11
-      '@types/react': 18.3.18
+      '@types/react': 19.0.10
       '@types/react-router-config': 5.0.11
       clsx: 2.1.1
       parse-numeric-range: 1.3.0
@@ -15646,7 +15655,7 @@ snapshots:
     dependencies:
       '@mdx-js/mdx': 3.1.0(acorn@8.14.0)
       '@types/history': 4.7.11
-      '@types/react': 18.3.18
+      '@types/react': 19.0.10
       commander: 5.1.0
       joi: 17.13.3
       react: 18.3.1
@@ -16029,8 +16038,6 @@ snapshots:
     optionalDependencies:
       typescript: 5.7.3
 
-  '@gasket/assets@7.2.0': {}
-
   '@gasket/core@7.2.2':
     dependencies:
       '@gasket/utils': 7.2.2
@@ -16038,7 +16045,20 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@gasket/core@file:packages/gasket-core':
+    dependencies:
+      '@gasket/utils': 7.2.2
+      debug: 4.4.0(supports-color@5.5.0)
+    transitivePeerDependencies:
+      - supports-color
+
   '@gasket/data@7.2.0':
+    dependencies:
+      '@gasket/request': 7.2.0
+    transitivePeerDependencies:
+      - supports-color
+
+  '@gasket/data@file:packages/gasket-data':
     dependencies:
       '@gasket/request': 7.2.0
     transitivePeerDependencies:
@@ -16053,28 +16073,16 @@ snapshots:
 
   '@gasket/intl@7.2.0': {}
 
-  '@gasket/nextjs@7.2.0(next@14.2.24(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)':
+  '@gasket/nextjs@file:packages/gasket-nextjs(next@14.2.24(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@gasket/data': 7.2.0
       '@gasket/request': 7.2.0
+      hoist-non-react-statics: 3.3.2
       htmlescape: 1.1.1
       next: 14.2.24(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
     transitivePeerDependencies:
       - supports-color
-
-  '@gasket/plugin-analyze@7.2.2(@swc/core@1.10.18(@swc/helpers@0.5.5))':
-    dependencies:
-      '@types/webpack-bundle-analyzer': 4.7.0(@swc/core@1.10.18(@swc/helpers@0.5.5))
-      deepmerge: 4.3.1
-      webpack-bundle-analyzer: 4.10.2
-    transitivePeerDependencies:
-      - '@swc/core'
-      - bufferutil
-      - esbuild
-      - uglify-js
-      - utf-8-validate
-      - webpack-cli
 
   '@gasket/plugin-command@7.2.2':
     dependencies:
@@ -16083,17 +16091,22 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@gasket/plugin-command@file:packages/gasket-plugin-command':
+    dependencies:
+      '@gasket/core': 7.2.2
+      commander: 12.1.0
+    transitivePeerDependencies:
+      - supports-color
+
   '@gasket/plugin-cypress@7.2.2': {}
 
-  '@gasket/plugin-data@7.2.2':
+  '@gasket/plugin-data@file:packages/gasket-plugin-data':
     dependencies:
       '@gasket/request': 7.2.0
       '@gasket/utils': 7.2.2
       lodash.merge: 4.6.2
     transitivePeerDependencies:
       - supports-color
-
-  '@gasket/plugin-docs-graphs@7.2.0': {}
 
   '@gasket/plugin-docs@7.2.2':
     dependencies:
@@ -16106,16 +16119,16 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@gasket/plugin-docusaurus@7.2.2(@gasket/plugin-logger@7.2.2)':
+  '@gasket/plugin-docusaurus@7.2.2(@gasket/plugin-logger@file:packages/gasket-plugin-logger)':
     dependencies:
-      '@gasket/plugin-logger': 7.2.2
+      '@gasket/plugin-logger': file:packages/gasket-plugin-logger
       lodash.defaultsdeep: 4.6.1
 
   '@gasket/plugin-dynamic-plugins@7.2.2':
     dependencies:
       chalk: 5.4.1
 
-  '@gasket/plugin-elastic-apm@7.2.2':
+  '@gasket/plugin-elastic-apm@file:packages/gasket-plugin-elastic-apm':
     dependencies:
       '@gasket/request': 7.2.0
     transitivePeerDependencies:
@@ -16142,9 +16155,9 @@ snapshots:
     dependencies:
       '@gasket/utils': 7.2.2
 
-  '@gasket/plugin-happyfeet@7.2.0':
+  '@gasket/plugin-git@file:packages/gasket-plugin-git':
     dependencies:
-      happy-feet: 2.2.0
+      '@gasket/utils': 7.2.2
 
   '@gasket/plugin-https-proxy@7.2.2':
     dependencies:
@@ -16176,6 +16189,18 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@gasket/plugin-intl@file:packages/gasket-plugin-intl':
+    dependencies:
+      '@gasket/request': 7.2.0
+      debug: 4.4.0(supports-color@5.5.0)
+      fs-extra: 10.1.0
+      glob: 8.1.0
+      intl: 1.2.5
+      negotiator: 1.0.0
+      semver: 7.7.1
+    transitivePeerDependencies:
+      - supports-color
+
   '@gasket/plugin-jest@7.2.0': {}
 
   '@gasket/plugin-lint@7.2.2':
@@ -16184,13 +16209,9 @@ snapshots:
 
   '@gasket/plugin-logger@7.2.2': {}
 
-  '@gasket/plugin-manifest@7.2.2':
-    dependencies:
-      deepmerge: 4.3.1
-      escape-string-regexp: 1.0.5
-      mkdirp: 1.0.4
+  '@gasket/plugin-logger@file:packages/gasket-plugin-logger': {}
 
-  '@gasket/plugin-metadata@7.2.2':
+  '@gasket/plugin-metadata@file:packages/gasket-plugin-metadata':
     dependencies:
       '@gasket/core': 7.2.2
       '@gasket/plugin-logger': 7.2.2
@@ -16199,26 +16220,15 @@ snapshots:
 
   '@gasket/plugin-mocha@7.2.0': {}
 
-  '@gasket/plugin-morgan@7.2.2(@gasket/plugin-logger@7.2.2)(express@4.21.2)':
+  '@gasket/plugin-nextjs@7.2.2(@gasket/plugin-webpack@file:packages/gasket-plugin-webpack)(next@14.2.24(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@gasket/plugin-logger': 7.2.2
-      express: 4.21.2
-      morgan: 1.10.0
-      split: 1.0.1
-    transitivePeerDependencies:
-      - supports-color
-
-  '@gasket/plugin-nextjs@7.2.2(@gasket/plugin-webpack@7.2.2)(next@14.2.24(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
-    dependencies:
-      '@gasket/plugin-webpack': 7.2.2
+      '@gasket/plugin-webpack': file:packages/gasket-plugin-webpack
       fastify: 4.29.0
       next: 14.2.24(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  '@gasket/plugin-redux@7.2.2': {}
-
-  '@gasket/plugin-service-worker@7.2.2(webpack@5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5)))':
+  '@gasket/plugin-service-worker@file:packages/gasket-plugin-service-worker(webpack@5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5)))':
     dependencies:
       '@types/lru-cache': 5.1.1
       '@types/uglify-js': 3.17.5
@@ -16242,31 +16252,35 @@ snapshots:
       - openapi-types
       - supports-color
 
+  '@gasket/plugin-swagger@file:packages/gasket-plugin-swagger':
+    dependencies:
+      '@fastify/swagger': 8.15.0
+      '@fastify/swagger-ui': 4.2.0
+      '@types/swagger-ui-express': 4.1.7
+      express: 4.21.2
+      swagger-jsdoc: 4.3.2(openapi-types@12.1.3)
+      swagger-ui-express: 4.6.3(express@4.21.2)
+    transitivePeerDependencies:
+      - openapi-types
+      - supports-color
+
   '@gasket/plugin-typescript@7.2.0': {}
 
   '@gasket/plugin-webpack@7.2.2': {}
 
-  '@gasket/plugin-winston@7.2.2(@gasket/plugin-logger@7.2.2)':
+  '@gasket/plugin-webpack@file:packages/gasket-plugin-webpack': {}
+
+  '@gasket/plugin-winston@7.2.2(@gasket/plugin-logger@file:packages/gasket-plugin-logger)':
     dependencies:
-      '@gasket/plugin-logger': 7.2.2
+      '@gasket/plugin-logger': file:packages/gasket-plugin-logger
       winston: 3.17.0
 
-  '@gasket/plugin-workbox@7.2.2(@types/babel__core@7.20.5)':
-    dependencies:
-      '@types/workbox-build': 5.1.0(@types/babel__core@7.20.5)
-      deepmerge: 4.3.1
-      serve-static: 1.16.2
-      workbox-build: 4.3.1
-    transitivePeerDependencies:
-      - '@types/babel__core'
-      - supports-color
-
-  '@gasket/preset-api@7.2.2(express@4.21.2)(fastify@4.29.0)':
+  '@gasket/preset-api@file:packages/gasket-preset-api(express@4.21.2)(fastify@4.29.0)':
     dependencies:
       '@gasket/plugin-command': 7.2.2
       '@gasket/plugin-cypress': 7.2.2
       '@gasket/plugin-docs': 7.2.2
-      '@gasket/plugin-docusaurus': 7.2.2(@gasket/plugin-logger@7.2.2)
+      '@gasket/plugin-docusaurus': 7.2.2(@gasket/plugin-logger@file:packages/gasket-plugin-logger)
       '@gasket/plugin-dynamic-plugins': 7.2.2
       '@gasket/plugin-express': 7.2.2(express@4.21.2)
       '@gasket/plugin-fastify': 7.2.2(fastify@4.29.0)
@@ -16275,11 +16289,10 @@ snapshots:
       '@gasket/plugin-jest': 7.2.0
       '@gasket/plugin-lint': 7.2.2
       '@gasket/plugin-logger': 7.2.2
-      '@gasket/plugin-metadata': 7.2.2
       '@gasket/plugin-mocha': 7.2.0
       '@gasket/plugin-swagger': 7.2.2
       '@gasket/plugin-typescript': 7.2.0
-      '@gasket/plugin-winston': 7.2.2(@gasket/plugin-logger@7.2.2)
+      '@gasket/plugin-winston': 7.2.2(@gasket/plugin-logger@file:packages/gasket-plugin-logger)
     transitivePeerDependencies:
       - debug
       - express
@@ -16287,12 +16300,12 @@ snapshots:
       - openapi-types
       - supports-color
 
-  '@gasket/preset-nextjs@7.2.2(express@4.21.2)(next@14.2.24(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@gasket/preset-nextjs@file:packages/gasket-preset-nextjs(express@4.21.2)(next@14.2.24(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@gasket/plugin-command': 7.2.2
       '@gasket/plugin-cypress': 7.2.2
       '@gasket/plugin-docs': 7.2.2
-      '@gasket/plugin-docusaurus': 7.2.2(@gasket/plugin-logger@7.2.2)
+      '@gasket/plugin-docusaurus': 7.2.2(@gasket/plugin-logger@file:packages/gasket-plugin-logger)
       '@gasket/plugin-dynamic-plugins': 7.2.2
       '@gasket/plugin-express': 7.2.2(express@4.21.2)
       '@gasket/plugin-git': 7.2.2
@@ -16302,12 +16315,11 @@ snapshots:
       '@gasket/plugin-jest': 7.2.0
       '@gasket/plugin-lint': 7.2.2
       '@gasket/plugin-logger': 7.2.2
-      '@gasket/plugin-metadata': 7.2.2
       '@gasket/plugin-mocha': 7.2.0
-      '@gasket/plugin-nextjs': 7.2.2(@gasket/plugin-webpack@7.2.2)(next@14.2.24(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@gasket/plugin-nextjs': 7.2.2(@gasket/plugin-webpack@file:packages/gasket-plugin-webpack)(next@14.2.24(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@gasket/plugin-typescript': 7.2.0
       '@gasket/plugin-webpack': 7.2.2
-      '@gasket/plugin-winston': 7.2.2(@gasket/plugin-logger@7.2.2)
+      '@gasket/plugin-winston': 7.2.2(@gasket/plugin-logger@file:packages/gasket-plugin-logger)
       '@gasket/utils': 7.2.2
     transitivePeerDependencies:
       - debug
@@ -16317,25 +16329,18 @@ snapshots:
       - react-dom
       - supports-color
 
-  '@gasket/react-intl@7.2.0(@gasket/plugin-intl@7.2.2)':
+  '@gasket/react-intl@file:packages/gasket-react-intl(@gasket/plugin-intl@file:packages/gasket-plugin-intl)':
     dependencies:
       '@gasket/data': 7.2.0
       '@gasket/fetch': 7.2.0
       '@gasket/intl': 7.2.0
-      '@gasket/plugin-intl': 7.2.2
+      '@gasket/plugin-intl': file:packages/gasket-plugin-intl
       hoist-non-react-statics: 3.3.2
       htmlescape: 1.1.1
       just-extend: 6.2.0
     transitivePeerDependencies:
       - encoding
       - supports-color
-
-  '@gasket/redux@7.2.2(redux@4.2.1)':
-    dependencies:
-      '@babel/runtime': 7.26.9
-      redux: 4.2.1
-      redux-logger: 3.0.6
-      redux-thunk: 2.4.2(redux@4.2.1)
 
   '@gasket/request@7.2.0':
     dependencies:
@@ -16430,7 +16435,7 @@ snapshots:
   '@jest/console@29.7.0':
     dependencies:
       '@jest/types': 29.6.3
-      '@types/node': 20.17.19
+      '@types/node': 22.13.4
       chalk: 4.1.2
       jest-message-util: 29.7.0
       jest-util: 29.7.0
@@ -16443,14 +16448,14 @@ snapshots:
       '@jest/test-result': 29.7.0
       '@jest/transform': 29.7.0
       '@jest/types': 29.6.3
-      '@types/node': 20.17.19
+      '@types/node': 22.13.4
       ansi-escapes: 4.3.2
       chalk: 4.1.2
       ci-info: 3.9.0
       exit: 0.1.2
       graceful-fs: 4.2.11
       jest-changed-files: 29.7.0
-      jest-config: 29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@20.17.19)(typescript@5.7.3))
+      jest-config: 29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@20.17.19)(typescript@5.7.3))
       jest-haste-map: 29.7.0
       jest-message-util: 29.7.0
       jest-regex-util: 29.6.3
@@ -16478,14 +16483,14 @@ snapshots:
       '@jest/test-result': 29.7.0
       '@jest/transform': 29.7.0
       '@jest/types': 29.6.3
-      '@types/node': 20.17.19
+      '@types/node': 22.13.4
       ansi-escapes: 4.3.2
       chalk: 4.1.2
       ci-info: 3.9.0
       exit: 0.1.2
       graceful-fs: 4.2.11
       jest-changed-files: 29.7.0
-      jest-config: 29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3))
+      jest-config: 29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3))
       jest-haste-map: 29.7.0
       jest-message-util: 29.7.0
       jest-regex-util: 29.6.3
@@ -16528,7 +16533,7 @@ snapshots:
     dependencies:
       '@jest/types': 29.6.3
       '@sinonjs/fake-timers': 10.3.0
-      '@types/node': 20.17.19
+      '@types/node': 22.13.4
       jest-message-util: 29.7.0
       jest-mock: 29.7.0
       jest-util: 29.7.0
@@ -16550,7 +16555,7 @@ snapshots:
       '@jest/transform': 29.7.0
       '@jest/types': 29.6.3
       '@jridgewell/trace-mapping': 0.3.25
-      '@types/node': 20.17.19
+      '@types/node': 22.13.4
       chalk: 4.1.2
       collect-v8-coverage: 1.0.2
       exit: 0.1.2
@@ -16620,7 +16625,7 @@ snapshots:
       '@jest/schemas': 29.6.3
       '@types/istanbul-lib-coverage': 2.0.6
       '@types/istanbul-reports': 3.0.4
-      '@types/node': 20.17.19
+      '@types/node': 22.13.4
       '@types/yargs': 17.0.33
       chalk: 4.1.2
 
@@ -17405,11 +17410,11 @@ snapshots:
   '@types/body-parser@1.19.5':
     dependencies:
       '@types/connect': 3.4.38
-      '@types/node': 20.17.19
+      '@types/node': 22.13.4
 
   '@types/bonjour@3.5.13':
     dependencies:
-      '@types/node': 20.17.19
+      '@types/node': 22.13.4
 
   '@types/cacheable-request@6.0.3':
     dependencies:
@@ -17420,20 +17425,20 @@ snapshots:
 
   '@types/compression@1.7.5':
     dependencies:
-      '@types/express': 4.17.21
+      '@types/express': 5.0.0
 
   '@types/concat-stream@2.0.3':
     dependencies:
-      '@types/node': 20.17.19
+      '@types/node': 22.13.4
 
   '@types/connect-history-api-fallback@1.5.4':
     dependencies:
       '@types/express-serve-static-core': 5.0.6
-      '@types/node': 20.17.19
+      '@types/node': 22.13.4
 
   '@types/connect@3.4.38':
     dependencies:
-      '@types/node': 20.17.19
+      '@types/node': 22.13.4
 
   '@types/cookie-parser@1.4.8(@types/express@5.0.0)':
     dependencies:
@@ -17441,7 +17446,7 @@ snapshots:
 
   '@types/cross-spawn@6.0.6':
     dependencies:
-      '@types/node': 20.17.19
+      '@types/node': 22.13.4
 
   '@types/d3-array@3.2.1': {}
 
@@ -17584,14 +17589,14 @@ snapshots:
 
   '@types/express-serve-static-core@4.19.6':
     dependencies:
-      '@types/node': 20.17.19
+      '@types/node': 22.13.4
       '@types/qs': 6.9.18
       '@types/range-parser': 1.2.7
       '@types/send': 0.17.4
 
   '@types/express-serve-static-core@5.0.6':
     dependencies:
-      '@types/node': 20.17.19
+      '@types/node': 22.13.4
       '@types/qs': 6.9.18
       '@types/range-parser': 1.2.7
       '@types/send': 0.17.4
@@ -17614,7 +17619,7 @@ snapshots:
 
   '@types/graceful-fs@4.1.9':
     dependencies:
-      '@types/node': 20.17.19
+      '@types/node': 22.13.4
 
   '@types/gtag.js@0.0.12': {}
 
@@ -17637,7 +17642,7 @@ snapshots:
 
   '@types/http-proxy@1.17.16':
     dependencies:
-      '@types/node': 20.17.19
+      '@types/node': 22.13.4
 
   '@types/inquirer@9.0.7':
     dependencies:
@@ -17661,7 +17666,7 @@ snapshots:
 
   '@types/jsdom@20.0.1':
     dependencies:
-      '@types/node': 20.17.19
+      '@types/node': 22.13.4
       '@types/tough-cookie': 4.0.5
       parse5: 7.2.1
 
@@ -17687,13 +17692,13 @@ snapshots:
 
   '@types/morgan@1.9.9':
     dependencies:
-      '@types/node': 20.17.19
+      '@types/node': 22.13.4
 
   '@types/ms@2.1.0': {}
 
   '@types/node-forge@1.3.11':
     dependencies:
-      '@types/node': 20.17.19
+      '@types/node': 22.13.4
 
   '@types/node@12.20.55': {}
 
@@ -17731,19 +17736,19 @@ snapshots:
   '@types/react-router-config@5.0.11':
     dependencies:
       '@types/history': 4.7.11
-      '@types/react': 18.3.18
+      '@types/react': 19.0.10
       '@types/react-router': 5.1.20
 
   '@types/react-router-dom@5.3.3':
     dependencies:
       '@types/history': 4.7.11
-      '@types/react': 18.3.18
+      '@types/react': 19.0.10
       '@types/react-router': 5.1.20
 
   '@types/react-router@5.1.20':
     dependencies:
       '@types/history': 4.7.11
-      '@types/react': 18.3.18
+      '@types/react': 19.0.10
 
   '@types/react@18.3.18':
     dependencies:
@@ -17764,14 +17769,14 @@ snapshots:
 
   '@types/sax@1.2.7':
     dependencies:
-      '@types/node': 20.17.19
+      '@types/node': 17.0.45
 
   '@types/semver@7.5.8': {}
 
   '@types/send@0.17.4':
     dependencies:
       '@types/mime': 1.3.5
-      '@types/node': 20.17.19
+      '@types/node': 22.13.4
 
   '@types/serve-index@1.9.4':
     dependencies:
@@ -17780,7 +17785,7 @@ snapshots:
   '@types/serve-static@1.15.7':
     dependencies:
       '@types/http-errors': 2.0.4
-      '@types/node': 20.17.19
+      '@types/node': 22.13.4
       '@types/send': 0.17.4
 
   '@types/sinonjs__fake-timers@8.1.1': {}
@@ -17789,13 +17794,13 @@ snapshots:
 
   '@types/sockjs@0.3.36':
     dependencies:
-      '@types/node': 20.17.19
+      '@types/node': 22.13.4
 
   '@types/stack-utils@2.0.3': {}
 
   '@types/swagger-ui-express@4.1.7':
     dependencies:
-      '@types/express': 4.17.21
+      '@types/express': 5.0.0
       '@types/serve-static': 1.15.7
 
   '@types/testing-library__jest-dom@5.14.9':
@@ -17804,7 +17809,7 @@ snapshots:
 
   '@types/through@0.0.33':
     dependencies:
-      '@types/node': 20.17.19
+      '@types/node': 22.13.4
 
   '@types/tough-cookie@4.0.5': {}
 
@@ -17824,7 +17829,7 @@ snapshots:
 
   '@types/webpack-bundle-analyzer@4.7.0(@swc/core@1.10.18(@swc/helpers@0.5.5))':
     dependencies:
-      '@types/node': 20.17.19
+      '@types/node': 22.13.4
       tapable: 2.2.1
       webpack: 5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5))
     transitivePeerDependencies:
@@ -17833,16 +17838,13 @@ snapshots:
       - uglify-js
       - webpack-cli
 
-  '@types/workbox-build@5.1.0(@types/babel__core@7.20.5)':
+  '@types/workbox-build@5.1.0':
     dependencies:
-      workbox-build: 7.3.0(@types/babel__core@7.20.5)
-    transitivePeerDependencies:
-      - '@types/babel__core'
-      - supports-color
+      workbox-build: 4.3.1
 
   '@types/ws@8.5.14':
     dependencies:
-      '@types/node': 20.17.19
+      '@types/node': 22.13.4
 
   '@types/yargs-parser@21.0.3': {}
 
@@ -17852,7 +17854,7 @@ snapshots:
 
   '@types/yauzl@2.10.3':
     dependencies:
-      '@types/node': 20.17.19
+      '@types/node': 22.13.4
     optional: true
 
   '@typescript-eslint/eslint-plugin@5.62.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3)':
@@ -19285,31 +19287,6 @@ snapshots:
     optionalDependencies:
       typescript: 5.7.3
 
-  create-gasket-app@7.2.2:
-    dependencies:
-      '@gasket/core': 7.2.2
-      '@gasket/plugin-command': 7.2.2
-      '@gasket/plugin-docs': 7.2.2
-      '@gasket/plugin-docusaurus': 7.2.2(@gasket/plugin-logger@7.2.2)
-      '@gasket/plugin-dynamic-plugins': 7.2.2
-      '@gasket/plugin-git': 7.2.2
-      '@gasket/plugin-logger': 7.2.2
-      '@gasket/plugin-metadata': 7.2.2
-      '@gasket/request': 7.2.0
-      '@gasket/utils': 7.2.2
-      commander: 12.1.0
-      deepmerge: 4.3.1
-      diagnostics: 2.0.2
-      glob: 8.1.0
-      handlebars: 4.7.8
-      inquirer: 6.5.2
-      json5: 2.2.3
-      mkdirp: 1.0.4
-      ora: 3.4.0
-      semver: 7.7.1
-    transitivePeerDependencies:
-      - supports-color
-
   create-jest@29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@20.17.19)(typescript@5.7.3)):
     dependencies:
       '@jest/types': 29.6.3
@@ -20469,17 +20446,6 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-plugin-jest@28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@20.17.19)(typescript@5.7.3)))(typescript@5.7.3):
-    dependencies:
-      '@typescript-eslint/utils': 8.24.1(eslint@8.57.1)(typescript@5.7.3)
-      eslint: 8.57.1
-    optionalDependencies:
-      '@typescript-eslint/eslint-plugin': 6.21.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3)
-      jest: 29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@20.17.19)(typescript@5.7.3))
-    transitivePeerDependencies:
-      - supports-color
-      - typescript
-
   eslint-plugin-jest@28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)))(typescript@5.7.3):
     dependencies:
       '@typescript-eslint/utils': 8.24.1(eslint@8.57.1)(typescript@5.7.3)
@@ -20770,7 +20736,7 @@ snapshots:
 
   eval@0.1.8:
     dependencies:
-      '@types/node': 20.17.19
+      '@types/node': 22.13.4
       require-like: 0.1.2
 
   event-stream@3.3.4:
@@ -22204,7 +22170,7 @@ snapshots:
       '@jest/expect': 29.7.0
       '@jest/test-result': 29.7.0
       '@jest/types': 29.6.3
-      '@types/node': 20.17.19
+      '@types/node': 22.13.4
       chalk: 4.1.2
       co: 4.6.0
       dedent: 1.5.3
@@ -22293,7 +22259,7 @@ snapshots:
       - babel-plugin-macros
       - supports-color
 
-  jest-config@29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)):
+  jest-config@29.7.0(@types/node@22.13.4)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@20.17.19)(typescript@5.7.3)):
     dependencies:
       '@babel/core': 7.26.9
       '@jest/test-sequencer': 29.7.0
@@ -22318,8 +22284,8 @@ snapshots:
       slash: 3.0.0
       strip-json-comments: 3.1.1
     optionalDependencies:
-      '@types/node': 20.17.19
-      ts-node: 10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@22.13.4)(typescript@5.7.3)
+      '@types/node': 22.13.4
+      ts-node: 10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@20.17.19)(typescript@5.7.3)
     transitivePeerDependencies:
       - babel-plugin-macros
       - supports-color
@@ -22380,7 +22346,7 @@ snapshots:
       '@jest/fake-timers': 29.7.0
       '@jest/types': 29.6.3
       '@types/jsdom': 20.0.1
-      '@types/node': 20.17.19
+      '@types/node': 22.13.4
       jest-mock: 29.7.0
       jest-util: 29.7.0
       jsdom: 20.0.3
@@ -22394,7 +22360,7 @@ snapshots:
       '@jest/environment': 29.7.0
       '@jest/fake-timers': 29.7.0
       '@jest/types': 29.6.3
-      '@types/node': 20.17.19
+      '@types/node': 22.13.4
       jest-mock: 29.7.0
       jest-util: 29.7.0
 
@@ -22404,7 +22370,7 @@ snapshots:
     dependencies:
       '@jest/types': 29.6.3
       '@types/graceful-fs': 4.1.9
-      '@types/node': 20.17.19
+      '@types/node': 22.13.4
       anymatch: 3.1.3
       fb-watchman: 2.0.2
       graceful-fs: 4.2.11
@@ -22478,7 +22444,7 @@ snapshots:
       '@jest/test-result': 29.7.0
       '@jest/transform': 29.7.0
       '@jest/types': 29.6.3
-      '@types/node': 20.17.19
+      '@types/node': 22.13.4
       chalk: 4.1.2
       emittery: 0.13.1
       graceful-fs: 4.2.11
@@ -22506,7 +22472,7 @@ snapshots:
       '@jest/test-result': 29.7.0
       '@jest/transform': 29.7.0
       '@jest/types': 29.6.3
-      '@types/node': 20.17.19
+      '@types/node': 22.13.4
       chalk: 4.1.2
       cjs-module-lexer: 1.4.3
       collect-v8-coverage: 1.0.2
@@ -22552,7 +22518,7 @@ snapshots:
   jest-util@29.7.0:
     dependencies:
       '@jest/types': 29.6.3
-      '@types/node': 20.17.19
+      '@types/node': 22.13.4
       chalk: 4.1.2
       ci-info: 3.9.0
       graceful-fs: 4.2.11
@@ -22571,7 +22537,7 @@ snapshots:
     dependencies:
       '@jest/test-result': 29.7.0
       '@jest/types': 29.6.3
-      '@types/node': 20.17.19
+      '@types/node': 22.13.4
       ansi-escapes: 4.3.2
       chalk: 4.1.2
       emittery: 0.13.1
@@ -22580,13 +22546,13 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 20.17.19
+      '@types/node': 22.13.4
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
   jest-worker@29.7.0:
     dependencies:
-      '@types/node': 20.17.19
+      '@types/node': 22.13.4
       jest-util: 29.7.0
       merge-stream: 2.0.0
       supports-color: 8.1.1
@@ -23998,7 +23964,7 @@ snapshots:
       bl: 4.1.0
       chalk: 4.1.2
       cli-cursor: 3.1.0
-      cli-spinners: 2.9.2
+      cli-spinners: 2.6.1
       is-interactive: 1.0.0
       log-symbols: 4.1.0
       strip-ansi: 6.0.1

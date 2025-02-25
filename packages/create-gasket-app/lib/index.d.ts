@@ -1,4 +1,4 @@
-import type { GasketConfigDefinition, MaybeAsync, Plugin, GasketEngine, GasketActions } from '@gasket/core';
+import type { GasketConfigDefinition, MaybeAsync, Plugin, GasketEngine } from '@gasket/core';
 import type { PackageManager } from '@gasket/utils';
 import type { PromptModule } from 'inquirer';
 import type ora from 'ora';

@@ -13,7 +13,7 @@ import type {
   FastifyBaseLogger,
   RawServerDefault
 } from 'fastify';
-import type { Gasket, Plugin } from '@gasket/core';
+import type { Gasket, Plugin, MaybeMultiple, Handler } from '@gasket/core';
 
 /** Type alias for Fastify application with HTTP/2 support */
 type FastifyApp<

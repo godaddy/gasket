@@ -1,12 +1,12 @@
 import { isBrowser, LocaleFileStatus } from './constants.js';
 import { LocaleHandler } from './locale-handler.js';
 
-/** @type {import('@gasket/intl').LocaleHandler} */
+/** @type {import('.').LocaleHandler} */
 let _browserSingletonHandler;
 
 /**
  * Utility class for loading locale files
- * @type {import('@gasket/intl').IntlManager}
+ * @type {import('.').IntlManager}
  */
 export class IntlManager {
   /** @type {import('./types').MessagesRegister } */
@@ -125,7 +125,7 @@ export class IntlManager {
 
   /** @type {import('./types').IntlManager_handleLocale } */
   handleLocale(locale) {
-    /** @type {import('@gasket/intl').IntlManager } */
+    /** @type {import('.').IntlManager } */
     // @ts-ignore - tsc confused with imports
     const manager = this;
 

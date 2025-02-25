@@ -3,7 +3,6 @@
   "private": true,
   "version": "0.0.0",
   "description": "Robust, pluggable, & render agnostic framework for rapid delivery of modern web applications.",
-  "description": "Robust, pluggable, & render agnostic framework for rapid delivery of modern web applications.",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "lint": "eslint scripts",

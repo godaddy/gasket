@@ -22,7 +22,7 @@ module.exports = async function middlewareHook(gasket) {
   /**
    * Middleware to attach the redux store to the req object for use in other
    * middleware
-   * @type {import('@gasket/plugin-redux').reduxMiddleware}
+   * @type {import('.').reduxMiddleware}
    */
   return async function middleware(req, res, next) {
     const context = { req, res };

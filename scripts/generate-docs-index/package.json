@@ -9,11 +9,11 @@
     "lint:fix": "pnpm run lint --fix"
   },
   "dependencies": {
-    "@gasket/core": "^7.2.2"
+    "@gasket/core": "workspace:^"
   },
   "devDependencies": {
-    "eslint": "^8.56.0",
-    "eslint-plugin-unicorn": "^44.0.0"
+    "eslint": "^8.57.1",
+    "eslint-plugin-unicorn": "^44.0.2"
   },
   "eslintConfig": {
     "extends": [

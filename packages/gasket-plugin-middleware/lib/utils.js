@@ -1,5 +1,6 @@
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
+// @ts-ignore
 const diagnostics = require('diagnostics');
 
 const debug = diagnostics('gasket:middleware');
@@ -43,8 +44,10 @@ function applyMiddlewareConfig(middleware, plugin, middlewareConfig, middlewareP
   const configEntry = middlewareConfig.find(mw => mw.plugin === pluginName);
 
   if (configEntry) {
+    // @ts-ignore
     middleware.paths = configEntry.paths;
     if (middlewarePattern) {
+      // @ts-ignore
       middleware.paths.push(middlewarePattern);
     }
   }
@@ -55,6 +58,7 @@ function applyMiddlewareConfig(middleware, plugin, middlewareConfig, middlewareP
  *  @type {import('./internal').applyMiddlewaresToApp}
  */
 function applyMiddlewaresToApp(app, middlewares, middlewarePattern) {
+  // @ts-ignore
   middlewares.forEach(async (layer) => {
     const { paths } = layer;
     if (paths) {
