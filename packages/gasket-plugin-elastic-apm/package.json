@@ -42,6 +42,7 @@
   "devDependencies": {
     "@gasket/core": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",
+    "@types/jest": "^29.5.14",
     "create-gasket-app": "workspace:^",
     "cross-env": "^7.0.3",
     "dotenv": "^16.4.7",

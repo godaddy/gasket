@@ -42,6 +42,7 @@
     "@gasket/plugin-middleware": "workspace:^",
     "@gasket/plugin-webpack": "workspace:^",
     "@gasket/redux": "workspace:^",
+    "@types/jest": "^29.5.14",
     "acorn": "^8.14.0",
     "create-gasket-app": "workspace:^",
     "cross-env": "^7.0.3",

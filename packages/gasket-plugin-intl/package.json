@@ -55,6 +55,7 @@
     "@gasket/plugin-nextjs": "workspace:^",
     "@gasket/plugin-service-worker": "workspace:^",
     "@gasket/react-intl": "workspace:^",
+    "@types/jest": "^29.5.14",
     "create-gasket-app": "workspace:^",
     "cross-env": "^7.0.3",
     "eslint": "^8.57.1",

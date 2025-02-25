@@ -58,6 +58,7 @@
     "@gasket/plugin-nextjs": "workspace:^",
     "@gasket/plugin-service-worker": "workspace:^",
     "@gasket/plugin-workbox": "workspace:^",
+    "@types/jest": "^29.5.14",
     "@types/react": "^18.3.18",
     "babel-eslint": "^10.1.0",
     "create-gasket-app": "workspace:^",

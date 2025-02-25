@@ -45,6 +45,7 @@
   },
   "devDependencies": {
     "@testing-library/react": "^13.4.0",
+    "@types/jest": "^29.5.14",
     "cross-env": "^7.0.3",
     "eslint": "^8.57.1",
     "eslint-config-godaddy-react": "^9.1.0",

@@ -37,6 +37,7 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-intl",
   "devDependencies": {
     "@jest/globals": "^29.7.0",
+    "@types/jest": "^29.5.14",
     "cross-env": "^7.0.3",
     "eslint": "^8.57.1",
     "eslint-config-godaddy": "^7.1.1",

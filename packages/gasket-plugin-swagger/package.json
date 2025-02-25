@@ -52,6 +52,7 @@
     "@gasket/core": "workspace:^",
     "@gasket/plugin-command": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",
+    "@types/jest": "^29.5.14",
     "create-gasket-app": "workspace:^",
     "cross-env": "^7.0.3",
     "eslint": "^8.57.1",
