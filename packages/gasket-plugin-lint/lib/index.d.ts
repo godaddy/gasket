@@ -26,7 +26,6 @@ declare module 'create-gasket-app' {
     eslintConfig?: string;
     stylelintConfig?: string;
     addStylelint?: boolean;
-    typescript?: boolean;
   }
 
   export interface PackageJson {

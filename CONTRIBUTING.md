@@ -125,7 +125,7 @@ reserved for [How it works] section below and/or extended files in `docs/`. -->
 
 ## Installation
 
-Show `npm i` steps, and/or mention use with the create command.
+Show `pnpm install` steps, and/or mention use with the create command.
 
 ## Configuration
 

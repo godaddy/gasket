@@ -23,11 +23,11 @@ npx create-gasket-app test-app --presets=gasket-preset-example@file:/absolute/pa
 
 ## Testing plugin changes locally
 
-Two options for testing your plugin locally are to point a local app's dependencies a the local plugin or to use `npm link`.
+Two options for testing your plugin locally are to point a local app's dependencies a the local plugin or to use `pnpm link`.
 
 ### Point dependencies to local plugin
 
-To test a Gasket plugin locally, you can modify the plugin dependency in a local Gasket app’s `package.json` to point to the absolute path of the local plugin you want to test. After updating the path, run `npm install` to refresh the `node_modules` directory with the local version.
+To test a Gasket plugin locally, you can modify the plugin dependency in a local Gasket app’s `package.json` to point to the absolute path of the local plugin you want to test. After updating the path, run `pnpm install` to refresh the `node_modules` directory with the local version.
 
 ```diff
 // package.json
@@ -39,22 +39,21 @@ To test a Gasket plugin locally, you can modify the plugin dependency in a local
 }
 ```
 
-### Use npm link
+### Use pnpm link
 
-To test a plugin locally, you can link your plugin to your app using the `npm link` command. This will create a symbolic link between your plugin and your app, allowing you to test your plugin locally.
+To test a plugin locally, you can link your plugin to your app using the `pnpm link` command. This will create a symbolic link between your plugin and your app, allowing you to test your plugin locally.
 
 ```sh
 cd path/to/gasket/packages/gasket-plugin-example
-npm link
+pnpm link
 
 cd path/to/app
-npm link @gasket/plugin-example
+pnpm link @gasket/plugin-example
 ```
 
 ## Gotchas for testing presets locally
 
 When testing a preset locally, you might encounter an issue where the local version of a plugin in your preset isn't being used. This occurs because the preset specifies a specific version of the plugin. To resolve this, modify the plugin, as described in the [Testing plugin changes locally] section, to point to the local version instead of the version specified by the preset.
-
 
 [testing plugin changes locally]: #testing-plugin-changes-locally
 [local paths]: https://docs.npmjs.com/cli/v10/configuring-npm/package-json#local-paths
