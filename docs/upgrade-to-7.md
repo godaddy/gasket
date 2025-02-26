@@ -22,6 +22,7 @@ This guide will take you through updating `@gasket/*` packages to `7.x`.
   - [Update ElasticAPM Start](#update-elasticapm-start)
   - [Switch to GasketData](#switch-to-gasketdata)
   - [Switch Redux to GasketData](#switch-redux-to-gasketdata)
+    - [Initialize Redux with GasketData](#initialize-redux-with-gasketdata)  
   - [Switch to @gasket/plugin-logger](#switch-to-gasketplugin-logger)
   - [Update Intl](#update-intl)
     - [Bring your Own Intl Provider](#bring-your-own-intl-provider)
@@ -443,12 +444,49 @@ browser, we recommend switch to GasketData, using the [@gasket/plugin-data]
 plugin with [@gasket/data] instead. The GasketData approach is leaner and works
 with the Next.js App Router and Page Router using its built-in server.
 
-`@gasket/plugin-redux` is not supported for Next.js built-in server apps.
+### Initialize Redux with GasketData
 
-If you have other reasons to stick with Redux, you can still use it Next.js Page
-Router using a custom server. However, you will need to change the store
-property from `config` -> `gasketData`, corresponding with the other guidance in
-the [Switch to GasketData] section.
+`@gasket/plugin-redux` is deprecated and is not supported for apps using
+the Next.js built-in server.
+However, if you have other reasons to stick with Redux, you can make public
+GasketData available in Redux state in your Next.js app
+using `getInitialAppProps` from [next-redux-wrapper].
+
+With your Redux store set up in a store file, you can use the
+`getInitialAppProps` method in your `_app.js` to load public GasketData and
+dispatch it to the Redux store.
+
+```js
+import React from 'react';
+import { Provider as ReduxProvider } from 'react-redux';
+import { wrapper } from '../store.js';
+
+function MyApp({ Component, ...rest }) {
+  const { store, props } = wrapper.useWrappedStore(rest);
+  return (
+    <ReduxProvider store={ store }>
+      <Component { ...props.pageProps } />
+    </ReduxProvider>
+  );
+};
+
+MyApp.getInitialProps = wrapper.getInitialAppProps(store => async context => {
+  const publicGasketData = await gasket.actions.getPublicGasketData(context.ctx.req);
+  await store.dispatch({
+    type: 'LOAD_GASKET_DATA',
+    payload: publicGasketData
+  });
+
+  return {
+    // any initial app props here
+  };
+});
+
+export default MyApp;
+```
+
+You will need a reducer to handle the `LOAD_GASKET_DATA` action, and set the
+payload to the Redux state as `gasketData` or a property name of your choice.
 
 ![alt text](images/redux-with-gasket-data.png)
 
@@ -933,6 +971,7 @@ register('@gasket/plugin-mocha/node-loader-babel', pathToFileURL('./test'));
 [App Router]: https://nextjs.org/docs/app/building-your-application/routing
 [Next.js 14]: https://nextjs.org/docs/pages/building-your-application/upgrading/version-14
 [Next.js 13]: https://nextjs.org/docs/pages/building-your-application/upgrading/version-13
+[next-redux-wrapper]: https://github.com/kirill-konshin/next-redux-wrapper#app
 
 <!-- Packages -->
 [@gasket/plugin-command]: ../packages/gasket-plugin-command/README.md
