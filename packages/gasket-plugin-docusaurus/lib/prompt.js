@@ -1,3 +1,5 @@
+/// <reference types="@gasket/plugin-docs" />
+
 /** @type {import('@gasket/core').HookHandler<'prompt'>} */
 module.exports = async function promptHook(gasket, context, { prompt }) {
   if (context.useDocs === false) return context;

@@ -33,7 +33,6 @@ declare module 'create-gasket-app' {
   export interface CreateContext {
     apiApp?: boolean;
     addApiRoutes?: boolean;
-    typescript?: boolean;
   }
 }
 

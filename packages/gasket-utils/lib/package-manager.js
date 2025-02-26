@@ -6,7 +6,7 @@ const runShellCommand = require('./run-shell-command');
  */
 class PackageManager {
   /** @param {import('./index').PackageManagerOptions} options -  Options */
-  constructor({ packageManager = 'npm', dest }) {
+  constructor({ packageManager = 'pnpm', dest }) {
     this.manager = packageManager;
     this.dest = dest;
   }

@@ -13,7 +13,7 @@ import type {
   FastifyBaseLogger,
   RawServerDefault
 } from 'fastify';
-import type { Gasket } from '@gasket/core';
+import type { Gasket, Plugin, MaybeMultiple, Handler } from '@gasket/core';
 
 /** Type alias for Fastify application with HTTP/2 support */
 type FastifyApp<
@@ -58,13 +58,16 @@ export function applyCompression(
 /**
  * Executes the middleware lifecycle for the application.
  */
-export function executeMiddlewareLifecycle(
+export async function executeMiddlewareLifecycle(
   gasket: Gasket,
   app: ExpressApp | FastifyApp,
   middlewarePattern: RegExp
-): void;
+): Promise<void>;
 
 /**
  * Attaches a log enhancer to the Express Request object.
  */
 export function attachLogEnhancer(req: ExpressRequest): void;
+export function isValidMiddleware(middleware: Function | Function[]): boolean;
+export function applyMiddlewareConfig(middleware: MaybeMultiple<Handler>, plugin: Plugin, middlewareConfig, middlewarePattern: RegExp): void;
+export function applyMiddlewaresToApp(app, middlewares: MaybeMultiple<Handler>, middlewarePattern: RegExp): void;

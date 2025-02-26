@@ -26,8 +26,7 @@ function portInUseError(errors) {
 
 /**
  * Create a https proxy server for local development
- * @param {import('@gasket/core').DevProxyConfig} opts Gasket instance
- * @param {import('@gasket/plugin-logger').Logger} logger Gasket logger
+ * @type {import('.').startProxy}
  */
 function startProxy(opts, logger) {
   const { protocol = 'http', hostname = 'localhost', port = 8080, ...proxyOpts } = opts;

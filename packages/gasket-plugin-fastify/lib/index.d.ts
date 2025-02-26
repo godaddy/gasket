@@ -71,7 +71,6 @@ declare module 'create-gasket-app' {
     /** Flag indicating if API app is enabled */
     apiApp?: boolean;
     addApiRoutes?: boolean;
-    typescript?: boolean;
   }
 }
 
