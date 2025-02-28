@@ -58,7 +58,7 @@
     "semver": "^7.7.1"
   },
   "devDependencies": {
-    "@gasket/request": "7.1.0-next.6",
+    "@gasket/request": "workspace:^",
     "@types/inquirer": "^9.0.7",
     "@types/jest": "^29.5.14",
     "@types/node": "^20.17.19",

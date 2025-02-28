@@ -13,6 +13,7 @@
     "posttest": "pnpm run lint",
     "build": "pnpm run -r build",
     "align-packages": "node ./scripts/align-packages",
+    "changeset": "changeset",
     "clean": "pnpm run clean:packages && pnpm run clean:root",
     "clean:packages": "pnpm -r exec rimraf dist node_modules",
     "clean:root": "rimraf node_modules",
