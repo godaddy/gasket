@@ -217,9 +217,10 @@ export class ConfigBuilder {
     }
   }
 
-  /** Remove a key from fields
+  /**
+   * Remove a key from fields
    * @param {string[]} path - Array of strings representing the path to the field to remove
-  */
+   */
   remove(path) {
     if (!Array.isArray(path) || path.length === 0) {
       throw new Error('Path must be a non-empty array of strings');
