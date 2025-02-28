@@ -40,9 +40,8 @@ declare module 'create-gasket-app' {
   }
 }
 
-const plugin: Plugin = {
-  name: '@gasket/plugin-data',
-  hooks: {}
-};
 
-export = plugin;
+declare module '@gasket/plugin-data' {
+  const plugin: Plugin;
+  export default plugin;
+}

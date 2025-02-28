@@ -74,9 +74,6 @@ declare module 'create-gasket-app' {
   }
 }
 
-const plugin: Plugin = {
-  name: '@gasket/plugin-fastify',
-  hooks: {}
-};
+declare const plugin: Plugin;
 
-export = plugin;
+export default plugin;

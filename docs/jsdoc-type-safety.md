@@ -50,7 +50,7 @@ pnpm add -D typescript
     "allowJs": true,
     "checkJs": true,
     "noEmit": true,
-    "skipLibCheck": true,
+    "skipLibCheck": false,
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "lib": ["esnext", "dom"],

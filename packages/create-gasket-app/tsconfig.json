@@ -3,11 +3,11 @@
     "allowJs": true,
     "checkJs": true,
     "noEmit": true,
-    "skipLibCheck": true,
+    "skipLibCheck": false,
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "moduleResolution": "bundler",
-    "module": "esnext",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "lib": [
       "esnext",
       "dom"

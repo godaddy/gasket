@@ -1,6 +1,7 @@
 import type { Store, Reducer, Middleware } from 'redux';
 import type { IncomingMessage, OutgoingMessage } from 'http';
 import type { ThunkMiddleware } from 'redux-thunk';
+import type { Logger } from '@gasket/plugin-logger';
 
 declare module 'http' {
   interface IncomingMessage {
@@ -27,7 +28,7 @@ export type MakeStoreFn = {
 
 export interface ConfigureMakeStoreOptions {
   /** Map of identifiers and reducers */
-  reducers?: Object<string, Reducer>;
+  reducers?: Record<string, Reducer>;
   /** Entry reducer to run before combined reducers */
   rootReducer?: Reducer;
   initialState?: {
@@ -75,7 +76,7 @@ export function getOrCreateStore(
  * placeholders.
  */
 export function placeholderReducers(
-  reducers?: Object<string, Reducer>,
+  reducers?: Record<string, Reducer>,
   /** State to preload store with */
-  preloadedState?: Object<string, any>
-): Object<string, Reducer>;
+  preloadedState?: Record<string, any>
+): Record<string, Reducer>;

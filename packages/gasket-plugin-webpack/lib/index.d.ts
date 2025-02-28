@@ -30,9 +30,8 @@ declare module '@gasket/core' {
   }
 }
 
-const plugin: Plugin = {
-  name: '@gasket/plugin-webpack',
-  hooks: {}
-};
 
-export = plugin;
+declare module '@gasket/plugin-webpack' {
+  const plugin: Plugin;
+  export default plugin;
+}

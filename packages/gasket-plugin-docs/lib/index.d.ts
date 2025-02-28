@@ -36,9 +36,8 @@ declare module '@gasket/plugin-metadata' {
   }
 }
 
-const plugin: Plugin = {
-  name: '@gasket/plugin-docs',
-  hooks: {}
-};
 
-export = plugin;
+declare module '@gasket/plugin-docs' {
+  const plugin: Plugin;
+  export default plugin;
+}

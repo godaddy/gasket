@@ -1,5 +1,5 @@
 import type { IncomingMessage, OutgoingMessage } from 'http';
-import type { PartialRecursive, MaybeAsync } from '@gasket/core';
+import type { PartialRecursive, MaybeAsync, Plugin } from '@gasket/core';
 import type { GenerateSWConfig } from 'workbox-build';
 import type { Request, Response } from 'express';
 
@@ -29,9 +29,6 @@ declare module '@gasket/core' {
   }
 }
 
-export = {
-  name: '@gasket/plugin-workbox',
-  version: '',
-  description: '',
-  hooks: {}
-};
+declare const plugin: Plugin;
+
+export default plugin;

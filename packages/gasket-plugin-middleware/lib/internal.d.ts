@@ -58,7 +58,7 @@ export function applyCompression(
 /**
  * Executes the middleware lifecycle for the application.
  */
-export async function executeMiddlewareLifecycle(
+export function executeMiddlewareLifecycle(
   gasket: Gasket,
   app: ExpressApp | FastifyApp,
   middlewarePattern: RegExp

@@ -60,9 +60,8 @@ declare module 'create-gasket-app' {
   }
 }
 
-const plugin: Plugin = {
-  name: '@gasket/plugin-intl',
-  hooks: {}
-};
 
-export = plugin;
+declare module '@gasket/plugin-intl' {
+  const plugin: Plugin;
+  export default plugin;
+}

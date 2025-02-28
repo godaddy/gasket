@@ -78,15 +78,12 @@ declare module '@gasket/core' {
   }
 }
 
-export async function reduxMiddleware(
+export function reduxMiddleware(
   req: IncomingMessage,
   res: OutgoingMessage,
   next: (err?: any) => void
 ): Promise<void>;
 
-const plugin: Plugin = {
-  name: '@gasket/plugin-redux',
-  hooks: {}
-};
+declare const plugin: Plugin;
 
-export = plugin;
+export default plugin;

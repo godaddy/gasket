@@ -62,6 +62,7 @@
     "@gasket/plugin-nextjs": "workspace:^",
     "@gasket/plugin-service-worker": "workspace:^",
     "@gasket/plugin-workbox": "workspace:^",
+    "@gasket/request": "workspace:^",
     "@types/jest": "^29.5.14",
     "@types/node": "^20.17.19",
     "@types/react": "^18.3.18",

@@ -370,7 +370,7 @@ interface Files {
   toOrderedKeys(obj: object, orderBy?: string[]): object;
 }
 
-export class Readme {
+export interface Readme {
   /** Markdown content to be injected into the app readme */
   markdown: string[];
 
@@ -507,7 +507,7 @@ export interface CreateContext {
   readme: Readme;
 
   constructor(initContext?: Partial<CreateContext>);
-  runWith(plugin: Plugin): Proxy<CreateContext>;
+  runWith(plugin: Plugin): typeof Proxy<CreateContext>;
   /** Flag indicating if typescript is enabled */
   typescript?: boolean;
   /** Flag indicating if API app is enabled */

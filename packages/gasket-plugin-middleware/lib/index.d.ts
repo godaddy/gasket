@@ -27,9 +27,7 @@ declare module '@gasket/core' {
   }
 }
 
-const plugin: Plugin = {
-  name: '@gasket/plugin-middleware',
-  hooks: {}
-};
-
-export = plugin;
+declare module '@gasket/plugin-middleware' {
+  const plugin: Plugin;
+  export default plugin;
+}

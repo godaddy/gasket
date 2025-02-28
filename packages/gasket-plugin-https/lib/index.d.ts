@@ -7,7 +7,7 @@ import type { ServerOptions as ProxyServerOptions } from 'http-proxy';
 import type { TerminusOptions, HealthCheckError } from '@godaddy/terminus';
 import type { Logger } from '@gasket/plugin-logger';
 
-type RequireAtLeastOne<T, Keys extends keyof T = keyof T> =
+export type RequireAtLeastOne<T, Keys extends keyof T = keyof T> =
   Pick<T, Exclude<keyof T, Keys>>
   & {
     [K in Keys]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<Keys, K>>>
@@ -109,9 +109,6 @@ declare module '@gasket/core' {
   }
 }
 
-const plugin: Plugin = {
-  name: '@gasket/plugin-https',
-  hooks: {}
-};
+declare const plugin: Plugin;
 
-export = plugin;
+export default plugin;

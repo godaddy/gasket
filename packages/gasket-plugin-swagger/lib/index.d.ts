@@ -53,15 +53,14 @@ declare module 'create-gasket-app' {
   }
 }
 
-const plugin: Plugin = {
-  name: '@gasket/plugin-swagger',
-  hooks: {}
-};
-
-export = plugin;
-
 /* Externalize Swagger prompts for preset */
-export async function promptSwagger(
+export function promptSwagger(
   context: CreateContext,
   prompt: CreatePrompt
 ): Promise<CreateContext>
+
+
+declare module '@gasket/plugin-swagger' {
+  const plugin: Plugin;
+  export default plugin;
+}

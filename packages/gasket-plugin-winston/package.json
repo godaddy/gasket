@@ -58,9 +58,6 @@
     "triple-beam": "^1.4.1",
     "typescript": "^5.7.3"
   },
-  "peerDependencies": {
-    "@gasket/plugin-logger": "^7.1"
-  },
   "eslintConfig": {
     "extends": [
       "godaddy",
