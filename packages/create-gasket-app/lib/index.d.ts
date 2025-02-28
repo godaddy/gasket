@@ -127,9 +127,10 @@ export interface ConfigBuilder<Config> {
   ): void;
   add(key: string, value: object, options?: object): void;
 
-  /** Remove a key from fields
+  /**
+   * Remove a key from fields
    * @param {string[]} path - Array of strings representing the path to the field to remove
-  */
+   */
   remove(path: string[]): void;
 
   /**
