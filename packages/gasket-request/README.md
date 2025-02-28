@@ -45,7 +45,7 @@ export default async function expressHandler(req, res) {
 You can also assemble a `GasketRequest` object from parts of a request object.
 
 ```js
-import { GasketRequest } from '@gasket/request';
+import { makeGasketRequest } from '@gasket/request';
 
 const headers = {
   'x-example': 'example'
