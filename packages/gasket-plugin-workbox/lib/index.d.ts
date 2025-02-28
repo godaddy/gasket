@@ -17,7 +17,7 @@ export interface WorkboxConfig {
   /** Any initial workbox config options which will be merged with those
    * from any workbox lifecycle hooks. */
   config?: PartialRecursive<GenerateSWConfig>;
-  libraryVersion: string;
+  libraryVersion?: string;
 }
 
 declare module '@gasket/core' {
