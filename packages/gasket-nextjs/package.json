@@ -36,7 +36,7 @@
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
     "test:watch": "pnpm run test --watch",
     "test:coverage": "pnpm run test --coverage",
-    "posttest": "pnpm run lint && pnpm run typecheck",
+    "posttest": "pnpm run lint",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },

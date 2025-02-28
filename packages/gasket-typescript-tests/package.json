@@ -57,6 +57,7 @@
     "@gasket/plugin-https": "workspace:^",
     "@gasket/plugin-intl": "workspace:^",
     "@gasket/plugin-jest": "workspace:^",
+    "@gasket/plugin-lint": "workspace:^",
     "@gasket/plugin-logger": "workspace:^",
     "@gasket/plugin-manifest": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",

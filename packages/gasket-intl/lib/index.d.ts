@@ -13,6 +13,5 @@ export {
   IntlManager,
   LocaleHandler,
   LocaleManifest,
-  LocaleManifestConfig,
-  Messages
+  LocaleManifestConfig
 } from './types';

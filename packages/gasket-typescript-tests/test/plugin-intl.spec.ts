@@ -1,4 +1,3 @@
-import type { IncomingMessage, OutgoingMessage } from 'http';
 import type { Gasket, GasketConfigDefinition, Hook } from '@gasket/core';
 import type { GasketRequest } from '@gasket/request';
 import '@gasket/plugin-intl';
@@ -16,6 +15,8 @@ describe('@gasket/plugin-intl', () => {
         }
       }
     };
+
+    expect(config.intl).toHaveProperty('defaultLocale', 'fr-FR');
   });
 
   it('validated expected props', () => {
@@ -26,6 +27,8 @@ describe('@gasket/plugin-intl', () => {
         modules: true
       }
     };
+
+    expect(config.intl).toHaveProperty('modules', true);
   });
 
   it('module configurations', () => {
@@ -61,7 +64,7 @@ describe('@gasket/plugin-intl', () => {
 
     const badConfig: GasketConfigDefinition = {
       intl: {
-        // @ts-expect-error
+        // @ts-expect-error - modules must not be a number
         modules: 12345
       }
     };
@@ -71,14 +74,16 @@ describe('@gasket/plugin-intl', () => {
     const hook: Hook<'intlLocale'> = (
       gasket: Gasket,
       locale: string,
-      { req }: { req: GasketRequest }
+      { req: GasketRequest }
     ) => {
       return 'fr-FR';
     };
+
+    expect(hook).toBeInstanceOf(Function);
   });
 
   it('validates intlLocale return types', async () => {
-    // @ts-expect-error
+    // @ts-expect-error - must return a string
     const hook: Hook<'intlLocale'> = (
       gasket: Gasket,
       locale: string,

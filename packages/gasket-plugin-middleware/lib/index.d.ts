@@ -15,7 +15,7 @@ declare module 'express-serve-static-core' {
      * and also, by the 'compiled' version in Next.js
      * @see: https://github.com/vercel/next.js/issues/11669
      */
-    _implicitHeader: () => void;
+    _implicitHeader?: () => void;
   }
 }
 

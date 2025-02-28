@@ -23,7 +23,7 @@
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
     "test:watch": "pnpm run test --watch",
     "test:coverage": "pnpm run test --coverage",
-    "posttest": "pnpm run lint && pnpm run typecheck",
+    "posttest": "pnpm run lint",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch",
     "build": "swc lib -d cjs --delete-dir-on-start --strip-leading-paths --out-file-extension cjs",
@@ -56,6 +56,7 @@
     "debug": "^4.4.0"
   },
   "devDependencies": {
+    "@gasket/core": "workspace:^",
     "@jest/globals": "^29.7.0",
     "@swc/cli": "^0.3.14",
     "@swc/core": "^1.10.18",

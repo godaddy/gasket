@@ -22,7 +22,7 @@ import pluginMocha from '@gasket/plugin-mocha';
 import pluginMorgan from '@gasket/plugin-morgan';
 import pluginNextjs from '@gasket/plugin-nextjs';
 import pluginRedux from '@gasket/plugin-redux';
-import pluginResponseData from '@gasket/plugin-data';
+import pluginData from '@gasket/plugin-data';
 import pluginServiceWorker from '@gasket/plugin-service-worker';
 import pluginSwagger from '@gasket/plugin-swagger';
 import pluginTypescript from '@gasket/plugin-typescript';
@@ -35,6 +35,7 @@ const config: GasketConfigDefinition = {
   plugins: [
     pluginAnalyze,
     pluginCypress,
+    pluginData,
     pluginDocs,
     pluginDocsGraphs,
     pluginDocusaurus,
@@ -54,7 +55,6 @@ const config: GasketConfigDefinition = {
     pluginMorgan,
     pluginNextjs,
     pluginRedux,
-    pluginResponseData,
     pluginServiceWorker,
     pluginSwagger,
     pluginTypescript,

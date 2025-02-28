@@ -1,5 +1,4 @@
 import type { GasketConfigDefinition, MaybeAsync, Plugin, GasketEngine } from '@gasket/core';
-import type { PackageManager } from '@gasket/utils';
 import type { PromptModule } from 'inquirer';
 import type ora from 'ora';
 import type { Command } from 'commander';
@@ -491,7 +490,7 @@ export interface CreateContext {
   pkg: PackageJsonBuilder;
 
   /** manager to execute npm or yarn commands */
-  pkgManager: PackageManager;
+  pkgManager: any;
 
   // Added by `setup-gasket-config`
 

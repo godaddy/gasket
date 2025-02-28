@@ -30,14 +30,7 @@ declare module '@gasket/core' {
   }
 }
 
-declare module '@gasket/plugin-metadata' {
-  export interface DetailData {
-    targetRoot?: string;
-  }
-}
+declare const plugin: Plugin;
 
+export default plugin;
 
-declare module '@gasket/plugin-docs' {
-  const plugin: Plugin;
-  export default plugin;
-}
