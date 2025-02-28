@@ -92,7 +92,7 @@ const createCommand = {
 
 /**
  * createCommand action
- * @type {import('create-gasket-app').createCommandAction}
+ * @type {import('../index').createCommandAction}
  */
 createCommand.action = async function run(appname, options, command) {
   // eslint-disable-next-line no-process-env

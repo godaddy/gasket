@@ -45,6 +45,7 @@
     "@gasket/plugin-metadata": "workspace:^",
     "@gasket/request": "workspace:^",
     "@gasket/utils": "workspace:^",
+    "chalk": "^5.4.1",
     "commander": "^12.1.0",
     "deepmerge": "^4.3.1",
     "diagnostics": "^2.0.2",

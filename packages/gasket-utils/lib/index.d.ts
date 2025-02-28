@@ -96,12 +96,7 @@ export function runShellCommand(
   /** Arguments passed to npm binary through spawn. */
   argv?: string[],
   /** Options passed to npm binary through spawn */
-  options?: {
-    /** AbortControl signal allowing process to be canceled */
-    signal?: Signal;
-    /** Path to the target app (Default: cwd/appName) */
-    cwd?: string;
-  },
+  options?: SpawnOptions,
   /** When present pipes std{out,err} to process.*/
   debug?: boolean
 ): Promise<{ stdout: string }>;

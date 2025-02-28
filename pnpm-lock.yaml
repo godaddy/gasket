@@ -110,6 +110,9 @@ importers:
       '@gasket/utils':
         specifier: workspace:^
         version: link:../gasket-utils
+      chalk:
+        specifier: ^5.4.1
+        version: 5.4.1
       commander:
         specifier: ^12.1.0
         version: 12.1.0
@@ -2058,6 +2061,9 @@ importers:
       '@gasket/request':
         specifier: workspace:^
         version: link:../gasket-request
+      '@types/express':
+        specifier: ^4.17.21
+        version: 4.17.21
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -2518,9 +2524,24 @@ importers:
       '@gasket/core':
         specifier: workspace:^
         version: link:../gasket-core
+      '@gasket/plugin-command':
+        specifier: workspace:^
+        version: link:../gasket-plugin-command
+      '@gasket/plugin-express':
+        specifier: workspace:^
+        version: link:../gasket-plugin-express
+      '@gasket/plugin-fastify':
+        specifier: workspace:^
+        version: link:../gasket-plugin-fastify
+      '@gasket/plugin-logger':
+        specifier: workspace:^
+        version: link:../gasket-plugin-logger
       '@gasket/plugin-metadata':
         specifier: workspace:^
         version: link:../gasket-plugin-metadata
+      '@gasket/plugin-service-worker':
+        specifier: workspace:^
+        version: link:../gasket-plugin-service-worker
       '@types/express':
         specifier: ^4.17.21
         version: 4.17.21

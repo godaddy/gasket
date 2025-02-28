@@ -52,7 +52,7 @@ function isValidVersion(v) {
 /**
  * ConfigBuilder is an extensible data structure for **specifically**
  * managing `package.json` data.
- * @type {import('create-gasket-app').ConfigBuilder}
+ * @type {import('../index').ConfigBuilder}
  */
 export class ConfigBuilder {
   /**

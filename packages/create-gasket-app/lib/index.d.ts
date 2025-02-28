@@ -506,16 +506,12 @@ export interface CreateContext {
   readme: Readme;
 
   constructor(initContext?: Partial<CreateContext>);
-  runWith(plugin: Plugin): typeof Proxy<CreateContext>;
+  runWith(plugin: Plugin): CreateContext;
   /** Flag indicating if typescript is enabled */
   typescript?: boolean;
   /** Flag indicating if API app is enabled */
   apiApp?: boolean;
   addApiRoutes?: boolean;
-}
-
-declare module 'create-gasket-app' {
-  export { CreateContext };
 }
 
 export interface ActionWrapperParams {

@@ -13,7 +13,7 @@ export type PartialRecursive<T> = T extends object
   ? { [K in keyof T]?: PartialRecursive<T[K]> } | undefined
   : T | undefined;
 
-type ConfigDefinition<T = any> = T & {
+export type ConfigDefinition<T = any> = T & {
   environments?: Record<string, PartialRecursive<T>>;
   commands?: Record<string, PartialRecursive<T>>;
 };

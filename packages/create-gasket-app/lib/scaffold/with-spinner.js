@@ -32,7 +32,7 @@ function wrapWithSpinner(label, task, { startSpinner = true } = {}) {
 export function withGasketSpinner(label, task, options) {
   return wrapWithSpinner(label, ({ gasket, context, spinner }) =>
     task({ gasket, context, spinner }),
-  options
+    options
   );
 }
 
@@ -43,6 +43,6 @@ export function withGasketSpinner(label, task, options) {
 export function withSpinner(label, task, options) {
   return wrapWithSpinner(label, ({ context, spinner }) =>
     task({ context, spinner }),
-  options
+    options
   );
 }

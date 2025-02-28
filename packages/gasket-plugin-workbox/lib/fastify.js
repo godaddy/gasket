@@ -1,11 +1,9 @@
+/// <reference types="@gasket/plugin-fastify" />
+
 const serveStatic = require('serve-static');
 const { getOutputDir } = require('./utils');
 
-/**
- * Express lifecycle to set up route for serving workbox libraries
- * @param {Gasket} gasket - Gasket
- * @param {object} app - Fastify app
- */
+/** @type {import('@gasket/core').HookHandler<'fastify'>} */
 module.exports = function fastify(gasket, app) {
   const outputDir = getOutputDir(gasket);
 

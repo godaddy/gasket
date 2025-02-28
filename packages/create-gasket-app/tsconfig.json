@@ -6,8 +6,8 @@
     "skipLibCheck": false,
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "lib": [
       "esnext",
       "dom"

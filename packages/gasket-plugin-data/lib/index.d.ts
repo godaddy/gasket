@@ -1,5 +1,5 @@
 import type { MaybeAsync, Plugin } from '@gasket/core';
-import type { RequestLike, GasketRequest } from '@gasket/request';
+import type { RequestLike, GasketRequest } from '@gasket/request' with { 'resolution-mode': 'import' };
 
 export interface PublicGasketData extends Record<string, any> {
 }
