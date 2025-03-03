@@ -1,23 +1,23 @@
 # `@gasket/plugin-nextjs`
 
-### 7.1.6
+## 7.1.6
 
 - Auto exclude gasket.mjs files from webpack bundle ([#1017])
 
-### 7.1.0
+## 7.1.0
 
 - Add HTTPS proxy server to Next.js dev server ([#982])
 
-### 7.0.5
+## 7.0.5
 
 - Fix typo in dir names ([#948])
 
-### 7.0.4
+## 7.0.4
 
 - Add app type readme links in create ([#946])
 - Make Custom Server default prompt choice
 
-### 7.0.0
+## 7.0.0
 
 - See [Version 7 Upgrade Guide] for overall changes
 - Add gasketData layout for app router ([#814])
@@ -38,135 +38,135 @@
 - Removed support for deprecated `next` config support ([#655])
 - With Redux, generate _app with example `getInitialAppProps` ([#693])
 
-### 6.47.0
+## 6.47.0
 
 - Check if headers sent from lifecycle ([#750])
 
-### 6.46.7
+## 6.46.7
 
 - (fix) Handle malformed URL segments in Elastic APM transaction labeling ([#724])
 - (fix) Omit query parameters when parsing next.js route labels ([#724])
 
-### 6.46.4
+## 6.46.4
 
 - Adjust JSDocs and TS types ([#695])
 
-### 6.46.1
+## 6.46.1
 
 - Adjust generated page tests for initial flexibility ([#678])
 - Use `req.path` instead of `req.url` in path matching in `getNextRoute` ([#679])
 
-### 6.45.2
+## 6.45.2
 
 - Add `peerDeps` ([#670])
 
-### 6.43.0
+## 6.43.0
 
 - Upgrade to Next.js 13.1.1 ([#614])
 
-### 6.38.2
+## 6.38.2
 
 - Fix generated Mocha example test ([#556])
 
-### 6.38.0
+## 6.38.0
 
 - Update Cypress examples to v12 ([#541])
 
-### 6.35.0
+## 6.35.0
 
 - Prompt to add `next-sitemap` during create ([#479])
 - Upgrade `react` and `react-dom` to v18 ([#463])
 
-### 6.34.4
+## 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
 - Upgrade next-redux-wrapper to v8 ([#443])
 - Upgrade sinon to v14 ([#460])
 
-### 6.34.3
+## 6.34.3
 
 - Upgrade mocha v10 ([#442])
 
-### 6.33.1
+## 6.33.1
 
 - Fix for port fallback ([#433])
 - Use level "warning" not "warn" with logger ([#445])
 
-### 6.32.0
+## 6.32.0
 
 - Fix syntax that is not node 14 compatible ([#407])
 - Add `nextPreHandling` lifecycle ([#411])
 - Next.js Middleware Support ([#413])
 - Configuring cache dir for deployments ([#416])
 
-### 6.30.1
+## 6.30.1
 
 - Lazy load next package ([#403])
 
-### 6.30.0
+## 6.30.0
 
 - Add a `getNextRoute` function to requests ([#400])
 - Add an `apmTransaction` hook
 - Support for Fastify ([#398])
 
-### 6.21.0
+## 6.21.0
 
 - Support for scaffolded cypress tests ([#357])
 
-### 6.17.1
+## 6.17.1
 
 - Update glob path from `__dirname` ([#337])
 
-### 6.16.0
+## 6.16.0
 
 - Updates to support not generating a .babelrc file when creating new apps ([#334])
 
-### 6.13.0
+## 6.13.0
 
 - Default next-redux-wrapper to v7 for new Gasket apps with Next + Redux ([#326])
 
-### 6.12.0
+## 6.12.0
 
 - Replaced enzyme with React Testing Library. ([#324])
 
-### 6.10.0
+## 6.10.0
 
 - TypeScript definitions for config & lifecycles ([#311])
 
-### 6.8.3
+## 6.8.3
 
 - Ability to disable Next.js Intl Routing when configuring `locales` ([#310])
 
-### 6.6.0
+## 6.6.0
 
 - Created new webpackConfig lifecycle ([#284])
 
-### 6.5.1
+## 6.5.1
 
 - Updated default .babelrc to only set modules: 'commonjs' for the test env.
   ([#289])
 
-### 6.4.0
+## 6.4.0
 
 - Upgrade to next@^10.2 ([#285]).
 
-### 6.0.10
+## 6.0.10
 
 - Safer base path config selection ([#266])
 
-### 6.0.9
+## 6.0.9
 
 - Adjust peerDependencies ([#262])
 
-### 6.0.7
+## 6.0.7
 
 - Ensure NextJS catchall route for pages is registered last ([#257])
 
-### 6.0.3
+## 6.0.3
 
 - Create gasket.config.js with nextConfig for future webpack5  ([#252])
 
-### 6.0.0
+## 6.0.0
 
 - Add public/ to structure metadata for docs index ([#245])
 - Fix to only add i18n to next config if locales array set ([#243])
@@ -183,68 +183,67 @@
 - Change `zone` config to `basePath` ([#212])
 - Update next@10 and react@17 dependencies ([#216])
 
-### 5.5.0
+## 5.5.0
 
 - Updated plugins to consume zones gasket config property ([#166])
 
-### 5.3.1
+## 5.3.1
 
 - Configure server worker plugin to inject registration script to _app entry
   ([#158])
 
-### 5.0.2
+## 5.0.2
 
 - Fix name in plugin timing ([#136])
 
-### 5.0.0
+## 5.0.0
 
 - Open Source Release
 - Generate `_app.js` for Redux integration ([#125])
 - Move test framework generated content ([#114])
 
-### 2.3.3
+## 2.3.3
 
 - Bump to `next@9.1.2` to fix hanging `gasket build` ([#97])
 - Tune for `react/destructuring-assignment` from Airbnb style ([#98])
 
-### 2.3.2
+## 2.3.2
 
 - Fix package.json scripts to wrap glob patterns in double-quotes
 
-### 2.3.0
+## 2.3.0
 
 - Support `gasket.command` interface change ([#75])
 
-### 2.2.0
+## 2.2.0
 
 - Use `next@9` for new apps
 
-### 2.1.0
+## 2.1.0
 
 - Align package structure and dependencies
 
-### 2.0.2
+## 2.0.2
 
 - [#33] Add required dependencies during `gasket create`
 
-### 2.0.1
+## 2.0.1
 
 - [#32] Do not build with `gasket local` command
 
-### 2.0.0
+## 2.0.0
 
 - [#23] Dismantling core-plugin
 
-### 1.1.1
+## 1.1.1
 
 - Fix for missing dependency during create command
 
-### 1.1.0
+## 1.1.0
 
 - Renaming hooks and removing the `webpack` hook
 - Separate next plugins from core
 - Initial release.
-
 
 [next-redux-wrapper]: https://github.com/kirill-konshin/next-redux-wrapper
 
@@ -320,4 +319,3 @@
 [#948]: https://github.com/godaddy/gasket/pull/948
 [#982]: https://github.com/godaddy/gasket/pull/982
 [#1017]: https://github.com/godaddy/gasket/pull/1017
-

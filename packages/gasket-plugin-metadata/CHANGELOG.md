@@ -2,65 +2,65 @@
 
 - Add plugin as a dev dependency in create ([#1034])
 
-### 7.2.1
+## 7.2.1
 
 - Fix to use gasket.metadata from package.json for modules ([#1022])
 
-### 7.1.0
+## 7.1.0
 
 - Convert plugin to ESM ([#978])
 
-### 7.0.0
+## 7.0.0
 
 - See [Version 7 Upgrade Guide] for overall changes
 
-### 6.46.4
+## 6.46.4
 
 - Adjust JSDocs and TS types ([#695])
 
-### 6.41.1
+## 6.41.1
 
 - Docs on accessing `gasket.metadata` ([#613])
 
-### 6.39.2
+## 6.39.2
 
 - Add missing `ConfigurationsData` type ([#597])
 
-### 6.36.0
+## 6.36.0
 
 - Add missing `configurations` property to plugin metadata type ([#498])
 
-### 6.35.0
+## 6.35.0
 
 - Fix package object type ([#489])
 
-### 6.34.4
+## 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
 - Upgrade sinon to v14 ([#460])
 
-### 6.34.3
+## 6.34.3
 
 - Upgrade mocha v10 ([#442])
 
-### 6.10.0
+## 6.10.0
 
 - TypeScript definitions for config & lifecycles ([#311])
 
-### 6.0.0
+## 6.0.0
 
 - Version alignment
 - Upgraded dev dependencies ([#247])
 
-### 5.1.0
+## 5.1.0
 
 - Clean markdown from jsdocs ([#141])
 
-### 5.0.0
+## 5.0.0
 
 - Open Source Release
 
-### 2.0.0
+## 2.0.0
 
 - Allow presets to define metadata
 - Metadata is assigned to gasket instance, and only by this plugin ([#64])
@@ -68,12 +68,11 @@
   - `gasket.metadata` structure matches loaded infos with functions redacted
 - Load [ModuleInfo] for main app
 
-### 1.0.0
+## 1.0.0
 
 - [#51] Initial implementation
   - Adds `package.json` and hooks to each `gasket.config.metadata`
   - Implements the `metadata` lifecycle
-
 
 [Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#51]: https://github.com/godaddy/gasket/pull/51

@@ -2,19 +2,19 @@
 
 - Remove metadata plugin ([#1034])
 
-### 7.2.0
+## 7.2.0
 
 - Move default plugins into presets ([#1014])
 
-### 7.1.4
+## 7.1.4
 
 - Remove routes import from the `server.ts` ([#1011])
 
-### 7.1.0
+## 7.1.0
 
 - Aligned version releases across all packages
 
-### 7.0.0
+## 7.0.0
 
 - See [Version 7 Upgrade Guide] for overall changes
 - Convert to ESM ([#736])
@@ -24,26 +24,25 @@
 - Add tests
 - Update dependencies
 
-### 6.44.6
+## 6.44.6
 
 - revert docsify dep change ([#662])
 
-### 6.44.2
+## 6.44.2
 
 - Deprecate Docsify ([#648])
 
-### 6.10.0
+## 6.10.0
 
 - TypeScript definitions for config & lifecycles ([#311])
 
-### 6.0.0
+## 6.0.0
 
 - Upgrade dependencies to 6.0.0 ([#243])
 
-### 5.9.0
+## 5.9.0
 
 - Created and integrated Gasket API Preset ([#181])
-
 
 [Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#181]: https://github.com/godaddy/gasket/pull/181
