@@ -1,5 +1,7 @@
 # `@gasket/plugin-docusaurus`
 
+### 7.2.3
+
 - Make plugin dynamic ([#1034])
 
 ### 7.1.0

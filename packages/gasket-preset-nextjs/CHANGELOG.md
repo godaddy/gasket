@@ -1,5 +1,7 @@
 # `@gasket/preset-nextjs`
 
+### 7.2.3
+
 - Remove metadata plugin ([#1034])
 
 ### 7.2.0
