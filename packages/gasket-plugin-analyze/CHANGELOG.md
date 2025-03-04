@@ -1,5 +1,7 @@
 # `@gasket/plugin-analyze`
 
+### 7.2.3
+
 - Update create to use environment config ([#1010])
   - Fix for ANALYZE env var check with support for analyze in Gasket env check
 
