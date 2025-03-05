@@ -473,7 +473,7 @@ export interface CreateContext {
   /** Names of the plugins that add unit and integration tests */
   testPlugins: Array<string>;
 
-  /** Which package manager to use (Default: 'npm') */
+  /** Which package manager to use (Default: 'pnpm') */
   packageManager: string;
 
   /** Derived install command (Default: 'npm install') */
