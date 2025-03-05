@@ -1,6 +1,6 @@
 # `@gasket/plugin-docusaurus`
 
-## 8.0.0
+## 7.3.0
 
 ### Minor Changes
 
