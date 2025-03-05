@@ -1,7 +1,9 @@
+// @ts-nocheck
 /* eslint-disable max-len, max-statements */
 import fs from 'fs';
 import path from 'path';
 import { readConfig } from '../scaffold/utils.js';
+import { ConfigBuilder } from './config-builder.js';
 
 /**
  * The CreateRuntime represents a shallow proxy to a CreateContext
@@ -113,7 +115,24 @@ export function makeCreateContext(argv = [], options = {}) {
     presetConfig: {
       plugins: []
     },
-    readme: []
+    readme: [],
+    installCmd: 'npm install',
+    localCmd: 'npm run local',
+    packageManager: 'npm',
+    gasketConfig: ConfigBuilder.create({}, { orderBy: ['plugins'], warnings: [] }),
+    ConfigBuilder,
+    basePackageFilePath: '',
+    setBasePackageFilePath: (filePath) => {
+      if (context.basePackageFilePath) throw new Error('basePackageFilePath already set');
+      context.basePackageFilePath = filePath;
+    },
+    pkg: ConfigBuilder.createPackageJson({
+      name: appName,
+      version: '0.0.0',
+      description: '',
+      type: 'module'
+    }, { warnings: [] }),
+    FileSet: new Set([])
   });
 
   readConfig(context, { config, configFile });

@@ -90,6 +90,15 @@ const createCommand = {
   ]
 };
 
+async function newPresetFlow(context) {
+  await loadPreset({ context });
+  // await globalPrompts({ context });
+
+  for (const fn of context.presets) {
+    await fn(context);
+  }
+}
+
 /**
  * createCommand action
  * @type {import('create-gasket-app').createCommandAction}
@@ -99,6 +108,15 @@ createCommand.action = async function run(appname, options, command) {
   process.env.GASKET_ENV = 'create';
   const context = makeCreateContext([appname], options);
   const { rawPresets, localPresets } = context;
+
+  if (
+    rawPresets.includes('@gasket/preset-next') ||
+    localPresets.some(v => v.includes('gasket-preset-next'))
+  ) {
+    await newPresetFlow(context);
+    return;
+  }
+
 
   try {
     await globalPrompts({ context });
@@ -119,12 +137,12 @@ createCommand.action = async function run(appname, options, command) {
       plugins: context.presetConfig.plugins.concat(context.presets)
     });
 
-    await promptHooks({ gasket: pluginGasket, context });
+    // await promptHooks({ gasket: pluginGasket, context });
     await mkDir({ context });
-    await setupPkg({ context });
-    await createHooks({ gasket: pluginGasket, context });
-    await writePkg({ context });
-    await generateFiles({ context });
+    // await setupPkg({ context });
+    // await createHooks({ gasket: pluginGasket, context });
+    // await writePkg({ context });
+    // await generateFiles({ context });
     await writeGasketConfig({ context });
     await installModules({ context });
     await linkModules({ context });
