@@ -45,6 +45,8 @@ export default async function handleAppType(context) {
 
     // Add scripts
     pkg.add('scripts', {
+      'start': 'npm run start:https & next start',
+      'local': 'npm run local:https & next dev',
       'start:https': 'node dist/server.js',
       'local:https': 'tsx watch server.ts',
       'build:tsc:watch': 'tsc -p ./tsconfig.server.json --watch',
