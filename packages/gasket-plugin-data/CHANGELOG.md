@@ -1,5 +1,17 @@
 # `@gasket/plugin-data`
 
+## 7.3.0
+
+### Minor Changes
+
+- 29f72a5: Migrated packages to use PNPM and changesets. Fixed issues with types and dependencies.
+
+### Patch Changes
+
+- Updated dependencies [29f72a5]
+  - @gasket/request@7.3.0
+  - @gasket/utils@7.3.0
+
 ## 7.1.0
 
 - Use normalized GasketRequest ([#973])

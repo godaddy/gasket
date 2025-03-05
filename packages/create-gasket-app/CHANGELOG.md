@@ -1,5 +1,25 @@
 # `create-gasket-app`
 
+## 7.3.0
+
+### Minor Changes
+
+- 29f72a5: Migrated packages to use PNPM and changesets. Fixed issues with types and dependencies.
+
+### Patch Changes
+
+- Updated dependencies [29f72a5]
+  - @gasket/plugin-dynamic-plugins@7.3.0
+  - @gasket/plugin-docusaurus@8.0.0
+  - @gasket/plugin-metadata@7.3.0
+  - @gasket/plugin-command@7.3.0
+  - @gasket/plugin-logger@7.3.0
+  - @gasket/plugin-docs@7.3.0
+  - @gasket/plugin-git@7.3.0
+  - @gasket/request@7.3.0
+  - @gasket/utils@7.3.0
+  - @gasket/core@7.3.0
+
 ### 7.2.3
 
 - Add `remove` to config-builder ([#1036])

@@ -1,5 +1,16 @@
 # `@gasket/plugin-nextjs`
 
+## 8.0.0
+
+### Minor Changes
+
+- 29f72a5: Migrated packages to use PNPM and changesets. Fixed issues with types and dependencies.
+
+### Patch Changes
+
+- Updated dependencies [29f72a5]
+  - @gasket/plugin-webpack@7.3.0
+
 ## 7.2.3
 
 - Await gasket.isReady to allow async configurations to be prepared ([#1035])
@@ -40,7 +51,7 @@
 - Plugin is `typescript` aware
 - Add Prompt for `nextServerType`
 - Removed support for deprecated `next` config support ([#655])
-- With Redux, generate _app with example `getInitialAppProps` ([#693])
+- With Redux, generate \_app with example `getInitialAppProps` ([#693])
 
 ## 6.47.0
 
@@ -168,7 +179,7 @@
 
 ## 6.0.3
 
-- Create gasket.config.js with nextConfig for future webpack5  ([#252])
+- Create gasket.config.js with nextConfig for future webpack5 ([#252])
 
 ## 6.0.0
 
@@ -193,7 +204,7 @@
 
 ## 5.3.1
 
-- Configure server worker plugin to inject registration script to _app entry
+- Configure server worker plugin to inject registration script to \_app entry
   ([#158])
 
 ## 5.0.2
@@ -250,7 +261,6 @@
 - Initial release.
 
 [next-redux-wrapper]: https://github.com/kirill-konshin/next-redux-wrapper
-
 [Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#23]: https://github.com/godaddy/gasket/pull/23
 [#32]: https://github.com/godaddy/gasket/pull/32

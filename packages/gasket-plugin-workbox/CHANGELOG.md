@@ -1,5 +1,11 @@
 # `@gasket/plugin-workbox`
 
+## 7.3.0
+
+### Minor Changes
+
+- 29f72a5: Migrated packages to use PNPM and changesets. Fixed issues with types and dependencies.
+
 ## 7.1.0
 
 - Aligned version releases across all packages
@@ -62,10 +68,10 @@
 
 ## 1.0.0
 
- Initial implementation.
+Initial implementation.
 
 [Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
-[#95]:https://github.com/godaddy/gasket/pull/95
+[#95]: https://github.com/godaddy/gasket/pull/95
 [#166]: https://github.com/godaddy/gasket/pull/166
 [#212]: https://github.com/godaddy/gasket/pull/212
 [#217]: https://github.com/godaddy/gasket/pull/217

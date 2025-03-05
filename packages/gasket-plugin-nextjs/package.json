@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-nextjs",
-  "version": "7.2.3",
+  "version": "8.0.0",
   "description": "Adds Next support to your application",
   "types": "lib/index.d.ts",
   "files": [
@@ -85,7 +85,7 @@
     "typescript": "catalog:"
   },
   "peerDependencies": {
-    "@gasket/plugin-webpack": "^7.1",
+    "@gasket/plugin-webpack": "^7.3.0",
     "next": "^14",
     "react": "^18",
     "react-dom": "^18"
