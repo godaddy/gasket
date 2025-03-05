@@ -39,23 +39,23 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-winston",
   "dependencies": {
     "@gasket/plugin-logger": "workspace:^",
-    "winston": "^3.17.0"
+    "winston": "catalog:"
   },
   "devDependencies": {
     "@gasket/core": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",
-    "@types/jest": "^29.5.14",
-    "@types/node": "^20.17.19",
-    "babel-eslint": "^10.1.0",
+    "@types/jest": "catalog:",
+    "@types/node": "catalog:",
+    "babel-eslint": "catalog:",
     "create-gasket-app": "workspace:^",
-    "cross-env": "^7.0.3",
+    "cross-env": "catalog:",
     "eslint": "catalog:",
-    "eslint-config-godaddy": "^7.1.1",
-    "eslint-config-godaddy-typescript": "^4.0.3",
-    "eslint-plugin-jest": "^28.11.0",
-    "eslint-plugin-unicorn": "^55.0.0",
-    "jest": "^29.7.0",
-    "triple-beam": "^1.4.1",
+    "eslint-config-godaddy": "catalog:",
+    "eslint-config-godaddy-typescript": "catalog:",
+    "eslint-plugin-jest": "catalog:",
+    "eslint-plugin-unicorn": "catalog:",
+    "jest": "catalog:",
+    "triple-beam": "catalog:",
     "typescript": "catalog:"
   },
   "eslintConfig": {
