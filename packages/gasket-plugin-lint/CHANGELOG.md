@@ -1,5 +1,11 @@
 # `@gasket/plugin-lint`
 
+## 7.3.0
+
+### Minor Changes
+
+- 29f72a5: Migrated packages to use PNPM and changesets. Fixed issues with types and dependencies.
+
 ## 7.2.2
 
 - Predefine lint plugin dep versions ([#1029])
@@ -117,7 +123,6 @@
 [GoDaddy]: README.md#godaddy
 [Standard]: README.md#standard
 [Airbnb]: README.md#airbnb
-
 [#98]: https://github.com/godaddy/gasket/pull/98
 [#142]: https://github.com/godaddy/gasket/pull/142
 [#247]: https://github.com/godaddy/gasket/pull/247

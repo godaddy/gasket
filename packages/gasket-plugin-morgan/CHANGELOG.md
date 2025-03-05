@@ -1,5 +1,16 @@
 # `@gasket/plugin-morgan`
 
+## 7.3.0
+
+### Minor Changes
+
+- 29f72a5: Migrated packages to use PNPM and changesets. Fixed issues with types and dependencies.
+
+### Patch Changes
+
+- Updated dependencies [29f72a5]
+  - @gasket/plugin-logger@7.3.0
+
 ## 7.1.0
 
 - Aligned version releases across all packages

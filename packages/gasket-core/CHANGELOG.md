@@ -1,5 +1,16 @@
 # `@gasket/core`
 
+## 7.3.0
+
+### Minor Changes
+
+- 29f72a5: Migrated packages to use PNPM and changesets. Fixed issues with types and dependencies.
+
+### Patch Changes
+
+- Updated dependencies [29f72a5]
+  - @gasket/utils@7.3.0
+
 ## 7.2.2
 
 - Fix configuration options so they allow partial environment overrides ([#1026])
@@ -23,7 +34,6 @@
 - See [Version 7 Upgrade Guide] for overall changes
 
 [Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
-
 [#949]: https://github.com/godaddy/gasket/pull/949
 [#961]: https://github.com/godaddy/gasket/pull/961
 [#970]: https://github.com/godaddy/gasket/pull/970

@@ -1,5 +1,11 @@
 # `@gasket/plugin-swagger`
 
+## 7.3.0
+
+### Minor Changes
+
+- 29f72a5: Migrated packages to use PNPM and changesets. Fixed issues with types and dependencies.
+
 ## 7.2.2
 
 - Update swagger config to include routes plugin ([#1023])

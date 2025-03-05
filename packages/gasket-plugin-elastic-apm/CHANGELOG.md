@@ -1,5 +1,16 @@
 # `@gasket/plugin-elastic-apm`
 
+## 7.3.0
+
+### Minor Changes
+
+- 29f72a5: Migrated packages to use PNPM and changesets. Fixed issues with types and dependencies.
+
+### Patch Changes
+
+- Updated dependencies [29f72a5]
+  - @gasket/request@7.3.0
+
 ## 7.1.0
 
 - Use normalized GasketRequest ([#973])
@@ -57,11 +68,11 @@
 - Initial release.
 
 [Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
-[#311]:https://github.com/godaddy/gasket/pull/311
-[#378]:https://github.com/godaddy/gasket/pull/378
-[#388]:https://github.com/godaddy/gasket/pull/388
-[#400]:https://github.com/godaddy/gasket/pull/400
-[#407]:https://github.com/godaddy/gasket/pull/407
+[#311]: https://github.com/godaddy/gasket/pull/311
+[#378]: https://github.com/godaddy/gasket/pull/378
+[#388]: https://github.com/godaddy/gasket/pull/388
+[#400]: https://github.com/godaddy/gasket/pull/400
+[#407]: https://github.com/godaddy/gasket/pull/407
 [#436]: https://github.com/godaddy/gasket/pull/436
 [#457]: https://github.com/godaddy/gasket/pull/457
 [#670]: https://github.com/godaddy/gasket/pull/670
