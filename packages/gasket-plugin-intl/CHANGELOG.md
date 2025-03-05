@@ -1,133 +1,133 @@
 # `@gasket/plugin-intl`
 
-### 7.1.3
+## 7.1.3
 
 - Replace `@hapi/accept` with `negotiator` ([#1006])
- 
-### 7.1.0
+
+## 7.1.0
 
 - Use normalized GasketRequest ([#973])
 
-### 7.0.14
+## 7.0.14
 
 - Tune getIntlManager to import intl.js ([#975])
 - Add json assertion to dynamic import
 - Add ESM flag to jest for dynamic import
 - Add config for experimental import attributes
 
-### 7.0.7
+## 7.0.7
 
 - add `defaultLocale` to created Gasket TS config ([#965])
 
-### 7.0.0
+## 7.0.0
 
 - See [Version 7 Upgrade Guide] for overall changes
 - Add gasket actions ([#791])
 
-### 6.46.4
+## 6.46.4
 
 - Fix for missing manifest paths ([#701])
 
-### 6.46.3
+## 6.46.3
 
 - Only config webpack with add env vars for server bundles ([#696])
 
-### 6.46.0
+## 6.46.0
 
 - Fix to nested module.localesDir lookup ([#676])
 - Add support for specific module packages and subdirectory configure ([#676])
 
-### 6.45.2
+## 6.45.2
 
 - Remove `eslint-plugin-mocha` & `setup-env` ([#670])
 - Support debug logging under namespace `gasket:plugin:intl:*`
 
-### 6.38.7
+## 6.38.7
 
 - Add missing runtime dependency to the package.json ([#593])
 
-### 6.35.1
+## 6.35.1
 
 - Add option to preload locales file ([#491])
 
-### 6.34.5
+## 6.34.5
 
 - Upgrade fs-extra to v10 ([#467])
 
-### 6.34.4
+## 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
 - Upgrade react-intl to v6 ([#451])
 - Upgrade setup-env to v2 ([#459])
 - Upgrade sinon to v14 ([#460])
 
-### 6.34.3
+## 6.34.3
 
 - Upgrade mocha v10 ([#442])
 
-### 6.30.1
+## 6.30.1
 
 - Fix middleware hook handler ([#403])
 
-### 6.30.0
+## 6.30.0
 
 - Add `apmTransaction` hook ([#400])
 
-### 6.24.0
+## 6.24.0
 
 - Add Fastify support ([#366])
 
-### 6.19.0
+## 6.19.0
 
 - Migrate `webpack` -> `webpackConfig` lifecycle ([#347])
 
-### 6.16.1
+## 6.16.1
 
 - Fix to not polyfill intl for node >= 14 ([#336])
 
-### 6.11.2
+## 6.11.2
 
 - Use fs.promises ([#319])
 
-### 6.11.1
+## 6.11.1
 
 - Reduce bad accept-language log to `debug` level ([#320])
 
-### 6.10.0
+## 6.10.0
 
 - TypeScript definitions for config & lifecycles ([#311])
 
-### 6.8.3
+## 6.8.3
 
 - Ability to disable Next.js Intl Routing when configuring `locales` ([#310])
 
-### 6.8.2
+## 6.8.2
 
 - Handle malformed and inconsistent formatted accept-language header ([#302])
 
-### 6.7.2
+## 6.7.2
 
 - Minor fix to update logger to use `gasket.logger.warning` ([#297])
 
-### 6.5.2
+## 6.5.2
 
 - Handle/log accept.language exceptions ([#290])
 
-### 6.0.12
+## 6.0.12
 
 - Improve logging for missing locale files and manifest write errors ([#274])
 
-### 6.0.10
+## 6.0.10
 
 - Add additional safety checks around accessing gasketData ([#263])
 - Fix to use configured intl.localesDir for serving static files ([#265])
 - Safer base path config selection ([#266])
 
-### 6.0.4
+## 6.0.4
 
 - Fix to use defaultPath in workbox lifecycle ([#254])
 
-### 6.0.0
+## 6.0.0
 
 - Fix to handle default `localesDir` for metadata ([#245])
 - Fix missing dependencies ([#243])
@@ -147,78 +147,77 @@
 - Fix path for generated locale file ([#216])
 - Use new `composeServiceWorker` context for determining locale precache config ([#217])
 
-### 5.7.0
+## 5.7.0
 
 - Create new apps with `react-intl` v5 ([#175])
 
-### 5.5.0
+## 5.5.0
 
 - Updated plugins to consume zones gasket config property ([#166])
 
-### 5.1.2
+## 5.1.2
 
 - Fixed missing `await` when saving locales-manifest.json file ([#144])
 
-### 5.0.0
+## 5.0.0
 
 - Open Source Release
 
-### 4.2.0
+## 4.2.0
 
 - Polyfill Intl in node for SSR
 
-### 4.1.0
+## 4.1.0
 
 - Create new apps with `react-intl` as direct dependency
 
-### 4.0.2
+## 4.0.2
 
 - Create new apps with `@gasket/react-intl@4`
 
-### 4.0.1
+## 4.0.1
 
 - Fix `initReduxState` from stomping over existing state
 
-### 4.0.0
+## 4.0.0
 
 - Execute `intlLanguage` lifecycle to determine language
 - Set `intl.language` on redux state instead of market cookie
 - Migrated to monorepo
 - Align package structure and dependencies
 
-### 3.1.2
+## 3.1.2
 
 - Use url-join package to resolve assetPrefix paths
 
-### 3.1.1
+## 3.1.1
 
 - Allow `@gasket/log-plugin@3`
 - Fix security audit failures
 - Fix babel configuration
 
-### 3.1.0
+## 3.1.0
 
 - Precache locale files with Workbox
 
-### 3.0.0
+## 3.0.0
 
 - Uses `assetPrefix` from plugin config for CDN support
   - Removes use of `apiBase`
 - Provides `req.localesDir` for outputDir from plugin config
 - Moves locale file endpoint to `/_locales` with better cache control headers
 
-### 2.0.0
+## 2.0.0
 
 - Depend on `@gasket/*` 2.0 packages for Next & Babel 7 support.
 
-### 1.1.0
+## 1.1.0
 
 - Add files from `@gasket/app-template`.
 
-### 1.0.0
+## 1.0.0
 
 - Initial release.
-
 
 [Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#144]: https://github.com/godaddy/gasket/pull/144

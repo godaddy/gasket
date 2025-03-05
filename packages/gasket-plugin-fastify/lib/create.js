@@ -1,4 +1,5 @@
 /// <reference types="@gasket/core" />
+/// <reference types="create-gasket-app" />
 
 const { name, version, devDependencies } = require('../package.json');
 

@@ -34,7 +34,5 @@ module.exports = {
     });
 
     setupNextHandling(app, fastifyApp, gasket);
-
-    return app;
   }
 };

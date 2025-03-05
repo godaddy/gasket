@@ -1,4 +1,4 @@
-/** @type {import('@gasket/plugin-swagger').promptSwagger} */
+/** @type {import('.').promptSwagger} */
 async function promptSwagger(context, prompt) {
   if (!('useSwagger' in context)) {
     const { useSwagger } = await prompt([

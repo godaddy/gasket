@@ -9,7 +9,6 @@ import type {
 declare module 'create-gasket-app' {
   export interface CreateContext {
     useDocs?: boolean;
-    typescript?: boolean;
   }
 }
 
@@ -31,15 +30,7 @@ declare module '@gasket/core' {
   }
 }
 
-declare module '@gasket/plugin-metadata' {
-  export interface DetailData {
-    targetRoot?: string;
-  }
-}
+declare const plugin: Plugin;
 
-const plugin: Plugin = {
-  name: '@gasket/plugin-docs',
-  hooks: {}
-};
+export default plugin;
 
-export = plugin;

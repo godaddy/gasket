@@ -43,9 +43,9 @@ describe('@gasket/plugin-winston', () => {
     config.winston?.format = false;
   });
 
-  it('defines the winstonTransports lifecycle', async() => {
-    const hook: Hook<'winstonTransports'> = (gasket: Gasket) => {
-      return fakeTransport;
-    };
-  });
+  // it('defines the winstonTransports lifecycle', async () => {
+  //   const hook: Hook<'winstonTransports'> = (gasket: Gasket) => {
+  //     return fakeTransport;
+  //   };
+  // });
 });

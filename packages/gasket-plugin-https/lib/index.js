@@ -1,6 +1,7 @@
 /// <reference types="@gasket/core" />
 /// <reference types="@gasket/plugin-metadata" />
 /// <reference types="@gasket/plugin-logger" />
+/// <reference types="create-gasket-app" />
 
 const { name, version, description } = require('../package.json');
 const actions = require('./actions');

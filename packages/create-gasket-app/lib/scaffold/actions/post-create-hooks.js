@@ -14,7 +14,7 @@ async function postCreateHooks({ gasket, context }) {
    * @returns {Promise} A promise represents if npm succeeds or fails.
    */
   async function runScript(script) {
-    return await runShellCommand('npm', ['run', script], { cwd: dest });
+    return await runShellCommand('pnpm', ['run', script], { cwd: dest });
   }
 
   /**

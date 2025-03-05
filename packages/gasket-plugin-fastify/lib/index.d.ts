@@ -71,13 +71,9 @@ declare module 'create-gasket-app' {
     /** Flag indicating if API app is enabled */
     apiApp?: boolean;
     addApiRoutes?: boolean;
-    typescript?: boolean;
   }
 }
 
-const plugin: Plugin = {
-  name: '@gasket/plugin-fastify',
-  hooks: {}
-};
+declare const plugin: Plugin;
 
-export = plugin;
+export default plugin;

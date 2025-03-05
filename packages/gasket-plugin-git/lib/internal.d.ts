@@ -14,7 +14,7 @@ export type GitIgnoreCategory = keyof GitIgnoreContent;
 export declare class Gitignore {
   readonly _content: GitIgnoreContent;
 
-  constructor(): void;
+  constructor();
 
   /**
    * Adds content to gitignore

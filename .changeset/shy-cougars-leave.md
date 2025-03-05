@@ -1,0 +1,51 @@
+---
+"@gasket/plugin-dynamic-plugins": minor
+"@gasket/plugin-service-worker": minor
+"@gasket/plugin-docs-graphs": minor
+"@gasket/plugin-elastic-apm": minor
+"@gasket/plugin-https-proxy": minor
+"@gasket/plugin-docusaurus": minor
+"@gasket/plugin-middleware": minor
+"@gasket/plugin-typescript": minor
+"@gasket/plugin-happyfeet": minor
+"@gasket/typescript-tests": minor
+"@gasket/plugin-manifest": minor
+"@gasket/plugin-metadata": minor
+"@gasket/plugin-analyze": minor
+"@gasket/plugin-command": minor
+"@gasket/plugin-cypress": minor
+"@gasket/plugin-express": minor
+"@gasket/plugin-fastify": minor
+"@gasket/plugin-swagger": minor
+"@gasket/plugin-webpack": minor
+"@gasket/plugin-winston": minor
+"@gasket/plugin-workbox": minor
+"@gasket/plugin-logger": minor
+"@gasket/plugin-morgan": minor
+"@gasket/plugin-nextjs": minor
+"@gasket/preset-nextjs": minor
+"@gasket/plugin-https": minor
+"@gasket/plugin-mocha": minor
+"@gasket/plugin-redux": minor
+"@gasket/plugin-data": minor
+"@gasket/plugin-docs": minor
+"@gasket/plugin-intl": minor
+"@gasket/plugin-jest": minor
+"@gasket/plugin-lint": minor
+"generate-docs-index": minor
+"create-gasket-app": minor
+"@gasket/plugin-git": minor
+"@gasket/preset-api": minor
+"@gasket/react-intl": minor
+"@gasket/request": minor
+"@gasket/assets": minor
+"@gasket/nextjs": minor
+"@gasket/fetch": minor
+"@gasket/redux": minor
+"@gasket/utils": minor
+"@gasket/core": minor
+"@gasket/data": minor
+"@gasket/intl": minor
+---
+
+Migrated packages to use PNPM and changesets. Fixed issues with types and dependencies.

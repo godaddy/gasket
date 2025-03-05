@@ -125,7 +125,7 @@ reserved for [How it works] section below and/or extended files in `docs/`. -->
 
 ## Installation
 
-Show `npm i` steps, and/or mention use with the create command.
+Show `pnpm install` steps, and/or mention use with the create command.
 
 ## Configuration
 
@@ -194,10 +194,40 @@ manually re-publish the ones that didn’t make it out.
 File and directory names should follow kebab-casing. Incorrect naming will
 generate a linting error.
 
-```
+```md
 new-file.js
 example-directory-name/
 ```
+
+## Submit a changeset
+
+This repository utilizes [changesets] to handle versioning and publishing as you submit a pull-request.
+A changeset should be included with your pull-request to help the maintainers
+understand the changes and to help with the release process.
+
+To initiate a changeset run:
+
+```bash
+pnpm run changeset
+```
+
+After which follow the command prompts to select which packages and which version each package should receive.
+
+Commit and push the changeset to your branch to be included with your pull-request.
+
+## Publishing
+
+When a pull-request is merged into the `main` branch, the changeset will be used
+to determine the next version of the package.
+
+A "Version Packages" pull-request will be automatically created to bump the
+versions.
+If multiple PRs with changesets are merged, this PR will automatically update to
+include all changesets.
+
+When all changes are ready to be published, repo admins can force squash merge
+the "Version Packages" PR to main (CI worflows do not run on this automated branch).
+This will trigger the CI to publish the packages to npm.
 
 ## Additional Resources
 
@@ -210,3 +240,4 @@ example-directory-name/
 [npm]: http://npmjs.org/
 [style]: https://github.com/godaddy/javascript/#godaddy-style
 [Type Safety with JSDoc document]: https://github.com/godaddy/gasket/blob/main/docs/jsdoc-type-safety.md
+[changesets]: https://github.com/changesets/changesets

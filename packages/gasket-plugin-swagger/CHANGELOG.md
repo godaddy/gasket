@@ -1,63 +1,62 @@
 # `@gasket/plugin-swagger`
 
-### 7.2.2
+## 7.2.2
 
 - Update swagger config to include routes plugin ([#1023])
 
-### 7.1.0
+## 7.1.0
 
 - Aligned version releases across all packages
 
-### 7.0.0
+## 7.0.0
 
 - See [Version 7 Upgrade Guide] for overall changes
 - Add prompt for use in presets ([#850])
 - Add plugin import to gasket file ([#736])
 - Add itself to the app package file
 
-### 6.34.4
+## 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
 - Upgrade setup-env to v2 ([#459])
 - Upgrade sinon to v14 ([#460])
 
-### 6.34.3
+## 6.34.3
 
 - Upgrade mocha v10 ([#442])
 
-### 6.31.0
+## 6.31.0
 
 - Support fastify ([#404])
 
-### 6.11.2
+## 6.11.2
 
 - Use fs.promises ([#319])
 
-### 6.10.0
+## 6.10.0
 
 - TypeScript definitions for config & lifecycles ([#311])
 
-### 6.7.0
+## 6.7.0
 
 - Added timing to express lifecycle ([#294])
 
-### 6.0.0
+## 6.0.0
 
 - Version alignment
 - Upgraded dev dependencies ([#247])
 
-### 5.10.0
+## 5.10.0
 
 - Added check for swagger.json file, with warning/error messaging if not found. ([#186])
 
-### 5.9.0
+## 5.9.0
 
 - Created and integrated Gasket API Preset ([#181])
 
-### 5.8.0
+## 5.8.0
 
 - Initial release. ([#177])
-
 
 [Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#177]: https://github.com/godaddy/gasket/pull/177

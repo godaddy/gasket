@@ -1,6 +1,6 @@
 import { readFile } from 'fs/promises';
 
-/** @type {import('create-gasket-app').Readme} */
+/** @type {import('../index').Readme} */
 export default class Readme {
   constructor() {
     this.markdown = [];

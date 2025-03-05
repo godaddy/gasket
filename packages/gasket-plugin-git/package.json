@@ -10,11 +10,11 @@
   ],
   "scripts": {
     "lint": "eslint .",
-    "lint:fix": "npm run lint -- --fix",
+    "lint:fix": "pnpm run lint --fix",
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "posttest": "npm run lint && npm run typecheck",
+    "posttest": "pnpm run lint && pnpm run typecheck",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
@@ -37,17 +37,22 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-git",
   "dependencies": {
-    "@gasket/utils": "^7.2.3"
+    "@gasket/utils": "workspace:^"
   },
   "devDependencies": {
+    "@gasket/core": "workspace:^",
+    "@gasket/plugin-metadata": "workspace:^",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^20.17.19",
+    "create-gasket-app": "workspace:^",
     "cross-env": "^7.0.3",
-    "eslint": "^8.56.0",
+    "eslint": "catalog:",
     "eslint-config-godaddy": "^7.1.1",
     "eslint-config-godaddy-typescript": "^4.0.3",
-    "eslint-plugin-jest": "^28.6.0",
+    "eslint-plugin-jest": "^28.11.0",
     "eslint-plugin-unicorn": "^55.0.0",
     "jest": "^29.7.0",
-    "typescript": "^5.4.5"
+    "typescript": "catalog:"
   },
   "eslintConfig": {
     "extends": [

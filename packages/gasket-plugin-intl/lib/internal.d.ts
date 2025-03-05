@@ -1,5 +1,6 @@
-import type { Gasket, GasketRequest } from '@gasket/core';
+import type { Gasket } from '@gasket/core';
 import type { IncomingMessage } from 'http';
+import type { GasketRequest } from '@gasket/request';
 
 /** Get the preferred locale from the request headers. */
 export function getLocaleFromHeaders(
@@ -23,7 +24,7 @@ export function formatLocale(
 /** Tuple of package name and path */
 type SrcPkgDir = [string, string];
 
-export async function getPackageDirs(
+export function getPackageDirs(
   /** Path to parent directory */
   parentDir: string,
   /** List of full paths */

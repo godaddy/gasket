@@ -1,13 +1,11 @@
-# Workflow to run CI and tests for all branches on push and on pull requests
-
 name: CI
 
 on:
   pull_request:
   push:
     branches:
-      - 'main'
-      - 'lts'
+      - main
+      - lts
 
 jobs:
   ci:
@@ -18,19 +16,23 @@ jobs:
         node-version: [20.x, 22.x]
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Set up Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: npm
+          cache: pnpm
 
       - name: Install Dependencies
-        run: npm ci --prefer-offline
+        run: pnpm install --frozen-lockfile
 
       - name: Build
-        run: npm run build
+        run: pnpm run build
 
       - name: Run Tests & Lint
-        run: npm test
+        run: pnpm test

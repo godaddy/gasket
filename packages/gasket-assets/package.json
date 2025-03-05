@@ -9,10 +9,10 @@
   ],
   "scripts": {
     "lint": "eslint .",
-    "lint:fix": "npm run lint -- --fix",
-    "test": "npm run lint",
-    "build": "npm run clean && npm run svg-to-react",
-    "prepublishOnly": "npm run build",
+    "lint:fix": "pnpm run lint --fix",
+    "test": "pnpm run lint",
+    "build": "pnpm run clean && pnpm run svg-to-react",
+    "prepublishOnly": "pnpm run build",
     "clean": "rimraf ./react",
     "svg-to-react": "babel-node --presets @babel/env ./scripts/svg-to-react.js"
   },
@@ -35,21 +35,23 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-assets",
   "devDependencies": {
-    "@babel/core": "^7.23.7",
-    "@babel/node": "^7.22.19",
-    "@babel/preset-env": "^7.23.8",
-    "@babel/preset-react": "^7.23.3",
+    "@babel/core": "^7.26.9",
+    "@babel/node": "^7.26.0",
+    "@babel/preset-env": "^7.26.9",
+    "@babel/preset-react": "^7.26.3",
     "@svgr/core": "^6.5.1",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^20.17.19",
     "babel-plugin-add-module-exports": "^1.0.4",
-    "eslint": "^8.56.0",
+    "eslint": "catalog:",
     "eslint-config-godaddy": "^7.1.1",
     "eslint-config-godaddy-typescript": "^4.0.3",
     "eslint-plugin-unicorn": "^55.0.0",
     "mkdirp": "^1.0.4",
-    "react": "^18.2.0",
+    "react": "catalog:",
     "recursive-readdir": "^2.2.3",
     "rimraf": "^3.0.2",
-    "typescript": "^5.4.5"
+    "typescript": "catalog:"
   },
   "eslintConfig": {
     "extends": [

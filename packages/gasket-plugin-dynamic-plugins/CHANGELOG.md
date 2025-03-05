@@ -4,17 +4,17 @@
 
 - Add to config during create ([#1010])
 
-### 7.2.0
+## 7.2.0
 
 - Set timing before commands plugins to allow dynamic plugins to register commands ([#1016])
 - Add 'deduped' trace for improved lifecycle debugging
 - Invoke prepare lifecycle of dynamic plugins
 
-### 7.1.5
+## 7.1.5
 
 - Export default for type module pkg ([#1015])
 
-### 7.1.0
+## 7.1.0
 
 - Initial release ([#970], [#991]).
 

@@ -160,7 +160,7 @@ declare module '@gasket/core' {
   /**
    * Represents a Gasket instance.
    */
-  export interface Gasket extends GasketEngine {
+  export class Gasket extends GasketEngine {
     constructor(config: GasketConfigDefinition);
     new(config: GasketConfigDefinition): Gasket;
 
@@ -176,7 +176,7 @@ declare module '@gasket/core' {
   /**
    * A proxy type for tracing Gasket operations.
    */
-  export type GasketTrace = Proxy<Gasket> & {
+  export type GasketTrace = typeof Proxy<Gasket> & {
     trace: (msg: string) => void
   };
 

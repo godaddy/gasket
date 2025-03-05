@@ -8,7 +8,7 @@ export type Manifest = {
   staticOutput?: string | boolean;
 };
 
-export async function manifestMiddleware(
+export function manifestMiddleware(
   req: IncomingMessage,
   res: ServerResponse,
   next: (err?: any) => void
@@ -27,7 +27,7 @@ declare module '@gasket/core' {
   }
 }
 
-declare module '@types/express-serve-static-core' {
+declare module 'express-serve-static-core' {
   interface Request {
     manifest?: Manifest;
   }
@@ -40,9 +40,6 @@ declare module 'http' {
   }
 }
 
-const plugin: Plugin = {
-  name: '@gasket/plugin-manifest',
-  hooks: {}
-};
+declare const plugin: Plugin;
 
-export = plugin;
+export default plugin;
