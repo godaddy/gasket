@@ -15,7 +15,7 @@ declare module 'express-serve-static-core' {
      * and also, by the 'compiled' version in Next.js
      * @see: https://github.com/vercel/next.js/issues/11669
      */
-    _implicitHeader: () => void;
+    _implicitHeader?: () => void;
   }
 }
 
@@ -27,9 +27,7 @@ declare module '@gasket/core' {
   }
 }
 
-const plugin: Plugin = {
-  name: '@gasket/plugin-middleware',
-  hooks: {}
-};
-
-export = plugin;
+declare module '@gasket/plugin-middleware' {
+  const plugin: Plugin;
+  export default plugin;
+}

@@ -2,9 +2,10 @@ import type { IncomingMessage, ServerResponse } from 'http';
 import type { NextConfig } from 'next';
 import type { NextServer } from 'next/dist/server/next';
 import type { Application } from 'express';
-import type { Fastify } from 'fastify';
-import type { Gasket } from '@gasket/core';
-import type { CreateContext, CreatePrompt } from 'create-gasket-app';
+import type { FastifyInstance } from 'fastify';
+import type { Gasket, Plugin } from '@gasket/core';
+import type { CreateContext, CreatePrompt } from 'create-gasket-app' with { 'resolution-mode': 'import' };
+import type { GasketRequest } from '@gasket/request' with { 'resolution-mode': 'import' };
 
 export { NextConfig, NextServer };
 
@@ -17,7 +18,7 @@ declare module '@gasket/core' {
 
   export interface GasketActions {
     getNextConfig?: (config?: NextConfig | NextConfigFunction) => (phase: string, context?: { defaultConfig?: NextConfig }) => Promise<NextConfig>
-    getNextRoute?: (req: IncomingMessage) => Promise<null | {
+    getNextRoute?: (req: GasketRequest) => Promise<null | {
       page: string;
       regex: RegExp;
       routeKeys: Record<string, string>;
@@ -53,14 +54,8 @@ declare module '@gasket/core' {
     }): MaybeAsync<void>;
     nextFastify(params: {
       next: NextServer;
-      fastify: Fastify;
+      fastify: FastifyInstance;
     }): MaybeAsync<void>;
-  }
-}
-
-declare module '@gasket/plugin-webpack' {
-  export interface WebpackContext {
-    isServer: boolean;
   }
 }
 
@@ -75,17 +70,13 @@ declare module 'create-gasket-app' {
     addSitemap?: boolean;
     nextServerType: 'appRouter' | 'pageRouter' | 'customServer';
     nextDevProxy: boolean;
-    typescript: boolean;
     useAppRouter: boolean;
   }
 }
 
 declare module '@gasket/plugin-nextjs' {
-  export const name = '@gasket/plugin-nextjs';
-  export const hooks = {};
-
   /** Gets the NextJS route matching the request */
-  export async function getNextRoute(
+  export function getNextRoute(
     gasket: Gasket,
     req: IncomingMessage
   ): Promise<null | {
@@ -98,23 +89,27 @@ declare module '@gasket/plugin-nextjs' {
   }
 
   /* Exported prompts */
-  export async function promptAppRouter(
+  export function promptAppRouter(
     context: CreateContext,
     prompt: CreatePrompt
   ): Promise<undefined>
 
-  export async function promptNextServerType(
+  export function promptNextServerType(
     context: CreateContext,
     prompt: CreatePrompt
   ): Promise<undefined>
 
-  export async function promptNextDevProxy(
+  export function promptNextDevProxy(
     context: CreateContext,
     prompt: CreatePrompt
   ): Promise<undefined>
 
-  export async function promptSitemap(
+  export function promptSitemap(
     context: CreateContext,
     prompt: CreatePrompt
   ): Promise<undefined>
 }
+
+declare const plugin: Plugin;
+
+export default plugin;

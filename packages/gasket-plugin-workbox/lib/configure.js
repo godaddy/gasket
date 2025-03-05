@@ -3,19 +3,14 @@ const {
   getBasePath
 } = require('./utils');
 
-/**
- * Configure lifecycle to set up SW config with defaults
- * @param {Gasket} gasket - Gasket
- * @param {object} config - Base gasket config
- * @returns {object} config
- */
+/** @type {import('@gasket/core').HookHandler<'configure'>} */
 module.exports = function configure(gasket, config) {
   const workbox = getWorkboxConfig({ config });
   const basePath = getBasePath({ config });
 
   workbox.basePath = basePath;
 
-  const { version } = require('workbox-build/package');
+  const { version } = require('workbox-build/package.json');
   const libraryVersion = `workbox-v${version}`;
 
   const scriptUrl = [

@@ -92,17 +92,17 @@ interface ServiceWorkerLocals {
   };
 }
 
-declare module 'express' {
+declare module 'express-serve-static-core' {
   interface Response {
     locals?: ServiceWorkerLocals;
   }
 }
 
-export async function configureEndpoint(gasket: Gasket):
+export function configureEndpoint(gasket: Gasket):
   RouteHandlerMethod<Http2SecureServer, Http2ServerRequest, Http2ServerResponse> |
   Application<Record<string, any>>;
 
-export async function serviceWorkerMiddleware(
+export function serviceWorkerMiddleware(
   req: Request & {
     swRegisterScript: string;
   },
@@ -116,21 +116,18 @@ export function getSWConfig(param: {
 }): ServiceWorkerConfig;
 
 /** Gathers thunks to key caches of composed sw scripts, based on req */
-export async function getCacheKeys(
+export function getCacheKeys(
   gasket: Gasket
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
 ): Promise<Array<(req: Request | FastifyRequest, res: Response | FastifyReply) => MaybeAsync<string>>>;
 
-export async function getComposedContent(
+export function getComposedContent(
   gasket: Gasket,
   context: { req: Request; res: Response }
 ): string;
 
-export async function loadRegisterScript(config: ServiceWorkerConfig): string;
+export function loadRegisterScript(config: ServiceWorkerConfig): string;
 
-const plugin: Plugin = {
-  name: '@gasket/plugin-service-worker',
-  hooks: {}
-};
+declare const plugin: Plugin;
 
-export = plugin;
+export default plugin;

@@ -26,7 +26,6 @@ declare module 'create-gasket-app' {
     eslintConfig?: string;
     stylelintConfig?: string;
     addStylelint?: boolean;
-    typescript?: boolean;
   }
 
   export interface PackageJson {
@@ -37,9 +36,6 @@ declare module 'create-gasket-app' {
   }
 }
 
-const plugin: Plugin = {
-  name: '@gasket/plugin-lint',
-  hooks: {}
-};
+declare const plugin: Plugin;
 
-export = plugin;
+export default plugin;

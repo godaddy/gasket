@@ -1,55 +1,54 @@
 # `@gasket/fetch`
 
-### 7.1.0
+## 7.1.0
 
 - Aligned version releases across all packages
 
-### 7.0.0
+## 7.0.0
 
 - See [Version 7 Upgrade Guide] for overall changes
 
-### 6.45.2
+## 6.45.2
 
 - Remove `setup-env` ([#670])
 
-### 6.34.3
+## 6.34.3
 
 - Upgrade mocha v10 ([#442])
 - Upgrade setup-env to v2 ([#459])
 - Upgrade sinon to v14 ([#460])
 
-### 6.34.2
+## 6.34.2
 
 - Upgrade jsdom to v20 ([#440])
 
-### 6.28.1
+## 6.28.1
 
 - Update TS types, remove test case ([#394])
 
-### 6.24.2
+## 6.24.2
 
 - Use wrapper to call through to window.fetch in browser ([#372])
 
-### 6.0.0
+## 6.0.0
 
 - Replace cross-fetch with native implementation. ([#176])
 
-### 5.6.0
+## 5.6.0
 
 - Updating version of cross-fetch to 3.0.4 ([#164])
 
-### 5.0.0
+## 5.0.0
 
 - Open Source Release
 
-### 1.0.1
+## 1.0.1
 
 - Migrated to monorepo
 
-### 1.0.0
+## 1.0.0
 
 - Initial release.
-
 
 [Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#164]: https://github.com/godaddy/gasket/pull/164

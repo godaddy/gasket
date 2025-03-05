@@ -17,7 +17,7 @@ const sensitiveCookies = (config) => {
 
 /**
  * Redacts the contents of user-specified sensitive cookies
- * @type {import('@gasket/plugin-elastic-apm').filterSensitiveCookies}
+ * @type {import('.').filterSensitiveCookies}
  */
 const filterSensitiveCookies = function (config) {
   return function (payload) {

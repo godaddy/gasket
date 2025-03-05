@@ -1,5 +1,5 @@
 import type { MaybeAsync } from '@gasket/core';
-import type { SpawnOpts } from 'node:child_process';
+import type { SpawnOptions } from 'child_process';
 
 export { applyConfigOverrides } from './config';
 
@@ -13,7 +13,7 @@ export interface PackageManagerOptions {
 /**
  * Wrapper class for executing commands for a given package manager
  */
-export class PackageManager {
+export interface PackageManager {
   constructor(options: PackageManagerOptions): void;
 
   /** Name of manager, either `npm` (default) or `yarn` */
@@ -96,12 +96,7 @@ export function runShellCommand(
   /** Arguments passed to npm binary through spawn. */
   argv?: string[],
   /** Options passed to npm binary through spawn */
-  options?: {
-    /** AbortControl signal allowing process to be canceled */
-    signal?: Signal;
-    /** Path to the target app (Default: cwd/appName) */
-    cwd?: string;
-  },
+  options?: SpawnOptions,
   /** When present pipes std{out,err} to process.*/
   debug?: boolean
 ): Promise<{ stdout: string }>;
@@ -144,7 +139,7 @@ declare module '@gasket/utils' {
     /** Precise CLI arguments to pass to `npm`. */
     argv: string[],
     /** Options for child_process.spawn. */
-    spawnWith: SpawnOpts
+    spawnWith: SpawnOptions
   ): Promise<{ stdout: string }>;
 
   /**
@@ -158,7 +153,7 @@ declare module '@gasket/utils' {
     /** Precise CLI arguments to pass to `npm`. */
     argv: string[],
     /** Options for child_process.spawn. */
-    spawnWith: SpawnOpts
+    spawnWith: SpawnOptions
   ): Promise<{ stdout: string }>;
 
   function PackageManager_exec(

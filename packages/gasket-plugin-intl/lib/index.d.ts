@@ -1,6 +1,7 @@
 import type { MaybeAsync, Plugin } from '@gasket/core';
 import type { IntlManager } from '@gasket/intl';
 import type { LocaleManifestConfig } from '@gasket/intl';
+import type { RequestLike, GasketRequest } from '@gasket/request';
 
 interface CustomScanSettings {
   /** Lookup dir for module files (default: `locales`) */
@@ -20,11 +21,11 @@ export interface IntlConfig extends LocaleManifestConfig {
   nextRouting?: boolean;
   manager?: IntlManager;
   experimentalImportAttributes?: boolean;
+  locales: string[];
+  defaultLocale?: string;
 }
 
 declare module '@gasket/core' {
-  import type { RequestLike, GasketRequest } from '@gasket/request';
-
   export interface GasketConfig {
     intl?: IntlConfig;
   }
@@ -35,7 +36,7 @@ declare module '@gasket/core' {
      * Provides access to the Intl manager instance to plugins.
      * Especially useful for plugins that are still CJS.
      */
-    async getIntlManager: () => IntlManager;
+    getIntlManager: () => IntlManager;
   }
 
   export interface HookExecTypes {
@@ -60,9 +61,6 @@ declare module 'create-gasket-app' {
   }
 }
 
-const plugin: Plugin = {
-  name: '@gasket/plugin-intl',
-  hooks: {}
-};
+declare const plugin: Plugin;
 
-export = plugin;
+export default plugin;

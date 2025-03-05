@@ -33,13 +33,9 @@ declare module 'create-gasket-app' {
   export interface CreateContext {
     apiApp?: boolean;
     addApiRoutes?: boolean;
-    typescript?: boolean;
   }
 }
 
-const plugin: Plugin = {
-  name: '@gasket/plugin-express',
-  hooks: {}
-};
+declare const plugin: Plugin;
 
-export = plugin;
+export default plugin;

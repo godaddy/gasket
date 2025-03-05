@@ -1,5 +1,3 @@
-/// <reference types="./index.d.ts"/>
-
 import proxy from 'http-proxy';
 
 /** @type {import('@gasket/core').ActionHandler<'startProxyServer'>} */

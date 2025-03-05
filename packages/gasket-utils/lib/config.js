@@ -31,6 +31,7 @@ function *getPotentialConfigs(config, { env, commandId }) {
   if (commandId) {
     yield* getCommandOverrides(commands, commandId);
   } else {
+    // @ts-ignore - commands is originally omitted from this type
     baseConfig.commands = commands;
   }
   yield* getSubEnvironmentOverrides(env, environments);

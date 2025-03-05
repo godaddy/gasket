@@ -1,57 +1,61 @@
-# Simple workflow for deploying static content to GitHub Pages
-name: Deploy Docs Site
+name: Deploy Docs Site to Github Pages
 
 on:
-  # Runs on pushes targeting the default branch
-  push:
-    branches: [main]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+  push:
+    branches:
+      - main
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Allow one concurrent deployment
 concurrency:
-  group: "pages"
+  group: pages
   cancel-in-progress: true
 
 env:
-  # Hosted GitHub runners have 7 GB of memory available, let's use 6 GB
   NODE_OPTIONS: --max-old-space-size=6144
 
 jobs:
-  # Single deploy job since we're just deploying
   deploy:
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
+      - name: Checkout Repository
         uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4  
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
+          cache: pnpm
+      
       - name: Install dependencies
-        run: npm ci
-      - name: Build Docs
-        run: npm run docs
-      - name: Build Docs Site
+        run: pnpm install --frozen-lockfile
+
+      - name: Build documentation
+        run: pnpm run docs
+
+      - name: Build site
         working-directory: site
-        run: npm run build
-      - name: Setup Pages
+        run: pnpm run build
+
+      - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: site/build
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

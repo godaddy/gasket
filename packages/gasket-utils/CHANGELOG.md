@@ -1,14 +1,14 @@
 # `@gasket/utils`
 
-### 7.2.2
+## 7.2.2
 
 - Fix type of environment overrides ([#1026])
 
-### 7.1.2
+## 7.1.2
 
 - Ensure non-plain objects are copied instead of merge ([#1002])
 
-### 7.1.0
+## 7.1.0
 
 - Aligned version releases across all packages
 
@@ -16,83 +16,82 @@
   - Add config export for leaner applyConfigOverrides
   - Use `deepmerge` instead of `lodash.defaultsdeep` due to incompatible _new Function_
 
-### 7.0.0
+## 7.0.0
 
 - See [Version 7 Upgrade Guide] for overall changes
 - Added getPackageLastestVersion util function ([#768])
 - Removed `requireWithInstall` to encourage import patterns with ESM
 - Removed support for deprecated `--npmconfig` flag ([#647])
 
-### 6.41.0
+## 6.41.0
 
 - Add diagnostic logging for environment/config resolution when a `DEBUG=gasket:*` environment variable is set ([#607])
 
-### 6.36.0
+## 6.36.0
 
 - force install with npm ([#496])
 
-### 6.35.2
+## 6.35.2
 
 - add requireWithInstall & tryResolve utils ([#492])
 
-### 6.34.4
+## 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
 
-### 6.20.0
+## 6.20.0
 
 - Add `applyConfigOverrides` to allow command overrides in config ([#348])
   - Deprecates `applyEnvironmentOverrides` for improved API
 
-### 6.15.0
+## 6.15.0
 
 - Support for AbortController with `runShellCommand` ([#331])
 
-### 6.10.0
+## 6.10.0
 
 - TypeScript definitions for config & lifecycles ([#311])
 
-### 6.3.0
+## 6.3.0
 
 - Fixed issue where an `environments` section of config files was doing proper inheritance of dev environment settings for the `local` environment.
 
-### 6.0.13
+## 6.0.13
 
 - Added --legacy-peer-deps flag to install cli. ([#275])
 
-### 6.0.0
+## 6.0.0
 
 - Version alignment
 - Upgraded dependencies ([#247])
 
-### 5.1.1
+## 5.1.1
 
 - Fix missing dependency
 
-### 5.1.0
+## 5.1.0
 
 - Move and expose PackageManager from `@gasket/cli` ([#143])
   - Align tests to Mocha suite
 
-### 5.0.0
+## 5.0.0
 
 - Open Source Release
 
-### 1.2.0
+## 1.2.0
 
 - Align package structure and dependencies
 
-### 1.1.0
+## 1.1.0
 
 - Adds functions:
   - `runShellCommand`
 
-### 1.0.0
+## 1.0.0
 
 - Initial implementation. Adds:
   - `tryRequire`
   - `applyEnvironmentOverrides`
-
 
 [Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#143]: https://github.com/godaddy/gasket/pull/143

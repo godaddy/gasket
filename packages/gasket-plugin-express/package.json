@@ -11,11 +11,11 @@
   ],
   "scripts": {
     "lint": "eslint .",
-    "lint:fix": "npm run lint -- --fix",
+    "lint:fix": "pnpm run lint --fix",
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "posttest": "npm run lint && npm run typecheck",
+    "posttest": "pnpm run lint && pnpm run typecheck",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
@@ -38,25 +38,30 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-express",
   "dependencies": {
-    "@types/express": "^4.17.21",
-    "@types/jest": "^29.5.12",
-    "compression": "^1.7.4",
-    "cookie-parser": "^1.4.6",
+    "compression": "^1.8.0",
+    "cookie-parser": "^1.4.7",
     "diagnostics": "^2.0.2",
     "glob": "^8.1.0",
-    "http2-express": "^1.0.0"
+    "http2-express": "^1.0.1"
   },
   "devDependencies": {
-    "@gasket/core": "^7.2.3",
+    "@gasket/core": "workspace:^",
+    "@gasket/plugin-https": "workspace:^",
+    "@gasket/plugin-logger": "workspace:^",
+    "@gasket/plugin-metadata": "workspace:^",
+    "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^20.17.19",
+    "create-gasket-app": "workspace:^",
     "cross-env": "^7.0.3",
-    "eslint": "^8.56.0",
+    "eslint": "catalog:",
     "eslint-config-godaddy": "^7.1.1",
     "eslint-config-godaddy-typescript": "^4.0.3",
-    "eslint-plugin-jest": "^28.6.0",
+    "eslint-plugin-jest": "^28.11.0",
     "eslint-plugin-unicorn": "^55.0.0",
-    "express": "^4.21.0",
+    "express": "^4.21.2",
     "jest": "^29.7.0",
-    "typescript": "^5.4.5"
+    "typescript": "catalog:"
   },
   "peerDependencies": {
     "express": "^4.21.0"
@@ -72,17 +77,7 @@
       "jsdoc"
     ],
     "rules": {
-      "unicorn/filename-case": "error",
-      "valid-jsdoc": "off",
-      "spaced-comment": [
-        "error",
-        "always",
-        {
-          "markers": [
-            "/"
-          ]
-        }
-      ]
+      "unicorn/filename-case": "error"
     },
     "overrides": [
       {

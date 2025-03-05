@@ -1,5 +1,6 @@
 /// <reference types="@gasket/plugin-intl" />
 
+// @ts-ignore
 import { resolveGasketData } from '@gasket/data';
 
 /** @type {import('.').withLocaleInitialProps} */

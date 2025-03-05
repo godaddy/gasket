@@ -1,12 +1,13 @@
-import type { CreateContext, CreatePrompt } from 'create-gasket-app';
+import type { Plugin } from '@gasket/core';
+import type { CreateContext, CreatePrompt } from 'create-gasket-app' with { 'resolution-mode': 'import' };
 
-declare module '@gasket/plugin-typescript' {
-  export const name = '@gasket/plugin-typescript';
-  export const hooks = {};
 
-  /* Externalize TS prompts for preset */
-  export async function promptTypescript(
-    context: CreateContext,
-    prompt: CreatePrompt
-  ): Promise<undefined>
-}
+declare const plugin: Plugin;
+export default plugin;
+
+/* Externalize TS prompts for preset */
+export function promptTypescript(
+  context: CreateContext,
+  prompt: CreatePrompt
+): Promise<undefined>
+
