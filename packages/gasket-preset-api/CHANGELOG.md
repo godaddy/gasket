@@ -10,7 +10,7 @@
 
 - Updated dependencies [29f72a5]
   - @gasket/plugin-dynamic-plugins@7.3.0
-  - @gasket/plugin-docusaurus@8.0.0
+  - @gasket/plugin-docusaurus@7.3.0
   - @gasket/plugin-typescript@7.3.0
   - @gasket/plugin-command@7.3.0
   - @gasket/plugin-cypress@7.3.0

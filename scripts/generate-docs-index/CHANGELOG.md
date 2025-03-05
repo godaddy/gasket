@@ -14,7 +14,7 @@
   - @gasket/plugin-docs-graphs@7.3.0
   - @gasket/plugin-elastic-apm@7.3.0
   - @gasket/plugin-https-proxy@7.3.0
-  - @gasket/plugin-docusaurus@8.0.0
+  - @gasket/plugin-docusaurus@7.3.0
   - @gasket/plugin-middleware@7.3.0
   - @gasket/plugin-typescript@7.3.0
   - @gasket/plugin-happyfeet@7.3.0
@@ -30,8 +30,8 @@
   - @gasket/plugin-winston@7.3.0
   - @gasket/plugin-workbox@7.3.0
   - @gasket/plugin-logger@7.3.0
-  - @gasket/plugin-morgan@8.0.0
-  - @gasket/plugin-nextjs@8.0.0
+  - @gasket/plugin-morgan@7.3.0
+  - @gasket/plugin-nextjs@7.3.0
   - @gasket/preset-nextjs@7.3.0
   - @gasket/plugin-https@7.3.0
   - @gasket/plugin-mocha@7.3.0
@@ -44,7 +44,7 @@
   - create-gasket-app@7.3.0
   - @gasket/plugin-git@7.3.0
   - @gasket/preset-api@7.3.0
-  - @gasket/react-intl@8.0.0
+  - @gasket/react-intl@7.3.0
   - @gasket/request@7.3.0
   - @gasket/assets@7.3.0
   - @gasket/nextjs@7.3.0

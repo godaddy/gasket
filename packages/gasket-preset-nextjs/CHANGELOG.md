@@ -11,7 +11,7 @@
 - Updated dependencies [29f72a5]
   - @gasket/plugin-dynamic-plugins@7.3.0
   - @gasket/plugin-https-proxy@7.3.0
-  - @gasket/plugin-docusaurus@8.0.0
+  - @gasket/plugin-docusaurus@7.3.0
   - @gasket/plugin-typescript@7.3.0
   - @gasket/plugin-command@7.3.0
   - @gasket/plugin-cypress@7.3.0
@@ -19,7 +19,7 @@
   - @gasket/plugin-webpack@7.3.0
   - @gasket/plugin-winston@7.3.0
   - @gasket/plugin-logger@7.3.0
-  - @gasket/plugin-nextjs@8.0.0
+  - @gasket/plugin-nextjs@7.3.0
   - @gasket/plugin-https@7.3.0
   - @gasket/plugin-mocha@7.3.0
   - @gasket/plugin-docs@7.3.0
