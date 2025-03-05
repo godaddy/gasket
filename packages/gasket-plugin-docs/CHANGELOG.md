@@ -1,5 +1,16 @@
 # `@gasket/plugin-docs`
 
+## 7.3.0
+
+### Minor Changes
+
+- 29f72a5: Migrated packages to use PNPM and changesets. Fixed issues with types and dependencies.
+
+### Patch Changes
+
+- Updated dependencies [29f72a5]
+  - @gasket/plugin-command@7.3.0
+
 ### 7.2.3
 
 - Make plugin dynamic ([#1034])
@@ -91,8 +102,8 @@
 - Initial release
 
 [Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
-[#82]:https://github.com/godaddy/gasket/pull/82
-[#139]:https://github.com/godaddy/gasket/pull/139
+[#82]: https://github.com/godaddy/gasket/pull/82
+[#139]: https://github.com/godaddy/gasket/pull/139
 [#141]: https://github.com/godaddy/gasket/pull/141
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#311]: https://github.com/godaddy/gasket/pull/311

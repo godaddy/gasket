@@ -1,5 +1,11 @@
 # `@gasket/plugin-service-worker`
 
+## 7.3.0
+
+### Minor Changes
+
+- 29f72a5: Migrated packages to use PNPM and changesets. Fixed issues with types and dependencies.
+
 ## 7.1.0
 
 - Improvements to gasket command setup ([#989])
@@ -71,7 +77,7 @@
 - Support for caching sw content
 
 [Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
-[#95]:https://github.com/godaddy/gasket/pull/95
+[#95]: https://github.com/godaddy/gasket/pull/95
 [#158]: https://github.com/godaddy/gasket/pull/158
 [#217]: https://github.com/godaddy/gasket/pull/217
 [#311]: https://github.com/godaddy/gasket/pull/311

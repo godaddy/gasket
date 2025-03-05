@@ -1,5 +1,11 @@
 # `@gasket/plugin-https`
 
+## 7.3.0
+
+### Minor Changes
+
+- 29f72a5: Migrated packages to use PNPM and changesets. Fixed issues with types and dependencies.
+
 ## 7.2.2
 
 - Add configure hook to set a default for the root property inside the https|htt2 config options ([#1028])
@@ -121,6 +127,5 @@
 [#736]: https://github.com/godaddy/gasket/pull/736
 [#952]: https://github.com/godaddy/gasket/pull/952
 [#1028]: https://github.com/godaddy/gasket/pull/1028
-
 [terminus]: https://github.com/godaddy/terminus
 [create-servers]: https://github.com/http-party/create-servers

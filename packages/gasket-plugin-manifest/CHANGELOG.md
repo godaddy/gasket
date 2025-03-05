@@ -1,5 +1,11 @@
 # `@gasket/plugin-manifest`
 
+## 7.3.0
+
+### Minor Changes
+
+- 29f72a5: Migrated packages to use PNPM and changesets. Fixed issues with types and dependencies.
+
 ## 7.1.0
 
 - Aligned version releases across all packages
@@ -51,19 +57,19 @@
 
 ## 1.2.0
 
- Add `manifest.path` config option to allow serving `manifest.json` from a custom path
+- Add `manifest.path` config option to allow serving `manifest.json` from a custom path
 
 ## 1.1.0
 
- Use execWaterfall for the manifest lifecycle
+- Use execWaterfall for the manifest lifecycle
 
 ## 1.0.1
 
- Fix forward slash on endpoint
+- Fix forward slash on endpoint
 
 ## 1.0.0
 
- Initial implementation
+- Initial implementation
 
 - Serving `manifest.json`
 - Adding a `link` to the document `<head>`

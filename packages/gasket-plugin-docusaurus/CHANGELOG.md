@@ -1,5 +1,16 @@
 # `@gasket/plugin-docusaurus`
 
+## 7.3.0
+
+### Minor Changes
+
+- 29f72a5: Migrated packages to use PNPM and changesets. Fixed issues with types and dependencies.
+
+### Patch Changes
+
+- Updated dependencies [29f72a5]
+  - @gasket/plugin-logger@7.3.0
+
 ### 7.2.3
 
 - Make plugin dynamic ([#1034])
@@ -37,7 +48,7 @@
 
 ## 6.35.0
 
-- Upgrade @docusaurus/* to v2.2.0 ([#481])
+- Upgrade @docusaurus/\* to v2.2.0 ([#481])
 
 ## 6.34.4
 

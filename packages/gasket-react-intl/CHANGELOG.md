@@ -1,5 +1,19 @@
 # `@gasket/react-intl`
 
+## 7.3.0
+
+### Minor Changes
+
+- 29f72a5: Migrated packages to use PNPM and changesets. Fixed issues with types and dependencies.
+
+### Patch Changes
+
+- Updated dependencies [29f72a5]
+  - @gasket/plugin-intl@7.3.0
+  - @gasket/fetch@7.3.0
+  - @gasket/data@7.3.0
+  - @gasket/intl@7.3.0
+
 ## 7.1.0
 
 - Aligned version releases across all packages
@@ -178,7 +192,6 @@
 - Switch to Reduxful
 
 [Next.js i18n routing]: https://nextjs.org/docs/advanced-features/i18n-routing
-
 [Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#166]: https://github.com/godaddy/gasket/pull/166
 [#175]: https://github.com/godaddy/gasket/pull/175
