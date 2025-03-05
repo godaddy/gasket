@@ -24,9 +24,7 @@ export interface BaseConfig {
   path: string;
 }
 
-const plugin: Plugin = {
-  name: '@gasket/plugin-docusaurus',
-  hooks: {}
-};
+declare const plugin: Plugin;
 
-export = plugin;
+export default plugin;
+

@@ -1,42 +1,41 @@
 # `@gasket/plugin-docs-graph`
 
-### 7.1.0
+## 7.1.0
 
 - Aligned version releases across all packages
 
-### 7.0.0
+## 7.0.0
 
 - See [Version 7 Upgrade Guide] for overall changes
 
-### 6.34.4
+## 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
 
-### 6.34.3
+## 6.34.3
 
 - Upgrade mocha v10 ([#442])
 
-### 6.26.2
+## 6.26.2
 
 - Fix syntax error with the deprecation note in the lifecycle diagram ([#386])
 
-### 6.24.2
+## 6.24.2
 
 - Support showing deprecation for lifecycles ([#376])
 
-### 6.11.2
+## 6.11.2
 
 - Use fs.promises ([#319])
 
-### 6.0.0
+## 6.0.0
 
 - Version alignment
 - Upgraded dev dependencies ([#247])
 
-### 5.0.2
+## 5.0.2
 
 - Initial implementation
-
 
 [Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#247]: https://github.com/godaddy/gasket/pull/247

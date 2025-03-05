@@ -41,7 +41,7 @@ async function setupNextApp(gasket) {
 
 /**
  * Sets up the next.js request handler to be called after all other middleware
- * @type {import('../internal').setupNextServer}
+ * @type {import('../internal').setupNextHandling}
  */
 function setupNextHandling(nextServer, serverApp, gasket) {
   const nextHandler = nextServer.getRequestHandler();

@@ -8,6 +8,8 @@ interface BaseHttpsProxyConfig extends ProxyServerOptions {
   hostname?: string;
   /** defaults to 8080 */
   port?: number;
+  target?: string;
+  forward?: string;
 }
 
 declare module '@gasket/core' {
@@ -26,9 +28,9 @@ declare module '@gasket/core' {
   }
 }
 
-const plugin: Plugin = {
-  name: '@gasket/plugin-plugin-https-proxy',
-  hooks: {}
-};
 
-export default plugin;
+
+declare module '@gasket/plugin-https-proxy' {
+  const plugin: Plugin;
+  export default plugin;
+}

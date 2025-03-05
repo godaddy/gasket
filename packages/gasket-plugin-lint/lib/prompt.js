@@ -1,4 +1,5 @@
 /// <reference types="@gasket/plugin-express" />
+/// <reference types="create-gasket-app" />
 
 const codeStyles = require('./code-styles');
 

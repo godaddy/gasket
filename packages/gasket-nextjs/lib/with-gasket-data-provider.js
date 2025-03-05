@@ -1,5 +1,6 @@
 import { createElement } from 'react';
 import hoistNonReactStatics from 'hoist-non-react-statics';
+// @ts-ignore
 import { resolveGasketData } from '@gasket/data';
 import { GasketDataProvider } from './gasket-data-provider.js';
 

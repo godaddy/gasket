@@ -1,5 +1,5 @@
 /**
- * @type {typeof import('./index.js').WeakPromiseKeeper}
+ * @type {import('@gasket/request').WeakPromiseKeeper}
  */
 // @ts-ignore - https://github.com/microsoft/TypeScript/issues/56664
 export class WeakPromiseKeeper extends WeakMap {

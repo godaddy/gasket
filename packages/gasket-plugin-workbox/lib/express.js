@@ -1,11 +1,9 @@
+/// <reference types="@gasket/plugin-express" />
+
 const serveStatic = require('serve-static');
 const { getOutputDir } = require('./utils');
 
-/**
- * Express lifecycle to set up route for serving workbox libraries
- * @param {Gasket} gasket - Gasket
- * @param {object} app - Express app
- */
+/** @type {import('@gasket/core').HookHandler<'express'>} */
 module.exports = function express(gasket, app) {
   const outputDir = getOutputDir(gasket);
 

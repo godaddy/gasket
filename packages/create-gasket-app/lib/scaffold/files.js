@@ -1,6 +1,6 @@
 /**
  * Utility for plugins to add files and templates for generating
- * @type {import('create-gasket-app').Files}
+ * @type {import('../index').Files}
  */
 export class Files {
   constructor() {

@@ -18,7 +18,7 @@ function selectBody(children) {
 
 /**
  * Renders a script tag with JSON gasketData
- * @type {import('@gasket/nextjs').injectGasketData}
+ * @type {import('.').injectGasketData}
  */
 export function injectGasketData(html, gasketData, lookupIndex, insertIndex = -1) {
   const htmlChildren = Children.toArray(html.props.children);

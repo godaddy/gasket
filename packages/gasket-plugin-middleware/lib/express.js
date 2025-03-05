@@ -41,8 +41,11 @@ module.exports = async function express(gasket, app) {
        * and also, by the 'compiled' version in Next.js
        * @see: https://github.com/vercel/next.js/issues/11669
        */
+      // @ts-ignore
       function http2Patch(req, res, next) {
+        // @ts-ignore
         if (!res._implicitHeader) {
+          // @ts-ignore
           res._implicitHeader = () => res.writeHead(res.statusCode);
         }
         return next();
@@ -65,6 +68,7 @@ module.exports = async function express(gasket, app) {
     };
   }
 
+  // @ts-ignore
   useForAllowedPaths((req, res, next) => {
     req.logger = gasket.logger;
     attachLogEnhancer(req);

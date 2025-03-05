@@ -1,68 +1,67 @@
 # `@gasket/nextjs`
 
-### 7.1.0
+## 7.1.0
 
 - Use normalized GasketRequest ([#973])
-  - Deprecating request from `@gasket/nextjs/server` for 
+  - Deprecating request from `@gasket/nextjs/server` for
     `@gasket/nextjs/request`
   - Supports Next 15 async headers
 
-### 7.0.0
+## 7.0.0
 
 - See [Version 7 Upgrade Guide] for overall changes
 - Add gasketData layout for app router ([#814])
 - Add file extensions to imports, fix package exports conflict ([#778])
 
-### 6.45.2
+## 6.45.2
 
 - Refactor tests to Jest, update test scripts, add `cross-env`, remove obsolete `devDeps` ([#670])
 
-### 6.43.0
+## 6.43.0
 
 - Upgrade to Next.js 13.1.1 ([#614])
 
-### 6.40.0
+## 6.40.0
 
 - Fix TypeScript declarations for HOCs ([#603])
 
-### 6.37.0
+## 6.37.0
 
 - Migrate from Enzyme to React Testing Library ([#523])
 
-### 6.34.4
+## 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
 - Upgrade setup-env to v2 ([#459])
 - Upgrade sinon to v14 ([#460])
 
-### 6.34.3
+## 6.34.3
 
 - Upgrade mocha v10 ([#442])
 
-### 6.34.2
+## 6.34.2
 
 - Upgrade jsdom to v20 ([#440])
 
-### 6.20.3
+## 6.20.3
 
 - Switch Enzyme adapter for React 17 ([#354])
 
-### 6.8.0
+## 6.8.0
 
 - Add `withGasketDataProvider` and `useGasketData` React hook ([#298])
 
-### 6.4.0
+## 6.4.0
 
 - Upgrade to next@^10.2 ([#285]).
 
-### 6.0.9
+## 6.0.9
 
 - Adjust peerDependencies ([#262])
 
-### 6.0.0
+## 6.0.0
 
 - Initial release
-
 
 [Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#262]: https://github.com/godaddy/gasket/pull/262

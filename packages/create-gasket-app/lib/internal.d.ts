@@ -6,7 +6,7 @@ import type {
   CommandArgument,
   CommandOption,
   CreateCommandOptions
-} from 'create-gasket-app';
+} from './index.d.ts';
 import type { GasketEngine, Plugin, Gasket } from '@gasket/core';
 import type { Ora } from 'ora';
 import type { Command, Option } from 'commander';
@@ -27,7 +27,7 @@ export function dumpErrorContext(context: PartialCreateContext, error: Error): P
 
 export function makeCreateContext(argv?: string[], options?: CreateCommandOptions): PartialCreateContext;
 
-export function makeCreateRuntime(context: PartialCreateContext, source: Plugin): Proxy<CreateContext>;
+export function makeCreateRuntime(context: PartialCreateContext, source: Plugin): typeof Proxy<CreateContext>;
 
 /**
  * Represents the execution context for a task.
@@ -134,7 +134,7 @@ export function writeGasketConfig(params: { context: PartialCreateContext }): Pr
 export function writeImports(imports: object | null): string;
 export function writeExpressions(expressions: string[] | null): string;
 export function createInjectionAssignments(config: object, assignments: (object | null)): string;
-export function cleanupFields(config: ConfigBuilder): void;
+export function cleanupFields(config: ConfigBuilder<>): void;
 export function writePluginImports(plugins: string[]): string;
 export function replaceInjectionAssignments(content: string, assignments: (object | null)): string;
 

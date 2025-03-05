@@ -1,6 +1,5 @@
 /**
  * Try to resolve a module, returning null if not found
- *
  * @param moduleName
  * @param paths
  */

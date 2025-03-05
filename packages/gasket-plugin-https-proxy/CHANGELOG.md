@@ -1,6 +1,6 @@
 # `@gasket/plugin-https-proxy`
 
-### 7.1.0
+## 7.1.0
 
 - Initial implementation ([#982])
 
