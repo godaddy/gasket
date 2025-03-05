@@ -38,7 +38,7 @@ async function choosePackageManager(context, prompt) {
             { name: 'pnpm' },
             { name: 'yarn' }
           ],
-          default: 'pnpm'
+          default: 'npm'
         }
       ])
     ).packageManager;
