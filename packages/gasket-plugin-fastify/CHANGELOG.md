@@ -1,5 +1,11 @@
 # `@gasket/plugin-fastify`
 
+## 7.3.1
+
+### Patch Changes
+
+- 4b6d124: Removed accidental test devDep.
+
 ## 7.3.0
 
 ### Minor Changes

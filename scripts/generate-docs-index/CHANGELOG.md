@@ -1,5 +1,19 @@
 # generate-docs-index
 
+## 7.3.1
+
+### Patch Changes
+
+- Updated dependencies [4b6d124]
+  - @gasket/plugin-fastify@7.3.1
+  - @gasket/plugin-manifest@7.3.0
+  - @gasket/plugin-middleware@7.3.0
+  - @gasket/plugin-nextjs@7.3.0
+  - @gasket/plugin-service-worker@7.3.0
+  - @gasket/plugin-swagger@7.3.0
+  - @gasket/plugin-workbox@7.3.0
+  - @gasket/preset-api@7.3.1
+
 ## 7.3.0
 
 ### Minor Changes
