@@ -1156,9 +1156,6 @@ importers:
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@20.17.19)(typescript@5.7.3))
-      plugin-https,:
-        specifier: link:@gasket/plugin-https,
-        version: link:@gasket/plugin-https,
       typescript:
         specifier: 'catalog:'
         version: 5.7.3
