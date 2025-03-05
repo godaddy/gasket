@@ -92,7 +92,6 @@ const createCommand = {
 
 async function newPresetFlow(context) {
   await loadPreset({ context });
-  // await globalPrompts({ context });
 
   for (const fn of context.presets) {
     await fn(context);
