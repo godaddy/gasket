@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-analyze",
-  "version": "7.2.3",
+  "version": "7.3.0",
   "description": "Gasket Analyzer Plugin",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

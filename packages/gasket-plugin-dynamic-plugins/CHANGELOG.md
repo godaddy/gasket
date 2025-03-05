@@ -1,5 +1,11 @@
 # `@gasket/plugin-dynamic-plugins`
 
+## 7.3.0
+
+### Minor Changes
+
+- 29f72a5: Migrated packages to use PNPM and changesets. Fixed issues with types and dependencies.
+
 ### 7.2.3
 
 - Add to config during create ([#1010])
