@@ -1,5 +1,7 @@
 # `@gasket/plugin-metadata`
 
+### 7.2.3
+
 - Add plugin as a dev dependency in create ([#1034])
 
 ## 7.2.1

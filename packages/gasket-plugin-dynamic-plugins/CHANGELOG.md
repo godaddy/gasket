@@ -1,5 +1,7 @@
 # `@gasket/plugin-dynamic-plugins`
 
+### 7.2.3
+
 - Add to config during create ([#1010])
 
 ## 7.2.0

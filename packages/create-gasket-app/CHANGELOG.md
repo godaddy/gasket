@@ -1,5 +1,7 @@
 # `create-gasket-app`
 
+### 7.2.3
+
 - Add `remove` to config-builder ([#1036])
 - Add `addCommand` method for create context ([#1034])
 - Add `addEnvironment` method for create context ([#1010])
