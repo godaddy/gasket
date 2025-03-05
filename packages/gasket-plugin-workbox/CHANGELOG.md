@@ -68,7 +68,7 @@
 
 ## 1.0.0
 
-Initial implementation.
+- Initial implementation.
 
 [Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#95]: https://github.com/godaddy/gasket/pull/95
