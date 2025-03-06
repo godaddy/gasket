@@ -27,7 +27,5 @@ declare module '@gasket/core' {
   }
 }
 
-declare module '@gasket/plugin-middleware' {
-  const plugin: Plugin;
-  export default plugin;
-}
+declare const plugin: Plugin;
+export default plugin;
