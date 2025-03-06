@@ -1,29 +1,22 @@
 import type { MaybeAsync, MaybeMultiple, Plugin } from '@gasket/core';
 import type { Application, ErrorRequestHandler, Handler } from 'express';
 
+
+export interface ExpressConfig {
+  /** Whether responses are compressed (true by default) */
+  compression?: boolean;
+  trustProxy?: boolean | string | number | Function;
+}
 declare module '@gasket/core' {
   export interface GasketActions {
     /** @deprecated */
     getExpressApp(): Application;
   }
   export interface GasketConfig {
-    express?: {
-      /** Whether responses are compressed (true by default) */
-      compression?: boolean;
-      /** Filter for which request URLs invoke Gasket middleware */
-      middlewareInclusionRegex?: RegExp;
-      /** @deprecated */
-      excludedRoutesRegex?: RegExp;
-      trustProxy?: boolean | string | number | Function;
-    };
-    middleware?: {
-      plugin: string;
-      paths?: (string | RegExp)[];
-    }[];
+    express?: ExpressConfig;
   }
 
   export interface HookExecTypes {
-    middleware(app: Application): MaybeAsync<MaybeMultiple<Handler> & { paths?: (string | RegExp)[] }>;
     express(app: Application): MaybeAsync<void>;
     errorMiddleware(): MaybeAsync<MaybeMultiple<ErrorRequestHandler>>;
   }

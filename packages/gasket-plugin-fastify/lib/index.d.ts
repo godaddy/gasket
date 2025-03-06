@@ -11,6 +11,15 @@ import type {
 } from 'fastify';
 import type { IncomingMessage, ServerResponse } from 'http';
 
+export interface FastifyConfig {
+  /** Enable compression */
+  compression?: boolean;
+  /** Trust proxy configuration */
+  trustProxy?: FastifyServerOptions['trustProxy'];
+  /** Fastify request logging per route */
+  disableRequestLogging?: boolean;
+}
+
 declare module '@gasket/core' {
   export interface GasketActions {
     /** @deprecated */
@@ -18,25 +27,7 @@ declare module '@gasket/core' {
   }
 
   export interface GasketConfig {
-    fastify?: {
-      /** Enable compression */
-      compression?: boolean;
-      /** Filter for which request URLs invoke Gasket middleware */
-      middlewareInclusionRegex?: RegExp;
-      /** @deprecated */
-      excludedRoutesRegex?: RegExp;
-      /** Trust proxy configuration */
-      trustProxy?: FastifyServerOptions['trustProxy'];
-      /** Fastify request logging per route */
-      disableRequestLogging?: boolean;
-    };
-    /** Middleware configuration */
-    middleware?: {
-      /** Plugin name */
-      plugin: string;
-      /** Paths for middleware */
-      paths?: (string | RegExp)[];
-    }[];
+    fastify?: FastifyConfig
   }
 
   /**

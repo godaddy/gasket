@@ -6,6 +6,24 @@ declare module 'fastify' {
   }
 }
 
+declare module '@gasket/plugin-fastify' {
+  interface FastifyConfig {
+    /** Filter for which request URLs invoke Gasket middleware */
+    middlewareInclusionRegex?: RegExp;
+    /** @deprecated */
+    excludedRoutesRegex?: RegExp;
+  }
+}
+
+declare module '@gasket/plugin-express' {
+  interface ExpressConfig {
+    /** Filter for which request URLs invoke Gasket middleware */
+    middlewareInclusionRegex?: RegExp;
+    /** @deprecated */
+    excludedRoutesRegex?: RegExp;
+  }
+}
+
 declare module 'express-serve-static-core' {
   interface Response {
     /*
@@ -24,6 +42,16 @@ declare module '@gasket/core' {
     middleware(): MaybeAsync<MaybeMultiple<Handler> & {
       paths?: (string | RegExp)[]
     }>;
+  }
+
+  export interface GasketConfig {
+    /** Middleware configuration */
+    middleware?: {
+      /** Plugin name */
+      plugin: string;
+      /** Paths for middleware */
+      paths?: (string | RegExp)[];
+    }[];
   }
 }
 
