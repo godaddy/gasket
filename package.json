@@ -67,7 +67,7 @@
     "react": "catalog:",
     "react-dom": "catalog:",
     "rimraf": "catalog:",
-    "search-insights": ">= 1 < 3",
+    "search-insights": "catalog:",
     "typescript": "catalog:"
   },
   "eslintConfig": {

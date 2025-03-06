@@ -60,7 +60,7 @@
     "jest": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "search-insights": "^2.17.3",
+    "search-insights": "catalog:",
     "typescript": "catalog:"
   },
   "peerDependencies": {

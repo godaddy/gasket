@@ -44,7 +44,7 @@ catalog:
   "@types/webpack-bundle-analyzer": ^4.7.0
   "@types/workbox-build": ^5.1.0
   "@typescript-eslint/eslint-plugin": ^6.21.0
-  "@typescript-eslint/parser": ^6.0.0
+  "@typescript-eslint/parser": ^6.21.0
   abort-controller: ^3.0.0
   acorn: ^8.14.0
   ajv: ^8.17.1
@@ -125,6 +125,7 @@ catalog:
   regenerator-runtime: ^0.14.1
   replace: ^1.2.2
   rimraf: ^3.0.2
+  search-insights: ^2.17.3
   semver: ^7.7.1
   serve-static: ^1.16.2
   split: ^1.0.1
