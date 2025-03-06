@@ -59,8 +59,5 @@ export function promptSwagger(
   prompt: CreatePrompt
 ): Promise<CreateContext>
 
-
-declare module '@gasket/plugin-swagger' {
-  const plugin: Plugin;
-  export default plugin;
-}
+declare const plugin: Plugin;
+export default plugin;

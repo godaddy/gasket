@@ -58,7 +58,7 @@
     "typescript": "^5.7.3"
   },
   "peerDependencies": {
-    "fastify": "^4"
+    "fastify": "^4.29.0"
   },
   "eslintConfig": {
     "extends": [

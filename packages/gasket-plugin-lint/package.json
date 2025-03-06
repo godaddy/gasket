@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-lint",
-  "version": "7.3.0",
+  "version": "7.3.1",
   "description": "Adds GoDaddy standard linting to your application",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -45,6 +45,7 @@
     "@gasket/plugin-metadata": "^7.3.0",
     "@types/jest": "^29.5.14",
     "@types/node": "^20.17.19",
+    "@typescript-eslint/parser": "^6.21.0",
     "create-gasket-app": "^7.3.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.57.1",

@@ -1,5 +1,12 @@
 # `@gasket/plugin-metadata`
 
+## 7.3.1
+
+### Patch Changes
+
+- 87ea998: Add missing dep to lint plugin, adjust TS type exports
+  - @gasket/plugin-logger@7.3.0
+
 ## 7.3.0
 
 ### Minor Changes

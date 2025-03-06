@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-analyze",
-  "version": "7.3.0",
+  "version": "7.3.1",
   "description": "Gasket Analyzer Plugin",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -36,12 +36,12 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-analyze",
   "dependencies": {
-    "@types/webpack-bundle-analyzer": "^4.7.0",
     "deepmerge": "^4.3.1",
     "webpack-bundle-analyzer": "^4.10.2"
   },
   "devDependencies": {
     "@gasket/core": "^7.3.0",
+    "@types/webpack-bundle-analyzer": "^4.7.0",
     "@gasket/plugin-metadata": "^7.3.0",
     "@gasket/plugin-webpack": "^7.3.0",
     "@types/jest": "^29.5.14",

@@ -28,9 +28,5 @@ declare module '@gasket/core' {
   }
 }
 
-
-
-declare module '@gasket/plugin-https-proxy' {
-  const plugin: Plugin;
-  export default plugin;
-}
+declare const plugin: Plugin;
+export default plugin;
