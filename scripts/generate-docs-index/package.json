@@ -56,10 +56,10 @@
     "create-gasket-app": "workspace:^"
   },
   "devDependencies": {
-    "@types/jest": "^29.5.14",
-    "@types/node": "^20.17.19",
+    "@types/jest": "catalog:",
+    "@types/node": "catalog:",
     "eslint": "catalog:",
-    "eslint-plugin-unicorn": "^44.0.2"
+    "eslint-plugin-unicorn": "catalog:"
   },
   "eslintConfig": {
     "extends": [
