@@ -1,5 +1,30 @@
 # `@gasket/preset-nextjs`
 
+## 7.3.1
+
+### Patch Changes
+
+- Updated dependencies [87ea998]
+- Updated dependencies [cd76a80]
+  - @gasket/plugin-dynamic-plugins@7.3.1
+  - @gasket/plugin-https-proxy@7.3.1
+  - @gasket/plugin-command@7.3.1
+  - @gasket/plugin-https@7.3.1
+  - @gasket/plugin-mocha@7.3.1
+  - @gasket/plugin-lint@7.3.1
+  - @gasket/plugin-intl@7.3.0
+  - @gasket/plugin-nextjs@7.3.0
+  - @gasket/plugin-cypress@7.3.0
+  - @gasket/plugin-docs@7.3.1
+  - @gasket/plugin-docusaurus@7.3.0
+  - @gasket/plugin-express@7.3.0
+  - @gasket/plugin-git@7.3.0
+  - @gasket/plugin-jest@7.3.0
+  - @gasket/plugin-logger@7.3.0
+  - @gasket/plugin-typescript@7.3.0
+  - @gasket/plugin-webpack@7.3.0
+  - @gasket/plugin-winston@7.3.0
+
 ## 7.3.0
 
 ### Minor Changes
