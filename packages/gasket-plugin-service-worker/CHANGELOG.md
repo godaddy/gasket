@@ -1,5 +1,11 @@
 # `@gasket/plugin-service-worker`
 
+## 7.3.2
+
+### Patch Changes
+
+- 41e5c6d: Remove Catalog and Workspace alias usage.
+
 ## 7.3.1
 
 ### Patch Changes

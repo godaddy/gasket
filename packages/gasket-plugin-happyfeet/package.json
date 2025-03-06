@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-happyfeet",
-  "version": "7.3.0",
+  "version": "7.3.1",
   "description": "A gasket plugin to enable happyfeet healthchecks",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -35,13 +35,13 @@
     "happy-feet": "^2.2.0"
   },
   "devDependencies": {
-    "@gasket/core": "^7.3.0",
-    "@gasket/plugin-https": "^7.3.0",
-    "@gasket/plugin-metadata": "^7.3.0",
+    "@gasket/core": "^7.3.1",
+    "@gasket/plugin-https": "^7.3.2",
+    "@gasket/plugin-metadata": "^7.3.2",
     "@godaddy/terminus": "^4.12.1",
     "@types/jest": "^29.5.14",
     "@types/node": "^20.17.19",
-    "create-gasket-app": "^7.3.0",
+    "create-gasket-app": "^7.3.2",
     "cross-env": "^7.0.3",
     "eslint": "^8.57.1",
     "eslint-config-godaddy": "^7.1.1",

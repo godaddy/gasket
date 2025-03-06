@@ -1,5 +1,31 @@
 # `@gasket/preset-nextjs`
 
+## 7.3.2
+
+### Patch Changes
+
+- 41e5c6d: Remove Catalog and Workspace alias usage.
+- Updated dependencies [41e5c6d]
+  - @gasket/plugin-dynamic-plugins@7.3.2
+  - @gasket/plugin-https-proxy@7.3.2
+  - @gasket/plugin-docusaurus@7.3.1
+  - @gasket/plugin-typescript@7.3.1
+  - @gasket/plugin-command@7.3.2
+  - @gasket/plugin-cypress@7.3.1
+  - @gasket/plugin-express@7.3.1
+  - @gasket/plugin-webpack@7.3.1
+  - @gasket/plugin-winston@7.3.1
+  - @gasket/plugin-logger@7.3.1
+  - @gasket/plugin-nextjs@7.3.1
+  - @gasket/plugin-https@7.3.2
+  - @gasket/plugin-mocha@7.3.2
+  - @gasket/plugin-docs@7.3.2
+  - @gasket/plugin-intl@7.3.1
+  - @gasket/plugin-jest@7.3.1
+  - @gasket/plugin-lint@7.3.2
+  - @gasket/plugin-git@7.3.1
+  - @gasket/utils@7.3.1
+
 ## 7.3.1
 
 ### Patch Changes
