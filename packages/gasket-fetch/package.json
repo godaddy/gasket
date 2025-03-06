@@ -37,28 +37,28 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-fetch",
   "dependencies": {
-    "abort-controller": "catalog:",
-    "node-fetch": "catalog:"
+    "abort-controller": "^3.0.0",
+    "node-fetch": "^2.7.0"
   },
   "devDependencies": {
-    "@babel/core": "catalog:",
-    "@babel/plugin-transform-runtime": "catalog:",
-    "@babel/preset-env": "catalog:",
-    "@babel/register": "catalog:",
-    "@types/jest": "catalog:",
-    "@types/node": "catalog:",
-    "core-js": "catalog:",
-    "cross-env": "catalog:",
-    "eslint": "catalog:",
-    "eslint-config-godaddy": "catalog:",
-    "eslint-config-godaddy-typescript": "catalog:",
-    "eslint-plugin-jest": "catalog:",
-    "eslint-plugin-unicorn": "catalog:",
-    "jest": "catalog:",
-    "jsdom": "catalog:",
-    "regenerator-runtime": "catalog:",
-    "typescript": "catalog:",
-    "whatwg-fetch": "catalog:"
+    "@babel/core": "^7.26.9",
+    "@babel/plugin-transform-runtime": "^7.26.9",
+    "@babel/preset-env": "^7.26.9",
+    "@babel/register": "^7.25.9",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^20.17.19",
+    "core-js": "^3.40.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.57.1",
+    "eslint-config-godaddy": "^7.1.1",
+    "eslint-config-godaddy-typescript": "^4.0.3",
+    "eslint-plugin-jest": "^28.11.0",
+    "eslint-plugin-unicorn": "^55.0.0",
+    "jest": "^29.7.0",
+    "jsdom": "^20.0.3",
+    "regenerator-runtime": "^0.14.1",
+    "typescript": "^5.7.3",
+    "whatwg-fetch": "3.6.20"
   },
   "eslintConfig": {
     "extends": [

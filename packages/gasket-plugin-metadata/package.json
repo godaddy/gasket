@@ -37,23 +37,23 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-metadata",
   "dependencies": {
-    "@gasket/core": "workspace:^",
-    "@gasket/plugin-logger": "workspace:^"
+    "@gasket/core": "^7.3.0",
+    "@gasket/plugin-logger": "^7.3.0"
   },
   "devDependencies": {
-    "@gasket/plugin-metadata": "workspace:^",
-    "@gasket/plugin-webpack": "workspace:^",
-    "@godaddy/dmd": "catalog:",
-    "@types/jest": "catalog:",
-    "@types/node": "catalog:",
-    "create-gasket-app": "workspace:^",
-    "eslint": "catalog:",
-    "eslint-config-godaddy": "catalog:",
-    "eslint-config-godaddy-typescript": "catalog:",
-    "eslint-plugin-jest": "catalog:",
-    "eslint-plugin-unicorn": "catalog:",
-    "typescript": "catalog:",
-    "vitest": "catalog:"
+    "@gasket/plugin-metadata": "^7.3.0",
+    "@gasket/plugin-webpack": "^7.3.0",
+    "@godaddy/dmd": "^1.0.4",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^20.17.19",
+    "create-gasket-app": "^7.3.0",
+    "eslint": "^8.57.1",
+    "eslint-config-godaddy": "^7.1.1",
+    "eslint-config-godaddy-typescript": "^4.0.3",
+    "eslint-plugin-jest": "^28.11.0",
+    "eslint-plugin-unicorn": "^55.0.0",
+    "typescript": "^5.7.3",
+    "vitest": "^3.0.7"
   },
   "eslintConfig": {
     "extends": [
