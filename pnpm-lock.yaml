@@ -1573,6 +1573,9 @@ importers:
       '@types/node':
         specifier: ^20.17.19
         version: 20.17.19
+      '@typescript-eslint/parser':
+        specifier: ^6.21.0
+        version: 6.21.0(eslint@8.57.1)(typescript@5.7.3)
       create-gasket-app:
         specifier: workspace:^
         version: link:../create-gasket-app
