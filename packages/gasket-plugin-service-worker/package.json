@@ -36,8 +36,6 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-service-worker",
   "dependencies": {
-    "@types/lru-cache": "^5.1.1",
-    "@types/uglify-js": "^3.17.5",
     "deepmerge": "^4.3.1",
     "lru-cache": "^5.1.1",
     "mkdirp": "^1.0.4",
@@ -46,6 +44,8 @@
   },
   "devDependencies": {
     "@gasket/core": "workspace:^",
+    "@types/lru-cache": "^5.1.1",
+    "@types/uglify-js": "^3.17.5",
     "@gasket/plugin-command": "workspace:^",
     "@gasket/plugin-express": "workspace:^",
     "@gasket/plugin-fastify": "workspace:^",

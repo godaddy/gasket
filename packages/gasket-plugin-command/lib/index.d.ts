@@ -39,7 +39,5 @@ declare module '@gasket/core' {
   }
 }
 
-declare module '@gasket/plugin-command' {
-}
 declare const plugin: Plugin;
 export default plugin;

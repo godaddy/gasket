@@ -517,9 +517,6 @@ importers:
 
   packages/gasket-plugin-analyze:
     dependencies:
-      '@types/webpack-bundle-analyzer':
-        specifier: ^4.7.0
-        version: 4.7.0(@swc/core@1.10.18(@swc/helpers@0.5.5))
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
@@ -542,6 +539,9 @@ importers:
       '@types/node':
         specifier: ^20.17.19
         version: 20.17.19
+      '@types/webpack-bundle-analyzer':
+        specifier: ^4.7.0
+        version: 4.7.0(@swc/core@1.10.18(@swc/helpers@0.5.5))
       create-gasket-app:
         specifier: workspace:^
         version: link:../create-gasket-app
@@ -1263,9 +1263,6 @@ importers:
       '@godaddy/terminus':
         specifier: ^4.12.1
         version: 4.12.1
-      '@types/http-proxy':
-        specifier: ^1.17.16
-        version: 1.17.16
       create-servers:
         specifier: ^3.3.0
         version: 3.3.0
@@ -1291,6 +1288,9 @@ importers:
       '@gasket/plugin-metadata':
         specifier: workspace:^
         version: link:../gasket-plugin-metadata
+      '@types/http-proxy':
+        specifier: ^1.17.16
+        version: 1.17.16
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -1573,6 +1573,9 @@ importers:
       '@types/node':
         specifier: ^20.17.19
         version: 20.17.19
+      '@typescript-eslint/parser':
+        specifier: ^6.21.0
+        version: 6.21.0(eslint@8.57.1)(typescript@5.7.3)
       create-gasket-app:
         specifier: workspace:^
         version: link:../create-gasket-app
@@ -2196,12 +2199,6 @@ importers:
 
   packages/gasket-plugin-service-worker:
     dependencies:
-      '@types/lru-cache':
-        specifier: ^5.1.1
-        version: 5.1.1
-      '@types/uglify-js':
-        specifier: ^3.17.5
-        version: 3.17.5
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
@@ -2242,9 +2239,15 @@ importers:
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
+      '@types/lru-cache':
+        specifier: ^5.1.1
+        version: 5.1.1
       '@types/node':
         specifier: ^20.17.19
         version: 20.17.19
+      '@types/uglify-js':
+        specifier: ^3.17.5
+        version: 3.17.5
       create-gasket-app:
         specifier: workspace:^
         version: link:../create-gasket-app
