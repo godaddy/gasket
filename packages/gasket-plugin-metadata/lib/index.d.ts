@@ -85,6 +85,5 @@ declare module '@gasket/core' {
   }
 }
 
-// Export plugin separately
 declare const plugin: Plugin;
 export default plugin;
