@@ -70,12 +70,12 @@ describe('utils', () => {
 
     it('[yarn] returns command', () => {
       const results = forYarn('test-script');
-      expect(results).toEqual('yarn test-script');
+      expect(results).toEqual('yarn run test-script');
     });
 
     it('[yarn] returns command with flags (removes "--")', () => {
       const results = forYarn('test-script -- --extra');
-      expect(results).toEqual('yarn test-script --extra');
+      expect(results).toEqual('yarn run test-script --extra');
     });
 
     it('throws TypeError for an invalid script name', () => {

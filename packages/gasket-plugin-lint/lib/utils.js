@@ -68,12 +68,12 @@ function makeGatherDevDeps() {
 /**
  * Creates a function to generate the correct package script execution command.
  *
- * This function returns a script command formatted for either npm or yarn, depending
+ * This function returns a script command formatted for npm, yarn, or pnpm, depending
  * on the package manager used in the given context.
  * @type {import('./internal').makeRunScriptStr}
  */
 function makeRunScriptStr(context) {
-  var runCmd = context.packageManager === 'npm' ? 'npm run' : context.packageManager;
+  let runCmd = `${context.packageManager} run`;
 
   /**
    * Formats the script command for execution.
@@ -85,7 +85,7 @@ function makeRunScriptStr(context) {
       throw new TypeError('Script name must be a non-empty string.');
     }
 
-    return runCmd === 'yarn' ? (runCmd + ' ' + script).replace(' -- ', ' ') : runCmd + ' ' + script;
+    return runCmd.includes('npm') ? `${runCmd} ${script}` : (`${runCmd} ${script}`).replace(' -- ', ' ');
   }
 
   return runScriptStr;
