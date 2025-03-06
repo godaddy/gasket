@@ -1,5 +1,13 @@
 # `@gasket/plugin-docs`
 
+## 7.3.2
+
+### Patch Changes
+
+- 41e5c6d: Remove Catalog and Workspace alias usage.
+- Updated dependencies [41e5c6d]
+  - @gasket/plugin-command@7.3.2
+
 ## 7.3.1
 
 ### Patch Changes

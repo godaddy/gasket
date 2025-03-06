@@ -1,5 +1,14 @@
 # `@gasket/plugin-data`
 
+## 7.3.1
+
+### Patch Changes
+
+- 41e5c6d: Remove Catalog and Workspace alias usage.
+- Updated dependencies [41e5c6d]
+  - @gasket/request@7.3.1
+  - @gasket/utils@7.3.1
+
 ## 7.3.0
 
 ### Minor Changes
