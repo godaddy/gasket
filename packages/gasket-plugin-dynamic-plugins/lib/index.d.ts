@@ -9,5 +9,6 @@ declare module '@gasket/core' {
 
 declare module '@gasket/plugin-dynamic-plugins' {
   const plugin: Plugin;
-  export default plugin;
 }
+
+export default plugin;
