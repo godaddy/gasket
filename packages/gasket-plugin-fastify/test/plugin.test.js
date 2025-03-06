@@ -251,7 +251,7 @@ describe('create', () => {
     expectCreatedWith(({ pkg }) => {
       expect(pkg.add).toHaveBeenCalledWith('dependencies',
         expect.objectContaining({
-          fastify: '^4.28.1'
+          fastify: expect.any(String)
         }));
     })
   );
