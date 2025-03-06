@@ -37,22 +37,22 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-metadata",
   "dependencies": {
-    "@gasket/core": "workspace:^",
-    "@gasket/plugin-logger": "workspace:^"
+    "@gasket/core": "^7.3.0",
+    "@gasket/plugin-logger": "^7.3.0"
   },
   "devDependencies": {
-    "@gasket/plugin-metadata": "workspace:^",
-    "@gasket/plugin-webpack": "workspace:^",
+    "@gasket/plugin-metadata": "^7.3.0",
+    "@gasket/plugin-webpack": "^7.3.0",
     "@godaddy/dmd": "^1.0.4",
     "@types/jest": "^29.5.14",
     "@types/node": "^20.17.19",
-    "create-gasket-app": "workspace:^",
-    "eslint": "catalog:",
+    "create-gasket-app": "^7.3.0",
+    "eslint": "^8.57.1",
     "eslint-config-godaddy": "^7.1.1",
     "eslint-config-godaddy-typescript": "^4.0.3",
     "eslint-plugin-jest": "^28.11.0",
     "eslint-plugin-unicorn": "^55.0.0",
-    "typescript": "catalog:",
+    "typescript": "^5.7.3",
     "vitest": "^2.1.9"
   },
   "eslintConfig": {
