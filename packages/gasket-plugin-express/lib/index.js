@@ -55,13 +55,6 @@ const plugin = {
         ],
         lifecycles: [
           {
-            name: 'middleware',
-            method: 'exec',
-            description: 'Add Express style middleware',
-            link: 'README.md#middleware',
-            parent: 'createServers'
-          },
-          {
             name: 'express',
             method: 'exec',
             description: 'Modify the Express instance to for adding endpoints',
@@ -89,17 +82,6 @@ const plugin = {
           description: 'Automatic compression',
           type: 'boolean',
           default: true
-        }, {
-          name: 'express.excludedRoutesRegex',
-          link: 'README.md#configuration',
-          description: 'Routes to be included for Gasket middleware, based on a regex',
-          deprecated: true,
-          type: 'RegExp'
-        }, {
-          name: 'express.middlewareInclusionRegex',
-          link: 'README.md#configuration',
-          description: 'Routes to be included for Gasket middleware, based on a regex',
-          type: 'RegExp'
         }]
       };
     }

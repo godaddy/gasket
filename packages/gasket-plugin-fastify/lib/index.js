@@ -47,13 +47,6 @@ const plugin = {
         ],
         lifecycles: [
           {
-            name: 'middleware',
-            method: 'exec',
-            description: 'Add Express style middleware for Fastify',
-            link: 'README.md#middleware',
-            parent: 'createServers'
-          },
-          {
             name: 'fastify',
             method: 'exec',
             description: 'Modify the Fastify instance to for adding endpoints',

@@ -1,8 +1,28 @@
-import type { Plugin, MaybeAsync, MaybeMultiple, Handler } from '@gasket/core';
+import type { Plugin, MaybeAsync, MaybeMultiple, Gasket } from '@gasket/core';
+import type { FastifyInstance } from 'fastify'
+import type { Application as ExpressApplication } from 'express';
 
 declare module 'fastify' {
   interface FastifyReply {
     locals: Record<string, any>;
+  }
+}
+
+declare module '@gasket/plugin-fastify' {
+  interface FastifyConfig {
+    /** Filter for which request URLs invoke Gasket middleware */
+    middlewareInclusionRegex?: RegExp;
+    /** @deprecated */
+    excludedRoutesRegex?: RegExp;
+  }
+}
+
+declare module '@gasket/plugin-express' {
+  interface ExpressConfig {
+    /** Filter for which request URLs invoke Gasket middleware */
+    middlewareInclusionRegex?: RegExp;
+    /** @deprecated */
+    excludedRoutesRegex?: RegExp;
   }
 }
 
@@ -19,11 +39,23 @@ declare module 'express-serve-static-core' {
   }
 }
 
+export type Handler = (req: any, res: any, next: (error?: Error) => void) => void;
+
+type App = FastifyInstance | ExpressApplication;
+
 declare module '@gasket/core' {
   export interface HookExecTypes {
-    middleware(): MaybeAsync<MaybeMultiple<Handler> & {
-      paths?: (string | RegExp)[]
-    }>;
+    middleware(gasket: Gasket, app: App): MaybeAsync<MaybeMultiple<Handler> >;
+  }
+
+  export interface GasketConfig {
+    /** Middleware configuration */
+    middleware?: {
+      /** Plugin name */
+      plugin: string;
+      /** Paths for middleware */
+      paths?: (string | RegExp)[];
+    }[];
   }
 }
 
