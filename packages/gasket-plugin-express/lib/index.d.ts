@@ -1,5 +1,5 @@
 import type { MaybeAsync, MaybeMultiple, Plugin } from '@gasket/core';
-import type { Application, ErrorRequestHandler, Handler } from 'express';
+import type { Application, ErrorRequestHandler } from 'express';
 
 
 export interface ExpressConfig {
