@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-service-worker",
-  "version": "7.3.0",
+  "version": "7.3.1",
   "description": "Gasket Service Worker Plugin",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -43,20 +43,20 @@
     "webpack-inject-plugin": "^1.5.5"
   },
   "devDependencies": {
-    "@gasket/core": "workspace:^",
+    "@gasket/core": "^7.3.0",
     "@types/lru-cache": "^5.1.1",
     "@types/uglify-js": "^3.17.5",
-    "@gasket/plugin-command": "workspace:^",
-    "@gasket/plugin-express": "workspace:^",
-    "@gasket/plugin-fastify": "workspace:^",
-    "@gasket/plugin-logger": "workspace:^",
-    "@gasket/plugin-metadata": "workspace:^",
-    "@gasket/plugin-webpack": "workspace:^",
+    "@gasket/plugin-command": "^7.3.0",
+    "@gasket/plugin-express": "^7.3.0",
+    "@gasket/plugin-fastify": "^7.3.1",
+    "@gasket/plugin-logger": "^7.3.0",
+    "@gasket/plugin-metadata": "^7.3.0",
+    "@gasket/plugin-webpack": "^7.3.0",
     "@types/jest": "^29.5.14",
     "@types/node": "^20.17.19",
-    "create-gasket-app": "workspace:^",
+    "create-gasket-app": "^7.3.0",
     "cross-env": "^7.0.3",
-    "eslint": "catalog:",
+    "eslint": "^8.57.1",
     "eslint-config-godaddy": "^7.1.1",
     "eslint-config-godaddy-typescript": "^4.0.3",
     "eslint-plugin-jest": "^28.11.0",
@@ -64,7 +64,7 @@
     "express": "^4.21.2",
     "fastify": "^4.29.0",
     "jest": "^29.7.0",
-    "typescript": "catalog:"
+    "typescript": "^5.7.3"
   },
   "eslintConfig": {
     "extends": [

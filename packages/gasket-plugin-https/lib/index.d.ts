@@ -27,8 +27,8 @@ declare module '@gasket/core' {
 
   type CustomHttpsSettings = {
     root?: string;
-    key: MaybeMultiple<CertInput>;
-    cert: MaybeMultiple<CertInput>;
+    key?: MaybeMultiple<CertInput>;
+    cert?: MaybeMultiple<CertInput>;
     ca?: MaybeMultiple<CertInput>;
     ciphers?: MaybeMultiple<string>;
     honorCipherOrder?: boolean;

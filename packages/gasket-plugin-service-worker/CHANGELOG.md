@@ -1,5 +1,11 @@
 # `@gasket/plugin-service-worker`
 
+## 7.3.1
+
+### Patch Changes
+
+- 87ea998: Add missing dep to lint plugin, adjust TS type exports
+
 ## 7.3.0
 
 ### Minor Changes
