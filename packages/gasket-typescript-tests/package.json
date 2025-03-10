@@ -61,6 +61,7 @@
     "@gasket/plugin-logger": "^7.3.0",
     "@gasket/plugin-manifest": "^7.3.0",
     "@gasket/plugin-metadata": "^7.3.0",
+    "@gasket/plugin-middleware": "workspace:^",
     "@gasket/plugin-mocha": "^7.3.0",
     "@gasket/plugin-morgan": "^7.3.0",
     "@gasket/plugin-nextjs": "^7.3.0",
