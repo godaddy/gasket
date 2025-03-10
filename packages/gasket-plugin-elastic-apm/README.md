@@ -37,7 +37,6 @@ Add a `setup.js` script to the root of your app
 
 ```
 // setup.js
-import dotenv from 'dotenv/config';
 import apm from 'elastic-apm-node';
 
 // Elastic APM setup
@@ -53,13 +52,31 @@ apm.start({
 ## Configuration
 
 The [start recommendations] for the APM agent are to require it as early as
-possible in your app. For Gasket apps, using `--require ./setup.js`
+possible in your app. For Gasket apps, using `NODE_OPTIONS=--import=./setup.js`
 will accomplish this. To configure the APM agent, set the environment variables
 described in the [configuration options documentation].
 
 In particular, the APM server URL (`ELASTIC_APM_SERVER_URL`) and secret token
 (`ELASTIC_APM_SECRET_TOKEN`) are both required configuration. If either of these
 are not present, the APM agent will be disabled.
+
+### Dotenv
+
+If you wish to use `dotenv`, be sure it is installed and imported in `setup.js`:
+
+```
+npm i dotenv
+```
+
+```diff
+// setup.js
++ import 'dotenv/config';
+import apm from 'elastic-apm-node';
+
+// Elastic APM setup
+apm.start({
+...
+```
 
 ### Plugin Configurations
 
@@ -90,14 +107,14 @@ information in their cookies, you may wish to filter them out before they are
 stored in Elasticsearch. Specify a list of cookie names to redact in
 `setup.js` using the [sanitizeFieldNames] configuration option:
 
-```
+```diff
 // setup.js
-require('dotenv').config();
+import apm from 'elastic-apm-node';
 
-require('elastic-apm-node').start({
-  ...,
-  sanitizeFieldNames: ['foo', 'bar', '*token*']
-});
+// Elastic APM setup
+apm.start({
++   sanitizeFieldNames: ['foo', 'bar', '*token*']
+...
 ```
 
 The `sanitizeFieldNames` config option can be used for:
@@ -111,7 +128,8 @@ To filter out other data, use the [APM Add Filter API].
 ### Custom Filters
 
 According to the [Elastic APM docs], the _Elastic APM agent for Node.js is a
-singleton_. This means that you can require and configure singleton in various
+singleton_.
+This means that you can import and configure the singleton in various
 hooks of your Gasket app, such as with the [init] or [middleware] lifecycles.
 
 ## Actions
