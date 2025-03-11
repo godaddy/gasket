@@ -29,6 +29,7 @@ function lookupIndex(bodyChildren, index = -1) {
 export function withGasketData(gasket, options = { index: -1 }) {
   const { index } = options;
   return layout => async props => {
+    await gasket.isReady;
     const req = await request();
     const gasketData = req ? await gasket.actions.getPublicGasketData?.(req) ?? {} : {};
     const html = await layout({ ...props });

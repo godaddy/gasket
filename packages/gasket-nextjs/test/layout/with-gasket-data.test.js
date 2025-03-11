@@ -15,6 +15,7 @@ describe('withGasketData', () => {
   beforeEach(async () => {
     mockPublicGasketData = { foo: 'bar' };
     mockGasket = {
+      isReady: new Promise(resolve => resolve()),
       actions: {
         getPublicGasketData: jest.fn(() => mockPublicGasketData)
       }
