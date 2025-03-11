@@ -92,12 +92,6 @@ interface ServiceWorkerLocals {
   };
 }
 
-declare module 'express-serve-static-core' {
-  interface Response {
-    locals?: ServiceWorkerLocals;
-  }
-}
-
 export function configureEndpoint(gasket: Gasket):
   RouteHandlerMethod<Http2SecureServer, Http2ServerRequest, Http2ServerResponse> |
   Application<Record<string, any>>;
