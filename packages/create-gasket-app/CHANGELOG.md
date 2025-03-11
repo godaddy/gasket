@@ -1,5 +1,24 @@
 # `create-gasket-app`
 
+## 7.3.2
+
+### Patch Changes
+
+- 41e5c6d: Remove Catalog and Workspace alias usage.
+- 0561cd5: Updates to use user-selected package manager. Update all packages to use catalog dep versions.
+- Updated dependencies [41e5c6d]
+- Updated dependencies [0561cd5]
+  - @gasket/plugin-dynamic-plugins@7.3.2
+  - @gasket/plugin-docusaurus@7.3.1
+  - @gasket/plugin-metadata@7.3.2
+  - @gasket/plugin-command@7.3.2
+  - @gasket/plugin-logger@7.3.1
+  - @gasket/plugin-docs@7.3.2
+  - @gasket/plugin-git@7.3.1
+  - @gasket/request@7.3.1
+  - @gasket/utils@7.3.1
+  - @gasket/core@7.3.1
+
 ## 7.3.1
 
 ### Patch Changes
