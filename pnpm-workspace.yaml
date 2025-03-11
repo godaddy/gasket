@@ -155,7 +155,6 @@ catalog:
   next: ^14.2.24
   node-fetch: ^2.7.0
   nodemon: ^3.1.9
-  nx: ^20.4.6
   nyc: ^15.1.0
   one-time: ^1.0.0
   ora: 3.4.0

@@ -16,13 +16,13 @@ importers:
         version: 2.28.1
       '@docusaurus/core':
         specifier: ^3.7.0
-        version: 3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)
+        version: 3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)
       '@docusaurus/preset-classic':
         specifier: ^3.7.0
-        version: 3.7.0(@algolia/client-search@5.20.3)(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/react@18.3.18)(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(search-insights@2.17.3)(typescript@5.7.3)
+        version: 3.7.0(@algolia/client-search@5.20.3)(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(@types/react@18.3.18)(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(search-insights@2.17.3)(typescript@5.7.3)
       '@docusaurus/theme-mermaid':
         specifier: ^3.7.0
-        version: 3.7.0(@docusaurus/plugin-content-docs@3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3))(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)
+        version: 3.7.0(@docusaurus/plugin-content-docs@3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3))(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.21.0
         version: 6.21.0(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3)
@@ -50,9 +50,6 @@ importers:
       jsdom:
         specifier: ^20.0.3
         version: 20.0.3
-      nx:
-        specifier: ^20.4.6
-        version: 20.4.6(@swc/core@1.10.18(@swc/helpers@0.5.5))
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -73,34 +70,34 @@ importers:
     dependencies:
       '@gasket/core':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-core
       '@gasket/plugin-command':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-command
       '@gasket/plugin-docs':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-docs
       '@gasket/plugin-docusaurus':
         specifier: ^7.3.0
-        version: 7.3.0(@gasket/plugin-logger@7.3.0)
+        version: link:../gasket-plugin-docusaurus
       '@gasket/plugin-dynamic-plugins':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-dynamic-plugins
       '@gasket/plugin-git':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-git
       '@gasket/plugin-logger':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-logger
       '@gasket/plugin-metadata':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-metadata
       '@gasket/request':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-request
       '@gasket/utils':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-utils
       chalk:
         specifier: ^4.1.2
         version: 4.1.2
@@ -233,7 +230,7 @@ importers:
     dependencies:
       '@gasket/utils':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-utils
       debug:
         specifier: ^4.4.0
         version: 4.4.0(supports-color@5.5.0)
@@ -282,11 +279,11 @@ importers:
     dependencies:
       '@gasket/request':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-request
     devDependencies:
       '@gasket/plugin-data':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-data
       '@jest/globals':
         specifier: ^29.7.0
         version: 29.7.0
@@ -434,10 +431,10 @@ importers:
     dependencies:
       '@gasket/data':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-data
       '@gasket/request':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-request
       hoist-non-react-statics:
         specifier: ^3.3.2
         version: 3.3.2
@@ -447,10 +444,10 @@ importers:
     devDependencies:
       '@gasket/plugin-data':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-data
       '@gasket/plugin-intl':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-intl
       '@jest/globals':
         specifier: ^29.7.0
         version: 29.7.0
@@ -520,13 +517,13 @@ importers:
     devDependencies:
       '@gasket/core':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-core
       '@gasket/plugin-metadata':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-metadata
       '@gasket/plugin-webpack':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-webpack
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -538,7 +535,7 @@ importers:
         version: 4.7.0(@swc/core@1.10.18(@swc/helpers@0.5.5))
       create-gasket-app:
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -568,17 +565,17 @@ importers:
     dependencies:
       '@gasket/core':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-core
       '@gasket/utils':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-utils
       commander:
         specifier: ^12.1.0
         version: 12.1.0
     devDependencies:
       '@gasket/plugin-metadata':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-metadata
       '@jest/globals':
         specifier: ^29.7.0
         version: 29.7.0
@@ -590,7 +587,7 @@ importers:
         version: 20.17.19
       create-gasket-app:
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -623,10 +620,10 @@ importers:
         version: 7.26.9
       '@gasket/core':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-core
       '@gasket/plugin-metadata':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-metadata
       '@testing-library/react':
         specifier: ^13.4.0
         version: 13.4.0(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -641,7 +638,7 @@ importers:
         version: 18.3.18
       create-gasket-app:
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -683,29 +680,29 @@ importers:
     dependencies:
       '@gasket/request':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-request
       '@gasket/utils':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-utils
       lodash.merge:
         specifier: ^4.6.2
         version: 4.6.2
     devDependencies:
       '@gasket/core':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-core
       '@gasket/data':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-data
       '@gasket/plugin-command':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-command
       '@gasket/plugin-metadata':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-metadata
       '@gasket/plugin-redux':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-redux
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -714,7 +711,7 @@ importers:
         version: 20.17.19
       create-gasket-app:
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -744,7 +741,7 @@ importers:
     dependencies:
       '@gasket/plugin-command':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-command
       glob:
         specifier: ^8.1.0
         version: 8.1.0
@@ -763,19 +760,19 @@ importers:
     devDependencies:
       '@gasket/core':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-core
       '@gasket/plugin-git':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-git
       '@gasket/plugin-logger':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-logger
       '@gasket/plugin-metadata':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-metadata
       '@gasket/plugin-webpack':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-webpack
       '@godaddy/dmd':
         specifier: ^1.0.4
         version: 1.0.4
@@ -787,7 +784,7 @@ importers:
         version: 20.17.19
       create-gasket-app:
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -817,13 +814,13 @@ importers:
     devDependencies:
       '@gasket/core':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-core
       '@gasket/plugin-docs':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-docs
       '@gasket/plugin-metadata':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-metadata
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -832,7 +829,7 @@ importers:
         version: 20.17.19
       create-gasket-app:
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -862,7 +859,7 @@ importers:
     dependencies:
       '@gasket/plugin-logger':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-logger
       lodash.defaultsdeep:
         specifier: ^4.6.1
         version: 4.6.1
@@ -875,16 +872,16 @@ importers:
         version: 3.7.0(@algolia/client-search@5.20.3)(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/react@18.3.18)(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(search-insights@2.17.3)(typescript@5.7.3)
       '@gasket/core':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-core
       '@gasket/plugin-docs':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-docs
       '@gasket/plugin-metadata':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-metadata
       '@gasket/plugin-webpack':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-webpack
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -896,7 +893,7 @@ importers:
         version: 8.17.1
       create-gasket-app:
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -939,10 +936,10 @@ importers:
     devDependencies:
       '@gasket/core':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-core
       '@gasket/plugin-metadata':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-metadata
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -951,7 +948,7 @@ importers:
         version: 20.17.19
       create-gasket-app:
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -981,14 +978,14 @@ importers:
     dependencies:
       '@gasket/request':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-request
     devDependencies:
       '@gasket/core':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-core
       '@gasket/plugin-metadata':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-metadata
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -997,7 +994,7 @@ importers:
         version: 20.17.19
       create-gasket-app:
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -1052,16 +1049,16 @@ importers:
     devDependencies:
       '@gasket/core':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-core
       '@gasket/plugin-https':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-https
       '@gasket/plugin-logger':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-logger
       '@gasket/plugin-metadata':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-metadata
       '@types/express':
         specifier: ^4.17.21
         version: 4.17.21
@@ -1073,7 +1070,7 @@ importers:
         version: 20.17.19
       create-gasket-app:
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -1110,16 +1107,16 @@ importers:
     devDependencies:
       '@gasket/core':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-core
       '@gasket/plugin-https':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-https
       '@gasket/plugin-logger':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-logger
       '@gasket/plugin-metadata':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-metadata
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -1128,7 +1125,7 @@ importers:
         version: 20.17.19
       create-gasket-app:
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -1158,14 +1155,14 @@ importers:
     dependencies:
       '@gasket/utils':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-utils
     devDependencies:
       '@gasket/core':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-core
       '@gasket/plugin-metadata':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-metadata
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -1174,7 +1171,7 @@ importers:
         version: 20.17.19
       create-gasket-app:
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -1208,13 +1205,13 @@ importers:
     devDependencies:
       '@gasket/core':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-core
       '@gasket/plugin-https':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-https
       '@gasket/plugin-metadata':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-metadata
       '@godaddy/terminus':
         specifier: ^4.12.1
         version: 4.12.1
@@ -1226,7 +1223,7 @@ importers:
         version: 20.17.19
       create-gasket-app:
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -1275,13 +1272,13 @@ importers:
     devDependencies:
       '@gasket/core':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-core
       '@gasket/plugin-logger':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-logger
       '@gasket/plugin-metadata':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-metadata
       '@types/http-proxy':
         specifier: ^1.17.16
         version: 1.17.16
@@ -1293,7 +1290,7 @@ importers:
         version: 20.17.19
       create-gasket-app:
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -1327,16 +1324,16 @@ importers:
     devDependencies:
       '@gasket/core':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-core
       '@gasket/plugin-https':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-https
       '@gasket/plugin-logger':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-logger
       '@gasket/plugin-metadata':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-metadata
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -1345,7 +1342,7 @@ importers:
         version: 20.17.19
       create-gasket-app:
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../create-gasket-app
       eslint:
         specifier: ^8.57.1
         version: 8.57.1
@@ -1366,13 +1363,13 @@ importers:
         version: 5.7.3
       vitest:
         specifier: ^3.0.7
-        version: 3.0.7(@types/debug@4.1.12)(@types/node@20.17.19)(jsdom@20.0.3)(terser@5.39.0)
+        version: 3.0.7(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
 
   packages/gasket-plugin-intl:
     dependencies:
       '@gasket/request':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-request
       debug:
         specifier: ^4.4.0
         version: 4.4.0(supports-color@5.5.0)
@@ -1394,34 +1391,34 @@ importers:
     devDependencies:
       '@gasket/core':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-core
       '@gasket/intl':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-intl
       '@gasket/plugin-command':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-command
       '@gasket/plugin-data':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-data
       '@gasket/plugin-elastic-apm':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-elastic-apm
       '@gasket/plugin-logger':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-logger
       '@gasket/plugin-metadata':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-metadata
       '@gasket/plugin-nextjs':
         specifier: ^7.3.0
-        version: 7.3.0(@gasket/plugin-webpack@7.3.0)(next@14.2.24(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: link:../gasket-plugin-nextjs
       '@gasket/plugin-service-worker':
         specifier: ^7.3.0
-        version: 7.3.0(webpack@5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5)))
+        version: link:../gasket-plugin-service-worker
       '@gasket/react-intl':
         specifier: ^7.3.0
-        version: 7.3.0(@gasket/plugin-intl@7.3.0)
+        version: link:../gasket-react-intl
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -1430,7 +1427,7 @@ importers:
         version: 20.17.19
       create-gasket-app:
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -1469,13 +1466,13 @@ importers:
     devDependencies:
       '@gasket/core':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-core
       '@gasket/plugin-express':
         specifier: ^7.3.0
-        version: 7.3.0(express@4.21.2)
+        version: link:../gasket-plugin-express
       '@gasket/plugin-metadata':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-metadata
       '@testing-library/jest-dom':
         specifier: ^5.17.0
         version: 5.17.0
@@ -1496,7 +1493,7 @@ importers:
         version: 10.1.0(eslint@8.57.1)
       create-gasket-app:
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -1554,13 +1551,13 @@ importers:
     devDependencies:
       '@gasket/core':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-core
       '@gasket/plugin-express':
         specifier: ^7.3.0
-        version: 7.3.0(express@4.21.2)
+        version: link:../gasket-plugin-express
       '@gasket/plugin-metadata':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-metadata
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -1572,7 +1569,7 @@ importers:
         version: 6.21.0(eslint@8.57.1)(typescript@5.7.3)
       create-gasket-app:
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -1605,13 +1602,13 @@ importers:
     devDependencies:
       '@gasket/core':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-core
       '@gasket/plugin-https':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-https
       '@gasket/plugin-metadata':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-metadata
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -1620,7 +1617,7 @@ importers:
         version: 20.17.19
       create-gasket-app:
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -1660,25 +1657,25 @@ importers:
     devDependencies:
       '@gasket/core':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-core
       '@gasket/plugin-command':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-command
       '@gasket/plugin-express':
         specifier: ^7.3.0
-        version: 7.3.0(express@4.21.2)
+        version: link:../gasket-plugin-express
       '@gasket/plugin-fastify':
         specifier: ^7.3.1
-        version: 7.3.1(fastify@4.29.0)
+        version: link:../gasket-plugin-fastify
       '@gasket/plugin-logger':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-logger
       '@gasket/plugin-metadata':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-metadata
       '@gasket/plugin-service-worker':
         specifier: ^7.3.0
-        version: 7.3.0(webpack@5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5)))
+        version: link:../gasket-plugin-service-worker
       '@types/express':
         specifier: ^4.17.21
         version: 4.17.21
@@ -1690,7 +1687,7 @@ importers:
         version: 20.17.19
       create-gasket-app:
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -1723,17 +1720,17 @@ importers:
     dependencies:
       '@gasket/core':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-core
       '@gasket/plugin-logger':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-logger
     devDependencies:
       '@gasket/plugin-metadata':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: 'link:'
       '@gasket/plugin-webpack':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-webpack
       '@godaddy/dmd':
         specifier: ^1.0.4
         version: 1.0.4
@@ -1745,7 +1742,7 @@ importers:
         version: 20.17.19
       create-gasket-app:
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../create-gasket-app
       eslint:
         specifier: ^8.57.1
         version: 8.57.1
@@ -1766,7 +1763,7 @@ importers:
         version: 5.7.3
       vitest:
         specifier: ^3.0.7
-        version: 3.0.7(@types/debug@4.1.12)(@types/node@20.17.19)(jsdom@20.0.3)(terser@5.39.0)
+        version: 3.0.7(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
 
   packages/gasket-plugin-middleware:
     dependencies:
@@ -1785,22 +1782,22 @@ importers:
     devDependencies:
       '@gasket/core':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-core
       '@gasket/plugin-express':
         specifier: ^7.3.0
-        version: 7.3.0(express@4.21.2)
+        version: link:../gasket-plugin-express
       '@gasket/plugin-fastify':
         specifier: ^7.3.1
-        version: 7.3.1(fastify@4.29.0)
+        version: link:../gasket-plugin-fastify
       '@gasket/plugin-https':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-https
       '@gasket/plugin-logger':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-logger
       '@gasket/plugin-metadata':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-metadata
       '@types/compression':
         specifier: ^1.7.5
         version: 1.7.5
@@ -1818,7 +1815,7 @@ importers:
         version: 20.17.19
       create-gasket-app:
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -1866,13 +1863,13 @@ importers:
         version: 7.26.0(@babel/core@7.26.9)
       '@gasket/core':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-core
       '@gasket/plugin-express':
         specifier: ^7.3.0
-        version: 7.3.0(express@4.21.2)
+        version: link:../gasket-plugin-express
       '@gasket/plugin-metadata':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-metadata
       '@testing-library/react':
         specifier: ^13.4.0
         version: 13.4.0(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1893,7 +1890,7 @@ importers:
         version: 10.1.0(eslint@8.57.1)
       create-gasket-app:
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -1941,7 +1938,7 @@ importers:
     dependencies:
       '@gasket/plugin-logger':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-logger
       express:
         specifier: ^4.21.0
         version: 4.21.2
@@ -1954,13 +1951,13 @@ importers:
     devDependencies:
       '@gasket/core':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-core
       '@gasket/plugin-express':
         specifier: ^7.3.0
-        version: 7.3.0(express@4.21.2)
+        version: link:../gasket-plugin-express
       '@gasket/plugin-metadata':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-metadata
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -1972,7 +1969,7 @@ importers:
         version: 20.17.19
       create-gasket-app:
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -2002,7 +1999,7 @@ importers:
     dependencies:
       '@gasket/plugin-webpack':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-webpack
       fastify:
         specifier: ^4.29.0
         version: 4.29.0
@@ -2012,49 +2009,49 @@ importers:
         version: 7.26.3(@babel/core@7.26.9)
       '@gasket/assets':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-assets
       '@gasket/core':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-core
       '@gasket/intl':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-intl
       '@gasket/nextjs':
         specifier: ^7.3.0
-        version: 7.3.0(next@14.2.24(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
+        version: link:../gasket-nextjs
       '@gasket/plugin-elastic-apm':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-elastic-apm
       '@gasket/plugin-express':
         specifier: ^7.3.0
-        version: 7.3.0(express@4.21.2)
+        version: link:../gasket-plugin-express
       '@gasket/plugin-fastify':
         specifier: ^7.3.1
-        version: 7.3.1(fastify@4.29.0)
+        version: link:../gasket-plugin-fastify
       '@gasket/plugin-https':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-https
       '@gasket/plugin-intl':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-intl
       '@gasket/plugin-logger':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-logger
       '@gasket/plugin-metadata':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-metadata
       '@gasket/plugin-nextjs':
         specifier: ^7.3.0
-        version: 7.3.0(@gasket/plugin-webpack@7.3.0)(next@14.2.24(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 'link:'
       '@gasket/plugin-service-worker':
         specifier: ^7.3.0
-        version: 7.3.0(webpack@5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5)))
+        version: link:../gasket-plugin-service-worker
       '@gasket/plugin-workbox':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-workbox
       '@gasket/request':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-request
       '@types/express':
         specifier: ^4.17.21
         version: 4.17.21
@@ -2072,7 +2069,7 @@ importers:
         version: 10.1.0(eslint@8.57.1)
       create-gasket-app:
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -2120,25 +2117,25 @@ importers:
     devDependencies:
       '@gasket/core':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-core
       '@gasket/plugin-express':
         specifier: ^7.3.0
-        version: 7.3.0(express@4.21.2)
+        version: link:../gasket-plugin-express
       '@gasket/plugin-logger':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-logger
       '@gasket/plugin-metadata':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-metadata
       '@gasket/plugin-middleware':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-middleware
       '@gasket/plugin-webpack':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-webpack
       '@gasket/redux':
         specifier: ^7.3.0
-        version: 7.3.0(redux@4.2.1)
+        version: link:../gasket-redux
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -2150,7 +2147,7 @@ importers:
         version: 8.14.0
       create-gasket-app:
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -2211,25 +2208,25 @@ importers:
     devDependencies:
       '@gasket/core':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-core
       '@gasket/plugin-command':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-command
       '@gasket/plugin-express':
         specifier: ^7.3.0
-        version: 7.3.0(express@4.21.2)
+        version: link:../gasket-plugin-express
       '@gasket/plugin-fastify':
         specifier: ^7.3.1
-        version: 7.3.1(fastify@4.29.0)
+        version: link:../gasket-plugin-fastify
       '@gasket/plugin-logger':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-logger
       '@gasket/plugin-metadata':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-metadata
       '@gasket/plugin-webpack':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-webpack
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -2244,7 +2241,7 @@ importers:
         version: 3.17.5
       create-gasket-app:
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -2299,22 +2296,22 @@ importers:
     devDependencies:
       '@gasket/core':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-core
       '@gasket/plugin-command':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-command
       '@gasket/plugin-express':
         specifier: ^7.3.0
-        version: 7.3.0(express@4.21.2)
+        version: link:../gasket-plugin-express
       '@gasket/plugin-fastify':
         specifier: ^7.3.1
-        version: 7.3.1(fastify@4.29.0)
+        version: link:../gasket-plugin-fastify
       '@gasket/plugin-logger':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-logger
       '@gasket/plugin-metadata':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-metadata
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -2323,7 +2320,7 @@ importers:
         version: 20.17.19
       create-gasket-app:
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -2348,6 +2345,9 @@ importers:
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@20.17.19)(typescript@5.7.3))
+      openapi-types:
+        specifier: ^12.1.3
+        version: 12.1.3
       typescript:
         specifier: ^5.7.3
         version: 5.7.3
@@ -2356,10 +2356,10 @@ importers:
     devDependencies:
       '@gasket/core':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-core
       '@gasket/plugin-metadata':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-metadata
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -2371,7 +2371,7 @@ importers:
         version: 9.1.2
       create-gasket-app:
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -2401,13 +2401,13 @@ importers:
     devDependencies:
       '@gasket/core':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-core
       '@gasket/plugin-logger':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-logger
       '@gasket/plugin-metadata':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-metadata
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -2416,7 +2416,7 @@ importers:
         version: 20.17.19
       create-gasket-app:
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -2452,17 +2452,17 @@ importers:
     dependencies:
       '@gasket/plugin-logger':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-logger
       winston:
         specifier: ^3.17.0
         version: 3.17.0
     devDependencies:
       '@gasket/core':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-core
       '@gasket/plugin-metadata':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-metadata
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -2474,7 +2474,7 @@ importers:
         version: 10.1.0(eslint@8.57.1)
       create-gasket-app:
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -2517,25 +2517,25 @@ importers:
     devDependencies:
       '@gasket/core':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-core
       '@gasket/plugin-command':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-command
       '@gasket/plugin-express':
         specifier: ^7.3.0
-        version: 7.3.0(express@4.21.2)
+        version: link:../gasket-plugin-express
       '@gasket/plugin-fastify':
         specifier: ^7.3.1
-        version: 7.3.1(fastify@4.29.0)
+        version: link:../gasket-plugin-fastify
       '@gasket/plugin-logger':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-logger
       '@gasket/plugin-metadata':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-metadata
       '@gasket/plugin-service-worker':
         specifier: ^7.3.0
-        version: 7.3.0(webpack@5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5)))
+        version: link:../gasket-plugin-service-worker
       '@types/express':
         specifier: ^4.17.21
         version: 4.17.21
@@ -2550,7 +2550,7 @@ importers:
         version: 5.1.0
       create-gasket-app:
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -2580,56 +2580,56 @@ importers:
     dependencies:
       '@gasket/plugin-command':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-command
       '@gasket/plugin-cypress':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-cypress
       '@gasket/plugin-docs':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-docs
       '@gasket/plugin-docusaurus':
         specifier: ^7.3.0
-        version: 7.3.0(@gasket/plugin-logger@7.3.0)
+        version: link:../gasket-plugin-docusaurus
       '@gasket/plugin-dynamic-plugins':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-dynamic-plugins
       '@gasket/plugin-express':
         specifier: ^7.3.0
-        version: 7.3.0(express@4.21.2)
+        version: link:../gasket-plugin-express
       '@gasket/plugin-fastify':
         specifier: ^7.3.1
-        version: 7.3.1(fastify@4.29.0)
+        version: link:../gasket-plugin-fastify
       '@gasket/plugin-git':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-git
       '@gasket/plugin-https':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-https
       '@gasket/plugin-jest':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-jest
       '@gasket/plugin-lint':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-lint
       '@gasket/plugin-logger':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-logger
       '@gasket/plugin-mocha':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-mocha
       '@gasket/plugin-swagger':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-swagger
       '@gasket/plugin-typescript':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-typescript
       '@gasket/plugin-winston':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-winston
     devDependencies:
       '@gasket/plugin-metadata':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-metadata
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -2638,7 +2638,7 @@ importers:
         version: 20.17.19
       create-gasket-app:
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -2671,61 +2671,61 @@ importers:
     dependencies:
       '@gasket/plugin-command':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-command
       '@gasket/plugin-cypress':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-cypress
       '@gasket/plugin-docs':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-docs
       '@gasket/plugin-docusaurus':
         specifier: ^7.3.0
-        version: 7.3.0(@gasket/plugin-logger@7.3.0)
+        version: link:../gasket-plugin-docusaurus
       '@gasket/plugin-dynamic-plugins':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-dynamic-plugins
       '@gasket/plugin-express':
         specifier: ^7.3.0
-        version: 7.3.0(express@4.21.2)
+        version: link:../gasket-plugin-express
       '@gasket/plugin-git':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-git
       '@gasket/plugin-https':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-https
       '@gasket/plugin-https-proxy':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-https-proxy
       '@gasket/plugin-intl':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-intl
       '@gasket/plugin-jest':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-jest
       '@gasket/plugin-lint':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-lint
       '@gasket/plugin-logger':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-logger
       '@gasket/plugin-mocha':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-mocha
       '@gasket/plugin-nextjs':
         specifier: ^7.3.0
-        version: 7.3.0(@gasket/plugin-webpack@7.3.0)(next@14.2.24(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: link:../gasket-plugin-nextjs
       '@gasket/plugin-typescript':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-typescript
       '@gasket/plugin-webpack':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-webpack
       '@gasket/plugin-winston':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-winston
       '@gasket/utils':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-utils
     devDependencies:
       '@types/jest':
         specifier: ^29.5.14
@@ -2762,16 +2762,16 @@ importers:
     dependencies:
       '@gasket/data':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-data
       '@gasket/fetch':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-fetch
       '@gasket/intl':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-intl
       '@gasket/plugin-intl':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-intl
       hoist-non-react-statics:
         specifier: ^3.3.2
         version: 3.3.2
@@ -2875,7 +2875,7 @@ importers:
         version: 7.26.9(@babel/core@7.26.9)
       '@gasket/plugin-logger':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-logger
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -2933,7 +2933,7 @@ importers:
     devDependencies:
       '@gasket/core':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-core
       '@jest/globals':
         specifier: ^29.7.0
         version: 29.7.0
@@ -2981,127 +2981,127 @@ importers:
     devDependencies:
       '@gasket/assets':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-assets
       '@gasket/core':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-core
       '@gasket/data':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-data
       '@gasket/fetch':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-fetch
       '@gasket/intl':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-intl
       '@gasket/nextjs':
         specifier: ^7.3.0
-        version: 7.3.0(next@14.2.24(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
+        version: link:../gasket-nextjs
       '@gasket/plugin-analyze':
         specifier: ^7.3.0
-        version: 7.3.0(@swc/core@1.10.18(@swc/helpers@0.5.5))
+        version: link:../gasket-plugin-analyze
       '@gasket/plugin-command':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-command
       '@gasket/plugin-cypress':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-cypress
       '@gasket/plugin-data':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-data
       '@gasket/plugin-docs':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-docs
       '@gasket/plugin-docs-graphs':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-docs-graphs
       '@gasket/plugin-docusaurus':
         specifier: ^7.3.0
-        version: 7.3.0(@gasket/plugin-logger@7.3.0)
+        version: link:../gasket-plugin-docusaurus
       '@gasket/plugin-elastic-apm':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-elastic-apm
       '@gasket/plugin-express':
         specifier: ^7.3.0
-        version: 7.3.0(express@4.21.2)
+        version: link:../gasket-plugin-express
       '@gasket/plugin-fastify':
         specifier: ^7.3.1
-        version: 7.3.1(fastify@4.29.0)
+        version: link:../gasket-plugin-fastify
       '@gasket/plugin-git':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-git
       '@gasket/plugin-happyfeet':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-happyfeet
       '@gasket/plugin-https':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-https
       '@gasket/plugin-intl':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-intl
       '@gasket/plugin-jest':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-jest
       '@gasket/plugin-lint':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-lint
       '@gasket/plugin-logger':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-logger
       '@gasket/plugin-manifest':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-manifest
       '@gasket/plugin-metadata':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-metadata
       '@gasket/plugin-mocha':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-mocha
       '@gasket/plugin-morgan':
         specifier: ^7.3.0
-        version: 7.3.0(@gasket/plugin-logger@7.3.0)(express@4.21.2)
+        version: link:../gasket-plugin-morgan
       '@gasket/plugin-nextjs':
         specifier: ^7.3.0
-        version: 7.3.0(@gasket/plugin-webpack@7.3.0)(next@14.2.24(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: link:../gasket-plugin-nextjs
       '@gasket/plugin-redux':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-redux
       '@gasket/plugin-service-worker':
         specifier: ^7.3.0
-        version: 7.3.0(webpack@5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5)))
+        version: link:../gasket-plugin-service-worker
       '@gasket/plugin-swagger':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-swagger
       '@gasket/plugin-typescript':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-typescript
       '@gasket/plugin-webpack':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-webpack
       '@gasket/plugin-winston':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-winston
       '@gasket/plugin-workbox':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-plugin-workbox
       '@gasket/preset-api':
         specifier: ^7.3.1
-        version: 7.3.1(express@4.21.2)(fastify@4.29.0)
+        version: link:../gasket-preset-api
       '@gasket/preset-nextjs':
         specifier: ^7.3.0
-        version: 7.3.0(express@4.21.2)(next@14.2.24(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: link:../gasket-preset-nextjs
       '@gasket/react-intl':
         specifier: ^7.3.0
-        version: 7.3.0(@gasket/plugin-intl@7.3.0)
+        version: link:../gasket-react-intl
       '@gasket/redux':
         specifier: ^7.3.0
-        version: 7.3.0(redux@4.2.1)
+        version: link:../gasket-redux
       '@gasket/request':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-request
       '@gasket/utils':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-utils
       '@types/express':
         specifier: ^4.17.21
         version: 4.17.21
@@ -3113,7 +3113,7 @@ importers:
         version: 20.17.19
       create-gasket-app:
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -3171,7 +3171,7 @@ importers:
     devDependencies:
       '@gasket/core':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../gasket-core
       '@types/concat-stream':
         specifier: ^2.0.3
         version: 2.0.3
@@ -3216,139 +3216,139 @@ importers:
     dependencies:
       '@gasket/assets':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../../packages/gasket-assets
       '@gasket/core':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../../packages/gasket-core
       '@gasket/data':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../../packages/gasket-data
       '@gasket/fetch':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../../packages/gasket-fetch
       '@gasket/intl':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../../packages/gasket-intl
       '@gasket/nextjs':
         specifier: ^7.3.0
-        version: 7.3.0(next@14.2.24(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
+        version: link:../../packages/gasket-nextjs
       '@gasket/plugin-analyze':
         specifier: ^7.3.0
-        version: 7.3.0(@swc/core@1.10.18(@swc/helpers@0.5.5))
+        version: link:../../packages/gasket-plugin-analyze
       '@gasket/plugin-command':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../../packages/gasket-plugin-command
       '@gasket/plugin-cypress':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../../packages/gasket-plugin-cypress
       '@gasket/plugin-data':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../../packages/gasket-plugin-data
       '@gasket/plugin-docs':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../../packages/gasket-plugin-docs
       '@gasket/plugin-docs-graphs':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../../packages/gasket-plugin-docs-graphs
       '@gasket/plugin-docusaurus':
         specifier: ^7.3.0
-        version: 7.3.0(@gasket/plugin-logger@7.3.0)
+        version: link:../../packages/gasket-plugin-docusaurus
       '@gasket/plugin-dynamic-plugins':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../../packages/gasket-plugin-dynamic-plugins
       '@gasket/plugin-elastic-apm':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../../packages/gasket-plugin-elastic-apm
       '@gasket/plugin-express':
         specifier: ^7.3.0
-        version: 7.3.0(express@4.21.2)
+        version: link:../../packages/gasket-plugin-express
       '@gasket/plugin-fastify':
         specifier: ^7.3.1
-        version: 7.3.1(fastify@4.29.0)
+        version: link:../../packages/gasket-plugin-fastify
       '@gasket/plugin-git':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../../packages/gasket-plugin-git
       '@gasket/plugin-happyfeet':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../../packages/gasket-plugin-happyfeet
       '@gasket/plugin-https':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../../packages/gasket-plugin-https
       '@gasket/plugin-https-proxy':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../../packages/gasket-plugin-https-proxy
       '@gasket/plugin-intl':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../../packages/gasket-plugin-intl
       '@gasket/plugin-jest':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../../packages/gasket-plugin-jest
       '@gasket/plugin-lint':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../../packages/gasket-plugin-lint
       '@gasket/plugin-logger':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../../packages/gasket-plugin-logger
       '@gasket/plugin-manifest':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../../packages/gasket-plugin-manifest
       '@gasket/plugin-metadata':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../../packages/gasket-plugin-metadata
       '@gasket/plugin-middleware':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../../packages/gasket-plugin-middleware
       '@gasket/plugin-mocha':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../../packages/gasket-plugin-mocha
       '@gasket/plugin-morgan':
         specifier: ^7.3.0
-        version: 7.3.0(@gasket/plugin-logger@7.3.0)(express@4.21.2)
+        version: link:../../packages/gasket-plugin-morgan
       '@gasket/plugin-nextjs':
         specifier: ^7.3.0
-        version: 7.3.0(@gasket/plugin-webpack@7.3.0)(next@14.2.24(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: link:../../packages/gasket-plugin-nextjs
       '@gasket/plugin-redux':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../../packages/gasket-plugin-redux
       '@gasket/plugin-service-worker':
         specifier: ^7.3.0
-        version: 7.3.0(webpack@5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5)))
+        version: link:../../packages/gasket-plugin-service-worker
       '@gasket/plugin-swagger':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../../packages/gasket-plugin-swagger
       '@gasket/plugin-typescript':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../../packages/gasket-plugin-typescript
       '@gasket/plugin-webpack':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../../packages/gasket-plugin-webpack
       '@gasket/plugin-winston':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../../packages/gasket-plugin-winston
       '@gasket/plugin-workbox':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../../packages/gasket-plugin-workbox
       '@gasket/preset-api':
         specifier: ^7.3.1
-        version: 7.3.1(express@4.21.2)(fastify@4.29.0)
+        version: link:../../packages/gasket-preset-api
       '@gasket/preset-nextjs':
         specifier: ^7.3.0
-        version: 7.3.0(express@4.21.2)(next@14.2.24(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: link:../../packages/gasket-preset-nextjs
       '@gasket/react-intl':
         specifier: ^7.3.0
-        version: 7.3.0(@gasket/plugin-intl@7.3.0)
+        version: link:../../packages/gasket-react-intl
       '@gasket/redux':
         specifier: ^7.3.0
-        version: 7.3.0(redux@4.2.1)
+        version: link:../../packages/gasket-redux
       '@gasket/request':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../../packages/gasket-request
       '@gasket/utils':
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../../packages/gasket-utils
       create-gasket-app:
         specifier: ^7.3.0
-        version: 7.3.0
+        version: link:../../packages/create-gasket-app
     devDependencies:
       '@types/jest':
         specifier: ^29.5.14
@@ -4687,22 +4687,13 @@ packages:
     resolution: {integrity: sha512-7MMVmT50ucEl7no8mUgCIl+pffBVNRl36uZi0vmalWa2xPWISBxM9k9WSP/WTgOkmGj9G35e5g3UfCS1zxshBg==}
     engines: {node: '>=10'}
 
-  '@emnapi/core@1.3.1':
-    resolution: {integrity: sha512-pVGjBIt1Y6gg3EJN8jTcfpP/+uuRksIo055oE/OBkDNcjZqVbfkWCksG1Jp4yZnj3iKWyWX8fdG/j6UDYPbFog==}
-
-  '@emnapi/runtime@1.3.1':
-    resolution: {integrity: sha512-kEBmG8KyqtxJZv+ygbEim+KCGtIq1fC22Ms3S4ziXmYKm8uyoLX0MHONVKwp+9opg390VaKRNt4a7A9NwmpNhw==}
-
-  '@emnapi/wasi-threads@1.0.1':
-    resolution: {integrity: sha512-iIBu7mwkq4UQGeMEM8bLwNK962nXdhodeScX4slfQnRhEMMzvYivHhutCIk8uojvmASXXPC2WNEjwxFWk72Oqw==}
-
   '@es-joy/jsdoccomment@0.46.0':
     resolution: {integrity: sha512-C3Axuq1xd/9VqFZpW4YAzOx5O9q/LP46uIQy/iNDpHG3fmPa6TBtvfglMCs3RBiBxAIi0Go97r8+jvTt55XMyQ==}
     engines: {node: '>=16'}
 
-  '@esbuild/aix-ppc64@0.21.5':
-    resolution: {integrity: sha512-1SDgH6ZSPTlggy1yI6+Dbkiz8xzpHJEVAlF/AM1tHPLsf5STom9rwtjE4hKAF20FfXXNTFqEYXyJNWh1GiZedQ==}
-    engines: {node: '>=12'}
+  '@esbuild/aix-ppc64@0.24.2':
+    resolution: {integrity: sha512-thpVCb/rhxE/BnMLQ7GReQLLN8q9qbHmI55F4489/ByVg2aQaQ6kbcLb6FHkocZzQhxc4gx0sCk0tJkKBFzDhA==}
+    engines: {node: '>=18'}
     cpu: [ppc64]
     os: [aix]
 
@@ -4712,9 +4703,9 @@ packages:
     cpu: [ppc64]
     os: [aix]
 
-  '@esbuild/android-arm64@0.21.5':
-    resolution: {integrity: sha512-c0uX9VAUBQ7dTDCjq+wdyGLowMdtR/GoC2U5IYk/7D1H1JYC0qseD7+11iMP2mRLN9RcCMRcjC4YMclCzGwS/A==}
-    engines: {node: '>=12'}
+  '@esbuild/android-arm64@0.24.2':
+    resolution: {integrity: sha512-cNLgeqCqV8WxfcTIOeL4OAtSmL8JjcN6m09XIgro1Wi7cF4t/THaWEa7eL5CMoMBdjoHOTh/vwTO/o2TRXIyzg==}
+    engines: {node: '>=18'}
     cpu: [arm64]
     os: [android]
 
@@ -4724,9 +4715,9 @@ packages:
     cpu: [arm64]
     os: [android]
 
-  '@esbuild/android-arm@0.21.5':
-    resolution: {integrity: sha512-vCPvzSjpPHEi1siZdlvAlsPxXl7WbOVUBBAowWug4rJHb68Ox8KualB+1ocNvT5fjv6wpkX6o/iEpbDrf68zcg==}
-    engines: {node: '>=12'}
+  '@esbuild/android-arm@0.24.2':
+    resolution: {integrity: sha512-tmwl4hJkCfNHwFB3nBa8z1Uy3ypZpxqxfTQOcHX+xRByyYgunVbZ9MzUUfb0RxaHIMnbHagwAxuTL+tnNM+1/Q==}
+    engines: {node: '>=18'}
     cpu: [arm]
     os: [android]
 
@@ -4736,9 +4727,9 @@ packages:
     cpu: [arm]
     os: [android]
 
-  '@esbuild/android-x64@0.21.5':
-    resolution: {integrity: sha512-D7aPRUUNHRBwHxzxRvp856rjUHRFW1SdQATKXH2hqA0kAZb1hKmi02OpYRacl0TxIGz/ZmXWlbZgjwWYaCakTA==}
-    engines: {node: '>=12'}
+  '@esbuild/android-x64@0.24.2':
+    resolution: {integrity: sha512-B6Q0YQDqMx9D7rvIcsXfmJfvUYLoP722bgfBlO5cGvNVb5V/+Y7nhBE3mHV9OpxBf4eAS2S68KZztiPaWq4XYw==}
+    engines: {node: '>=18'}
     cpu: [x64]
     os: [android]
 
@@ -4748,9 +4739,9 @@ packages:
     cpu: [x64]
     os: [android]
 
-  '@esbuild/darwin-arm64@0.21.5':
-    resolution: {integrity: sha512-DwqXqZyuk5AiWWf3UfLiRDJ5EDd49zg6O9wclZ7kUMv2WRFr4HKjXp/5t8JZ11QbQfUS6/cRCKGwYhtNAY88kQ==}
-    engines: {node: '>=12'}
+  '@esbuild/darwin-arm64@0.24.2':
+    resolution: {integrity: sha512-kj3AnYWc+CekmZnS5IPu9D+HWtUI49hbnyqk0FLEJDbzCIQt7hg7ucF1SQAilhtYpIujfaHr6O0UHlzzSPdOeA==}
+    engines: {node: '>=18'}
     cpu: [arm64]
     os: [darwin]
 
@@ -4760,9 +4751,9 @@ packages:
     cpu: [arm64]
     os: [darwin]
 
-  '@esbuild/darwin-x64@0.21.5':
-    resolution: {integrity: sha512-se/JjF8NlmKVG4kNIuyWMV/22ZaerB+qaSi5MdrXtd6R08kvs2qCN4C09miupktDitvh8jRFflwGFBQcxZRjbw==}
-    engines: {node: '>=12'}
+  '@esbuild/darwin-x64@0.24.2':
+    resolution: {integrity: sha512-WeSrmwwHaPkNR5H3yYfowhZcbriGqooyu3zI/3GGpF8AyUdsrrP0X6KumITGA9WOyiJavnGZUwPGvxvwfWPHIA==}
+    engines: {node: '>=18'}
     cpu: [x64]
     os: [darwin]
 
@@ -4772,9 +4763,9 @@ packages:
     cpu: [x64]
     os: [darwin]
 
-  '@esbuild/freebsd-arm64@0.21.5':
-    resolution: {integrity: sha512-5JcRxxRDUJLX8JXp/wcBCy3pENnCgBR9bN6JsY4OmhfUtIHe3ZW0mawA7+RDAcMLrMIZaf03NlQiX9DGyB8h4g==}
-    engines: {node: '>=12'}
+  '@esbuild/freebsd-arm64@0.24.2':
+    resolution: {integrity: sha512-UN8HXjtJ0k/Mj6a9+5u6+2eZ2ERD7Edt1Q9IZiB5UZAIdPnVKDoG7mdTVGhHJIeEml60JteamR3qhsr1r8gXvg==}
+    engines: {node: '>=18'}
     cpu: [arm64]
     os: [freebsd]
 
@@ -4784,9 +4775,9 @@ packages:
     cpu: [arm64]
     os: [freebsd]
 
-  '@esbuild/freebsd-x64@0.21.5':
-    resolution: {integrity: sha512-J95kNBj1zkbMXtHVH29bBriQygMXqoVQOQYA+ISs0/2l3T9/kj42ow2mpqerRBxDJnmkUDCaQT/dfNXWX/ZZCQ==}
-    engines: {node: '>=12'}
+  '@esbuild/freebsd-x64@0.24.2':
+    resolution: {integrity: sha512-TvW7wE/89PYW+IevEJXZ5sF6gJRDY/14hyIGFXdIucxCsbRmLUcjseQu1SyTko+2idmCw94TgyaEZi9HUSOe3Q==}
+    engines: {node: '>=18'}
     cpu: [x64]
     os: [freebsd]
 
@@ -4796,9 +4787,9 @@ packages:
     cpu: [x64]
     os: [freebsd]
 
-  '@esbuild/linux-arm64@0.21.5':
-    resolution: {integrity: sha512-ibKvmyYzKsBeX8d8I7MH/TMfWDXBF3db4qM6sy+7re0YXya+K1cem3on9XgdT2EQGMu4hQyZhan7TeQ8XkGp4Q==}
-    engines: {node: '>=12'}
+  '@esbuild/linux-arm64@0.24.2':
+    resolution: {integrity: sha512-7HnAD6074BW43YvvUmE/35Id9/NB7BeX5EoNkK9obndmZBUk8xmJJeU7DwmUeN7tkysslb2eSl6CTrYz6oEMQg==}
+    engines: {node: '>=18'}
     cpu: [arm64]
     os: [linux]
 
@@ -4808,9 +4799,9 @@ packages:
     cpu: [arm64]
     os: [linux]
 
-  '@esbuild/linux-arm@0.21.5':
-    resolution: {integrity: sha512-bPb5AHZtbeNGjCKVZ9UGqGwo8EUu4cLq68E95A53KlxAPRmUyYv2D6F0uUI65XisGOL1hBP5mTronbgo+0bFcA==}
-    engines: {node: '>=12'}
+  '@esbuild/linux-arm@0.24.2':
+    resolution: {integrity: sha512-n0WRM/gWIdU29J57hJyUdIsk0WarGd6To0s+Y+LwvlC55wt+GT/OgkwoXCXvIue1i1sSNWblHEig00GBWiJgfA==}
+    engines: {node: '>=18'}
     cpu: [arm]
     os: [linux]
 
@@ -4820,9 +4811,9 @@ packages:
     cpu: [arm]
     os: [linux]
 
-  '@esbuild/linux-ia32@0.21.5':
-    resolution: {integrity: sha512-YvjXDqLRqPDl2dvRODYmmhz4rPeVKYvppfGYKSNGdyZkA01046pLWyRKKI3ax8fbJoK5QbxblURkwK/MWY18Tg==}
-    engines: {node: '>=12'}
+  '@esbuild/linux-ia32@0.24.2':
+    resolution: {integrity: sha512-sfv0tGPQhcZOgTKO3oBE9xpHuUqguHvSo4jl+wjnKwFpapx+vUDcawbwPNuBIAYdRAvIDBfZVvXprIj3HA+Ugw==}
+    engines: {node: '>=18'}
     cpu: [ia32]
     os: [linux]
 
@@ -4832,9 +4823,9 @@ packages:
     cpu: [ia32]
     os: [linux]
 
-  '@esbuild/linux-loong64@0.21.5':
-    resolution: {integrity: sha512-uHf1BmMG8qEvzdrzAqg2SIG/02+4/DHB6a9Kbya0XDvwDEKCoC8ZRWI5JJvNdUjtciBGFQ5PuBlpEOXQj+JQSg==}
-    engines: {node: '>=12'}
+  '@esbuild/linux-loong64@0.24.2':
+    resolution: {integrity: sha512-CN9AZr8kEndGooS35ntToZLTQLHEjtVB5n7dl8ZcTZMonJ7CCfStrYhrzF97eAecqVbVJ7APOEe18RPI4KLhwQ==}
+    engines: {node: '>=18'}
     cpu: [loong64]
     os: [linux]
 
@@ -4844,9 +4835,9 @@ packages:
     cpu: [loong64]
     os: [linux]
 
-  '@esbuild/linux-mips64el@0.21.5':
-    resolution: {integrity: sha512-IajOmO+KJK23bj52dFSNCMsz1QP1DqM6cwLUv3W1QwyxkyIWecfafnI555fvSGqEKwjMXVLokcV5ygHW5b3Jbg==}
-    engines: {node: '>=12'}
+  '@esbuild/linux-mips64el@0.24.2':
+    resolution: {integrity: sha512-iMkk7qr/wl3exJATwkISxI7kTcmHKE+BlymIAbHO8xanq/TjHaaVThFF6ipWzPHryoFsesNQJPE/3wFJw4+huw==}
+    engines: {node: '>=18'}
     cpu: [mips64el]
     os: [linux]
 
@@ -4856,9 +4847,9 @@ packages:
     cpu: [mips64el]
     os: [linux]
 
-  '@esbuild/linux-ppc64@0.21.5':
-    resolution: {integrity: sha512-1hHV/Z4OEfMwpLO8rp7CvlhBDnjsC3CttJXIhBi+5Aj5r+MBvy4egg7wCbe//hSsT+RvDAG7s81tAvpL2XAE4w==}
-    engines: {node: '>=12'}
+  '@esbuild/linux-ppc64@0.24.2':
+    resolution: {integrity: sha512-shsVrgCZ57Vr2L8mm39kO5PPIb+843FStGt7sGGoqiiWYconSxwTiuswC1VJZLCjNiMLAMh34jg4VSEQb+iEbw==}
+    engines: {node: '>=18'}
     cpu: [ppc64]
     os: [linux]
 
@@ -4868,9 +4859,9 @@ packages:
     cpu: [ppc64]
     os: [linux]
 
-  '@esbuild/linux-riscv64@0.21.5':
-    resolution: {integrity: sha512-2HdXDMd9GMgTGrPWnJzP2ALSokE/0O5HhTUvWIbD3YdjME8JwvSCnNGBnTThKGEB91OZhzrJ4qIIxk/SBmyDDA==}
-    engines: {node: '>=12'}
+  '@esbuild/linux-riscv64@0.24.2':
+    resolution: {integrity: sha512-4eSFWnU9Hhd68fW16GD0TINewo1L6dRrB+oLNNbYyMUAeOD2yCK5KXGK1GH4qD/kT+bTEXjsyTCiJGHPZ3eM9Q==}
+    engines: {node: '>=18'}
     cpu: [riscv64]
     os: [linux]
 
@@ -4880,9 +4871,9 @@ packages:
     cpu: [riscv64]
     os: [linux]
 
-  '@esbuild/linux-s390x@0.21.5':
-    resolution: {integrity: sha512-zus5sxzqBJD3eXxwvjN1yQkRepANgxE9lgOW2qLnmr8ikMTphkjgXu1HR01K4FJg8h1kEEDAqDcZQtbrRnB41A==}
-    engines: {node: '>=12'}
+  '@esbuild/linux-s390x@0.24.2':
+    resolution: {integrity: sha512-S0Bh0A53b0YHL2XEXC20bHLuGMOhFDO6GN4b3YjRLK//Ep3ql3erpNcPlEFed93hsQAjAQDNsvcK+hV90FubSw==}
+    engines: {node: '>=18'}
     cpu: [s390x]
     os: [linux]
 
@@ -4892,9 +4883,9 @@ packages:
     cpu: [s390x]
     os: [linux]
 
-  '@esbuild/linux-x64@0.21.5':
-    resolution: {integrity: sha512-1rYdTpyv03iycF1+BhzrzQJCdOuAOtaqHTWJZCWvijKD2N5Xu0TtVC8/+1faWqcP9iBCWOmjmhoH94dH82BxPQ==}
-    engines: {node: '>=12'}
+  '@esbuild/linux-x64@0.24.2':
+    resolution: {integrity: sha512-8Qi4nQcCTbLnK9WoMjdC9NiTG6/E38RNICU6sUNqK0QFxCYgoARqVqxdFmWkdonVsvGqWhmm7MO0jyTqLqwj0Q==}
+    engines: {node: '>=18'}
     cpu: [x64]
     os: [linux]
 
@@ -4904,15 +4895,21 @@ packages:
     cpu: [x64]
     os: [linux]
 
+  '@esbuild/netbsd-arm64@0.24.2':
+    resolution: {integrity: sha512-wuLK/VztRRpMt9zyHSazyCVdCXlpHkKm34WUyinD2lzK07FAHTq0KQvZZlXikNWkDGoT6x3TD51jKQ7gMVpopw==}
+    engines: {node: '>=18'}
+    cpu: [arm64]
+    os: [netbsd]
+
   '@esbuild/netbsd-arm64@0.25.0':
     resolution: {integrity: sha512-RuG4PSMPFfrkH6UwCAqBzauBWTygTvb1nxWasEJooGSJ/NwRw7b2HOwyRTQIU97Hq37l3npXoZGYMy3b3xYvPw==}
     engines: {node: '>=18'}
     cpu: [arm64]
     os: [netbsd]
 
-  '@esbuild/netbsd-x64@0.21.5':
-    resolution: {integrity: sha512-Woi2MXzXjMULccIwMnLciyZH4nCIMpWQAs049KEeMvOcNADVxo0UBIQPfSmxB3CWKedngg7sWZdLvLczpe0tLg==}
-    engines: {node: '>=12'}
+  '@esbuild/netbsd-x64@0.24.2':
+    resolution: {integrity: sha512-VefFaQUc4FMmJuAxmIHgUmfNiLXY438XrL4GDNV1Y1H/RW3qow68xTwjZKfj/+Plp9NANmzbH5R40Meudu8mmw==}
+    engines: {node: '>=18'}
     cpu: [x64]
     os: [netbsd]
 
@@ -4922,15 +4919,21 @@ packages:
     cpu: [x64]
     os: [netbsd]
 
+  '@esbuild/openbsd-arm64@0.24.2':
+    resolution: {integrity: sha512-YQbi46SBct6iKnszhSvdluqDmxCJA+Pu280Av9WICNwQmMxV7nLRHZfjQzwbPs3jeWnuAhE9Jy0NrnJ12Oz+0A==}
+    engines: {node: '>=18'}
+    cpu: [arm64]
+    os: [openbsd]
+
   '@esbuild/openbsd-arm64@0.25.0':
     resolution: {integrity: sha512-21sUNbq2r84YE+SJDfaQRvdgznTD8Xc0oc3p3iW/a1EVWeNj/SdUCbm5U0itZPQYRuRTW20fPMWMpcrciH2EJw==}
     engines: {node: '>=18'}
     cpu: [arm64]
     os: [openbsd]
 
-  '@esbuild/openbsd-x64@0.21.5':
-    resolution: {integrity: sha512-HLNNw99xsvx12lFBUwoT8EVCsSvRNDVxNpjZ7bPn947b8gJPzeHWyNVhFsaerc0n3TsbOINvRP2byTZ5LKezow==}
-    engines: {node: '>=12'}
+  '@esbuild/openbsd-x64@0.24.2':
+    resolution: {integrity: sha512-+iDS6zpNM6EnJyWv0bMGLWSWeXGN/HTaF/LXHXHwejGsVi+ooqDfMCCTerNFxEkM3wYVcExkeGXNqshc9iMaOA==}
+    engines: {node: '>=18'}
     cpu: [x64]
     os: [openbsd]
 
@@ -4940,9 +4943,9 @@ packages:
     cpu: [x64]
     os: [openbsd]
 
-  '@esbuild/sunos-x64@0.21.5':
-    resolution: {integrity: sha512-6+gjmFpfy0BHU5Tpptkuh8+uw3mnrvgs+dSPQXQOv3ekbordwnzTVEb4qnIvQcYXq6gzkyTnoZ9dZG+D4garKg==}
-    engines: {node: '>=12'}
+  '@esbuild/sunos-x64@0.24.2':
+    resolution: {integrity: sha512-hTdsW27jcktEvpwNHJU4ZwWFGkz2zRJUz8pvddmXPtXDzVKTTINmlmga3ZzwcuMpUvLw7JkLy9QLKyGpD2Yxig==}
+    engines: {node: '>=18'}
     cpu: [x64]
     os: [sunos]
 
@@ -4952,9 +4955,9 @@ packages:
     cpu: [x64]
     os: [sunos]
 
-  '@esbuild/win32-arm64@0.21.5':
-    resolution: {integrity: sha512-Z0gOTd75VvXqyq7nsl93zwahcTROgqvuAcYDUr+vOv8uHhNSKROyU961kgtCD1e95IqPKSQKH7tBTslnS3tA8A==}
-    engines: {node: '>=12'}
+  '@esbuild/win32-arm64@0.24.2':
+    resolution: {integrity: sha512-LihEQ2BBKVFLOC9ZItT9iFprsE9tqjDjnbulhHoFxYQtQfai7qfluVODIYxt1PgdoyQkz23+01rzwNwYfutxUQ==}
+    engines: {node: '>=18'}
     cpu: [arm64]
     os: [win32]
 
@@ -4964,9 +4967,9 @@ packages:
     cpu: [arm64]
     os: [win32]
 
-  '@esbuild/win32-ia32@0.21.5':
-    resolution: {integrity: sha512-SWXFF1CL2RVNMaVs+BBClwtfZSvDgtL//G/smwAc5oVK/UPu2Gu9tIaRgFmYFFKrmg3SyAjSrElf0TiJ1v8fYA==}
-    engines: {node: '>=12'}
+  '@esbuild/win32-ia32@0.24.2':
+    resolution: {integrity: sha512-q+iGUwfs8tncmFC9pcnD5IvRHAzmbwQ3GPS5/ceCyHdjXubwQWI12MKWSNSMYLJMq23/IUCvJMS76PDqXe1fxA==}
+    engines: {node: '>=18'}
     cpu: [ia32]
     os: [win32]
 
@@ -4976,9 +4979,9 @@ packages:
     cpu: [ia32]
     os: [win32]
 
-  '@esbuild/win32-x64@0.21.5':
-    resolution: {integrity: sha512-tQd/1efJuzPC6rCFwEvLtci/xNFcTZknmXs98FYDfGE4wP9ClFV98nyKrzJKVPMhdDnjzLhdUyMX4PsQAPjwIw==}
-    engines: {node: '>=12'}
+  '@esbuild/win32-x64@0.24.2':
+    resolution: {integrity: sha512-7VTgWzgMGvup6aSqDPLiW5zHaxYJGTO4OokMjIlrCtf+VpEL+cXKtCvg723iguPYI5oaUNdS+/V7OU2gvXVWEg==}
+    engines: {node: '>=18'}
     cpu: [x64]
     os: [win32]
 
@@ -5065,160 +5068,6 @@ packages:
     peerDependenciesMeta:
       typescript:
         optional: true
-
-  '@gasket/assets@7.3.0':
-    resolution: {integrity: sha512-TxXh5KK1tWxz6VBVry4b3VoJlwbXEX7DbJMp97FHq2x5QmE2rpLwXhJSXCYEjvfTvRROrjQNnvOFctgBCQw9oA==}
-
-  '@gasket/core@7.3.0':
-    resolution: {integrity: sha512-8CZR4WtrJSQ0mCjq8QrwsKlm1xSRtMXH5NrunLSeC6wlzC5CoqGyG2tSbP2be4EsfQbEk9mdDCTmPuD4b8Yjhg==}
-
-  '@gasket/data@7.3.0':
-    resolution: {integrity: sha512-72HLFUbwGVoM8Hwj3dzxCQlKhYOTjyEbL8O/VLd8WxAg6jsvr08Vca6FjVw29m56JnztqhMBdvIPP73OaQcMnQ==}
-
-  '@gasket/fetch@7.3.0':
-    resolution: {integrity: sha512-mKUfQ5wZTTUqp2L2UuDuJWT3NaCknSfgYeqKqQ/+tqat+L3qB3GsvSk10XvmiDIBUZRSVfdEP4/kCfu5i3zfCg==}
-
-  '@gasket/intl@7.3.0':
-    resolution: {integrity: sha512-EozGBf/E+w6cGQbZ8MuuI2VZ3f75P5TEjDNkO0q5dY4EKj1/MWkBMOUjUj6cCL4r655Asp5GzOMCmidCTvWZhQ==}
-
-  '@gasket/nextjs@7.3.0':
-    resolution: {integrity: sha512-qC2SNTigfAWXCofxAG3AFXhbppS0NXtQZXzp4G65wuS2Uz2DjTVI523BHviEY49S+M9hoxeJRB+kuLyAAOLIoQ==}
-    peerDependencies:
-      next: ^14
-      react: ^18
-
-  '@gasket/plugin-analyze@7.3.0':
-    resolution: {integrity: sha512-R3OuyEf9HIubASMbMLUGhNlr7FMhl//W4pnBwBUvjhKQO1rcQalXLNkm6ZbfTOSxJcIz3XXRG4PYFCpTqs7l7w==}
-
-  '@gasket/plugin-command@7.3.0':
-    resolution: {integrity: sha512-EQKKHrvd7gpRlynqcRMW/89fsaW6+zlyG5vcGS6KEESWBvBReG4aQFFBiveE4a0lgjRCvqBO1hLjHMbpYDNK3w==}
-
-  '@gasket/plugin-cypress@7.3.0':
-    resolution: {integrity: sha512-OZDq4OkSSHvGUoHtjc2ff+QV+ogCWpWuJYe0NY406PG53mzeeU18+YDvKwDpc92oy3pAatMqbFqn+AuiKhKUXw==}
-
-  '@gasket/plugin-data@7.3.0':
-    resolution: {integrity: sha512-AK/xWM7AXjqEuZX1jIQReKls8vcFB2rKM4seMl1NG1kU8GJhr15H407Kl46AU+TWhW2WNEMuF/Gl1pNjdAgr8w==}
-
-  '@gasket/plugin-docs-graphs@7.3.0':
-    resolution: {integrity: sha512-pHAwMPOij4zwvXX6MZ3E5fmGnJnpg8nodhTQCSao8gqAmRRGZ3A3s4qgSpxsg3Jc4d5fIiTbJOGGT9lPuKEcrA==}
-
-  '@gasket/plugin-docs@7.3.0':
-    resolution: {integrity: sha512-G72vzg5V9mAOkNCOgfCRtNX/JSTO0LpUZHUJ5bGbAOjNES9HrUGIvP+MefIc10xVVhTYf9qqVsq3CvTq6rcxWg==}
-
-  '@gasket/plugin-docusaurus@7.3.0':
-    resolution: {integrity: sha512-QtAygDiaWoExNkjMe8y5o5ComMbbgW74ZjpU3olxzLIX8gapsoe6W19GwseG0ENGnaxHNyWk9kcPmuEmw7xmYA==}
-    peerDependencies:
-      '@gasket/plugin-logger': ^7.3.0
-
-  '@gasket/plugin-dynamic-plugins@7.3.0':
-    resolution: {integrity: sha512-UWkBVPZ/tXrFYxfNfTGeSaltknOOdPOeOMvBrSj1Y7aTeI/Pqd8vwPzp5eqkvJs8pwOoQZx9yeGPcb0U0tuCjw==}
-
-  '@gasket/plugin-elastic-apm@7.3.0':
-    resolution: {integrity: sha512-nY9jGlBX3sobCV8EEu4ixbbEpOkXESXHPf7Hk0f5zJ6C7Ma/07KCRUumwkk6CfUJyORxcR8QUfEyfOIYrWfHsQ==}
-
-  '@gasket/plugin-express@7.3.0':
-    resolution: {integrity: sha512-0f9XGQD/LFe0anaW+ilpRogDQKb3N/TMI8Wd2XaRU11G/rSvztkdscZLSLVbMfn0HvZO0J+3UE0wgGRSwvXHTw==}
-    peerDependencies:
-      express: ^4.21.0
-
-  '@gasket/plugin-fastify@7.3.1':
-    resolution: {integrity: sha512-rn7Dy7QzAA226AWc34wrjwl38bp9ermWL65N72szmL1UGjfWQDDgry++ClfLSu2qhmlX/cCGZr/tbBHtQmSU+Q==}
-    peerDependencies:
-      fastify: ^4
-
-  '@gasket/plugin-git@7.3.0':
-    resolution: {integrity: sha512-XEJv8jLELw/lc4/OlVqVeXyMqDD/HsIF1rLD2zUZBudsYz9yHhoIPbJ8+c5wPZoLRNaC+WjA7REnOnSlQmh2WA==}
-
-  '@gasket/plugin-happyfeet@7.3.0':
-    resolution: {integrity: sha512-djCZ8J7hciWXZVnRgVbyx+BE1eIlaFaXQGO3ZTsXOVU9tYfvCs0qUTJ+t+t3jWxhpMDs2acwJZKNhybO+cnMaw==}
-
-  '@gasket/plugin-https-proxy@7.3.0':
-    resolution: {integrity: sha512-4xjklAsREi1Oc85NhOHDX2miHQ0+WDW/MOZuJYli6HC22kgowHjdN7IofVrDqhfGTI0diFQ6YfvrWhZ4VvvqnA==}
-
-  '@gasket/plugin-https@7.3.0':
-    resolution: {integrity: sha512-traMKgLFCSa7OPjmc3tDcY2GXkfJNjuqa5RH6nn3YlWLAkH1Zz4GyArndZ9f4h627hBJfCAs3Yxj/WfF1SR23w==}
-
-  '@gasket/plugin-intl@7.3.0':
-    resolution: {integrity: sha512-GbARsJ2l69ySeb9L8XFg9sAOT1+OEfVmZZ21Sv3tqg8BHMCd9AWmSmjUFZYeLrxwenELRopVXIiiluMh0D597g==}
-
-  '@gasket/plugin-jest@7.3.0':
-    resolution: {integrity: sha512-HUvvUuyJVSMu/7PJ5gwgSHxS5wV8Pu4wp7L5uETbr+mQrz7V2o/D2+pffw3hogu3ZgAiuLnEaMud5OtSe+PnrQ==}
-
-  '@gasket/plugin-lint@7.3.0':
-    resolution: {integrity: sha512-JKn3IUVu/aaRYmzRpalTFesHJ7Retm/le/OUzvZ0Nk/kwJEvxTIeQcn+h0MSOyA+GZt6ZSNWjbsiyvzoY/VBGg==}
-
-  '@gasket/plugin-logger@7.3.0':
-    resolution: {integrity: sha512-0rM4TA1lC650+Vf4j7a8cw+jsp0xyyhJYYndgUidytxs6zpHKox6+kOipWkm1jn7zVE71zWxevTHgi5QkMSZWw==}
-
-  '@gasket/plugin-manifest@7.3.0':
-    resolution: {integrity: sha512-HfkQ4P7lAoT/id4piRcqDrr8+qnWltlTpcEYuTYMVRbjWO82NQh6b602quoSMJivZycrGvemeXO3W8rOG01jfA==}
-
-  '@gasket/plugin-metadata@7.3.0':
-    resolution: {integrity: sha512-Mt2Zb6yUsv7Mj0bsYumMhRGZVONvNaXy0oKSIJdC7ZO4NuQ51SHJ5VIujfpsB4lqxkAikC2QGoNkQ3KuFmRK3g==}
-
-  '@gasket/plugin-middleware@7.3.0':
-    resolution: {integrity: sha512-/d9mJIbloegmxQYqSpHwf2rL7PYtOQnCkVZFGWnfCX4VTq79Igx3h/BjYEFNqvBOoNrE/kgFkfmDzFiot+edpQ==}
-
-  '@gasket/plugin-mocha@7.3.0':
-    resolution: {integrity: sha512-i7mAqJS7burSJSQFjXBTatt9o7BSEPDdSXuF9t6teYgWTvlGe1UtMBVk9neIRiQq73SLGifBUs9ZzJqj9mKN4g==}
-
-  '@gasket/plugin-morgan@7.3.0':
-    resolution: {integrity: sha512-QFwVjMmPNhVNixkQunODIJfVUM8iYIGbfwat0ZbQ5wS/zQkhDGY2JeIK5rTcTZ8xAzSCWBS5n42mzlTKm+JquQ==}
-    peerDependencies:
-      '@gasket/plugin-logger': ^7.3.0
-      express: ^4.21.0
-
-  '@gasket/plugin-nextjs@7.3.0':
-    resolution: {integrity: sha512-/AzaBR/nj3+zYRnOuBQBRWhhH6fqz6BdOrxebXTCqUDOjwH73xIqXyPIVli+Nowzv72TnLkYCSR/7SNO0nxeLQ==}
-    peerDependencies:
-      '@gasket/plugin-webpack': ^7.3.0
-      next: ^14
-      react: ^18
-      react-dom: ^18
-
-  '@gasket/plugin-redux@7.3.0':
-    resolution: {integrity: sha512-K+sFZgQEz5Ko8gVOH5IPu87KyBvTLH+XrDhP9RvQNsCcTf/QmWeqialSAgfrdeZrtCLatE8Ig7qrAO2FJWgmyg==}
-    deprecated: Package deprecated and will be removed in future major release.
-
-  '@gasket/plugin-service-worker@7.3.0':
-    resolution: {integrity: sha512-xEQ/u1Wtgbns3qQRu82QpEl+a/gd5k3+wf0nvTGNFeCSxMVoIxEDbZ8yBgDIDJgrnZj/rX695gEn2HaaImE14Q==}
-
-  '@gasket/plugin-swagger@7.3.0':
-    resolution: {integrity: sha512-TUumYwTJfknFNlAjXhiOmHCzE3ZqNgZPmTsjRyxo2ConZhDhAEs01G3fO23nMfOjgvcJvgLGOi7ig+p4AXOW0A==}
-
-  '@gasket/plugin-typescript@7.3.0':
-    resolution: {integrity: sha512-n+xiY6Nq4TFZb0fHLGQ5Qa3X9Ywe71UuuQudzxCxaT7rjz7abihwpgmzlzvfQocYoygDvRSnCYz6EPYoxSifRA==}
-
-  '@gasket/plugin-webpack@7.3.0':
-    resolution: {integrity: sha512-Gi22tgDN9zMfqT2R1YZoVlgAQmb8LTOHRsvfW0fTGVSYgbBvZU7qK94dzlyH6JprHO98xbsW+lg2DnllkdMhhQ==}
-
-  '@gasket/plugin-winston@7.3.0':
-    resolution: {integrity: sha512-wNfkCreTn6Ew/GwGF3ZmTGWZhlYW9HPMxkX0dqcvoa3DziDfdmcjvyP4SLfhqvDtrpLv6oSD3V8MjOAZLrIMxQ==}
-
-  '@gasket/plugin-workbox@7.3.0':
-    resolution: {integrity: sha512-jTolOa8oMEAB2BMKV1wd2HRZWPmW7OaEw0aGrF3CYSHEZqEI4nZSO+qCYbkK3YUYZYsJP4opiVvE7/lCBTRYcQ==}
-
-  '@gasket/preset-api@7.3.1':
-    resolution: {integrity: sha512-4psIwCp8THBe2M0xLOvSjijU7oQ47naQP2C8VZ/2zMNwtneUbAs+oZkZAvNRtXtgSL6h4aupvNZglBvYcCknmQ==}
-
-  '@gasket/preset-nextjs@7.3.0':
-    resolution: {integrity: sha512-DnFkoEazUc8qSy4f5kI3+FaC8BuYHr7ag2Tirwqxsk4ZG5fGxM8xed1geNq9fGRhf/REboT4U8L0Ba+1GNnYCg==}
-
-  '@gasket/react-intl@7.3.0':
-    resolution: {integrity: sha512-sHKSGqFw0oOi22vkEITMdZz+73/khnGAQRQasuE+p6CcLSnGbLd70bORdbYz/9N70O9vR2nyCgJ7xfB9m7i7tA==}
-    peerDependencies:
-      '@gasket/plugin-intl': ^7.3.0
-
-  '@gasket/redux@7.3.0':
-    resolution: {integrity: sha512-CMijNq5eb+AiRkOLid634HdpipzVwrg6/WjXAA6BZNEcTYm8htHYiYHKrBtZVAT2z10b6HK8jVysUUTaf4P8fQ==}
-    peerDependencies:
-      redux: ^3.7.2 || ^4.0.1
-
-  '@gasket/request@7.3.0':
-    resolution: {integrity: sha512-nJjyWQrfUp862IHgGdSJHkD1MWWSNw/aEQ7znrVDkR5YgkRD+/T8nUrbFwGpoRz/MBWigxVeRr/wX51Rn9691w==}
-
-  '@gasket/utils@7.3.0':
-    resolution: {integrity: sha512-xhcgu3xMviPpLZgi5Ke0UwYsgo34/OPbEi1oJztB63HJ8LLvRaVjMT7nG3vHux8yVtPYCpNnYsNbQRbfHLvDbg==}
 
   '@godaddy/dmd@1.0.4':
     resolution: {integrity: sha512-f/Usjur8YE3gyko+fbBkFjQ5Q7j/uftPBuqHZPOGhT3pePe9X78HQixIKqvIM+C/Bwv70A+j3aV5t0N5yDkoTA==}
@@ -5501,9 +5350,6 @@ packages:
     resolution: {integrity: sha512-zM0mVWSXE0a0h9aKACLwKmD6nHcRiKrPpCfvaKqG1CqDEyjEawId0ocXxVzPMCAm6kkWr2P025msfxXEnt8UGQ==}
     engines: {node: '>= 10'}
 
-  '@napi-rs/wasm-runtime@0.2.4':
-    resolution: {integrity: sha512-9zESzOO5aDByvhIAsOy9TbpZ0Ur2AJbUI7UT73kcUTS2mxAMHOBaa1st/jAymNoCtvrit99kkzT1FZuXVcgfIQ==}
-
   '@next/env@14.2.24':
     resolution: {integrity: sha512-LAm0Is2KHTNT6IT16lxT+suD0u+VVfYNQqM+EJTKuFRRuY2z+zj01kueWXPCxbMBDt0B5vONYzabHGUNbZYAhA==}
 
@@ -5585,66 +5431,6 @@ packages:
   '@nolyfill/is-core-module@1.0.39':
     resolution: {integrity: sha512-nn5ozdjYQpUCZlWGuxcJY/KpxkWQs4DcbMCmKojjyrYDEAGy4Ce19NN4v5MduafTwJlbKc99UA8YhSVqq9yPZA==}
     engines: {node: '>=12.4.0'}
-
-  '@nx/nx-darwin-arm64@20.4.6':
-    resolution: {integrity: sha512-yYBkXCqx9XDS88IKlbXQUMKAmNE6OA7AwmreDabL0zKCeB5x9qit5iaGwQOYCA7PSdjFQTYvPdKK+S3ytKCJ2w==}
-    engines: {node: '>= 10'}
-    cpu: [arm64]
-    os: [darwin]
-
-  '@nx/nx-darwin-x64@20.4.6':
-    resolution: {integrity: sha512-YeGCTQPmZmWYSJ3Km8rsx3YhohbQNp8grclyEp4KA7GXrPY+AKA9hcy0e5KwF4hPP41EEYkju2Xpl0XdmOfdBQ==}
-    engines: {node: '>= 10'}
-    cpu: [x64]
-    os: [darwin]
-
-  '@nx/nx-freebsd-x64@20.4.6':
-    resolution: {integrity: sha512-49Ad0ysTWrNARmZxc02bmWfrGT5XKEnb5+Nms+RGzQVs+5WI6yqKx2iuLGrx2CDY0FEY11Z0zFpwvrZPGnnLXw==}
-    engines: {node: '>= 10'}
-    cpu: [x64]
-    os: [freebsd]
-
-  '@nx/nx-linux-arm-gnueabihf@20.4.6':
-    resolution: {integrity: sha512-+SMu0xYf2Qim2AC4eYn2SKLXd94UwudMIdPiwbHQUtqRnX88T8rGQKxtINdEAEmIt/KkHyceyJ7lpHGRKmFfbw==}
-    engines: {node: '>= 10'}
-    cpu: [arm]
-    os: [linux]
-
-  '@nx/nx-linux-arm64-gnu@20.4.6':
-    resolution: {integrity: sha512-1u+qawDO4R8w6op2mqIECzJ8YEViPhpqyq3RiRyAchPodUgrd1rnYnYj+xgQeED4d+L+djeZfhN6000WDhZ5oA==}
-    engines: {node: '>= 10'}
-    cpu: [arm64]
-    os: [linux]
-
-  '@nx/nx-linux-arm64-musl@20.4.6':
-    resolution: {integrity: sha512-8sFM3Z8k2iojXpL1E/ynlp+BPD8YWCs12cc+qk/4Ke5uOILcpDQ7XZSmzYoNIxp/0fcbZ1bosE+o7Lx4sbpfjQ==}
-    engines: {node: '>= 10'}
-    cpu: [arm64]
-    os: [linux]
-
-  '@nx/nx-linux-x64-gnu@20.4.6':
-    resolution: {integrity: sha512-9t8jPREQN8a2j09O9q9aQI4cP6UXn7tOD+UVYhlQ9EO+EsHKCcaTzszeLoatySVxzeG0RB3vutMgaa8AiS4qcA==}
-    engines: {node: '>= 10'}
-    cpu: [x64]
-    os: [linux]
-
-  '@nx/nx-linux-x64-musl@20.4.6':
-    resolution: {integrity: sha512-4EO71ND0OJcvinYNc+enB3ouFeKWjCcb73xG2RdjF5s8A9/RFFK6Z3zasYTmGWR06nSLm3mi6xiyiNXWvIdZMA==}
-    engines: {node: '>= 10'}
-    cpu: [x64]
-    os: [linux]
-
-  '@nx/nx-win32-arm64-msvc@20.4.6':
-    resolution: {integrity: sha512-o8Vurr2c9SMP+a2jrBD3VUkQqmHXqi1yC+NJHMzO7GiVPaCFoJR1IizAECXIiKUXv5dB+WFQow7yzVkQQAjk6g==}
-    engines: {node: '>= 10'}
-    cpu: [arm64]
-    os: [win32]
-
-  '@nx/nx-win32-x64-msvc@20.4.6':
-    resolution: {integrity: sha512-PtBlsTJHsHeAEawt2HrWkSEsHbwu7MlqFIrw8cS+tg7ZblpesUWva1L3Ylx0hEcQrY7UjMGDR0RVo2DKAUvKZA==}
-    engines: {node: '>= 10'}
-    cpu: [x64]
-    os: [win32]
 
   '@opentelemetry/api@1.9.0':
     resolution: {integrity: sha512-3giAOQvZiH5F9bMlMiv8+GSPMeqg0dbaeo58/0SlA9sxSqZhnUtxzX9/2FzyhS9sWQf5S0GJE0AKBrFqjpeYcg==}
@@ -6101,9 +5887,6 @@ packages:
 
   '@tsconfig/node16@1.0.4':
     resolution: {integrity: sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==}
-
-  '@tybys/wasm-util@0.9.0':
-    resolution: {integrity: sha512-6+7nlbMVX/PVDCwaIQ8nTOPveOcFLSt8GcXdx8hD0bt39uWxYT88uXzqTd4fTvqta7oeUJqudepapKNt2DYJFw==}
 
   '@types/acorn@4.0.6':
     resolution: {integrity: sha512-veQTnWP+1D/xbxVrPC3zHnCZRjSrKfhbMUlEA43iMZLu7EsnTtkJklIuwrCPbOi8YkvDQAiW05VQQFvvz9oieQ==}
@@ -6718,17 +6501,6 @@ packages:
   '@xtuc/long@4.2.2':
     resolution: {integrity: sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==}
 
-  '@yarnpkg/lockfile@1.1.0':
-    resolution: {integrity: sha512-GpSwvyXOcOOlV70vbnzjj4fW5xW/FdUF6nQEt1ENy7m4ZCczi1+/buVUPAqmGfqznsORNFzUMjctTIp8a9tuCQ==}
-
-  '@yarnpkg/parsers@3.0.2':
-    resolution: {integrity: sha512-/HcYgtUSiJiot/XWGLOlGxPYUG65+/31V8oqk17vZLW1xlCoR4PampyePljOxY2n8/3jz9+tIFzICsyGujJZoA==}
-    engines: {node: '>=18.12.0'}
-
-  '@zkochan/js-yaml@0.0.7':
-    resolution: {integrity: sha512-nrUSn7hzt7J6JWgWGz78ZYI8wj+gdIJdk0Ynjpp8l+trkn58Uqsf6RYrYkEK+3X18EX+TNdtJI0WxAtc+L84SQ==}
-    hasBin: true
-
   abab@2.0.6:
     resolution: {integrity: sha512-j2afSsaIENvHZN2B8GOpF566vZ5WVk5opAiMTvWgaQT8DkbOqsTfvNAvHoRGU2zzP8cPoqys+xHTRDWW8L+/BA==}
     deprecated: Use your platform's native atob() and btoa() methods instead
@@ -7175,9 +6947,6 @@ packages:
   binary-search@1.3.6:
     resolution: {integrity: sha512-nbE1WxOTTrUWIfsfZ4aHGYu5DOuNkbxGokjV6Z2kxfJK3uaAb8zNK1muzOeipoLHZjInT4Br88BHpzevc681xA==}
 
-  bl@4.1.0:
-    resolution: {integrity: sha512-1W07cM9gS6DcLperZfFSj+bWLtaPGSOHWhPiGzXmvVJbRLdG82sH/Kn8EtW1VqWVA54AKf2h5k5BbnIbwF3h6w==}
-
   blob-util@2.0.2:
     resolution: {integrity: sha512-T7JQa+zsXXEa6/8ZhHcQEW1UFfVM49Ts65uBkFL6fz2QmrElqmbajIDJvuA0tEhRe5eIjpV9ZF+0RfZR9voJFQ==}
 
@@ -7425,10 +7194,6 @@ packages:
   cli-cursor@3.1.0:
     resolution: {integrity: sha512-I/zHAwsKf9FqGoXM4WWRACob9+SNukZTd94DWF57E4toouRulbCxcUh6RKUEOQlYTHJnzkPMySvPNaaSLNfLZw==}
     engines: {node: '>=8'}
-
-  cli-spinners@2.6.1:
-    resolution: {integrity: sha512-x/5fWmGMnbKQAaNwN+UZlV79qBLM9JFnJuJ03gIi5whrob0xV0ofNVHy9DhwGdsMJQc2OKv0oGmLzvaqvAVv+g==}
-    engines: {node: '>=6'}
 
   cli-spinners@2.9.2:
     resolution: {integrity: sha512-ywqV+5MmyL4E7ybXgKys4DugZbX0FC6LnwrhjuykIjnK9k8OQacQ7axGKnjDXWNhns0xot3bZI5h55H8yo9cJg==}
@@ -7689,10 +7454,6 @@ packages:
     peerDependenciesMeta:
       typescript:
         optional: true
-
-  create-gasket-app@7.3.0:
-    resolution: {integrity: sha512-04xgMVkPIwNfOfjTPh4mUdJdSmAOgqrk/t43kyHmCxwER4RLh1p1Ndw0/RcRS35ECM4euYJmIayQASH0/UFSkg==}
-    hasBin: true
 
   create-jest@29.7.0:
     resolution: {integrity: sha512-Adz2bdH0Vq3F53KEMJOoftQFutWCukm6J24wbPWRO4k1kMY7gS7ds/uoJkNuV8wDCtWWnuwGcJwpWcih+zEW1Q==}
@@ -8261,10 +8022,6 @@ packages:
     resolution: {integrity: sha512-tE7ztYzXHIeyvc7N+hR3oi7FIbf/NIjVP9hmAt3yMXzrQ072/fpjGLx2GxNxGxUl5V73MEqYzioOMoVhGMJ5cA==}
     engines: {node: '>=10'}
 
-  dotenv-expand@11.0.7:
-    resolution: {integrity: sha512-zIHwmZPRshsCdpMDyVsqGmgyP0yT8GAgXUnkdAoJisxvf33k7yO6OuoKmcTGuXPWSsm8Oh88nZicRLA9Y0rUeA==}
-    engines: {node: '>=12'}
-
   dotenv@16.4.7:
     resolution: {integrity: sha512-47qPchRCykZC03FhkYAhrvwU4xDBFIj1QPqaarj6mdM/hgUzfPHcpkHJOn3mJAufFeeAxAzeGsr5X0M4k6fLZQ==}
     engines: {node: '>=12'}
@@ -8338,10 +8095,6 @@ packages:
   enhanced-resolve@5.18.1:
     resolution: {integrity: sha512-ZSW3ma5GkcQBIpwZTSRAI8N71Uuwgs93IezB7mf7R60tC8ZbJideoDNKjHn2O9KIlx6rkGTTEk1xUCK2E1Y2Yg==}
     engines: {node: '>=10.13.0'}
-
-  enquirer@2.3.6:
-    resolution: {integrity: sha512-yjNnPr315/FjS4zIsUxYguYUPP2e1NK4d7E7ZOLiyYCcbFBiTMyID+2wvm2w6+pZ/odMA7cRkjhsPbltwBOrLg==}
-    engines: {node: '>=8.6'}
 
   enquirer@2.4.1:
     resolution: {integrity: sha512-rRqJg/6gd538VHvR3PSrdRBb/1Vy2YfzHqzvbhGIQpDRKIa4FgV/54b5Q1xYSxOOwKvjXweS26E0Q+nAMwp2pQ==}
@@ -8418,9 +8171,9 @@ packages:
   esast-util-from-js@2.0.1:
     resolution: {integrity: sha512-8Ja+rNJ0Lt56Pcf3TAmpBZjmx8ZcK5Ts4cAzIOjsjevg9oSXJnl6SUQ2EevU8tv3h6ZLWmoKL5H4fgWvdvfETw==}
 
-  esbuild@0.21.5:
-    resolution: {integrity: sha512-mg3OPMV4hXywwpoDxu3Qda5xCKQi+vCTZq8S9J/EpkhB2HzKXq4SNFZE3+NK93JYxc8VMSep+lOUSC/RVKaBqw==}
-    engines: {node: '>=12'}
+  esbuild@0.24.2:
+    resolution: {integrity: sha512-+9egpBW8I3CD5XPe0n6BfT5fxLzxrlDzqydF3aviG+9ni1lDC/OvMHcxqEFV0+LANZG5R1bFMWfUrjVsdwxJvA==}
+    engines: {node: '>=18'}
     hasBin: true
 
   esbuild@0.25.0:
@@ -9028,12 +8781,6 @@ packages:
 
   fromentries@1.3.2:
     resolution: {integrity: sha512-cHEpEQHUg0f8XdtZCc2ZAhrHzKzT0MrFUTcvx+hfxYu7rGMDc5SKoXFh+n4YigxsHXRzc6OrCshdR1bWH6HHyg==}
-
-  front-matter@4.0.2:
-    resolution: {integrity: sha512-I8ZuJ/qG92NWX8i5x1Y8qyj3vizhXS31OxjKDu3LKP+7/qBgfIKValiZIEwoVoJKUHlhWtYrktkxV1XsX+pPlg==}
-
-  fs-constants@1.0.0:
-    resolution: {integrity: sha512-y6OAwoSIf7FyjMIv94u+b5rdheZEjzR63GTyZJm5qh4Bi+2YgwLCcI/fPFZkL5PSixOt6ZNKm+w+Hfp/Bciwow==}
 
   fs-extra@10.1.0:
     resolution: {integrity: sha512-oRXApq54ETRj4eMiFzGnHWGy+zo5raudjuxN0b8H7s/RU2oW0Wvsx9O0ACRN/kRq9E8Vu/ReskGB5o3ji+FzHQ==}
@@ -9689,10 +9436,6 @@ packages:
   is-integer@1.0.7:
     resolution: {integrity: sha512-RPQc/s9yBHSvpi+hs9dYiJ2cuFeU6x3TyyIp8O2H6SKEltIvJOzRj9ToyvcStDvPR/pS4rxgr1oBFajQjZ2Szg==}
 
-  is-interactive@1.0.0:
-    resolution: {integrity: sha512-2HvIEKRoqS62guEC+qBjpvRubdX910WCMuJTZ+I9yvqKU2/12eSL549HMwtabb4oupdj2sMP50k+XJfB/8JE6w==}
-    engines: {node: '>=8'}
-
   is-map@2.0.3:
     resolution: {integrity: sha512-1Qed0/Hr2m+YqxnM09CjA2d/i6YZNfF6R2oRAOj36eUdS6qIV/huPJNSEpKbupewFs+ZsJlxsjjPbc0/afW6Lw==}
     engines: {node: '>= 0.4'}
@@ -10124,9 +9867,6 @@ packages:
     engines: {node: '>=6'}
     hasBin: true
 
-  jsonc-parser@3.2.0:
-    resolution: {integrity: sha512-gfFQZrcTc8CnKXp6Y4/CBT3fTc0OVuDofpre4aEeEpSBPV5X5v4+Vmx+8snU7RLPrNHPKSgLxGo9YuQzz20o+w==}
-
   jsonc-parser@3.3.1:
     resolution: {integrity: sha512-HUgH65KyejrUFPvHFPbqOY0rsFip3Bo5wb4ngvdi1EpCYWUQDC5V+Y7mZws+DLkr4M//zQJoanu1SP+87Dv1oQ==}
 
@@ -10216,10 +9956,6 @@ packages:
 
   lines-and-columns@1.2.4:
     resolution: {integrity: sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==}
-
-  lines-and-columns@2.0.3:
-    resolution: {integrity: sha512-cNOjgCnLB+FnvWWtyRTzmB3POJ+cXxTA81LoW7u8JdmhfXzriropYwpjShnz1QLLWsQwY7nIxoDmcPTwphDK9w==}
-    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
   listr2@3.14.0:
     resolution: {integrity: sha512-TyWI8G99GX9GjE54cJ+RrNMcIFBfwMPxc3XTFiAYGN4s10hWROGtOg7+O6u6LE3mNkyld7RSLE6nrKBvTfcs3g==}
@@ -10833,9 +10569,6 @@ packages:
   node-int64@0.4.0:
     resolution: {integrity: sha512-O5lz91xSOeoXP6DulyHfllpq+Eg00MWitZIbtPfoSEvqIHdl5gfcY6hYzDWnj0qD5tz52PI08u9qUvSVeUBeHw==}
 
-  node-machine-id@1.1.12:
-    resolution: {integrity: sha512-QNABxbrPa3qEIfrE6GOJ7BYIuignnJw7iQ2YPbc3Nla1HzRJjXzZOiikfF8m7eAMfichLt3M4VgLOetqgDmgGQ==}
-
   node-preload@0.2.1:
     resolution: {integrity: sha512-RM5oyBy45cLEoHqCeh+MNuFAxO0vTFBLskvQbOKnEE7YTTSN4tbN8QWDIPQ6L+WvKsB/qLEGpYe2ZZ9d4W9OIQ==}
     engines: {node: '>=8'}
@@ -10885,18 +10618,6 @@ packages:
 
   nwsapi@2.2.16:
     resolution: {integrity: sha512-F1I/bimDpj3ncaNDhfyMWuFqmQDBwDB0Fogc2qpL3BWvkQteFD/8BzWuIRl83rq0DXfm8SGt/HFhLXZyljTXcQ==}
-
-  nx@20.4.6:
-    resolution: {integrity: sha512-gXRw3urAq4glK6B1+jxHjzXRyuNrFFI7L3ggNg34UmQ46AyT7a6FgjZp2OZ779urwnoQSTvxNfBuD4+RrB31MQ==}
-    hasBin: true
-    peerDependencies:
-      '@swc-node/register': ^1.8.0
-      '@swc/core': ^1.3.85
-    peerDependenciesMeta:
-      '@swc-node/register':
-        optional: true
-      '@swc/core':
-        optional: true
 
   nyc@15.1.0:
     resolution: {integrity: sha512-jMW04n9SxKdKi1ZMGhvUTHBN0EICCRkHemEoE5jm6mTYcqcdas0ATzgUgejlQUHMvpnOZqGB5Xxsv9KxJW1j8A==}
@@ -11003,10 +10724,6 @@ packages:
   ora@3.4.0:
     resolution: {integrity: sha512-eNwHudNbO1folBP3JsZ19v9azXWtQZjICdr3Q0TDPIaeBQ3mXLrh54wM+er0+hSp+dWKf+Z8KM58CYzEyIYxYg==}
     engines: {node: '>=6'}
-
-  ora@5.3.0:
-    resolution: {integrity: sha512-zAKMgGXUim0Jyd6CXK9lraBnD3H5yPGBPPOkC23a2BG6hsm4Zu6OQSjQuEtV0BHDf4aKHcUFvJiGRrFuW3MG8g==}
-    engines: {node: '>=10'}
 
   original-url@1.2.3:
     resolution: {integrity: sha512-BYm+pKYLtS4mVe/mgT3YKGtWV5HzN/XKiaIu1aK4rsxyjuHeTW9N+xVBEpJcY1onB3nccfH0RbzUEoimMqFUHQ==}
@@ -12802,10 +12519,6 @@ packages:
     resolution: {integrity: sha512-GNzQvQTOIP6RyTfE2Qxb8ZVlNmw0n88vp1szwWRimP02mnTsx3Wtn5qRdqY9w2XduFNUgvOwhNnQsjwCp+kqaQ==}
     engines: {node: '>=6'}
 
-  tar-stream@2.2.0:
-    resolution: {integrity: sha512-ujeqbceABgwMZxEJnk2HDY2DlnUZ+9oEcb1KzTVfYHio0UE6dG71n60d8D2I4qNvleWrrXpmjpt7vZeF1LnMZQ==}
-    engines: {node: '>=6'}
-
   tar-stream@3.1.7:
     resolution: {integrity: sha512-qJj60CXt7IU1Ffyc3NJMjh6EkuCFej46zUqJ4J7pqYlThyd9bO0XBTmcOIhSzZJVWfsLks0+nle/j538YAW9RQ==}
 
@@ -13020,10 +12733,6 @@ packages:
 
   tsconfig-paths@3.15.0:
     resolution: {integrity: sha512-2Ac2RgzDe/cn48GvOe3M+o82pEFewD3UPbyoUHHdKasHwJKjds4fLXWf/Ux5kATBKN20oaFGu+jbElp1pos0mg==}
-
-  tsconfig-paths@4.2.0:
-    resolution: {integrity: sha512-NoZ4roiN7LnbKn9QqE1amc9DJfzvZXxF4xDavcOWt1BPkdx+m+0gJuPM+S0vCe7zTJMYUP0R8pO2XMr+Y8oLIg==}
-    engines: {node: '>=6'}
 
   tslib@1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
@@ -13306,21 +13015,26 @@ packages:
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
     hasBin: true
 
-  vite@5.4.14:
-    resolution: {integrity: sha512-EK5cY7Q1D8JNhSaPKVK4pwBFvaTmZxEnoKXLG/U9gmdDcihQGNzFlgIvaxezFR4glP1LsuiedwMBqCXH3wZccA==}
-    engines: {node: ^18.0.0 || >=20.0.0}
+  vite@6.1.1:
+    resolution: {integrity: sha512-4GgM54XrwRfrOp297aIYspIti66k56v16ZnqHvrIM7mG+HjDlAwS7p+Srr7J6fGvEdOJ5JcQ/D9T7HhtdXDTzA==}
+    engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
     hasBin: true
     peerDependencies:
-      '@types/node': ^18.0.0 || >=20.0.0
+      '@types/node': ^18.0.0 || ^20.0.0 || >=22.0.0
+      jiti: '>=1.21.0'
       less: '*'
       lightningcss: ^1.21.0
       sass: '*'
       sass-embedded: '*'
       stylus: '*'
       sugarss: '*'
-      terser: ^5.4.0
+      terser: ^5.16.0
+      tsx: ^4.8.1
+      yaml: ^2.4.2
     peerDependenciesMeta:
       '@types/node':
+        optional: true
+      jiti:
         optional: true
       less:
         optional: true
@@ -13335,6 +13049,10 @@ packages:
       sugarss:
         optional: true
       terser:
+        optional: true
+      tsx:
+        optional: true
+      yaml:
         optional: true
 
   vitest@3.0.7:
@@ -13919,7 +13637,7 @@ snapshots:
       '@babel/traverse': 7.26.9
       '@babel/types': 7.26.9
       convert-source-map: 2.0.0
-      debug: 4.4.0(supports-color@5.5.0)
+      debug: 4.4.0
       gensync: 1.0.0-beta.2
       json5: 2.2.3
       semver: 6.3.1
@@ -13979,7 +13697,7 @@ snapshots:
       '@babel/core': 7.26.9
       '@babel/helper-compilation-targets': 7.26.5
       '@babel/helper-plugin-utils': 7.26.5
-      debug: 4.4.0(supports-color@5.5.0)
+      debug: 4.4.0
       lodash.debounce: 4.0.8
       resolve: 1.22.10
     transitivePeerDependencies:
@@ -14733,7 +14451,7 @@ snapshots:
       '@babel/parser': 7.26.9
       '@babel/template': 7.26.9
       '@babel/types': 7.26.9
-      debug: 4.4.0(supports-color@5.5.0)
+      debug: 4.4.0
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
@@ -15246,6 +14964,33 @@ snapshots:
       - uglify-js
       - webpack-cli
 
+  '@docusaurus/babel@3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@babel/core': 7.26.9
+      '@babel/generator': 7.26.9
+      '@babel/plugin-syntax-dynamic-import': 7.8.3(@babel/core@7.26.9)
+      '@babel/plugin-transform-runtime': 7.26.9(@babel/core@7.26.9)
+      '@babel/preset-env': 7.26.9(@babel/core@7.26.9)
+      '@babel/preset-react': 7.26.3(@babel/core@7.26.9)
+      '@babel/preset-typescript': 7.26.0(@babel/core@7.26.9)
+      '@babel/runtime': 7.26.9
+      '@babel/runtime-corejs3': 7.26.9
+      '@babel/traverse': 7.26.9
+      '@docusaurus/logger': 3.7.0
+      '@docusaurus/utils': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      babel-plugin-dynamic-import-node: 2.3.3
+      fs-extra: 11.3.0
+      tslib: 2.8.1
+    transitivePeerDependencies:
+      - '@swc/core'
+      - acorn
+      - esbuild
+      - react
+      - react-dom
+      - supports-color
+      - uglify-js
+      - webpack-cli
+
   '@docusaurus/bundler@3.7.0(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)':
     dependencies:
       '@babel/core': 7.26.9
@@ -15273,6 +15018,51 @@ snapshots:
       url-loader: 4.1.1(file-loader@6.2.0(webpack@5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5))))(webpack@5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5)))
       webpack: 5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5))
       webpackbar: 6.0.1(webpack@5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5)))
+    transitivePeerDependencies:
+      - '@parcel/css'
+      - '@rspack/core'
+      - '@swc/core'
+      - '@swc/css'
+      - acorn
+      - csso
+      - esbuild
+      - eslint
+      - lightningcss
+      - react
+      - react-dom
+      - supports-color
+      - typescript
+      - uglify-js
+      - vue-template-compiler
+      - webpack-cli
+
+  '@docusaurus/bundler@3.7.0(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)':
+    dependencies:
+      '@babel/core': 7.26.9
+      '@docusaurus/babel': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/cssnano-preset': 3.7.0
+      '@docusaurus/logger': 3.7.0
+      '@docusaurus/types': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/utils': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      babel-loader: 9.2.1(@babel/core@7.26.9)(webpack@5.98.0)
+      clean-css: 5.3.3
+      copy-webpack-plugin: 11.0.0(webpack@5.98.0)
+      css-loader: 6.11.0(webpack@5.98.0)
+      css-minimizer-webpack-plugin: 5.0.1(clean-css@5.3.3)(webpack@5.98.0)
+      cssnano: 6.1.2(postcss@8.5.3)
+      file-loader: 6.2.0(webpack@5.98.0)
+      html-minifier-terser: 7.2.0
+      mini-css-extract-plugin: 2.9.2(webpack@5.98.0)
+      null-loader: 4.0.1(webpack@5.98.0)
+      postcss: 8.5.3
+      postcss-loader: 7.3.4(postcss@8.5.3)(typescript@5.7.3)(webpack@5.98.0)
+      postcss-preset-env: 10.1.4(postcss@8.5.3)
+      react-dev-utils: 12.0.1(eslint@8.57.1)(typescript@5.7.3)(webpack@5.98.0)
+      terser-webpack-plugin: 5.3.11(webpack@5.98.0)
+      tslib: 2.8.1
+      url-loader: 4.1.1(file-loader@6.2.0(webpack@5.98.0))(webpack@5.98.0)
+      webpack: 5.98.0
+      webpackbar: 6.0.1(webpack@5.98.0)
     transitivePeerDependencies:
       - '@parcel/css'
       - '@rspack/core'
@@ -15358,6 +15148,73 @@ snapshots:
       - vue-template-compiler
       - webpack-cli
 
+  '@docusaurus/core@3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)':
+    dependencies:
+      '@docusaurus/babel': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/bundler': 3.7.0(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)
+      '@docusaurus/logger': 3.7.0
+      '@docusaurus/mdx-loader': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/utils': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/utils-common': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/utils-validation': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@mdx-js/react': 3.1.0(@types/react@18.3.18)(react@18.3.1)
+      boxen: 6.2.1
+      chalk: 4.1.2
+      chokidar: 3.6.0
+      cli-table3: 0.6.5
+      combine-promises: 1.2.0
+      commander: 5.1.0
+      core-js: 3.40.0
+      del: 6.1.1
+      detect-port: 1.6.1
+      escape-html: 1.0.3
+      eta: 2.2.0
+      eval: 0.1.8
+      fs-extra: 11.3.0
+      html-tags: 3.3.1
+      html-webpack-plugin: 5.6.3(webpack@5.98.0)
+      leven: 3.1.0
+      lodash: 4.17.21
+      p-map: 4.0.0
+      prompts: 2.4.2
+      react: 18.3.1
+      react-dev-utils: 12.0.1(eslint@8.57.1)(typescript@5.7.3)(webpack@5.98.0)
+      react-dom: 18.3.1(react@18.3.1)
+      react-helmet-async: '@slorber/react-helmet-async@1.3.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)'
+      react-loadable: '@docusaurus/react-loadable@6.0.0(react@18.3.1)'
+      react-loadable-ssr-addon-v5-slorber: 1.0.1(@docusaurus/react-loadable@6.0.0(react@18.3.1))(webpack@5.98.0)
+      react-router: 5.3.4(react@18.3.1)
+      react-router-config: 5.1.1(react-router@5.3.4(react@18.3.1))(react@18.3.1)
+      react-router-dom: 5.3.4(react@18.3.1)
+      semver: 7.7.1
+      serve-handler: 6.1.6
+      shelljs: 0.8.5
+      tslib: 2.8.1
+      update-notifier: 6.0.2
+      webpack: 5.98.0
+      webpack-bundle-analyzer: 4.10.2
+      webpack-dev-server: 4.15.2(webpack@5.98.0)
+      webpack-merge: 6.0.1
+    transitivePeerDependencies:
+      - '@docusaurus/faster'
+      - '@parcel/css'
+      - '@rspack/core'
+      - '@swc/core'
+      - '@swc/css'
+      - acorn
+      - bufferutil
+      - csso
+      - debug
+      - esbuild
+      - eslint
+      - lightningcss
+      - supports-color
+      - typescript
+      - uglify-js
+      - utf-8-validate
+      - vue-template-compiler
+      - webpack-cli
+
   '@docusaurus/cssnano-preset@3.7.0':
     dependencies:
       cssnano-preset-advanced: 6.1.2(postcss@8.5.3)
@@ -15406,9 +15263,64 @@ snapshots:
       - uglify-js
       - webpack-cli
 
+  '@docusaurus/mdx-loader@3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@docusaurus/logger': 3.7.0
+      '@docusaurus/utils': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/utils-validation': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@mdx-js/mdx': 3.1.0(acorn@8.14.0)
+      '@slorber/remark-comment': 1.0.0
+      escape-html: 1.0.3
+      estree-util-value-to-estree: 3.3.2
+      file-loader: 6.2.0(webpack@5.98.0)
+      fs-extra: 11.3.0
+      image-size: 1.2.0
+      mdast-util-mdx: 3.0.0
+      mdast-util-to-string: 4.0.0
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      rehype-raw: 7.0.0
+      remark-directive: 3.0.1
+      remark-emoji: 4.0.1
+      remark-frontmatter: 5.0.0
+      remark-gfm: 4.0.1
+      stringify-object: 3.3.0
+      tslib: 2.8.1
+      unified: 11.0.5
+      unist-util-visit: 5.0.0
+      url-loader: 4.1.1(file-loader@6.2.0(webpack@5.98.0))(webpack@5.98.0)
+      vfile: 6.0.3
+      webpack: 5.98.0
+    transitivePeerDependencies:
+      - '@swc/core'
+      - acorn
+      - esbuild
+      - supports-color
+      - uglify-js
+      - webpack-cli
+
   '@docusaurus/module-type-aliases@3.7.0(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@docusaurus/types': 3.7.0(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@types/history': 4.7.11
+      '@types/react': 18.3.18
+      '@types/react-router-config': 5.0.11
+      '@types/react-router-dom': 5.3.3
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      react-helmet-async: '@slorber/react-helmet-async@1.3.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)'
+      react-loadable: '@docusaurus/react-loadable@6.0.0(react@18.3.1)'
+    transitivePeerDependencies:
+      - '@swc/core'
+      - acorn
+      - esbuild
+      - supports-color
+      - uglify-js
+      - webpack-cli
+
+  '@docusaurus/module-type-aliases@3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@docusaurus/types': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@types/history': 4.7.11
       '@types/react': 18.3.18
       '@types/react-router-config': 5.0.11
@@ -15448,6 +15360,50 @@ snapshots:
       unist-util-visit: 5.0.0
       utility-types: 3.11.0
       webpack: 5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5))
+    transitivePeerDependencies:
+      - '@docusaurus/faster'
+      - '@mdx-js/react'
+      - '@parcel/css'
+      - '@rspack/core'
+      - '@swc/core'
+      - '@swc/css'
+      - acorn
+      - bufferutil
+      - csso
+      - debug
+      - esbuild
+      - eslint
+      - lightningcss
+      - supports-color
+      - typescript
+      - uglify-js
+      - utf-8-validate
+      - vue-template-compiler
+      - webpack-cli
+
+  '@docusaurus/plugin-content-blog@3.7.0(@docusaurus/plugin-content-docs@3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3))(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)':
+    dependencies:
+      '@docusaurus/core': 3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)
+      '@docusaurus/logger': 3.7.0
+      '@docusaurus/mdx-loader': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/plugin-content-docs': 3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)
+      '@docusaurus/theme-common': 3.7.0(@docusaurus/plugin-content-docs@3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3))(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/types': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/utils': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/utils-common': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/utils-validation': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      cheerio: 1.0.0-rc.12
+      feed: 4.2.2
+      fs-extra: 11.3.0
+      lodash: 4.17.21
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      reading-time: 1.5.0
+      srcset: 4.0.0
+      tslib: 2.8.1
+      unist-util-visit: 5.0.0
+      utility-types: 3.11.0
+      webpack: 5.98.0
     transitivePeerDependencies:
       - '@docusaurus/faster'
       - '@mdx-js/react'
@@ -15511,6 +15467,48 @@ snapshots:
       - vue-template-compiler
       - webpack-cli
 
+  '@docusaurus/plugin-content-docs@3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)':
+    dependencies:
+      '@docusaurus/core': 3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)
+      '@docusaurus/logger': 3.7.0
+      '@docusaurus/mdx-loader': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/module-type-aliases': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/theme-common': 3.7.0(@docusaurus/plugin-content-docs@3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3))(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/types': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/utils': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/utils-common': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/utils-validation': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@types/react-router-config': 5.0.11
+      combine-promises: 1.2.0
+      fs-extra: 11.3.0
+      js-yaml: 4.1.0
+      lodash: 4.17.21
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      tslib: 2.8.1
+      utility-types: 3.11.0
+      webpack: 5.98.0
+    transitivePeerDependencies:
+      - '@docusaurus/faster'
+      - '@mdx-js/react'
+      - '@parcel/css'
+      - '@rspack/core'
+      - '@swc/core'
+      - '@swc/css'
+      - acorn
+      - bufferutil
+      - csso
+      - debug
+      - esbuild
+      - eslint
+      - lightningcss
+      - supports-color
+      - typescript
+      - uglify-js
+      - utf-8-validate
+      - vue-template-compiler
+      - webpack-cli
+
   '@docusaurus/plugin-content-pages@3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)':
     dependencies:
       '@docusaurus/core': 3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)
@@ -15544,11 +15542,75 @@ snapshots:
       - vue-template-compiler
       - webpack-cli
 
+  '@docusaurus/plugin-content-pages@3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)':
+    dependencies:
+      '@docusaurus/core': 3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)
+      '@docusaurus/mdx-loader': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/types': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/utils': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/utils-validation': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      fs-extra: 11.3.0
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      tslib: 2.8.1
+      webpack: 5.98.0
+    transitivePeerDependencies:
+      - '@docusaurus/faster'
+      - '@mdx-js/react'
+      - '@parcel/css'
+      - '@rspack/core'
+      - '@swc/core'
+      - '@swc/css'
+      - acorn
+      - bufferutil
+      - csso
+      - debug
+      - esbuild
+      - eslint
+      - lightningcss
+      - supports-color
+      - typescript
+      - uglify-js
+      - utf-8-validate
+      - vue-template-compiler
+      - webpack-cli
+
   '@docusaurus/plugin-debug@3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)':
     dependencies:
       '@docusaurus/core': 3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)
       '@docusaurus/types': 3.7.0(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@docusaurus/utils': 3.7.0(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      fs-extra: 11.3.0
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      react-json-view-lite: 1.5.0(react@18.3.1)
+      tslib: 2.8.1
+    transitivePeerDependencies:
+      - '@docusaurus/faster'
+      - '@mdx-js/react'
+      - '@parcel/css'
+      - '@rspack/core'
+      - '@swc/core'
+      - '@swc/css'
+      - acorn
+      - bufferutil
+      - csso
+      - debug
+      - esbuild
+      - eslint
+      - lightningcss
+      - supports-color
+      - typescript
+      - uglify-js
+      - utf-8-validate
+      - vue-template-compiler
+      - webpack-cli
+
+  '@docusaurus/plugin-debug@3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)':
+    dependencies:
+      '@docusaurus/core': 3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)
+      '@docusaurus/types': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/utils': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       fs-extra: 11.3.0
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
@@ -15604,11 +15666,70 @@ snapshots:
       - vue-template-compiler
       - webpack-cli
 
+  '@docusaurus/plugin-google-analytics@3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)':
+    dependencies:
+      '@docusaurus/core': 3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)
+      '@docusaurus/types': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/utils-validation': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      tslib: 2.8.1
+    transitivePeerDependencies:
+      - '@docusaurus/faster'
+      - '@mdx-js/react'
+      - '@parcel/css'
+      - '@rspack/core'
+      - '@swc/core'
+      - '@swc/css'
+      - acorn
+      - bufferutil
+      - csso
+      - debug
+      - esbuild
+      - eslint
+      - lightningcss
+      - supports-color
+      - typescript
+      - uglify-js
+      - utf-8-validate
+      - vue-template-compiler
+      - webpack-cli
+
   '@docusaurus/plugin-google-gtag@3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)':
     dependencies:
       '@docusaurus/core': 3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)
       '@docusaurus/types': 3.7.0(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@docusaurus/utils-validation': 3.7.0(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@types/gtag.js': 0.0.12
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      tslib: 2.8.1
+    transitivePeerDependencies:
+      - '@docusaurus/faster'
+      - '@mdx-js/react'
+      - '@parcel/css'
+      - '@rspack/core'
+      - '@swc/core'
+      - '@swc/css'
+      - acorn
+      - bufferutil
+      - csso
+      - debug
+      - esbuild
+      - eslint
+      - lightningcss
+      - supports-color
+      - typescript
+      - uglify-js
+      - utf-8-validate
+      - vue-template-compiler
+      - webpack-cli
+
+  '@docusaurus/plugin-google-gtag@3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)':
+    dependencies:
+      '@docusaurus/core': 3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)
+      '@docusaurus/types': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/utils-validation': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@types/gtag.js': 0.0.12
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
@@ -15663,6 +15784,35 @@ snapshots:
       - vue-template-compiler
       - webpack-cli
 
+  '@docusaurus/plugin-google-tag-manager@3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)':
+    dependencies:
+      '@docusaurus/core': 3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)
+      '@docusaurus/types': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/utils-validation': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      tslib: 2.8.1
+    transitivePeerDependencies:
+      - '@docusaurus/faster'
+      - '@mdx-js/react'
+      - '@parcel/css'
+      - '@rspack/core'
+      - '@swc/core'
+      - '@swc/css'
+      - acorn
+      - bufferutil
+      - csso
+      - debug
+      - esbuild
+      - eslint
+      - lightningcss
+      - supports-color
+      - typescript
+      - uglify-js
+      - utf-8-validate
+      - vue-template-compiler
+      - webpack-cli
+
   '@docusaurus/plugin-sitemap@3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)':
     dependencies:
       '@docusaurus/core': 3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)
@@ -15671,6 +15821,40 @@ snapshots:
       '@docusaurus/utils': 3.7.0(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@docusaurus/utils-common': 3.7.0(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@docusaurus/utils-validation': 3.7.0(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      fs-extra: 11.3.0
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      sitemap: 7.1.2
+      tslib: 2.8.1
+    transitivePeerDependencies:
+      - '@docusaurus/faster'
+      - '@mdx-js/react'
+      - '@parcel/css'
+      - '@rspack/core'
+      - '@swc/core'
+      - '@swc/css'
+      - acorn
+      - bufferutil
+      - csso
+      - debug
+      - esbuild
+      - eslint
+      - lightningcss
+      - supports-color
+      - typescript
+      - uglify-js
+      - utf-8-validate
+      - vue-template-compiler
+      - webpack-cli
+
+  '@docusaurus/plugin-sitemap@3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)':
+    dependencies:
+      '@docusaurus/core': 3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)
+      '@docusaurus/logger': 3.7.0
+      '@docusaurus/types': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/utils': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/utils-common': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/utils-validation': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       fs-extra: 11.3.0
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
@@ -15730,6 +15914,39 @@ snapshots:
       - vue-template-compiler
       - webpack-cli
 
+  '@docusaurus/plugin-svgr@3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)':
+    dependencies:
+      '@docusaurus/core': 3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)
+      '@docusaurus/types': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/utils': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/utils-validation': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@svgr/core': 8.1.0(typescript@5.7.3)
+      '@svgr/webpack': 8.1.0(typescript@5.7.3)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      tslib: 2.8.1
+      webpack: 5.98.0
+    transitivePeerDependencies:
+      - '@docusaurus/faster'
+      - '@mdx-js/react'
+      - '@parcel/css'
+      - '@rspack/core'
+      - '@swc/core'
+      - '@swc/css'
+      - acorn
+      - bufferutil
+      - csso
+      - debug
+      - esbuild
+      - eslint
+      - lightningcss
+      - supports-color
+      - typescript
+      - uglify-js
+      - utf-8-validate
+      - vue-template-compiler
+      - webpack-cli
+
   '@docusaurus/preset-classic@3.7.0(@algolia/client-search@5.20.3)(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/react@18.3.18)(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(search-insights@2.17.3)(typescript@5.7.3)':
     dependencies:
       '@docusaurus/core': 3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)
@@ -15746,6 +15963,48 @@ snapshots:
       '@docusaurus/theme-common': 3.7.0(@docusaurus/plugin-content-docs@3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3))(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@docusaurus/theme-search-algolia': 3.7.0(@algolia/client-search@5.20.3)(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/react@18.3.18)(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(search-insights@2.17.3)(typescript@5.7.3)
       '@docusaurus/types': 3.7.0(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+    transitivePeerDependencies:
+      - '@algolia/client-search'
+      - '@docusaurus/faster'
+      - '@mdx-js/react'
+      - '@parcel/css'
+      - '@rspack/core'
+      - '@swc/core'
+      - '@swc/css'
+      - '@types/react'
+      - acorn
+      - bufferutil
+      - csso
+      - debug
+      - esbuild
+      - eslint
+      - lightningcss
+      - search-insights
+      - supports-color
+      - typescript
+      - uglify-js
+      - utf-8-validate
+      - vue-template-compiler
+      - webpack-cli
+
+  '@docusaurus/preset-classic@3.7.0(@algolia/client-search@5.20.3)(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(@types/react@18.3.18)(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(search-insights@2.17.3)(typescript@5.7.3)':
+    dependencies:
+      '@docusaurus/core': 3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)
+      '@docusaurus/plugin-content-blog': 3.7.0(@docusaurus/plugin-content-docs@3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3))(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)
+      '@docusaurus/plugin-content-docs': 3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)
+      '@docusaurus/plugin-content-pages': 3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)
+      '@docusaurus/plugin-debug': 3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)
+      '@docusaurus/plugin-google-analytics': 3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)
+      '@docusaurus/plugin-google-gtag': 3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)
+      '@docusaurus/plugin-google-tag-manager': 3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)
+      '@docusaurus/plugin-sitemap': 3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)
+      '@docusaurus/plugin-svgr': 3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)
+      '@docusaurus/theme-classic': 3.7.0(@types/react@18.3.18)(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)
+      '@docusaurus/theme-common': 3.7.0(@docusaurus/plugin-content-docs@3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3))(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/theme-search-algolia': 3.7.0(@algolia/client-search@5.20.3)(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(@types/react@18.3.18)(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(search-insights@2.17.3)(typescript@5.7.3)
+      '@docusaurus/types': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
     transitivePeerDependencies:
@@ -15828,6 +16087,57 @@ snapshots:
       - vue-template-compiler
       - webpack-cli
 
+  '@docusaurus/theme-classic@3.7.0(@types/react@18.3.18)(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)':
+    dependencies:
+      '@docusaurus/core': 3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)
+      '@docusaurus/logger': 3.7.0
+      '@docusaurus/mdx-loader': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/module-type-aliases': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/plugin-content-blog': 3.7.0(@docusaurus/plugin-content-docs@3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3))(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)
+      '@docusaurus/plugin-content-docs': 3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)
+      '@docusaurus/plugin-content-pages': 3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)
+      '@docusaurus/theme-common': 3.7.0(@docusaurus/plugin-content-docs@3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3))(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/theme-translations': 3.7.0
+      '@docusaurus/types': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/utils': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/utils-common': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/utils-validation': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@mdx-js/react': 3.1.0(@types/react@18.3.18)(react@18.3.1)
+      clsx: 2.1.1
+      copy-text-to-clipboard: 3.2.0
+      infima: 0.2.0-alpha.45
+      lodash: 4.17.21
+      nprogress: 0.2.0
+      postcss: 8.5.3
+      prism-react-renderer: 2.4.1(react@18.3.1)
+      prismjs: 1.29.0
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      react-router-dom: 5.3.4(react@18.3.1)
+      rtlcss: 4.3.0
+      tslib: 2.8.1
+      utility-types: 3.11.0
+    transitivePeerDependencies:
+      - '@docusaurus/faster'
+      - '@parcel/css'
+      - '@rspack/core'
+      - '@swc/core'
+      - '@swc/css'
+      - '@types/react'
+      - acorn
+      - bufferutil
+      - csso
+      - debug
+      - esbuild
+      - eslint
+      - lightningcss
+      - supports-color
+      - typescript
+      - uglify-js
+      - utf-8-validate
+      - vue-template-compiler
+      - webpack-cli
+
   '@docusaurus/theme-common@3.7.0(@docusaurus/plugin-content-docs@3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3))(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@docusaurus/mdx-loader': 3.7.0(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -15853,13 +16163,38 @@ snapshots:
       - uglify-js
       - webpack-cli
 
-  '@docusaurus/theme-mermaid@3.7.0(@docusaurus/plugin-content-docs@3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3))(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)':
+  '@docusaurus/theme-common@3.7.0(@docusaurus/plugin-content-docs@3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3))(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@docusaurus/core': 3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)
-      '@docusaurus/module-type-aliases': 3.7.0(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@docusaurus/theme-common': 3.7.0(@docusaurus/plugin-content-docs@3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3))(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@docusaurus/types': 3.7.0(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@docusaurus/utils-validation': 3.7.0(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/mdx-loader': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/module-type-aliases': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/plugin-content-docs': 3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)
+      '@docusaurus/utils': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/utils-common': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@types/history': 4.7.11
+      '@types/react': 18.3.18
+      '@types/react-router-config': 5.0.11
+      clsx: 2.1.1
+      parse-numeric-range: 1.3.0
+      prism-react-renderer: 2.4.1(react@18.3.1)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      tslib: 2.8.1
+      utility-types: 3.11.0
+    transitivePeerDependencies:
+      - '@swc/core'
+      - acorn
+      - esbuild
+      - supports-color
+      - uglify-js
+      - webpack-cli
+
+  '@docusaurus/theme-mermaid@3.7.0(@docusaurus/plugin-content-docs@3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3))(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)':
+    dependencies:
+      '@docusaurus/core': 3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)
+      '@docusaurus/module-type-aliases': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/theme-common': 3.7.0(@docusaurus/plugin-content-docs@3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3))(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/types': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/utils-validation': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       mermaid: 11.4.1
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
@@ -15930,6 +16265,50 @@ snapshots:
       - vue-template-compiler
       - webpack-cli
 
+  '@docusaurus/theme-search-algolia@3.7.0(@algolia/client-search@5.20.3)(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(@types/react@18.3.18)(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(search-insights@2.17.3)(typescript@5.7.3)':
+    dependencies:
+      '@docsearch/react': 3.9.0(@algolia/client-search@5.20.3)(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(search-insights@2.17.3)
+      '@docusaurus/core': 3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)
+      '@docusaurus/logger': 3.7.0
+      '@docusaurus/plugin-content-docs': 3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)
+      '@docusaurus/theme-common': 3.7.0(@docusaurus/plugin-content-docs@3.7.0(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3))(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/theme-translations': 3.7.0
+      '@docusaurus/utils': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/utils-validation': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      algoliasearch: 5.20.3
+      algoliasearch-helper: 3.24.1(algoliasearch@5.20.3)
+      clsx: 2.1.1
+      eta: 2.2.0
+      fs-extra: 11.3.0
+      lodash: 4.17.21
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      tslib: 2.8.1
+      utility-types: 3.11.0
+    transitivePeerDependencies:
+      - '@algolia/client-search'
+      - '@docusaurus/faster'
+      - '@mdx-js/react'
+      - '@parcel/css'
+      - '@rspack/core'
+      - '@swc/core'
+      - '@swc/css'
+      - '@types/react'
+      - acorn
+      - bufferutil
+      - csso
+      - debug
+      - esbuild
+      - eslint
+      - lightningcss
+      - search-insights
+      - supports-color
+      - typescript
+      - uglify-js
+      - utf-8-validate
+      - vue-template-compiler
+      - webpack-cli
+
   '@docusaurus/theme-translations@3.7.0':
     dependencies:
       fs-extra: 11.3.0
@@ -15956,9 +16335,44 @@ snapshots:
       - uglify-js
       - webpack-cli
 
+  '@docusaurus/types@3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@mdx-js/mdx': 3.1.0(acorn@8.14.0)
+      '@types/history': 4.7.11
+      '@types/react': 18.3.18
+      commander: 5.1.0
+      joi: 17.13.3
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      react-helmet-async: '@slorber/react-helmet-async@1.3.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)'
+      utility-types: 3.11.0
+      webpack: 5.98.0
+      webpack-merge: 5.10.0
+    transitivePeerDependencies:
+      - '@swc/core'
+      - acorn
+      - esbuild
+      - supports-color
+      - uglify-js
+      - webpack-cli
+
   '@docusaurus/utils-common@3.7.0(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@docusaurus/types': 3.7.0(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      tslib: 2.8.1
+    transitivePeerDependencies:
+      - '@swc/core'
+      - acorn
+      - esbuild
+      - react
+      - react-dom
+      - supports-color
+      - uglify-js
+      - webpack-cli
+
+  '@docusaurus/utils-common@3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@docusaurus/types': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       tslib: 2.8.1
     transitivePeerDependencies:
       - '@swc/core'
@@ -15975,6 +16389,26 @@ snapshots:
       '@docusaurus/logger': 3.7.0
       '@docusaurus/utils': 3.7.0(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@docusaurus/utils-common': 3.7.0(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      fs-extra: 11.3.0
+      joi: 17.13.3
+      js-yaml: 4.1.0
+      lodash: 4.17.21
+      tslib: 2.8.1
+    transitivePeerDependencies:
+      - '@swc/core'
+      - acorn
+      - esbuild
+      - react
+      - react-dom
+      - supports-color
+      - uglify-js
+      - webpack-cli
+
+  '@docusaurus/utils-validation@3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@docusaurus/logger': 3.7.0
+      '@docusaurus/utils': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/utils-common': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       fs-extra: 11.3.0
       joi: 17.13.3
       js-yaml: 4.1.0
@@ -16022,24 +16456,43 @@ snapshots:
       - uglify-js
       - webpack-cli
 
+  '@docusaurus/utils@3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@docusaurus/logger': 3.7.0
+      '@docusaurus/types': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@docusaurus/utils-common': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      escape-string-regexp: 4.0.0
+      file-loader: 6.2.0(webpack@5.98.0)
+      fs-extra: 11.3.0
+      github-slugger: 1.5.0
+      globby: 11.1.0
+      gray-matter: 4.0.3
+      jiti: 1.21.7
+      js-yaml: 4.1.0
+      lodash: 4.17.21
+      micromatch: 4.0.8
+      prompts: 2.4.2
+      resolve-pathname: 3.0.0
+      shelljs: 0.8.5
+      tslib: 2.8.1
+      url-loader: 4.1.1(file-loader@6.2.0(webpack@5.98.0))(webpack@5.98.0)
+      utility-types: 3.11.0
+      webpack: 5.98.0
+    transitivePeerDependencies:
+      - '@swc/core'
+      - acorn
+      - esbuild
+      - react
+      - react-dom
+      - supports-color
+      - uglify-js
+      - webpack-cli
+
   '@elastic/ecs-helpers@2.1.1': {}
 
   '@elastic/ecs-pino-format@1.5.0':
     dependencies:
       '@elastic/ecs-helpers': 2.1.1
-
-  '@emnapi/core@1.3.1':
-    dependencies:
-      '@emnapi/wasi-threads': 1.0.1
-      tslib: 2.8.1
-
-  '@emnapi/runtime@1.3.1':
-    dependencies:
-      tslib: 2.8.1
-
-  '@emnapi/wasi-threads@1.0.1':
-    dependencies:
-      tslib: 2.8.1
 
   '@es-joy/jsdoccomment@0.46.0':
     dependencies:
@@ -16047,145 +16500,151 @@ snapshots:
       esquery: 1.6.0
       jsdoc-type-pratt-parser: 4.0.0
 
-  '@esbuild/aix-ppc64@0.21.5':
+  '@esbuild/aix-ppc64@0.24.2':
     optional: true
 
   '@esbuild/aix-ppc64@0.25.0':
     optional: true
 
-  '@esbuild/android-arm64@0.21.5':
+  '@esbuild/android-arm64@0.24.2':
     optional: true
 
   '@esbuild/android-arm64@0.25.0':
     optional: true
 
-  '@esbuild/android-arm@0.21.5':
+  '@esbuild/android-arm@0.24.2':
     optional: true
 
   '@esbuild/android-arm@0.25.0':
     optional: true
 
-  '@esbuild/android-x64@0.21.5':
+  '@esbuild/android-x64@0.24.2':
     optional: true
 
   '@esbuild/android-x64@0.25.0':
     optional: true
 
-  '@esbuild/darwin-arm64@0.21.5':
+  '@esbuild/darwin-arm64@0.24.2':
     optional: true
 
   '@esbuild/darwin-arm64@0.25.0':
     optional: true
 
-  '@esbuild/darwin-x64@0.21.5':
+  '@esbuild/darwin-x64@0.24.2':
     optional: true
 
   '@esbuild/darwin-x64@0.25.0':
     optional: true
 
-  '@esbuild/freebsd-arm64@0.21.5':
+  '@esbuild/freebsd-arm64@0.24.2':
     optional: true
 
   '@esbuild/freebsd-arm64@0.25.0':
     optional: true
 
-  '@esbuild/freebsd-x64@0.21.5':
+  '@esbuild/freebsd-x64@0.24.2':
     optional: true
 
   '@esbuild/freebsd-x64@0.25.0':
     optional: true
 
-  '@esbuild/linux-arm64@0.21.5':
+  '@esbuild/linux-arm64@0.24.2':
     optional: true
 
   '@esbuild/linux-arm64@0.25.0':
     optional: true
 
-  '@esbuild/linux-arm@0.21.5':
+  '@esbuild/linux-arm@0.24.2':
     optional: true
 
   '@esbuild/linux-arm@0.25.0':
     optional: true
 
-  '@esbuild/linux-ia32@0.21.5':
+  '@esbuild/linux-ia32@0.24.2':
     optional: true
 
   '@esbuild/linux-ia32@0.25.0':
     optional: true
 
-  '@esbuild/linux-loong64@0.21.5':
+  '@esbuild/linux-loong64@0.24.2':
     optional: true
 
   '@esbuild/linux-loong64@0.25.0':
     optional: true
 
-  '@esbuild/linux-mips64el@0.21.5':
+  '@esbuild/linux-mips64el@0.24.2':
     optional: true
 
   '@esbuild/linux-mips64el@0.25.0':
     optional: true
 
-  '@esbuild/linux-ppc64@0.21.5':
+  '@esbuild/linux-ppc64@0.24.2':
     optional: true
 
   '@esbuild/linux-ppc64@0.25.0':
     optional: true
 
-  '@esbuild/linux-riscv64@0.21.5':
+  '@esbuild/linux-riscv64@0.24.2':
     optional: true
 
   '@esbuild/linux-riscv64@0.25.0':
     optional: true
 
-  '@esbuild/linux-s390x@0.21.5':
+  '@esbuild/linux-s390x@0.24.2':
     optional: true
 
   '@esbuild/linux-s390x@0.25.0':
     optional: true
 
-  '@esbuild/linux-x64@0.21.5':
+  '@esbuild/linux-x64@0.24.2':
     optional: true
 
   '@esbuild/linux-x64@0.25.0':
     optional: true
 
+  '@esbuild/netbsd-arm64@0.24.2':
+    optional: true
+
   '@esbuild/netbsd-arm64@0.25.0':
     optional: true
 
-  '@esbuild/netbsd-x64@0.21.5':
+  '@esbuild/netbsd-x64@0.24.2':
     optional: true
 
   '@esbuild/netbsd-x64@0.25.0':
     optional: true
 
+  '@esbuild/openbsd-arm64@0.24.2':
+    optional: true
+
   '@esbuild/openbsd-arm64@0.25.0':
     optional: true
 
-  '@esbuild/openbsd-x64@0.21.5':
+  '@esbuild/openbsd-x64@0.24.2':
     optional: true
 
   '@esbuild/openbsd-x64@0.25.0':
     optional: true
 
-  '@esbuild/sunos-x64@0.21.5':
+  '@esbuild/sunos-x64@0.24.2':
     optional: true
 
   '@esbuild/sunos-x64@0.25.0':
     optional: true
 
-  '@esbuild/win32-arm64@0.21.5':
+  '@esbuild/win32-arm64@0.24.2':
     optional: true
 
   '@esbuild/win32-arm64@0.25.0':
     optional: true
 
-  '@esbuild/win32-ia32@0.21.5':
+  '@esbuild/win32-ia32@0.24.2':
     optional: true
 
   '@esbuild/win32-ia32@0.25.0':
     optional: true
 
-  '@esbuild/win32-x64@0.21.5':
+  '@esbuild/win32-x64@0.24.2':
     optional: true
 
   '@esbuild/win32-x64@0.25.0':
@@ -16201,7 +16660,7 @@ snapshots:
   '@eslint/eslintrc@2.1.4':
     dependencies:
       ajv: 6.12.6
-      debug: 4.4.0(supports-color@5.5.0)
+      debug: 4.4.0
       espree: 9.6.1
       globals: 13.24.0
       ignore: 5.3.2
@@ -16322,334 +16781,6 @@ snapshots:
     optionalDependencies:
       typescript: 5.7.3
 
-  '@gasket/assets@7.3.0': {}
-
-  '@gasket/core@7.3.0':
-    dependencies:
-      '@gasket/utils': 7.3.0
-      debug: 4.4.0(supports-color@5.5.0)
-    transitivePeerDependencies:
-      - supports-color
-
-  '@gasket/data@7.3.0':
-    dependencies:
-      '@gasket/request': 7.3.0
-    transitivePeerDependencies:
-      - supports-color
-
-  '@gasket/fetch@7.3.0':
-    dependencies:
-      abort-controller: 3.0.0
-      node-fetch: 2.7.0
-    transitivePeerDependencies:
-      - encoding
-
-  '@gasket/intl@7.3.0': {}
-
-  '@gasket/nextjs@7.3.0(next@14.2.24(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)':
-    dependencies:
-      '@gasket/data': 7.3.0
-      '@gasket/request': 7.3.0
-      hoist-non-react-statics: 3.3.2
-      htmlescape: 1.1.1
-      next: 14.2.24(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      react: 18.3.1
-    transitivePeerDependencies:
-      - supports-color
-
-  '@gasket/plugin-analyze@7.3.0(@swc/core@1.10.18(@swc/helpers@0.5.5))':
-    dependencies:
-      '@types/webpack-bundle-analyzer': 4.7.0(@swc/core@1.10.18(@swc/helpers@0.5.5))
-      deepmerge: 4.3.1
-      webpack-bundle-analyzer: 4.10.2
-    transitivePeerDependencies:
-      - '@swc/core'
-      - bufferutil
-      - esbuild
-      - uglify-js
-      - utf-8-validate
-      - webpack-cli
-
-  '@gasket/plugin-command@7.3.0':
-    dependencies:
-      '@gasket/core': 7.3.0
-      '@gasket/utils': 7.3.0
-      commander: 12.1.0
-    transitivePeerDependencies:
-      - supports-color
-
-  '@gasket/plugin-cypress@7.3.0': {}
-
-  '@gasket/plugin-data@7.3.0':
-    dependencies:
-      '@gasket/request': 7.3.0
-      '@gasket/utils': 7.3.0
-      lodash.merge: 4.6.2
-    transitivePeerDependencies:
-      - supports-color
-
-  '@gasket/plugin-docs-graphs@7.3.0': {}
-
-  '@gasket/plugin-docs@7.3.0':
-    dependencies:
-      '@gasket/plugin-command': 7.3.0
-      glob: 8.1.0
-      lodash.defaultsdeep: 4.6.1
-      markdown-table: 1.1.3
-      mkdirp: 1.0.4
-      rimraf: 3.0.2
-    transitivePeerDependencies:
-      - supports-color
-
-  '@gasket/plugin-docusaurus@7.3.0(@gasket/plugin-logger@7.3.0)':
-    dependencies:
-      '@gasket/plugin-logger': 7.3.0
-      lodash.defaultsdeep: 4.6.1
-
-  '@gasket/plugin-dynamic-plugins@7.3.0':
-    dependencies:
-      chalk: 5.4.1
-
-  '@gasket/plugin-elastic-apm@7.3.0':
-    dependencies:
-      '@gasket/request': 7.3.0
-    transitivePeerDependencies:
-      - supports-color
-
-  '@gasket/plugin-express@7.3.0(express@4.21.2)':
-    dependencies:
-      compression: 1.8.0
-      cookie-parser: 1.4.7
-      diagnostics: 2.0.2
-      express: 4.21.2
-      glob: 8.1.0
-      http2-express: 1.0.1
-    transitivePeerDependencies:
-      - supports-color
-
-  '@gasket/plugin-fastify@7.3.1(fastify@4.29.0)':
-    dependencies:
-      fastify: 4.29.0
-
-  '@gasket/plugin-git@7.3.0':
-    dependencies:
-      '@gasket/utils': 7.3.0
-
-  '@gasket/plugin-happyfeet@7.3.0':
-    dependencies:
-      happy-feet: 2.2.0
-
-  '@gasket/plugin-https-proxy@7.3.0':
-    dependencies:
-      http-proxy: 1.18.1
-    transitivePeerDependencies:
-      - debug
-
-  '@gasket/plugin-https@7.3.0':
-    dependencies:
-      '@godaddy/terminus': 4.12.1
-      '@types/http-proxy': 1.17.16
-      create-servers: 3.3.0
-      diagnostics: 2.0.2
-      errs: 0.3.2
-      http-proxy: 1.18.1
-      one-time: 1.0.0
-    transitivePeerDependencies:
-      - debug
-
-  '@gasket/plugin-intl@7.3.0':
-    dependencies:
-      '@gasket/request': 7.3.0
-      debug: 4.4.0(supports-color@5.5.0)
-      fs-extra: 10.1.0
-      glob: 8.1.0
-      intl: 1.2.5
-      negotiator: 1.0.0
-      semver: 7.7.1
-    transitivePeerDependencies:
-      - supports-color
-
-  '@gasket/plugin-jest@7.3.0': {}
-
-  '@gasket/plugin-lint@7.3.0':
-    dependencies:
-      semver: 7.7.1
-
-  '@gasket/plugin-logger@7.3.0': {}
-
-  '@gasket/plugin-manifest@7.3.0':
-    dependencies:
-      deepmerge: 4.3.1
-      escape-string-regexp: 1.0.5
-      mkdirp: 1.0.4
-
-  '@gasket/plugin-metadata@7.3.0':
-    dependencies:
-      '@gasket/core': 7.3.0
-      '@gasket/plugin-logger': 7.3.0
-    transitivePeerDependencies:
-      - supports-color
-
-  '@gasket/plugin-middleware@7.3.0':
-    dependencies:
-      '@fastify/express': 3.0.0
-      compression: 1.8.0
-      cookie-parser: 1.4.7
-      diagnostics: 2.0.2
-    transitivePeerDependencies:
-      - supports-color
-
-  '@gasket/plugin-mocha@7.3.0': {}
-
-  '@gasket/plugin-morgan@7.3.0(@gasket/plugin-logger@7.3.0)(express@4.21.2)':
-    dependencies:
-      '@gasket/plugin-logger': 7.3.0
-      express: 4.21.2
-      morgan: 1.10.0
-      split: 1.0.1
-    transitivePeerDependencies:
-      - supports-color
-
-  '@gasket/plugin-nextjs@7.3.0(@gasket/plugin-webpack@7.3.0)(next@14.2.24(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
-    dependencies:
-      '@gasket/plugin-webpack': 7.3.0
-      fastify: 4.29.0
-      next: 14.2.24(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
-
-  '@gasket/plugin-redux@7.3.0': {}
-
-  '@gasket/plugin-service-worker@7.3.0(webpack@5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5)))':
-    dependencies:
-      '@types/lru-cache': 5.1.1
-      '@types/uglify-js': 3.17.5
-      deepmerge: 4.3.1
-      lru-cache: 5.1.1
-      mkdirp: 1.0.4
-      uglify-js: 3.19.3
-      webpack-inject-plugin: 1.5.5(webpack@5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5)))
-    transitivePeerDependencies:
-      - webpack
-
-  '@gasket/plugin-swagger@7.3.0':
-    dependencies:
-      '@fastify/swagger': 8.15.0
-      '@fastify/swagger-ui': 4.2.0
-      express: 4.21.2
-      js-yaml: 4.1.0
-      swagger-jsdoc: 4.3.2(openapi-types@12.1.3)
-      swagger-ui-express: 4.6.3(express@4.21.2)
-    transitivePeerDependencies:
-      - openapi-types
-      - supports-color
-
-  '@gasket/plugin-typescript@7.3.0': {}
-
-  '@gasket/plugin-webpack@7.3.0': {}
-
-  '@gasket/plugin-winston@7.3.0':
-    dependencies:
-      '@gasket/plugin-logger': 7.3.0
-      winston: 3.17.0
-
-  '@gasket/plugin-workbox@7.3.0':
-    dependencies:
-      deepmerge: 4.3.1
-      serve-static: 1.16.2
-      workbox-build: 4.3.1
-    transitivePeerDependencies:
-      - supports-color
-
-  '@gasket/preset-api@7.3.1(express@4.21.2)(fastify@4.29.0)':
-    dependencies:
-      '@gasket/plugin-command': 7.3.0
-      '@gasket/plugin-cypress': 7.3.0
-      '@gasket/plugin-docs': 7.3.0
-      '@gasket/plugin-docusaurus': 7.3.0(@gasket/plugin-logger@7.3.0)
-      '@gasket/plugin-dynamic-plugins': 7.3.0
-      '@gasket/plugin-express': 7.3.0(express@4.21.2)
-      '@gasket/plugin-fastify': 7.3.1(fastify@4.29.0)
-      '@gasket/plugin-git': 7.3.0
-      '@gasket/plugin-https': 7.3.0
-      '@gasket/plugin-jest': 7.3.0
-      '@gasket/plugin-lint': 7.3.0
-      '@gasket/plugin-logger': 7.3.0
-      '@gasket/plugin-mocha': 7.3.0
-      '@gasket/plugin-swagger': 7.3.0
-      '@gasket/plugin-typescript': 7.3.0
-      '@gasket/plugin-winston': 7.3.0
-    transitivePeerDependencies:
-      - debug
-      - express
-      - fastify
-      - openapi-types
-      - supports-color
-
-  '@gasket/preset-nextjs@7.3.0(express@4.21.2)(next@14.2.24(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
-    dependencies:
-      '@gasket/plugin-command': 7.3.0
-      '@gasket/plugin-cypress': 7.3.0
-      '@gasket/plugin-docs': 7.3.0
-      '@gasket/plugin-docusaurus': 7.3.0(@gasket/plugin-logger@7.3.0)
-      '@gasket/plugin-dynamic-plugins': 7.3.0
-      '@gasket/plugin-express': 7.3.0(express@4.21.2)
-      '@gasket/plugin-git': 7.3.0
-      '@gasket/plugin-https': 7.3.0
-      '@gasket/plugin-https-proxy': 7.3.0
-      '@gasket/plugin-intl': 7.3.0
-      '@gasket/plugin-jest': 7.3.0
-      '@gasket/plugin-lint': 7.3.0
-      '@gasket/plugin-logger': 7.3.0
-      '@gasket/plugin-mocha': 7.3.0
-      '@gasket/plugin-nextjs': 7.3.0(@gasket/plugin-webpack@7.3.0)(next@14.2.24(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@gasket/plugin-typescript': 7.3.0
-      '@gasket/plugin-webpack': 7.3.0
-      '@gasket/plugin-winston': 7.3.0
-      '@gasket/utils': 7.3.0
-    transitivePeerDependencies:
-      - debug
-      - express
-      - next
-      - react
-      - react-dom
-      - supports-color
-
-  '@gasket/react-intl@7.3.0(@gasket/plugin-intl@7.3.0)':
-    dependencies:
-      '@gasket/data': 7.3.0
-      '@gasket/fetch': 7.3.0
-      '@gasket/intl': 7.3.0
-      '@gasket/plugin-intl': 7.3.0
-      hoist-non-react-statics: 3.3.2
-      htmlescape: 1.1.1
-      just-extend: 6.2.0
-    transitivePeerDependencies:
-      - encoding
-      - supports-color
-
-  '@gasket/redux@7.3.0(redux@4.2.1)':
-    dependencies:
-      '@babel/runtime': 7.26.9
-      redux: 4.2.1
-      redux-logger: 3.0.6
-      redux-thunk: 2.4.2(redux@4.2.1)
-
-  '@gasket/request@7.3.0':
-    dependencies:
-      debug: 4.4.0(supports-color@5.5.0)
-    transitivePeerDependencies:
-      - supports-color
-
-  '@gasket/utils@7.3.0':
-    dependencies:
-      chalk: 4.1.2
-      concat-stream: 2.0.0
-      deepmerge: 4.3.1
-      diagnostics: 2.0.2
-      is-plain-object: 5.0.0
-      semver: 7.7.1
-
   '@godaddy/dmd@1.0.4': {}
 
   '@godaddy/terminus@4.12.1':
@@ -16682,7 +16813,7 @@ snapshots:
   '@humanwhocodes/config-array@0.13.0':
     dependencies:
       '@humanwhocodes/object-schema': 2.0.3
-      debug: 4.4.0(supports-color@5.5.0)
+      debug: 4.4.0
       minimatch: 3.1.2
     transitivePeerDependencies:
       - supports-color
@@ -16698,7 +16829,7 @@ snapshots:
       '@antfu/install-pkg': 1.0.0
       '@antfu/utils': 8.1.1
       '@iconify/types': 2.0.0
-      debug: 4.4.0(supports-color@5.5.0)
+      debug: 4.4.0
       globals: 15.15.0
       kolorist: 1.8.0
       local-pkg: 1.0.0
@@ -17044,12 +17175,6 @@ snapshots:
       '@napi-rs/nice-win32-x64-msvc': 1.0.1
     optional: true
 
-  '@napi-rs/wasm-runtime@0.2.4':
-    dependencies:
-      '@emnapi/core': 1.3.1
-      '@emnapi/runtime': 1.3.1
-      '@tybys/wasm-util': 0.9.0
-
   '@next/env@14.2.24': {}
 
   '@next/eslint-plugin-next@13.5.8':
@@ -17103,36 +17228,6 @@ snapshots:
       fastq: 1.19.0
 
   '@nolyfill/is-core-module@1.0.39': {}
-
-  '@nx/nx-darwin-arm64@20.4.6':
-    optional: true
-
-  '@nx/nx-darwin-x64@20.4.6':
-    optional: true
-
-  '@nx/nx-freebsd-x64@20.4.6':
-    optional: true
-
-  '@nx/nx-linux-arm-gnueabihf@20.4.6':
-    optional: true
-
-  '@nx/nx-linux-arm64-gnu@20.4.6':
-    optional: true
-
-  '@nx/nx-linux-arm64-musl@20.4.6':
-    optional: true
-
-  '@nx/nx-linux-x64-gnu@20.4.6':
-    optional: true
-
-  '@nx/nx-linux-x64-musl@20.4.6':
-    optional: true
-
-  '@nx/nx-win32-arm64-msvc@20.4.6':
-    optional: true
-
-  '@nx/nx-win32-x64-msvc@20.4.6':
-    optional: true
 
   '@opentelemetry/api@1.9.0': {}
 
@@ -17552,10 +17647,6 @@ snapshots:
   '@tsconfig/node14@1.0.3': {}
 
   '@tsconfig/node16@1.0.4': {}
-
-  '@tybys/wasm-util@0.9.0':
-    dependencies:
-      tslib: 2.8.1
 
   '@types/acorn@4.0.6':
     dependencies:
@@ -17998,7 +18089,7 @@ snapshots:
       '@typescript-eslint/scope-manager': 5.62.0
       '@typescript-eslint/type-utils': 5.62.0(eslint@8.57.1)(typescript@5.7.3)
       '@typescript-eslint/utils': 5.62.0(eslint@8.57.1)(typescript@5.7.3)
-      debug: 4.4.0(supports-color@5.5.0)
+      debug: 4.4.0
       eslint: 8.57.1
       graphemer: 1.4.0
       ignore: 5.3.2
@@ -18018,7 +18109,7 @@ snapshots:
       '@typescript-eslint/type-utils': 6.21.0(eslint@8.57.1)(typescript@5.7.3)
       '@typescript-eslint/utils': 6.21.0(eslint@8.57.1)(typescript@5.7.3)
       '@typescript-eslint/visitor-keys': 6.21.0
-      debug: 4.4.0(supports-color@5.5.0)
+      debug: 4.4.0
       eslint: 8.57.1
       graphemer: 1.4.0
       ignore: 5.3.2
@@ -18036,7 +18127,7 @@ snapshots:
       '@typescript-eslint/types': 6.21.0
       '@typescript-eslint/typescript-estree': 6.21.0(typescript@5.7.3)
       '@typescript-eslint/visitor-keys': 6.21.0
-      debug: 4.4.0(supports-color@5.5.0)
+      debug: 4.4.0
       eslint: 8.57.1
     optionalDependencies:
       typescript: 5.7.3
@@ -18062,7 +18153,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/typescript-estree': 5.62.0(typescript@5.7.3)
       '@typescript-eslint/utils': 5.62.0(eslint@8.57.1)(typescript@5.7.3)
-      debug: 4.4.0(supports-color@5.5.0)
+      debug: 4.4.0
       eslint: 8.57.1
       tsutils: 3.21.0(typescript@5.7.3)
     optionalDependencies:
@@ -18074,7 +18165,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/typescript-estree': 6.21.0(typescript@5.7.3)
       '@typescript-eslint/utils': 6.21.0(eslint@8.57.1)(typescript@5.7.3)
-      debug: 4.4.0(supports-color@5.5.0)
+      debug: 4.4.0
       eslint: 8.57.1
       ts-api-utils: 1.4.3(typescript@5.7.3)
     optionalDependencies:
@@ -18092,7 +18183,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 5.62.0
       '@typescript-eslint/visitor-keys': 5.62.0
-      debug: 4.4.0(supports-color@5.5.0)
+      debug: 4.4.0
       globby: 11.1.0
       is-glob: 4.0.3
       semver: 7.7.1
@@ -18106,7 +18197,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 6.21.0
       '@typescript-eslint/visitor-keys': 6.21.0
-      debug: 4.4.0(supports-color@5.5.0)
+      debug: 4.4.0
       globby: 11.1.0
       is-glob: 4.0.3
       minimatch: 9.0.3
@@ -18195,13 +18286,13 @@ snapshots:
       chai: 5.2.0
       tinyrainbow: 2.0.0
 
-  '@vitest/mocker@3.0.7(vite@5.4.14(@types/node@20.17.19)(terser@5.39.0))':
+  '@vitest/mocker@3.0.7(vite@6.1.1(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))':
     dependencies:
       '@vitest/spy': 3.0.7
       estree-walker: 3.0.3
       magic-string: 0.30.17
     optionalDependencies:
-      vite: 5.4.14(@types/node@20.17.19)(terser@5.39.0)
+      vite: 6.1.1(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
 
   '@vitest/pretty-format@3.0.7':
     dependencies:
@@ -18376,17 +18467,6 @@ snapshots:
 
   '@xtuc/long@4.2.2': {}
 
-  '@yarnpkg/lockfile@1.1.0': {}
-
-  '@yarnpkg/parsers@3.0.2':
-    dependencies:
-      js-yaml: 3.14.1
-      tslib: 2.8.1
-
-  '@zkochan/js-yaml@0.0.7':
-    dependencies:
-      argparse: 2.0.1
-
   abab@2.0.6: {}
 
   abort-controller@3.0.0:
@@ -18425,7 +18505,7 @@ snapshots:
 
   agent-base@6.0.2:
     dependencies:
-      debug: 4.4.0(supports-color@5.5.0)
+      debug: 4.4.0
     transitivePeerDependencies:
       - supports-color
 
@@ -18742,6 +18822,13 @@ snapshots:
       schema-utils: 4.3.0
       webpack: 5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5))
 
+  babel-loader@9.2.1(@babel/core@7.26.9)(webpack@5.98.0):
+    dependencies:
+      '@babel/core': 7.26.9
+      find-cache-dir: 4.0.0
+      schema-utils: 4.3.0
+      webpack: 5.98.0
+
   babel-plugin-add-module-exports@1.0.4: {}
 
   babel-plugin-dynamic-import-node@2.3.3:
@@ -18877,12 +18964,6 @@ snapshots:
   binary-extensions@2.3.0: {}
 
   binary-search@1.3.6: {}
-
-  bl@4.1.0:
-    dependencies:
-      buffer: 5.7.1
-      inherits: 2.0.4
-      readable-stream: 3.6.2
 
   blob-util@2.0.2: {}
 
@@ -19173,8 +19254,6 @@ snapshots:
     dependencies:
       restore-cursor: 3.1.0
 
-  cli-spinners@2.6.1: {}
-
   cli-spinners@2.9.2: {}
 
   cli-table3@0.6.5:
@@ -19376,6 +19455,16 @@ snapshots:
       serialize-javascript: 6.0.2
       webpack: 5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5))
 
+  copy-webpack-plugin@11.0.0(webpack@5.98.0):
+    dependencies:
+      fast-glob: 3.3.3
+      glob-parent: 6.0.2
+      globby: 13.2.2
+      normalize-path: 3.0.0
+      schema-utils: 4.3.0
+      serialize-javascript: 6.0.2
+      webpack: 5.98.0
+
   core-js-compat@3.40.0:
     dependencies:
       browserslist: 4.24.4
@@ -19422,32 +19511,6 @@ snapshots:
       path-type: 4.0.0
     optionalDependencies:
       typescript: 5.7.3
-
-  create-gasket-app@7.3.0:
-    dependencies:
-      '@gasket/core': 7.3.0
-      '@gasket/plugin-command': 7.3.0
-      '@gasket/plugin-docs': 7.3.0
-      '@gasket/plugin-docusaurus': 7.3.0(@gasket/plugin-logger@7.3.0)
-      '@gasket/plugin-dynamic-plugins': 7.3.0
-      '@gasket/plugin-git': 7.3.0
-      '@gasket/plugin-logger': 7.3.0
-      '@gasket/plugin-metadata': 7.3.0
-      '@gasket/request': 7.3.0
-      '@gasket/utils': 7.3.0
-      chalk: 5.4.1
-      commander: 12.1.0
-      deepmerge: 4.3.1
-      diagnostics: 2.0.2
-      glob: 8.1.0
-      handlebars: 4.7.8
-      inquirer: 6.5.2
-      json5: 2.2.3
-      mkdirp: 1.0.4
-      ora: 3.4.0
-      semver: 7.7.1
-    transitivePeerDependencies:
-      - supports-color
 
   create-jest@29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@20.17.19)(typescript@5.7.3)):
     dependencies:
@@ -19515,6 +19578,19 @@ snapshots:
     optionalDependencies:
       webpack: 5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5))
 
+  css-loader@6.11.0(webpack@5.98.0):
+    dependencies:
+      icss-utils: 5.1.0(postcss@8.5.3)
+      postcss: 8.5.3
+      postcss-modules-extract-imports: 3.1.0(postcss@8.5.3)
+      postcss-modules-local-by-default: 4.2.0(postcss@8.5.3)
+      postcss-modules-scope: 3.2.1(postcss@8.5.3)
+      postcss-modules-values: 4.0.0(postcss@8.5.3)
+      postcss-value-parser: 4.2.0
+      semver: 7.7.1
+    optionalDependencies:
+      webpack: 5.98.0
+
   css-minimizer-webpack-plugin@5.0.1(clean-css@5.3.3)(webpack@5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5))):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.25
@@ -19524,6 +19600,18 @@ snapshots:
       schema-utils: 4.3.0
       serialize-javascript: 6.0.2
       webpack: 5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5))
+    optionalDependencies:
+      clean-css: 5.3.3
+
+  css-minimizer-webpack-plugin@5.0.1(clean-css@5.3.3)(webpack@5.98.0):
+    dependencies:
+      '@jridgewell/trace-mapping': 0.3.25
+      cssnano: 6.1.2(postcss@8.5.3)
+      jest-worker: 29.7.0
+      postcss: 8.5.3
+      schema-utils: 4.3.0
+      serialize-javascript: 6.0.2
+      webpack: 5.98.0
     optionalDependencies:
       clean-css: 5.3.3
 
@@ -19908,6 +19996,10 @@ snapshots:
     optionalDependencies:
       supports-color: 8.1.1
 
+  debug@4.4.0:
+    dependencies:
+      ms: 2.1.3
+
   debug@4.4.0(supports-color@5.5.0):
     dependencies:
       ms: 2.1.3
@@ -20036,7 +20128,7 @@ snapshots:
   detect-port@1.6.1:
     dependencies:
       address: 1.2.2
-      debug: 4.4.0(supports-color@5.5.0)
+      debug: 4.4.0
     transitivePeerDependencies:
       - supports-color
 
@@ -20127,10 +20219,6 @@ snapshots:
   dot-prop@6.0.1:
     dependencies:
       is-obj: 2.0.0
-
-  dotenv-expand@11.0.7:
-    dependencies:
-      dotenv: 16.4.7
 
   dotenv@16.4.7: {}
 
@@ -20227,10 +20315,6 @@ snapshots:
     dependencies:
       graceful-fs: 4.2.11
       tapable: 2.2.1
-
-  enquirer@2.3.6:
-    dependencies:
-      ansi-colors: 4.1.3
 
   enquirer@2.4.1:
     dependencies:
@@ -20383,31 +20467,33 @@ snapshots:
       esast-util-from-estree: 2.0.0
       vfile-message: 4.0.2
 
-  esbuild@0.21.5:
+  esbuild@0.24.2:
     optionalDependencies:
-      '@esbuild/aix-ppc64': 0.21.5
-      '@esbuild/android-arm': 0.21.5
-      '@esbuild/android-arm64': 0.21.5
-      '@esbuild/android-x64': 0.21.5
-      '@esbuild/darwin-arm64': 0.21.5
-      '@esbuild/darwin-x64': 0.21.5
-      '@esbuild/freebsd-arm64': 0.21.5
-      '@esbuild/freebsd-x64': 0.21.5
-      '@esbuild/linux-arm': 0.21.5
-      '@esbuild/linux-arm64': 0.21.5
-      '@esbuild/linux-ia32': 0.21.5
-      '@esbuild/linux-loong64': 0.21.5
-      '@esbuild/linux-mips64el': 0.21.5
-      '@esbuild/linux-ppc64': 0.21.5
-      '@esbuild/linux-riscv64': 0.21.5
-      '@esbuild/linux-s390x': 0.21.5
-      '@esbuild/linux-x64': 0.21.5
-      '@esbuild/netbsd-x64': 0.21.5
-      '@esbuild/openbsd-x64': 0.21.5
-      '@esbuild/sunos-x64': 0.21.5
-      '@esbuild/win32-arm64': 0.21.5
-      '@esbuild/win32-ia32': 0.21.5
-      '@esbuild/win32-x64': 0.21.5
+      '@esbuild/aix-ppc64': 0.24.2
+      '@esbuild/android-arm': 0.24.2
+      '@esbuild/android-arm64': 0.24.2
+      '@esbuild/android-x64': 0.24.2
+      '@esbuild/darwin-arm64': 0.24.2
+      '@esbuild/darwin-x64': 0.24.2
+      '@esbuild/freebsd-arm64': 0.24.2
+      '@esbuild/freebsd-x64': 0.24.2
+      '@esbuild/linux-arm': 0.24.2
+      '@esbuild/linux-arm64': 0.24.2
+      '@esbuild/linux-ia32': 0.24.2
+      '@esbuild/linux-loong64': 0.24.2
+      '@esbuild/linux-mips64el': 0.24.2
+      '@esbuild/linux-ppc64': 0.24.2
+      '@esbuild/linux-riscv64': 0.24.2
+      '@esbuild/linux-s390x': 0.24.2
+      '@esbuild/linux-x64': 0.24.2
+      '@esbuild/netbsd-arm64': 0.24.2
+      '@esbuild/netbsd-x64': 0.24.2
+      '@esbuild/openbsd-arm64': 0.24.2
+      '@esbuild/openbsd-x64': 0.24.2
+      '@esbuild/sunos-x64': 0.24.2
+      '@esbuild/win32-arm64': 0.24.2
+      '@esbuild/win32-ia32': 0.24.2
+      '@esbuild/win32-x64': 0.24.2
 
   esbuild@0.25.0:
     optionalDependencies:
@@ -20600,7 +20686,7 @@ snapshots:
       '@es-joy/jsdoccomment': 0.46.0
       are-docs-informative: 0.0.2
       comment-parser: 1.4.1
-      debug: 4.4.0(supports-color@5.5.0)
+      debug: 4.4.0
       escape-string-regexp: 4.0.0
       eslint: 8.57.1
       espree: 10.3.0
@@ -20729,7 +20815,7 @@ snapshots:
       ajv: 6.12.6
       chalk: 4.1.2
       cross-spawn: 7.0.6
-      debug: 4.4.0(supports-color@5.5.0)
+      debug: 4.4.0
       doctrine: 3.0.0
       escape-string-regexp: 4.0.0
       eslint-scope: 7.2.2
@@ -21077,6 +21163,12 @@ snapshots:
       schema-utils: 3.3.0
       webpack: 5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5))
 
+  file-loader@6.2.0(webpack@5.98.0):
+    dependencies:
+      loader-utils: 2.0.4
+      schema-utils: 3.3.0
+      webpack: 5.98.0
+
   file-type@19.6.0:
     dependencies:
       get-stream: 9.0.1
@@ -21170,6 +21262,8 @@ snapshots:
 
   fn.name@1.1.0: {}
 
+  follow-redirects@1.15.9: {}
+
   follow-redirects@1.15.9(debug@4.4.0):
     optionalDependencies:
       debug: 4.4.0(supports-color@5.5.0)
@@ -21210,6 +21304,26 @@ snapshots:
     optionalDependencies:
       eslint: 8.57.1
 
+  fork-ts-checker-webpack-plugin@6.5.3(eslint@8.57.1)(typescript@5.7.3)(webpack@5.98.0):
+    dependencies:
+      '@babel/code-frame': 7.26.2
+      '@types/json-schema': 7.0.15
+      chalk: 4.1.2
+      chokidar: 3.6.0
+      cosmiconfig: 6.0.0
+      deepmerge: 4.3.1
+      fs-extra: 9.1.0
+      glob: 7.2.3
+      memfs: 3.5.3
+      minimatch: 3.1.2
+      schema-utils: 2.7.0
+      semver: 7.7.1
+      tapable: 1.1.3
+      typescript: 5.7.3
+      webpack: 5.98.0
+    optionalDependencies:
+      eslint: 8.57.1
+
   form-data-encoder@2.1.4: {}
 
   form-data@4.0.2:
@@ -21232,12 +21346,6 @@ snapshots:
   from@0.1.7: {}
 
   fromentries@1.3.2: {}
-
-  front-matter@4.0.2:
-    dependencies:
-      js-yaml: 3.14.1
-
-  fs-constants@1.0.0: {}
 
   fs-extra@10.1.0:
     dependencies:
@@ -21720,6 +21828,16 @@ snapshots:
     optionalDependencies:
       webpack: 5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5))
 
+  html-webpack-plugin@5.6.3(webpack@5.98.0):
+    dependencies:
+      '@types/html-minifier-terser': 6.1.0
+      html-minifier-terser: 6.1.0
+      lodash: 4.17.21
+      pretty-error: 4.0.0
+      tapable: 2.2.1
+    optionalDependencies:
+      webpack: 5.98.0
+
   htmlescape@1.1.1: {}
 
   htmlparser2@6.1.0:
@@ -21765,7 +21883,7 @@ snapshots:
     dependencies:
       '@tootallnate/once': 2.0.0
       agent-base: 6.0.2
-      debug: 4.4.0(supports-color@5.5.0)
+      debug: 4.4.0
     transitivePeerDependencies:
       - supports-color
 
@@ -21784,7 +21902,7 @@ snapshots:
   http-proxy@1.18.1:
     dependencies:
       eventemitter3: 4.0.7
-      follow-redirects: 1.15.9(debug@4.4.0)
+      follow-redirects: 1.15.9
       requires-port: 1.0.0
     transitivePeerDependencies:
       - debug
@@ -21805,7 +21923,7 @@ snapshots:
   https-proxy-agent@5.0.1:
     dependencies:
       agent-base: 6.0.2
-      debug: 4.4.0(supports-color@5.5.0)
+      debug: 4.4.0
     transitivePeerDependencies:
       - supports-color
 
@@ -22045,8 +22163,6 @@ snapshots:
   is-integer@1.0.7:
     dependencies:
       is-finite: 1.1.0
-
-  is-interactive@1.0.0: {}
 
   is-map@2.0.3: {}
 
@@ -22676,8 +22792,6 @@ snapshots:
 
   json5@2.2.3: {}
 
-  jsonc-parser@3.2.0: {}
-
   jsonc-parser@3.3.1: {}
 
   jsonfile@4.0.0:
@@ -22769,8 +22883,6 @@ snapshots:
   lilconfig@3.1.3: {}
 
   lines-and-columns@1.2.4: {}
-
-  lines-and-columns@2.0.3: {}
 
   listr2@3.14.0(enquirer@2.4.1):
     dependencies:
@@ -23471,7 +23583,7 @@ snapshots:
   micromark@4.0.1:
     dependencies:
       '@types/debug': 4.1.12
-      debug: 4.4.0(supports-color@5.5.0)
+      debug: 4.4.0
       decode-named-character-reference: 1.0.2
       devlop: 1.1.0
       micromark-core-commonmark: 2.0.2
@@ -23528,6 +23640,12 @@ snapshots:
       schema-utils: 4.3.0
       tapable: 2.2.1
       webpack: 5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5))
+
+  mini-css-extract-plugin@2.9.2(webpack@5.98.0):
+    dependencies:
+      schema-utils: 4.3.0
+      tapable: 2.2.1
+      webpack: 5.98.0
 
   minimalistic-assert@1.0.1: {}
 
@@ -23665,8 +23783,6 @@ snapshots:
 
   node-int64@0.4.0: {}
 
-  node-machine-id@1.1.12: {}
-
   node-preload@0.2.1:
     dependencies:
       process-on-spawn: 1.1.0
@@ -23719,58 +23835,13 @@ snapshots:
       schema-utils: 3.3.0
       webpack: 5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5))
 
-  nwsapi@2.2.16: {}
-
-  nx@20.4.6(@swc/core@1.10.18(@swc/helpers@0.5.5)):
+  null-loader@4.0.1(webpack@5.98.0):
     dependencies:
-      '@napi-rs/wasm-runtime': 0.2.4
-      '@yarnpkg/lockfile': 1.1.0
-      '@yarnpkg/parsers': 3.0.2
-      '@zkochan/js-yaml': 0.0.7
-      axios: 1.7.9(debug@4.4.0)
-      chalk: 4.1.2
-      cli-cursor: 3.1.0
-      cli-spinners: 2.6.1
-      cliui: 8.0.1
-      dotenv: 16.4.7
-      dotenv-expand: 11.0.7
-      enquirer: 2.3.6
-      figures: 3.2.0
-      flat: 5.0.2
-      front-matter: 4.0.2
-      ignore: 5.3.2
-      jest-diff: 29.7.0
-      jsonc-parser: 3.2.0
-      lines-and-columns: 2.0.3
-      minimatch: 9.0.3
-      node-machine-id: 1.1.12
-      npm-run-path: 4.0.1
-      open: 8.4.2
-      ora: 5.3.0
-      resolve.exports: 2.0.3
-      semver: 7.7.1
-      string-width: 4.2.3
-      tar-stream: 2.2.0
-      tmp: 0.2.3
-      tsconfig-paths: 4.2.0
-      tslib: 2.8.1
-      yaml: 2.7.0
-      yargs: 17.7.2
-      yargs-parser: 21.1.1
-    optionalDependencies:
-      '@nx/nx-darwin-arm64': 20.4.6
-      '@nx/nx-darwin-x64': 20.4.6
-      '@nx/nx-freebsd-x64': 20.4.6
-      '@nx/nx-linux-arm-gnueabihf': 20.4.6
-      '@nx/nx-linux-arm64-gnu': 20.4.6
-      '@nx/nx-linux-arm64-musl': 20.4.6
-      '@nx/nx-linux-x64-gnu': 20.4.6
-      '@nx/nx-linux-x64-musl': 20.4.6
-      '@nx/nx-win32-arm64-msvc': 20.4.6
-      '@nx/nx-win32-x64-msvc': 20.4.6
-      '@swc/core': 1.10.18(@swc/helpers@0.5.5)
-    transitivePeerDependencies:
-      - debug
+      loader-utils: 2.0.4
+      schema-utils: 3.3.0
+      webpack: 5.98.0
+
+  nwsapi@2.2.16: {}
 
   nyc@15.1.0:
     dependencies:
@@ -23924,17 +23995,6 @@ snapshots:
       cli-spinners: 2.9.2
       log-symbols: 2.2.0
       strip-ansi: 5.2.0
-      wcwidth: 1.0.1
-
-  ora@5.3.0:
-    dependencies:
-      bl: 4.1.0
-      chalk: 4.1.2
-      cli-cursor: 3.1.0
-      cli-spinners: 2.9.2
-      is-interactive: 1.0.0
-      log-symbols: 4.1.0
-      strip-ansi: 6.0.1
       wcwidth: 1.0.1
 
   original-url@1.2.3:
@@ -24357,6 +24417,16 @@ snapshots:
       postcss: 8.5.3
       semver: 7.7.1
       webpack: 5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5))
+    transitivePeerDependencies:
+      - typescript
+
+  postcss-loader@7.3.4(postcss@8.5.3)(typescript@5.7.3)(webpack@5.98.0):
+    dependencies:
+      cosmiconfig: 8.3.6(typescript@5.7.3)
+      jiti: 1.21.7
+      postcss: 8.5.3
+      semver: 7.7.1
+      webpack: 5.98.0
     transitivePeerDependencies:
       - typescript
 
@@ -24819,6 +24889,40 @@ snapshots:
       - supports-color
       - vue-template-compiler
 
+  react-dev-utils@12.0.1(eslint@8.57.1)(typescript@5.7.3)(webpack@5.98.0):
+    dependencies:
+      '@babel/code-frame': 7.26.2
+      address: 1.2.2
+      browserslist: 4.24.4
+      chalk: 4.1.2
+      cross-spawn: 7.0.6
+      detect-port-alt: 1.1.6
+      escape-string-regexp: 4.0.0
+      filesize: 8.0.7
+      find-up: 5.0.0
+      fork-ts-checker-webpack-plugin: 6.5.3(eslint@8.57.1)(typescript@5.7.3)(webpack@5.98.0)
+      global-modules: 2.0.0
+      globby: 11.1.0
+      gzip-size: 6.0.0
+      immer: 9.0.21
+      is-root: 2.1.0
+      loader-utils: 3.3.1
+      open: 8.4.2
+      pkg-up: 3.1.0
+      prompts: 2.4.2
+      react-error-overlay: 6.1.0
+      recursive-readdir: 2.2.3
+      shell-quote: 1.8.2
+      strip-ansi: 6.0.1
+      text-table: 0.2.0
+      webpack: 5.98.0
+    optionalDependencies:
+      typescript: 5.7.3
+    transitivePeerDependencies:
+      - eslint
+      - supports-color
+      - vue-template-compiler
+
   react-dom@18.3.1(react@18.3.1):
     dependencies:
       loose-envify: 1.4.0
@@ -24860,6 +24964,12 @@ snapshots:
       '@babel/runtime': 7.26.9
       react-loadable: '@docusaurus/react-loadable@6.0.0(react@18.3.1)'
       webpack: 5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5))
+
+  react-loadable-ssr-addon-v5-slorber@1.0.1(@docusaurus/react-loadable@6.0.0(react@18.3.1))(webpack@5.98.0):
+    dependencies:
+      '@babel/runtime': 7.26.9
+      react-loadable: '@docusaurus/react-loadable@6.0.0(react@18.3.1)'
+      webpack: 5.98.0
 
   react-redux@8.1.3(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(redux@4.2.1):
     dependencies:
@@ -25688,7 +25798,7 @@ snapshots:
 
   spdy-transport@3.0.0:
     dependencies:
-      debug: 4.4.0(supports-color@5.5.0)
+      debug: 4.4.0
       detect-node: 2.1.0
       hpack.js: 2.1.6
       obuf: 1.1.2
@@ -25699,7 +25809,7 @@ snapshots:
 
   spdy@4.0.2:
     dependencies:
-      debug: 4.4.0(supports-color@5.5.0)
+      debug: 4.4.0
       handle-thing: 2.0.1
       http-deceiver: 1.2.7
       select-hose: 2.0.0
@@ -26014,14 +26124,6 @@ snapshots:
 
   tapable@2.2.1: {}
 
-  tar-stream@2.2.0:
-    dependencies:
-      bl: 4.1.0
-      end-of-stream: 1.4.4
-      fs-constants: 1.0.0
-      inherits: 2.0.4
-      readable-stream: 3.6.2
-
   tar-stream@3.1.7:
     dependencies:
       b4a: 1.6.7
@@ -26052,6 +26154,15 @@ snapshots:
       webpack: 5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5))
     optionalDependencies:
       '@swc/core': 1.10.18(@swc/helpers@0.5.5)
+
+  terser-webpack-plugin@5.3.11(webpack@5.98.0):
+    dependencies:
+      '@jridgewell/trace-mapping': 0.3.25
+      jest-worker: 27.5.1
+      schema-utils: 4.3.0
+      serialize-javascript: 6.0.2
+      terser: 5.39.0
+      webpack: 5.98.0
 
   terser@5.39.0:
     dependencies:
@@ -26220,12 +26331,6 @@ snapshots:
     dependencies:
       '@types/json5': 0.0.29
       json5: 1.0.2
-      minimist: 1.2.8
-      strip-bom: 3.0.0
-
-  tsconfig-paths@4.2.0:
-    dependencies:
-      json5: 2.2.3
       minimist: 1.2.8
       strip-bom: 3.0.0
 
@@ -26448,6 +26553,15 @@ snapshots:
     optionalDependencies:
       file-loader: 6.2.0(webpack@5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5)))
 
+  url-loader@4.1.1(file-loader@6.2.0(webpack@5.98.0))(webpack@5.98.0):
+    dependencies:
+      loader-utils: 2.0.4
+      mime-types: 2.1.35
+      schema-utils: 3.3.0
+      webpack: 5.98.0
+    optionalDependencies:
+      file-loader: 6.2.0(webpack@5.98.0)
+
   url-parse@1.5.10:
     dependencies:
       querystringify: 2.2.0
@@ -26513,15 +26627,16 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.2
 
-  vite-node@3.0.7(@types/node@20.17.19)(terser@5.39.0):
+  vite-node@3.0.7(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0):
     dependencies:
       cac: 6.7.14
       debug: 4.4.0(supports-color@5.5.0)
       es-module-lexer: 1.6.0
       pathe: 2.0.3
-      vite: 5.4.14(@types/node@20.17.19)(terser@5.39.0)
+      vite: 6.1.1(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
     transitivePeerDependencies:
       - '@types/node'
+      - jiti
       - less
       - lightningcss
       - sass
@@ -26530,21 +26645,26 @@ snapshots:
       - sugarss
       - supports-color
       - terser
+      - tsx
+      - yaml
 
-  vite@5.4.14(@types/node@20.17.19)(terser@5.39.0):
+  vite@6.1.1(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0):
     dependencies:
-      esbuild: 0.21.5
+      esbuild: 0.24.2
       postcss: 8.5.3
       rollup: 4.34.8
     optionalDependencies:
       '@types/node': 20.17.19
       fsevents: 2.3.3
+      jiti: 1.21.7
       terser: 5.39.0
+      tsx: 4.19.3
+      yaml: 2.7.0
 
-  vitest@3.0.7(@types/debug@4.1.12)(@types/node@20.17.19)(jsdom@20.0.3)(terser@5.39.0):
+  vitest@3.0.7(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0):
     dependencies:
       '@vitest/expect': 3.0.7
-      '@vitest/mocker': 3.0.7(vite@5.4.14(@types/node@20.17.19)(terser@5.39.0))
+      '@vitest/mocker': 3.0.7(vite@6.1.1(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
       '@vitest/pretty-format': 3.0.7
       '@vitest/runner': 3.0.7
       '@vitest/snapshot': 3.0.7
@@ -26560,14 +26680,15 @@ snapshots:
       tinyexec: 0.3.2
       tinypool: 1.0.2
       tinyrainbow: 2.0.0
-      vite: 5.4.14(@types/node@20.17.19)(terser@5.39.0)
-      vite-node: 3.0.7(@types/node@20.17.19)(terser@5.39.0)
+      vite: 6.1.1(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+      vite-node: 3.0.7(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/debug': 4.1.12
       '@types/node': 20.17.19
       jsdom: 20.0.3
     transitivePeerDependencies:
+      - jiti
       - less
       - lightningcss
       - msw
@@ -26577,6 +26698,8 @@ snapshots:
       - sugarss
       - supports-color
       - terser
+      - tsx
+      - yaml
 
   vscode-json-languageservice@4.2.1:
     dependencies:
@@ -26673,6 +26796,15 @@ snapshots:
       schema-utils: 4.3.0
       webpack: 5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5))
 
+  webpack-dev-middleware@5.3.4(webpack@5.98.0):
+    dependencies:
+      colorette: 2.0.20
+      memfs: 3.5.3
+      mime-types: 2.1.35
+      range-parser: 1.2.1
+      schema-utils: 4.3.0
+      webpack: 5.98.0
+
   webpack-dev-server@4.15.2(webpack@5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5))):
     dependencies:
       '@types/bonjour': 3.5.13
@@ -26713,15 +26845,50 @@ snapshots:
       - supports-color
       - utf-8-validate
 
+  webpack-dev-server@4.15.2(webpack@5.98.0):
+    dependencies:
+      '@types/bonjour': 3.5.13
+      '@types/connect-history-api-fallback': 1.5.4
+      '@types/express': 4.17.21
+      '@types/serve-index': 1.9.4
+      '@types/serve-static': 1.15.7
+      '@types/sockjs': 0.3.36
+      '@types/ws': 8.5.14
+      ansi-html-community: 0.0.8
+      bonjour-service: 1.3.0
+      chokidar: 3.6.0
+      colorette: 2.0.20
+      compression: 1.8.0
+      connect-history-api-fallback: 2.0.0
+      default-gateway: 6.0.3
+      express: 4.21.2
+      graceful-fs: 4.2.11
+      html-entities: 2.5.2
+      http-proxy-middleware: 2.0.7(@types/express@4.17.21)
+      ipaddr.js: 2.2.0
+      launch-editor: 2.10.0
+      open: 8.4.2
+      p-retry: 4.6.2
+      rimraf: 3.0.2
+      schema-utils: 4.3.0
+      selfsigned: 2.4.1
+      serve-index: 1.9.1
+      sockjs: 0.3.24
+      spdy: 4.0.2
+      webpack-dev-middleware: 5.3.4(webpack@5.98.0)
+      ws: 8.18.0
+    optionalDependencies:
+      webpack: 5.98.0
+    transitivePeerDependencies:
+      - bufferutil
+      - debug
+      - supports-color
+      - utf-8-validate
+
   webpack-inject-plugin@1.5.5(webpack@5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5))(uglify-js@3.19.3)):
     dependencies:
       loader-utils: 1.2.3
       webpack: 5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5))(uglify-js@3.19.3)
-
-  webpack-inject-plugin@1.5.5(webpack@5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5))):
-    dependencies:
-      loader-utils: 1.2.3
-      webpack: 5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5))
 
   webpack-merge@5.10.0:
     dependencies:
@@ -26736,6 +26903,36 @@ snapshots:
       wildcard: 2.0.1
 
   webpack-sources@3.2.3: {}
+
+  webpack@5.98.0:
+    dependencies:
+      '@types/eslint-scope': 3.7.7
+      '@types/estree': 1.0.6
+      '@webassemblyjs/ast': 1.14.1
+      '@webassemblyjs/wasm-edit': 1.14.1
+      '@webassemblyjs/wasm-parser': 1.14.1
+      acorn: 8.14.0
+      browserslist: 4.24.4
+      chrome-trace-event: 1.0.4
+      enhanced-resolve: 5.18.1
+      es-module-lexer: 1.6.0
+      eslint-scope: 5.1.1
+      events: 3.3.0
+      glob-to-regexp: 0.4.1
+      graceful-fs: 4.2.11
+      json-parse-even-better-errors: 2.3.1
+      loader-runner: 4.3.0
+      mime-types: 2.1.35
+      neo-async: 2.6.2
+      schema-utils: 4.3.0
+      tapable: 2.2.1
+      terser-webpack-plugin: 5.3.11(webpack@5.98.0)
+      watchpack: 2.4.2
+      webpack-sources: 3.2.3
+    transitivePeerDependencies:
+      - '@swc/core'
+      - esbuild
+      - uglify-js
 
   webpack@5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5)):
     dependencies:
@@ -26807,6 +27004,18 @@ snapshots:
       pretty-time: 1.1.0
       std-env: 3.8.0
       webpack: 5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5))
+      wrap-ansi: 7.0.0
+
+  webpackbar@6.0.1(webpack@5.98.0):
+    dependencies:
+      ansi-escapes: 4.3.2
+      chalk: 4.1.2
+      consola: 3.4.0
+      figures: 3.2.0
+      markdown-table: 2.0.0
+      pretty-time: 1.1.0
+      std-env: 3.8.0
+      webpack: 5.98.0
       wrap-ansi: 7.0.0
 
   websocket-driver@0.7.4:
