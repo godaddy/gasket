@@ -1,5 +1,6 @@
 /// <reference types="@gasket/plugin-service-worker" />
 /// <reference types="@gasket/plugin-express" />
+/// <reference types="@gasket/plugin-middleware" />
 
 const escapeRegex = require('escape-string-regexp');
 const { gatherManifestData } = require('./utils');

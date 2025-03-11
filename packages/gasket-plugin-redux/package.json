@@ -41,7 +41,7 @@
     "@gasket/plugin-express": "^7.3.0",
     "@gasket/plugin-logger": "^7.3.0",
     "@gasket/plugin-metadata": "^7.3.0",
-    "@gasket/plugin-middleware": "^7.3.0",
+    "@gasket/plugin-middleware": "workspace:^",
     "@gasket/plugin-webpack": "^7.3.0",
     "@gasket/redux": "^7.3.0",
     "@types/jest": "^29.5.14",

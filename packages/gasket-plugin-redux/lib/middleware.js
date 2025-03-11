@@ -1,6 +1,7 @@
 /* eslint require-atomic-updates: warn */
 /// <reference types="@gasket/plugin-express" />
 /// <reference types="@gasket/plugin-logger" />
+/// <reference types="@gasket/plugin-middleware" />
 
 /**
  * Configure middleware
