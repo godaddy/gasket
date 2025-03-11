@@ -19,11 +19,55 @@ catalog:
   "@fastify/express": ^3.0.0
   "@fastify/swagger": ^8.15.0
   "@fastify/swagger-ui": ^4.2.0
+  "@gasket/assets": ^7.3.0
+  "@gasket/core": ^7.3.0
+  "@gasket/data": ^7.3.0
+  "@gasket/fetch": ^7.3.0
+  "@gasket/intl": ^7.3.0
+  "@gasket/nextjs": ^7.3.0
+  "@gasket/plugin-analyze": ^7.3.0
+  "@gasket/plugin-command": ^7.3.0
+  "@gasket/plugin-cypress": ^7.3.0
+  "@gasket/plugin-data": ^7.3.0
+  "@gasket/plugin-docs": ^7.3.0
+  "@gasket/plugin-docs-graphs": ^7.3.0
+  "@gasket/plugin-docusaurus": ^7.3.0
+  "@gasket/plugin-dynamic-plugins": ^7.3.0
+  "@gasket/plugin-elastic-apm": ^7.3.0
+  "@gasket/plugin-express": ^7.3.0
+  "@gasket/plugin-fastify": ^7.3.1
+  "@gasket/plugin-git": ^7.3.0
+  "@gasket/plugin-happyfeet": ^7.3.0
+  "@gasket/plugin-https": ^7.3.0
+  "@gasket/plugin-https-proxy": ^7.3.0
+  "@gasket/plugin-intl": ^7.3.0
+  "@gasket/plugin-jest": ^7.3.0
+  "@gasket/plugin-lint": ^7.3.0
+  "@gasket/plugin-logger": ^7.3.0
+  "@gasket/plugin-manifest": ^7.3.0
+  "@gasket/plugin-metadata": ^7.3.0
+  "@gasket/plugin-middleware": ^7.3.0
+  "@gasket/plugin-mocha": ^7.3.0
+  "@gasket/plugin-morgan": ^7.3.0
+  "@gasket/plugin-nextjs": ^7.3.0
+  "@gasket/plugin-redux": ^7.3.0
+  "@gasket/plugin-service-worker": ^7.3.0
+  "@gasket/plugin-swagger": ^7.3.0
+  "@gasket/plugin-typescript": ^7.3.0
+  "@gasket/plugin-webpack": ^7.3.0
+  "@gasket/plugin-winston": ^7.3.0
+  "@gasket/plugin-workbox": ^7.3.0
+  "@gasket/preset-api": ^7.3.1
+  "@gasket/preset-nextjs": ^7.3.0
+  "@gasket/react-intl": ^7.3.0
+  "@gasket/redux": ^7.3.0
+  "@gasket/request": ^7.3.0
+  "@gasket/utils": ^7.3.0
   "@godaddy/dmd": ^1.0.4
   "@godaddy/terminus": ^4.12.1
   "@jest/globals": ^29.7.0
   "@svgr/core": ^6.5.1
-  "@swc/cli": ^0.3.14
+  "@swc/cli": ^0.6.0
   "@swc/core": ^1.10.18
   "@testing-library/jest-dom": ^5.17.0
   "@testing-library/react": ^13.4.0
@@ -59,6 +103,7 @@ catalog:
   concurrently: ^9.1.2
   cookie-parser: ^1.4.7
   core-js: ^3.40.0
+  create-gasket-app: ^7.3.0
   create-servers: ^3.3.0
   cross-env: ^7.0.3
   cypress: ^13.17.0
@@ -110,7 +155,6 @@ catalog:
   next: ^14.2.24
   node-fetch: ^2.7.0
   nodemon: ^3.1.9
-  nx: ^20.4.6
   nyc: ^15.1.0
   one-time: ^1.0.0
   ora: 3.4.0
@@ -129,7 +173,7 @@ catalog:
   semver: ^7.7.1
   serve-static: ^1.16.2
   split: ^1.0.1
-  start-server-and-test: ^1.15.4
+  start-server-and-test: ^2.0.10
   swagger-jsdoc: ^4.3.2
   swagger-ui-express: ^4.6.3
   triple-beam: ^1.4.1
@@ -138,7 +182,7 @@ catalog:
   tsx: ^4.19.3
   typescript: ^5.7.3
   uglify-js: ^3.19.3
-  vitest: ^2.1.9
+  vitest: ^3.0.7
   webpack: ^5.98.0
   webpack-bundle-analyzer: ^4.10.2
   webpack-inject-plugin: ^1.5.5
