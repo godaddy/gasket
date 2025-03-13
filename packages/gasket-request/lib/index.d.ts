@@ -69,7 +69,7 @@ export function objectFromSearchParams(searchParams: URLSearchParams): Record<st
 /**
  * Represents a normalized request object for GasketActions.
  */
-export interface GasketRequest {
+export class GasketRequest {
   constructor(normalized: {
     headers: Record<string, string>;
     cookies: Record<string, string>;
@@ -87,7 +87,7 @@ export interface GasketRequest {
  * A cache that holds promises for weakly referenced objects.
  */
 // eslint-disable-next-line no-undef
-export interface WeakPromiseKeeper<Key extends WeakKey = WeakKey, Value = any> {
+export class WeakPromiseKeeper<Key extends WeakKey = WeakKey, Value = any> {
   set(key: Key, value: Promise<Value>): this;
   get(key: Key): Promise<Value> | Value;
   has(key: Key): boolean;
