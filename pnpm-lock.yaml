@@ -69,34 +69,34 @@ importers:
   packages/create-gasket-app:
     dependencies:
       '@gasket/core':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-core
       '@gasket/plugin-command':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-command
       '@gasket/plugin-docs':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-docs
       '@gasket/plugin-docusaurus':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-docusaurus
       '@gasket/plugin-dynamic-plugins':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-dynamic-plugins
       '@gasket/plugin-git':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-git
       '@gasket/plugin-logger':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-logger
       '@gasket/plugin-metadata':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-metadata
       '@gasket/request':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-request
       '@gasket/utils':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-utils
       chalk:
         specifier: ^4.1.2
@@ -229,11 +229,11 @@ importers:
   packages/gasket-core:
     dependencies:
       '@gasket/utils':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-utils
       debug:
         specifier: ^4.4.0
-        version: 4.4.0(supports-color@8.1.1)
+        version: 4.4.0(supports-color@5.5.0)
     devDependencies:
       '@jest/globals':
         specifier: ^29.7.0
@@ -278,11 +278,11 @@ importers:
   packages/gasket-data:
     dependencies:
       '@gasket/request':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-request
     devDependencies:
       '@gasket/plugin-data':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-data
       '@jest/globals':
         specifier: ^29.7.0
@@ -430,10 +430,10 @@ importers:
   packages/gasket-nextjs:
     dependencies:
       '@gasket/data':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-data
       '@gasket/request':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-request
       hoist-non-react-statics:
         specifier: ^3.3.2
@@ -443,10 +443,10 @@ importers:
         version: 1.1.1
     devDependencies:
       '@gasket/plugin-data':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-data
       '@gasket/plugin-intl':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-intl
       '@jest/globals':
         specifier: ^29.7.0
@@ -516,13 +516,13 @@ importers:
         version: 4.10.2
     devDependencies:
       '@gasket/core':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-core
       '@gasket/plugin-metadata':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-metadata
       '@gasket/plugin-webpack':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-webpack
       '@types/jest':
         specifier: ^29.5.14
@@ -534,7 +534,7 @@ importers:
         specifier: ^4.7.0
         version: 4.7.0(@swc/core@1.10.18(@swc/helpers@0.5.5))
       create-gasket-app:
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
@@ -564,17 +564,17 @@ importers:
   packages/gasket-plugin-command:
     dependencies:
       '@gasket/core':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-core
       '@gasket/utils':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-utils
       commander:
         specifier: ^12.1.0
         version: 12.1.0
     devDependencies:
       '@gasket/plugin-metadata':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-metadata
       '@jest/globals':
         specifier: ^29.7.0
@@ -586,7 +586,7 @@ importers:
         specifier: ^20.17.19
         version: 20.17.19
       create-gasket-app:
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
@@ -619,10 +619,10 @@ importers:
         specifier: ^7.26.9
         version: 7.26.9
       '@gasket/core':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-core
       '@gasket/plugin-metadata':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-metadata
       '@testing-library/react':
         specifier: ^13.4.0
@@ -637,7 +637,7 @@ importers:
         specifier: ^18.3.18
         version: 18.3.18
       create-gasket-app:
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
@@ -679,29 +679,29 @@ importers:
   packages/gasket-plugin-data:
     dependencies:
       '@gasket/request':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-request
       '@gasket/utils':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-utils
       lodash.merge:
         specifier: ^4.6.2
         version: 4.6.2
     devDependencies:
       '@gasket/core':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-core
       '@gasket/data':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-data
       '@gasket/plugin-command':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-command
       '@gasket/plugin-metadata':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-metadata
       '@gasket/plugin-redux':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-redux
       '@types/jest':
         specifier: ^29.5.14
@@ -710,7 +710,7 @@ importers:
         specifier: ^20.17.19
         version: 20.17.19
       create-gasket-app:
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
@@ -740,7 +740,7 @@ importers:
   packages/gasket-plugin-docs:
     dependencies:
       '@gasket/plugin-command':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-command
       glob:
         specifier: ^8.1.0
@@ -759,19 +759,19 @@ importers:
         version: 3.0.2
     devDependencies:
       '@gasket/core':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-core
       '@gasket/plugin-git':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-git
       '@gasket/plugin-logger':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-logger
       '@gasket/plugin-metadata':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-metadata
       '@gasket/plugin-webpack':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-webpack
       '@godaddy/dmd':
         specifier: ^1.0.4
@@ -783,7 +783,7 @@ importers:
         specifier: ^20.17.19
         version: 20.17.19
       create-gasket-app:
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
@@ -813,13 +813,13 @@ importers:
   packages/gasket-plugin-docs-graphs:
     devDependencies:
       '@gasket/core':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-core
       '@gasket/plugin-docs':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-docs
       '@gasket/plugin-metadata':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-metadata
       '@types/jest':
         specifier: ^29.5.14
@@ -828,7 +828,7 @@ importers:
         specifier: ^20.17.19
         version: 20.17.19
       create-gasket-app:
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
@@ -858,7 +858,7 @@ importers:
   packages/gasket-plugin-docusaurus:
     dependencies:
       '@gasket/plugin-logger':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-logger
       lodash.defaultsdeep:
         specifier: ^4.6.1
@@ -871,16 +871,16 @@ importers:
         specifier: ^3.7.0
         version: 3.7.0(@algolia/client-search@5.20.3)(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/react@18.3.18)(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(search-insights@2.17.3)(typescript@5.7.3)
       '@gasket/core':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-core
       '@gasket/plugin-docs':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-docs
       '@gasket/plugin-metadata':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-metadata
       '@gasket/plugin-webpack':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-webpack
       '@types/jest':
         specifier: ^29.5.14
@@ -892,7 +892,7 @@ importers:
         specifier: ^8.17.1
         version: 8.17.1
       create-gasket-app:
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
@@ -935,10 +935,10 @@ importers:
         version: 4.1.2
     devDependencies:
       '@gasket/core':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-core
       '@gasket/plugin-metadata':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-metadata
       '@types/jest':
         specifier: ^29.5.14
@@ -947,7 +947,7 @@ importers:
         specifier: ^20.17.19
         version: 20.17.19
       create-gasket-app:
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
@@ -977,14 +977,14 @@ importers:
   packages/gasket-plugin-elastic-apm:
     dependencies:
       '@gasket/request':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-request
     devDependencies:
       '@gasket/core':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-core
       '@gasket/plugin-metadata':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-metadata
       '@types/jest':
         specifier: ^29.5.14
@@ -993,7 +993,7 @@ importers:
         specifier: ^20.17.19
         version: 20.17.19
       create-gasket-app:
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
@@ -1048,16 +1048,16 @@ importers:
         version: 1.0.1
     devDependencies:
       '@gasket/core':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-core
       '@gasket/plugin-https':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-https
       '@gasket/plugin-logger':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-logger
       '@gasket/plugin-metadata':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-metadata
       '@types/express':
         specifier: ^4.17.21
@@ -1069,7 +1069,7 @@ importers:
         specifier: ^20.17.19
         version: 20.17.19
       create-gasket-app:
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
@@ -1106,16 +1106,16 @@ importers:
         version: 4.29.0
     devDependencies:
       '@gasket/core':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-core
       '@gasket/plugin-https':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-https
       '@gasket/plugin-logger':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-logger
       '@gasket/plugin-metadata':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-metadata
       '@types/jest':
         specifier: ^29.5.14
@@ -1124,7 +1124,7 @@ importers:
         specifier: ^20.17.19
         version: 20.17.19
       create-gasket-app:
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
@@ -1154,14 +1154,14 @@ importers:
   packages/gasket-plugin-git:
     dependencies:
       '@gasket/utils':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-utils
     devDependencies:
       '@gasket/core':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-core
       '@gasket/plugin-metadata':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-metadata
       '@types/jest':
         specifier: ^29.5.14
@@ -1170,7 +1170,7 @@ importers:
         specifier: ^20.17.19
         version: 20.17.19
       create-gasket-app:
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
@@ -1204,13 +1204,13 @@ importers:
         version: 2.2.0
     devDependencies:
       '@gasket/core':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-core
       '@gasket/plugin-https':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-https
       '@gasket/plugin-metadata':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-metadata
       '@godaddy/terminus':
         specifier: ^4.12.1
@@ -1222,7 +1222,7 @@ importers:
         specifier: ^20.17.19
         version: 20.17.19
       create-gasket-app:
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
@@ -1271,13 +1271,13 @@ importers:
         version: 1.0.0
     devDependencies:
       '@gasket/core':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-core
       '@gasket/plugin-logger':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-logger
       '@gasket/plugin-metadata':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-metadata
       '@types/http-proxy':
         specifier: ^1.17.16
@@ -1289,7 +1289,7 @@ importers:
         specifier: ^20.17.19
         version: 20.17.19
       create-gasket-app:
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
@@ -1323,16 +1323,16 @@ importers:
         version: 1.18.1
     devDependencies:
       '@gasket/core':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-core
       '@gasket/plugin-https':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-https
       '@gasket/plugin-logger':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-logger
       '@gasket/plugin-metadata':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-metadata
       '@types/jest':
         specifier: ^29.5.14
@@ -1341,7 +1341,7 @@ importers:
         specifier: ^20.17.19
         version: 20.17.19
       create-gasket-app:
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../create-gasket-app
       eslint:
         specifier: ^8.57.1
@@ -1368,11 +1368,11 @@ importers:
   packages/gasket-plugin-intl:
     dependencies:
       '@gasket/request':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-request
       debug:
         specifier: ^4.4.0
-        version: 4.4.0(supports-color@8.1.1)
+        version: 4.4.0(supports-color@5.5.0)
       fs-extra:
         specifier: ^10.1.0
         version: 10.1.0
@@ -1390,34 +1390,34 @@ importers:
         version: 7.7.1
     devDependencies:
       '@gasket/core':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-core
       '@gasket/intl':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-intl
       '@gasket/plugin-command':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-command
       '@gasket/plugin-data':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-data
       '@gasket/plugin-elastic-apm':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-elastic-apm
       '@gasket/plugin-logger':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-logger
       '@gasket/plugin-metadata':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-metadata
       '@gasket/plugin-nextjs':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-nextjs
       '@gasket/plugin-service-worker':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-service-worker
       '@gasket/react-intl':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-react-intl
       '@types/jest':
         specifier: ^29.5.14
@@ -1426,7 +1426,7 @@ importers:
         specifier: ^20.17.19
         version: 20.17.19
       create-gasket-app:
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
@@ -1465,13 +1465,13 @@ importers:
   packages/gasket-plugin-jest:
     devDependencies:
       '@gasket/core':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-core
       '@gasket/plugin-express':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-express
       '@gasket/plugin-metadata':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-metadata
       '@testing-library/jest-dom':
         specifier: ^5.17.0
@@ -1492,7 +1492,7 @@ importers:
         specifier: ^10.1.0
         version: 10.1.0(eslint@8.57.1)
       create-gasket-app:
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
@@ -1550,13 +1550,13 @@ importers:
         version: 7.7.1
     devDependencies:
       '@gasket/core':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-core
       '@gasket/plugin-express':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-express
       '@gasket/plugin-metadata':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-metadata
       '@types/jest':
         specifier: ^29.5.14
@@ -1568,7 +1568,7 @@ importers:
         specifier: ^6.21.0
         version: 6.21.0(eslint@8.57.1)(typescript@5.7.3)
       create-gasket-app:
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
@@ -1601,13 +1601,13 @@ importers:
   packages/gasket-plugin-logger:
     devDependencies:
       '@gasket/core':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-core
       '@gasket/plugin-https':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-https
       '@gasket/plugin-metadata':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-metadata
       '@types/jest':
         specifier: ^29.5.14
@@ -1616,7 +1616,7 @@ importers:
         specifier: ^20.17.19
         version: 20.17.19
       create-gasket-app:
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
@@ -1656,28 +1656,28 @@ importers:
         version: 1.0.4
     devDependencies:
       '@gasket/core':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-core
       '@gasket/plugin-command':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-command
       '@gasket/plugin-express':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-express
       '@gasket/plugin-fastify':
-        specifier: ^7.3.1
+        specifier: ^7.3.2
         version: link:../gasket-plugin-fastify
       '@gasket/plugin-logger':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-logger
       '@gasket/plugin-metadata':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-metadata
       '@gasket/plugin-middleware':
         specifier: workspace:^
         version: link:../gasket-plugin-middleware
       '@gasket/plugin-service-worker':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-service-worker
       '@types/express':
         specifier: ^4.17.21
@@ -1689,7 +1689,7 @@ importers:
         specifier: ^20.17.19
         version: 20.17.19
       create-gasket-app:
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
@@ -1722,17 +1722,17 @@ importers:
   packages/gasket-plugin-metadata:
     dependencies:
       '@gasket/core':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-core
       '@gasket/plugin-logger':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-logger
     devDependencies:
       '@gasket/plugin-metadata':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: 'link:'
       '@gasket/plugin-webpack':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-webpack
       '@godaddy/dmd':
         specifier: ^1.0.4
@@ -1744,7 +1744,7 @@ importers:
         specifier: ^20.17.19
         version: 20.17.19
       create-gasket-app:
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../create-gasket-app
       eslint:
         specifier: ^8.57.1
@@ -1784,22 +1784,22 @@ importers:
         version: 2.0.2
     devDependencies:
       '@gasket/core':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-core
       '@gasket/plugin-express':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-express
       '@gasket/plugin-fastify':
-        specifier: ^7.3.1
+        specifier: ^7.3.2
         version: link:../gasket-plugin-fastify
       '@gasket/plugin-https':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-https
       '@gasket/plugin-logger':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-logger
       '@gasket/plugin-metadata':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-metadata
       '@types/compression':
         specifier: ^1.7.5
@@ -1817,7 +1817,7 @@ importers:
         specifier: ^20.17.19
         version: 20.17.19
       create-gasket-app:
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
@@ -1865,13 +1865,13 @@ importers:
         specifier: ^7.26.0
         version: 7.26.0(@babel/core@7.26.9)
       '@gasket/core':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-core
       '@gasket/plugin-express':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-express
       '@gasket/plugin-metadata':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-metadata
       '@testing-library/react':
         specifier: ^13.4.0
@@ -1892,7 +1892,7 @@ importers:
         specifier: ^10.1.0
         version: 10.1.0(eslint@8.57.1)
       create-gasket-app:
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
@@ -1940,7 +1940,7 @@ importers:
   packages/gasket-plugin-morgan:
     dependencies:
       '@gasket/plugin-logger':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-logger
       express:
         specifier: ^4.21.0
@@ -1953,16 +1953,16 @@ importers:
         version: 1.0.1
     devDependencies:
       '@gasket/core':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-core
       '@gasket/plugin-express':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-express
       '@gasket/plugin-metadata':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-metadata
       '@gasket/plugin-middleware':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-middleware
       '@types/jest':
         specifier: ^29.5.14
@@ -1974,7 +1974,7 @@ importers:
         specifier: ^20.17.19
         version: 20.17.19
       create-gasket-app:
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
@@ -2004,7 +2004,7 @@ importers:
   packages/gasket-plugin-nextjs:
     dependencies:
       '@gasket/plugin-webpack':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-webpack
       fastify:
         specifier: ^4.29.0
@@ -2014,49 +2014,49 @@ importers:
         specifier: ^7.26.3
         version: 7.26.3(@babel/core@7.26.9)
       '@gasket/assets':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-assets
       '@gasket/core':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-core
       '@gasket/intl':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-intl
       '@gasket/nextjs':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-nextjs
       '@gasket/plugin-elastic-apm':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-elastic-apm
       '@gasket/plugin-express':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-express
       '@gasket/plugin-fastify':
-        specifier: ^7.3.1
+        specifier: ^7.3.2
         version: link:../gasket-plugin-fastify
       '@gasket/plugin-https':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-https
       '@gasket/plugin-intl':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-intl
       '@gasket/plugin-logger':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-logger
       '@gasket/plugin-metadata':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-metadata
       '@gasket/plugin-nextjs':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: 'link:'
       '@gasket/plugin-service-worker':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-service-worker
       '@gasket/plugin-workbox':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-workbox
       '@gasket/request':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-request
       '@types/express':
         specifier: ^4.17.21
@@ -2074,7 +2074,7 @@ importers:
         specifier: ^10.1.0
         version: 10.1.0(eslint@8.57.1)
       create-gasket-app:
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
@@ -2122,25 +2122,25 @@ importers:
   packages/gasket-plugin-redux:
     devDependencies:
       '@gasket/core':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-core
       '@gasket/plugin-express':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-express
       '@gasket/plugin-logger':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-logger
       '@gasket/plugin-metadata':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-metadata
       '@gasket/plugin-middleware':
         specifier: workspace:^
         version: link:../gasket-plugin-middleware
       '@gasket/plugin-webpack':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-webpack
       '@gasket/redux':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-redux
       '@types/jest':
         specifier: ^29.5.14
@@ -2152,7 +2152,7 @@ importers:
         specifier: ^8.14.0
         version: 8.14.0
       create-gasket-app:
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
@@ -2213,25 +2213,25 @@ importers:
         version: 1.5.5(webpack@5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.5))(uglify-js@3.19.3))
     devDependencies:
       '@gasket/core':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-core
       '@gasket/plugin-command':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-command
       '@gasket/plugin-express':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-express
       '@gasket/plugin-fastify':
-        specifier: ^7.3.1
+        specifier: ^7.3.2
         version: link:../gasket-plugin-fastify
       '@gasket/plugin-logger':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-logger
       '@gasket/plugin-metadata':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-metadata
       '@gasket/plugin-webpack':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-webpack
       '@types/jest':
         specifier: ^29.5.14
@@ -2246,7 +2246,7 @@ importers:
         specifier: ^3.17.5
         version: 3.17.5
       create-gasket-app:
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
@@ -2301,22 +2301,22 @@ importers:
         version: 4.6.3(express@4.21.2)
     devDependencies:
       '@gasket/core':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-core
       '@gasket/plugin-command':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-command
       '@gasket/plugin-express':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-express
       '@gasket/plugin-fastify':
-        specifier: ^7.3.1
+        specifier: ^7.3.2
         version: link:../gasket-plugin-fastify
       '@gasket/plugin-logger':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-logger
       '@gasket/plugin-metadata':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-metadata
       '@types/jest':
         specifier: ^29.5.14
@@ -2325,7 +2325,7 @@ importers:
         specifier: ^20.17.19
         version: 20.17.19
       create-gasket-app:
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
@@ -2361,10 +2361,10 @@ importers:
   packages/gasket-plugin-typescript:
     devDependencies:
       '@gasket/core':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-core
       '@gasket/plugin-metadata':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-metadata
       '@types/jest':
         specifier: ^29.5.14
@@ -2376,7 +2376,7 @@ importers:
         specifier: ^9.1.2
         version: 9.1.2
       create-gasket-app:
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
@@ -2406,13 +2406,13 @@ importers:
   packages/gasket-plugin-webpack:
     devDependencies:
       '@gasket/core':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-core
       '@gasket/plugin-logger':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-logger
       '@gasket/plugin-metadata':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-metadata
       '@types/jest':
         specifier: ^29.5.14
@@ -2421,7 +2421,7 @@ importers:
         specifier: ^20.17.19
         version: 20.17.19
       create-gasket-app:
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
@@ -2457,17 +2457,17 @@ importers:
   packages/gasket-plugin-winston:
     dependencies:
       '@gasket/plugin-logger':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-logger
       winston:
         specifier: ^3.17.0
         version: 3.17.0
     devDependencies:
       '@gasket/core':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-core
       '@gasket/plugin-metadata':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-metadata
       '@types/jest':
         specifier: ^29.5.14
@@ -2479,7 +2479,7 @@ importers:
         specifier: ^10.1.0
         version: 10.1.0(eslint@8.57.1)
       create-gasket-app:
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
@@ -2522,25 +2522,25 @@ importers:
         version: 4.3.1
     devDependencies:
       '@gasket/core':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-core
       '@gasket/plugin-command':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-command
       '@gasket/plugin-express':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-express
       '@gasket/plugin-fastify':
-        specifier: ^7.3.1
+        specifier: ^7.3.2
         version: link:../gasket-plugin-fastify
       '@gasket/plugin-logger':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-logger
       '@gasket/plugin-metadata':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-metadata
       '@gasket/plugin-service-worker':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-service-worker
       '@types/express':
         specifier: ^4.17.21
@@ -2555,7 +2555,7 @@ importers:
         specifier: ^5.1.0
         version: 5.1.0
       create-gasket-app:
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
@@ -2585,56 +2585,56 @@ importers:
   packages/gasket-preset-api:
     dependencies:
       '@gasket/plugin-command':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-command
       '@gasket/plugin-cypress':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-cypress
       '@gasket/plugin-docs':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-docs
       '@gasket/plugin-docusaurus':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-docusaurus
       '@gasket/plugin-dynamic-plugins':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-dynamic-plugins
       '@gasket/plugin-express':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-express
       '@gasket/plugin-fastify':
-        specifier: ^7.3.1
+        specifier: ^7.3.2
         version: link:../gasket-plugin-fastify
       '@gasket/plugin-git':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-git
       '@gasket/plugin-https':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-https
       '@gasket/plugin-jest':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-jest
       '@gasket/plugin-lint':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-lint
       '@gasket/plugin-logger':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-logger
       '@gasket/plugin-mocha':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-mocha
       '@gasket/plugin-swagger':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-swagger
       '@gasket/plugin-typescript':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-typescript
       '@gasket/plugin-winston':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-winston
     devDependencies:
       '@gasket/plugin-metadata':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-metadata
       '@types/jest':
         specifier: ^29.5.14
@@ -2643,7 +2643,7 @@ importers:
         specifier: ^20.17.19
         version: 20.17.19
       create-gasket-app:
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
@@ -2676,61 +2676,61 @@ importers:
   packages/gasket-preset-nextjs:
     dependencies:
       '@gasket/plugin-command':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-command
       '@gasket/plugin-cypress':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-cypress
       '@gasket/plugin-docs':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-docs
       '@gasket/plugin-docusaurus':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-docusaurus
       '@gasket/plugin-dynamic-plugins':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-dynamic-plugins
       '@gasket/plugin-express':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-express
       '@gasket/plugin-git':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-git
       '@gasket/plugin-https':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-https
       '@gasket/plugin-https-proxy':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-https-proxy
       '@gasket/plugin-intl':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-intl
       '@gasket/plugin-jest':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-jest
       '@gasket/plugin-lint':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-lint
       '@gasket/plugin-logger':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-logger
       '@gasket/plugin-mocha':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-mocha
       '@gasket/plugin-nextjs':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-nextjs
       '@gasket/plugin-typescript':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-typescript
       '@gasket/plugin-webpack':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-webpack
       '@gasket/plugin-winston':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-winston
       '@gasket/utils':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-utils
     devDependencies:
       '@types/jest':
@@ -2767,16 +2767,16 @@ importers:
   packages/gasket-react-intl:
     dependencies:
       '@gasket/data':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-data
       '@gasket/fetch':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-fetch
       '@gasket/intl':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-intl
       '@gasket/plugin-intl':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-intl
       hoist-non-react-statics:
         specifier: ^3.3.2
@@ -2880,7 +2880,7 @@ importers:
         specifier: ^7.26.9
         version: 7.26.9(@babel/core@7.26.9)
       '@gasket/plugin-logger':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-logger
       '@types/jest':
         specifier: ^29.5.14
@@ -2935,10 +2935,10 @@ importers:
     dependencies:
       debug:
         specifier: ^4.4.0
-        version: 4.4.0(supports-color@8.1.1)
+        version: 4.4.0(supports-color@5.5.0)
     devDependencies:
       '@gasket/core':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-core
       '@jest/globals':
         specifier: ^29.7.0
@@ -2986,130 +2986,130 @@ importers:
   packages/gasket-typescript-tests:
     devDependencies:
       '@gasket/assets':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-assets
       '@gasket/core':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-core
       '@gasket/data':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-data
       '@gasket/fetch':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-fetch
       '@gasket/intl':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-intl
       '@gasket/nextjs':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-nextjs
       '@gasket/plugin-analyze':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-analyze
       '@gasket/plugin-command':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-command
       '@gasket/plugin-cypress':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-cypress
       '@gasket/plugin-data':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-data
       '@gasket/plugin-docs':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-docs
       '@gasket/plugin-docs-graphs':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-docs-graphs
       '@gasket/plugin-docusaurus':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-docusaurus
       '@gasket/plugin-elastic-apm':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-elastic-apm
       '@gasket/plugin-express':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-express
       '@gasket/plugin-fastify':
-        specifier: ^7.3.1
+        specifier: ^7.3.2
         version: link:../gasket-plugin-fastify
       '@gasket/plugin-git':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-git
       '@gasket/plugin-happyfeet':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-happyfeet
       '@gasket/plugin-https':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-https
       '@gasket/plugin-intl':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-intl
       '@gasket/plugin-jest':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-jest
       '@gasket/plugin-lint':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-lint
       '@gasket/plugin-logger':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-logger
       '@gasket/plugin-manifest':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-manifest
       '@gasket/plugin-metadata':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-metadata
       '@gasket/plugin-middleware':
         specifier: workspace:^
         version: link:../gasket-plugin-middleware
       '@gasket/plugin-mocha':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-mocha
       '@gasket/plugin-morgan':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-morgan
       '@gasket/plugin-nextjs':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-nextjs
       '@gasket/plugin-redux':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-redux
       '@gasket/plugin-service-worker':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-service-worker
       '@gasket/plugin-swagger':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-plugin-swagger
       '@gasket/plugin-typescript':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-typescript
       '@gasket/plugin-webpack':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-webpack
       '@gasket/plugin-winston':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-winston
       '@gasket/plugin-workbox':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-plugin-workbox
       '@gasket/preset-api':
-        specifier: ^7.3.1
+        specifier: ^7.3.3
         version: link:../gasket-preset-api
       '@gasket/preset-nextjs':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../gasket-preset-nextjs
       '@gasket/react-intl':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-react-intl
       '@gasket/redux':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-redux
       '@gasket/request':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-request
       '@gasket/utils':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-utils
       '@types/express':
         specifier: ^4.17.21
@@ -3121,7 +3121,7 @@ importers:
         specifier: ^20.17.19
         version: 20.17.19
       create-gasket-app:
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../create-gasket-app
       cross-env:
         specifier: ^7.0.3
@@ -3179,7 +3179,7 @@ importers:
         version: 7.7.1
     devDependencies:
       '@gasket/core':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../gasket-core
       '@types/concat-stream':
         specifier: ^2.0.3
@@ -3224,139 +3224,139 @@ importers:
   scripts/generate-docs-index:
     dependencies:
       '@gasket/assets':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../../packages/gasket-assets
       '@gasket/core':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../../packages/gasket-core
       '@gasket/data':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../../packages/gasket-data
       '@gasket/fetch':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../../packages/gasket-fetch
       '@gasket/intl':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../../packages/gasket-intl
       '@gasket/nextjs':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../../packages/gasket-nextjs
       '@gasket/plugin-analyze':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../../packages/gasket-plugin-analyze
       '@gasket/plugin-command':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../../packages/gasket-plugin-command
       '@gasket/plugin-cypress':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../../packages/gasket-plugin-cypress
       '@gasket/plugin-data':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../../packages/gasket-plugin-data
       '@gasket/plugin-docs':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../../packages/gasket-plugin-docs
       '@gasket/plugin-docs-graphs':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../../packages/gasket-plugin-docs-graphs
       '@gasket/plugin-docusaurus':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../../packages/gasket-plugin-docusaurus
       '@gasket/plugin-dynamic-plugins':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../../packages/gasket-plugin-dynamic-plugins
       '@gasket/plugin-elastic-apm':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../../packages/gasket-plugin-elastic-apm
       '@gasket/plugin-express':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../../packages/gasket-plugin-express
       '@gasket/plugin-fastify':
-        specifier: ^7.3.1
+        specifier: ^7.3.2
         version: link:../../packages/gasket-plugin-fastify
       '@gasket/plugin-git':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../../packages/gasket-plugin-git
       '@gasket/plugin-happyfeet':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../../packages/gasket-plugin-happyfeet
       '@gasket/plugin-https':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../../packages/gasket-plugin-https
       '@gasket/plugin-https-proxy':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../../packages/gasket-plugin-https-proxy
       '@gasket/plugin-intl':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../../packages/gasket-plugin-intl
       '@gasket/plugin-jest':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../../packages/gasket-plugin-jest
       '@gasket/plugin-lint':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../../packages/gasket-plugin-lint
       '@gasket/plugin-logger':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../../packages/gasket-plugin-logger
       '@gasket/plugin-manifest':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../../packages/gasket-plugin-manifest
       '@gasket/plugin-metadata':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../../packages/gasket-plugin-metadata
       '@gasket/plugin-middleware':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../../packages/gasket-plugin-middleware
       '@gasket/plugin-mocha':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../../packages/gasket-plugin-mocha
       '@gasket/plugin-morgan':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../../packages/gasket-plugin-morgan
       '@gasket/plugin-nextjs':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../../packages/gasket-plugin-nextjs
       '@gasket/plugin-redux':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../../packages/gasket-plugin-redux
       '@gasket/plugin-service-worker':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../../packages/gasket-plugin-service-worker
       '@gasket/plugin-swagger':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../../packages/gasket-plugin-swagger
       '@gasket/plugin-typescript':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../../packages/gasket-plugin-typescript
       '@gasket/plugin-webpack':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../../packages/gasket-plugin-webpack
       '@gasket/plugin-winston':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../../packages/gasket-plugin-winston
       '@gasket/plugin-workbox':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../../packages/gasket-plugin-workbox
       '@gasket/preset-api':
-        specifier: ^7.3.1
+        specifier: ^7.3.3
         version: link:../../packages/gasket-preset-api
       '@gasket/preset-nextjs':
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../../packages/gasket-preset-nextjs
       '@gasket/react-intl':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../../packages/gasket-react-intl
       '@gasket/redux':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../../packages/gasket-redux
       '@gasket/request':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../../packages/gasket-request
       '@gasket/utils':
-        specifier: ^7.3.0
+        specifier: ^7.3.1
         version: link:../../packages/gasket-utils
       create-gasket-app:
-        specifier: ^7.3.0
+        specifier: ^7.3.2
         version: link:../../packages/create-gasket-app
     devDependencies:
       '@types/jest':
@@ -13646,7 +13646,7 @@ snapshots:
       '@babel/traverse': 7.26.9
       '@babel/types': 7.26.9
       convert-source-map: 2.0.0
-      debug: 4.4.0
+      debug: 4.4.0(supports-color@5.5.0)
       gensync: 1.0.0-beta.2
       json5: 2.2.3
       semver: 6.3.1
@@ -13706,7 +13706,7 @@ snapshots:
       '@babel/core': 7.26.9
       '@babel/helper-compilation-targets': 7.26.5
       '@babel/helper-plugin-utils': 7.26.5
-      debug: 4.4.0
+      debug: 4.4.0(supports-color@5.5.0)
       lodash.debounce: 4.0.8
       resolve: 1.22.10
     transitivePeerDependencies:
@@ -14460,7 +14460,7 @@ snapshots:
       '@babel/parser': 7.26.9
       '@babel/template': 7.26.9
       '@babel/types': 7.26.9
-      debug: 4.4.0
+      debug: 4.4.0(supports-color@5.5.0)
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
@@ -16669,7 +16669,7 @@ snapshots:
   '@eslint/eslintrc@2.1.4':
     dependencies:
       ajv: 6.12.6
-      debug: 4.4.0
+      debug: 4.4.0(supports-color@5.5.0)
       espree: 9.6.1
       globals: 13.24.0
       ignore: 5.3.2
@@ -16822,7 +16822,7 @@ snapshots:
   '@humanwhocodes/config-array@0.13.0':
     dependencies:
       '@humanwhocodes/object-schema': 2.0.3
-      debug: 4.4.0
+      debug: 4.4.0(supports-color@5.5.0)
       minimatch: 3.1.2
     transitivePeerDependencies:
       - supports-color
@@ -16838,7 +16838,7 @@ snapshots:
       '@antfu/install-pkg': 1.0.0
       '@antfu/utils': 8.1.1
       '@iconify/types': 2.0.0
-      debug: 4.4.0
+      debug: 4.4.0(supports-color@5.5.0)
       globals: 15.15.0
       kolorist: 1.8.0
       local-pkg: 1.0.0
@@ -18098,7 +18098,7 @@ snapshots:
       '@typescript-eslint/scope-manager': 5.62.0
       '@typescript-eslint/type-utils': 5.62.0(eslint@8.57.1)(typescript@5.7.3)
       '@typescript-eslint/utils': 5.62.0(eslint@8.57.1)(typescript@5.7.3)
-      debug: 4.4.0
+      debug: 4.4.0(supports-color@5.5.0)
       eslint: 8.57.1
       graphemer: 1.4.0
       ignore: 5.3.2
@@ -18118,7 +18118,7 @@ snapshots:
       '@typescript-eslint/type-utils': 6.21.0(eslint@8.57.1)(typescript@5.7.3)
       '@typescript-eslint/utils': 6.21.0(eslint@8.57.1)(typescript@5.7.3)
       '@typescript-eslint/visitor-keys': 6.21.0
-      debug: 4.4.0
+      debug: 4.4.0(supports-color@5.5.0)
       eslint: 8.57.1
       graphemer: 1.4.0
       ignore: 5.3.2
@@ -18136,7 +18136,7 @@ snapshots:
       '@typescript-eslint/types': 6.21.0
       '@typescript-eslint/typescript-estree': 6.21.0(typescript@5.7.3)
       '@typescript-eslint/visitor-keys': 6.21.0
-      debug: 4.4.0
+      debug: 4.4.0(supports-color@5.5.0)
       eslint: 8.57.1
     optionalDependencies:
       typescript: 5.7.3
@@ -18162,7 +18162,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/typescript-estree': 5.62.0(typescript@5.7.3)
       '@typescript-eslint/utils': 5.62.0(eslint@8.57.1)(typescript@5.7.3)
-      debug: 4.4.0
+      debug: 4.4.0(supports-color@5.5.0)
       eslint: 8.57.1
       tsutils: 3.21.0(typescript@5.7.3)
     optionalDependencies:
@@ -18174,7 +18174,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/typescript-estree': 6.21.0(typescript@5.7.3)
       '@typescript-eslint/utils': 6.21.0(eslint@8.57.1)(typescript@5.7.3)
-      debug: 4.4.0
+      debug: 4.4.0(supports-color@5.5.0)
       eslint: 8.57.1
       ts-api-utils: 1.4.3(typescript@5.7.3)
     optionalDependencies:
@@ -18192,7 +18192,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 5.62.0
       '@typescript-eslint/visitor-keys': 5.62.0
-      debug: 4.4.0
+      debug: 4.4.0(supports-color@5.5.0)
       globby: 11.1.0
       is-glob: 4.0.3
       semver: 7.7.1
@@ -18206,7 +18206,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 6.21.0
       '@typescript-eslint/visitor-keys': 6.21.0
-      debug: 4.4.0
+      debug: 4.4.0(supports-color@5.5.0)
       globby: 11.1.0
       is-glob: 4.0.3
       minimatch: 9.0.3
@@ -18221,7 +18221,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 8.24.1
       '@typescript-eslint/visitor-keys': 8.24.1
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0(supports-color@5.5.0)
       fast-glob: 3.3.3
       is-glob: 4.0.3
       minimatch: 9.0.5
@@ -18514,7 +18514,7 @@ snapshots:
 
   agent-base@6.0.2:
     dependencies:
-      debug: 4.4.0
+      debug: 4.4.0(supports-color@5.5.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -20005,10 +20005,6 @@ snapshots:
     optionalDependencies:
       supports-color: 8.1.1
 
-  debug@4.4.0:
-    dependencies:
-      ms: 2.1.3
-
   debug@4.4.0(supports-color@5.5.0):
     dependencies:
       ms: 2.1.3
@@ -20137,7 +20133,7 @@ snapshots:
   detect-port@1.6.1:
     dependencies:
       address: 1.2.2
-      debug: 4.4.0
+      debug: 4.4.0(supports-color@5.5.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -20627,7 +20623,7 @@ snapshots:
   eslint-import-resolver-typescript@3.8.3(eslint-plugin-import@2.31.0)(eslint@8.57.1):
     dependencies:
       '@nolyfill/is-core-module': 1.0.39
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0(supports-color@5.5.0)
       enhanced-resolve: 5.18.1
       eslint: 8.57.1
       get-tsconfig: 4.10.0
@@ -20695,7 +20691,7 @@ snapshots:
       '@es-joy/jsdoccomment': 0.46.0
       are-docs-informative: 0.0.2
       comment-parser: 1.4.1
-      debug: 4.4.0
+      debug: 4.4.0(supports-color@5.5.0)
       escape-string-regexp: 4.0.0
       eslint: 8.57.1
       espree: 10.3.0
@@ -20824,7 +20820,7 @@ snapshots:
       ajv: 6.12.6
       chalk: 4.1.2
       cross-spawn: 7.0.6
-      debug: 4.4.0
+      debug: 4.4.0(supports-color@5.5.0)
       doctrine: 3.0.0
       escape-string-regexp: 4.0.0
       eslint-scope: 7.2.2
@@ -21270,8 +21266,6 @@ snapshots:
   flatted@3.3.3: {}
 
   fn.name@1.1.0: {}
-
-  follow-redirects@1.15.9: {}
 
   follow-redirects@1.15.9(debug@4.4.0):
     optionalDependencies:
@@ -21892,7 +21886,7 @@ snapshots:
     dependencies:
       '@tootallnate/once': 2.0.0
       agent-base: 6.0.2
-      debug: 4.4.0
+      debug: 4.4.0(supports-color@5.5.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -21911,7 +21905,7 @@ snapshots:
   http-proxy@1.18.1:
     dependencies:
       eventemitter3: 4.0.7
-      follow-redirects: 1.15.9
+      follow-redirects: 1.15.9(debug@4.4.0)
       requires-port: 1.0.0
     transitivePeerDependencies:
       - debug
@@ -21932,7 +21926,7 @@ snapshots:
   https-proxy-agent@5.0.1:
     dependencies:
       agent-base: 6.0.2
-      debug: 4.4.0
+      debug: 4.4.0(supports-color@5.5.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -22333,7 +22327,7 @@ snapshots:
 
   istanbul-lib-source-maps@4.0.1:
     dependencies:
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0(supports-color@5.5.0)
       istanbul-lib-coverage: 3.2.2
       source-map: 0.6.1
     transitivePeerDependencies:
@@ -22779,7 +22773,7 @@ snapshots:
 
   json-schema-resolver@2.0.0:
     dependencies:
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0(supports-color@5.5.0)
       rfdc: 1.4.1
       uri-js: 4.4.1
     transitivePeerDependencies:
@@ -23592,7 +23586,7 @@ snapshots:
   micromark@4.0.1:
     dependencies:
       '@types/debug': 4.1.12
-      debug: 4.4.0
+      debug: 4.4.0(supports-color@5.5.0)
       decode-named-character-reference: 1.0.2
       devlop: 1.1.0
       micromark-core-commonmark: 2.0.2
@@ -25316,7 +25310,7 @@ snapshots:
 
   require-in-the-middle@7.5.1:
     dependencies:
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0(supports-color@5.5.0)
       module-details-from-path: 1.0.3
       resolve: 1.22.10
     transitivePeerDependencies:
@@ -25807,7 +25801,7 @@ snapshots:
 
   spdy-transport@3.0.0:
     dependencies:
-      debug: 4.4.0
+      debug: 4.4.0(supports-color@5.5.0)
       detect-node: 2.1.0
       hpack.js: 2.1.6
       obuf: 1.1.2
@@ -25818,7 +25812,7 @@ snapshots:
 
   spdy@4.0.2:
     dependencies:
-      debug: 4.4.0
+      debug: 4.4.0(supports-color@5.5.0)
       handle-thing: 2.0.1
       http-deceiver: 1.2.7
       select-hose: 2.0.0
@@ -26639,7 +26633,7 @@ snapshots:
   vite-node@3.0.7(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0):
     dependencies:
       cac: 6.7.14
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0(supports-color@5.5.0)
       es-module-lexer: 1.6.0
       pathe: 2.0.3
       vite: 6.1.1(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
@@ -26680,7 +26674,7 @@ snapshots:
       '@vitest/spy': 3.0.7
       '@vitest/utils': 3.0.7
       chai: 5.2.0
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0(supports-color@5.5.0)
       expect-type: 1.1.0
       magic-string: 0.30.17
       pathe: 2.0.3
