@@ -2,7 +2,7 @@ import type { MaybeAsync, Plugin } from '@gasket/core';
 import type { PackageJson } from 'create-gasket-app';
 
 /** Metadata for details of a plugin */
-interface DetailData {
+export interface DetailData {
   name: string;
   version?: string;
   description?: string;
