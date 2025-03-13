@@ -1,5 +1,16 @@
 # `@gasket/plugin-metadata`
 
+## 7.3.2
+
+### Patch Changes
+
+- 41e5c6d: Remove Catalog and Workspace alias usage.
+- 0561cd5: Updates to use user-selected package manager. Update all packages to use catalog dep versions.
+- Updated dependencies [41e5c6d]
+- Updated dependencies [0561cd5]
+  - @gasket/plugin-logger@7.3.1
+  - @gasket/core@7.3.1
+
 ## 7.3.1
 
 ### Patch Changes
