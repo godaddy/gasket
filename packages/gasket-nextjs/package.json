@@ -1,6 +1,6 @@
 {
   "name": "@gasket/nextjs",
-  "version": "7.3.0",
+  "version": "7.3.1",
   "description": "Gasket integrations for Next.js apps",
   "type": "module",
   "types": "lib/index.d.ts",
@@ -58,14 +58,14 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-nextjs",
   "dependencies": {
-    "@gasket/data": "^7.3.0",
-    "@gasket/request": "^7.3.0",
+    "@gasket/data": "^7.3.1",
+    "@gasket/request": "^7.3.1",
     "hoist-non-react-statics": "^3.3.2",
     "htmlescape": "^1.1.1"
   },
   "devDependencies": {
-    "@gasket/plugin-data": "^7.3.0",
-    "@gasket/plugin-intl": "^7.3.0",
+    "@gasket/plugin-data": "^7.3.1",
+    "@gasket/plugin-intl": "^7.3.1",
     "@jest/globals": "^29.7.0",
     "@testing-library/react": "^13.4.0",
     "@types/jest": "^29.5.14",
