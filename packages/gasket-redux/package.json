@@ -1,6 +1,6 @@
 {
   "name": "@gasket/redux",
-  "version": "7.3.0",
+  "version": "7.3.1",
   "description": "Gasket Redux Configuration",
   "main": "lib",
   "types": "src/index.d.ts",
@@ -48,7 +48,7 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.20.7",
     "@babel/plugin-transform-runtime": "^7.26.9",
     "@babel/preset-env": "^7.26.9",
-    "@gasket/plugin-logger": "^7.3.0",
+    "@gasket/plugin-logger": "^7.3.1",
     "@types/jest": "^29.5.14",
     "@types/node": "^20.17.19",
     "babel-core": "7.0.0-bridge.0",
