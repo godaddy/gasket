@@ -1,5 +1,18 @@
 # `@gasket/react-intl`
 
+## 7.3.1
+
+### Patch Changes
+
+- 41e5c6d: Remove Catalog and Workspace alias usage.
+- 0561cd5: Updates to use user-selected package manager. Update all packages to use catalog dep versions.
+- Updated dependencies [41e5c6d]
+- Updated dependencies [0561cd5]
+  - @gasket/plugin-intl@7.3.1
+  - @gasket/fetch@7.3.1
+  - @gasket/data@7.3.1
+  - @gasket/intl@7.3.1
+
 ## 7.3.0
 
 ### Minor Changes
