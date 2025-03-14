@@ -1729,7 +1729,7 @@ importers:
         version: link:../gasket-plugin-logger
     devDependencies:
       '@gasket/plugin-metadata':
-        specifier: ^7.3.2
+        specifier: ^7.3.3
         version: 'link:'
       '@gasket/plugin-webpack':
         specifier: ^7.3.1
