@@ -1,5 +1,11 @@
 # `@gasket/plugin-metadata`
 
+## 7.3.3
+
+### Patch Changes
+
+- a02ebdc: Export DetailData type.
+
 ## 7.3.2
 
 ### Patch Changes
