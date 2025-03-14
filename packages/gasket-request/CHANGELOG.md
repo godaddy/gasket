@@ -1,5 +1,11 @@
 # `@gasket/request`
 
+## 7.3.2
+
+### Patch Changes
+
+- feb2bcd: Fix GasketRequest class type.
+
 ## 7.3.1
 
 ### Patch Changes
