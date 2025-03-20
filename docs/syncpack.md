@@ -1,0 +1,41 @@
+# syncpack
+
+## Why syncpack?
+
+As of `PNPM@10.4.1`, we cannot use the `pnpm update` command on [Catalog versions](https://pnpm.io/catalogs#caveats). We will use syncpack for the following:
+
+- Find and fix dependency version mismatches.
+- Enforce a single version policy.
+- Find and bump outdated versions from the npm registry.
+- Ban some dependencies from being used in specific places (ie. `@types/*` in prod dependencies).
+- Sort and format package.json files consistently.
+
+### align-packages
+
+We will continue to use the `scripts/align-packages.js` script for the following:
+
+- Add/verify fixed properties to the package.json
+- Verify typechecking configuration; includes updating eslintConfig
+- Verify required npm scripts
+- Remove maintainers property
+- Verify homepage property
+
+## Commands
+
+List issues
+
+```sh
+syncpack list
+```
+
+Fix auto-fixable issues
+
+```sh
+syncpack fix-mismatches
+```
+
+Format package.json
+
+```sh
+syncpack format
+```
