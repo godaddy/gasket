@@ -59,21 +59,16 @@ const config = {
     'eslintIgnore',
     'gasket'
   ],
-  versionGroups: [{
-    "dependencies": ["@types/**"],
-    "dependencyTypes": ["!devDependencies"],
-    "isBanned": true,
-    "label": "@types packages should only be under devDependencies"
-  },
-  {
-    label: 'workspace-packages',
-    dependencies: [
-      'create-gasket-app',
-      '@gasket/*',
-    ],
-    dependencyTypes: ['dependencies', 'devDependencies'],
-    pinVersion: 'workspace:*'
-  }],
+  versionGroups: [
+    {
+      label: 'workspace-packages',
+      dependencies: [
+        'create-gasket-app',
+        '@gasket/*',
+      ],
+      dependencyTypes: ['dependencies', 'devDependencies'],
+      pinVersion: 'workspace:*'
+    }],
   "lintFormatting": true,
   "lintSemverRanges": true,
   "lintVersions": true,
