@@ -101,7 +101,7 @@
   "pnpm": {
     "overrides": {
       "@typescript-eslint/parser": "^6.21.0",
-      "react-json-view-lite": "2.3.0"
+      "react-json-view-lite": "^2.3.0"
     },
     "peerDependencyRules": {
       "allowedVersions": {
