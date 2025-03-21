@@ -1,5 +1,11 @@
 # `@gasket/plugin-lint`
 
+## 7.3.3
+
+### Patch Changes
+
+- 43b7e31: Fix npm script creation for new PNPM apps.
+
 ## 7.3.2
 
 ### Patch Changes
