@@ -4,17 +4,8 @@
   "version": "0.0.0",
   "description": "Robust, pluggable, & render agnostic framework for rapid delivery of modern web applications.",
   "scripts": {
-    "preinstall": "npx only-allow pnpm",
-    "lint": "eslint scripts",
-    "lint:fix": "pnpm run lint --fix",
-    "lint:fix:all": "pnpm run lint:fix && pnpm run -r lint:fix",
-    "test": "pnpm run -r test",
-    "test:coverage": "pnpm run -r test:coverage",
-    "posttest": "pnpm run lint",
-    "build": "pnpm run -r build",
     "align-packages": "node ./scripts/align-packages",
-    "version": "changeset version",
-    "release": "changeset publish",
+    "build": "pnpm run -r build",
     "changeset": "changeset",
     "clean": "pnpm run clean:packages && pnpm run clean:root",
     "clean:packages": "pnpm -r exec rimraf dist node_modules",
@@ -22,33 +13,40 @@
     "docs": "pnpm run -r docs && pnpm run generate-docs-index",
     "docs-view": "pnpm run generate-docs-index && cd site && docusaurus start",
     "generate-docs-index": "node scripts/generate-docs-index",
+    "lint": "eslint scripts",
+    "lint:fix": "pnpm run lint --fix",
+    "lint:fix:all": "pnpm run lint:fix && pnpm run -r lint:fix",
     "postinstall": "pnpm run build",
     "postpublish": "node scripts/mark-deprecated.mjs",
+    "posttest": "pnpm run lint",
+    "preinstall": "npx only-allow pnpm",
     "publish": "pnpm changeset publish",
     "publish:canary": "pnpm changeset version --snapshot canary && pnpm changeset publish --tag canary",
     "publish:next": "pnpm changeset version --pre next && pnpm changeset publish --tag next --force-publish --exact",
+    "release": "changeset publish",
+    "replace-ws-aliases": "node scripts/replace-ws-aliases.js",
+    "syncpack": "syncpack",
+    "syncpack:fix": "syncpack fix-mismatches && syncpack format",
+    "test": "pnpm run -r test",
+    "test:coverage": "pnpm run -r test:coverage",
     "test:package": "pnpm run -r --filter $* test",
-    "typecheck:all": "pnpm run -r typecheck"
+    "typecheck:all": "pnpm run -r typecheck",
+    "version": "changeset version"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/godaddy/gasket.git"
-  },
+  "repository": "godaddy/gasket.git",
   "publishConfig": {
     "access": "public"
   },
   "keywords": [
-    "gasket",
     "framework",
+    "gasket",
+    "plugins",
     "pwa",
-    "ssr",
-    "plugins"
+    "ssr"
   ],
   "author": "GoDaddy Operating Company, LLC",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/godaddy/gasket/issues"
-  },
+  "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket#readme",
   "devDependencies": {
     "@changesets/cli": "^2.28.1",
@@ -68,6 +66,7 @@
     "react-dom": "^18.3.1",
     "rimraf": "^3.0.2",
     "search-insights": "^2.17.3",
+    "syncpack": "^13.0.3",
     "typescript": "^5.7.3"
   },
   "eslintConfig": {
@@ -94,10 +93,6 @@
     "node": ">=20"
   },
   "packageManager": "pnpm@10.4.1",
-  "workspaces": [
-    "packages/*",
-    "scripts/generate-docs-index"
-  ],
   "pnpm": {
     "overrides": {
       "@typescript-eslint/parser": "^6.21.0"
@@ -107,5 +102,9 @@
         "@typescript-eslint/parser": "^6.21.0"
       }
     }
-  }
+  },
+  "workspaces": [
+    "packages/*",
+    "scripts/generate-docs-index"
+  ]
 }

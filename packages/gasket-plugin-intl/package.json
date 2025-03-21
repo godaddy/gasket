@@ -11,33 +11,28 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
-    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
-    "test:watch": "pnpm run test --watch",
-    "test:coverage": "pnpm run test --coverage",
     "posttest": "pnpm run lint && pnpm run typecheck",
+    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
+    "test:coverage": "pnpm run test --coverage",
+    "test:watch": "pnpm run test --watch",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/godaddy/gasket.git"
-  },
+  "repository": "godaddy/gasket.git",
   "publishConfig": {
     "access": "public"
   },
   "keywords": [
     "gasket",
-    "plugin",
-    "intl"
+    "intl",
+    "plugin"
   ],
   "author": "GoDaddy Operating Company, LLC",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/godaddy/gasket/issues"
-  },
+  "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-intl",
   "dependencies": {
-    "@gasket/request": "^7.3.1",
+    "@gasket/request": "workspace:*",
     "debug": "^4.4.0",
     "fs-extra": "^10.1.0",
     "glob": "^8.1.0",
@@ -46,19 +41,19 @@
     "semver": "^7.7.1"
   },
   "devDependencies": {
-    "@gasket/core": "^7.3.1",
-    "@gasket/intl": "^7.3.1",
-    "@gasket/plugin-command": "^7.3.2",
-    "@gasket/plugin-data": "^7.3.1",
-    "@gasket/plugin-elastic-apm": "^7.3.1",
-    "@gasket/plugin-logger": "^7.3.1",
-    "@gasket/plugin-metadata": "^7.3.2",
-    "@gasket/plugin-nextjs": "^7.3.1",
-    "@gasket/plugin-service-worker": "^7.3.2",
-    "@gasket/react-intl": "^7.3.1",
+    "@gasket/core": "workspace:*",
+    "@gasket/intl": "workspace:*",
+    "@gasket/plugin-command": "workspace:*",
+    "@gasket/plugin-data": "workspace:*",
+    "@gasket/plugin-elastic-apm": "workspace:*",
+    "@gasket/plugin-logger": "workspace:*",
+    "@gasket/plugin-metadata": "workspace:*",
+    "@gasket/plugin-nextjs": "workspace:*",
+    "@gasket/plugin-service-worker": "workspace:*",
+    "@gasket/react-intl": "workspace:*",
     "@types/jest": "^29.5.14",
     "@types/node": "^20.17.19",
-    "create-gasket-app": "^7.3.2",
+    "create-gasket-app": "workspace:*",
     "cross-env": "^7.0.3",
     "eslint": "^8.57.1",
     "eslint-config-godaddy": "^7.1.1",
@@ -67,7 +62,7 @@
     "eslint-plugin-unicorn": "^55.0.0",
     "jest": "^29.7.0",
     "react": "^18.3.1",
-    "react-intl": "~6.6.8",
+    "react-intl": "^6.8.9",
     "typescript": "^5.7.3",
     "webpack": "^5.98.0"
   },

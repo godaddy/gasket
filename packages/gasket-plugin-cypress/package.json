@@ -7,17 +7,14 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
-    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
-    "test:watch": "pnpm run test --watchAll",
-    "test:coverage": "pnpm run test --coverage",
     "posttest": "pnpm run lint && pnpm run typecheck",
+    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
+    "test:coverage": "pnpm run test --coverage",
+    "test:watch": "pnpm run test --watchAll",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/godaddy/gasket.git"
-  },
+  "repository": "godaddy/gasket.git",
   "publishConfig": {
     "access": "public"
   },
@@ -28,19 +25,17 @@
   ],
   "author": "GoDaddy Operating Company, LLC",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/godaddy/gasket/issues"
-  },
+  "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-cypress",
   "devDependencies": {
     "@babel/core": "^7.26.9",
-    "@gasket/core": "^7.3.1",
-    "@gasket/plugin-metadata": "^7.3.2",
+    "@gasket/core": "workspace:*",
+    "@gasket/plugin-metadata": "workspace:*",
     "@testing-library/react": "^13.4.0",
     "@types/jest": "^29.5.14",
     "@types/node": "^20.17.19",
     "@types/react": "^18.3.18",
-    "create-gasket-app": "^7.3.2",
+    "create-gasket-app": "workspace:*",
     "cross-env": "^7.0.3",
     "cypress": "^13.17.0",
     "eslint": "^8.57.1",

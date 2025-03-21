@@ -26,31 +26,26 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
-    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
     "posttest": "pnpm run lint && pnpm run typecheck",
+    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/godaddy/gasket.git"
-  },
+  "repository": "godaddy/gasket.git",
   "publishConfig": {
     "access": "public"
   },
   "keywords": [
     "gasket",
-    "plugin",
     "mocha",
+    "plugin",
     "test"
   ],
   "author": "GoDaddy Operating Company, LLC",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/godaddy/gasket/issues"
-  },
+  "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-mocha",
   "devDependencies": {
     "@babel/core": "^7.26.9",
@@ -58,16 +53,16 @@
     "@babel/preset-env": "^7.26.9",
     "@babel/preset-react": "^7.26.3",
     "@babel/preset-typescript": "^7.26.0",
-    "@gasket/core": "^7.3.1",
-    "@gasket/plugin-express": "^7.3.1",
-    "@gasket/plugin-metadata": "^7.3.2",
+    "@gasket/core": "workspace:*",
+    "@gasket/plugin-express": "workspace:*",
+    "@gasket/plugin-metadata": "workspace:*",
     "@testing-library/react": "^13.4.0",
     "@types/jest": "^29.5.14",
     "@types/mocha": "^10.0.10",
     "@types/node": "^20.17.19",
     "@types/react": "^18.3.18",
     "babel-eslint": "^10.1.0",
-    "create-gasket-app": "^7.3.2",
+    "create-gasket-app": "workspace:*",
     "cross-env": "^7.0.3",
     "eslint": "^8.57.1",
     "eslint-config-godaddy": "^7.1.1",

@@ -1,8 +1,7 @@
-import type { IncomingMessage, OutgoingMessage } from 'http';
 import type { PartialRecursive, MaybeAsync, Plugin } from '@gasket/core';
 import type { GenerateSWConfig } from 'workbox-build';
 import type { Request, Response } from 'express';
-import type { Gasket, GasketConfig } from '@gasket/core';
+import type { Gasket } from '@gasket/core';
 
 export interface WorkboxConfig {
   /** path of directory to copy Workbox libraries to (default:
