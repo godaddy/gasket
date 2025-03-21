@@ -85,7 +85,7 @@ function makeRunScriptStr(context) {
       throw new TypeError('Script name must be a non-empty string.');
     }
 
-    return runCmd.includes('npm') ? `${runCmd} ${script}` : (`${runCmd} ${script}`).replace(' -- ', ' ');
+    return runCmd.startsWith('npm') ? `${runCmd} ${script}` : (`${runCmd} ${script}`).replace(' -- ', ' ');
   }
 
   return runScriptStr;
