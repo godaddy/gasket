@@ -1,5 +1,7 @@
 # syncpack
 
+<https://github.com/JamieMason/syncpack>
+
 ## Why syncpack?
 
 As of `PNPM@10.4.1`, we cannot use the `pnpm update` command on [Catalog versions](https://pnpm.io/catalogs#caveats). We will use syncpack for the following:
@@ -22,19 +24,19 @@ We will continue to use the `scripts/align-packages.js` script for the following
 
 ## Commands
 
-List issues
+[List issues](https://jamiemason.github.io/syncpack/command/list/)
 
 ```sh
 syncpack list
 ```
 
-Fix auto-fixable issues
+[Fix auto-fixable issues](https://jamiemason.github.io/syncpack/command/fix-mismatches/)
 
 ```sh
 syncpack fix-mismatches
 ```
 
-Format package.json
+[Format package.json](https://jamiemason.github.io/syncpack/command/format/)
 
 ```sh
 syncpack format
