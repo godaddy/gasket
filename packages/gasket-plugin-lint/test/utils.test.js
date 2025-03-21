@@ -46,15 +46,17 @@ describe('utils', () => {
   });
 
   describe('makeRunScriptStr', () => {
-    let forNpm, forYarn;
+    let forNpm, forYarn, forPnpm;
 
     beforeEach(() => {
       forNpm = makeRunScriptStr({ packageManager: 'npm' });
+      forPnpm = makeRunScriptStr({ packageManager: 'pnpm' });
       forYarn = makeRunScriptStr({ packageManager: 'yarn' });
     });
 
     it('returns a function', () => {
       expect(typeof forNpm).toBe('function');
+      expect(typeof forPnpm).toBe('function');
       expect(typeof forYarn).toBe('function');
     });
 
@@ -76,6 +78,16 @@ describe('utils', () => {
     it('[yarn] returns command with flags (removes "--")', () => {
       const results = forYarn('test-script -- --extra');
       expect(results).toEqual('yarn run test-script --extra');
+    });
+
+    it('[pnpm] returns command', () => {
+      const results = forPnpm('test-script');
+      expect(results).toEqual('pnpm run test-script');
+    });
+
+    it('[pnpm] returns command with flags (removes "--")', () => {
+      const results = forPnpm('test-script -- --extra');
+      expect(results).toEqual('pnpm run test-script --extra');
     });
 
     it('throws TypeError for an invalid script name', () => {
