@@ -1,5 +1,11 @@
 # `@gasket/plugin-jest`
 
+## 7.3.2
+
+### Patch Changes
+
+- 721e8ad: Bump next.js version to latest patch to mitigate critical vulnerability.
+
 ## 7.3.1
 
 ### Patch Changes
