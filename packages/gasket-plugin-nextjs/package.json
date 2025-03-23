@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-nextjs",
-  "version": "7.3.1",
+  "version": "7.3.2",
   "description": "Adds Next support to your application",
   "types": "lib/index.d.ts",
   "files": [
@@ -51,7 +51,7 @@
     "@gasket/assets": "^7.3.1",
     "@gasket/core": "^7.3.1",
     "@gasket/intl": "^7.3.1",
-    "@gasket/nextjs": "^7.3.1",
+    "@gasket/nextjs": "^7.3.2",
     "@gasket/plugin-elastic-apm": "^7.3.1",
     "@gasket/plugin-express": "^7.3.1",
     "@gasket/plugin-fastify": "^7.3.2",
@@ -59,7 +59,7 @@
     "@gasket/plugin-intl": "^7.3.1",
     "@gasket/plugin-logger": "^7.3.1",
     "@gasket/plugin-metadata": "^7.3.2",
-    "@gasket/plugin-nextjs": "^7.3.1",
+    "@gasket/plugin-nextjs": "^7.3.2",
     "@gasket/plugin-service-worker": "^7.3.2",
     "@gasket/plugin-workbox": "^7.3.1",
     "@gasket/request": "^7.3.1",
