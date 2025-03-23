@@ -2023,7 +2023,7 @@ importers:
         specifier: ^7.3.1
         version: link:../gasket-intl
       '@gasket/nextjs':
-        specifier: ^7.3.1
+        specifier: ^7.3.2
         version: link:../gasket-nextjs
       '@gasket/plugin-elastic-apm':
         specifier: ^7.3.1
@@ -2047,7 +2047,7 @@ importers:
         specifier: ^7.3.2
         version: link:../gasket-plugin-metadata
       '@gasket/plugin-nextjs':
-        specifier: ^7.3.1
+        specifier: ^7.3.2
         version: 'link:'
       '@gasket/plugin-service-worker':
         specifier: ^7.3.2
