@@ -1,0 +1,49 @@
+---
+"@gasket/plugin-dynamic-plugins": patch
+"@gasket/plugin-service-worker": patch
+"@gasket/plugin-docs-graphs": patch
+"@gasket/plugin-elastic-apm": patch
+"@gasket/plugin-https-proxy": patch
+"@gasket/plugin-docusaurus": patch
+"@gasket/plugin-middleware": patch
+"@gasket/plugin-typescript": patch
+"@gasket/plugin-happyfeet": patch
+"@gasket/typescript-tests": patch
+"@gasket/plugin-manifest": patch
+"@gasket/plugin-metadata": patch
+"@gasket/plugin-analyze": patch
+"@gasket/plugin-command": patch
+"@gasket/plugin-cypress": patch
+"@gasket/plugin-express": patch
+"@gasket/plugin-fastify": patch
+"@gasket/plugin-swagger": patch
+"@gasket/plugin-webpack": patch
+"@gasket/plugin-winston": patch
+"@gasket/plugin-workbox": patch
+"@gasket/plugin-logger": patch
+"@gasket/plugin-morgan": patch
+"@gasket/plugin-nextjs": patch
+"@gasket/preset-nextjs": patch
+"@gasket/plugin-https": patch
+"@gasket/plugin-mocha": patch
+"@gasket/plugin-redux": patch
+"@gasket/plugin-data": patch
+"@gasket/plugin-docs": patch
+"@gasket/plugin-intl": patch
+"@gasket/plugin-jest": patch
+"@gasket/plugin-lint": patch
+"create-gasket-app": patch
+"@gasket/plugin-git": patch
+"@gasket/preset-api": patch
+"@gasket/react-intl": patch
+"@gasket/request": patch
+"@gasket/nextjs": patch
+"@gasket/fetch": patch
+"@gasket/redux": patch
+"@gasket/utils": patch
+"@gasket/core": patch
+"@gasket/data": patch
+"@gasket/intl": patch
+---
+
+Downgrade eslint-plugin-jest version due to conflicting peer dependency between versions of @typescript-eslint/eslint-plugin.
