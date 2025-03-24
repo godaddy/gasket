@@ -1,5 +1,13 @@
 # `@gasket/plugin-nextjs`
 
+## 7.3.3
+
+### Patch Changes
+
+- 7812607: Updates to support using syncpack.
+- Updated dependencies [7812607]
+  - @gasket/plugin-webpack@7.3.2
+
 ## 7.3.2
 
 ### Patch Changes
