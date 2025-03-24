@@ -1,6 +1,6 @@
 {
   "name": "@gasket/react-intl",
-  "version": "7.3.1",
+  "version": "7.3.2",
   "description": "React component library to enable localization for gasket apps.",
   "type": "module",
   "main": "lib/index.js",
@@ -62,7 +62,7 @@
     "typescript": "^5.7.3"
   },
   "peerDependencies": {
-    "@gasket/plugin-intl": "^7.3.1"
+    "@gasket/plugin-intl": "workspace:*"
   },
   "eslintConfig": {
     "extends": [

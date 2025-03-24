@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-workbox",
-  "version": "7.3.1",
+  "version": "7.3.2",
   "description": "Gasket Workbox Plugin",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
