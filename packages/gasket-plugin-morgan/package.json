@@ -54,7 +54,7 @@
     "typescript": "^5.7.3"
   },
   "peerDependencies": {
-    "@gasket/plugin-logger": "^7.3.2",
+    "@gasket/plugin-logger": "workspace:*",
     "express": "^4.21.2"
   },
   "eslintConfig": {
