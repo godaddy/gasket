@@ -1,5 +1,13 @@
 # `@gasket/core`
 
+## 7.3.3
+
+### Patch Changes
+
+- b667c4e: Downgrade eslint-plugin-jest version due to conflicting peer dependency between versions of @typescript-eslint/eslint-plugin.
+- Updated dependencies [b667c4e]
+  - @gasket/utils@7.3.3
+
 ## 7.3.2
 
 ### Patch Changes
