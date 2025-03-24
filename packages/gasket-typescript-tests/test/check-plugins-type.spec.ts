@@ -32,9 +32,6 @@ import pluginWebpack from '@gasket/plugin-webpack';
 import pluginWinston from '@gasket/plugin-winston';
 import pluginWorkbox from '@gasket/plugin-workbox';
 
-
-
-
 describe('check plugins type', () => {
   it('should have correct type', () => {
     const plugins: Plugin[] = [
