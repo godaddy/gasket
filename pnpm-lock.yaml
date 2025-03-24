@@ -861,7 +861,7 @@ importers:
   packages/gasket-plugin-docusaurus:
     dependencies:
       '@gasket/plugin-logger':
-        specifier: ^7.3.1
+        specifier: workspace:*
         version: link:../gasket-plugin-logger
       lodash.defaultsdeep:
         specifier: ^4.6.1
@@ -1943,7 +1943,7 @@ importers:
   packages/gasket-plugin-morgan:
     dependencies:
       '@gasket/plugin-logger':
-        specifier: ^7.3.1
+        specifier: workspace:*
         version: link:../gasket-plugin-logger
       express:
         specifier: ^4.21.2
@@ -2779,7 +2779,7 @@ importers:
         specifier: workspace:*
         version: link:../gasket-intl
       '@gasket/plugin-intl':
-        specifier: ^7.3.1
+        specifier: workspace:*
         version: link:../gasket-plugin-intl
       hoist-non-react-statics:
         specifier: ^3.3.2
@@ -15462,7 +15462,7 @@ snapshots:
     dependencies:
       '@docusaurus/types': 3.7.0(@swc/core@1.10.18(@swc/helpers@0.5.5))(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@types/history': 4.7.11
-      '@types/react': 19.0.10
+      '@types/react': 18.3.18
       '@types/react-router-config': 5.0.11
       '@types/react-router-dom': 5.3.3
       react: 18.3.1
@@ -15481,7 +15481,7 @@ snapshots:
     dependencies:
       '@docusaurus/types': 3.7.0(acorn@8.14.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@types/history': 4.7.11
-      '@types/react': 19.0.10
+      '@types/react': 18.3.18
       '@types/react-router-config': 5.0.11
       '@types/react-router-dom': 5.3.3
       react: 18.3.1
@@ -16192,7 +16192,7 @@ snapshots:
 
   '@docusaurus/react-loadable@6.0.0(react@18.3.1)':
     dependencies:
-      '@types/react': 19.0.10
+      '@types/react': 18.3.18
       react: 18.3.1
 
   '@docusaurus/theme-classic@3.7.0(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/react@19.0.10)(acorn@8.14.0)(eslint@8.57.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3)':
@@ -18144,19 +18144,19 @@ snapshots:
   '@types/react-router-config@5.0.11':
     dependencies:
       '@types/history': 4.7.11
-      '@types/react': 19.0.10
+      '@types/react': 18.3.18
       '@types/react-router': 5.1.20
 
   '@types/react-router-dom@5.3.3':
     dependencies:
       '@types/history': 4.7.11
-      '@types/react': 19.0.10
+      '@types/react': 18.3.18
       '@types/react-router': 5.1.20
 
   '@types/react-router@5.1.20':
     dependencies:
       '@types/history': 4.7.11
-      '@types/react': 19.0.10
+      '@types/react': 18.3.18
 
   '@types/react@18.3.18':
     dependencies:

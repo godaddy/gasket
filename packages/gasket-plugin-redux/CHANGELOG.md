@@ -1,5 +1,11 @@
 # `@gasket/plugin-redux`
 
+## 7.3.2
+
+### Patch Changes
+
+- 7812607: Updates to support using syncpack.
+
 ## 7.3.1
 
 ### Patch Changes
