@@ -1,31 +1,26 @@
 {
   "name": "@gasket/plugin-middleware",
-  "version": "7.3.2",
+  "version": "7.3.3",
   "description": "Handles common server engine setups for routing and executing lifecycles.",
   "main": "lib",
   "types": "lib/index.d.ts",
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
-    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
     "posttest": "pnpm run lint && pnpm run typecheck",
+    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/godaddy/gasket.git"
-  },
+  "repository": "godaddy/gasket.git",
   "publishConfig": {
     "access": "public"
   },
   "author": "GoDaddy Operating Company, LLC",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/godaddy/gasket/issues"
-  },
+  "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-middleware",
   "dependencies": {
     "@fastify/express": "^3.0.0",
@@ -34,18 +29,18 @@
     "diagnostics": "^2.0.2"
   },
   "devDependencies": {
-    "@gasket/core": "^7.3.1",
-    "@gasket/plugin-express": "^7.3.1",
-    "@gasket/plugin-fastify": "^7.3.2",
-    "@gasket/plugin-https": "^7.3.2",
-    "@gasket/plugin-logger": "^7.3.1",
-    "@gasket/plugin-metadata": "^7.3.2",
+    "@gasket/core": "workspace:*",
+    "@gasket/plugin-express": "workspace:*",
+    "@gasket/plugin-fastify": "workspace:*",
+    "@gasket/plugin-https": "workspace:*",
+    "@gasket/plugin-logger": "workspace:*",
+    "@gasket/plugin-metadata": "workspace:*",
     "@types/compression": "^1.7.5",
     "@types/cookie-parser": "^1.4.8",
     "@types/express": "^4.17.21",
     "@types/jest": "^29.5.14",
     "@types/node": "^20.17.19",
-    "create-gasket-app": "^7.3.2",
+    "create-gasket-app": "workspace:*",
     "cross-env": "^7.0.3",
     "eslint": "^8.57.1",
     "eslint-config-godaddy": "^7.1.1",

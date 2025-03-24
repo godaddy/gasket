@@ -1,5 +1,11 @@
 # `@gasket/plugin-service-worker`
 
+## 7.3.3
+
+### Patch Changes
+
+- 7812607: Updates to support using syncpack.
+
 ## 7.3.2
 
 ### Patch Changes

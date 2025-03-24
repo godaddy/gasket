@@ -1,5 +1,13 @@
 # `@gasket/plugin-docusaurus`
 
+## 7.3.2
+
+### Patch Changes
+
+- 7812607: Updates to support using syncpack.
+- Updated dependencies [7812607]
+  - @gasket/plugin-logger@7.3.2
+
 ## 7.3.1
 
 ### Patch Changes

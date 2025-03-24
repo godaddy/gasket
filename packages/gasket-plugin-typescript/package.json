@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-typescript",
-  "version": "7.3.1",
+  "version": "7.3.2",
   "description": "Gasket plugin for TypeScript support",
   "types": "lib/index.d.ts",
   "files": [
@@ -15,17 +15,14 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
-    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
     "posttest": "pnpm run lint && pnpm run typecheck",
+    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/godaddy/gasket.git"
-  },
+  "repository": "godaddy/gasket.git",
   "publishConfig": {
     "access": "public"
   },
@@ -36,17 +33,15 @@
   ],
   "author": "GoDaddy Operating Company, LLC",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/godaddy/gasket/issues"
-  },
+  "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-typescript",
   "devDependencies": {
-    "@gasket/core": "^7.3.1",
-    "@gasket/plugin-metadata": "^7.3.2",
+    "@gasket/core": "workspace:*",
+    "@gasket/plugin-metadata": "workspace:*",
     "@types/jest": "^29.5.14",
     "@types/node": "^20.17.19",
     "concurrently": "^9.1.2",
-    "create-gasket-app": "^7.3.2",
+    "create-gasket-app": "workspace:*",
     "cross-env": "^7.0.3",
     "eslint": "^8.57.1",
     "eslint-config-godaddy": "^7.1.1",

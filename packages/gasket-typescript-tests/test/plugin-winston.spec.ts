@@ -36,8 +36,8 @@ describe('@gasket/plugin-winston', () => {
       }
     };
 
-    // eslint-disable-next-line no-new-func
     const invalidAssignment = () => {
+      // eslint-disable-next-line no-new-func
       new Function(`
         config.winston?.levels = 'bad string';
         config.winston?.format = false;

@@ -1,5 +1,16 @@
 # `@gasket/react-intl`
 
+## 7.3.2
+
+### Patch Changes
+
+- 7812607: Updates to support using syncpack.
+- Updated dependencies [7812607]
+  - @gasket/plugin-intl@7.3.2
+  - @gasket/fetch@7.3.2
+  - @gasket/data@7.3.2
+  - @gasket/intl@7.3.2
+
 ## 7.3.1
 
 ### Patch Changes

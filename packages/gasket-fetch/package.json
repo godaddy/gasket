@@ -1,6 +1,6 @@
 {
   "name": "@gasket/fetch",
-  "version": "7.3.1",
+  "version": "7.3.2",
   "description": "Gasket Fetch API",
   "main": "lib/node.js",
   "browser": "lib/browser.js",
@@ -11,30 +11,25 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
-    "test": "pnpm run test:runner",
-    "test:runner": "pnpm run test:server && pnpm run test:browser",
-    "test:browser": "jest --detectOpenHandles --env=jsdom test/browser.spec.js",
-    "test:server": "jest --env=node test/server.spec.js",
     "posttest": "pnpm run lint && pnpm run typecheck",
+    "test": "pnpm run test:runner",
+    "test:browser": "jest --detectOpenHandles --env=jsdom test/browser.spec.js",
+    "test:runner": "pnpm run test:server && pnpm run test:browser",
+    "test:server": "jest --env=node test/server.spec.js",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/godaddy/gasket.git"
-  },
+  "repository": "godaddy/gasket.git",
   "publishConfig": {
     "access": "public"
   },
   "keywords": [
-    "gasket",
-    "fetch"
+    "fetch",
+    "gasket"
   ],
   "author": "GoDaddy Operating Company, LLC",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/godaddy/gasket/issues"
-  },
+  "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-fetch",
   "dependencies": {
     "abort-controller": "^3.0.0",
@@ -58,7 +53,7 @@
     "jsdom": "^20.0.3",
     "regenerator-runtime": "^0.14.1",
     "typescript": "^5.7.3",
-    "whatwg-fetch": "3.6.20"
+    "whatwg-fetch": "^3.6.20"
   },
   "eslintConfig": {
     "extends": [

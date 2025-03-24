@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-morgan",
-  "version": "7.3.1",
+  "version": "7.3.2",
   "description": "Adds morgan request logger to your app",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -10,45 +10,40 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
-    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
     "posttest": "pnpm run lint && pnpm run typecheck",
+    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/godaddy/gasket.git"
-  },
+  "repository": "godaddy/gasket.git",
   "publishConfig": {
     "access": "public"
   },
   "keywords": [
-    "morgan",
     "express",
     "gasket",
+    "morgan",
     "plugin"
   ],
   "author": "GoDaddy Operating Company, LLC",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/godaddy/gasket/issues"
-  },
+  "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-morgan",
   "dependencies": {
     "morgan": "^1.10.0",
     "split": "^1.0.1"
   },
   "devDependencies": {
-    "@gasket/core": "^7.3.1",
-    "@gasket/plugin-express": "^7.3.1",
-    "@gasket/plugin-metadata": "^7.3.2",
-    "@gasket/plugin-middleware": "^7.3.2",
+    "@gasket/core": "workspace:*",
+    "@gasket/plugin-express": "workspace:*",
+    "@gasket/plugin-metadata": "workspace:*",
+    "@gasket/plugin-middleware": "workspace:*",
     "@types/jest": "^29.5.14",
     "@types/morgan": "^1.9.9",
     "@types/node": "^20.17.19",
-    "create-gasket-app": "^7.3.2",
+    "create-gasket-app": "workspace:*",
     "cross-env": "^7.0.3",
     "eslint": "^8.57.1",
     "eslint-config-godaddy": "^7.1.1",
@@ -59,8 +54,8 @@
     "typescript": "^5.7.3"
   },
   "peerDependencies": {
-    "@gasket/plugin-logger": "^7.3.1",
-    "express": "^4.21.0"
+    "@gasket/plugin-logger": "workspace:*",
+    "express": "^4.21.2"
   },
   "eslintConfig": {
     "extends": [
