@@ -16,59 +16,54 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
-    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
-    "test:watch": "pnpm run test --watch",
-    "test:coverage": "pnpm run test --coverage",
     "posttest": "pnpm run lint",
+    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
+    "test:coverage": "pnpm run test --coverage",
+    "test:watch": "pnpm run test --watch",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/godaddy/gasket.git"
-  },
+  "repository": "godaddy/gasket.git",
   "publishConfig": {
     "access": "public"
   },
   "keywords": [
+    "gasket",
     "next",
     "nextjs",
-    "gasket",
     "plugin"
   ],
   "author": "GoDaddy Operating Company, LLC",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/godaddy/gasket/issues"
-  },
+  "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-nextjs",
   "dependencies": {
-    "@gasket/plugin-webpack": "^7.3.1",
+    "@gasket/plugin-webpack": "workspace:*",
     "fastify": "^4.29.0"
   },
   "devDependencies": {
     "@babel/preset-react": "^7.26.3",
-    "@gasket/assets": "^7.3.1",
-    "@gasket/core": "^7.3.1",
-    "@gasket/intl": "^7.3.1",
-    "@gasket/nextjs": "^7.3.2",
-    "@gasket/plugin-elastic-apm": "^7.3.1",
-    "@gasket/plugin-express": "^7.3.1",
-    "@gasket/plugin-fastify": "^7.3.2",
-    "@gasket/plugin-https": "^7.3.2",
-    "@gasket/plugin-intl": "^7.3.1",
-    "@gasket/plugin-logger": "^7.3.1",
-    "@gasket/plugin-metadata": "^7.3.2",
-    "@gasket/plugin-nextjs": "^7.3.2",
-    "@gasket/plugin-service-worker": "^7.3.2",
-    "@gasket/plugin-workbox": "^7.3.1",
-    "@gasket/request": "^7.3.1",
+    "@gasket/assets": "workspace:*",
+    "@gasket/core": "workspace:*",
+    "@gasket/intl": "workspace:*",
+    "@gasket/nextjs": "workspace:*",
+    "@gasket/plugin-elastic-apm": "workspace:*",
+    "@gasket/plugin-express": "workspace:*",
+    "@gasket/plugin-fastify": "workspace:*",
+    "@gasket/plugin-https": "workspace:*",
+    "@gasket/plugin-intl": "workspace:*",
+    "@gasket/plugin-logger": "workspace:*",
+    "@gasket/plugin-metadata": "workspace:*",
+    "@gasket/plugin-nextjs": "workspace:*",
+    "@gasket/plugin-service-worker": "workspace:*",
+    "@gasket/plugin-workbox": "workspace:*",
+    "@gasket/request": "workspace:*",
     "@types/express": "^4.17.21",
     "@types/jest": "^29.5.14",
     "@types/node": "^20.17.19",
     "@types/react": "^18.3.18",
     "babel-eslint": "^10.1.0",
-    "create-gasket-app": "^7.3.2",
+    "create-gasket-app": "workspace:*",
     "cross-env": "^7.0.3",
     "eslint": "^8.57.1",
     "eslint-config-godaddy": "^7.1.1",
@@ -87,8 +82,8 @@
   "peerDependencies": {
     "@gasket/plugin-webpack": "^7.3.1",
     "next": "^14.2.25",
-    "react": "^18",
-    "react-dom": "^18"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "eslintConfig": {
     "extends": [
