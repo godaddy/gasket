@@ -36,11 +36,15 @@ describe('@gasket/plugin-winston', () => {
       }
     };
 
-    // @ts-expect-error
-    config.winston?.levels = 'bad string';
+    // eslint-disable-next-line no-new-func
+    const invalidAssignment = () => {
+      new Function(`
+        config.winston?.levels = 'bad string';
+        config.winston?.format = false;
+      `)();
+    };
 
-    // @ts-expect-error
-    config.winston?.format = false;
+    expect(invalidAssignment).toThrow(SyntaxError);
   });
 
   // it('defines the winstonTransports lifecycle', async () => {

@@ -1,5 +1,5 @@
-import { Plugin }  from '@gasket/core'
-import pluginAnalyze from '@gasket/plugin-analyze'
+import { Plugin }  from '@gasket/core';
+import pluginAnalyze from '@gasket/plugin-analyze';
 import pluginCommand from '@gasket/plugin-command';
 import pluginCypress from '@gasket/plugin-cypress';
 import pluginData from '@gasket/plugin-data';
@@ -32,37 +32,44 @@ import pluginWebpack from '@gasket/plugin-webpack';
 import pluginWinston from '@gasket/plugin-winston';
 import pluginWorkbox from '@gasket/plugin-workbox';
 
-const plugins: Plugin[] = [
-  pluginAnalyze,
-  pluginCommand,
-  pluginCypress,
-  pluginData,
-  pluginDocs,
-  pluginDocsGraphs,
-  pluginDocusaurus,
-  pluginDynamicPlugins,
-  pluginElasticApm,
-  pluginExpress,
-  pluginFastify,
-  pluginGit,
-  pluginHappyFeet,
-  pluginHttps,
-  pluginHttpsProxy,
-  pluginIntl,
-  pluginJest,
-  pluginLint,
-  pluginLogger,
-  pluginManifest,
-  pluginMetadata,
-  pluginMiddleware,
-  pluginMocha,
-  pluginMorgan,
-  pluginNextjs,
-  pluginRedux,
-  pluginServiceWorker,
-  pluginSwagger,
-  pluginTypeScript,
-  pluginWebpack,
-  pluginWinston,
-  pluginWorkbox
-];
+
+
+
+describe('check plugins type', () => {
+  it('should have correct type', () => {
+    const plugins: Plugin[] = [
+      pluginAnalyze,
+      pluginCommand,
+      pluginCypress,
+      pluginData,
+      pluginDocs,
+      pluginDocsGraphs,
+      pluginDocusaurus,
+      pluginDynamicPlugins,
+      pluginElasticApm,
+      pluginExpress,
+      pluginFastify,
+      pluginGit,
+      pluginHappyFeet,
+      pluginHttps,
+      pluginHttpsProxy,
+      pluginIntl,
+      pluginJest,
+      pluginLint,
+      pluginLogger,
+      pluginManifest,
+      pluginMetadata,
+      pluginMiddleware,
+      pluginMocha,
+      pluginMorgan,
+      pluginNextjs,
+      pluginRedux,
+      pluginServiceWorker,
+      pluginSwagger,
+      pluginTypeScript,
+      pluginWebpack,
+      pluginWinston,
+      pluginWorkbox
+    ];
+  });
+});

@@ -13,7 +13,7 @@
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
     "pretest": "pnpm run typecheck",
-    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
+    "test": "vitest run --globals",
     "posttest": "pnpm run lint",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
@@ -90,10 +90,9 @@
     "eslint-config-godaddy-typescript": "^4.0.3",
     "eslint-plugin-jest": "^28.11.0",
     "eslint-plugin-unicorn": "^55.0.0",
-    "jest": "^29.7.0",
     "redux": "^4.2.1",
-    "ts-jest": "^29.2.5",
     "typescript": "^5.7.3",
+    "vitest": "^3.0.7",
     "workbox-build": "^4.3.1"
   },
   "eslintConfig": {
