@@ -2,18 +2,15 @@ name: Syncpack
 
 on:
   pull_request:
-  push:
-    branches:
-      - main
-      - lts
+
+# Cancel in-flight syncpack runs for the same PR
+concurrency:
+  group: syncpack-${{ github.head_ref }}
+  cancel-in-progress: true
 
 jobs:
   syncpack:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [22.x]
 
     steps:
       - name: Checkout Repository
@@ -22,14 +19,22 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v4
 
-      - name: Set up Node.js ${{ matrix.node-version }}
+      - name: Use Node.js 22.x
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 22.x
           cache: pnpm
 
+      - name: Cache pnpm store
+        uses: actions/cache@v3
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
       - name: Install Dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile --prefer-offline
 
       - name: Run Syncpack
         run: pnpm run syncpack lint
