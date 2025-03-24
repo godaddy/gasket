@@ -3024,6 +3024,9 @@ importers:
       '@gasket/plugin-docusaurus':
         specifier: ^7.3.1
         version: link:../gasket-plugin-docusaurus
+      '@gasket/plugin-dynamic-plugins':
+        specifier: ^7.3.2
+        version: link:../gasket-plugin-dynamic-plugins
       '@gasket/plugin-elastic-apm':
         specifier: ^7.3.1
         version: link:../gasket-plugin-elastic-apm
@@ -3042,6 +3045,9 @@ importers:
       '@gasket/plugin-https':
         specifier: ^7.3.2
         version: link:../gasket-plugin-https
+      '@gasket/plugin-https-proxy':
+        specifier: ^7.3.2
+        version: link:../gasket-plugin-https-proxy
       '@gasket/plugin-intl':
         specifier: ^7.3.1
         version: link:../gasket-plugin-intl
