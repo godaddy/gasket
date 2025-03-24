@@ -4,12 +4,12 @@
 
 ## Why syncpack?
 
-As of `PNPM@10.4.1`, we cannot use the `pnpm update` command on [Catalog versions](https://pnpm.io/catalogs#caveats). We will use syncpack for the following:
+As of `PNPM@10.4.1`, we cannot use the `pnpm update` command on [Catalog versions](https://pnpm.io/catalogs#caveats). We will use
+syncpack for the following:
 
 - Find and fix dependency version mismatches.
 - Enforce a single version policy.
 - Find and bump outdated versions from the npm registry.
-- Ban some dependencies from being used in specific places (ie. `@types/*` in prod dependencies).
 - Sort and format package.json files consistently.
 
 ### align-packages

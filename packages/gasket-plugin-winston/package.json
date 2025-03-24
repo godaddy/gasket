@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-winston",
-  "version": "7.3.2",
+  "version": "7.3.3",
   "description": "Gasket logger based on Winston",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
