@@ -1,5 +1,28 @@
 # `@gasket/preset-api`
 
+## 7.3.4
+
+### Patch Changes
+
+- 7812607: Updates to support using syncpack.
+- Updated dependencies [7812607]
+  - @gasket/plugin-dynamic-plugins@7.3.3
+  - @gasket/plugin-docusaurus@7.3.2
+  - @gasket/plugin-typescript@7.3.2
+  - @gasket/plugin-command@7.3.3
+  - @gasket/plugin-cypress@7.3.2
+  - @gasket/plugin-express@7.3.2
+  - @gasket/plugin-fastify@7.3.3
+  - @gasket/plugin-swagger@7.3.3
+  - @gasket/plugin-winston@7.3.2
+  - @gasket/plugin-logger@7.3.2
+  - @gasket/plugin-https@7.3.3
+  - @gasket/plugin-mocha@7.3.3
+  - @gasket/plugin-docs@7.3.3
+  - @gasket/plugin-jest@7.3.3
+  - @gasket/plugin-lint@7.3.4
+  - @gasket/plugin-git@7.3.2
+
 ## 7.3.3
 
 ### Patch Changes

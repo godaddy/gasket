@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-https",
-  "version": "7.3.2",
+  "version": "7.3.3",
   "description": "Create http/s servers with graceful termination",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
