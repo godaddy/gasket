@@ -6,6 +6,7 @@ const { name, version } = require('../package.json');
  * @type {import('@gasket/core').HookHandler<'create'>}
  */
 module.exports = function create(gasket, { pkg, gasketConfig }) {
+  console.log('Adding Gasket Analyze plugin to your app...');
   gasketConfig.addEnvironment('local.analyze', {
     dynamicPlugins: [
       '@gasket/plugin-analyze'
