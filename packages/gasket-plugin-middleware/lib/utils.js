@@ -63,8 +63,10 @@ function applyMiddlewaresToApp(app, middlewares, middlewarePattern) {
     const { paths } = layer;
     if (paths) {
       app.use(paths, layer);
+    } else if (middlewarePattern) {
+      app.use(middlewarePattern, layer);
     } else {
-      app.use(middlewarePattern || layer);
+      app.use(layer);
     }
   });
 }

@@ -122,6 +122,17 @@ describe('utils', function () {
 
       expect(app.use).not.toHaveBeenCalledWith([]);
     });
+
+    it('gates middleware between an inclusion regex', async function () {
+      const mockMiddlewares = [function () { }, function () { }];
+      middlewarePattern = /^\/gaskety\/routes\//;
+      gasket.config.express = { middlewareInclusionRegex: middlewarePattern };
+      mockMwPlugins = [{ name: 'middleware-1' }, mockMiddlewares];
+
+      await executeMiddlewareLifecycle(gasket, app, middlewarePattern);
+
+      expect(app.use).toHaveBeenCalledWith(middlewarePattern, mockMiddlewares);
+    });
   });
 
   /**

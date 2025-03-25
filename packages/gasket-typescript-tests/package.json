@@ -14,7 +14,7 @@
     "lint:fix": "pnpm run lint --fix",
     "posttest": "pnpm run lint",
     "pretest": "pnpm run typecheck",
-    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
+    "test": "vitest run --globals",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
@@ -44,12 +44,14 @@
     "@gasket/plugin-docs": "workspace:*",
     "@gasket/plugin-docs-graphs": "workspace:*",
     "@gasket/plugin-docusaurus": "workspace:*",
+    "@gasket/plugin-dynamic-plugins": "workspace:*",
     "@gasket/plugin-elastic-apm": "workspace:*",
     "@gasket/plugin-express": "workspace:*",
     "@gasket/plugin-fastify": "workspace:*",
     "@gasket/plugin-git": "workspace:*",
     "@gasket/plugin-happyfeet": "workspace:*",
     "@gasket/plugin-https": "workspace:*",
+    "@gasket/plugin-https-proxy": "workspace:*",
     "@gasket/plugin-intl": "workspace:*",
     "@gasket/plugin-jest": "workspace:*",
     "@gasket/plugin-lint": "workspace:*",
@@ -87,6 +89,7 @@
     "redux": "^5.0.1",
     "ts-jest": "^29.2.5",
     "typescript": "^5.7.3",
+    "vitest": "^3.0.7",
     "workbox-build": "^4.3.1"
   },
   "eslintConfig": {
