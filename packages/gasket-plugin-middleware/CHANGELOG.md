@@ -1,5 +1,11 @@
 # `@gasket/plugin-middleware`
 
+## 7.3.5
+
+### Patch Changes
+
+- 4d470bd: Fix usage of middlewareInclusionRegex
+
 ## 7.3.4
 
 ### Patch Changes
