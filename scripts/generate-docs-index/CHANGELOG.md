@@ -1,5 +1,15 @@
 # generate-docs-index
 
+## 7.3.6
+
+### Patch Changes
+
+- Updated dependencies [4d470bd]
+  - @gasket/plugin-middleware@7.3.5
+  - @gasket/plugin-manifest@7.3.3
+  - @gasket/plugin-morgan@7.3.3
+  - @gasket/plugin-redux@7.3.3
+
 ## 7.3.5
 
 ### Patch Changes
