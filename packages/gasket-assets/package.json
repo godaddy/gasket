@@ -1,6 +1,6 @@
 {
   "name": "@gasket/assets",
-  "version": "7.3.1",
+  "version": "7.3.2",
   "description": "Gasket assets",
   "main": "react/index.js",
   "files": [
@@ -8,31 +8,26 @@
     "svgs"
   ],
   "scripts": {
+    "build": "pnpm run clean && pnpm run svg-to-react",
+    "clean": "rimraf ./react",
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
-    "test": "pnpm run lint",
-    "build": "pnpm run clean && pnpm run svg-to-react",
     "prepublishOnly": "pnpm run build",
-    "clean": "rimraf ./react",
-    "svg-to-react": "babel-node --presets @babel/env ./scripts/svg-to-react.js"
+    "svg-to-react": "babel-node --presets @babel/env ./scripts/svg-to-react.js",
+    "test": "pnpm run lint"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/godaddy/gasket.git"
-  },
+  "repository": "godaddy/gasket.git",
   "publishConfig": {
     "access": "public"
   },
   "keywords": [
-    "gasket",
     "assets",
+    "gasket",
     "logo"
   ],
   "author": "GoDaddy Operating Company, LLC",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/godaddy/gasket/issues"
-  },
+  "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-assets",
   "devDependencies": {
     "@babel/core": "^7.26.9",

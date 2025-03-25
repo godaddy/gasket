@@ -1,5 +1,17 @@
 # `@gasket/plugin-mocha`
 
+## 7.3.4
+
+### Patch Changes
+
+- b667c4e: Downgrade eslint-plugin-jest version due to conflicting peer dependency between versions of @typescript-eslint/eslint-plugin.
+
+## 7.3.3
+
+### Patch Changes
+
+- 7812607: Updates to support using syncpack.
+
 ## 7.3.2
 
 ### Patch Changes

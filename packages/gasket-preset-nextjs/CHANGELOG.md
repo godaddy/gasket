@@ -1,5 +1,57 @@
 # `@gasket/preset-nextjs`
 
+## 7.3.4
+
+### Patch Changes
+
+- b667c4e: Downgrade eslint-plugin-jest version due to conflicting peer dependency between versions of @typescript-eslint/eslint-plugin.
+- Updated dependencies [b667c4e]
+  - @gasket/plugin-dynamic-plugins@7.3.4
+  - @gasket/plugin-https-proxy@7.3.4
+  - @gasket/plugin-docusaurus@7.3.3
+  - @gasket/plugin-typescript@7.3.3
+  - @gasket/plugin-command@7.3.4
+  - @gasket/plugin-cypress@7.3.3
+  - @gasket/plugin-express@7.3.3
+  - @gasket/plugin-webpack@7.3.3
+  - @gasket/plugin-winston@7.3.3
+  - @gasket/plugin-logger@7.3.3
+  - @gasket/plugin-nextjs@7.3.4
+  - @gasket/plugin-https@7.3.4
+  - @gasket/plugin-mocha@7.3.4
+  - @gasket/plugin-docs@7.3.4
+  - @gasket/plugin-intl@7.3.3
+  - @gasket/plugin-jest@7.3.4
+  - @gasket/plugin-lint@7.3.5
+  - @gasket/plugin-git@7.3.3
+  - @gasket/utils@7.3.3
+
+## 7.3.3
+
+### Patch Changes
+
+- 7812607: Updates to support using syncpack.
+- Updated dependencies [7812607]
+  - @gasket/plugin-dynamic-plugins@7.3.3
+  - @gasket/plugin-https-proxy@7.3.3
+  - @gasket/plugin-docusaurus@7.3.2
+  - @gasket/plugin-typescript@7.3.2
+  - @gasket/plugin-command@7.3.3
+  - @gasket/plugin-cypress@7.3.2
+  - @gasket/plugin-express@7.3.2
+  - @gasket/plugin-webpack@7.3.2
+  - @gasket/plugin-winston@7.3.2
+  - @gasket/plugin-logger@7.3.2
+  - @gasket/plugin-nextjs@7.3.3
+  - @gasket/plugin-https@7.3.3
+  - @gasket/plugin-mocha@7.3.3
+  - @gasket/plugin-docs@7.3.3
+  - @gasket/plugin-intl@7.3.2
+  - @gasket/plugin-jest@7.3.3
+  - @gasket/plugin-lint@7.3.4
+  - @gasket/plugin-git@7.3.2
+  - @gasket/utils@7.3.2
+
 ## 7.3.2
 
 ### Patch Changes

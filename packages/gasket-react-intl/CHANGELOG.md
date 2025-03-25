@@ -1,5 +1,27 @@
 # `@gasket/react-intl`
 
+## 7.3.3
+
+### Patch Changes
+
+- b667c4e: Downgrade eslint-plugin-jest version due to conflicting peer dependency between versions of @typescript-eslint/eslint-plugin.
+- Updated dependencies [b667c4e]
+  - @gasket/plugin-intl@7.3.3
+  - @gasket/fetch@7.3.3
+  - @gasket/data@7.3.3
+  - @gasket/intl@7.3.3
+
+## 7.3.2
+
+### Patch Changes
+
+- 7812607: Updates to support using syncpack.
+- Updated dependencies [7812607]
+  - @gasket/plugin-intl@7.3.2
+  - @gasket/fetch@7.3.2
+  - @gasket/data@7.3.2
+  - @gasket/intl@7.3.2
+
 ## 7.3.1
 
 ### Patch Changes

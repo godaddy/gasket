@@ -1,6 +1,6 @@
 {
   "name": "@gasket/nextjs",
-  "version": "7.3.1",
+  "version": "7.3.4",
   "description": "Gasket integrations for Next.js apps",
   "type": "module",
   "types": "lib/index.d.ts",
@@ -33,17 +33,14 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
-    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
-    "test:watch": "pnpm run test --watch",
-    "test:coverage": "pnpm run test --coverage",
     "posttest": "pnpm run lint",
+    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
+    "test:coverage": "pnpm run test --coverage",
+    "test:watch": "pnpm run test --watch",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/godaddy/gasket.git"
-  },
+  "repository": "godaddy/gasket.git",
   "publishConfig": {
     "access": "public"
   },
@@ -53,19 +50,17 @@
   ],
   "author": "GoDaddy Operating Company, LLC",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/godaddy/gasket/issues"
-  },
+  "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-nextjs",
   "dependencies": {
-    "@gasket/data": "^7.3.1",
-    "@gasket/request": "^7.3.1",
+    "@gasket/data": "workspace:*",
+    "@gasket/request": "workspace:*",
     "hoist-non-react-statics": "^3.3.2",
     "htmlescape": "^1.1.1"
   },
   "devDependencies": {
-    "@gasket/plugin-data": "^7.3.1",
-    "@gasket/plugin-intl": "^7.3.1",
+    "@gasket/plugin-data": "workspace:*",
+    "@gasket/plugin-intl": "workspace:*",
     "@jest/globals": "^29.7.0",
     "@testing-library/dom": "^10.0.0",
     "@testing-library/react": "^16.2.0",
@@ -76,7 +71,7 @@
     "eslint": "^8.57.1",
     "eslint-config-godaddy-react": "^9.1.0",
     "eslint-config-godaddy-typescript": "^4.0.3",
-    "eslint-plugin-jest": "^28.11.0",
+    "eslint-plugin-jest": "^27.9.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react": "^7.37.4",
     "eslint-plugin-unicorn": "^55.0.0",

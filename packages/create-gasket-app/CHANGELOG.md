@@ -1,5 +1,39 @@
 # `create-gasket-app`
 
+## 7.3.4
+
+### Patch Changes
+
+- b667c4e: Downgrade eslint-plugin-jest version due to conflicting peer dependency between versions of @typescript-eslint/eslint-plugin.
+- Updated dependencies [b667c4e]
+  - @gasket/plugin-dynamic-plugins@7.3.4
+  - @gasket/plugin-docusaurus@7.3.3
+  - @gasket/plugin-metadata@7.3.5
+  - @gasket/plugin-command@7.3.4
+  - @gasket/plugin-logger@7.3.3
+  - @gasket/plugin-docs@7.3.4
+  - @gasket/plugin-git@7.3.3
+  - @gasket/request@7.3.4
+  - @gasket/utils@7.3.3
+  - @gasket/core@7.3.3
+
+## 7.3.3
+
+### Patch Changes
+
+- 7812607: Updates to support using syncpack.
+- Updated dependencies [7812607]
+  - @gasket/plugin-dynamic-plugins@7.3.3
+  - @gasket/plugin-docusaurus@7.3.2
+  - @gasket/plugin-metadata@7.3.4
+  - @gasket/plugin-command@7.3.3
+  - @gasket/plugin-logger@7.3.2
+  - @gasket/plugin-docs@7.3.3
+  - @gasket/plugin-git@7.3.2
+  - @gasket/request@7.3.3
+  - @gasket/utils@7.3.2
+  - @gasket/core@7.3.2
+
 ## 7.3.2
 
 ### Patch Changes

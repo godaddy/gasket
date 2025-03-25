@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-metadata",
-  "version": "7.3.3",
+  "version": "7.3.5",
   "description": "Adds metadata to gasket lifecycles",
   "type": "module",
   "main": "lib/index.js",
@@ -11,46 +11,41 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
-    "test": "vitest run --globals",
-    "test:watch": "vitest --watch --globals",
-    "test:coverage": "pnpm run test --coverage",
     "posttest": "pnpm run lint && pnpm run typecheck",
+    "test": "vitest run --globals",
+    "test:coverage": "pnpm run test --coverage",
+    "test:watch": "vitest --watch --globals",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/godaddy/gasket.git"
-  },
+  "repository": "godaddy/gasket.git",
   "publishConfig": {
     "access": "public"
   },
   "keywords": [
-    "metadata",
     "gasket",
+    "metadata",
     "plugin"
   ],
   "author": "GoDaddy Operating Company, LLC",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/godaddy/gasket/issues"
-  },
+  "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-metadata",
   "dependencies": {
-    "@gasket/core": "^7.3.1",
-    "@gasket/plugin-logger": "^7.3.1"
+    "@gasket/core": "workspace:*",
+    "@gasket/plugin-logger": "workspace:*"
   },
   "devDependencies": {
-    "@gasket/plugin-metadata": "^7.3.3",
-    "@gasket/plugin-webpack": "^7.3.1",
+    "@gasket/plugin-metadata": "workspace:*",
+    "@gasket/plugin-webpack": "workspace:*",
     "@godaddy/dmd": "^1.0.4",
     "@types/jest": "^29.5.14",
     "@types/node": "^20.17.19",
-    "create-gasket-app": "^7.3.2",
+    "create-gasket-app": "workspace:*",
     "eslint": "^8.57.1",
     "eslint-config-godaddy": "^7.1.1",
     "eslint-config-godaddy-typescript": "^4.0.3",
-    "eslint-plugin-jest": "^28.11.0",
+    "eslint-plugin-jest": "^27.9.0",
     "eslint-plugin-unicorn": "^55.0.0",
     "typescript": "^5.7.3",
     "vitest": "^3.0.7"
