@@ -82,8 +82,7 @@
   "peerDependencies": {
     "@gasket/plugin-webpack": "workspace:*",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "next": "^15.2.3"
+    "react-dom": "^19.0.0"
   },
   "eslintConfig": {
     "extends": [
