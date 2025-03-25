@@ -80,10 +80,10 @@
     "typescript": "^5.7.3"
   },
   "peerDependencies": {
-    "next": "^14 || ^15",
-    "react": "^18 || ^19",
-    "react-dom": "^18 || ^19",
-    "@gasket/plugin-webpack": "workspace:*"
+    "@gasket/plugin-webpack": "workspace:*",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "next": "^15.2.3"
   },
   "eslintConfig": {
     "extends": [
