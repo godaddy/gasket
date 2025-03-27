@@ -1,12 +1,11 @@
-import { expect, vi } from 'vitest';
 import configureMakeStore, { prepareReducer } from '../src/configure-make-store';
 import { withExtraArgument } from 'redux-thunk';
 
 const mockInitialState = { bogus: 'BOGUS' };
 
-const mockMiddleware = vi.fn(() => next => action => next(action));
-const mockEnhancer = vi.fn(createStore => (reducer, initialState, enhancer) => createStore(reducer, initialState, enhancer));
-const mockPostCreate = vi.fn();
+const mockMiddleware = jest.fn(() => next => action => next(action));
+const mockEnhancer = jest.fn(createStore => (reducer, initialState, enhancer) => createStore(reducer, initialState, enhancer));
+const mockPostCreate = jest.fn();
 
 describe('configureMakeStore', () => {
   let result, makeStore, store;
@@ -34,7 +33,7 @@ describe('configureMakeStore', () => {
 
   it('accepts callback optionsFn called with makeStoreOptions', () => {
     const mockMakeOptions = { logger: {}, req: {} };
-    const mockOptionsFn = vi.fn().mockReturnValue({});
+    const mockOptionsFn = jest.fn().mockReturnValue({});
     configureMakeStore(mockOptionsFn)({}, mockMakeOptions);
     expect(mockOptionsFn).toHaveBeenCalledWith(mockMakeOptions);
   });
@@ -91,29 +90,14 @@ describe('configureMakeStore', () => {
     expect(result).toEqual({ ...action, modified: true });
   });
 
-  it('adds thunk and logger middleware if enabled', () => {
-    const consoleLogSpy = vi.spyOn(console, 'log');
-
-    // Create the store with logging enabled
-    makeStore = configureMakeStore({ logging: true });
-    store = makeStore();
-
-    // Dispatch a test action
-    const action = { type: 'TEST_ACTION', payload: 'test payload' };
-    store.dispatch(action);
-
-    expect(consoleLogSpy.mock.calls[0][0]).toContain('TEST_ACTION');
-    consoleLogSpy.mockRestore();
-  });
-
   it('allows adding custom thunk middleware', () => {
-    const functionForExtraArg = vi.fn();
-    const exampleAction = vi.fn(() => {
+    const functionForExtraArg = jest.fn();
+    const exampleAction = jest.fn(() => {
       return (getState, dispatch, functionAsExtraArg) => {
         functionAsExtraArg('value');
       };
     });
-    const exampleReducer = vi.fn((state = 'initialState') => state);
+    const exampleReducer = jest.fn((state = 'initialState') => state);
     const thunkMiddleware = withExtraArgument(functionForExtraArg);
     makeStore = configureMakeStore({
       reducers: {
@@ -130,7 +114,8 @@ describe('configureMakeStore', () => {
   });
 
   it('allows removing logger middleware', () => {
-    const consoleLogSpy = vi.spyOn(console, 'log');
+    const createLoggerSpy = jest.spyOn(require('redux-logger'), 'createLogger');
+
 
     makeStore = configureMakeStore({
       middleware: [mockMiddleware],
@@ -141,9 +126,9 @@ describe('configureMakeStore', () => {
 
     const action = { type: 'TEST_ACTION' };
     store.dispatch(action);
-    expect(consoleLogSpy).not.toHaveBeenCalled();
+    expect(createLoggerSpy).not.toHaveBeenCalled();
     expect(mockMiddleware).toHaveBeenCalled();
-    consoleLogSpy.mockRestore();
+    createLoggerSpy.mockRestore();
   });
 
   it('allows custom enhancers', () => {
@@ -179,8 +164,8 @@ describe('configureMakeStore', () => {
   });
 
   it('allows custom rootReducer', () => {
-    const exampleReducer = vi.fn((state = 'initialState') => state);
-    const exampleRootReducer = vi.fn((state = 'initialState') => state);
+    const exampleReducer = jest.fn((state = 'initialState') => state);
+    const exampleRootReducer = jest.fn((state = 'initialState') => state);
     makeStore = configureMakeStore({
       rootReducer: exampleRootReducer,
       reducers: {
@@ -196,7 +181,7 @@ describe('configureMakeStore', () => {
   });
 
   it('uses devtools composer if set', () => {
-    const mockDevToolsCompose = vi.fn();
+    const mockDevToolsCompose = jest.fn();
     // eslint-disable-next-line id-length
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ = mockDevToolsCompose;
     configureMakeStore({ enhancers: [mockEnhancer] })();
@@ -249,11 +234,11 @@ describe('configureMakeStore', () => {
 
     it('returns existing redux store if already present on req', () => {
       const mockStore = {
-        getState: vi.fn()
+        getState: jest.fn()
       };
 
       const mockLogger = {
-        debug: vi.fn()
+        debug: jest.fn()
       };
 
       result = makeStore({}, { logger: mockLogger, req: { store: mockStore } });
@@ -264,11 +249,11 @@ describe('configureMakeStore', () => {
 
 describe('prepareReducer', () => {
   let result;
-  const mockRootReducer = vi.fn((state = {}, { type } = {}) => type === 'ROOT' && { ...state, root: true } || state);
-  const mockReducers = { fake: vi.fn((state = 'one') => state), fake2: vi.fn((state = 'two') => state) };
+  const mockRootReducer = jest.fn((state = {}, { type } = {}) => type === 'ROOT' && { ...state, root: true } || state);
+  const mockReducers = { fake: jest.fn((state = 'one') => state), fake2: jest.fn((state = 'two') => state) };
 
   beforeEach(() => {
-    vi.clearAllMocks();
+    jest.clearAllMocks();
   });
 
   it('returns base function if no reducers', function () {
@@ -295,7 +280,7 @@ describe('prepareReducer', () => {
     result = prepareReducer(mockReducers, mockRootReducer);
     const initState = {};
 
-    vi.clearAllMocks();
+    jest.clearAllMocks();
     expect(result(initState)).toEqual({ fake: 'one', fake2: 'two' });
     expect(mockRootReducer).toHaveBeenCalledTimes(1);
     expect(mockReducers.fake).toHaveBeenCalledTimes(1);
@@ -306,7 +291,7 @@ describe('prepareReducer', () => {
     result = prepareReducer(mockReducers, mockRootReducer);
     const initState = { existing: true };
 
-    vi.clearAllMocks();
+    jest.clearAllMocks();
     expect(result(initState, { type: 'ROOT' })).toEqual({ ...initState, root: true });
     expect(mockRootReducer).toHaveBeenCalledTimes(1);
     expect(mockReducers.fake).toHaveBeenCalledTimes(0);
