@@ -35,7 +35,7 @@
   "dependencies": {
     "@babel/runtime": "^7.26.9",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.4.2"
+    "redux-thunk": "^3.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.26.4",
@@ -58,11 +58,11 @@
     "eslint-plugin-unicorn": "^55.0.0",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
-    "redux": "^4.2.1",
+    "redux": "^5.0.1",
     "typescript": "^5.7.3"
   },
   "peerDependencies": {
-    "redux": "^4.2.1"
+    "redux": "^5.0.1"
   },
   "eslintConfig": {
     "extends": [

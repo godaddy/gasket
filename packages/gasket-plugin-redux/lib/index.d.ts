@@ -39,12 +39,6 @@ declare class ReduxReducers {
   addEntry(str: string): void;
 }
 
-declare module 'http' {
-  export interface IncomingMessage {
-    store?: Store;
-  }
-}
-
 export interface ReduxConfig {
   makeStore?: string;
   makeStorePath?: string;

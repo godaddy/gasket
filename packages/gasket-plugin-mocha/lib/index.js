@@ -66,6 +66,7 @@ const plugin = {
             // All dependencies to correctly configure React Testing Library
             '@babel/preset-react': devDependencies['@babel/preset-react'],
             '@testing-library/react': devDependencies['@testing-library/react'],
+            '@testing-library/dom': devDependencies['@testing-library/dom'],
             'jsdom': devDependencies.jsdom,
             'global-jsdom': devDependencies['global-jsdom'],
             [name]: `^${version}`
