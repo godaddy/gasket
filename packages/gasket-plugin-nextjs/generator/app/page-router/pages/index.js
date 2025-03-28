@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 {{#if hasGasketIntl}}
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from '{{reactIntlPkg}}';
 {{/if}}
 import Head from '../components/head.js';
 import GasketEmblem from '@gasket/assets/react/gasket-emblem.js';
