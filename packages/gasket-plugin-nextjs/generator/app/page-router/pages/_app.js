@@ -1,7 +1,7 @@
 import React from 'react';
 {{#if hasGasketIntl}}
 import { useRouter } from 'next/router';
-import { IntlProvider } from 'react-intl';
+import { IntlProvider } from '{{reactIntlPkg}}';
 import { withMessagesProvider } from '@gasket/react-intl';
 import intlManager from '../intl.js';
 {{/if}}
