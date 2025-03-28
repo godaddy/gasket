@@ -1,5 +1,11 @@
 # @gasket/typescript-tests
 
+## 7.3.4
+
+### Patch Changes
+
+- 9e5608b: add test for plugin type
+
 ## 7.3.3
 
 ### Patch Changes
