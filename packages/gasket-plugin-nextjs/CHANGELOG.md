@@ -1,5 +1,11 @@
 # `@gasket/plugin-nextjs`
 
+## 7.3.5
+
+### Patch Changes
+
+- 0e54d9d: Set reactIntlPkg in CreateContext to be used by templates.
+
 ## 7.3.4
 
 ### Patch Changes
