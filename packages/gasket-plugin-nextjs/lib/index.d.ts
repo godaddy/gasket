@@ -71,6 +71,7 @@ declare module 'create-gasket-app' {
     nextServerType: 'appRouter' | 'pageRouter' | 'customServer';
     nextDevProxy: boolean;
     useAppRouter: boolean;
+    reactIntlPkg: string;
   }
 }
 

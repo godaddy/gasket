@@ -1,6 +1,7 @@
 name: Syncpack
 
 on:
+  workflow_dispatch:
   pull_request:
 
 # Cancel in-flight syncpack runs for the same PR

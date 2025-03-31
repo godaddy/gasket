@@ -364,4 +364,16 @@ describe('create hook', () => {
       });
     });
   });
+
+  it('sets reactIntlPkg to react-intl if hasGasketIntl is true', async function () {
+    mockContext.hasGasketIntl = true;
+    await create.handler({}, mockContext);
+    expect(mockContext.reactIntlPkg).toBe('react-intl');
+  });
+
+  it('does not set reactIntlPkg if hasGasketIntl is false', async function () {
+    mockContext.hasGasketIntl = false;
+    await create.handler({}, mockContext);
+    expect(mockContext.reactIntlPkg).toBeUndefined();
+  });
 });
