@@ -1,4 +1,4 @@
-import { vi } from 'vitest';
+import { vi, describe, beforeEach, afterEach, it, expect } from 'vitest';
 
 vi.mock('../lib/utils.js', { spy: true });
 
@@ -34,6 +34,9 @@ describe('actions', () => {
     gasket = {
       config: {
         root: process.cwd()
+      },
+      logger: {
+        error: vi.fn()
       },
       execApply: async (event, fn) => {
         await applyStub(event);
@@ -131,9 +134,7 @@ describe('actions', () => {
           name: 'fake-one',
           gasket: {
             metadata: {
-              lifecycle: [{
-                name: 'init'
-              }]
+              lifecycle: [{ name: 'init' }]
             }
           }
         };
@@ -149,5 +150,45 @@ describe('actions', () => {
     expect(result.modules[0]).toHaveProperty('metadata');
     expect(result.modules[0].metadata).toHaveProperty('lifecycle');
     expect(result.modules[0].metadata.lifecycle).toEqual([{ name: 'init' }]);
+  });
+
+  it('skips moduleInfo if tryRequire returns undefined', async () => {
+    tryRequire.mockReturnValueOnce(void 0);
+    const result = await actions.getMetadata(gasket);
+    expect(result.modules[0]).not.toHaveProperty('metadata.lifecycle');
+  });
+
+  it('handles errors resolving plugin path gracefully', async () => {
+    gasket.execApply = async (event, fn) => {
+      await applyStub(event);
+      await fn({ name: '@gasket/plugin-bad' }, () => ({})); // valid plugin format triggers resolution
+    };
+
+    await actions.getMetadata(gasket);
+    expect(gasket.logger.error).toHaveBeenCalledWith(expect.stringContaining('Error resolving plugin'));
+  });
+
+  it('returns same metadata object when memoized', async () => {
+    const result1 = await actions.getMetadata(gasket);
+    const result2 = await actions.getMetadata(gasket);
+    expect(result1).toBe(result2);
+  });
+
+  it('handles missing package.json gracefully', async () => {
+    gasket.config.root = 'non-existent';
+    tryRequire.mockReturnValueOnce(void 0);
+    const result = await actions.getMetadata(gasket);
+    expect(result).toHaveProperty('app');
+  });
+
+  it('still returns metadata when module lacks gasket metadata', async () => {
+    tryRequire.mockImplementation(pkg => {
+      if (pkg === 'fake-one/package.json') {
+        return { name: 'fake-one' }; // no gasket.metadata
+      }
+    });
+    const result = await actions.getMetadata(gasket);
+    expect(result.modules[0]).toHaveProperty('metadata');
+    expect(result.modules[0].metadata).not.toHaveProperty('lifecycle');
   });
 });

@@ -32,8 +32,15 @@ function getAppInfo(gasket) {
       }
     };
   } catch (err) {
-    // eslint-disable-next-line no-console
     console.error(`Error loading app metadata: ${err.message}`);
+    app = {
+      name: 'unknown',
+      version: '0.0.0',
+      metadata: {
+        name: 'unknown',
+        path: root
+      }
+    };
   }
 
   return app;
@@ -74,7 +81,8 @@ async function getMetadata(gasket) {
           return;
         }
         pluginData.metadata.path = path.dirname(path.join(resolvedPath, '..'));
-        const { dependencies, devDependencies } = require(path.join(pluginData.metadata.path, 'package.json'));
+        const pkg = tryRequire(`${pluginData.name}/package.json`);
+        const { dependencies, devDependencies } = pkg || {};
 
         if (isPreset) {
           presets.push(pluginData);
