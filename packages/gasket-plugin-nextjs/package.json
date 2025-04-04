@@ -73,7 +73,7 @@
     "eslint-plugin-unicorn": "^55.0.0",
     "jest": "^29.7.0",
     "lodash.merge": "^4.6.2",
-    "next": "^15.2.3",
+    "next": "^15.2.4",
     "nodemon": "^3.1.9",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
