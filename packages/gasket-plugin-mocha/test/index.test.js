@@ -145,6 +145,7 @@ describe('Plugin', () => {
     [
       'global-jsdom',
       '@testing-library/react',
+      '@testing-library/dom',
       'jsdom'
     ].forEach(name => {
       it(`doesn't add framework specific dependency "${name}" in the devDependencies`, async function () {
@@ -168,6 +169,7 @@ describe('Plugin', () => {
     [
       '@babel/preset-react',
       '@testing-library/react',
+      '@testing-library/dom',
       'global-jsdom',
       'jsdom'
     ].forEach(name => {

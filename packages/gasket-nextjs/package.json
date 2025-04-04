@@ -62,10 +62,11 @@
     "@gasket/plugin-data": "workspace:*",
     "@gasket/plugin-intl": "workspace:*",
     "@jest/globals": "^29.7.0",
-    "@testing-library/react": "^13.4.0",
+    "@testing-library/dom": "^10.0.0",
+    "@testing-library/react": "^16.2.0",
     "@types/jest": "^29.5.14",
     "@types/node": "^20.17.19",
-    "@types/react": "^18.3.18",
+    "@types/react": "^19.0.12",
     "cross-env": "^7.0.3",
     "eslint": "^8.57.1",
     "eslint-config-godaddy-react": "^9.1.0",
@@ -76,14 +77,14 @@
     "eslint-plugin-unicorn": "^55.0.0",
     "jest": "^29.7.0",
     "jsdom": "^20.0.3",
-    "next": "^14.2.25",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "next": "^15.2.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "typescript": "^5.7.3"
   },
   "peerDependencies": {
-    "next": "^14.2.25",
-    "react": "^18.3.1"
+    "next": "^15.2.3",
+    "react": "^19.0.0"
   },
   "eslintConfig": {
     "extends": [
