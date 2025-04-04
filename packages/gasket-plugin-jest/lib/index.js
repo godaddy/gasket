@@ -39,7 +39,8 @@ const plugin = {
           pkg.add('devDependencies', {
             '@testing-library/react': devDependencies['@testing-library/react'],
             '@testing-library/jest-dom': devDependencies['@testing-library/jest-dom'],
-            'jest-environment-jsdom': devDependencies['jest-environment-jsdom']
+            'jest-environment-jsdom': devDependencies['jest-environment-jsdom'],
+            '@testing-library/dom': devDependencies['@testing-library/dom']
           });
 
           pkg.add('scripts', {
