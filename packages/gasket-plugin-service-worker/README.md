@@ -41,7 +41,7 @@ To be set in under `serviceWorker` in the `gasket.js`.
   [lru-cache options]. By default, content will remain cached for 5 days from
   last request.
 - `minify` - (object). Minification options to be used on the composed
-  JavaScript. Configuration for this field is passed directly to [`uglify-js`].
+  JavaScript. Configuration for this field is passed directly to [`swc`].
   This is turned on in `production` by default. Adding `minify: { }` will turn
   on the default behavior in other environments, if specified.
 - `webpackRegister` - (string|string[]|function|boolean) By default, a service
@@ -270,7 +270,7 @@ environment, which can be easily done using [service-worker-mock].
 [Loaded script]:#example-loaded-script
 [registering]:#registering
 [lru-cache options]:https://github.com/isaacs/node-lru-cache#options
-[`uglify-js`]: https://www.npmjs.com/package/uglify-js
+[`swc`]: https://swc.rs/docs/configuration/minification#configuration
 [service-worker-mock]:https://github.com/pinterest/service-workers/tree/master/packages/service-worker-mock#service-worker-mock
 [service workers]:https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API
 [@gasket/plugin-webpack]:/packages/gasket-plugin-webpack/README.md

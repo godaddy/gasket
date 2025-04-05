@@ -1,5 +1,4 @@
 const mockCache = require('lru-cache');
-const mockMinify = require('uglify-js');
 const express = require('../lib/express');
 
 describe('express', () => {
@@ -35,7 +34,6 @@ describe('express', () => {
       send: jest.fn()
     };
     mockCache.mockClear();
-    mockMinify.mockClear();
 
     cacheKeyA = jest.fn().mockResolvedValue('A');
     cacheKeyB = jest.fn().mockResolvedValue('B');
