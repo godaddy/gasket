@@ -1,6 +1,11 @@
-const mockMinify = require('uglify-js');
+/* eslint-disable no-sync */
+const transformSync = require('@swc/core').transformSync;
 const { getComposedContent } = require('../lib/utils/utils');
 const { getCacheKeys, getSWConfig, loadRegisterScript } = require('../lib/utils/utils');
+
+jest.mock('@swc/core', () => ({
+  transformSync: jest.fn(() => ({ code: 'minified code' }))
+}));
 
 describe('utils', () => {
   describe('getCacheKeys', () => {
@@ -16,7 +21,6 @@ describe('utils', () => {
         config: {},
         exec: mockExec
       };
-      mockMinify.mockClear();
     });
 
     it('executes exec for serviceWorkerCacheKey lifecycle', async () => {
@@ -108,25 +112,25 @@ describe('utils', () => {
 
     it('does not minifies code in an unknown environment', async () => {
       await getComposedContent(mockGasket);
-      expect(mockMinify.minify).not.toHaveBeenCalled();
+      expect(transformSync).not.toHaveBeenCalled();
     });
 
     it('minifies code in the production environment', async () => {
       mockGasket.config.env = 'production';
       await getComposedContent(mockGasket);
-      expect(mockMinify.minify).toHaveBeenCalled();
+      expect(transformSync).toHaveBeenCalled();
     });
 
     it('minifies code if explicitly specified by gasket', async () => {
       mockGasket.config.serviceWorker.minify = {};
       await getComposedContent(mockGasket);
-      expect(mockMinify.minify).toHaveBeenCalled();
+      expect(transformSync).toHaveBeenCalled();
     });
 
     it('minifies code if passed a boolean', async () => {
       mockGasket.config.serviceWorker.minify = true;
       await getComposedContent(mockGasket);
-      expect(mockMinify.minify).toHaveBeenCalled();
+      expect(transformSync).toHaveBeenCalled();
     });
 
   });

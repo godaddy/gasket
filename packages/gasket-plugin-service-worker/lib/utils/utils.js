@@ -1,10 +1,29 @@
-const uglify = require('uglify-js');
+const { transformSync } = require('@swc/core');
 
 const swHeader = `'use strict';
 
 /* Gasket composed service worker. */
 
 `;
+
+/**
+ * minify the service worker content
+ * @type {import('../index').minifyContent}
+ */
+function minifyContent(code, options = {}) {
+  const result = transformSync(code, {
+    minify: true,
+    jsc: {
+      minify: {
+        compress: true,
+        mangle: true,
+        ...options
+      }
+    }
+  });
+
+  return result.code;
+}
 
 /**
  * Get the service worker configuration from the gasket config
@@ -56,7 +75,7 @@ async function getComposedContent(gasket, context) {
     ('minify' in swConfig || /prod/i.test(env)) &&
     typeof minifyConfig === 'object'
   ) {
-    composedContent = uglify.minify(composedContent, minifyConfig).code;
+    composedContent = minifyContent(composedContent, minifyConfig);
   }
 
   return composedContent;
