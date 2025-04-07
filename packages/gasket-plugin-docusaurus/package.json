@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-docusaurus",
-  "version": "7.3.3",
+  "version": "7.4.0",
   "description": "Gasket plugin for docusaurus",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

@@ -1,5 +1,11 @@
 # `@gasket/plugin-service-worker`
 
+## 7.4.0
+
+### Minor Changes
+
+- 2b42786: Use swc in place of uglify for minification
+
 ## 7.3.4
 
 ### Patch Changes
