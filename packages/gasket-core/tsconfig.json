@@ -8,6 +8,7 @@
     "noEmit": true,
     "skipLibCheck": false,
     "resolveJsonModule": true,
+    "noImplicitAny": true,
     "esModuleInterop": true,
     "lib": [
       "esnext",

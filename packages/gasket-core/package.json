@@ -23,7 +23,7 @@
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
     "postbuild": "node -e \"require('fs').writeFileSync('cjs/package.json', '{}')\"",
-    "posttest": "pnpm run lint",
+    "posttest": "pnpm run lint && pnpm run typecheck",
     "prepublishOnly": "pnpm run build",
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
     "test:coverage": "pnpm run test --coverage",
@@ -50,6 +50,7 @@
     "debug": "^4.4.0"
   },
   "devDependencies": {
+    "@gasket/plugin-metadata": "workspace:^",
     "@jest/globals": "^29.7.0",
     "@swc/cli": "^0.6.0",
     "@swc/core": "^1.10.18",
