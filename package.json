@@ -5,7 +5,7 @@
   "description": "Robust, pluggable, & render agnostic framework for rapid delivery of modern web applications.",
   "scripts": {
     "align-packages": "node ./scripts/align-packages",
-    "build": "pnpm run -r build",
+    "build": "pnpm -r run build",
     "changeset": "changeset",
     "clean": "pnpm run clean:packages && pnpm run clean:root",
     "clean:packages": "pnpm -r exec rimraf dist node_modules",
@@ -13,7 +13,7 @@
     "docs": "pnpm run -r docs && pnpm run generate-docs-index",
     "docs-view": "pnpm run generate-docs-index && cd site && docusaurus start",
     "generate-docs-index": "node scripts/generate-docs-index",
-    "lint": "eslint scripts",
+    "lint": "pnpm -r run lint",
     "lint:fix": "pnpm run lint --fix",
     "lint:fix:all": "pnpm run lint:fix && pnpm run -r lint:fix",
     "postinstall": "pnpm run build",
@@ -30,7 +30,7 @@
     "test": "pnpm run -r test",
     "test:coverage": "pnpm run -r test:coverage",
     "test:package": "pnpm run -r --filter $* test",
-    "typecheck:all": "pnpm run -r typecheck",
+    "typecheck": "pnpm -r run typecheck",
     "version": "changeset version"
   },
   "repository": "godaddy/gasket.git",
