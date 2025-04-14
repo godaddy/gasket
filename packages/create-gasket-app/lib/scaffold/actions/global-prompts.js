@@ -1,5 +1,5 @@
 import inquirer from 'inquirer';
-import action from '../action-wrapper.js';
+import { withSpinner } from '../with-spinner.js';
 
 /**
  * What is your app description?
@@ -37,7 +37,8 @@ async function choosePackageManager(context, prompt) {
             { name: 'npm' },
             { name: 'pnpm' },
             { name: 'yarn' }
-          ]
+          ],
+          default: 'npm'
         }
       ])
     ).packageManager;
@@ -150,4 +151,4 @@ async function globalPrompts({ context }) {
   }
 }
 
-export default action('Global prompts', globalPrompts, { startSpinner: false });
+export default withSpinner('Global prompts', globalPrompts, { startSpinner: false });

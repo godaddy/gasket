@@ -1,6 +1,7 @@
-import { Plugin } from '@gasket/core';
-import type { ServerOptions as ProxyServerOptions, Server as ProxyServer } from 'http-proxy';
-import http from 'http';
+import type { Plugin, MaybeAsync } from '@gasket/core';
+import type { ServerOptions as ProxyServerOptions } from 'http-proxy';
+import ProxyServer from 'http-proxy';
+import type { RequireAtLeastOne } from '@gasket/plugin-https';
 
 interface BaseHttpsProxyConfig extends ProxyServerOptions {
   protocol?: string;
@@ -8,6 +9,8 @@ interface BaseHttpsProxyConfig extends ProxyServerOptions {
   hostname?: string;
   /** defaults to 8080 */
   port?: number;
+  target?: string;
+  forward?: string;
 }
 
 declare module '@gasket/core' {
@@ -26,9 +29,5 @@ declare module '@gasket/core' {
   }
 }
 
-const plugin: Plugin = {
-  name: '@gasket/plugin-plugin-https-proxy',
-  hooks: {}
-};
-
+declare const plugin: Plugin;
 export default plugin;

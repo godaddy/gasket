@@ -17,7 +17,7 @@ const sensitiveCookies = (config) => {
 
 /**
  * Redacts the contents of user-specified sensitive cookies
- * @type {import('./index').filterSensitiveCookies}
+ * @type {import('.').filterSensitiveCookies}
  */
 const filterSensitiveCookies = function (config) {
   return function (payload) {
@@ -25,9 +25,9 @@ const filterSensitiveCookies = function (config) {
 
     if (
       payload.context &&
-    payload.context.request &&
-    payload.context.request.headers &&
-    payload.context.request.headers.cookie
+      payload.context.request &&
+      payload.context.request.headers &&
+      payload.context.request.headers.cookie
     ) {
       let cookie = payload.context.request.headers.cookie;
       cookiesToRedact.forEach((sc) => {
@@ -41,8 +41,8 @@ const filterSensitiveCookies = function (config) {
     }
 
     if (payload.context &&
-    payload.context.request &&
-    payload.context.request.cookies
+      payload.context.request &&
+      payload.context.request.cookies
     ) {
       cookiesToRedact.forEach((sc) => {
         if (sc in payload.context.request.cookies) {

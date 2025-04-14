@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-jest",
-  "version": "7.2.0",
+  "version": "7.3.4",
   "description": "Integrated jest into your application.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -10,53 +10,55 @@
   ],
   "scripts": {
     "lint": "eslint .",
-    "lint:fix": "npm run lint -- --fix",
+    "lint:fix": "pnpm run lint --fix",
+    "posttest": "pnpm run lint && pnpm run typecheck",
     "test": "jest",
-    "test:watch": "jest --watchAll",
     "test:coverage": "jest --coverage",
-    "posttest": "npm run lint && npm run typecheck",
+    "test:watch": "jest --watchAll",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/godaddy/gasket.git"
-  },
+  "repository": "godaddy/gasket.git",
   "publishConfig": {
     "access": "public"
   },
   "keywords": [
-    "jest",
     "gasket",
+    "jest",
     "plugin"
   ],
   "author": "GoDaddy Operating Company, LLC",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/godaddy/gasket/issues"
-  },
+  "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-jest",
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.16.1",
-    "@testing-library/react": "^13.4.0",
-    "@types/jest": "^29.5.12",
+    "@gasket/core": "workspace:*",
+    "@gasket/plugin-express": "workspace:*",
+    "@gasket/plugin-metadata": "workspace:*",
+    "@testing-library/dom": "^10.0.0",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^16.2.0",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^20.17.19",
+    "@types/react": "^19.0.12",
     "babel-eslint": "^10.1.0",
+    "create-gasket-app": "workspace:*",
     "cross-env": "^7.0.3",
-    "eslint": "^8.56.0",
+    "eslint": "^8.57.1",
     "eslint-config-godaddy": "^7.1.1",
-    "eslint-plugin-jest": "^28.6.0",
-    "eslint-plugin-json": "^3.1.0",
-    "eslint-plugin-jsx-a11y": "^6.8.0",
-    "eslint-plugin-react": "^7.35.0",
+    "eslint-config-godaddy-typescript": "^4.0.3",
+    "eslint-plugin-jest": "^27.9.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react": "^7.37.4",
     "eslint-plugin-unicorn": "^55.0.0",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
-    "next": "^14.0.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "next": "^15.2.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
-    "typescript": "^5.4.5"
+    "typescript": "^5.7.3"
   },
   "eslintConfig": {
     "extends": [
@@ -70,6 +72,19 @@
     ],
     "rules": {
       "unicorn/filename-case": "error"
-    }
+    },
+    "overrides": [
+      {
+        "files": [
+          "lib/*.ts"
+        ],
+        "extends": [
+          "godaddy-typescript"
+        ],
+        "rules": {
+          "jsdoc/*": "off"
+        }
+      }
+    ]
   }
 }

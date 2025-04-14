@@ -21,7 +21,7 @@ export function lowestStatus(statuses) {
 
 /**
  * Utility class for loading locale files
- * @type {import('./index').LocaleHandler}
+ * @type {import('.').LocaleHandler}
  */
 export class LocaleHandler {
   /** @type {import('./types').LocaleFileKey[] } */

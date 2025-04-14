@@ -4,6 +4,12 @@ const { pathToFileURL } = require('url');
 // Extended regex for matching common CSS-related file extensions
 const styleFileRegex = /\.(css|scss|sass|less|styl)$/;
 
+/**
+ *
+ * @param specifier
+ * @param context
+ * @param defaultResolve
+ */
 function resolve(specifier, context, defaultResolve) {
   // Use the regex to check if the file is a CSS or related file
   if (styleFileRegex.test(specifier)) {
@@ -16,6 +22,12 @@ function resolve(specifier, context, defaultResolve) {
   return defaultResolve(specifier, context, defaultResolve);
 }
 
+/**
+ *
+ * @param url
+ * @param context
+ * @param defaultLoad
+ */
 function load(url, context, defaultLoad) {
   // Handle loading for the 'empty-module.js' placeholder
   if (url.endsWith('empty-module.js')) {

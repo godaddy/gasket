@@ -3,8 +3,8 @@ import { LocaleFileStatus } from '../lib/constants.js';
 import { LocaleHandler, lowestStatus } from '../lib/locale-handler.js';
 import { pause } from './helpers.js';
 
-jest.spyOn(console, 'log').mockImplementation(() => {});
-jest.spyOn(console, 'error').mockImplementation(() => {});
+jest.spyOn(console, 'log').mockImplementation(() => { });
+jest.spyOn(console, 'error').mockImplementation(() => { });
 
 
 describe('LocaleHandler', () => {
@@ -417,7 +417,6 @@ describe('LocaleHandler', () => {
     });
   });
 
-  // TODO HERE
   describe('.getStaticsRegister', () => {
     beforeEach(() => {
       mockManifest.imports['locales/nested/en-US'] = jest.fn(() => Promise.resolve({

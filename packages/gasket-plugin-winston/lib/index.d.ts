@@ -1,3 +1,4 @@
+import type { MaybeAsync, Plugin } from '@gasket/core';
 import type { LoggerOptions, LeveledLogMethod } from 'winston';
 
 declare module 'winston' {
@@ -10,17 +11,14 @@ declare module 'winston' {
 
 declare module '@gasket/core' {
   export interface GasketConfig {
-    winston?: Partial<Pick<LoggerOptions, 'level' | 'transports' | 'config' | 'silent' | 'levels' | 'format'>>;
+    winston?: Partial<Pick<LoggerOptions, 'level' | 'transports' | 'silent' | 'levels' | 'format'>>;
   }
 
   export interface HookExecTypes {
-    winstonTransports(): MaybeAsync<LoggerOptions.transports>;
+    winstonTransports(): MaybeAsync<LoggerOptions['transports']>;
   }
 }
 
-export = {
-  name: '@gasket/plugin-winston',
-  version: '',
-  description: '',
-  hooks: {}
-};
+declare const plugin: Plugin;
+
+export default plugin;

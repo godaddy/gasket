@@ -37,7 +37,5 @@ module.exports = {
     // with the express router we want to add a last, catch all route that will
     // activate the `next`.
     setupNextHandling(app, expressApp, gasket);
-
-    return app;
   }
 };

@@ -8,7 +8,7 @@ const fallbackMap = {
 /**
  * A helper function to ensure that all the required log levels
  * for a Fastify server are present.
- * @type {import('./index').alignLogger}
+ * @type {import('@gasket/plugin-fastify').alignLogger}
  */
 function alignLogger(logger) {
   const fastifyLogger = logger;

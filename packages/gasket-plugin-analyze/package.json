@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-analyze",
-  "version": "7.2.1",
+  "version": "7.3.4",
   "description": "Gasket Analyzer Plugin",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -9,48 +9,47 @@
   ],
   "scripts": {
     "lint": "eslint .",
-    "lint:fix": "npm run lint -- --fix",
+    "lint:fix": "pnpm run lint --fix",
+    "posttest": "pnpm run lint && pnpm run typecheck",
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
-    "test:watch": "jest --watchAll",
     "test:coverage": "jest --coverage",
-    "posttest": "npm run lint && npm run typecheck",
+    "test:watch": "jest --watchAll",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/godaddy/gasket.git"
-  },
+  "repository": "godaddy/gasket.git",
   "publishConfig": {
     "access": "public"
   },
   "keywords": [
+    "analyze",
     "gasket",
-    "plugin",
-    "analyze"
+    "plugin"
   ],
   "author": "GoDaddy Operating Company, LLC",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/godaddy/gasket/issues"
-  },
+  "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-analyze",
   "dependencies": {
-    "@types/webpack-bundle-analyzer": "^4.6.3",
     "deepmerge": "^4.3.1",
-    "webpack-bundle-analyzer": "^4.10.1"
+    "webpack-bundle-analyzer": "^4.10.2"
   },
   "devDependencies": {
-    "@gasket/core": "^7.2.1",
-    "@types/jest": "^29.5.12",
+    "@gasket/core": "workspace:*",
+    "@gasket/plugin-metadata": "workspace:*",
+    "@gasket/plugin-webpack": "workspace:*",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^20.17.19",
+    "@types/webpack-bundle-analyzer": "^4.7.0",
+    "create-gasket-app": "workspace:*",
     "cross-env": "^7.0.3",
-    "eslint": "^8.56.0",
+    "eslint": "^8.57.1",
     "eslint-config-godaddy": "^7.1.1",
-    "eslint-plugin-jest": "^28.6.0",
-    "eslint-plugin-json": "^3.1.0",
+    "eslint-config-godaddy-typescript": "^4.0.3",
+    "eslint-plugin-jest": "^27.9.0",
     "eslint-plugin-unicorn": "^55.0.0",
     "jest": "^29.7.0",
-    "typescript": "^5.4.5"
+    "typescript": "^5.7.3"
   },
   "eslintConfig": {
     "extends": [
@@ -64,6 +63,19 @@
     ],
     "rules": {
       "unicorn/filename-case": "error"
-    }
+    },
+    "overrides": [
+      {
+        "files": [
+          "lib/*.ts"
+        ],
+        "extends": [
+          "godaddy-typescript"
+        ],
+        "rules": {
+          "jsdoc/*": "off"
+        }
+      }
+    ]
   }
 }

@@ -1,13 +1,50 @@
 # `@gasket/plugin-middleware`
 
-### 7.1.0
+## 7.3.5
+
+### Patch Changes
+
+- 4d470bd: Fix usage of middlewareInclusionRegex
+
+## 7.3.4
+
+### Patch Changes
+
+- b667c4e: Downgrade eslint-plugin-jest version due to conflicting peer dependency between versions of @typescript-eslint/eslint-plugin.
+
+## 7.3.3
+
+### Patch Changes
+
+- 7812607: Updates to support using syncpack.
+
+## 7.3.2
+
+### Patch Changes
+
+- f716c9e: move middleware types to the middleware plugin
+- 41e5c6d: Remove Catalog and Workspace alias usage.
+- 0561cd5: Updates to use user-selected package manager. Update all packages to use catalog dep versions.
+
+## 7.3.1
+
+### Patch Changes
+
+- 87ea998: Add missing dep to lint plugin, adjust TS type exports
+
+## 7.3.0
+
+### Minor Changes
+
+- 29f72a5: Migrated packages to use PNPM and changesets. Fixed issues with types and dependencies.
+
+## 7.1.0
 
 - Aligned version releases across all packages
 
-### 7.0.0
+## 7.0.0
 
 - See [Version 7 Upgrade Guide] for overall changes
 - Initial release.
-
 
 [Version 7 Upgrade Guide]: /docs/upgrade-to-7.md

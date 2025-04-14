@@ -24,24 +24,24 @@ Update your `gasket` file plugin configuration:
 
 ## Usage
 
-This plugin gives you the option to dynamically add plugins to Gasket after the core Gasket instance has been created.
+This plugin gives you the option to dynamically add plugins to Gasket after the
+core Gasket instance has been created.
 
-This is can be useful when you want to add plugins to Gasket only in specific environments.
+This can be useful when you want to add plugins to Gasket for specific
+environments or commands.
 
-For example, if you have plugins for docs creation (`@gasket/plugin-docs`, `@gasket/plugin-docusarus`) that are only needed for development purposes and do not need to be included in your production code, you can dynamically load them into Gasket only when doing development locally through this plugin. You could then add plugins designated only for development to you `devDependencies` in your `package.json` file.
+For example, if you have plugins that are really only needed for development,
+such as (`@gasket/plugin-docs`, `@gasket/plugin-docusarus`), you can dynamically
+load them into Gasket only when doing development locally through with plugin.
 
-If you want to wait until dynamic plugins have been loaded into the Gasket instance before running app code, you can do so by checking if the `isReady` property on the Gasket instance has been resolved.
-
-```js
-import gasket from './gasket.js';
-gasket.isReady.then(() => {
-  gasket.actions.startServer();
-});
-```
+You could then add plugins designated only for development to you
+`devDependencies` in your `package.json` file.
 
 ## Configuration
 
-To specify which plugins to load dynamically, add a `dynamicPlugins` key to your `gasket` file with a value of an array of strings containing the plugin names you want to add.
+To specify which plugins to load dynamically,
+in your `gasket` set the `dynamicPlugins` prop to an array of strings
+containing the plugin names you want to add.
 
 ```diff
 // gasket.js
@@ -83,6 +83,27 @@ makeGasket({
     }
   }
 })
+```
+
+## Waiting for dynamic plugins
+
+Basic gasket configuration is synchronous, but dynamic plugins will be
+loaded asynchronously.
+
+If you want to wait until dynamic plugins have been loaded into the Gasket
+instance before running app code or actions, you can do so by checking if the
+`isReady` property on the Gasket instance has been resolved.
+
+```diff
+export default {
+  name: 'example-plugin',
+  actions: {
+    async myAction(gasket) {
++      await gasket.isReady;
+      // do something async after dynamic plugins have been loaded
+    }
+  }
+};
 ```
 
 ## How it works

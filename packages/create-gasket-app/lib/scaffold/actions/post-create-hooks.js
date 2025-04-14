@@ -1,4 +1,4 @@
-import action from '../action-wrapper.js';
+import { withGasketSpinner } from '../with-spinner.js';
 import { runShellCommand } from '@gasket/utils';
 
 /**
@@ -6,23 +6,37 @@ import { runShellCommand } from '@gasket/utils';
  * @type {import('../../internal').postCreateHooks}
  */
 async function postCreateHooks({ gasket, context }) {
-  const { dest } = context;
+  const { dest, packageManager } = context;
 
   /**
-   * Run an npm script in the context of the created application
-   * @param  {string} script name of script
-   * @returns {Promise} A promise represents if npm succeeds or fails.
+   * Determines the correct command for running scripts based on the package manager.
+   * @param {string} script - The name of the script to run.
+   * @returns {Promise} A promise that resolves if the script runs successfully.
    */
   async function runScript(script) {
-    return await runShellCommand('npm', ['run', script], { cwd: dest });
+    let cmd;
+
+    switch (packageManager) {
+      case 'yarn':
+        cmd = 'yarn';
+        break;
+      case 'pnpm':
+        cmd = 'pnpm';
+        break;
+      case 'npm':
+      default:
+        cmd = 'npm';
+        break;
+    }
+
+    return await runShellCommand(cmd, ['run', script], { cwd: dest });
   }
 
   /**
-   * An object with one value for now, so adding more utilities
-   * in future is easy.
+   * An object with one value for now, so adding more utilities in future is easy.
    */
   const utils = { runScript };
   await gasket.exec('postCreate', context, utils);
 }
 
-export default action('Execute postCreate hooks', postCreateHooks);
+export default withGasketSpinner('Execute postCreate hooks', postCreateHooks);

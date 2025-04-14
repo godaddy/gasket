@@ -1,20 +1,56 @@
 # `@gasket/plugin-dynamic-plugins`
 
-### 7.2.0
+## 7.3.4
+
+### Patch Changes
+
+- b667c4e: Downgrade eslint-plugin-jest version due to conflicting peer dependency between versions of @typescript-eslint/eslint-plugin.
+
+## 7.3.3
+
+### Patch Changes
+
+- 7812607: Updates to support using syncpack.
+
+## 7.3.2
+
+### Patch Changes
+
+- 41e5c6d: Remove Catalog and Workspace alias usage.
+- 0561cd5: Updates to use user-selected package manager. Update all packages to use catalog dep versions.
+
+## 7.3.1
+
+### Patch Changes
+
+- 87ea998: Add missing dep to lint plugin, adjust TS type exports
+
+## 7.3.0
+
+### Minor Changes
+
+- 29f72a5: Migrated packages to use PNPM and changesets. Fixed issues with types and dependencies.
+
+### 7.2.3
+
+- Add to config during create ([#1010])
+
+## 7.2.0
 
 - Set timing before commands plugins to allow dynamic plugins to register commands ([#1016])
 - Add 'deduped' trace for improved lifecycle debugging
 - Invoke prepare lifecycle of dynamic plugins
 
-### 7.1.5
+## 7.1.5
 
 - Export default for type module pkg ([#1015])
 
-### 7.1.0
+## 7.1.0
 
 - Initial release ([#970], [#991]).
 
 [#970]: https://github.com/godaddy/gasket/pull/970
 [#991]: https://github.com/godaddy/gasket/pull/991
+[#1010]: https://github.com/godaddy/gasket/pull/1010
 [#1015]: https://github.com/godaddy/gasket/pull/1015
 [#1016]: https://github.com/godaddy/gasket/pull/1016

@@ -47,7 +47,7 @@ You can determine when the asynchronous lifecycles have completed by verifying t
 ```js
 import gasket from './gasket.js';
 gasket.isReady.then(() => {
-  gasket.actions.startServer();
+  gasket.actions.doSomething();
 });
 ```
 

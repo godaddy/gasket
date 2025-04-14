@@ -1,7 +1,7 @@
 import { default as JSON5 } from 'json5';
 import path from 'path';
 import { writeFile } from 'fs/promises';
-import action from '../action-wrapper.js';
+import { withSpinner } from '../with-spinner.js';
 
 /**
  * writePluginImports - Write string imports as value(s)
@@ -107,4 +107,4 @@ async function writeGasketConfig({ context }) {
   generatedFiles.add(fileName);
 }
 
-export default action('Write gasket config', writeGasketConfig);
+export default withSpinner('Write gasket config', writeGasketConfig);

@@ -27,7 +27,7 @@ const plugin = {
             link: 'README.md#getHappyFeet'
           }
         ]
-      }
+      };
     }
   }
 };

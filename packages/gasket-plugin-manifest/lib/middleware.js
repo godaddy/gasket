@@ -1,5 +1,6 @@
 /// <reference types="@gasket/plugin-service-worker" />
 /// <reference types="@gasket/plugin-express" />
+/// <reference types="@gasket/plugin-middleware" />
 
 const escapeRegex = require('escape-string-regexp');
 const { gatherManifestData } = require('./utils');
@@ -19,7 +20,7 @@ function handler(gasket) {
 
     if (swUrl) endpoints.push(new RegExp(escapeRegex(swUrl)));
 
-    /** @type {import('./index').manifestMiddleware} */
+    /** @type {import('.').manifestMiddleware} */
     return async function manifestMiddleware(req, res, next) {
       if (endpoints.some((p) => req.path.match(p))) {
         req.manifest = await gatherManifestData(gasket, { req, res });

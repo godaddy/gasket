@@ -13,7 +13,10 @@ describe('configureHook', () => {
       root: rootPath
     };
     mockGasket = {
-      config: mockConfig
+      config: mockConfig,
+      logger: {
+        warn: jest.fn()
+      }
     };
   });
 
@@ -84,5 +87,12 @@ describe('configureHook', () => {
     expect(results.redux).toEqual({});
     spy.mockReset();
     spy.mockRestore();
+  });
+
+  it('logs deprecation warning', () => {
+    configureHook(mockGasket, mockConfig);
+    expect(mockGasket.logger.warn).toHaveBeenCalledWith(
+      expect.stringMatching(/DEPRECATED `@gasket\/plugin-redux` will not be support in future major release\./)
+    );
   });
 });

@@ -218,6 +218,30 @@ export class ConfigBuilder {
   }
 
   /**
+   * Remove a key from fields
+   * @param {string[]} path - Array of strings representing the path to the field to remove
+   */
+  remove(path) {
+    if (!Array.isArray(path) || path.length === 0) {
+      throw new Error('Path must be a non-empty array of strings');
+    }
+
+    let current = this.fields;
+    for (let i = 0; i < path.length - 1; i++) {
+      if (Object.prototype.hasOwnProperty.call(current, path[i])) {
+        current = current[path[i]];
+      } else {
+        return; // Path does not exist
+      }
+    }
+
+    const key = path[path.length - 1];
+    if (Object.prototype.hasOwnProperty.call(current, key)) {
+      delete current[key];
+    }
+  }
+
+  /**
    * addPlugin - Add plugin import to the gasket file and use the value in the plugins array
    * @param {string} pluginImport - name of the import used as a value - `import pluginImport...`
    * @param {string} pluginName - name of the plugin import/package - `from 'pluginName'`
@@ -236,6 +260,52 @@ export class ConfigBuilder {
   addPlugin(pluginImport, pluginName) {
     this.add('plugins', [`${pluginImport}`]);
     this.add('pluginImports', { [pluginImport]: pluginName });
+  }
+
+  /**
+   * addEnvironment - Add environments to the gasket file
+   * @param {string} key - name of the environment - `local.analyze`
+   * @param {object} value - configuration for the environment - `{
+   *   dynamicPlugins: [
+   *     '@gasket/plugin-analyze',
+   *   ]
+   * }`
+   * @example
+   *   environments: {
+   *    'local.analyze': {
+   *      dynamicPlugins: [
+   *        '@gasket/plugin-analyze',
+   *      ]
+   *     }
+   *   },
+   */
+  addEnvironment(key, value) {
+    this.add('environments', {
+      [key]: value
+    });
+  }
+
+  /**
+   * addCommand - Add commands to the gasket file
+   * @param {string} key - name of the command - `docs`
+   * @param {object} value - configuration for the command - `{
+   *   dynamicPlugins: [
+   *     '@gasket/plugin-docs',
+   *   ]
+   * }`
+   * @example
+   *   commands: {
+   *    'docs': {
+   *      dynamicPlugins: [
+   *        '@gasket/plugin-docs',
+   *      ]
+   *     }
+   *   },
+   */
+  addCommand(key, value) {
+    this.add('commands', {
+      [key]: value
+    });
   }
 
   /**

@@ -3,12 +3,13 @@
     "allowJs": true,
     "checkJs": true,
     "noEmit": true,
-    "skipLibCheck": true,
+    "skipLibCheck": false,
     "resolveJsonModule": true,
+    "module": "NodeNext",
     "esModuleInterop": true,
     "lib": [
-      "esnext",
-      "dom"
+      "ESNext",
+      "DOM"
     ],
     "types": [
       "@types/jest"

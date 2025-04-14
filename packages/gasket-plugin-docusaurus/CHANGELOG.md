@@ -1,61 +1,102 @@
 # `@gasket/plugin-docusaurus`
 
-### 7.1.0
+## 7.3.3
+
+### Patch Changes
+
+- b667c4e: Downgrade eslint-plugin-jest version due to conflicting peer dependency between versions of @typescript-eslint/eslint-plugin.
+- Updated dependencies [b667c4e]
+  - @gasket/plugin-logger@7.3.3
+
+## 7.3.2
+
+### Patch Changes
+
+- 7812607: Updates to support using syncpack.
+- Updated dependencies [7812607]
+  - @gasket/plugin-logger@7.3.2
+
+## 7.3.1
+
+### Patch Changes
+
+- 41e5c6d: Remove Catalog and Workspace alias usage.
+- 0561cd5: Updates to use user-selected package manager. Update all packages to use catalog dep versions.
+- Updated dependencies [41e5c6d]
+- Updated dependencies [0561cd5]
+  - @gasket/plugin-logger@7.3.1
+
+## 7.3.0
+
+### Minor Changes
+
+- 29f72a5: Migrated packages to use PNPM and changesets. Fixed issues with types and dependencies.
+
+### Patch Changes
+
+- Updated dependencies [29f72a5]
+  - @gasket/plugin-logger@7.3.0
+
+### 7.2.3
+
+- Make plugin dynamic ([#1034])
+
+## 7.1.0
 
 - Aligned version releases across all packages
 
-### 7.0.3
+## 7.0.3
 
 - Add create hook check with dev deps ([#937])
 
-### 7.0.0
+## 7.0.0
 
 - See [Version 7 Upgrade Guide] for overall changes
 - Add plugin import to gasket file ([#736])
 - Add itself to the app package file
 - `configure` hook now synchronous
 
-### 6.46.0
+## 6.46.0
 
 - Adjust path on tryRequire to handle dep check ([#674])
 
-### 6.45.2
+## 6.45.2
 
 - Add `peerDeps`, unpin Docusaurus ([#670])
 
-### 6.44.5
+## 6.44.5
 
 - add docusaurus to devDeps, add dep check, add create hook ([#658])
 
-### 6.44.3
+## 6.44.3
 
 - Lazy load Docusaurus, update devDependencies ([#650])
 
-### 6.35.0
+## 6.35.0
 
-- Upgrade @docusaurus/* to v2.2.0 ([#481])
+- Upgrade @docusaurus/\* to v2.2.0 ([#481])
 
-### 6.34.4
+## 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
 - Upgrade sinon to v14 ([#460])
 
-### 6.34.3
+## 6.34.3
 
 - Upgrade mocha v10 ([#442])
 
-### 6.24.2
+## 6.24.2
 
 - Add `index.d.ts` type definitions
 - Update `docsView` test case ([#367])
 
-### 6.23.1
+## 6.23.1
 
 - Add support for configuration of the Docusaurus docs directory ([#364])
-### 6.23.0
+
+## 6.23.0
 
 - Initial release ([#362])
-
 
 [Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#362]: https://github.com/godaddy/gasket/pull/362
@@ -71,3 +112,4 @@
 [#674]: https://github.com/godaddy/gasket/pull/674
 [#736]: https://github.com/godaddy/gasket/pull/736
 [#937]: https://github.com/godaddy/gasket/pull/937
+[#1034]: https://github.com/godaddy/gasket/pull/1034

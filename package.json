@@ -2,65 +2,72 @@
   "name": "@gasket/repository",
   "private": true,
   "version": "0.0.0",
-  "description": "Robust, pluggable, & render agnostic framework for rapid deliver modern web applications.",
+  "description": "Robust, pluggable, & render agnostic framework for rapid delivery of modern web applications.",
   "scripts": {
-    "lint": "eslint scripts",
-    "lint:fix": "npm run lint -- --fix",
-    "lint:fix:all": "npm run lint:fix && lerna run lint:fix --stream",
-    "test": "lerna run test --stream",
-    "test:coverage": "lerna run test:coverage --stream",
-    "posttest": "npm run lint",
-    "build": "lerna run build",
     "align-packages": "node ./scripts/align-packages",
-    "clean": "npm run clean:packages && npm run clean:root",
-    "clean:packages": "lerna clean --yes",
+    "build": "pnpm run -r build",
+    "changeset": "changeset",
+    "clean": "pnpm run clean:packages && pnpm run clean:root",
+    "clean:packages": "pnpm -r exec rimraf dist node_modules",
     "clean:root": "rimraf node_modules",
-    "docs": "lerna run docs && npm run generate-docs-index",
-    "docs-view": "npm run generate-docs-index && cd site && docusaurus start",
+    "docs": "pnpm run -r docs && pnpm run generate-docs-index",
+    "docs-view": "pnpm run generate-docs-index && cd site && docusaurus start",
     "generate-docs-index": "node scripts/generate-docs-index",
-    "postinstall": "npm run build",
-    "publish": "lerna publish",
-    "publish:canary": "lerna publish --preid canary --dist-tag canary",
-    "publish:next": "lerna publish prerelease --preid next --dist-tag next --force-publish --exact",
-    "test:package": "lerna run test --stream --scope $*",
-    "typecheck:all": "lerna run typecheck --stream"
+    "lint": "eslint scripts",
+    "lint:fix": "pnpm run lint --fix",
+    "lint:fix:all": "pnpm run lint:fix && pnpm run -r lint:fix",
+    "postinstall": "pnpm run build",
+    "postpublish": "node scripts/mark-deprecated.mjs",
+    "posttest": "pnpm run lint",
+    "preinstall": "npx only-allow pnpm",
+    "publish": "pnpm changeset publish",
+    "publish:canary": "pnpm changeset version --snapshot canary && pnpm changeset publish --tag canary",
+    "publish:next": "pnpm changeset version --pre next && pnpm changeset publish --tag next --force-publish --exact",
+    "release": "changeset publish",
+    "replace-ws-aliases": "node scripts/replace-ws-aliases.js",
+    "syncpack": "syncpack",
+    "syncpack:fix": "syncpack fix-mismatches && syncpack format",
+    "test": "pnpm run -r test",
+    "test:coverage": "pnpm run -r test:coverage",
+    "test:package": "pnpm run -r --filter $* test",
+    "typecheck:all": "pnpm run -r typecheck",
+    "version": "changeset version"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/godaddy/gasket.git"
-  },
+  "repository": "godaddy/gasket.git",
   "publishConfig": {
     "access": "public"
   },
   "keywords": [
-    "gasket",
     "framework",
+    "gasket",
+    "plugins",
     "pwa",
-    "ssr",
-    "plugins"
+    "ssr"
   ],
   "author": "GoDaddy Operating Company, LLC",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/godaddy/gasket/issues"
-  },
+  "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket#readme",
   "devDependencies": {
+    "@changesets/cli": "^2.28.1",
     "@docusaurus/core": "^3.7.0",
     "@docusaurus/preset-classic": "^3.7.0",
     "@docusaurus/theme-mermaid": "^3.7.0",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
-    "eslint": "^8.56.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "eslint": "^8.57.1",
     "eslint-config-godaddy": "^7.1.1",
-    "eslint-plugin-json": "^3.1.0",
+    "eslint-config-godaddy-typescript": "^4.0.3",
     "eslint-plugin-unicorn": "^55.0.0",
-    "jsdom": "^20.0.0",
-    "lerna": "^8.1.8",
-    "nx": "^19.5.6",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "glob": "^8.1.0",
+    "js-yaml": "^4.1.0",
+    "jsdom": "^20.0.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "rimraf": "^3.0.2",
-    "typescript": "^5.4.5"
+    "search-insights": "^2.17.3",
+    "syncpack": "^13.0.3",
+    "typescript": "^5.7.3"
   },
   "eslintConfig": {
     "extends": [
@@ -80,11 +87,25 @@
     }
   },
   "engines": {
-    "npm": ">=8.0.0",
+    "pnpm": ">=8",
+    "npm": "please-use-pnpm",
+    "yarn": "please-use-pnpm",
     "node": ">=20"
   },
+  "packageManager": "pnpm@10.4.1",
+  "pnpm": {
+    "overrides": {
+      "@typescript-eslint/parser": "^6.21.0",
+      "react-json-view-lite": "^2.3.0"
+    },
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "@typescript-eslint/parser": "^6.21.0"
+      }
+    }
+  },
   "workspaces": [
-    "./packages/*",
+    "packages/*",
     "scripts/generate-docs-index"
   ]
 }

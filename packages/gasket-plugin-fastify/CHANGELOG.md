@@ -1,80 +1,112 @@
 # `@gasket/plugin-fastify`
 
-### 7.1.4
+## 7.3.4
+
+### Patch Changes
+
+- b667c4e: Downgrade eslint-plugin-jest version due to conflicting peer dependency between versions of @typescript-eslint/eslint-plugin.
+
+## 7.3.3
+
+### Patch Changes
+
+- 7812607: Updates to support using syncpack.
+
+## 7.3.2
+
+### Patch Changes
+
+- f716c9e: move middleware types to the middleware plugin
+- 41e5c6d: Remove Catalog and Workspace alias usage.
+- 0561cd5: Updates to use user-selected package manager. Update all packages to use catalog dep versions.
+
+## 7.3.1
+
+### Patch Changes
+
+- 4b6d124: Removed accidental test devDep.
+
+## 7.3.0
+
+### Minor Changes
+
+- 29f72a5: Migrated packages to use PNPM and changesets. Fixed issues with types and dependencies.
+
+## 7.1.4
 
 - Deprecate and remove the use of the `getFastifyApp` action ([#1011])
 
-### 7.1.0
+## 7.1.0
 
 - Aligned version releases across all packages
 
-### 7.0.13
+## 7.0.13
 
 - add conditional file content based on TS ([#972])
 
-### 7.0.12
+## 7.0.12
 
 - remove tsconfig.test from fastify, tune glob ignores ([#969])
 
-### 7.0.3
+## 7.0.3
 
 - Fix `[object Object]` logs in Fastify api apps ([#940])
 
-### 7.0.0
+## 7.0.0
 
 - See [Version 7 Upgrade Guide] for overall changes
 
-### 6.46.0
+## 6.46.0
 
 - Add native Gasket trust proxy support to Express config ([#675])
 
-### 6.41.1
+## 6.41.1
 
 - Align docs on configuring middleware paths ([#613])
 
-### 6.38.2
+## 6.38.2
 
 - Add generated Fastify starter routes file ([#555])
 
-### 6.34.4
+## 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
 - Upgrade sinon to v14 ([#460])
 
-### 6.34.3
+## 6.34.3
 
 - Upgrade mocha v10 ([#442])
 
-### 6.33.1
+## 6.33.1
 
 - Fix ability to use async `middleware` hooks ([#444])
 
-### 6.10.0
+## 6.10.0
 
 - TypeScript definitions for config & lifecycles ([#311])
 
-### 6.0.5
+## 6.0.5
 
 - Filter falsy middleware ([#255])
 
-### 6.0.1
+## 6.0.1
 
 - Fix to add `res.locals` for attaching data ([#250])
 
-### 6.0.0
+## 6.0.0
 
 Enable middleware support ([#172])
+
 - Add `middie@5` as dependency
 - Register `middie` to enable Fastify middleware
 
-### 5.0.0
+## 5.0.0
 
 - Open Source Release
 
-### 1.0.0
+## 1.0.0
 
 - [#88] Initial release.
-
 
 [Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#88]: https://github.com/godaddy/gasket/pull/88

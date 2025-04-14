@@ -1,78 +1,108 @@
 # `@gasket/plugin-service-worker`
 
-### 7.1.0
+## 7.3.4
+
+### Patch Changes
+
+- b667c4e: Downgrade eslint-plugin-jest version due to conflicting peer dependency between versions of @typescript-eslint/eslint-plugin.
+
+## 7.3.3
+
+### Patch Changes
+
+- 7812607: Updates to support using syncpack.
+
+## 7.3.2
+
+### Patch Changes
+
+- 41e5c6d: Remove Catalog and Workspace alias usage.
+- 0561cd5: Updates to use user-selected package manager. Update all packages to use catalog dep versions.
+
+## 7.3.1
+
+### Patch Changes
+
+- 87ea998: Add missing dep to lint plugin, adjust TS type exports
+
+## 7.3.0
+
+### Minor Changes
+
+- 29f72a5: Migrated packages to use PNPM and changesets. Fixed issues with types and dependencies.
+
+## 7.1.0
 
 - Improvements to gasket command setup ([#989])
 
-### 7.0.0
+## 7.0.0
 
 - See [Version 7 Upgrade Guide] for overall changes
 
-### 6.45.2
+## 6.45.2
 
 - Tune `devDeps`, update test script ([#670])
 
-### 6.34.4
+## 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
 
-### 6.34.2
+## 6.34.2
 
 - Upgrade eslint-plugin-jest ([#457])
 
-### 6.24.0
+## 6.24.0
 
 - Add Fastify support ([#365])
 
-### 6.19.0
+## 6.19.0
 
 - Migrate `webpack` -> `webpackConfig` lifecycle ([#347])
 
-### 6.11.2
+## 6.11.2
 
 - Use fs.promises and upgrade mkdirp ([#319])
 
-### 6.10.0
+## 6.10.0
 
 - TypeScript definitions for config & lifecycles ([#311])
 
-### 6.0.0
+## 6.0.0
 
 - Ability to configure static output of service workers for build time ([#217])
 - Context for `composeServiceWorker` changes for build vs request-based service workers ([#217])
 
-### 5.3.1
+## 5.3.1
 
 - Inject registration script to Webpack entry modules ([#158])
 
-### 5.0.0
+## 5.0.0
 
 - Open Source Release
 
-### 1.3.0
+## 1.3.0
 
 - `serviceWorkerCacheKey` executed in `express` lifecycle ([#95])
 
-### 1.2.0
+## 1.2.0
 
 - Align package structure and dependencies
 
-### 1.1.1
+## 1.1.1
 
 - Migrated to monorepo
 
-### 1.1.0
+## 1.1.0
 
 - Minify composed code in production
 
-### 1.0.0
+## 1.0.0
 
 - Initial implementation.
 - Support for caching sw content
 
-
 [Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
-[#95]:https://github.com/godaddy/gasket/pull/95
+[#95]: https://github.com/godaddy/gasket/pull/95
 [#158]: https://github.com/godaddy/gasket/pull/158
 [#217]: https://github.com/godaddy/gasket/pull/217
 [#311]: https://github.com/godaddy/gasket/pull/311

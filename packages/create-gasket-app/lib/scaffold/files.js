@@ -4,10 +4,10 @@
  */
 export class Files {
   constructor() {
-  /**
-   * Array of glob sets, each containing an array of globs and a source object.
-   * @type {Array<{globs: string[], source: object}>}
-   */
+    /**
+     * Array of glob sets, each containing an array of globs and a source object.
+     * @type {Array<{globs: string[], source: object}>}
+     */
     this.globSets = [];
   }
 

@@ -1,5 +1,6 @@
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
+// @ts-ignore
 const diagnostics = require('diagnostics');
 
 const debug = diagnostics('gasket:middleware');
@@ -27,36 +28,37 @@ function applyCompression(app, compressionConfig) {
 }
 
 /**
- * Executes the middleware lifecycle for the application
- * @type {import('./internal').executeMiddlewareLifecycle}
+ * Checks if the middleware is valid and should be added.
+ * @type {import('./internal').isValidMiddleware}
  */
-async function executeMiddlewareLifecycle(gasket, app, middlewarePattern) {
-  const { config } = gasket;
-  const {
-    middleware: middlewareConfig
-  } = config;
+function isValidMiddleware(middleware) {
+  return Boolean(middleware && (!Array.isArray(middleware) || middleware.length > 0));
+}
 
-  const middlewares = [];
-  await gasket.execApply('middleware', async (plugin, handler) => {
-    // @ts-ignore - TS is unable to infer that app can be either an Express application or a Fastify instance
-    const middleware = await handler(app);
+/**
+ * Applies configuration settings to the middleware based on the plugin.
+ * @type {import('./internal').applyMiddlewareConfig}
+ */
+function applyMiddlewareConfig(middleware, plugin, middlewareConfig, middlewarePattern) {
+  const pluginName = plugin?.name || '';
+  const configEntry = middlewareConfig.find(mw => mw.plugin === pluginName);
 
-    if (middleware && (!Array.isArray(middleware) || middleware.length)) {
-      if (middlewareConfig) {
-        const pluginName = plugin && plugin.name ? plugin.name : '';
-        const mwConfig = middlewareConfig.find(mw => mw.plugin === pluginName);
-        if (mwConfig) {
-          middleware.paths = mwConfig.paths;
-          if (middlewarePattern) {
-            middleware.paths.push(middlewarePattern);
-          }
-        }
-      }
-      middlewares.push(middleware);
+  if (configEntry) {
+    // @ts-ignore
+    middleware.paths = configEntry.paths;
+    if (middlewarePattern) {
+      // @ts-ignore
+      middleware.paths.push(middlewarePattern);
     }
-  });
+  }
+}
 
-  debug('applied %s middleware layers', middlewares.length);
+/**
+ * Attaches the middleware layers to the app.
+ *  @type {import('./internal').applyMiddlewaresToApp}
+ */
+function applyMiddlewaresToApp(app, middlewares, middlewarePattern) {
+  // @ts-ignore
   middlewares.forEach(async (layer) => {
     const { paths } = layer;
     if (paths) {
@@ -67,6 +69,29 @@ async function executeMiddlewareLifecycle(gasket, app, middlewarePattern) {
       app.use(layer);
     }
   });
+}
+
+/**
+ * Executes the middleware lifecycle for the application
+ * @type {import('./internal').executeMiddlewareLifecycle}
+ */
+async function executeMiddlewareLifecycle(gasket, app, middlewarePattern) {
+  const { config } = gasket;
+  const middlewareConfig = config.middleware || [];
+  const middlewares = [];
+
+  await gasket.execApply('middleware', async (plugin, handler) => {
+    // @ts-ignore - TS is unable to infer that `app` can be either an Express application or a Fastify instance
+    const middleware = await handler(app);
+
+    if (isValidMiddleware(middleware)) {
+      applyMiddlewareConfig(middleware, plugin, middlewareConfig, middlewarePattern);
+      middlewares.push(middleware);
+    }
+  });
+
+  debug('applied %s middleware layers', middlewares.length);
+  applyMiddlewaresToApp(app, middlewares, middlewarePattern);
 }
 
 module.exports = {

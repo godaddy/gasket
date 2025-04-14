@@ -1,15 +1,14 @@
 import type { AgentConfigOptions, Transaction, Payload, Agent } from 'elastic-apm-node';
-import type { GasketConfig, Plugin } from '@gasket/core';
+import type { GasketConfig, Plugin, MaybeAsync } from '@gasket/core';
+import type { RequestLike, GasketRequest } from '@gasket/request';
 
-export function filterSensitiveCookies(config: GasketConfig): function(Payload): Payload;
+export function filterSensitiveCookies(config: GasketConfig): (Payload) => Payload;
 
 export interface ExtendedAgentConfigOptions extends AgentConfigOptions {
   sensitiveCookies?: Array<string>;
 }
 
 declare module '@gasket/core' {
-  import { RequestLike, GasketRequest } from '@gasket/request';
-
   export interface GasketConfig {
     elasticAPM?: ExtendedAgentConfigOptions;
   }
@@ -34,9 +33,6 @@ declare module '@gasket/core' {
   }
 }
 
-const plugin: Plugin = {
-  name: '@gasket/plugin-elastic-apm',
-  hooks: {}
-};
+declare const plugin: Plugin;
 
-export = plugin;
+export default plugin;

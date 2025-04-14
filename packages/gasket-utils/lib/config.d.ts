@@ -7,51 +7,54 @@ interface ConfigContext {
   commandId?: string;
 }
 
-interface ConfigDefinition extends Record<string, any> {
-  environments?: Record<string, Partial<ConfigDefinition>>;
-  commands?: Record<string, Partial<ConfigDefinition>>;
-  [key: string]: any;
-}
+// TODO: switch @gasket/core to re-exporting this type once this change is
+// published and we can update its dependency to this version
+export type PartialRecursive<T> = T extends object
+  ? { [K in keyof T]?: PartialRecursive<T[K]> } | undefined
+  : T | undefined;
 
-type ConfigOutput = Omit<ConfigDefinition, 'environments' | 'commands'>;
-type ConfigPartial = Partial<ConfigDefinition> | undefined | void | unknown;
+export type ConfigDefinition<T = any> = T & {
+  environments?: Record<string, PartialRecursive<T>>;
+  commands?: Record<string, PartialRecursive<T>>;
+};
 
-export function getPotentialConfigs(
-  config: ConfigDefinition,
+type ConfigPartial<T> = PartialRecursive<T> | undefined | void | unknown;
+
+export function getPotentialConfigs<T>(
+  config: ConfigDefinition<T>,
   configContext: ConfigContext
-): Array<ConfigPartial>;
+): Array<ConfigPartial<T>>;
 
-export function getCommandOverrides(
-  commands: Record<string, Partial<ConfigDefinition>>,
+export function getCommandOverrides<T>(
+  commands: Record<string, PartialRecursive<T>>,
   commandId: string
-): Array<ConfigPartial>;
+): Array<ConfigPartial<T>>;
 
-export function getSubEnvironmentOverrides(
+export function getSubEnvironmentOverrides<T>(
   env: string,
-  environments: Record<string, Partial<ConfigDefinition>>
-): Array<ConfigPartial>;
+  environments: Record<string, PartialRecursive<T>>
+): Array<ConfigPartial<T>>;
 
-export function getDevOverrides(
+export function getDevOverrides<T>(
   isLocalEnv: boolean,
-  environments: Record<string, Partial<ConfigDefinition>>
-): Array<ConfigPartial>;
+  environments: Record<string, PartialRecursive<T>>
+): Array<ConfigPartial<T>>;
 
-export async function getLatestVersion(
+export function getLatestVersion(
   pkgName: string,
   /** current time in milliseconds */
   currentTime: number,
   cache: Record<string, any>
 ): Promise<string>;
 
-export function getLocalOverrides(
+export function getLocalOverrides<T>(
   isLocalEnv: boolean,
   root: string,
   localFile: string
-): Generator<ConfigDefinition | undefined, void, unknown>;
+): Generator<ConfigDefinition<T> | undefined, void, unknown>;
 
-// Normalize the config by applying any overrides for environments, commands, or
-// local-only config file.
-export function applyConfigOverrides<
-  Def extends ConfigDefinition,
-  Out extends ConfigOutput
->(config: Def, configContext: ConfigContext): Out;
+// Normalize the config by applying any overrides for environments, commands, or local-only config file.
+export function applyConfigOverrides<T>(
+  config: ConfigDefinition<T>,
+  configContext: ConfigContext
+): T;

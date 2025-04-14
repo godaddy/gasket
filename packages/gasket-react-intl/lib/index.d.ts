@@ -1,11 +1,11 @@
-import {
+import type {
   ComponentType,
   FunctionComponent,
   PropsWithChildren,
   ReactNode,
   Ref
 } from 'react';
-import {
+import type {
   LocaleFilePath,
   LocaleFileStatus,
   IntlManager,

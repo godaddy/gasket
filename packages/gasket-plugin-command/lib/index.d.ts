@@ -39,9 +39,5 @@ declare module '@gasket/core' {
   }
 }
 
-const plugin: Plugin = {
-  name: '@gasket/plugin-command',
-  hooks: {}
-};
-
+declare const plugin: Plugin;
 export default plugin;

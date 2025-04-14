@@ -1,5 +1,5 @@
 import type { Gasket, GasketConfigDefinition, Plugin } from '@gasket/core';
-import preset from '@gasket/preset-api';
+import type { Handler } from '@gasket/plugin-middleware';
 
 describe('@gasket/preset-api', () => {
   const { log } = console;
@@ -33,12 +33,13 @@ describe('@gasket/preset-api', () => {
         servers(gasket, servers) {
           log(servers.http);
         },
-        middleware(gasket) {
+        middleware(gasket: Gasket) {
+          const middleware: Handler = (req, res, next) => {
+            res.statusCode = 404;
+            res.send({ message: 'not found' });
+          };
           return [
-            (req, res, next) => {
-              res.statusCode = 404;
-              res.send({ message: 'not found' });
-            }
+            middleware
           ];
         }
       }

@@ -1,9 +1,28 @@
-import type { Plugin, MaybeAsync, MaybeMultiple } from '@gasket/core';
-import type { FastifyReply } from 'fastify';
+import type { Plugin, MaybeAsync, MaybeMultiple, Gasket } from '@gasket/core';
+import type { FastifyInstance } from 'fastify'
+import type { Application as ExpressApplication } from 'express';
 
 declare module 'fastify' {
   interface FastifyReply {
     locals: Record<string, any>;
+  }
+}
+
+declare module '@gasket/plugin-fastify' {
+  interface FastifyConfig {
+    /** Filter for which request URLs invoke Gasket middleware */
+    middlewareInclusionRegex?: RegExp;
+    /** @deprecated */
+    excludedRoutesRegex?: RegExp;
+  }
+}
+
+declare module '@gasket/plugin-express' {
+  interface ExpressConfig {
+    /** Filter for which request URLs invoke Gasket middleware */
+    middlewareInclusionRegex?: RegExp;
+    /** @deprecated */
+    excludedRoutesRegex?: RegExp;
   }
 }
 
@@ -16,19 +35,29 @@ declare module 'express-serve-static-core' {
      * and also, by the 'compiled' version in Next.js
      * @see: https://github.com/vercel/next.js/issues/11669
      */
-    _implicitHeader: () => void;
+    _implicitHeader?: () => void;
   }
 }
+
+export type Handler = (req: any, res: any, next: (error?: Error) => void) => void;
+
+type App = FastifyInstance | ExpressApplication;
 
 declare module '@gasket/core' {
   export interface HookExecTypes {
-    middleware(): MaybeAsync<MaybeMultiple<Handler>>;
+    middleware(gasket: Gasket, app: App): MaybeAsync<MaybeMultiple<Handler> >;
+  }
+
+  export interface GasketConfig {
+    /** Middleware configuration */
+    middleware?: {
+      /** Plugin name */
+      plugin: string;
+      /** Paths for middleware */
+      paths?: (string | RegExp)[];
+    }[];
   }
 }
 
-const plugin: Plugin = {
-  name: '@gasket/plugin-middleware',
-  hooks: {}
-};
-
-export = plugin;
+declare const plugin: Plugin;
+export default plugin;

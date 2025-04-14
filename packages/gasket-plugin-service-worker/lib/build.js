@@ -18,6 +18,7 @@ async function handler(gasket) {
   const { staticOutput } = getSWConfig(gasket);
 
   if (staticOutput && typeof staticOutput === 'string') {
+    // @ts-ignore - the req, res properties are added later on in the lifecycle
     const composedContent = await getComposedContent(gasket, {});
 
     await mkdirp(path.dirname(staticOutput));

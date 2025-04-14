@@ -1,3 +1,5 @@
+/// <reference types="@gasket/plugin-command" />
+
 /** @type {import('@gasket/core').HookHandler<'build'>} */
 async function build(gasket) {
   const { getIntlConfig } = require('./configure');

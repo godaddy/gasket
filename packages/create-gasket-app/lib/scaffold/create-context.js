@@ -31,6 +31,9 @@ function makeCreateRuntime(context, source) {
 
       has(key, value) {
         return context.pkg.has(key, value);
+      },
+      remove(path) {
+        context.pkg.remove(path);
       }
     }
   };
@@ -90,7 +93,7 @@ export function makeCreateContext(argv = [], options = {}) {
   /**
    * Input context which will be appended by prompts and passed to create hooks
    * @type {import('../internal').PartialCreateContext}
-  */
+   */
   const context = new CreateContext({
     destOverride: true,
     cwd,

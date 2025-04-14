@@ -1,6 +1,6 @@
 {
   "name": "@gasket/assets",
-  "version": "7.2.0",
+  "version": "7.3.2",
   "description": "Gasket assets",
   "main": "react/index.js",
   "files": [
@@ -8,47 +8,45 @@
     "svgs"
   ],
   "scripts": {
-    "lint": "eslint .",
-    "lint:fix": "npm run lint -- --fix",
-    "test": "npm run lint",
-    "build": "npm run clean && npm run svg-to-react",
-    "prepublishOnly": "npm run build",
+    "build": "pnpm run clean && pnpm run svg-to-react",
     "clean": "rimraf ./react",
-    "svg-to-react": "babel-node --presets @babel/env ./scripts/svg-to-react.js"
+    "lint": "eslint .",
+    "lint:fix": "pnpm run lint --fix",
+    "prepublishOnly": "pnpm run build",
+    "svg-to-react": "babel-node --presets @babel/env ./scripts/svg-to-react.js",
+    "test": "pnpm run lint"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/godaddy/gasket.git"
-  },
+  "repository": "godaddy/gasket.git",
   "publishConfig": {
     "access": "public"
   },
   "keywords": [
-    "gasket",
     "assets",
+    "gasket",
     "logo"
   ],
   "author": "GoDaddy Operating Company, LLC",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/godaddy/gasket/issues"
-  },
+  "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-assets",
   "devDependencies": {
-    "@babel/core": "^7.23.7",
-    "@babel/node": "^7.22.19",
-    "@babel/preset-env": "^7.23.8",
-    "@babel/preset-react": "^7.23.3",
+    "@babel/core": "^7.26.9",
+    "@babel/node": "^7.26.0",
+    "@babel/preset-env": "^7.26.9",
+    "@babel/preset-react": "^7.26.3",
     "@svgr/core": "^6.5.1",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^20.17.19",
     "babel-plugin-add-module-exports": "^1.0.4",
-    "eslint": "^8.56.0",
+    "eslint": "^8.57.1",
     "eslint-config-godaddy": "^7.1.1",
-    "eslint-plugin-json": "^3.1.0",
+    "eslint-config-godaddy-typescript": "^4.0.3",
     "eslint-plugin-unicorn": "^55.0.0",
     "mkdirp": "^1.0.4",
-    "react": "^18.2.0",
+    "react": "^19.0.0",
     "recursive-readdir": "^2.2.3",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "typescript": "^5.7.3"
   },
   "eslintConfig": {
     "extends": [

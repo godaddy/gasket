@@ -1,99 +1,134 @@
 # `@gasket/plugin-https`
 
-### 7.1.0
+## 7.3.4
+
+### Patch Changes
+
+- b667c4e: Downgrade eslint-plugin-jest version due to conflicting peer dependency between versions of @typescript-eslint/eslint-plugin.
+
+## 7.3.3
+
+### Patch Changes
+
+- 7812607: Updates to support using syncpack.
+
+## 7.3.2
+
+### Patch Changes
+
+- 41e5c6d: Remove Catalog and Workspace alias usage.
+- 0561cd5: Updates to use user-selected package manager. Update all packages to use catalog dep versions.
+
+## 7.3.1
+
+### Patch Changes
+
+- 87ea998: Add missing dep to lint plugin, adjust TS type exports
+- cd76a80: Allow partial https in gasket config.
+
+## 7.3.0
+
+### Minor Changes
+
+- 29f72a5: Migrated packages to use PNPM and changesets. Fixed issues with types and dependencies.
+
+## 7.2.2
+
+- Add configure hook to set a default for the root property inside the https|htt2 config options ([#1028])
+
+## 7.1.0
 
 - Aligned version releases across all packages
 
-### 7.0.6
+## 7.0.6
 
 - Pretty logs when custom port not configured ([#952])
 
-### 7.0.0
+## 7.0.0
 
 - See [Version 7 Upgrade Guide] for overall changes
 - Add plugin import to gasket file ([#736])
 - Add itself to the app package file
 - Add actions to hook exec types
 
-### 6.46.4
+## 6.46.4
 
 - Adjust JSDocs and TS types ([#695])
 
-### 6.44.0
+## 6.44.0
 
 - Better surfacing of server startup errors ([#634])
 
-### 6.34.4
+## 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
 - Upgrade sinon to v14 ([#460])
 
-### 6.34.3
+## 6.34.3
 
 - Upgrade mocha v10 ([#442])
 
-### 6.34.2
+## 6.34.2
 
 - Upgrade eslint-plugin-jest ([#457])
 
-### 6.33.1
+## 6.33.1
 
 - Fix for port fallback ([#433])
 
-### 6.32.0
+## 6.32.0
 
 - Add `hostname` config setting to type declarations ([#412])
 
-### 6.11.0
+## 6.11.0
 
 - Added healthcheck.html to terminus options. ([#315])
 
-### 6.10.0
+## 6.10.0
 
 - TypeScript definitions for config & lifecycles ([#311])
 
-### 6.5.0
+## 6.5.0
 
 - Add support for http2 servers ([#287])
 
-### 6.0.0
+## 6.0.0
 
 - Version alignment
 - Upgraded dev dependencies ([#247])
 
-### 5.1.3
+## 5.1.3
 
 - Set http fallbacks after createServer lifecycle ([#146])
 
-### 5.0.1
+## 5.0.1
 
 - Update default http port ([#130])
 
-### 5.0.0
+## 5.0.0
 
 - Open Source Release
 
-### 2.2.1
+## 2.2.1
 
 - Handle permeations of [create-servers] callback ([#92])
 
-### 2.2.0
+## 2.2.0
 
 - Graceful shutdown using [terminus] ([#90])
 
-### 2.1.1
+## 2.1.1
 
 - Default to http port 80 when not configured and log start-up errors ([#79])
 
-### 2.1.0
+## 2.1.0
 
 - Align package structure and dependencies
 
-### 2.0.0
+## 2.0.0
 
 - [#23] Dismantling core-plugin
 - [#7]: Initialize the `https-plugin`
-
 
 [Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#7]: https://github.com/godaddy/gasket/pull/7
@@ -117,6 +152,6 @@
 [#695]: https://github.com/godaddy/gasket/pull/695
 [#736]: https://github.com/godaddy/gasket/pull/736
 [#952]: https://github.com/godaddy/gasket/pull/952
-
+[#1028]: https://github.com/godaddy/gasket/pull/1028
 [terminus]: https://github.com/godaddy/terminus
 [create-servers]: https://github.com/http-party/create-servers

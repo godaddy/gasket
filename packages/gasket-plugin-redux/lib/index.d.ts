@@ -1,7 +1,8 @@
 import type { IncomingMessage, OutgoingMessage } from 'http';
 import type { Store } from 'redux';
 import type { MaybeAsync, Plugin } from '@gasket/core';
-import { Logger } from '@gasket/plugin-logger';
+import type { Logger } from '@gasket/plugin-logger';
+import type { Console } from 'inspector/promises';
 
 /**
  * Class to add statements to redux store.
@@ -38,10 +39,11 @@ declare class ReduxReducers {
   addEntry(str: string): void;
 }
 
-declare module 'http' {
-  export interface IncomingMessage {
-    store?: Store;
-  }
+export interface ReduxConfig {
+  makeStore?: string;
+  makeStorePath?: string;
+  initState?: any;
+  logger?: Console | Logger;
 }
 
 declare module 'create-gasket-app' {
@@ -54,11 +56,7 @@ declare module 'create-gasket-app' {
 
 declare module '@gasket/core' {
   export interface GasketConfig {
-    redux?: {
-      makeStore?: string;
-      initState?: any;
-      logger?: Console | Logger;
-    }
+    redux?: ReduxConfig
   }
 
   export interface HookExecTypes {
@@ -74,15 +72,12 @@ declare module '@gasket/core' {
   }
 }
 
-export async function reduxMiddleware(
+export function reduxMiddleware(
   req: IncomingMessage,
   res: OutgoingMessage,
   next: (err?: any) => void
 ): Promise<void>;
 
-const plugin: Plugin = {
-  name: '@gasket/plugin-redux',
-  hooks: {}
-};
+declare const plugin: Plugin;
 
-export = plugin;
+export default plugin;

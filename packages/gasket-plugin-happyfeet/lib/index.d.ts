@@ -13,9 +13,6 @@ declare module '@gasket/core' {
   }
 }
 
-const plugin: Plugin = {
-  name: '@gasket/plugin-happyfeet',
-  hooks: {}
-};
+declare const plugin: Plugin;
 
-export = plugin;
+export default plugin;

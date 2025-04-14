@@ -1,17 +1,10 @@
-import type { Plugin } from '@gasket/core';
-import type { PackageJson } from 'create-gasket-app';
+import type { Plugin, Gasket } from '@gasket/core';
+import type { Logger } from '@gasket/plugin-logger';
 import type {
   ModuleData,
   PluginData,
   PresetData
 } from '@gasket/plugin-metadata';
-
-/**
- * Configuration for setting up documentation modules.
- */
-export interface DocsSetupModulesConfig {
-  [key: string]: DocsSetup;
-}
 
 /**
  * Data structure for handling transformations on documentation files.
@@ -20,8 +13,10 @@ export interface DocsTransformHandlerData {
   /** Name of the file */
   filename: string;
   /** Configuration for the documentation module */
+  // eslint-disable-next-line no-use-before-define
   docsConfig: ModuleDocsConfig;
   /** Set of documentation configurations */
+  // eslint-disable-next-line no-use-before-define
   docsConfigSet: DocsConfigSet;
 }
 
@@ -45,6 +40,14 @@ export interface DocsTransform {
   test: RegExp;
   /** Transformation function */
   handler: DocsTransformHandler;
+}
+
+/**
+ * Configuration for setting up documentation modules.
+ */
+export interface DocsSetupModulesConfig {
+  // eslint-disable-next-line no-use-before-define
+  [key: string]: DocsSetup;
 }
 
 /**
@@ -122,9 +125,7 @@ export interface LifecycleDocsConfig extends DetailDocsConfig {
  */
 export interface DocsConfigSet extends PluginData {
   /** Name of the documentation */
-  name?: string;
-  /** Module of the documentation */
-  module?: Module;
+  name: string;
   /** Configuration for the app */
   app: ModuleDocsConfig;
   /** Root directory of the documentation */
@@ -151,7 +152,7 @@ export function findPluginData(
   plugin: Plugin,
   /** Metadata for plugins */
   pluginsDatas: PluginData[],
-  logger: Log
+  logger: Logger
 ): PluginData | undefined;
 
 /**
@@ -163,14 +164,14 @@ export function findPluginData(
  * - metadata for modules not processed with plugins
  * - metadata for presets
  */
-export async function buildDocsConfigSet(
+export function buildDocsConfigSet(
   gasket: Gasket
 ): Promise<DocsConfigSet>;
 
 /**
  * Function to find all documentation files for a module.
  */
-async function _findAllFiles(
+export function _findAllFiles(
   /** Metadata for the module. */
   moduleData: ModuleData,
   /** Documentation setup. */
@@ -192,18 +193,20 @@ export function _segregateTransforms(
 /**
  * Function to build the documentation configuration for a module.
  */
-export async function _buildDocsConfig(
+export function _buildDocsConfig(
   /** Metadata for module */
   moduleData: ModuleData,
   /** Files to include and transforms */
   docsSetup?: DocsSetup,
   /** Pre-configured properties */
-  overrides?: Overrides
+  overrides?: Partial<DocsConfig>
 ): Promise<ModuleDocsConfig>;
 
-/** Flattens all detail types from plugins' metadata. Add a from property with
- * name of parent plugin. */
-function _flattenDetails(
+/**
+ * Flattens all detail types from plugins' metadata. Add a from property with
+ * name of parent plugin.
+ */
+export function _flattenDetails(
   /** Detail type in metadata */
   type: string
 ): DetailDocsConfig[];
@@ -221,7 +224,7 @@ export function _addModuleDocsSetup(
 /**
  * Function to add documentation configuration for the app.
  */
-export async function addApp(
+export function addApp(
   /** Metadata for app module */
   moduleData: ModuleData,
   /** Initial docs setup */
@@ -231,7 +234,7 @@ export async function addApp(
 /**
  * Function to add documentation configuration for a plugin.
  */
-export async function addPlugin(
+export function addPlugin(
   /** Metadata for the plugin. */
   pluginData: PluginData,
   /** Initial documentation setup. */
@@ -241,7 +244,7 @@ export async function addPlugin(
 /**
  * Function to add documentation configuration for multiple plugins.
  */
-export async function addPlugins(
+export function addPlugins(
   /** Metadata for multiple plugins. */
   pluginsDatas: PluginData[]
 ): Promise<void>;
@@ -249,7 +252,7 @@ export async function addPlugins(
 /**
  * Function to add documentation configuration for a preset.
  */
-export async function addPreset(
+export function addPreset(
   /** Metadata for the preset. */
   presetData: PresetData,
   /** Initial documentation setup. */
@@ -259,7 +262,7 @@ export async function addPreset(
 /**
  * Function to add documentation configuration for multiple presets.
  */
-export async function addPresets(
+export function addPresets(
   /** Metadata for multiple presets. */
   presetsDatas: PresetData[]
 ): Promise<void>;
@@ -267,7 +270,7 @@ export async function addPresets(
 /**
  * Function to add documentation configuration for a module.
  */
-export async function addModule(
+export function addModule(
   /** Metadata for the module. */
   moduleData: ModuleData,
   /** Initial documentation setup. */
@@ -277,7 +280,7 @@ export async function addModule(
 /**
  * Function to add documentation configuration for multiple modules.
  */
-export async function addModules(
+export function addModules(
   /** Metadata for multiple modules. */
   modulesDatas: ModuleData[]
 ): Promise<void>;

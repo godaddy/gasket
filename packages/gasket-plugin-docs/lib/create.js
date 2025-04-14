@@ -1,7 +1,7 @@
 /// <reference types="create-gasket-app"/>
 /// <reference types="@gasket/plugin-git" />
 
-const { name, version } = require('../package.json');
+const { name, version, devDependencies } = require('../package.json');
 
 const { DEFAULT_CONFIG } = require('./utils/constants');
 
@@ -15,10 +15,17 @@ module.exports = function create(gasket, {
   readme
 }) {
   if (!useDocs) return;
-  gitignore?.add(DEFAULT_CONFIG.outputDir, 'Documentation');
-  gasketConfig.addPlugin('pluginDocs', name);
-  pkg.add('dependencies', {
-    [name]: `^${version}`
+
+  gitignore?.add(DEFAULT_CONFIG.outputDir, 'documentation');
+  gasketConfig.addCommand('docs', {
+    dynamicPlugins: [
+      `${name}`,
+      '@gasket/plugin-metadata'
+    ]
+  });
+  pkg.add('devDependencies', {
+    [name]: `^${version}`,
+    '@gasket/plugin-metadata': devDependencies['@gasket/plugin-metadata']
   });
 
   const docsScript = typescript

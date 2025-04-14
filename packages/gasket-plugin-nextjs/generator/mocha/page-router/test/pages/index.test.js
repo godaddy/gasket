@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import React from 'react';
 import IndexPage from '../../pages/index.js';
 {{#if hasGasketIntl}}
-import { IntlProvider } from 'react-intl';
+import { IntlProvider } from '{{reactIntlPkg}}';
 import { createRequire } from 'module';
 const messages = createRequire(import.meta.url)('../../locales/en-US.json');
 {{/if}}

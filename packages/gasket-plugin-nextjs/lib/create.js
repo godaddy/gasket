@@ -1,3 +1,6 @@
+/// <reference types="@gasket/plugin-intl" />
+/// <reference types="create-gasket-app" />
+
 const { name, version, devDependencies } = require('../package.json');
 
 /**
@@ -221,6 +224,13 @@ module.exports = {
       typescript,
       hasGasketIntl
     } = context;
+
+    // Set the default package name for react-intl. Plugins later in the lifecycle may override this with a custom value if
+    // needed.
+    if (hasGasketIntl) {
+      context.reactIntlPkg = 'react-intl';
+    }
+
     const generatorDir = `${__dirname}/../generator`;
     const appStructure = nextServerType === 'appRouter' ? 'app-router' : 'page-router';
 

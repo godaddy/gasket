@@ -1,7 +1,7 @@
 {
   "name": "@gasket/plugin-redux",
-  "version": "7.2.1",
-  "description": "Gasket Redux Setup",
+  "version": "7.3.3",
+  "description": "DEPRECATED Gasket Redux Setup",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
@@ -10,18 +10,15 @@
   ],
   "scripts": {
     "lint": "eslint .",
-    "lint:fix": "npm run lint -- --fix",
-    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
-    "test:watch": "jest --watchAll",
-    "test:coverage": "jest --coverage",
-    "posttest": "npm run lint && npm run typecheck",
+    "lint:fix": "pnpm run lint --fix",
+    "posttest": "pnpm run lint && pnpm run typecheck",
+    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
+    "test:coverage": "pnpm run test --coverage",
+    "test:watch": "pnpm run test --watchAll",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/godaddy/gasket.git"
-  },
+  "repository": "godaddy/gasket.git",
   "publishConfig": {
     "access": "public"
   },
@@ -32,27 +29,33 @@
   ],
   "author": "GoDaddy Operating Company, LLC",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/godaddy/gasket/issues"
-  },
+  "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-redux",
   "devDependencies": {
-    "@gasket/core": "^7.2.1",
-    "@gasket/redux": "^7.2.0",
-    "acorn": "^8.11.3",
+    "@gasket/core": "workspace:*",
+    "@gasket/plugin-express": "workspace:*",
+    "@gasket/plugin-logger": "workspace:*",
+    "@gasket/plugin-metadata": "workspace:*",
+    "@gasket/plugin-middleware": "workspace:*",
+    "@gasket/plugin-webpack": "workspace:*",
+    "@gasket/redux": "workspace:*",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^20.17.19",
+    "acorn": "^8.14.0",
+    "create-gasket-app": "workspace:*",
     "cross-env": "^7.0.3",
-    "eslint": "^8.56.0",
+    "eslint": "^8.57.1",
     "eslint-config-godaddy": "^7.1.1",
-    "eslint-plugin-jest": "^28.6.0",
-    "eslint-plugin-json": "^3.1.0",
+    "eslint-config-godaddy-typescript": "^4.0.3",
+    "eslint-plugin-jest": "^27.9.0",
     "eslint-plugin-unicorn": "^55.0.0",
     "jest": "^29.7.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-redux": "^8.0.0",
-    "redux": "^4.0.5",
-    "typescript": "^5.4.5",
-    "webpack": "^5.94.0"
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-redux": "^9.2.0",
+    "redux": "^5.0.1",
+    "typescript": "^5.7.3",
+    "webpack": "^5.98.0"
   },
   "eslintConfig": {
     "extends": [
@@ -69,9 +72,23 @@
     ],
     "rules": {
       "unicorn/filename-case": "error"
-    }
+    },
+    "overrides": [
+      {
+        "files": [
+          "lib/*.ts"
+        ],
+        "extends": [
+          "godaddy-typescript"
+        ],
+        "rules": {
+          "jsdoc/*": "off"
+        }
+      }
+    ]
   },
   "eslintIgnore": [
     "generator/redux/store.js"
-  ]
+  ],
+  "deprecated": "Package deprecated and will be removed in future major release."
 }

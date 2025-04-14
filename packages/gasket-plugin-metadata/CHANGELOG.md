@@ -1,64 +1,122 @@
 # `@gasket/plugin-metadata`
 
-### 7.2.1
+## 7.3.5
+
+### Patch Changes
+
+- b667c4e: Downgrade eslint-plugin-jest version due to conflicting peer dependency between versions of @typescript-eslint/eslint-plugin.
+- Updated dependencies [b667c4e]
+  - @gasket/plugin-logger@7.3.3
+  - @gasket/core@7.3.3
+
+## 7.3.4
+
+### Patch Changes
+
+- 7812607: Updates to support using syncpack.
+- Updated dependencies [7812607]
+  - @gasket/plugin-logger@7.3.2
+  - @gasket/core@7.3.2
+
+## 7.3.3
+
+### Patch Changes
+
+- a02ebdc: Export DetailData type.
+
+## 7.3.2
+
+### Patch Changes
+
+- 41e5c6d: Remove Catalog and Workspace alias usage.
+- 0561cd5: Updates to use user-selected package manager. Update all packages to use catalog dep versions.
+- Updated dependencies [41e5c6d]
+- Updated dependencies [0561cd5]
+  - @gasket/plugin-logger@7.3.1
+  - @gasket/core@7.3.1
+
+## 7.3.1
+
+### Patch Changes
+
+- 87ea998: Add missing dep to lint plugin, adjust TS type exports
+  - @gasket/plugin-logger@7.3.0
+
+## 7.3.0
+
+### Minor Changes
+
+- 29f72a5: Migrated packages to use PNPM and changesets. Fixed issues with types and dependencies.
+
+### Patch Changes
+
+- Updated dependencies [29f72a5]
+  - @gasket/plugin-logger@7.3.0
+  - @gasket/core@7.3.0
+
+### 7.2.3
+
+- Add plugin as a dev dependency in create ([#1034])
+
+## 7.2.1
 
 - Fix to use gasket.metadata from package.json for modules ([#1022])
 
-### 7.1.0
+## 7.1.0
 
 - Convert plugin to ESM ([#978])
 
-### 7.0.0
+## 7.0.0
 
 - See [Version 7 Upgrade Guide] for overall changes
 
-### 6.46.4
+## 6.46.4
 
 - Adjust JSDocs and TS types ([#695])
 
-### 6.41.1
+## 6.41.1
 
 - Docs on accessing `gasket.metadata` ([#613])
 
-### 6.39.2
+## 6.39.2
 
 - Add missing `ConfigurationsData` type ([#597])
 
-### 6.36.0
+## 6.36.0
 
 - Add missing `configurations` property to plugin metadata type ([#498])
 
-### 6.35.0
+## 6.35.0
 
 - Fix package object type ([#489])
 
-### 6.34.4
+## 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
 - Upgrade sinon to v14 ([#460])
 
-### 6.34.3
+## 6.34.3
 
 - Upgrade mocha v10 ([#442])
 
-### 6.10.0
+## 6.10.0
 
 - TypeScript definitions for config & lifecycles ([#311])
 
-### 6.0.0
+## 6.0.0
 
 - Version alignment
 - Upgraded dev dependencies ([#247])
 
-### 5.1.0
+## 5.1.0
 
 - Clean markdown from jsdocs ([#141])
 
-### 5.0.0
+## 5.0.0
 
 - Open Source Release
 
-### 2.0.0
+## 2.0.0
 
 - Allow presets to define metadata
 - Metadata is assigned to gasket instance, and only by this plugin ([#64])
@@ -66,12 +124,11 @@
   - `gasket.metadata` structure matches loaded infos with functions redacted
 - Load [ModuleInfo] for main app
 
-### 1.0.0
+## 1.0.0
 
 - [#51] Initial implementation
   - Adds `package.json` and hooks to each `gasket.config.metadata`
   - Implements the `metadata` lifecycle
-
 
 [Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#51]: https://github.com/godaddy/gasket/pull/51
@@ -89,8 +146,8 @@
 [#695]: https://github.com/godaddy/gasket/pull/695
 [#978]: https://github.com/godaddy/gasket/pull/978
 [#1022]: https://github.com/godaddy/gasket/pull/1022
-
-[Loader]:/packages/gasket-resolve/docs/api.md#loader
-[PluginInfo]:/packages/gasket-resolve/docs/api.md#plugininfo
-[PresetInfo]:/packages/gasket-resolve/docs/api.md#presetinfo
-[ModuleInfo]:/packages/gasket-resolve/docs/api.md#moduleinfo
+[#1034]: https://github.com/godaddy/gasket/pull/1034
+[Loader]: /packages/gasket-resolve/docs/api.md#loader
+[PluginInfo]: /packages/gasket-resolve/docs/api.md#plugininfo
+[PresetInfo]: /packages/gasket-resolve/docs/api.md#presetinfo
+[ModuleInfo]: /packages/gasket-resolve/docs/api.md#moduleinfo

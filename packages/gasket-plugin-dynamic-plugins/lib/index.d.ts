@@ -1,4 +1,4 @@
-import type { Plugin, Gasket } from '@gasket/core';
+import type { Plugin } from '@gasket/core';
 
 declare module '@gasket/core' {
   export interface GasketConfig {
@@ -6,9 +6,5 @@ declare module '@gasket/core' {
   }
 }
 
-const plugin: Plugin = {
-  name: '@gasket/plugin-dynamic-plugins',
-  hooks: {}
-};
-
+declare const plugin: Plugin;
 export default plugin;

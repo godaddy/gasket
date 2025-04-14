@@ -1,6 +1,5 @@
-/// <reference types="@gasket/plugin-command" />
-
-import { Plugin } from '@gasket/core';
+import type { MaybeAsync, Plugin } from '@gasket/core';
+import type { RequestLike, GasketRequest } from '@gasket/request' with { 'resolution-mode': 'import' };
 
 export interface PublicGasketData extends Record<string, any> {
 }
@@ -15,8 +14,6 @@ export type GasketDataDefinition = GasketData & {
 }
 
 declare module '@gasket/core' {
-  import { RequestLike, GasketRequest } from '@gasket/request';
-
   export interface GasketConfig {
     data?: GasketDataDefinition;
   }
@@ -38,15 +35,10 @@ declare module '@gasket/core' {
 
 declare module 'create-gasket-app' {
   export interface CreateContext {
-    typescript: boolean;
     nextServerType: 'appRouter' | 'pageRouter' | 'customServer';
-    apiApp: boolean;
   }
 }
 
-const plugin: Plugin = {
-  name: '@gasket/plugin-data',
-  hooks: {}
-};
+declare const plugin: Plugin;
 
-export = plugin;
+export default plugin;

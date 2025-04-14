@@ -1,24 +1,116 @@
 # `create-gasket-app`
 
-### 7.2.0
+## 7.3.4
+
+### Patch Changes
+
+- b667c4e: Downgrade eslint-plugin-jest version due to conflicting peer dependency between versions of @typescript-eslint/eslint-plugin.
+- Updated dependencies [b667c4e]
+  - @gasket/plugin-dynamic-plugins@7.3.4
+  - @gasket/plugin-docusaurus@7.3.3
+  - @gasket/plugin-metadata@7.3.5
+  - @gasket/plugin-command@7.3.4
+  - @gasket/plugin-logger@7.3.3
+  - @gasket/plugin-docs@7.3.4
+  - @gasket/plugin-git@7.3.3
+  - @gasket/request@7.3.4
+  - @gasket/utils@7.3.3
+  - @gasket/core@7.3.3
+
+## 7.3.3
+
+### Patch Changes
+
+- 7812607: Updates to support using syncpack.
+- Updated dependencies [7812607]
+  - @gasket/plugin-dynamic-plugins@7.3.3
+  - @gasket/plugin-docusaurus@7.3.2
+  - @gasket/plugin-metadata@7.3.4
+  - @gasket/plugin-command@7.3.3
+  - @gasket/plugin-logger@7.3.2
+  - @gasket/plugin-docs@7.3.3
+  - @gasket/plugin-git@7.3.2
+  - @gasket/request@7.3.3
+  - @gasket/utils@7.3.2
+  - @gasket/core@7.3.2
+
+## 7.3.2
+
+### Patch Changes
+
+- 41e5c6d: Remove Catalog and Workspace alias usage.
+- 0561cd5: Updates to use user-selected package manager. Update all packages to use catalog dep versions.
+- Updated dependencies [41e5c6d]
+- Updated dependencies [0561cd5]
+  - @gasket/plugin-dynamic-plugins@7.3.2
+  - @gasket/plugin-docusaurus@7.3.1
+  - @gasket/plugin-metadata@7.3.2
+  - @gasket/plugin-command@7.3.2
+  - @gasket/plugin-logger@7.3.1
+  - @gasket/plugin-docs@7.3.2
+  - @gasket/plugin-git@7.3.1
+  - @gasket/request@7.3.1
+  - @gasket/utils@7.3.1
+  - @gasket/core@7.3.1
+
+## 7.3.1
+
+### Patch Changes
+
+- Updated dependencies [87ea998]
+  - @gasket/plugin-dynamic-plugins@7.3.1
+  - @gasket/plugin-metadata@7.3.1
+  - @gasket/plugin-command@7.3.1
+  - @gasket/plugin-docs@7.3.1
+  - @gasket/plugin-docusaurus@7.3.0
+  - @gasket/plugin-git@7.3.0
+  - @gasket/plugin-logger@7.3.0
+
+## 7.3.0
+
+### Minor Changes
+
+- 29f72a5: Migrated packages to use PNPM and changesets. Fixed issues with types and dependencies.
+
+### Patch Changes
+
+- Updated dependencies [29f72a5]
+  - @gasket/plugin-dynamic-plugins@7.3.0
+  - @gasket/plugin-docusaurus@7.3.0
+  - @gasket/plugin-metadata@7.3.0
+  - @gasket/plugin-command@7.3.0
+  - @gasket/plugin-logger@7.3.0
+  - @gasket/plugin-docs@7.3.0
+  - @gasket/plugin-git@7.3.0
+  - @gasket/request@7.3.0
+  - @gasket/utils@7.3.0
+  - @gasket/core@7.3.0
+
+### 7.2.3
+
+- Add `remove` to config-builder ([#1036])
+- Add `addCommand` method for create context ([#1034])
+- Add `addEnvironment` method for create context ([#1010])
+
+## 7.2.0
 
 - Move default plugins into presets ([#1014])
 
-### 7.1.0
+## 7.1.0
 
 - Aligned version releases across all packages
 
-Added `@gasket/plugin-dynamic-plugin` to default plugins ([#970])
+- Added `@gasket/plugin-dynamic-plugin` to default plugins ([#970])
 
-### 7.0.6
+## 7.0.6
 
 - Add JSDoc Typechecking to create-gasket-app ([#943])
 
-### 7.0.2
+## 7.0.2
 
 - Add packageJson `type` type ([#936])
 
-### 7.0.0
+## 7.0.0
 
 - See [Version 7 Upgrade Guide] for overall changes
 - Exclude gaskets from client bundling ([#806])
@@ -42,36 +134,35 @@ Added `@gasket/plugin-dynamic-plugin` to default plugins ([#970])
 - Update `writeGasketConfig` to write in ESM
 - Update tests
 
-### 6.46.6
+## 6.46.6
 
 - Fix resolve cli path ([#712])
 
-### 6.34.4
+## 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
 - Upgrade sinon to v14 ([#460])
 
-### 6.34.3
+## 6.34.3
 
 - Upgrade mocha v10 ([#442])
 
-### 6.17.1
+## 6.17.1
 
 - Update relative path from `__dirname` ([#337])
 
-### 6.0.0
+## 6.0.0
 
 - Version alignment
 - Upgraded dependencies ([#247])
 
-### 5.6.2
+## 5.6.2
 
 - Fix bug with additional arguments ([#171])
 
-### 5.6.0
+## 5.6.0
 
 - Introducing `create-gasket-app` ([#167])
-
 
 [Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#167]: https://github.com/godaddy/gasket/pull/167
@@ -88,4 +179,7 @@ Added `@gasket/plugin-dynamic-plugin` to default plugins ([#970])
 [#936]: https://github.com/godaddy/gasket/pull/936
 [#943]: https://github.com/godaddy/gasket/pull/943
 [#970]: https://github.com/godaddy/gasket/pull/970
+[#1010]: https://github.com/godaddy/gasket/pull/1010
 [#1014]: https://github.com/godaddy/gasket/pull/1014
+[#1034]: https://github.com/godaddy/gasket/pull/1034
+[#1036]: https://github.com/godaddy/gasket/pull/1036

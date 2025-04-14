@@ -8,6 +8,10 @@ module.exports = function webpackConfigHook(
 ) {
   const { redux: reduxConfig } = gasket.config;
 
+  if (!reduxConfig.makeStore) {
+    return webpackConfig;
+  }
+
   return {
     ...webpackConfig,
     plugins: [

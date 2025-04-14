@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-https-proxy",
-  "version": "7.2.1",
+  "version": "7.3.4",
   "description": "Adds support for running an https proxy",
   "type": "module",
   "main": "lib/index.js",
@@ -10,47 +10,46 @@
   ],
   "scripts": {
     "lint": "eslint .",
-    "lint:fix": "npm run lint -- --fix",
+    "lint:fix": "pnpm run lint --fix",
+    "posttest": "pnpm run lint && pnpm run typecheck",
     "test": "vitest --watch=false",
+    "test:coverage": "pnpm run test --coverage",
     "test:watch": "vitest",
-    "test:coverage": "npm run test -- --coverage",
-    "posttest": "npm run lint && npm run typecheck",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/godaddy/gasket.git"
-  },
+  "repository": "godaddy/gasket.git",
   "publishConfig": {
     "access": "public"
   },
   "keywords": [
-    "https",
-    "proxy",
     "gasket",
-    "plugin"
+    "https",
+    "plugin",
+    "proxy"
   ],
   "author": "GoDaddy Operating Company, LLC",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/godaddy/gasket/issues"
-  },
+  "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-https-proxy",
   "dependencies": {
     "http-proxy": "^1.18.1"
   },
   "devDependencies": {
-    "@gasket/core": "^7.2.1",
-    "@gasket/plugin-logger": "^7.2.1",
-    "@types/node": "^20.12.5",
-    "eslint": "^8.56.0",
+    "@gasket/core": "workspace:*",
+    "@gasket/plugin-https": "workspace:*",
+    "@gasket/plugin-logger": "workspace:*",
+    "@gasket/plugin-metadata": "workspace:*",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^20.17.19",
+    "create-gasket-app": "workspace:*",
+    "eslint": "^8.57.1",
     "eslint-config-godaddy": "^7.1.1",
-    "eslint-plugin-jest": "^28.6.0",
-    "eslint-plugin-json": "^3.1.0",
+    "eslint-config-godaddy-typescript": "^4.0.3",
+    "eslint-plugin-jest": "^27.9.0",
     "eslint-plugin-unicorn": "^55.0.0",
-    "typescript": "^5.4.5",
-    "vitest": "^2.1.5"
+    "typescript": "^5.7.3",
+    "vitest": "^3.0.7"
   },
   "eslintConfig": {
     "extends": [
@@ -64,6 +63,19 @@
     ],
     "rules": {
       "unicorn/filename-case": "error"
-    }
+    },
+    "overrides": [
+      {
+        "files": [
+          "lib/*.ts"
+        ],
+        "extends": [
+          "godaddy-typescript"
+        ],
+        "rules": {
+          "jsdoc/*": "off"
+        }
+      }
+    ]
   }
 }

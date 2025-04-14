@@ -18,7 +18,6 @@ function selectBody(children) {
 
 /**
  * Renders a script tag with JSON gasketData
- *
  * @type {import('.').injectGasketData}
  */
 export function injectGasketData(html, gasketData, lookupIndex, insertIndex = -1) {

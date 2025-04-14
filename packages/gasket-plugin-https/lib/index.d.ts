@@ -1,17 +1,19 @@
-import type { MaybeMultiple, MaybeAsync, Plugin } from '@gasket/core';
+import type { MaybeMultiple, MaybeAsync, Plugin, DevProxyConfig } from '@gasket/core';
 import type { SecureContextOptions } from 'tls';
-import type { Agent as HttpAgent, Server as HttpServer } from 'http';
-import type { Agent as HttpsAgent, Server as HttpsServer } from 'https';
+import type { Server as HttpServer } from 'http';
+import type { Server as HttpsServer } from 'https';
 import type { SecureServerOptions, Http2Server } from 'http2';
 import type { ServerOptions as ProxyServerOptions } from 'http-proxy';
 import type { TerminusOptions, HealthCheckError } from '@godaddy/terminus';
+import type { Logger } from '@gasket/plugin-logger';
 
-
-type RequireAtLeastOne<T, Keys extends keyof T = keyof T> =
+export type RequireAtLeastOne<T, Keys extends keyof T = keyof T> =
   Pick<T, Exclude<keyof T, Keys>>
   & {
     [K in Keys]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<Keys, K>>>
   }[Keys];
+
+export function startProxy(opts: DevProxyConfig, logger: Logger): void;
 
 declare module '@gasket/core' {
   type BaseListenerConfig = {
@@ -25,22 +27,22 @@ declare module '@gasket/core' {
 
   type CustomHttpsSettings = {
     root?: string;
-    key: MaybeMultiple<CertInput>;
-    cert: MaybeMultiple<CertInput>;
+    key?: MaybeMultiple<CertInput>;
+    cert?: MaybeMultiple<CertInput>;
     ca?: MaybeMultiple<CertInput>;
     ciphers?: MaybeMultiple<string>;
     honorCipherOrder?: boolean;
   };
 
   type HttpsSettings =
-     CustomHttpsSettings &
+    CustomHttpsSettings &
     Omit<
       SecureContextOptions,
       keyof CustomHttpsSettings | 'secureProtocol' | 'secureOptions'
     >;
 
   type Http2Settings =
-     CustomHttpsSettings &
+    CustomHttpsSettings &
     Omit<
       SecureServerOptions,
       keyof CustomHttpsSettings | 'secureProtocol' | 'secureOptions'
@@ -62,15 +64,15 @@ declare module '@gasket/core' {
     http?: number | false | null | MaybeMultiple<BaseListenerConfig>;
     https?: MaybeMultiple<
       BaseListenerConfig &
-        HttpsSettings & {
-          sni?: Record<string, HttpsSettings>;
-        }
+      HttpsSettings & {
+        sni?: Record<string, HttpsSettings>;
+      }
     >;
     http2?: MaybeMultiple<
       BaseListenerConfig &
-        Http2Settings & {
-          sni?: Record<string, HttpsSettings>;
-        }
+      Http2Settings & {
+        sni?: Record<string, HttpsSettings>;
+      }
     >;
     handler?: Function;
   }
@@ -107,9 +109,6 @@ declare module '@gasket/core' {
   }
 }
 
-const plugin: Plugin = {
-  name: '@gasket/plugin-https',
-  hooks: {}
-};
+declare const plugin: Plugin;
 
-export = plugin;
+export default plugin;

@@ -1,8 +1,8 @@
 import type { Compiler, Configuration } from 'webpack';
-import { Gasket } from '@gasket/core';
-import type { WebpackMetrics } from '@gasket/plugin-webpack';
+import type { Gasket } from '@gasket/core';
+import type { WebpackMetrics } from './index';
 
-export async function handleMetrics(
+export function handleMetrics(
   /** Metrics data gathered from plugin */
   metrics: WebpackMetrics
 ): Promise<void>;

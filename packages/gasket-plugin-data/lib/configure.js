@@ -1,3 +1,5 @@
+/// <reference types="@gasket/plugin-command" />
+
 const { applyConfigOverrides } = require('@gasket/utils/config');
 const { baseDataMap } = require('./actions');
 

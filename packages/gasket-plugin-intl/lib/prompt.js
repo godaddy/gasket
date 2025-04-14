@@ -1,3 +1,5 @@
+/// <reference types="@gasket/plugin-nextjs" />
+
 /**
  * Prompt lifecycle hook
  *

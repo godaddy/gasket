@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-nextjs",
-  "version": "7.2.1",
+  "version": "7.3.5",
   "description": "Adds Next support to your application",
   "types": "lib/index.d.ts",
   "files": [
@@ -15,64 +15,74 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "lint:fix": "npm run lint -- --fix",
+    "lint:fix": "pnpm run lint --fix",
+    "posttest": "pnpm run lint",
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
-    "test:watch": "npm run test -- --watch",
-    "test:coverage": "npm run test -- --coverage",
-    "posttest": "npm run lint && npm run typecheck",
+    "test:coverage": "pnpm run test --coverage",
+    "test:watch": "pnpm run test --watch",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/godaddy/gasket.git"
-  },
+  "repository": "godaddy/gasket.git",
   "publishConfig": {
     "access": "public"
   },
   "keywords": [
+    "gasket",
     "next",
     "nextjs",
-    "gasket",
     "plugin"
   ],
   "author": "GoDaddy Operating Company, LLC",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/godaddy/gasket/issues"
-  },
+  "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-nextjs",
   "dependencies": {
-    "@gasket/plugin-webpack": "^7.2.1",
-    "fastify": "^4.28.1"
+    "@gasket/plugin-webpack": "workspace:*",
+    "fastify": "^4.29.0"
   },
   "devDependencies": {
-    "@babel/preset-react": "^7.23.3",
-    "@gasket/assets": "^7.2.0",
-    "@gasket/core": "^7.2.1",
-    "@gasket/nextjs": "^7.2.0",
-    "@types/react": "^18.2.0",
+    "@babel/preset-react": "^7.26.3",
+    "@gasket/assets": "workspace:*",
+    "@gasket/core": "workspace:*",
+    "@gasket/intl": "workspace:*",
+    "@gasket/nextjs": "workspace:*",
+    "@gasket/plugin-elastic-apm": "workspace:*",
+    "@gasket/plugin-express": "workspace:*",
+    "@gasket/plugin-fastify": "workspace:*",
+    "@gasket/plugin-https": "workspace:*",
+    "@gasket/plugin-intl": "workspace:*",
+    "@gasket/plugin-logger": "workspace:*",
+    "@gasket/plugin-metadata": "workspace:*",
+    "@gasket/plugin-nextjs": "workspace:*",
+    "@gasket/plugin-service-worker": "workspace:*",
+    "@gasket/plugin-workbox": "workspace:*",
+    "@gasket/request": "workspace:*",
+    "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^20.17.19",
+    "@types/react": "^19.0.12",
     "babel-eslint": "^10.1.0",
+    "create-gasket-app": "workspace:*",
     "cross-env": "^7.0.3",
-    "eslint": "^8.56.0",
+    "eslint": "^8.57.1",
     "eslint-config-godaddy": "^7.1.1",
     "eslint-config-godaddy-react": "^9.1.0",
-    "eslint-plugin-jest": "^28.6.0",
-    "eslint-plugin-json": "^3.1.0",
+    "eslint-config-godaddy-typescript": "^4.0.3",
+    "eslint-plugin-jest": "^27.9.0",
     "eslint-plugin-unicorn": "^55.0.0",
     "jest": "^29.7.0",
     "lodash.merge": "^4.6.2",
-    "next": "^14.0.0",
-    "nodemon": "^3.1.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "typescript": "^5.4.5"
+    "next": "^15.2.3",
+    "nodemon": "^3.1.9",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "typescript": "^5.7.3"
   },
   "peerDependencies": {
-    "@gasket/plugin-webpack": "^7.1",
-    "next": "^14",
-    "react": "^18",
-    "react-dom": "^18"
+    "@gasket/plugin-webpack": "workspace:*",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "eslintConfig": {
     "extends": [
@@ -98,6 +108,17 @@
         "extends": [
           "godaddy-react"
         ]
+      },
+      {
+        "files": [
+          "lib/*.ts"
+        ],
+        "extends": [
+          "godaddy-typescript"
+        ],
+        "rules": {
+          "jsdoc/*": "off"
+        }
       }
     ]
   },
