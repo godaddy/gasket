@@ -33,7 +33,7 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
-    "posttest": "pnpm run lint",
+    "posttest": "pnpm run lint && pnpm run typecheck",
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
     "test:coverage": "pnpm run test --coverage",
     "test:watch": "pnpm run test --watch",

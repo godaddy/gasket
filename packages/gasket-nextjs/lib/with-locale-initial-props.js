@@ -1,7 +1,16 @@
 /// <reference types="@gasket/plugin-intl" />
 
-// @ts-ignore
 import { resolveGasketData } from '@gasket/data';
+
+/**
+ * Returns the request object from Next.js context (App or Page).
+ * @param {import('next').NextPageContext | import('next/app').AppContext} ctx
+ * @returns {import('http').IncomingMessage | undefined}
+ */
+export const getRequestFromContext = (ctx) =>
+  // Functional guard for AppContext vs PageContext
+  'ctx' in ctx ? ctx.ctx?.req : ctx.req;
+
 
 /** @type {import('.').withLocaleInitialProps} */
 export function withLocaleInitialProps(gasket) {
@@ -9,7 +18,7 @@ export function withLocaleInitialProps(gasket) {
     const originalGetInitialProps = Component.getInitialProps;
     Component.getInitialProps = async (ctx) => {
       // support app or page context
-      const req = ctx.ctx?.req ?? ctx.req;
+      const req = getRequestFromContext(ctx);
       const gasketData = await resolveGasketData(gasket, req);
       const { locale } = gasketData.intl;
 

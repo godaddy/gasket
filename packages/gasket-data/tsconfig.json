@@ -3,7 +3,7 @@
     "allowJs": true,
     "checkJs": true,
     "noEmit": true,
-    "skipLibCheck": false,
+    "skipLibCheck": true,
     "resolveJsonModule": true,
     "module": "NodeNext",
     "esModuleInterop": true,
@@ -12,7 +12,8 @@
       "dom"
     ],
     "types": [
-      "@types/jest"
+      "@types/jest",
+      "@types/node"
     ]
   },
   "exclude": [

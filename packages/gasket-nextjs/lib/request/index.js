@@ -1,10 +1,8 @@
 import { makeGasketRequest, WeakPromiseKeeper } from '@gasket/request';
 import { cookies, headers } from 'next/headers';
 
-/** @typedef {import('@gasket/request').GasketRequest} GasketRequest */
-
 /**
- * @type {import('@gasket/request').WeakPromiseKeeper<Headers, GasketRequest>}
+ * @type {import('@gasket/request').WeakPromiseKeeper<Headers, import('@gasket/request').GasketRequest>}
  */
 const keeper = new WeakPromiseKeeper();
 
@@ -19,12 +17,19 @@ export async function request(params) {
         query
       ] = await Promise.all([cookies(), params]);
 
+      /** @type {Record<string, string>} */
+      const cookieEntries = {};
+
+      for (const { name, value } of cookieStore.getAll()) {
+        cookieEntries[name] = value;
+      }
+
       return makeGasketRequest({
         headers: headerStore,
-        cookies: cookieStore,
+        cookies: cookieEntries,
         query
       });
-    }
+    };
 
     keeper.set(headerStore, make());
   }

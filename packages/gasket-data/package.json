@@ -46,6 +46,7 @@
     "@gasket/request": "workspace:*"
   },
   "devDependencies": {
+    "@gasket/core": "workspace:*",
     "@gasket/plugin-data": "workspace:*",
     "@jest/globals": "^29.7.0",
     "@swc/cli": "^0.6.0",

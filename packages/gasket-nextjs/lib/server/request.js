@@ -17,7 +17,7 @@ export function request(query) {
           acc[name] = value;
           return acc;
         }, {}),
-      // @ts-ignore - TODO: entries is not available on Headers here for some reason..
+      // @ts-ignore - next/headers ReadonlyHeaders is iterable even if TS doesn't declare it
       headers: Object.fromEntries(headerStore.entries())
     };
 
