@@ -28,9 +28,8 @@ export default {
 
     gasket.engine.registerPlugins(config.plugins);
 
-    /** @type {import('@gasket/core').GasketTrace} */
-    // @ts-ignore - At this point in the lifecycle, Gasket has been converted to a proxy type for tracing Gasket operations.
-    const tracer = gasket;
+    const tracer = /** @type {import('@gasket/core').GasketTrace} */ (gasket);
+
 
     gasket.execApplySync('init', function (plugin, handler) {
       if (imported.includes(plugin)) {

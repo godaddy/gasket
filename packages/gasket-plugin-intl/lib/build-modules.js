@@ -1,7 +1,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 const { getPackageDirs, saveJsonFile } = require('./utils/fs-utils');
-const { getIntlConfig } = require('./configure');
+const { getIntlConfig } = require('./utils/configure-utils');
 
 const debug = require('debug')('gasket:plugin:intl:buildModules');
 
@@ -25,9 +25,12 @@ class BuildModules {
       this._lookupModuleDirs = modules;
     }
 
-    // @ts-ignore - modules will be an object or array by this point in the
-    // lifecycles
-    const { excludes, localesDir } = modules;
+    /** @type {Record<string, any>} */
+    let excludes, localesDir;
+
+    if (typeof modules === 'object' && !Array.isArray(modules)) {
+      ({ excludes, localesDir } = modules);
+    }
 
     this._logger = logger;
     this._outputDir = path.resolve(path.join(intlConfig.localesDir, 'modules'));
@@ -213,10 +216,8 @@ class BuildModules {
         );
       });
 
-      /** @type {import('./internal').SrcPkgDir[]} */
-      // @ts-ignore - force SrcPkgDir[] type
-      const results = await Promise.all(promises);
-      return results.filter(Boolean);
+      const results = (await Promise.all(promises)).filter(Boolean);
+      return /** @type {import('./internal').SrcPkgDir[]} */ (results);
     }
 
     return this.discoverDirs();

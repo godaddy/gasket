@@ -1,8 +1,7 @@
 import { Command } from 'commander';
 import { logo } from './utils/logo.js';
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
-const { version } = require('../package.json');
+import pkg from '../package.json';
+const { version } = pkg;
 const program = new Command();
 
 // Create Gasket CLI

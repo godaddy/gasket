@@ -10,21 +10,32 @@
 // eslint-disable-next-line max-statements
 module.exports = async function createServers(gasket, serverOpts) {
   const fastify = require('fastify');
+  const fastifyExpress = require('@fastify/express');
   const { alignLogger } = require('./utils');
   const { fastify: fastifyConfig = {}, http2, https } = gasket.config;
   const { trustProxy = false, disableRequestLogging = true } = fastifyConfig;
   const fastifyLogger = alignLogger(gasket.logger);
 
-  // @ts-ignore
-  const app = fastify({ logger: fastifyLogger, trustProxy, https, http2, disableRequestLogging });
+  /** @type {import('.').FastifyOptions} */
+  const fastifyOptions = {
+    logger: fastifyLogger,
+    trustProxy,
+    https,
+    http2,
+    disableRequestLogging
+  };
+  const app = fastify(fastifyOptions);
+  await app.register(fastifyExpress);
 
   // allow consuming apps to directly append options to their server
-  // @ts-ignore
   await gasket.exec('fastify', app);
 
   const postRenderingStacks = (await gasket.exec('errorMiddleware')).filter(Boolean);
-  // @ts-ignore
-  postRenderingStacks.forEach((stack) => app.use(stack));
+  postRenderingStacks.forEach((stack) => {
+    /** @type {import('connect').NextHandleFunction} */
+    const middleware = stack;
+    app.use(middleware);
+  });
 
   return {
     ...serverOpts,

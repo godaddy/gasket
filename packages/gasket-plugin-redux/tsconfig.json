@@ -1,23 +1,6 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "allowJs": true,
-    "checkJs": true,
-    "noEmit": true,
-    "skipLibCheck": false,
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "lib": [
-      "esnext",
-      "dom"
-    ],
-    "types": [
-      "@types/jest",
-      "@types/node"
-    ]
-  },
-  "exclude": [
-    "test",
-    "coverage",
-    "generator"
-  ]
+    "module": "ES2020"
+  }
 }

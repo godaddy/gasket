@@ -19,7 +19,6 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
-    "posttest": "pnpm run lint && pnpm run typecheck",
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watch",

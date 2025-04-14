@@ -2,7 +2,7 @@
 
 import { gasketData } from './gasket-data.js';
 
-/** @type {import('@gasket/data').resolveGasketData} */
+/** @type {import('.').resolveGasketData} */
 export async function resolveGasketData(gasket, req) {
   let data;
   if (typeof document !== 'undefined') {

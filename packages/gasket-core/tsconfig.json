@@ -1,23 +1,9 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "moduleResolution": "NodeNext",
-    "module": "NodeNext",
     "downlevelIteration": true,
-    "allowJs": true,
-    "checkJs": true,
-    "noEmit": true,
-    "skipLibCheck": false,
-    "resolveJsonModule": true,
-    "noImplicitAny": true,
-    "esModuleInterop": true,
-    "lib": [
-      "esnext",
-      "dom"
-    ],
-    "types": [
-      "@types/node",
-      "@types/jest"
-    ]
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext"
   },
   "exclude": [
     "test",

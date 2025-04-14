@@ -1,4 +1,4 @@
-import type { MaybeMultiple, MaybeAsync, Plugin, DevProxyConfig } from '@gasket/core';
+import type { MaybeMultiple, MaybeAsync, Plugin, DevProxyConfig } from '@gasket/core' with { 'resolution-mode': 'import' };
 import type { SecureContextOptions } from 'tls';
 import type { Server as HttpServer } from 'http';
 import type { Server as HttpsServer } from 'https';

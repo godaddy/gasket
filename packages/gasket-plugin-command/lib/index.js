@@ -5,12 +5,11 @@ import configure from './configure.js';
 import prepare from './prepare.js';
 import commands from './commands.js';
 import ready from './ready.js';
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
-const { name, version, description } = require('../package.json');
+import pkg from '../package.json';
+const { name, version, description } = pkg;
 
 /** @type {import('@gasket/core').Plugin} */
-export default {
+const plugin = {
   name,
   version,
   description,
@@ -50,3 +49,5 @@ export default {
     }
   }
 };
+
+export default plugin;
