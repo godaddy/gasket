@@ -100,6 +100,8 @@ export default {
 };
 ```
 
+For more details, see the additional [webpack documentation].
+
 ## License
 
 [MIT](./LICENSE.md)
@@ -108,3 +110,4 @@ export default {
 
 [webpack-merge]: https://github.com/survivejs/webpack-merge
 [webpackConfig]: #webpackconfig
+[webpack documentation]: ./docs/webpack.md
