@@ -37,6 +37,7 @@ const config = {
     'type',
     'bin',
     'main',
+    'module',
     'browser',
     'types',
     'files',
