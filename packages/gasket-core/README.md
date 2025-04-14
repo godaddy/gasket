@@ -9,7 +9,7 @@ npm install @gasket/core
 ```
 
 Add a `gasket.js` file to the root of your project.
-This can be a `.mjs` extension if your package.json has the `type` field set to `module`.
+This can be a `.js` extension if your package.json has the `type` field set to `module`.
 It is also possible to use with a `.ts` extension if you have TypeScript configured.
 
 ```js
