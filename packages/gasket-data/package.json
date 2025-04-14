@@ -60,5 +60,23 @@
     "typescript": "^5.7.3",
     "vite": "^5.0.0",
     "vitest": "^3.0.7"
+  },
+  "eslintConfig": {
+    "ignorePatterns": [
+      "dist/"
+    ],
+    "extends": [
+      "godaddy-typescript",
+      "plugin:jsdoc/recommended-typescript-flavor"
+    ],
+    "plugins": [
+      "unicorn",
+      "jsdoc"
+    ],
+    "rules": {
+      "unicorn/filename-case": "error",
+      "jsdoc/require-param": "off",
+      "jsdoc/require-returns": "off"
+    }
   }
 }
