@@ -1,6 +1,8 @@
+import { describe, it, expect } from 'vitest';
+
 describe('index', () => {
   it('has expected exports', async () => {
-    const mod = await import('../lib/index.js');
+    const mod = await import('../src/index');
 
     const expected = [
       'gasketData',

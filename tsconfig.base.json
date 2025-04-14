@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ESNext", // Use latest JS features
+    "module": "ESNext", // Enable modern module syntax (ESM)
+    "moduleResolution": "Node", // Match Node.js module rules
+    "esModuleInterop": true, // Allow default imports from CommonJS
+    "allowSyntheticDefaultImports": true, // Helps interop with CJS packages
+    "resolveJsonModule": true, // Import .json files as modules
+    "allowJs": true, // Support JS files in the project
+    "checkJs": true, // Type-check JS files
+    "skipLibCheck": false, // Type-check all dependencies
+    "declaration": true, // Emit .d.ts for published packages
+    "declarationMap": true, // Map .d.ts files to original source
+    "emitDeclarationOnly": false, // Also emit JS output
+    "sourceMap": true, // Enable source maps
+    "lib": [
+      "esnext",
+      "dom"
+    ] // Support modern JS + browser APIs
+  }
+}

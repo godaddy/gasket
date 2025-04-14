@@ -1,28 +1,34 @@
-/** @jest-environment node */ // eslint-disable-line
+import { describe, it, beforeEach, vi, expect } from 'vitest';
 
-import { jest } from '@jest/globals';
+const mockGasketData = vi.fn();
 
-const mockGasketData = jest.fn();
-jest.unstable_mockModule('../lib/gasket-data.js', () => ({ gasketData: mockGasketData }));
+// Vitest mock for ESM import
+vi.mock('../src/gasket-data', () => ({
+  gasketData: mockGasketData
+}));
 
 describe('resolveGasketData', () => {
-  let mockGasket;
+  let mockGasket: any;
   const mockReq = {};
 
   beforeEach(() => {
     mockGasketData.mockResolvedValue({ test: 'hello world' });
-    mockGasket = { actions: { getPublicGasketData: jest.fn() } };
+    mockGasket = {
+      actions: {
+        getPublicGasketData: vi.fn()
+      }
+    };
   });
 
   it('should not call gasketData on server', async () => {
-    const { resolveGasketData } = await import('../lib/resolve-gasket-data.js');
+    const { resolveGasketData } = await import('../src/resolve-gasket-data');
     await resolveGasketData(mockGasket, mockReq);
 
     expect(mockGasketData).not.toHaveBeenCalled();
   });
 
   it('should call gasket.actions.getPublicGasketData on server', async () => {
-    const { resolveGasketData } = await import('../lib/resolve-gasket-data.js');
+    const { resolveGasketData } = await import('../src/resolve-gasket-data');
     await resolveGasketData(mockGasket, mockReq);
 
     expect(mockGasket.actions.getPublicGasketData).toHaveBeenCalledWith(mockReq);
