@@ -50,7 +50,7 @@
     "eslint-plugin-unicorn": "^55.0.0",
     "fastify": "^4.29.0",
     "jest": "^29.7.0",
-    "typescript": "5.3.3"
+    "typescript": "^5.7.3"
   },
   "peerDependencies": {
     "fastify": "^4.29.0"

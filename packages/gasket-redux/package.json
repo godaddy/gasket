@@ -59,7 +59,7 @@
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "redux": "^5.0.1",
-    "typescript": "5.3.3"
+    "typescript": "^5.7.3"
   },
   "peerDependencies": {
     "redux": "^5.0.1"
