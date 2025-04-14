@@ -1,8 +1,6 @@
-let _gasketData;
+import type { GasketData } from './types';
 
-export type GasketData = {
-  config?: { [key: string | number]: string | undefined };
-}
+let _gasketData;
 
 /**
  * Function to retrieve Gasket data from the DOM.

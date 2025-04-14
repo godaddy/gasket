@@ -1,8 +1,8 @@
 /// <reference types="@gasket/plugin-data" />
 
-import type { GasketData } from './gasket-data';
 import type { Gasket } from '@gasket/core';
 import type { RequestLike } from '@gasket/request';
+import type { GasketData } from './types';
 
 /**
  * Resolves the Gasket data for the current environment.
