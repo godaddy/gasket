@@ -1,16 +1,16 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "allowJs": true,
-    "checkJs": true,
-    "skipLibCheck": false,
+    "target": "ESNext", // Use latest JS features
+    "module": "ESNext", // Enable modern module syntax
+    "moduleResolution": "Node", // Match Node.js module rules
+    "esModuleInterop": true, // Allow default imports from CommonJS
+    "resolveJsonModule": true, // Import .json files as modules
+    "allowJs": true, // Support JS files in the project
+    "checkJs": true, // Type-check JS files
+    "skipLibCheck": false, // Type-check all dependencies
     "lib": [
-      "esnext",
-      "dom"
+      "esnext", // Latest JS standard library
+      "dom" // Browser APIs
     ]
   }
 }
