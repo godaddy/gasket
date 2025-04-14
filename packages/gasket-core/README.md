@@ -9,7 +9,7 @@ npm install @gasket/core
 ```
 
 Add a `gasket.js` file to the root of your project.
-This can be a `.js` extension if your package.json has the `type` field set to `module`.
+This can be a `.mjs` extension if your package.json has the `type` field set to `module`.
 It is also possible to use with a `.ts` extension if you have TypeScript configured.
 
 ```js
@@ -28,7 +28,7 @@ export default makeGasket({
 
 You can now import the Gasket instance from your `gasket.js` file into your
 application code.
-With a Gasket, you can fire **actions** that will trigger **lifecycles** hooked
+With the Gasket instance, you can fire **actions** that will trigger **lifecycles** hooked
 by plugins which encapsulate functionality allowing reuse across many applications.
 
 ### Registered plugins
@@ -40,7 +40,7 @@ array of the Gasket configuration.
 
 ## Lifecycles
 
-When a new Gasket is created, there are two lifecycles synchronous executed followed by two asynchronous lifecycles.
+When a new Gasket instance is created, there are two lifecycles synchronous executed followed by two asynchronous lifecycles.
 
 You can determine when the asynchronous lifecycles have completed by verifying that the `isReady` property on the Gasket instance has been resolved.
 
@@ -114,7 +114,7 @@ const hooks = {
 export default { name, hooks };
 ```
 
-In this example, we register an action `getDoodads` that will only execute if the
+In the [actions] example below, we register an action `getDoodads` that will only execute if the
 `example` configuration is set to `true`.
 It will then execute the `doodads` lifecycle, allowing any registered plugin to
 provide doodads.
@@ -254,9 +254,9 @@ certain lifecycle flows.
 
 Additionally, it is possible to start fresh traces by calling
 `gasket.traceRoot()`.
-This method should will exit the current branch's trace history
-and start a fresh.
-Use this sparingly only for situations such as tracing handling for new requests.
+This method will exit the current branch's trace history
+and start a fresh trace.
+Use this sparingly, such as tracing handling for new requests.
 
 ## Recursion Protection
 

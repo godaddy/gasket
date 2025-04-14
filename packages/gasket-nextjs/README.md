@@ -145,7 +145,7 @@ and `<NextScript/>` components and the decorator cannot find the right place to 
 
 ### withGasketDataProvider
 
-Use this to inject gasket data in to provider context to share the gasketData with the `useGasketData` hook. This is SSR
+Use this to allow gasket data to be accessed with the `useGasketData` hook. This is SSR
 and client side friendly and can be added at the app level or component level.
 
 #### Example
