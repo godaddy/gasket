@@ -42,7 +42,6 @@ export default makeGasket({
   ],
   fastify: {
     compression: false,
-    routes: 'api/*.js',
     excludedRoutesRegex: /^(?!\/_next\/)/,
     trustProxy: true
   }

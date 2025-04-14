@@ -1,7 +1,7 @@
 # @gasket/plugin-metadata
 
 Metadata is the information about the registered plugins and presets, available to
-plugin lifecycle hooks. This data can be used in various was for plugins, most
+plugin lifecycle hooks. This data can be used in various ways for plugins, most
 notably the [@gasket/plugin-docs] which uses it to collate docs for an app.
 
 ## Installation
@@ -58,7 +58,7 @@ export default {
           {
             name: 'module-name',
             version: '7.0.0',
-            description: 'module-name despcrition',
+            description: 'module-name description',
             link: 'README.md'
           }
         ]
@@ -120,7 +120,7 @@ the `getMetadata` Gasket action.
 #### Access example
 
 Back to our example plugin, let's see how we can access details about an
-installed module, and put is some conditional logic.
+installed module, and put in some conditional logic.
 
 ```js
 // gasket-plugin-example.js

@@ -163,7 +163,7 @@ export default {
 
 ### serviceWorkerCacheKey
 
-Allows plugins to effect the cache key based on the request.
+Allows plugins to affect the cache key based on the request.
 
 Composing service workers can potentially be process intensive, and it is
 unnecessary to recompose the service worker for each unique request. This hook

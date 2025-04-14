@@ -1,6 +1,6 @@
 # @gasket/plugin-git
 
-This a built-in plugin to the Gasket CLI used to set up new apps with git
+This is a built-in plugin for the Gasket CLI used to set up new apps with git
 repositories when using the [gasket create command].
 
 ## Usage
@@ -11,12 +11,12 @@ create process.
 ### prompt
 
 The `prompt` will ask users during the create command if they wish to initialize
-a git repo or not. This prompt will set the `gitInit` property of the create
+a GitHub repository. This prompt will set the `gitInit` property of the create
 context. It is possible to default this in a preset, by setting this in the
 preset's package.json, under a `gasket.create` property.
 
 In the following example, when a new app is created with this preset, a git repo
-will always be initialized, and the user not prompted.
+will always be initialized, and the user will not be prompted.
 
 ```json
 {

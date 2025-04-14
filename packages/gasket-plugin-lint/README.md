@@ -33,7 +33,7 @@ an [ESLint shared config].
 
 **Do you want stylelint configured?**
 
-Some code style allow for [stylelint] to also be configured. Choose yes to
+Some code styles allow for [stylelint] to also be configured. Choose yes to
 include config for it, also.
 
 **What is the name of the stylelint config?**
