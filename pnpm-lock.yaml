@@ -586,6 +586,12 @@ importers:
       '@jest/globals':
         specifier: ^29.7.0
         version: 29.7.0
+      '@swc/cli':
+        specifier: ^0.6.0
+        version: 0.6.0(@swc/core@1.10.18(@swc/helpers@0.5.15))
+      '@swc/core':
+        specifier: ^1.10.18
+        version: 1.10.18(@swc/helpers@0.5.15)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
