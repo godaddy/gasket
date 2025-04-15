@@ -40,7 +40,7 @@ array of the Gasket configuration.
 
 ## Lifecycles
 
-When a new Gasket instance is created, there are two lifecycles synchronous executed followed by two asynchronous lifecycles.
+When a new Gasket instance is created, there are two synchronous lifecycles that are executed followed by two asynchronous lifecycles.
 
 You can determine when the asynchronous lifecycles have completed by verifying that the `isReady` property on the Gasket instance has been resolved.
 
