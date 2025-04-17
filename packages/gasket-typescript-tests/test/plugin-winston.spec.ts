@@ -1,7 +1,8 @@
 import { GasketConfigDefinition, Hook, Gasket } from '@gasket/core';
 import '@gasket/plugin-winston';
+import TransportStream from 'winston-transport';
 
-const fakeTransport = (options: any) => void 0;
+const fakeTransport = new TransportStream()
 
 describe('@gasket/plugin-winston', () => {
   it('adds a winston config section', () => {
@@ -43,9 +44,9 @@ describe('@gasket/plugin-winston', () => {
     config.winston.format = false;
   });
 
-  // it('defines the winstonTransports lifecycle', async () => {
-  //   const hook: Hook<'winstonTransports'> = (gasket: Gasket) => {
-  //     return fakeTransport;
-  //   };
-  // });
+  it('defines the winstonTransports lifecycle', async () => {
+    const hook: Hook<'winstonTransports'> = (gasket: Gasket) => {
+      return fakeTransport;
+    };
+  });
 });
