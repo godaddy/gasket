@@ -98,4 +98,19 @@ describe('The execWaterfallSync method', () => {
 
     expect(result).toEqual(null);
   });
+
+  it('throws for async hooks', () => {
+    const pluginBad = {
+      name: 'pluginBad',
+      hooks: {
+        async eventA(gasket, value) {
+          return value * 10;
+        }
+      }
+    };
+    mockGasket = new Gasket({ plugins: [pluginA, pluginB, pluginBad] });
+    expect(() => mockGasket.execWaterfallSync('eventA', 5)).toThrow(
+      'execWaterfallSync cannot be used with async hook (eventA) of plugin (pluginBad)'
+    );
+  });
 });
