@@ -16,7 +16,7 @@ const plugin = {
   version,
   description,
   hooks: {
-    async create(gasket, { pkg, gasketConfig }) {
+    create(gasket, { pkg, gasketConfig }) {
       gasketConfig.addPlugin('pluginWinston', '@gasket/plugin-winston');
       pkg.add('dependencies', {
         [name]: `^${version}`,
