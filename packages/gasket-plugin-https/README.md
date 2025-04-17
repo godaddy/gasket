@@ -260,7 +260,7 @@ want to throw custom errors.
 
 ### onSendFailureDuringShutdown
 
-Triggered when terminus about to send a 503 Error to the healthcheck route but
+Triggered when terminus about to send a 503 Error to the healthcheck route but the
 server is currently shutting down.
 
 ```js

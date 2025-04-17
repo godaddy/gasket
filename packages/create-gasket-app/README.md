@@ -184,7 +184,7 @@ The hook is passed the following parameters:
 | `gasket`               | The `gasket` API                                     |
 | `context`              | The CreateContext with data from flags, prompts, etc |
 | `context.pkg`          | Commonly used in create to add to package.json       |
-| `context.file`         | Commonly used to add files and templates for the app |
+| `context.files`        | Commonly used to add files and templates for the app |
 | `context.gasketConfig` | Used to add config to the generated gasket.js |
 | `context.messages`     | non-error/warning messages to report                 |
 | `context.warnings`     | warnings messages to report                          |

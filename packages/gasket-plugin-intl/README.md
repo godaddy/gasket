@@ -1,6 +1,6 @@
 # @gasket/plugin-intl
 
-This primary responsibility of this plugin is to build the intl manager script.
+The primary responsibility of this plugin is to build the intl manager script.
 
 ## Installation
 
@@ -78,7 +78,7 @@ For details on how the intl manager can be used, see the
 
 ### Locale File Path
 
-A `localeFilePath` represents be the target where static JSON files exist.
+A `localeFilePath` represents the target where static JSON files exist.
 An app or component can use this path to resolve the correct file to
 load for a given locale.
 
@@ -309,9 +309,9 @@ locale file is then copied to a `modules` directory under the directory
 configured for `localesDir` (i.e. `./public/locales/modules`). This allows these
 files found under node modules to be served or distributed as a static file.
 
-So, for example,say you have a shared package (`my-shared-pkg`) used across
-multiple apps. This packages has common locale JSON files under a `./locales`
-directory at the root of the package (`my-shared-pkg/locales`). These will be
+So, for example, say you have a shared package (`my-shared-pkg`) used across
+multiple apps. This package has common locale JSON files under a `./locales`
+directory at the root of the package (`my-shared-pkg/locales`). These files will be
 copied to your static locales directory
 (`./public/locales/modules/my-shared-pkg/*.json`). You can then set the
 [locale file path] with your loader (`locales/modules/my-shared-pkg`).
@@ -368,13 +368,13 @@ export default makeGasket({
 
 ## Debugging
 
-If you are experiencing difficulties seeing with locale files not working as expected, it can be helpful to enable debug logging for your gasket server via the `DEBUG` environment variable under the namespace `gasket`:
+If you are experiencing difficulties with locale files not working as expected, it can be helpful to enable debug logging for your gasket server via the `DEBUG` environment variable under the namespace `gasket`:
 
 ```shell
 DEBUG=gasket:* npm run local
 ```
 
-Once enabled, look for messages under the namespace `gasket:plugin:intl` and `gasket:intl` for a detailed accounting on what's happening behind the scenes.
+Once enabled, look for messages under the namespace `gasket:plugin:intl` and `gasket:intl` for a detailed account on what's happening behind the scenes.
 
 ## License
 
