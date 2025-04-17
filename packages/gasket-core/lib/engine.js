@@ -210,7 +210,11 @@ export class GasketEngine {
         this._executeInOrder(hookConfig, plugin => {
           executionPlan.push((passedGasket, ...execArgs) => {
             passedGasket.traceHookStart?.(plugin, event);
-            return subscribers[plugin].invoke(passedGasket, ...execArgs);
+            const result = subscribers[plugin].invoke(passedGasket, ...execArgs);
+            if (result instanceof Promise) {
+              throw new Error(`execSync cannot be used with async hook (${event}) of plugin (${plugin})`);
+            }
+            return result;
           });
         });
 
@@ -288,6 +292,9 @@ export class GasketEngine {
           executionPlan.push((passedGasket, resultMap, ...passedArgs) => {
             passedGasket.traceHookStart?.(plugin, event);
             resultMap[plugin] = subscribers[plugin].invoke(passedGasket, ...passedArgs);
+            if (resultMap[plugin] instanceof Promise) {
+              throw new Error(`execMapSync cannot be used with async hook (${event}) of plugin (${plugin})`);
+            }
           });
         });
 
@@ -362,6 +369,9 @@ export class GasketEngine {
           this._executeInOrder(hookConfig, plugin => {
             passedGasket.traceHookStart?.(plugin, event);
             result = subscribers[plugin].invoke(passedGasket, result, ...args);
+            if (result instanceof Promise) {
+              throw new Error(`execWaterfallSync cannot be used with async hook (${event}) of plugin (${plugin})`);
+            }
           });
 
           return result;
@@ -433,7 +443,11 @@ export class GasketEngine {
           executionPlan.push((passedGasket, passApplyFn) => {
             const callback = (...args) => subscribers[plugin].invoke(passedGasket, ...args);
             passedGasket.traceHookStart?.(plugin, event);
-            return passApplyFn(this._pluginMap[plugin], callback);
+            const result = passApplyFn(this._pluginMap[plugin], callback);
+            if (result instanceof Promise) {
+              throw new Error(`execApplySync cannot be used with async hook (${event}) of plugin (${plugin})`);
+            }
+            return result;
           });
         });
         return executionPlan;

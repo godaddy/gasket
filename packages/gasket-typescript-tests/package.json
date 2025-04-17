@@ -90,6 +90,7 @@
     "ts-jest": "^29.2.5",
     "typescript": "^5.7.3",
     "vitest": "^3.0.7",
+    "winston-transport": "^4.9.0",
     "workbox-build": "^4.3.1"
   },
   "eslintConfig": {

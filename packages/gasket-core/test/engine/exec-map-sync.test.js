@@ -9,7 +9,7 @@ const { GasketTrace }  = await import('../../lib/trace.js');
 const { Gasket }  = await import('../../lib/gasket.js');
 
 describe('The execSync method', () => {
-  let gasket, pluginA, pluginB;
+  let mockGasket, pluginA, pluginB;
 
   beforeEach(() => {
     pluginA = {
@@ -30,7 +30,7 @@ describe('The execSync method', () => {
       }
     };
 
-    gasket = new Gasket({ plugins: [pluginA, pluginB] });
+    mockGasket = new Gasket({ plugins: [pluginA, pluginB] });
   });
 
   afterEach(() => {
@@ -38,17 +38,17 @@ describe('The execSync method', () => {
   });
 
   it('returns an map of results', () => {
-    const result = gasket.execMapSync('eventA');
+    const result = mockGasket.execMapSync('eventA');
     expect(result).toEqual({ pluginA: 1, pluginB: 2 });
   });
 
   it('resolves to an empty array if nothing hooked the event', () => {
-    const result = gasket.execMapSync('eventB');
+    const result = mockGasket.execMapSync('eventB');
     expect(result).toEqual({});
   });
 
   it('works when invoked without a context', () => {
-    const { execMapSync } = gasket;
+    const { execMapSync } = mockGasket;
 
     const result = execMapSync('eventA');
 
@@ -56,14 +56,14 @@ describe('The execSync method', () => {
   });
 
   it('invokes hooks with isolate', () => {
-    gasket.execMapSync('eventA');
+    mockGasket.execMapSync('eventA');
 
     expect(pluginA.hooks.eventA).toHaveBeenCalledWith(expect.any(GasketTrace));
   });
 
   it('branch isolate passed through', () => {
-    const spy = jest.spyOn(gasket.engine, 'execMapSync');
-    const branch = gasket.traceBranch();
+    const spy = jest.spyOn(mockGasket.engine, 'execMapSync');
+    const branch = mockGasket.traceBranch();
     const result = branch.execMapSync('eventA');
 
     expect(spy).toHaveBeenCalledWith(expect.traceProxyOf(branch), 'eventA');
@@ -72,7 +72,7 @@ describe('The execSync method', () => {
 
   it('has expected trace output', () => {
     mockDebug.mockClear();
-    gasket.execMapSync('eventA', 5);
+    mockGasket.execMapSync('eventA', 5);
 
     expect(mockDebug.mock.calls).toEqual([
       ['⋌ root'],
@@ -80,5 +80,20 @@ describe('The execSync method', () => {
       ['  ↪ pluginA:eventA'],
       ['  ↪ pluginB:eventA']
     ]);
+  });
+
+  it('throws for async hooks', () => {
+    const pluginBad = {
+      name: 'pluginBad',
+      hooks: {
+        async eventA(gasket, value) {
+          return value * 10;
+        }
+      }
+    };
+    mockGasket = new Gasket({ plugins: [pluginA, pluginB, pluginBad] });
+    expect(() => mockGasket.execMapSync('eventA', 5)).toThrow(
+      'execMapSync cannot be used with async hook (eventA) of plugin (pluginBad)'
+    );
   });
 });

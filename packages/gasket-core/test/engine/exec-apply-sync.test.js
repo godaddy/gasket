@@ -10,7 +10,7 @@ const { Gasket }  = await import('../../lib/gasket.js');
 
 // eslint-disable-next-line max-statements
 describe('The execApplySync method', () => {
-  let gasket, hookASpy, hookBSpy, hookCSpy;
+  let mockGasket, hookASpy, hookBSpy, hookCSpy;
 
   const Wrapper = class Wrapper {
     constructor(plugin) {
@@ -55,7 +55,7 @@ describe('The execApplySync method', () => {
     hookBSpy = jest.spyOn(pluginB.hooks, 'eventA');
     hookCSpy = jest.spyOn(pluginC.hooks.eventA, 'handler');
 
-    gasket = new Gasket({ plugins: [pluginA, pluginB, pluginC] });
+    mockGasket = new Gasket({ plugins: [pluginA, pluginB, pluginC] });
   });
 
   afterEach(() => {
@@ -63,7 +63,7 @@ describe('The execApplySync method', () => {
   });
 
   it('invokes hooks with isolate', () => {
-    gasket.execApplySync('eventA', mockApplyHandler);
+    mockGasket.execApplySync('eventA', mockApplyHandler);
 
     expect(hookASpy).toHaveBeenCalledWith(expect.any(GasketTrace), expect.any(Wrapper));
     expect(hookBSpy).toHaveBeenCalledWith(expect.any(GasketTrace), expect.any(Wrapper));
@@ -71,8 +71,8 @@ describe('The execApplySync method', () => {
   });
 
   it('branch isolate passed through', () => {
-    const spy = jest.spyOn(gasket.engine, 'execApplySync');
-    const branch = gasket.traceBranch();
+    const spy = jest.spyOn(mockGasket.engine, 'execApplySync');
+    const branch = mockGasket.traceBranch();
 
     branch.execApplySync('eventA', mockApplyHandler);
 
@@ -80,7 +80,7 @@ describe('The execApplySync method', () => {
   });
 
   it('returns an Array of results', () => {
-    const result = gasket.execApplySync('eventA', mockApplyHandler);
+    const result = mockGasket.execApplySync('eventA', mockApplyHandler);
 
     expect(result).toHaveLength(3);
     expect(result[0].arg.plugin).toMatchObject(pluginA);
@@ -89,7 +89,7 @@ describe('The execApplySync method', () => {
   });
 
   it('accepts thunks and literal argument values when resolving an Array', () => {
-    const result = gasket.execApplySync('eventA', (plugin, handler) => {
+    const result = mockGasket.execApplySync('eventA', (plugin, handler) => {
       return handler(new Wrapper(plugin), 'literal');
     });
 
@@ -101,7 +101,7 @@ describe('The execApplySync method', () => {
   });
 
   it('resolves to an empty array if nothing hooked the event', () => {
-    const result = gasket.execApplySync('eventB', (plugin, handler) => {
+    const result = mockGasket.execApplySync('eventB', (plugin, handler) => {
       return handler(new Wrapper(plugin));
     });
 
@@ -109,7 +109,7 @@ describe('The execApplySync method', () => {
   });
 
   it('works when invoked without a context', () => {
-    const { execApplySync } = gasket;
+    const { execApplySync } = mockGasket;
 
     const result = execApplySync('eventA', (plugin, handler) => {
       return handler(new Wrapper(plugin));
@@ -125,8 +125,8 @@ describe('The execApplySync method', () => {
     const stub1 = jest.fn().mockImplementation((plugin, handler) => handler());
     const stub2 = jest.fn().mockImplementation((plugin, handler) => handler());
 
-    gasket.execApplySync('eventA', stub1);
-    gasket.execApplySync('eventA', stub2);
+    mockGasket.execApplySync('eventA', stub1);
+    mockGasket.execApplySync('eventA', stub2);
 
     expect(stub1).toHaveBeenCalledTimes(3);
     expect(stub2).toHaveBeenCalledTimes(3);
@@ -134,7 +134,7 @@ describe('The execApplySync method', () => {
 
   it('has expected trace output', () => {
     mockDebug.mockClear();
-    gasket.execApplySync('eventA', mockApplyHandler);
+    mockGasket.execApplySync('eventA', mockApplyHandler);
 
     expect(mockDebug.mock.calls).toEqual([
       ['⋌ root'],
@@ -143,5 +143,20 @@ describe('The execApplySync method', () => {
       ['  ↪ pluginB:eventA'],
       ['  ↪ pluginC:eventA']
     ]);
+  });
+
+  it('throws for async hooks', () => {
+    const pluginBad = {
+      name: 'pluginBad',
+      hooks: {
+        async eventA(gasket, value) {
+          return value * 10;
+        }
+      }
+    };
+    mockGasket = new Gasket({ plugins: [pluginA, pluginB, pluginBad] });
+    expect(() => mockGasket.execApplySync('eventA', mockApplyHandler)).toThrow(
+      'execApplySync cannot be used with async hook (eventA) of plugin (pluginBad)'
+    );
   });
 });

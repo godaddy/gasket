@@ -1,4 +1,4 @@
-/* eslint-disable no-use-before-define */
+/* eslint-disable no-use-before-define, jsdoc/require-param, jsdoc/require-returns */
 declare module '@gasket/core' {
   /**
    * Allows a type to be a single value or an array of that type.
