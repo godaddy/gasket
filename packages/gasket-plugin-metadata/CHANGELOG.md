@@ -1,5 +1,13 @@
 # `@gasket/plugin-metadata`
 
+## 7.3.6
+
+### Patch Changes
+
+- Updated dependencies [8e774bb]
+  - @gasket/core@7.4.0
+  - @gasket/plugin-logger@7.3.3
+
 ## 7.3.5
 
 ### Patch Changes
