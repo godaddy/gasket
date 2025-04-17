@@ -33,7 +33,7 @@ All the configurations for the plugin are added under `express` in the config:
 
 - `compression`: true by default. Can be set to false if applying compression
   differently.
-- 'trustProxy': Enable trust proxy option, [see Express documentation on Express behind proxies](https://expressjs.com/en/guide/behind-proxies.html)
+- `trustProxy`: Enable trust proxy option, [see Express documentation on Express behind proxies](https://expressjs.com/en/guide/behind-proxies.html)
 
 #### Example configuration
 
