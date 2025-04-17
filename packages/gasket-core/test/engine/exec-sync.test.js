@@ -81,4 +81,19 @@ describe('The execSync method', () => {
       ['  ↪ pluginB:eventA']
     ]);
   });
+
+  it('throws for async hooks', () => {
+    const pluginBad = {
+      name: 'pluginBad',
+      hooks: {
+        async eventA(gasket, value) {
+          return value * 10;
+        }
+      }
+    };
+    mockGasket = new Gasket({ plugins: [pluginA, pluginB, pluginBad] });
+    expect(() => mockGasket.execSync('eventA', 5)).toThrow(
+      'execSync cannot be used with async hook (eventA) of plugin (pluginBad)'
+    );
+  });
 });

@@ -63,7 +63,7 @@ describe('@gasket/core', () => {
     });
 
     // eslint-disable-next-line no-sync
-    gasket.execApplySync('example', async function (plugin, handler) {
+    gasket.execApplySync('example', function (plugin, handler) {
       handler('a string', 123, true);
     });
   });
