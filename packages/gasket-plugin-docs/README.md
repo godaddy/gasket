@@ -39,7 +39,7 @@ allows app developers to generate documentation for their Gasket projects. Only
 those presets and plugins that are configured for a project, will be used to
 determine what documentation is available.
 
-When running this command, markdown and other files will gathered from installed
+When running this command, markdown and other files will be gathered from installed
 node modules and collated to the output directory when they can be viewed
 together.
 
@@ -55,7 +55,7 @@ files that exist under a docs directory. Additionally, if any metadata defines
 `link`, these files will be collected, too.
 
 The `docsSetup` lifecycle allows plugin developers to tune the docsConfig that
-is compile for their plugin. Files or file globs can be set, and links changed
+is compiled for their plugin. Files or file globs can be set, and links changed
 as needed. Any lifecycle hooks should return a `docsSetup` object.
 The `defaults` are an available option to reference.
 
@@ -112,7 +112,7 @@ export default {
 
 Transforms can also be added in the docsSetup lifecycle. These are plugins to
 adjust content for files that match the transform's test [RegExp]. By default,
-these will only affect docs collected the plugin's package. If the transform
+these will only affect docs collected by the plugin's package. If the transform
 should be able affect all collected docs, the global property should be set to
 true.
 
@@ -123,11 +123,11 @@ be read about in the `docsTransformHandler` API.
 
 Beside docs for the plugin itself, `docsSetup` for supporting modules can also
 be described. For modules from [metadata], if a `docsSetup` is found, the files
-described will be collected, and link for the generated index go to the link
+described will be collected, and the link for a generated index will go to the link
 specified in the `docsSetup`, instead of the module's homepage.
 
 Alternatively, modules can described their own setup in their package.json by
-defining a `gasket.docsSetup` property. However, Being JSON, transforms or other
+defining a `gasket.docsSetup` property. However, being JSON, transforms or other
 setup functions cannot be described this way:
 
 ```json
@@ -166,7 +166,7 @@ export default {
 }
 ```
 
-The [@gasket/plugin-docusaurus] hooks this lifecycle, to render the docs using
+The [@gasket/plugin-docusaurus] hooks this lifecycle to render the docs using
 Docusaurus.
 
 ### docsGenerate

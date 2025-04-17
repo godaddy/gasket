@@ -46,6 +46,8 @@ using.
   functions. These functions receive the `app` object (Fastify or Express) to
   attach handlers and middleware.
 
+<!-- TODO: do we still need the routes config option? -->
+
 ### Example Configuration for Express
 
 ```js

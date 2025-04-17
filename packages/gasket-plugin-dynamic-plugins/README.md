@@ -30,17 +30,17 @@ core Gasket instance has been created.
 This can be useful when you want to add plugins to Gasket for specific
 environments or commands.
 
-For example, if you have plugins that are really only needed for development,
-such as (`@gasket/plugin-docs`, `@gasket/plugin-docusarus`), you can dynamically
-load them into Gasket only when doing development locally through with plugin.
+For example, if you have plugins that are only needed for development,
+such as the `@gasket/plugin-docs` and `@gasket/plugin-docusarus` plugins, you can 
+dynamically load them into Gasket during local development.
 
-You could then add plugins designated only for development to you
-`devDependencies` in your `package.json` file.
+These plugins can then be designated for development by moving them to
+`devDependencies` in the `package.json` file.
 
 ## Configuration
 
 To specify which plugins to load dynamically,
-in your `gasket` set the `dynamicPlugins` prop to an array of strings
+in `makeGasket` set the `dynamicPlugins` prop to an array of strings
 containing the plugin names you want to add.
 
 ```diff
@@ -57,8 +57,10 @@ export default makeGasket({
 
 ### Conditional configuration
 
-You can use sub-configurations by [environments] or [commands] to determine
+You can use sub-configurations by [commands] or [environments] to determine
 which plugins to load dynamically.
+
+#### Commands Example
 
 For example, if you wanted to load docs-related plugins only when using the
 docs commands, with a package script like:
@@ -79,6 +81,29 @@ makeGasket({
         '@gasket/plugin-docs',
         '@gasket/plugin-docusaurus',
         '@gasket/plugin-metadata'
+      ]
+    }
+  }
+})
+```
+
+#### Environments Example
+
+If you wanted to load the plugins for only a specific environment, you would 
+then configure the plugins to load dynamically for that environment. 
+
+```js
+makeGasket({
+  environments: {
+    local: {
+      dynamicPlugins: [
+        '@gasket/plugin-one',
+        '@gasket/plugin-two',
+      ]
+    },
+    'local.custom.env': {
+      dynamicPlugins: [
+        '@gasket/plugin-three'
       ]
     }
   }

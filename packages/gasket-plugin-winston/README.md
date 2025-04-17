@@ -53,7 +53,7 @@ The [winston documentation] enumerates which properties can be configured. To su
 
 | Name         | Default                                                    | Description                                                 |
 |:-------------|:-----------------------------------------------------------|:------------------------------------------------------------|
-| `level`      | `'info'` (`'debug'` in ENV=local)                          | Log only if `info.level`less than or equal to this level    |
+| `level`      | `'info'` (`'debug'` in ENV=local)                          | Log only if `info.level` is less than or equal to this level    |
 | `transports` | `[new Console()]` _(Console logging)_                      | Set of logging targets for `info` messages                  |
 | `silent`     | `false`                                                    | If true, all logs are suppressed                            |
 | `levels`     | `winston.config.syslog.levels`                             | Levels (and colors) representing log priorities             |
