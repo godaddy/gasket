@@ -4,34 +4,14 @@
 const { name, version, description } = require('../package.json');
 const create = require('./create');
 const createServers = require('./create-servers');
-
-// Memoize the Express app instance
-let app;
+const actions = require('./actions');
 
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {
   name,
   version,
   description,
-  actions: {
-    /** @deprecated */
-    getExpressApp(gasket) {
-      const express = require('express');
-      const { http2 } = gasket.config;
-
-      if (!app) {
-        if (http2) {
-          app = require('http2-express')(express);
-        } else {
-          app = express();
-        }
-
-        app.use(require('cookie-parser')());
-      }
-
-      return app;
-    }
-  },
+  actions,
   hooks: {
     create,
     createServers,
