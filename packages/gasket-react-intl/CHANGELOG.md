@@ -1,5 +1,16 @@
 # `@gasket/react-intl`
 
+## 8.0.0
+
+### Minor Changes
+
+- cc6b554: upgrade to react 19 and nextjs 15
+
+### Patch Changes
+
+- Updated dependencies [cc6b554]
+  - @gasket/plugin-intl@7.4.0
+
 ## 7.3.3
 
 ### Patch Changes
