@@ -79,6 +79,14 @@
         "rules": {
           "jsdoc/*": "off"
         }
+      },
+      {
+        "files": [
+          "test/**/*.js"
+        ],
+        "rules": {
+          "jsdoc/require-jsdoc": "off"
+        }
       }
     ]
   },
