@@ -1,5 +1,28 @@
 # `@gasket/preset-api`
 
+## 7.3.6
+
+### Patch Changes
+
+- Updated dependencies [cc6b554]
+- Updated dependencies [0ac6483]
+  - @gasket/plugin-docusaurus@7.4.0
+  - @gasket/plugin-cypress@7.4.0
+  - @gasket/plugin-mocha@7.4.0
+  - @gasket/plugin-jest@7.4.0
+  - @gasket/plugin-express@7.3.4
+  - @gasket/plugin-fastify@7.3.5
+  - @gasket/plugin-command@7.3.5
+  - @gasket/plugin-docs@7.3.5
+  - @gasket/plugin-dynamic-plugins@7.3.4
+  - @gasket/plugin-git@7.3.3
+  - @gasket/plugin-https@7.3.4
+  - @gasket/plugin-lint@7.3.5
+  - @gasket/plugin-logger@7.3.3
+  - @gasket/plugin-swagger@7.3.4
+  - @gasket/plugin-typescript@7.3.3
+  - @gasket/plugin-winston@7.3.3
+
 ## 7.3.5
 
 ### Patch Changes
