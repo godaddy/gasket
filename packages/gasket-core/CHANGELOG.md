@@ -1,5 +1,15 @@
 # `@gasket/core`
 
+## 7.4.0
+
+### Minor Changes
+
+- 8e774bb: Throw if hooks return promises for sync exec methods
+
+### Patch Changes
+
+- @gasket/utils@7.3.3
+
 ## 7.3.3
 
 ### Patch Changes

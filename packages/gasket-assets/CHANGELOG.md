@@ -1,5 +1,11 @@
 # `@gasket/assets`
 
+## 7.4.0
+
+### Minor Changes
+
+- cc6b554: upgrade to react 19 and nextjs 15
+
 ## 7.3.2
 
 ### Patch Changes
