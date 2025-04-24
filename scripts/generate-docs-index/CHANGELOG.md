@@ -17,7 +17,7 @@
   - @gasket/plugin-redux@7.4.0
   - @gasket/plugin-intl@7.4.0
   - @gasket/plugin-jest@7.4.0
-  - @gasket/react-intl@8.0.0
+  - @gasket/react-intl@7.4.0
   - @gasket/assets@7.4.0
   - @gasket/nextjs@7.4.0
   - @gasket/plugin-express@7.3.4
