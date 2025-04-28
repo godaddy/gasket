@@ -1,5 +1,6 @@
-/// <reference types="@gasket/plugin-express" /> <reference types="@gasket/plugin-https" /> <reference
-/// types="@gasket/plugin-logger" />
+/// <reference types="@gasket/plugin-express" /> 
+/// <reference types="@gasket/plugin-https" /> 
+/// <reference types="@gasket/plugin-logger" />
 
 const cookieParser = require('cookie-parser');
 const { applyCompression, applyCookieParser, executeMiddlewareLifecycle } = require('./utils');
