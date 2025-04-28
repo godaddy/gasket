@@ -1,5 +1,6 @@
 import debugPkg from 'debug';
 import { lifecycleMethods } from './engine.js';
+import { Gasket } from './gasket.js';
 
 /**
  * Lookup map for lifecycles method names.
@@ -118,7 +119,7 @@ export class GasketTrace {
     this.trace = this._tracer.trace;
 
     this.traceRoot = () => {
-      if ('config' in parent && 'hook' in parent && 'engine' in parent) return parent;
+      if (parent instanceof Gasket) return parent;
       return parent.traceRoot();
     };
   }

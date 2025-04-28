@@ -77,8 +77,8 @@ export class GasketEngine {
       acc[name] = plugin;
       return acc;
     },
-      /** @type {Record<string, import('@gasket/core').Plugin>} */
-      ({})
+    /** @type {Record<string, import('@gasket/core').Plugin>} */
+    ({})
     );
   }
 
@@ -196,10 +196,10 @@ export class GasketEngine {
         return Promise.all(
           executionPlan.map(fn =>
           /** @type {(gasket: import('@gasket/core').Gasket, pluginTasks: Record<string, Promise<any>>, ...args: any[]) => Promise<any>} */(fn)(
-            gasket,
-            pluginTasks,
-            ...args
-          )
+              gasket,
+              pluginTasks,
+              ...args
+            )
           )
         );
 
