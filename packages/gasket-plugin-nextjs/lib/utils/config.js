@@ -43,10 +43,10 @@ function forwardIntlConfig(gasket, config) {
  * configuration.
  * @param {import('@gasket/core').Gasket}  gasket The gasket API.
  * @param {import('next').NextConfig} nextConfig The nextjs configuration.
- * @returns {import('@gasket/core').MaybeAsync<import('next').NextConfig>} configuration data for nextjs.
+ * @returns {Promise<import('next').NextConfig>} configuration data for nextjs.
  * @private
  */
-function createConfig(gasket, nextConfig = {}) {
+async function createConfig(gasket, nextConfig = {}) {
   const config = {
     poweredByHeader: false,
     ...(gasket.config?.nextConfig || {}),
@@ -65,8 +65,7 @@ function createConfig(gasket, nextConfig = {}) {
     return gasket.actions.getWebpackConfig(webpackConfig, data);
   };
 
-  // eslint-disable-next-line no-sync
-  return gasket.execWaterfallSync('nextConfig', config);
+  return await gasket.execWaterfall('nextConfig', config);
 }
 
 module.exports = {
