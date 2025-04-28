@@ -12,7 +12,6 @@ export default function withLocaleFileRequired(
 ) {
   const { loading = null, forwardRef = false } = options;
 
-  // @ts-ignore
   return function wrapper(Component) {
     const displayName = Component.displayName || Component.name || 'Component';
 
@@ -44,7 +43,7 @@ export default function withLocaleFileRequired(
 
     // Forward ref through the HOC
     if (!forwardRef) {
-      return HOC;
+      return /** @type {import('.').LocaleFileRequiredHOC} */ (HOC);
     }
 
     const ForwardHOC = React.forwardRef((props, ref) =>
@@ -52,9 +51,8 @@ export default function withLocaleFileRequired(
     );
     hoistNonReactStatics(ForwardHOC, Component);
     ForwardHOC.displayName = `ForwardRef(withLocaleFileRequired/${displayName}))`;
-    // @ts-ignore - add WrappedComponent to forwardRef result
     ForwardHOC.WrappedComponent = Component;
 
-    return ForwardHOC;
+    return /** @type {import('.').LocaleFileRequiredHOC} */ (ForwardHOC);
   };
 }

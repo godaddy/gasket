@@ -80,10 +80,10 @@ export type HookTimings = {
   last?: boolean;
 
   /** Run this hook before these plugin names. */
-  before: string[];
+  before?: string[];
 
   /** Run this hook after these plugin names. */
-  after: string[];
+  after?: string[];
 };
 
 /**
@@ -220,13 +220,13 @@ export type WaterfallThunk<Id extends HookId> = (
 /**
  * Core engine that manages plugin hooks and execution.
  */
-export class GasketEngine {
-  constructor(plugins: Plugin[]);
-
+export interface GasketEngine {
   /** Available plugin actions */
   actions: GasketActions;
 
-  /** Register additional plugins */
+  /**
+   * Register new plugins onto the Gasket engine.
+   */
   registerPlugins(plugins: Plugin[]): void;
 
   /** Execute a hook asynchronously */
@@ -449,9 +449,7 @@ type GasketConfigOverrides =
 /**
  * Main Gasket instance used throughout apps and plugins.
  */
-export class Gasket {
-  constructor(config: GasketConfig);
-
+export interface Gasket {
   /** Final config after merging env overrides */
   config: GasketConfig;
 
@@ -478,14 +476,77 @@ export class Gasket {
 
   /** Optional debug hook trace helper */
   traceHookStart?: (pluginName: string, event: string) => void;
+
+  /** Execute a lifecycle event asynchronously */
+  exec(event: string, ...args: any[]): Promise<any>;
+
+  /** Execute a lifecycle event synchronously */
+  execSync(event: string, ...args: any[]): any[];
+
+  /** Execute a lifecycle event and return final result from waterfall (async) */
+  execWaterfall(event: string, input: any, ...args: any[]): Promise<any>;
+
+  /** Execute a lifecycle event and return final result from waterfall (sync) */
+  execWaterfallSync(event: string, input: any, ...args: any[]): any;
+
+  [key: string]: any;
+}
+
+export interface Tracer {
+  /** Stack of trace entries for the current branch */
+  traceStack: string[];
+
+  /** Generic trace function used internally */
+  trace: (message: string) => void;
+
+  /** Marks the start of a plugin's lifecycle hook */
+  traceHookStart(pluginName: string, event: string): void;
+
+  /** Marks the start of a lifecycle execution */
+  traceLifecycleStart(type: string, event: string): void;
+
+  /** Marks the end of a lifecycle execution (currently stubbed) */
+  traceLifecycleEnd(type: string, event: string): void;
+
+  /** Marks the start of a traced action */
+  traceActionStart(name: string): void;
+
+  /** Marks the end of a traced action (currently stubbed) */
+  traceActionEnd(name: string): void;
 }
 
 /**
  * Gasket instance with debugging trace helper.
  */
-export type GasketTrace = Gasket & {
+export interface GasketTrace {
+  /** Unique branch ID */
+  branchId: number;
+
+  /** Reference to the lifecycle engine */
+  engine: GasketEngine;
+
+  /** Trace output function */
   trace: (msg: string) => void;
-};
+
+  /** Lifecycle hook start tracer */
+  traceHookStart: (pluginName: string, event: string) => void;
+
+  /** Returns the root Gasket instance */
+  traceRoot(): Gasket;
+
+  /** Returns a new GasketTrace proxy branch */
+  traceBranch(): GasketTrace;
+
+  /** Internal tracer helper */
+  _tracer: Tracer
+
+  /** Proxy that combines both Gasket and GasketTrace behavior */
+  _proxy: Gasket & GasketTrace;
+}
+
+export interface GasketTraceConstructor {
+  new(parent: Gasket | GasketTrace, newBranchId?: number): GasketTrace;
+}
 
 
 /* ----------------------------- *
@@ -511,3 +572,15 @@ export interface GasketRequest {
  * Factory to create a new Gasket instance with provided config.
  */
 export function makeGasket(config: GasketConfigDefinition): Gasket;
+
+export type isolateLifecycle<T> = (
+  source: Gasket | GasketTrace,
+  name: string,
+  fn: HookHandler<T>
+) => HookHandler<T>;
+
+export type isolateAction<T> = (source: GasketTrace, name: string, fn: ActionHandler<T>) => ActionHandler<T>
+
+export type interceptActions = (source: GasketTrace, actions: GasketActions) => GasketActions
+
+export type makeTraceBranch = (gasket: Gasket | GasketTrace) => GasketTrace

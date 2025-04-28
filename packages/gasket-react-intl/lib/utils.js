@@ -1,11 +1,11 @@
 import { LocaleFileStatus } from '@gasket/intl';
 
-/** @type {import('./types').ensureArray} */
+/** @type {import('.').ensureArray} */
 export function ensureArray(value) {
   return (Array.isArray(value) ? value : [value]).filter(Boolean);
 }
 
-/** @type {import('./types').needsToLoad} */
+/** @type {import('.').needsToLoad} */
 export function needsToLoad(status) {
   return [LocaleFileStatus.notHandled, LocaleFileStatus.notLoaded].includes(status);
 }

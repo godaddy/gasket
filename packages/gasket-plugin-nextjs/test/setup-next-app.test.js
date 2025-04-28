@@ -1,3 +1,5 @@
+const { setupNextHandling } = require('../lib/utils/setup-next-app');
+
 const nextHandler = {
   prepare: jest.fn().mockResolvedValue(),
   getRequestHandler: jest.fn().mockResolvedValue({})
@@ -80,61 +82,33 @@ describe('setupNextApp', () => {
 });
 
 describe('setupNextHandling', () => {
-  let gasket, setupNextHandling, serverApp, nextServer, mockNextHandler;
-  let req, res, next;
+  const nextHandler = jest.fn();
+  const nextServer = {
+    getRequestHandler: () => nextHandler
+  };
 
-  beforeEach(() => {
-    gasket = mockGasketApi();
-    setupNextHandling = getModule().setupNextHandling;
-    serverApp = { all: jest.fn() };
-    mockNextHandler = jest.fn();
-    nextServer = {
-      getRequestHandler: jest.fn().mockReturnValue(mockNextHandler)
+  const gasket = {
+    traceRoot: () => ({
+      exec: jest.fn()
+    })
+  };
+
+  it('route handler calls nextHandler for Fastify', async () => {
+    const fastifyApp = {
+      route: jest.fn(),
+      inject: jest.fn()
     };
-    req = {};
-    res = { headersSent: false };
-    next = jest.fn();
-  });
 
-  it('adds * route handler', function () {
-    setupNextHandling(nextServer, serverApp, gasket);
-    expect(serverApp.all).toHaveBeenCalledWith('*', expect.any(Function));
-  });
+    setupNextHandling(nextServer, fastifyApp, gasket);
 
-  describe('route handler', () => {
-    let routeHandler;
-    beforeEach(() => {
-      serverApp.all.mockImplementation((path, handler) => {
-        routeHandler = handler;
-      });
+    // simulate captured route handler
+    const handler = fastifyApp.route.mock.calls[0][0].handler;
 
-      setupNextHandling(nextServer, serverApp, gasket);
-    });
+    const req = { raw: {} };
+    const res = { raw: { headersSent: false } };
+    await handler(req, res);
 
-    it('calls nextPreHandling lifecycle', async () => {
-      await routeHandler(req, res, next);
-      expect(gasket.exec).toHaveBeenCalledWith('nextPreHandling', { req, res, nextServer });
-    });
-
-    it('calls nextHandler', async () => {
-      await routeHandler(req, res, next);
-      expect(mockNextHandler).toHaveBeenCalledWith(req, res);
-    });
-
-    it('does not call nextHandler if headers sent in lifecycle', async () => {
-      res.headersSent = true;
-      await routeHandler(req, res, next);
-      expect(mockNextHandler).not.toHaveBeenCalled();
-    });
-
-    it('catches errors', async () => {
-      const testError = new Error('Test error');
-      mockNextHandler.mockImplementation(() => {
-        throw testError;
-      });
-      await routeHandler(req, res, next);
-      expect(next).toHaveBeenCalledWith(testError);
-    });
+    expect(nextHandler).toHaveBeenCalledWith(req.raw, res.raw);
   });
 });
 

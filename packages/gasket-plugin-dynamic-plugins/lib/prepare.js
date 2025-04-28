@@ -28,8 +28,8 @@ export default {
 
     gasket.engine.registerPlugins(config.plugins);
 
-    const tracer = /** @type {import('@gasket/core').GasketTrace} */ (gasket);
-
+    // Cast gasket to unknown first because Gasket and GasketTrace types differ structurally
+    const tracer = /** @type {import('@gasket/core').GasketTrace} */ (/** @type {unknown} */ (gasket));
 
     gasket.execApplySync('init', function (plugin, handler) {
       if (imported.includes(plugin)) {

@@ -4,6 +4,10 @@ import { normalizeHook, lifecycleMethods, createAsyncThunk, createSyncThunk, get
 
 export { lifecycleMethods };
 
+/**
+ * The Gasket class is the main entry point for the Gasket API.
+ * @type {import('@gasket/core').GasketEngine}
+ */
 export class GasketEngine {
   /**
    * @type {import('@gasket/core').GasketEngine_Constructor}
@@ -73,8 +77,8 @@ export class GasketEngine {
       acc[name] = plugin;
       return acc;
     },
-      /** @type {Record<string, import('@gasket/core').Plugin>} */
-      ({})
+    /** @type {Record<string, import('@gasket/core').Plugin>} */
+    ({})
     );
   }
 
@@ -105,9 +109,9 @@ export class GasketEngine {
   }
 
   /**
- * Registers actions from plugins.
- * @private
- */
+   * Registers actions from plugins.
+   * @private
+   */
   _registerActions() {
     /** @type {Record<string, Function>} */
     this.actions = {};
@@ -191,11 +195,11 @@ export class GasketEngine {
         const pluginTasks = {};
         return Promise.all(
           executionPlan.map(fn =>
-    /** @type {(gasket: import('@gasket/core').Gasket, pluginTasks: Record<string, Promise<any>>, ...args: any[]) => Promise<any>} */(fn)(
-            gasket,
-            pluginTasks,
-            ...args
-          )
+          /** @type {(gasket: import('@gasket/core').Gasket, pluginTasks: Record<string, Promise<any>>, ...args: any[]) => Promise<any>} */(fn)(
+              gasket,
+              pluginTasks,
+              ...args
+            )
           )
         );
 
@@ -392,7 +396,7 @@ export class GasketEngine {
               (passedGasket, pluginTasks, passedApplyFn) => {
                 /** @type {(...args: any[]) => any} */
                 const callback = (...args) =>
-                    /** @type {(gasket: import('@gasket/core').Gasket, ...args: any[]) => any} */(
+                /** @type {(gasket: import('@gasket/core').Gasket, ...args: any[]) => any} */(
                     subscribers[plugin].invoke
                   )(passedGasket, ...args);
 
@@ -435,7 +439,7 @@ export class GasketEngine {
             executionPlan.push((passedGasket, passApplyFn) => {
               /** @type {(...args: any[]) => any} */
               const callback = (...args) =>
-                  /** @type {(gasket: import('@gasket/core').Gasket, ...args: any[]) => any} */(
+              /** @type {(gasket: import('@gasket/core').Gasket, ...args: any[]) => any} */(
                   subscribers[plugin].invoke
                 )(passedGasket, ...args);
 
@@ -451,16 +455,16 @@ export class GasketEngine {
   /**
    * Exec, but with a cache for plans by type
    * @private
-    * @template Plan
-    * @template Result
-    * @param {{
-    *   event: string,
-    *   type: string,
-    *   prepare: (hookConfig: import('@gasket/core').HookConfig) => Plan,
-    *   exec: (plan: Plan) => Result
-    * }} options
-    * @returns {Result}
-    */
+   * @template Plan
+   * @template Result
+   * @param {{
+   *   event: string,
+   *   type: string,
+   *   prepare: (hookConfig: import('@gasket/core').HookConfig) => Plan,
+   *   exec: (plan: Plan) => Result
+   * }} options
+   * @returns {Result}
+   */
   _execWithCachedPlan({ event, type, prepare, exec }) {
     const hookConfig = this._getHookConfig(event);
     const plansByType = /** @type {Record<string, unknown>} */ (this._plans[event] ||= {});

@@ -1,16 +1,21 @@
-import type { MaybeMultiple, MaybeAsync, Plugin, DevProxyConfig } from '@gasket/core' with { 'resolution-mode': 'import' };
-import type { SecureContextOptions } from 'tls';
+import type {
+  DevProxyConfig,
+  MaybeAsync,
+  MaybeMultiple,
+  Plugin
+} from '@gasket/core';
+import type { HealthCheckError, TerminusOptions } from '@godaddy/terminus';
 import type { Server as HttpServer } from 'http';
 import type { Server as HttpsServer } from 'https';
-import type { SecureServerOptions, Http2Server } from 'http2';
 import type { ServerOptions as ProxyServerOptions } from 'http-proxy';
-import type { TerminusOptions, HealthCheckError } from '@godaddy/terminus';
+import type { SecureContextOptions } from 'tls';
+import type { Http2Server, SecureServerOptions } from 'http2';
 import type { Logger } from '@gasket/plugin-logger';
 
 export type RequireAtLeastOne<T, Keys extends keyof T = keyof T> =
-  Pick<T, Exclude<keyof T, Keys>>
-  & {
-    [K in Keys]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<Keys, K>>>
+  Pick<T, Exclude<keyof T, Keys>> &
+  {
+    [K in Keys]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<Keys, K>>>;
   }[Keys];
 
 export function startProxy(opts: DevProxyConfig, logger: Logger): void;
@@ -34,15 +39,13 @@ declare module '@gasket/core' {
     honorCipherOrder?: boolean;
   };
 
-  type HttpsSettings =
-    CustomHttpsSettings &
+  type HttpsSettings = CustomHttpsSettings &
     Omit<
       SecureContextOptions,
       keyof CustomHttpsSettings | 'secureProtocol' | 'secureOptions'
     >;
 
-  type Http2Settings =
-    CustomHttpsSettings &
+  type Http2Settings = CustomHttpsSettings &
     Omit<
       SecureServerOptions,
       keyof CustomHttpsSettings | 'secureProtocol' | 'secureOptions'
@@ -56,7 +59,10 @@ declare module '@gasket/core' {
     port?: number;
   }
 
-  export type DevProxyConfig = RequireAtLeastOne<BaseDevProxyConfig, 'target' | 'forward'>;
+  export type DevProxyConfig = RequireAtLeastOne<
+    BaseDevProxyConfig,
+    'target' | 'forward'
+  >;
 
   interface ServerOptions {
     root: string;
@@ -78,8 +84,8 @@ declare module '@gasket/core' {
   }
 
   export interface GasketConfig extends ServerOptions {
+    devProxy?: DevProxyConfig;
     terminus?: TerminusOptions & { healthcheck?: string[] };
-    devProxy?: DevProxyConfig
   }
 
   export interface GasketActions {
@@ -93,19 +99,18 @@ declare module '@gasket/core' {
   };
 
   export interface HookExecTypes {
-    devProxy(proxyConfig: DevProxyConfig): MaybeAsync<DevProxyConfig>,
-    serverConfig(serverConfig: Omit<ServerOptions, 'handler'>): MaybeAsync<ServerOptions>;
+    beforeShutdown(): MaybeAsync<void>;
     createServers(serverConfig: ServerOptions): MaybeAsync<ServerOptions>;
+    devProxy(proxyConfig: DevProxyConfig): MaybeAsync<DevProxyConfig>;
+    healthcheck(errorType: typeof HealthCheckError): MaybeAsync<void>;
+    onSendFailureDuringShutdown(): MaybeAsync<void>;
+    onShutdown(): MaybeAsync<void>;
+    onSignal(): MaybeAsync<void>;
+    serverConfig(serverConfig: Omit<ServerOptions, 'handler'>): MaybeAsync<ServerOptions>;
     servers(servers: CreatedServers): MaybeAsync<void>;
     terminus(
       opts: TerminusOptions
     ): MaybeAsync<TerminusOptions & { healthcheck?: string[] }>;
-    healthcheck(HealthcheckError: typeof HealthCheckError): MaybeAsync<void>;
-
-    onSignal(): MaybeAsync<void>;
-    beforeShutdown(): MaybeAsync<void>;
-    onSendFailureDuringShutdown(): MaybeAsync<void>;
-    onShutdown(): MaybeAsync<void>;
   }
 }
 

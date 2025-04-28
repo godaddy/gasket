@@ -122,7 +122,7 @@ export type LocaleHandler_init = () => void;
 
 export type LocaleHandler_getLocaleFileKey = (localeFilePath: LocaleFilePath) => LocaleFileKey;
 export type LocaleHandler_loadStatics = (...localeFilePaths: LocaleFilePath[]) => PromiseSettledResult<void>[];
-export type LocaleHandler_load = (...localeFilePaths: LocaleFilePath[]) => PromiseSettledResult<void>[];
+export type LocaleHandler_load = (...localeFilePaths: LocaleFilePath[]) => Promise<PromiseSettledResult<void>[]>;
 export type LocaleHandler_getStatus = (...localeFilePath: LocaleFilePath[]) => LocaleFileStatusType;
 export type LocaleHandler_getAllMessages = () => LocaleMessages;
 export type LocaleHandler_getStaticsRegister = () => MessagesRegister;

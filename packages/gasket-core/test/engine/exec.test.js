@@ -1,12 +1,12 @@
-import { jest } from '@jest/globals';
+import { jest, describe } from '@jest/globals';
 
 const mockDebug = jest.fn();
 jest.unstable_mockModule('debug', () => ({
   default: () => mockDebug
 }));
 
-const { GasketTrace }  = await import('../../lib/trace.js');
-const { Gasket }  = await import('../../lib/gasket.js');
+const { GasketTrace } = await import('../../lib/trace.js');
+const { Gasket } = await import('../../lib/gasket.js');
 
 async function pause(ms) {
   await new Promise(resolve => setTimeout(resolve, ms));

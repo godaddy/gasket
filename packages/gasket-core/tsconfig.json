@@ -1,13 +1,3 @@
 {
-  "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "downlevelIteration": true,
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext"
-  },
-  "exclude": [
-    "test",
-    "coverage",
-    "cjs"
-  ]
+  "extends": "../../tsconfig.base.json"
 }
