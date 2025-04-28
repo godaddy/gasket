@@ -2,9 +2,9 @@ import type { IncomingMessage } from 'http';
 import type { Application, Request, Response } from 'express';
 import type { FastifyRequest, FastifyReply, RouteHandlerMethod } from 'fastify';
 import type { Options } from 'lru-cache';
-import type { MinifyOptions } from 'uglify-js';
 import type { MaybeAsync, MaybeMultiple, Plugin, Gasket, GasketConfig } from '@gasket/core';
 import type { Http2SecureServer, Http2ServerRequest, Http2ServerResponse } from 'http2';
+import type { JsMinifyOptions } from '@swc/types';
 
 export interface ServiceWorkerConfig {
   /** Name the service worker file. Default is /sw.js */
@@ -35,11 +35,11 @@ export interface ServiceWorkerConfig {
 
   /**
    * Minification options to be used on the composed JavaScript.
-   * Configuration for this field is passed directly to uglify-js. This is
+   * Configuration for this field is passed directly to swc. This is
    * turned on in production by default. Adding minify: { } will turn on the
    * default behavior in other environments, if specified.
    */
-  minify?: MinifyOptions | boolean;
+  minify?: JsMinifyOptions | boolean;
 
   /**
    * By default, a service worker registration script will be injected to
@@ -91,6 +91,8 @@ interface ServiceWorkerLocals {
     };
   };
 }
+
+export function minifyContent(code: string, config: JsMinifyOptions): string;
 
 export function configureEndpoint(gasket: Gasket):
   RouteHandlerMethod<Http2SecureServer, Http2ServerRequest, Http2ServerResponse> |

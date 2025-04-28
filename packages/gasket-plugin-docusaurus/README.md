@@ -59,7 +59,7 @@ gasket-app/ // app root
 
 ### `docusaurus.config.js`
 
-A required `docusaurus.config.js` will generated in the root directory if one is not present. Docusaurus allows for additional [configuration/customization](https://docusaurus.io/docs/api/docusaurus-config) options and you can define those directly in the `docusaurus.config.js`.
+A required `docusaurus.config.js` will be generated in the root directory if one is not present. Docusaurus allows for additional [configuration/customization](https://docusaurus.io/docs/api/docusaurus-config) options. Define these directly in the `docusaurus.config.js`.
 
 ## License
 

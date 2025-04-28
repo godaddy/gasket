@@ -1,5 +1,4 @@
 const mockCache = require('lru-cache');
-const mockMinify = require('uglify-js');
 const fastify = require('../lib/fastify');
 
 describe('fastify', () => {
@@ -35,7 +34,6 @@ describe('fastify', () => {
       send: jest.fn()
     };
     mockCache.mockClear();
-    mockMinify.mockClear();
 
     cacheKeyA = jest.fn().mockResolvedValue('A');
     cacheKeyB = jest.fn().mockResolvedValue('B');

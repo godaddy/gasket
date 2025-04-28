@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-service-worker",
-  "version": "7.3.4",
+  "version": "7.4.0",
   "description": "Gasket Service Worker Plugin",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -31,10 +31,10 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-service-worker",
   "dependencies": {
+    "@swc/core": "^1.10.18",
     "deepmerge": "^4.3.1",
     "lru-cache": "^5.1.1",
     "mkdirp": "^1.0.4",
-    "uglify-js": "^3.19.3",
     "webpack-inject-plugin": "^1.5.5"
   },
   "devDependencies": {
@@ -45,10 +45,10 @@
     "@gasket/plugin-logger": "workspace:*",
     "@gasket/plugin-metadata": "workspace:*",
     "@gasket/plugin-webpack": "workspace:*",
+    "@swc/types": "^0.1.21",
     "@types/jest": "^29.5.14",
     "@types/lru-cache": "^5.1.1",
     "@types/node": "^20.17.19",
-    "@types/uglify-js": "^3.17.5",
     "create-gasket-app": "workspace:*",
     "cross-env": "^7.0.3",
     "eslint": "^8.57.1",

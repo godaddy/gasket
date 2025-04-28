@@ -1,16 +1,17 @@
-/* eslint-disable no-use-before-define */
+/* eslint-disable no-use-before-define, jsdoc/require-param, jsdoc/require-returns */
 
 /* ----------------------- *
  *    Utility Types       *
  * ----------------------- */
 
 /**
- * Allows a value to be a single item or an array of items.
+ * Allows a value to be a single item or an array of items. Useful for handling cases where a function accepts multiple values.
  */
 export type MaybeMultiple<T> = T | Array<T>;
 
 /**
  * Allows a value to be synchronous or asynchronous.
+ * Used for functions that may return a Promise or a direct value.
  */
 export type MaybeAsync<T> = T | Promise<T>;
 
@@ -342,6 +343,12 @@ export function GasketEngine_ExecSync(
   event: string,
   ...args: any[]
 ): any[];
+
+/**
+ * Arguments tuple for a given hook event.
+ */
+export type HookArgs<Id extends HookId = HookId> = Parameters<HookExecTypes[Id]>;
+
 
 /**
  * Execute a hook and return results per plugin.

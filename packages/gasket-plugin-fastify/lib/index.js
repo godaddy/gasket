@@ -1,44 +1,17 @@
 /// <reference types="@gasket/core" />
 /// <reference types="@gasket/plugin-metadata" />
 
-const {
-  name,
-  version,
-  description
-} = require('../package.json');
+const { name, version, description } = require('../package.json');
 const create = require('./create');
 const createServers = require('./create-servers');
-const fastify = require('fastify');
-const { alignLogger } = require('./utils');
-
-let app;
+const actions = require('./actions');
 
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {
   name,
   version,
   description,
-  actions: {
-    /** @deprecated */
-    getFastifyApp(gasket) {
-      const { fastify: fastifyConfig = {}, http2, https } = gasket.config;
-      const { trustProxy = false, disableRequestLogging = true } = fastifyConfig;
-      const fastifyLogger = alignLogger(gasket.logger);
-
-      /** @type {import('.').FastifyOptions} */
-      const fastifyOptions = {
-        logger: fastifyLogger,
-        trustProxy,
-        https,
-        http2,
-        disableRequestLogging
-      };
-
-      app ??= fastify(fastifyOptions);
-
-      return app;
-    }
-  },
+  actions,
   hooks: {
     create,
     createServers,

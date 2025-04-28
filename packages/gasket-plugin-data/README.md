@@ -6,7 +6,7 @@ configurations.
 Many times, applications need to have different configurations based on
 environments.
 This plugin simplifies the process of managing this data and also provides
-hooks for gather user or request-specific data.
+hooks to gather user or request-specific data.
 
 ## Installation
 
@@ -121,11 +121,13 @@ export default {
 };
 ```
 
-From there we recommend looking at [withGasketData] HOC from the
-`@gasket/nextjs` package which will use the [getPublicGasketData] action to get
-the `public` data and render it to script tag for browser access.
+From there, we recommend looking at the [withGasketData] HOC from the
+`@gasket/nextjs` package. This will use the [getPublicGasketData] action to get
+the `public` data and render it to a script tag for browser access.
 
 ### Browser Access with Redux
+
+<!-- TODO: encourage users to move away from redux? -->
 
 Another way to access to data values in client-side code is through redux state.
 This plugin looks for a `public` property of your configuration in

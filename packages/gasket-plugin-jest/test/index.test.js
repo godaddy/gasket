@@ -98,7 +98,8 @@ describe('Plugin', function () {
       [
         'jest',
         '@testing-library/react',
-        '@testing-library/jest-dom'
+        '@testing-library/jest-dom',
+        '@testing-library/dom'
       ].forEach(name => {
         it(`adds "${name}" in the devDependencies`, async function () {
           const { pkg } = await createReact();

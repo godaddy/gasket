@@ -3,13 +3,13 @@ import { cookies, headers } from 'next/headers';
 const reqCache = new WeakMap();
 
 /** @type {import('.').request} */
-export function request(query) {
+export async function request(query) {
   console.warn('DEPRECATED: use async `request` from @gasket/nextjs/request');
 
   const headerStore = headers();
 
   if (!reqCache.has(headerStore)) {
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
 
     const req = {
       cookies: cookieStore.getAll()

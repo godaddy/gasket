@@ -2,7 +2,6 @@
 
 /**
  * Get a default fallback port depending on the environment.
- *
  * @param {string} env - Environment string from gasket config
  * @returns {number} Default port number
  * @public
@@ -13,7 +12,6 @@ function getPortFallback(env = '') {
 
 /**
  * Determines the port from HTTP-related config or falls back.
- *
  * @param {object} config - Gasket config object
  * @returns {number} Resolved port
  */
@@ -25,7 +23,6 @@ function resolvePort(config) {
 
 /**
  * Determine if the server is running in dev mode.
- *
  * @returns {boolean} True if GASKET_DEV is set
  */
 function isDevServer() {
@@ -52,7 +49,6 @@ function isFastifyApp(app) {
 
 /**
  * Creates and prepares a Next.js app instance based on gasket config.
- *
  * @type {import('../index').setupNextApp}
  */
 async function setupNextApp(gasket) {
@@ -60,11 +56,15 @@ async function setupNextApp(gasket) {
   const mod = require('next');
   const createNextApp = typeof mod === 'function' ? mod : mod.default;
 
-  const app = createNextApp({
+  /**
+   * Cast to any because Next.js 15+ does not expose NextServer type publicly.
+   * In real apps, createNextApp() always returns a NextServer shape.
+   */
+  const app = /** @type {any} */ (createNextApp({
     dev: isDevServer(),
     hostname: config.hostname,
     port: resolvePort(config)
-  });
+  }));
 
   await gasket.exec('next', app);
   await app.prepare();
@@ -76,7 +76,6 @@ async function setupNextApp(gasket) {
  * Sets up the Next.js request handler as the final middleware handler.
  *
  * Supports both Express and Fastify servers.
- *
  * @type {import('../index').setupNextHandling}
  */
 function setupNextHandling(nextServer, serverApp, gasket) {

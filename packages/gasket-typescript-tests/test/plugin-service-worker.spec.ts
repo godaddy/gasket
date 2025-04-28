@@ -12,9 +12,7 @@ describe('@gasket/plugin-service-worker', () => {
           maxAge: 1000 * 60
         },
         scope: '/docs',
-        minify: {
-          ie8: true
-        }
+        minify: true
       }
     };
   });

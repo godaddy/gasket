@@ -1,6 +1,6 @@
 /// <reference types="@gasket/plugin-metadata" />
 
-import { normalizeHook, lifecycleMethods, createAsyncThunk, createSyncThunk, getDynamicPluginName } from './engine-utils.js';
+import { normalizeHook, lifecycleMethods, createAsyncThunk, getDynamicPluginName } from './engine-utils.js';
 
 export { lifecycleMethods };
 
@@ -77,8 +77,8 @@ export class GasketEngine {
       acc[name] = plugin;
       return acc;
     },
-    /** @type {Record<string, import('@gasket/core').Plugin>} */
-    ({})
+      /** @type {Record<string, import('@gasket/core').Plugin>} */
+      ({})
     );
   }
 
@@ -196,10 +196,10 @@ export class GasketEngine {
         return Promise.all(
           executionPlan.map(fn =>
           /** @type {(gasket: import('@gasket/core').Gasket, pluginTasks: Record<string, Promise<any>>, ...args: any[]) => Promise<any>} */(fn)(
-              gasket,
-              pluginTasks,
-              ...args
-            )
+            gasket,
+            pluginTasks,
+            ...args
+          )
           )
         );
 
@@ -223,7 +223,15 @@ export class GasketEngine {
         this._executeInOrder(hookConfig,
           /** @type {import('@gasket/core').PluginIterator} */
           plugin => {
-            executionPlan.push(createSyncThunk(plugin, subscribers[plugin], event, gasket.traceHookStart));
+            executionPlan.push((passedGasket, ...execArgs) => {
+              passedGasket.traceHookStart?.(plugin, event);
+              const result = subscribers[plugin].invoke(
+                passedGasket, .../** @type {import('.').HookArgs<import('.').HookId>} */ (execArgs));
+              if (result instanceof Promise) {
+                throw new Error(`execSync cannot be used with async hook (${event}) of plugin (${plugin})`);
+              }
+              return result;
+            });
           });
 
         return executionPlan;
@@ -291,18 +299,18 @@ export class GasketEngine {
         const { subscribers } = hookConfig;
         /** @type {import('@gasket/core').SyncPluginThunk[]} */
         const executionPlan = [];
-
-        this._executeInOrder(hookConfig,
-          /** @type {import('@gasket/core').PluginIterator} */
-          plugin => {
-            executionPlan.push((passedGasket, resultMap, ...passedArgs) => {
-              passedGasket.traceHookStart?.(plugin, event);
-              resultMap[plugin] = /** @type {(gasket: import('@gasket/core').Gasket, ...args: any[]) => any} */ (
-                subscribers[plugin].invoke
-              )(passedGasket, ...passedArgs);
-
-            });
+        this._executeInOrder(hookConfig, plugin => {
+          executionPlan.push((passedGasket, resultMap, ...passedArgs) => {
+            passedGasket.traceHookStart?.(plugin, event);
+            resultMap[plugin] = subscribers[plugin].invoke(
+              passedGasket,
+              .../** @type {import('.').HookArgs<import('.').HookId>} */(passedArgs));
+            if (resultMap[plugin] instanceof Promise) {
+              throw new Error(`execMapSync cannot be used with async hook (${event}) of plugin (${plugin})`);
+            }
           });
+        });
+
         return executionPlan;
       },
       exec: (
@@ -359,14 +367,22 @@ export class GasketEngine {
         const { subscribers } = hookConfig;
         return (passedGasket, passedValue, ...args) => {
           let result = passedValue;
-          this._executeInOrder(hookConfig,
-            /** @type {import('@gasket/core').PluginIterator} */
-            plugin => {
-              passedGasket.traceHookStart?.(plugin, event);
-              result = /** @type {(gasket: import('@gasket/core').Gasket, ...args: any[]) => any} */ (
-                subscribers[plugin].invoke
-              )(passedGasket, result, ...args);
-            });
+
+          this._executeInOrder(hookConfig, plugin => {
+            passedGasket.traceHookStart?.(plugin, event);
+
+            const invokeArgs = [result, ...args];
+
+            result = subscribers[plugin].invoke(
+              passedGasket,
+              .../** @type {import('.').HookArgs<import('.').HookId>} */(invokeArgs)
+            );
+
+            if (result instanceof Promise) {
+              throw new Error(`execWaterfallSync cannot be used with async hook (${event}) of plugin (${plugin})`);
+            }
+          });
+
           return result;
         };
       },
@@ -433,20 +449,19 @@ export class GasketEngine {
         const { subscribers } = hookConfig;
         /** @type {import('@gasket/core').SyncPluginThunk[]} */
         const executionPlan = [];
-        this._executeInOrder(hookConfig,
-          /** @type {import('@gasket/core').PluginIterator} */
-          plugin => {
-            executionPlan.push((passedGasket, passApplyFn) => {
-              /** @type {(...args: any[]) => any} */
-              const callback = (...args) =>
-              /** @type {(gasket: import('@gasket/core').Gasket, ...args: any[]) => any} */(
-                  subscribers[plugin].invoke
-                )(passedGasket, ...args);
-
-              passedGasket.traceHookStart?.(plugin, event);
-              return passApplyFn(this._pluginMap[plugin], callback);
-            });
+        this._executeInOrder(hookConfig, (plugin) => {
+          executionPlan.push((passedGasket, passApplyFn) => {
+            const callback = (...args) => subscribers[plugin].invoke(
+              passedGasket,
+              .../** @type {import('.').HookArgs<import('.').HookId>} */(args));
+            passedGasket.traceHookStart?.(plugin, event);
+            const result = passApplyFn(this._pluginMap[plugin], callback);
+            if (result instanceof Promise) {
+              throw new Error(`execApplySync cannot be used with async hook (${event}) of plugin (${plugin})`);
+            }
+            return result;
           });
+        });
         return executionPlan;
       },
       exec: executionPlan => executionPlan.map(fn => fn(gasket, applyFn))

@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-express",
-  "version": "7.3.3",
+  "version": "7.3.4",
   "description": "Adds express support to your application",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -84,6 +84,14 @@
         ],
         "rules": {
           "jsdoc/*": "off"
+        }
+      },
+      {
+        "files": [
+          "test/**/*.js"
+        ],
+        "rules": {
+          "jsdoc/require-jsdoc": "off"
         }
       }
     ]

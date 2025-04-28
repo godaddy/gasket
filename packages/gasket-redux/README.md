@@ -81,8 +81,8 @@ export default configureMakeStore({ reducers });
 
 #### Example: initial state
 
-If you are adding keys to the initial state without reducers, you make get
-an `unexpected key found in previous state` error. In this case consider using
+If you are adding keys to the initial state without reducers, you may get
+an `unexpected key found in previous state` error. In this case, consider using
 [@gasket/data] for these static-like values, or register placeholder reducers
 in your store.
 

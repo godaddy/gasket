@@ -172,34 +172,6 @@ node ./gasket.js example-cmd --list "apple,banana,orange"
 # Output: Parsed List: [ 'apple', 'banana', 'orange' ]
 ```
 
-### build
-
-The `build` lifecycle allows plugins to hook into the application's build
-process. This lifecycle is triggered by the `build` command in the Gasket CLI.
-
-#### Example
-
-Define a plugin that hooks into the `build` lifecycle:
-
-```js
-export default {
-  name: 'example-plugin',
-  hooks: {
-    async build(gasket) {
-      console.log('Running custom build logic...');
-    }
-  }
-};
-```
-
-Run the `build` command:
-
-```bash
-node ./gasket.js build
-# Output:
-# Running custom build logic...
-```
-
 #### Example with JSDoc Types
 
 For type safety, use the `CommandsHook` type:
@@ -227,6 +199,34 @@ export default {
     }
   }
 };
+```
+
+### build
+
+The `build` lifecycle allows plugins to hook into the application's build
+process. This lifecycle is triggered by the `build` command in the Gasket CLI.
+
+#### Example
+
+Define a plugin that hooks into the `build` lifecycle:
+
+```js
+export default {
+  name: 'example-plugin',
+  hooks: {
+    async build(gasket) {
+      console.log('Running custom build logic...');
+    }
+  }
+};
+```
+
+Run the `build` command:
+
+```bash
+node ./gasket.js build
+# Output:
+# Running custom build logic...
 ```
 
 ### Command-based Configuration

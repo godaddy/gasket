@@ -13,7 +13,7 @@ See [@gasket/plugin-intl] for more information on how to configure the plugin.
 ## Usage
 
 With a `intl.js` built by [@gasket/plugin-intl], you can use the manager to
-get provide messages for locales.
+get messages for locales.
 
 To get all messages for a locale:
 

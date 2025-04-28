@@ -37,8 +37,8 @@ export default makeGasket({
 ```
 
 If your app was previously using the `webpack` property in the
-`gasket.js`, then you should take steps [migrating to webpackConfig]
-lifecycle.
+`gasket.js`, you should update your configuration to use the
+[webpackConfig] lifecycle instead.
 
 ## Actions
 
@@ -100,6 +100,8 @@ export default {
 };
 ```
 
+For more details, see the additional [webpack documentation].
+
 ## License
 
 [MIT](./LICENSE.md)
@@ -107,3 +109,5 @@ export default {
 <!-- LINKS -->
 
 [webpack-merge]: https://github.com/survivejs/webpack-merge
+[webpackConfig]: #webpackconfig
+[webpack documentation]: ./docs/webpack.md

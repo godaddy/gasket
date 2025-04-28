@@ -28,12 +28,17 @@ function selectBody(children) {
  * @type {import('.').injectGasketData}
  */
 export function injectGasketData(html, gasketData, lookupIndex, insertIndex = -1) {
-  const htmlChildren = Children.toArray(html.props.children);
+  // html is declared as a ReactElement in types, but needs an explicit cast here
+  // because TypeScript infers it as `unknown` inside the JS runtime without a param type
+  /** @type {import('react').ReactElement} */
+  const htmlElement = /** @type {import('react').ReactElement} */ (html);
+
+  const htmlChildren = Children.toArray(htmlElement.props.children);
   const [body, bodyIdx] = selectBody(htmlChildren);
   const bodyChildren = Children.toArray(body.props.children).filter(isReactElement);
 
   bodyChildren.splice(lookupIndex(bodyChildren, insertIndex), 0, createElement(GasketDataScript, { data: gasketData }));
   htmlChildren[bodyIdx] = cloneElement(body, {}, ...bodyChildren);
 
-  return cloneElement(html, {}, ...htmlChildren);
+  return cloneElement(htmlElement, {}, ...htmlChildren);
 }

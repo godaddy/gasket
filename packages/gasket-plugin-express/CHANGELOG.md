@@ -1,5 +1,11 @@
 # `@gasket/plugin-express`
 
+## 7.3.4
+
+### Patch Changes
+
+- 0ac6483: Fix deprecated app actions to use single instance
+
 ## 7.3.3
 
 ### Patch Changes

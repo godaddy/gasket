@@ -8,8 +8,11 @@ export async function resolveGasketData(gasket, req) {
   if (typeof document !== 'undefined') {
     data = gasketData();
   } else {
-    data = await gasket.actions.getPublicGasketData(req);
+    // Server-side: req may be RequestLike or IncomingMessage.
+    // getPublicGasketData expects RequestLike, so we cast here.
+    data = await gasket.actions.getPublicGasketData(
+      /** @type {import('@gasket/request').RequestLike} */(req)
+    );
   }
-
   return data;
 }

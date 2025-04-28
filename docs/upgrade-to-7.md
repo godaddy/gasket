@@ -662,6 +662,27 @@ directory of a Next.js or serve then with an Express endpoint. The locale files
 can exist anywhere, though a top-level `/locales` directory is recommended as a
 convention.
 
+### Update Intl Config
+
+The `intl` config in `gasket.js` has been updated, but much of it is the same.
+One key difference is that it is more necessary to specify the `locales` and
+`defaultLocale`.
+
+```diff
+export default makeGasket({
+  // ...
++  intl: {
++    locales: ['en-US', 'fr-FR'],
++    defaultLocale: 'en-US',
++    nextRouting: false
++  }
+});
+```
+
+By default, if using Next.js with `@gasket/plugin-nextjs` Next.js's i18n routing
+will be enabled using the specified `locales` and `defaultLocale` options.
+If you wish to disable this feature, configure `nextRouting` set to `false`.
+
 See [@gasket/plugin-intl] for more details and other changes.
 
 ### Move locale files (Optional)
