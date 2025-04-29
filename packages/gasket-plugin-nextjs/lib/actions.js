@@ -11,7 +11,7 @@ function getNextConfig(gasket, nextConfig) {
     } else {
       baseConfig = nextConfig ?? {};
     }
-    return createConfig(gasket, baseConfig);
+    return await createConfig(gasket, baseConfig);
   };
 }
 

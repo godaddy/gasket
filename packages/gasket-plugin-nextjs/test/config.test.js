@@ -28,7 +28,7 @@ describe('createConfig', () => {
 
   it('executes the `nextConfig` lifecycle', async function () {
     result = await createConfig(gasket);
-    expect(gasket.execWaterfallSync).toHaveBeenCalledWith(
+    expect(gasket.execWaterfall).toHaveBeenCalledWith(
       'nextConfig',
       expect.any(Object)
     );
