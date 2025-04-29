@@ -1,0 +1,34 @@
+{
+  "name": "@gasket/plugin-vitest",
+  "version": "0.0.1",
+  "description": "Integrates Vitest based testing in to your Gasket application",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "generator",
+    "lib"
+  ],
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "pnpm run lint --fix",
+    "posttest": "pnpm run lint && pnpm run typecheck",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest",
+    "typecheck": "tsc",
+    "typecheck:watch": "tsc --watch"
+  },
+  "repository": "godaddy/gasket.git",
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "gasket",
+    "vitest",
+    "plugin"
+  ],
+  "author": "GoDaddy Operating Company, LLC",
+  "license": "MIT",
+  "bugs": "https://github.com/godaddy/gasket/issues",
+  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-vitest"
+}
