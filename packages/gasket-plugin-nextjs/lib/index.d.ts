@@ -5,7 +5,6 @@ import type { Application } from 'express';
 import type { FastifyInstance } from 'fastify';
 import type { Gasket, Plugin } from '@gasket/core';
 import type { CreateContext, CreatePrompt } from 'create-gasket-app' with { 'resolution-mode': 'import' };
-import type { GasketRequest } from '@gasket/request' with { 'resolution-mode': 'import' };
 
 export { NextConfig, NextServer };
 
@@ -15,6 +14,7 @@ export type NextConfigFunction = (phase: string, context: {
 }) => Promise<NextConfig>;
 
 declare module '@gasket/core' {
+  import type { GasketRequest } from '@gasket/request' with { 'resolution-mode': 'import' };
 
   export interface GasketActions {
     getNextConfig?: (config?: NextConfig | NextConfigFunction) => (phase: string, context?: { defaultConfig?: NextConfig }) => Promise<NextConfig>
