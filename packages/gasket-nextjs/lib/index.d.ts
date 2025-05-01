@@ -1,6 +1,7 @@
 import type { GasketData } from '@gasket/data';
 import type { Gasket } from '@gasket/core';
 import type { ComponentType, FunctionComponent, PropsWithChildren, ReactElement } from 'react';
+import type { NextPageContext } from 'next';
 
 declare module '@gasket/data' {
   export interface GasketData {
@@ -10,7 +11,7 @@ declare module '@gasket/data' {
   }
 }
 
-ComponentWithInitialProps<T> = ComponentType<T> & Partial<{
+type ComponentWithInitialProps<T> = ComponentType<T> & Partial<{
   getInitialProps: (ctx: NextPageContext) => Promise<any>
 }>;
 

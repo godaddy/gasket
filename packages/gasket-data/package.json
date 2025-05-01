@@ -62,36 +62,6 @@
     "jsdom": "^20.0.3",
     "typescript": "^5.7.3"
   },
-  "eslintConfig": {
-    "ignorePatterns": [
-      "cjs/"
-    ],
-    "extends": [
-      "godaddy",
-      "plugin:jest/recommended",
-      "plugin:jsdoc/recommended-typescript-flavor"
-    ],
-    "plugins": [
-      "unicorn",
-      "jsdoc"
-    ],
-    "rules": {
-      "unicorn/filename-case": "error"
-    },
-    "overrides": [
-      {
-        "files": [
-          "lib/*.ts"
-        ],
-        "extends": [
-          "godaddy-typescript"
-        ],
-        "rules": {
-          "jsdoc/*": "off"
-        }
-      }
-    ]
-  },
   "jest": {
     "transform": {}
   }

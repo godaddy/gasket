@@ -1,0 +1,17 @@
+{
+  "extends": [
+    "godaddy-react-typescript",
+    "plugin:jest/recommended"
+  ],
+  "plugins": [
+    "unicorn"
+  ],
+  "rules": {
+    "unicorn/filename-case": "error",
+    "jest/expect-expect": 0,
+    "@typescript-eslint/no-unused-vars": 0
+  },
+  "globals": {
+    "JSX": "readonly"
+  }
+}

@@ -64,36 +64,6 @@
   "peerDependencies": {
     "redux": "^5.0.1"
   },
-  "eslintConfig": {
-    "extends": [
-      "godaddy",
-      "plugin:jest/recommended",
-      "plugin:jsdoc/recommended-typescript-flavor"
-    ],
-    "plugins": [
-      "unicorn",
-      "jsdoc"
-    ],
-    "rules": {
-      "unicorn/filename-case": "error"
-    },
-    "overrides": [
-      {
-        "files": [
-          "lib/*.ts"
-        ],
-        "extends": [
-          "godaddy-typescript"
-        ],
-        "rules": {
-          "jsdoc/*": "off"
-        }
-      }
-    ]
-  },
-  "eslintIgnore": [
-    "lib"
-  ],
   "babel": {
     "presets": [
       "@babel/preset-env"

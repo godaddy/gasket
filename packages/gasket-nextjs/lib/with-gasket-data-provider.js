@@ -11,6 +11,13 @@ export function withGasketDataProvider(gasket) {
   return function wrapper(Component) {
     const displayName = Component.displayName || Component.name || 'Component';
 
+    /**
+     * Higher Order Component (HOC) that wraps the provided component with GasketDataProvider.
+     * @param {object} params - The parameters object.
+     * @param {object} params.gasketData - The gasket data.
+     * @param {object} params.props - The rest of the properties.
+     * @returns {object} - The created element with GasketDataProvider and the provided component.
+     */
     function HOC({ gasketData, ...props }) {
       return (
         createElement(GasketDataProvider, { gasketData },
@@ -37,5 +44,5 @@ export function withGasketDataProvider(gasket) {
     HOC.WrappedComponent = Component;
 
     return HOC;
-  }
+  };
 }

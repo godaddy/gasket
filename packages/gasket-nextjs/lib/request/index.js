@@ -24,7 +24,7 @@ export async function request(params) {
         cookies: cookieStore,
         query
       });
-    }
+    };
 
     keeper.set(headerStore, make());
   }

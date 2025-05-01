@@ -92,22 +92,5 @@
     "vitest": "^3.0.7",
     "winston-transport": "^4.9.0",
     "workbox-build": "^4.3.1"
-  },
-  "eslintConfig": {
-    "extends": [
-      "godaddy-react-typescript",
-      "plugin:jest/recommended"
-    ],
-    "plugins": [
-      "unicorn"
-    ],
-    "rules": {
-      "unicorn/filename-case": "error",
-      "jest/expect-expect": 0,
-      "@typescript-eslint/no-unused-vars": 0
-    },
-    "globals": {
-      "JSX": "readonly"
-    }
   }
 }

@@ -3,6 +3,11 @@
 import { Children, cloneElement, createElement } from 'react';
 import { GasketDataScript } from './gasket-data-script.js';
 
+/**
+ * This function finds the body element from the children array and returns it along with its index.
+ * @param {Array} children - The array of child elements.
+ * @returns {Array} - An array containing the body element and its index.
+ */
 function selectBody(children) {
 
   const bodyIdx = children.findIndex(t =>
