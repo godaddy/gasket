@@ -30,5 +30,13 @@
   "author": "GoDaddy Operating Company, LLC",
   "license": "MIT",
   "bugs": "https://github.com/godaddy/gasket/issues",
-  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-vitest"
+  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-vitest",
+  "devDependencies": {
+    "@gasket/core": "workspace:*",
+    "@gasket/plugin-metadata": "workspace:*",
+    "@vitest/eslint-plugin": "^1.1.44",
+    "create-gasket-app": "workspace:*",
+    "eslint": "^8.57.1",
+    "vitest": "^3.0.7"
+  }
 }
