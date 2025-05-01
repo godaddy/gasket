@@ -1,5 +1,8 @@
 /// <reference types="@gasket/plugin-webpack" />
 
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+
 const { name } = require('../package.json');
 
 /** @type {import('@gasket/core').HookHandler<'webpackConfig'>} */

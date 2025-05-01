@@ -99,7 +99,7 @@ export class GasketEngine {
       Object.entries(hooks || {}).forEach(([event, rawHook]) => {
         const { handler, timing } = normalizeHook(rawHook);
         this.hook({
-          event,
+          event: /** @type {keyof import('@gasket/core').HookExecTypes} */ (event),
           pluginName,
           timing,
           handler

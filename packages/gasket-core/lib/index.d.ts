@@ -591,3 +591,59 @@ export type isolateAction<T> = (source: GasketTrace, name: string, fn: ActionHan
 export type interceptActions = (source: GasketTrace, actions: GasketActions) => GasketActions
 
 export type makeTraceBranch = (gasket: Gasket | GasketTrace) => GasketTrace
+
+/* ----------------------- *
+ *    Engine Utils Types   *
+ * ----------------------- */
+
+/**
+ * Lifecycle method names available on the engine.
+ * Used for dynamically binding context for destructured methods.
+ */
+export const lifecycleMethods: string[];
+
+/**
+ * Normalize hook to ensure it is in the { handler, timing } shape
+ * @param hook - The hook to normalize
+ * @returns Normalized hook with handler and optional timing
+ */
+export function normalizeHook<Id extends HookId>(
+  hook: Hook<Id>
+): { handler: HookHandler<Id>; timing?: HookTimings };
+
+/**
+ * Create a thunk for async plugin execution
+ * @param plugin - Name of the plugin
+ * @param subscriber - Hook subscriber configuration
+ * @param event - Name of the event
+ * @param traceHookStart - Optional function to trace hook start
+ * @returns Async thunk function for plugin execution
+ */
+export function createAsyncThunk<Id extends HookId>(
+  plugin: string,
+  subscriber: HookSubscriber,
+  event: string,
+  traceHookStart?: (pluginName: string, event: string) => void
+): PluginThunk<Id>;
+
+/**
+ * Create a thunk for sync plugin execution
+ * @param plugin - Name of the plugin
+ * @param subscriber - Hook subscriber configuration
+ * @param event - Name of the event
+ * @param traceHookStart - Optional function to trace hook start
+ * @returns Sync thunk function for plugin execution
+ */
+export function createSyncThunk(
+  plugin: string,
+  subscriber: HookSubscriber,
+  event: string,
+  traceHookStart?: (pluginName: string, event: string) => void
+): SyncPluginThunk;
+
+/**
+ * Generate a unique plugin name for dynamically registered hooks.
+ * Used when no `pluginName` is provided explicitly.
+ * @returns Unique plugin name string
+ */
+export function getDynamicPluginName(): string;

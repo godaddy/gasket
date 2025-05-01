@@ -100,7 +100,7 @@ describe('utils', function () {
           lifecycles[lifecycle](...args)
         ),
         execApply: sandbox.mockImplementation(async function (lifecycle, fn) {
-          for (let plugin of mockMwPlugins) {
+          for (const plugin of mockMwPlugins) {
             await fn(plugin, plugin.handler);
           }
         })

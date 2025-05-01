@@ -6,10 +6,9 @@ const debug = diagnostics('gasket:middleware');
 
 /**
  * Type guard to detect if the app is an Express app.
- * @param {any} app
- * @returns {app is import('express').Application}
+ * @type {import('./internal').canUseMiddleware}
  */
-function isExpressApp(app) {
+function canUseMiddleware(app) {
   return typeof app?.use === 'function' && typeof app?.set === 'function';
 }
 
@@ -65,7 +64,7 @@ function applyMiddlewareConfig(middleware, plugin, middlewareConfig, middlewareP
  * @type {import('./internal').applyMiddlewaresToApp}
  */
 function applyMiddlewaresToApp(app, middlewares, middlewarePattern) {
-  if (!isExpressApp(app)) {
+  if (!canUseMiddleware(app)) {
     debug('Skipping middleware application – not an Express app');
     return;
   }
@@ -90,7 +89,7 @@ async function executeMiddlewareLifecycle(gasket, app, middlewarePattern) {
   const middlewareConfig = config.middleware || [];
   const middlewares = [];
 
-  if (isExpressApp(app)) {
+  if (canUseMiddleware(app)) {
     applyCookieParser(app, middlewarePattern);
     applyCompression(app, config.compression);
   } else {
@@ -108,7 +107,7 @@ async function executeMiddlewareLifecycle(gasket, app, middlewarePattern) {
 
   debug('applied %s middleware layers', middlewares.length);
 
-  if (isExpressApp(app)) {
+  if (canUseMiddleware(app)) {
     applyMiddlewaresToApp(app, middlewares, middlewarePattern);
   }
 }
@@ -120,5 +119,5 @@ module.exports = {
   isValidMiddleware,
   applyMiddlewareConfig,
   applyMiddlewaresToApp,
-  isExpressApp
+  canUseMiddleware
 };

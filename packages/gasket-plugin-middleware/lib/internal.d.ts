@@ -37,10 +37,15 @@ declare module 'express' {
 }
 
 /**
+ * Type guard to detect if the app is an Express app.
+ */
+export function canUseMiddleware(app: any): app is ExpressApp;
+
+/**
  * Applies the cookie parser based on the middleware pattern.
  */
 export function applyCookieParser(
-  app: ExpressApp,
+  app: ExpressApp | FastifyApp,
   middlewarePattern?: RegExp
 ): void;
 

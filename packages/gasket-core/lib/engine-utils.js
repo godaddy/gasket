@@ -1,11 +1,9 @@
-/// <reference types="@gasket/plugin-metadata" />
-
 let dynamicNamingId = 0;
 
 /**
  * Lifecycle method names available on the engine.
  * Used for dynamically binding context for destructured methods.
- * @type {string[]}
+ * @type {import('.').lifecycleMethods}
  */
 export const lifecycleMethods = [
   'exec', 'execSync',
@@ -16,8 +14,7 @@ export const lifecycleMethods = [
 
 /**
  * Normalize hook to ensure it is in the { handler, timing } shape
- * @param {import('@gasket/core').Hook<any>} hook
- * @returns {{ handler: import('@gasket/core').HookHandler<any>, timing?: import('@gasket/core').HookTimings }}
+ * @type {import('.').normalizeHook}
  */
 export function normalizeHook(hook) {
   return typeof hook === 'function' ? { handler: hook } : hook;
@@ -25,11 +22,7 @@ export function normalizeHook(hook) {
 
 /**
  * Create a thunk for async plugin execution
- * @param {string} plugin
- * @param {import('@gasket/core').HookSubscriber} subscriber
- * @param {string} event
- * @param {Function | undefined} traceHookStart
- * @returns {import('@gasket/core').PluginThunk}
+ * @type {import('.').createAsyncThunk}
  */
 export function createAsyncThunk(plugin, subscriber, event, traceHookStart) {
   return (gasket, pluginTasks, ...args) => {
@@ -46,11 +39,7 @@ export function createAsyncThunk(plugin, subscriber, event, traceHookStart) {
 
 /**
  * Create a thunk for sync plugin execution
- * @param {string} plugin
- * @param {import('@gasket/core').HookSubscriber} subscriber
- * @param {string} event
- * @param {Function | undefined} traceHookStart
- * @returns {import('@gasket/core').SyncPluginThunk}
+ * @type {import('.').createSyncThunk}
  */
 export function createSyncThunk(plugin, subscriber, event, traceHookStart) {
   return (gasket, ...args) => {
@@ -64,7 +53,7 @@ export function createSyncThunk(plugin, subscriber, event, traceHookStart) {
 /**
  * Generate a unique plugin name for dynamically registered hooks.
  * Used when no `pluginName` is provided explicitly.
- * @returns {string}
+ * @type {import('.').getDynamicPluginName}
  */
 export function getDynamicPluginName() {
   return `dynamic-${dynamicNamingId++}`;

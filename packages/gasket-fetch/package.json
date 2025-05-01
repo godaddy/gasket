@@ -51,7 +51,7 @@
     "jest": "^29.7.0",
     "jsdom": "^20.0.3",
     "regenerator-runtime": "^0.14.1",
-    "typescript": "^5.7.3",
+    "typescript": "^5.8.2",
     "whatwg-fetch": "^3.6.20"
   },
   "eslintConfig": {

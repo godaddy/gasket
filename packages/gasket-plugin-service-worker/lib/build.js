@@ -18,10 +18,7 @@ async function handler(gasket) {
   const { staticOutput } = getSWConfig(gasket);
 
   if (staticOutput && typeof staticOutput === 'string') {
-    const composedContent = await getComposedContent(gasket, {
-      req: { headers: {} },
-      res: {}
-    });
+    const composedContent = await getComposedContent(gasket, {});
 
     await mkdirp(path.dirname(staticOutput));
     await writeFile(staticOutput, composedContent, 'utf-8');
