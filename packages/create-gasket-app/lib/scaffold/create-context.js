@@ -52,6 +52,12 @@ function makeCreateRuntime(context, source) {
   });
 }
 
+/**
+ * Flattens an array by concatenating the given values to the accumulator.
+ * @param {Array} acc - The accumulator array that values will be concatenated to.
+ * @param {Array} values - The array of values to be concatenated.
+ * @returns {Array} - The resulting array after concatenation.
+ */
 function flatten(acc, values) {
   return acc.concat(values);
 }

@@ -18,6 +18,13 @@ const gasketBin = program
   .addHelpText('beforeAll', logo);
 
 
+/**
+ * Main function to execute the Gasket CLI.
+ * It suppresses deprecation warnings, processes the create command,
+ * checks if the package is outdated, adds the command to the Gasket CLI,
+ * inserts 'create' into the command line arguments, and parses the command.
+ * @returns {Promise<Command>} A promise that resolves with the parsed command.
+ */
 async function main() {
   // Suppress deprecation warning for punycode in node 22
   // @ts-ignore

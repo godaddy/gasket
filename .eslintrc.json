@@ -1,0 +1,17 @@
+{
+  "extends": [
+    "godaddy",
+    "plugin:jsdoc/recommended-typescript-flavor"
+  ],
+  "ignorePatterns": [
+    "node_modules/",
+    "coverage/"
+  ],
+  "plugins": [
+    "unicorn",
+    "jsdoc"
+  ],
+  "rules": {
+    "unicorn/filename-case": "error"
+  }
+}

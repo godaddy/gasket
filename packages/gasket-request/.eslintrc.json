@@ -1,0 +1,45 @@
+{
+  "ignorePatterns": [
+    "cjs/"
+  ],
+  "extends": [
+    "godaddy",
+    "plugin:jest/recommended",
+    "plugin:jsdoc/recommended-typescript-flavor"
+  ],
+  "plugins": [
+    "unicorn",
+    "jsdoc"
+  ],
+  "rules": {
+    "unicorn/filename-case": "error",
+    "no-undefined": 0,
+    "no-sync": 0
+  },
+  "overrides": [
+    {
+      "files": [
+        "test/**/*.js"
+      ],
+      "rules": {
+        "jsdoc/require-jsdoc": "off"
+      }
+    },
+    {
+      "files": [
+        "lib/*.ts"
+      ],
+      "extends": [
+        "godaddy-typescript"
+      ],
+      "rules": {
+        "jsdoc/require-jsdoc": "off",
+        "jsdoc/require-param": "off",
+        "jsdoc/require-returns": "off",
+        "jsdoc/require-description": "off",
+        "jsdoc/require-param-type": "off",
+        "jsdoc/require-returns-description": "off"
+      }
+    }
+  ]
+}

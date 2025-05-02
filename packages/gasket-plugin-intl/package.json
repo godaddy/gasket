@@ -65,32 +65,5 @@
     "react-intl": "^7.1.6",
     "typescript": "^5.7.3",
     "webpack": "^5.98.0"
-  },
-  "eslintConfig": {
-    "extends": [
-      "godaddy",
-      "plugin:jest/recommended",
-      "plugin:jsdoc/recommended-typescript-flavor"
-    ],
-    "plugins": [
-      "unicorn",
-      "jsdoc"
-    ],
-    "rules": {
-      "unicorn/filename-case": "error"
-    },
-    "overrides": [
-      {
-        "files": [
-          "lib/*.ts"
-        ],
-        "extends": [
-          "godaddy-typescript"
-        ],
-        "rules": {
-          "jsdoc/*": "off"
-        }
-      }
-    ]
   }
 }

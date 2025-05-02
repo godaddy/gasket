@@ -1,13 +1,14 @@
 import { request } from '../request';
-import { injectGasketData } from '../inject-gasket-data.js'
+import { injectGasketData } from '../inject-gasket-data.js';
 import NextScript from 'next/script';
 
 /**
- * To avoid polluting <head/>, we want to render our JSON in the <body/>
- * but before our other scripts so that it is available to query.
- *
- * @param {Array} bodyChildren - Children of body element
- * @returns {number} index
+ * This function is used to determine the index at which the JSON should be rendered in the <body/>.
+ * It tries to render the JSON before other scripts to avoid polluting <head/>.
+ * If it can't find a <script/> or <NextScript/>, it defaults to index 1.
+ * @param {Array} bodyChildren - The children elements of the body tag.
+ * @param {number} index - The initial index value, defaults to -1.
+ * @returns {number} - The determined index for JSON rendering.
  * @private
  */
 function lookupIndex(bodyChildren, index = -1) {
@@ -23,7 +24,6 @@ function lookupIndex(bodyChildren, index = -1) {
 /**
  * Make a wrapper to around the Root Layout, injecting a script with the
  * `gasketData`.
- *
  * @type {import('.').withGasketData}
  */
 export function withGasketData(gasket, options = { index: -1 }) {
@@ -34,5 +34,5 @@ export function withGasketData(gasket, options = { index: -1 }) {
     const gasketData = req ? await gasket.actions.getPublicGasketData?.(req) ?? {} : {};
     const html = await layout({ ...props });
     return injectGasketData(html, gasketData, lookupIndex, index);
-  }
+  };
 }

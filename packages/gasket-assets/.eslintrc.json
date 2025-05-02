@@ -1,0 +1,14 @@
+{
+  "extends": [
+    "godaddy"
+  ],
+  "plugins": [
+    "unicorn"
+  ],
+  "rules": {
+    "unicorn/filename-case": "error"
+  },
+  "ignorePatterns": [
+    "react"
+  ]
+}

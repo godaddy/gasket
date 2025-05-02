@@ -1,0 +1,37 @@
+{
+  "ignorePatterns": [
+    "cjs/"
+  ],
+  "extends": [
+    "godaddy",
+    "plugin:jest/recommended",
+    "plugin:jsdoc/recommended-typescript-flavor"
+  ],
+  "plugins": [
+    "unicorn",
+    "jsdoc"
+  ],
+  "rules": {
+    "unicorn/filename-case": "error",
+    "no-undefined": 0,
+    "no-sync": 0
+  },
+  "overrides": [
+    {
+      "files": [
+        "test/**/*.js"
+      ],
+      "rules": {
+        "jsdoc/require-jsdoc": "off"
+      }
+    },
+    {
+      "files": [
+        "lib/*.ts"
+      ],
+      "extends": [
+        "godaddy-typescript"
+      ]
+    }
+  ]
+}

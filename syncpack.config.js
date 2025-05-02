@@ -51,7 +51,6 @@ const config = {
     'devDependencies',
     'disabled_peerDependencies',
     'peerDependencies',
-    'eslintConfig',
     'eslintIgnore',
     'gasket'
   ],
@@ -60,14 +59,14 @@ const config = {
       label: 'workspace-packages',
       dependencies: [
         'create-gasket-app',
-        '@gasket/*',
+        '@gasket/*'
       ],
       dependencyTypes: ['dependencies', 'devDependencies'],
       pinVersion: 'workspace:*'
     }],
-  "lintFormatting": true,
-  "lintSemverRanges": true,
-  "lintVersions": true,
+  lintFormatting: true,
+  lintSemverRanges: true,
+  lintVersions: true
 };
 
 module.exports = config;

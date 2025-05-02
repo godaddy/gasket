@@ -1,0 +1,34 @@
+{
+  "extends": [
+    "godaddy",
+    "plugin:jest/recommended",
+    "plugin:jsdoc/recommended-typescript-flavor"
+  ],
+  "plugins": [
+    "unicorn",
+    "jsdoc"
+  ],
+  "rules": {
+    "unicorn/filename-case": "error"
+  },
+  "overrides": [
+    {
+      "files": [
+        "test/**/*.js"
+      ],
+      "rules": {
+        "jsdoc/require-param-description": "off",
+        "jsdoc/require-param-type": "off",
+        "jsdoc/require-returns-description": "off"
+      }
+    },
+    {
+      "files": [
+        "lib/*.ts"
+      ],
+      "extends": [
+        "godaddy-typescript"
+      ]
+    }
+  ]
+}

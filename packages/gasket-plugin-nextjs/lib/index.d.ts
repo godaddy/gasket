@@ -3,7 +3,7 @@ import type { NextConfig } from 'next';
 import type { NextServer } from 'next/dist/server/next';
 import type { Application } from 'express';
 import type { FastifyInstance } from 'fastify';
-import type { Gasket, Plugin } from '@gasket/core';
+import type { Gasket, Plugin, MaybeAsync } from '@gasket/core';
 import type { CreateContext, CreatePrompt } from 'create-gasket-app' with { 'resolution-mode': 'import' };
 
 export { NextConfig, NextServer };
@@ -76,18 +76,18 @@ declare module 'create-gasket-app' {
 }
 
 declare module '@gasket/plugin-nextjs' {
+  interface NextJsRoute {
+    page: string;
+    regex: RegExp;
+    namedRegex: RegExp;
+    routeKeys: Record<string, string>;
+    namedCapturingRegex: string;
+  }
   /** Gets the NextJS route matching the request */
   export function getNextRoute(
     gasket: Gasket,
-    req: IncomingMessage
-  ): Promise<null | {
-    page: string;
-    regex: RegExp;
-    routeKeys: Record<string, string>;
-    namedRegex: RegExp;
-  }> {
-    return Promise.resolve(null);
-  }
+    req: IncomingMessage & { path?: string }
+  ): Promise<NextJsRoute | null>;
 
   /* Exported prompts */
   export function promptAppRouter(

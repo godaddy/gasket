@@ -1,0 +1,15 @@
+{
+  "extends": [
+    "godaddy",
+    "plugin:jest/recommended"
+  ],
+  "plugins": [
+    "unicorn"
+  ],
+  "rules": {
+    "unicorn/filename-case": "error"
+  },
+  "ignorePatterns": [
+    "test/fixtures"
+  ]
+}

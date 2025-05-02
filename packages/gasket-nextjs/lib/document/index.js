@@ -14,10 +14,9 @@ function isDocumentClass(maybeClass) {
  * To avoid polluting <head/>, we want to render our JSON in the <body/>
  * but before our other scripts so that it is available to query.
  * In a basic Next.js app, this is between the Main and NextScript tags.*
- *
- * @param {Array} bodyChildren - Children of body element
- * @returns {number} index
- * @private
+ * @param {Array} bodyChildren - An array of React elements that are children of the body element.
+ * @param {number} [index] - An optional index at which to insert the script. If not provided, determine the best index.
+ * @returns {number} - The index at which the GasketData script should be inserted.
  */
 function lookupIndex(bodyChildren, index = -1) {
   const lookups = [
@@ -34,7 +33,6 @@ function lookupIndex(bodyChildren, index = -1) {
 /**
  * Make a wrapper to extend the Next.js Document, injecting a script with the
  * `gasketData` from the response object.
- *
  * @type {import('.').withGasketData}
  */
 export function withGasketData(
@@ -45,6 +43,13 @@ export function withGasketData(
 
   return Document => {
 
+    /**
+     * Asynchronously fetches initial properties for the document.
+     * If a request is present in the context, it fetches public Gasket data.
+     * Otherwise, it returns an empty object.
+     * @param {object} ctx - The context object.
+     * @returns {Promise<object>} A promise that resolves with the initial properties for the document.
+     */
     async function getInitialProps(ctx) {
       const gasketData = ctx.req ? await gasket.actions.getPublicGasketData?.(ctx.req) ?? {} : {};
 
@@ -55,7 +60,7 @@ export function withGasketData(
     }
 
     // if class-based Document
-    if(isDocumentClass(Document)) {
+    if (isDocumentClass(Document)) {
       return class GasketDocument extends Document {
         static async getInitialProps(ctx) {
           return getInitialProps(ctx);
@@ -70,7 +75,13 @@ export function withGasketData(
       };
     }
 
+    /**
+     * A function that wraps the Document component and injects GasketData into it.
+     * @param {object} props - The properties passed to the Document component.
+     * @returns {import('react').ReactElement} - The Document component with GasketData injected.
+     */
     function WrappedDocument(props) {
+      // eslint-disable-next-line new-cap
       const html = Document(props);
       const { gasketData } = props;
 
