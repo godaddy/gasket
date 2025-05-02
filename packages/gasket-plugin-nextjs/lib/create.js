@@ -206,7 +206,10 @@ function addConfig({ gasketConfig, nextDevProxy, nextServerType }) {
 
 module.exports = {
   timing: {
-    before: ['@gasket/plugin-intl']
+    before: [
+      '@gasket/plugin-intl',
+      '@gasket/plugin-docusaurus'
+    ]
   },
   /**
    * Add files & extend package.json for new apps.
