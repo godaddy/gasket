@@ -1,5 +1,12 @@
 # `@gasket/plugin-docusaurus`
 
+## 7.4.1
+
+### Patch Changes
+
+- a490392: Only add react devDeps if not already in deps
+  - @gasket/plugin-logger@7.3.3
+
 ## 7.4.0
 
 ### Minor Changes

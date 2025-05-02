@@ -1,5 +1,12 @@
 # `@gasket/plugin-nextjs`
 
+## 7.4.2
+
+### Patch Changes
+
+- a490392: Ensure create hook runs before docusaurus plugin
+  - @gasket/plugin-webpack@7.3.3
+
 ## 7.4.1
 
 ### Patch Changes
