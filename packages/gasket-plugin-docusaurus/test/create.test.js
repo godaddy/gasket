@@ -8,7 +8,8 @@ describe('createHook', () => {
     mockContext = {
       useDocusaurus: true,
       pkg: {
-        add: jest.fn()
+        add: jest.fn(),
+        has: jest.fn().mockReturnValue(true)
       },
       readme: {
         subHeading: jest.fn().mockReturnThis(),
@@ -37,11 +38,27 @@ describe('createHook', () => {
       [name]: `^${version}`,
       '@docusaurus/core': devDependencies['@docusaurus/core'],
       '@docusaurus/preset-classic': devDependencies['@docusaurus/preset-classic'],
-      'react': devDependencies.react,
-      'react-dom': devDependencies['react-dom'],
       'ajv': devDependencies.ajv,
       'typescript': devDependencies.typescript,
       'search-insights': devDependencies['search-insights']
+    });
+  });
+
+  it('adds react devDependencies if needed', async () => {
+    mockContext.pkg.has.mockReturnValue(false);
+    await create({}, mockContext);
+    expect(mockContext.pkg.add).toHaveBeenCalledWith('devDependencies', {
+      'react': devDependencies.react,
+      'react-dom': devDependencies['react-dom']
+    });
+  });
+
+  it('does not add react devDeps again', async () => {
+    mockContext.pkg.has.mockReturnValue(true);
+    await create({}, mockContext);
+    expect(mockContext.pkg.add).not.toHaveBeenCalledWith('devDependencies', {
+      'react': devDependencies.react,
+      'react-dom': devDependencies['react-dom']
     });
   });
 
