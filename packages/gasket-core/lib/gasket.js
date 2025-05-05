@@ -1,8 +1,12 @@
 /* eslint-disable no-console, no-process-env */
 
 import { GasketEngine, lifecycleMethods } from './engine.js';
-import { applyConfigOverrides } from '@gasket/utils/config';
 import { makeTraceBranch } from './trace.js';
+
+
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const { applyConfigOverrides } = require('@gasket/utils/config');
 
 /**
  * Get the environment to use for the gasket instance.
@@ -19,12 +23,30 @@ function getEnvironment() {
   return 'local';
 }
 
+/**
+ * Normalize ESM and CommonJS plugins to raw Plugin[]
+ * @param {(import('@gasket/core').Plugin | { default: import('@gasket/core').Plugin })[]} plugins
+ * @returns {import('@gasket/core').Plugin[]}
+ */
+function normalizePlugins(plugins) {
+  return plugins
+    .filter(Boolean)
+    .map(p => 'default' in p ? p.default : p)
+    .filter(p => p.name || p.hooks);
+}
+
 /* eslint-enable no-console, no-process-env */
 
 /**
  * The Gasket class is the main entry point for the Gasket API.
+ * @type {import('@gasket/core').Gasket}
  */
 export class Gasket {
+  /** These will be assigned dynamically later */
+  exec;
+  execSync;
+  execWaterfall;
+  execWaterfallSync;
 
   /**
    * @param {import('@gasket/core').GasketConfigDefinition} configDef - Gasket configuration
@@ -35,39 +57,34 @@ export class Gasket {
     config.env = env;
     config.root ??= process.cwd();
 
-    // prune nullish and/or empty plugins
-    config.plugins = config.plugins
-      .filter(Boolean)
-      .map(plugin => 'default' in plugin ? plugin.default : plugin) // quality of life for cjs apps
-      .filter(plugin => Boolean(plugin.name) || Boolean(plugin.hooks));
+    // Normalize plugins before assigning or using
+    const plugins = normalizePlugins(config.plugins);
+    config.plugins = plugins;
 
-    // start the engine
-    this.engine = new GasketEngine(config.plugins);
+    const resolvedConfig = /** @type {import('@gasket/core').GasketConfig} */ (config);
 
-    // bind engine methods to run through a proxy
+    // Start the engine
+    this.engine = new GasketEngine(plugins);
+
+    // Proxy lifecycle methods through trace branch
     lifecycleMethods.forEach(method => {
-      this[method] = (...args) => {
-        return this.traceBranch()[method](...args);
-      };
+      this[method] = (...args) => this.traceBranch()[method](...args);
     });
 
     this.hook = this.engine.hook.bind(this.engine);
-    this.config = config;
+    this.config = resolvedConfig;
 
     // Can be used as a key to identify a gasket instance
     this.symbol = Symbol('gasket');
 
-    // @ts-ignore
-    this.execSync('init');
-    // @ts-ignore
-    this.config = this.execWaterfallSync('configure', config);
+    const self = /** @type {import('@gasket/core').Gasket} */ (this);
+    self.execSync('init');
+    this.config = self.execWaterfallSync('configure', resolvedConfig);
 
     this.isReady = new Promise((resolve) => {
       (async () => {
-        // @ts-ignore - attached lifecycle trace methods
-        this.config = await this.execWaterfall('prepare', this.config);
-        // @ts-ignore - attached lifecycle trace methods
-        await this.exec('ready');
+        this.config = await self.execWaterfall('prepare', this.config);
+        await self.exec('ready');
         resolve();
       })();
     });
@@ -82,7 +99,6 @@ export class Gasket {
   }
 
   get actions() {
-    // @ts-ignore -- actions from proxy
     return this.traceBranch().actions;
   }
 }

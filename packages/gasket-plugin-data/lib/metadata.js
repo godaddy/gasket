@@ -1,9 +1,15 @@
+/// <reference types="@gasket/core" />
 /// <reference types="@gasket/plugin-metadata" />
 
-/** @type {import('@gasket/core').HookHandler<'metadata'>} */
-function metadata(gasket, meta) {
+const { name, version, description } = require('../package.json');
+
+/** @type {import('@gasket/core', { with: { "resolution-mode": "import" } }).HookHandler<'metadata'>} */
+async function metadata(gasket, meta) {
   return {
     ...meta,
+    name,
+    version,
+    description,
     actions: [
       {
         name: 'getGasketData',

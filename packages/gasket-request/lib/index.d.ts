@@ -81,6 +81,7 @@ export class GasketRequest {
   cookies: Record<string, string>;
   query: Record<string, string>;
   path: string;
+  url: string;
 }
 
 /**

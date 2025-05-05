@@ -1,30 +1,33 @@
 import React from 'react';
 import { needsToLoad } from './utils.js';
+import { LocaleFileStatus } from '@gasket/intl';
 
-/** @type {import('./types').GasketIntlContext} */
+/** @type {import('./index.d.ts').GasketIntlContext} */
 const defaultContext = {
-  getStatus: () => 'not-loaded',
-  load: () => {},
+  getStatus: () => LocaleFileStatus.notLoaded,
+  load: () => { },
   messages: {}
 };
 
 export const GasketIntlContext = React.createContext(defaultContext);
 
-/** @type {import('./types').makeContext} */
+/** @type {import('./index.d.ts').makeContext} */
 export function makeContext(localeHandler, messages, setMessages) {
 
-  /** @type {import('./types').IntlContext_load} */
+  /** @type {import('./index.d.ts').IntlContext_load} */
   function load(...localeFilePaths) {
     const status = localeHandler.getStatus(...localeFilePaths);
 
     if (needsToLoad(status)) {
-      void localeHandler.load(...localeFilePaths).then(() => {
-        setMessages(localeHandler.getAllMessages());
-      });
+      void localeHandler
+        .load(...localeFilePaths)
+        .then(() => {
+          setMessages(localeHandler.getAllMessages());
+        });
     }
   }
 
-  /** @type {import('./types').IntlContext_status} */
+  /** @type {import('./index.d.ts').IntlContext_status} */
   function getStatus(...localeFilePaths) {
     return localeHandler.getStatus(...localeFilePaths);
   }

@@ -3,7 +3,7 @@ import htmlescape from 'htmlescape';
 
 /**
  * Renders a script tag with JSON gasketData
- * @type {import('.').GasketDataScript} GasketDataScript
+ * @type {import('./index.d.ts').GasketDataScript} GasketDataScript
  */
 export function GasketDataScript(props) {
   const { data } = props;

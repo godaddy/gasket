@@ -2,14 +2,17 @@
 
 import { gasketData } from './gasket-data.js';
 
-/** @type {import('@gasket/data').resolveGasketData} */
+/** @type {import('./index.d.ts').resolveGasketData} */
 export async function resolveGasketData(gasket, req) {
   let data;
   if (typeof document !== 'undefined') {
     data = gasketData();
   } else {
-    data = await gasket.actions.getPublicGasketData(req);
+    // Server-side: req may be RequestLike or IncomingMessage.
+    // getPublicGasketData expects RequestLike, so we cast here.
+    data = await gasket.actions.getPublicGasketData(
+      /** @type {import('@gasket/request').RequestLike} */(req)
+    );
   }
-
   return data;
 }

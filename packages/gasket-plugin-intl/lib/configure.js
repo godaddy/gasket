@@ -3,20 +3,12 @@
 const path = require('path');
 
 const debug = require('debug')('gasket:plugin:intl:configure');
+const { getIntlConfig } = require('./utils/configure-utils');
 
 const moduleDefaults = {
   localesDir: 'locales',
   excludes: ['cacache', 'yargs', 'axe-core']
 };
-
-/**
- * Shortcut to get the gasket.config.intl object
- * @param {import("@gasket/core").Gasket} gasket - Gasket API
- * @returns {import('./index').IntlConfig} intl config
- */
-function getIntlConfig(gasket) {
-  return gasket.config.intl;
-}
 
 /**
  * Sets up the Intl config for the Gasket session and add process env variables
@@ -25,7 +17,6 @@ function getIntlConfig(gasket) {
  */
 module.exports = function configure(gasket, config) {
   const { root } = config;
-  // @ts-ignore - temp fix until we can get types for gasket-plugin-intl
   const intlConfig = { ...getIntlConfig({ config }) };
 
   // get user defined config and apply defaults
@@ -58,7 +49,6 @@ module.exports = function configure(gasket, config) {
     staticLocaleFilePaths = [defaultLocaleFilePath];
     gasket.logger.debug(`intl.staticLocaleFilePaths not configured, defaulting to [${staticLocaleFilePaths.join(', ')}]`);
   }
-
 
   let { modules = false } = intlConfig;
   if (modules && !Array.isArray(modules)) {
@@ -99,6 +89,3 @@ module.exports = function configure(gasket, config) {
     intl: normalizedIntlConfig
   };
 };
-
-// @ts-ignore
-module.exports.getIntlConfig = getIntlConfig;

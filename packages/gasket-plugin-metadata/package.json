@@ -36,7 +36,6 @@
     "@gasket/plugin-logger": "workspace:*"
   },
   "devDependencies": {
-    "@gasket/plugin-metadata": "workspace:*",
     "@gasket/plugin-webpack": "workspace:*",
     "@godaddy/dmd": "^1.0.4",
     "@types/jest": "^29.5.14",
@@ -47,7 +46,7 @@
     "eslint-config-godaddy-typescript": "^4.0.3",
     "eslint-plugin-jest": "^27.9.0",
     "eslint-plugin-unicorn": "^55.0.0",
-    "typescript": "^5.7.3",
+    "typescript": "^5.8.2",
     "vitest": "^3.0.7"
   },
   "eslintConfig": {

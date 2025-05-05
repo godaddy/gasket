@@ -1,6 +1,5 @@
 const codeStyles = require('../lib/code-styles');
-// @ts-ignore
-const { devDependencies } = require('../package');
+const { devDependencies } = require('../package.json');
 
 describe('code styles', () => {
   let context, utils, pkgHas, pkgAdd;

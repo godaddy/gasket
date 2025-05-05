@@ -1,20 +1,17 @@
 import { createElement } from 'react';
 import hoistNonReactStatics from 'hoist-non-react-statics';
-// @ts-ignore
 import { resolveGasketData } from '@gasket/data';
 import { GasketDataProvider } from './gasket-data-provider.js';
 
-/** @type {import('.').withGasketDataProvider} */
+/** @type {import('./index.d.ts').withGasketDataProvider} */
 export function withGasketDataProvider(gasket) {
-
-  // @ts-ignore
   return function wrapper(Component) {
     const displayName = Component.displayName || Component.name || 'Component';
 
     function HOC({ gasketData, ...props }) {
       return (
         createElement(GasketDataProvider, { gasketData },
-          createElement(Component, props)
+          createElement(Component, /** @type {any} */(props))
         )
       );
     }

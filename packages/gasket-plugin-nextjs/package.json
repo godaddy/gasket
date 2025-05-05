@@ -16,7 +16,7 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
-    "posttest": "pnpm run lint",
+    "posttest": "pnpm run lint && pnpm run typecheck",
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
     "test:coverage": "pnpm run test --coverage",
     "test:watch": "pnpm run test --watch",
@@ -77,7 +77,7 @@
     "nodemon": "^3.1.9",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "typescript": "^5.7.3"
+    "typescript": "^5.8.2"
   },
   "peerDependencies": {
     "@gasket/plugin-webpack": "workspace:*",

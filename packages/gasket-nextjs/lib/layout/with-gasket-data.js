@@ -1,4 +1,4 @@
-import { request } from '../request';
+import { request } from '../request/index.js';
 import { injectGasketData } from '../inject-gasket-data.js'
 import NextScript from 'next/script';
 
@@ -24,7 +24,7 @@ function lookupIndex(bodyChildren, index = -1) {
  * Make a wrapper to around the Root Layout, injecting a script with the
  * `gasketData`.
  *
- * @type {import('.').withGasketData}
+ * @type {import('./index.d.ts').withGasketData}
  */
 export function withGasketData(gasket, options = { index: -1 }) {
   const { index } = options;

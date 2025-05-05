@@ -32,6 +32,7 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-fastify",
   "dependencies": {
+    "@fastify/express": "^3.0.0",
     "fastify": "^4.29.0"
   },
   "devDependencies": {
@@ -39,6 +40,7 @@
     "@gasket/plugin-https": "workspace:*",
     "@gasket/plugin-logger": "workspace:*",
     "@gasket/plugin-metadata": "workspace:*",
+    "@types/connect": "^3.4.38",
     "@types/jest": "^29.5.14",
     "@types/node": "^20.17.19",
     "create-gasket-app": "workspace:*",
@@ -50,7 +52,7 @@
     "eslint-plugin-unicorn": "^55.0.0",
     "fastify": "^4.29.0",
     "jest": "^29.7.0",
-    "typescript": "^5.7.3"
+    "typescript": "^5.8.2"
   },
   "peerDependencies": {
     "fastify": "^4.29.0"

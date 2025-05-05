@@ -3,6 +3,7 @@ import type { Store } from 'redux';
 import type { MaybeAsync, Plugin } from '@gasket/core';
 import type { Logger } from '@gasket/plugin-logger';
 import type { Console } from 'inspector/promises';
+import type { RequestLike } from '@gasket/request';
 
 /**
  * Class to add statements to redux store.
@@ -62,7 +63,7 @@ declare module '@gasket/core' {
   export interface HookExecTypes {
     initReduxState<State>(
       state: State,
-      context: { req: IncomingMessage, res: OutgoingMessage }
+      context: { req: RequestLike | IncomingMessage, res: OutgoingMessage }
     ): MaybeAsync<State>;
 
     initReduxStore(

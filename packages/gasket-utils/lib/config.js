@@ -1,28 +1,24 @@
 const deepmerge = require('deepmerge');
-// @ts-ignore - diagnostics lib does not have a types declaration file
 const debug = require('diagnostics')('gasket:utils');
-// @ts-ignore - 'isPlainObject' is not imported by using a default import
 const { isPlainObject } = require('is-plain-object');
 
 /**
  * Normalize the config by applying any overrides for environments, commands,
  * or local-only config file.
- * @type {import('./config').applyConfigOverrides}
+ * @type {import('.').applyConfigOverrides}
  */
 function applyConfigOverrides(config, { env = '', commandId }) {
-  // @ts-ignore - merged config definitions
-  return deepmerge.all(
-    // @ts-ignore - partial config definitions
-    [...getPotentialConfigs(config, { env, commandId })].reverse(),
-    { isMergeableObject: isPlainObject }
-  );
+  const potentialConfigs = [...getPotentialConfigs(config, { env, commandId })].reverse();
+
+  // Cast to 'any' because generic type 'T' is only available in TypeScript declarations
+  return /** @type {any} */ (deepmerge.all(potentialConfigs, { isMergeableObject: isPlainObject }));
 }
 
 /**
  * Generator function to yield potential configurations
- * @type {import('./config').getPotentialConfigs}
+ * @type {import('.').getPotentialConfigs}
  */
-function *getPotentialConfigs(config, { env, commandId }) {
+function* getPotentialConfigs(config, { env, commandId }) {
   // Separate environment-specific config from another config
   const { environments = {}, commands = {}, ...baseConfig } = config;
   const isLocalEnv = env === 'local';
@@ -31,8 +27,8 @@ function *getPotentialConfigs(config, { env, commandId }) {
   if (commandId) {
     yield* getCommandOverrides(commands, commandId);
   } else {
-    // @ts-ignore - commands is originally omitted from this type
-    baseConfig.commands = commands;
+    // Cast baseConfig to any to manually add back commands property
+    /** @type {any} */ (baseConfig).commands = commands;
   }
   yield* getSubEnvironmentOverrides(env, environments);
   yield* getDevOverrides(isLocalEnv, environments);
@@ -41,9 +37,9 @@ function *getPotentialConfigs(config, { env, commandId }) {
 
 /**
  * Generator function to yield command overrides
- * @type {import('./config').getCommandOverrides}
+ * @type {import('.').getCommandOverrides}
  */
-function *getCommandOverrides(commands, commandId) {
+function* getCommandOverrides(commands, commandId) {
   const commandOverrides = commandId && commands[commandId];
   if (commandOverrides) {
     debug('Including config overrides for command', commandId);
@@ -53,9 +49,9 @@ function *getCommandOverrides(commands, commandId) {
 
 /**
  * Generator function to yield sub-environment overrides
- * @type {import('./config').getSubEnvironmentOverrides}
+ * @type {import('.').getSubEnvironmentOverrides}
  */
-function *getSubEnvironmentOverrides(env, environments) {
+function* getSubEnvironmentOverrides(env, environments) {
   const envParts = env.split('.');
 
   // Iterate over any `.` delimited parts (e.g. `production.subEnv`) and
@@ -72,9 +68,9 @@ function *getSubEnvironmentOverrides(env, environments) {
 
 /**
  * Generator function to yield development overrides
- * @type {import('./config').getDevOverrides}
+ * @type {import('.').getDevOverrides}
  */
-function *getDevOverrides(isLocalEnv, environments) {
+function* getDevOverrides(isLocalEnv, environments) {
   // Special case for the local environment, which inherits from the
   // development environment
   const devEnv = isLocalEnv && (environments.development || environments.dev);
