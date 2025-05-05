@@ -100,7 +100,7 @@ result will be cached for subsequent calls.
 import { withGasketRequestCache } from '@gasket/request';
 
 export const myAction = withGasketRequestCache(
-  async function handler(gasketRequest, req, arg1, arg2) {
+  async function handler(gasket, gasketRequest, arg1, arg2) {
     // use gasketRequest
   }
 );
