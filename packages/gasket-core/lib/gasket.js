@@ -1,8 +1,12 @@
 /* eslint-disable no-console, no-process-env */
 
 import { GasketEngine, lifecycleMethods } from './engine.js';
-import { applyConfigOverrides } from '@gasket/utils/config';
 import { makeTraceBranch } from './trace.js';
+
+
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const { applyConfigOverrides } = require('@gasket/utils/config');
 
 /**
  * Get the environment to use for the gasket instance.

@@ -226,7 +226,7 @@ export class GasketEngine {
             executionPlan.push((passedGasket, ...execArgs) => {
               passedGasket.traceHookStart?.(plugin, event);
               const result = subscribers[plugin].invoke(
-                passedGasket, .../** @type {import('.').HookArgs<import('.').HookId>} */ (execArgs));
+                passedGasket, .../** @type {import('@gasket/core').HookArgs<import('@gasket/core').HookId>} */ (execArgs));
               if (result instanceof Promise) {
                 throw new Error(`execSync cannot be used with async hook (${event}) of plugin (${plugin})`);
               }
@@ -304,7 +304,7 @@ export class GasketEngine {
             passedGasket.traceHookStart?.(plugin, event);
             resultMap[plugin] = subscribers[plugin].invoke(
               passedGasket,
-              .../** @type {import('.').HookArgs<import('.').HookId>} */(passedArgs));
+              .../** @type {import('@gasket/core').HookArgs<import('@gasket/core').HookId>} */(passedArgs));
             if (resultMap[plugin] instanceof Promise) {
               throw new Error(`execMapSync cannot be used with async hook (${event}) of plugin (${plugin})`);
             }
@@ -375,7 +375,7 @@ export class GasketEngine {
 
             result = subscribers[plugin].invoke(
               passedGasket,
-              .../** @type {import('.').HookArgs<import('.').HookId>} */(invokeArgs)
+              .../** @type {import('@gasket/core').HookArgs<import('@gasket/core').HookId>} */(invokeArgs)
             );
 
             if (result instanceof Promise) {
@@ -453,7 +453,7 @@ export class GasketEngine {
           executionPlan.push((passedGasket, passApplyFn) => {
             const callback = (...args) => subscribers[plugin].invoke(
               passedGasket,
-              .../** @type {import('.').HookArgs<import('.').HookId>} */(args));
+              .../** @type {import('@gasket/core').HookArgs<import('@gasket/core').HookId>} */(args));
             passedGasket.traceHookStart?.(plugin, event);
             const result = passApplyFn(this._pluginMap[plugin], callback);
             if (result instanceof Promise) {

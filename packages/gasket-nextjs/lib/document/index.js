@@ -35,7 +35,7 @@ function lookupIndex(bodyChildren, index = -1) {
  * Make a wrapper to extend the Next.js Document, injecting a script with the
  * `gasketData` from the response object.
  *
- * @type {import('.').withGasketData}
+ * @type {import('./index.d.ts').withGasketData}
  */
 export function withGasketData(
   gasket,
@@ -55,11 +55,14 @@ export function withGasketData(
     }
 
     // if class-based Document
-    if(isDocumentClass(Document)) {
+    if (isDocumentClass(Document)) {
       return class GasketDocument extends Document {
         static async getInitialProps(ctx) {
           return getInitialProps(ctx);
         }
+
+        /** @type {import('next/document').DocumentInitialProps & { gasketData: import('@gasket/data').GasketData }} */
+        props;
 
         render() {
           const html = super.render();

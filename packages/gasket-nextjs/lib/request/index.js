@@ -2,11 +2,11 @@ import { makeGasketRequest, WeakPromiseKeeper } from '@gasket/request';
 import { cookies, headers } from 'next/headers';
 
 /**
- * @type {import('@gasket/request').WeakPromiseKeeper<Headers, import('@gasket/request').GasketRequest>}
+ * @type {import('@gasket/request').WeakPromiseKeeper<ReturnType<typeof headers>, import('@gasket/request').GasketRequest>}
  */
 const keeper = new WeakPromiseKeeper();
 
-/** @type {import('.').request} */
+/** @type {import('./index.d.ts').request} */
 export async function request(params) {
   const headerStore = await headers();
 
@@ -24,8 +24,24 @@ export async function request(params) {
         cookieEntries[name] = value;
       }
 
+      // Convert headers to a simple object
+      /** @type {Record<string, string>} */
+      const headerEntries = {};
+      if (headerStore instanceof Headers) {
+        headerStore.forEach((value, key) => {
+          headerEntries[key] = value;
+        });
+      } else {
+        // Handle the mock case where headerStore is already an object
+        for (const [key, value] of Object.entries(headerStore)) {
+          if (typeof value === 'string') {
+            headerEntries[key] = value;
+          }
+        }
+      }
+
       return makeGasketRequest({
-        headers: headerStore,
+        headers: headerEntries,
         cookies: cookieEntries,
         query
       });

@@ -1,22 +1,22 @@
 import { isBrowser, LocaleFileStatus } from './constants.js';
 import { LocaleHandler } from './locale-handler.js';
 
-/** @type {import('.').LocaleHandler} */
+/** @type {import('./index.d.ts').LocaleHandler} */
 let _browserSingletonHandler;
 
 /**
  * Utility class for loading locale files
- * @type {import('.').IntlManager}
+ * @type {import('./index.d.ts').IntlManager}
  */
 export class IntlManager {
-  /** @type {import('.').MessagesRegister } */
+  /** @type {import('./index.d.ts').MessagesRegister } */
   messagesRegister = {};
-  /** @type {import('.').StatusRegister } */
+  /** @type {import('./index.d.ts').StatusRegister } */
   statusRegister = {};
-  /** @type {import('.').PromisesRegister } */
+  /** @type {import('./index.d.ts').PromisesRegister } */
   promisesRegister = {};
 
-  /** @type {import('.').IntlManager_constructor } */
+  /** @type {import('./index.d.ts').IntlManager_constructor } */
   constructor(manifest) {
     this.manifest = manifest;
     this.managedLocales = [...this.locales, ...Object.keys(this.manifest.localesMap ?? {})];
@@ -36,7 +36,7 @@ export class IntlManager {
     return this.manifest.staticLocaleFilePaths ?? [];
   }
 
-  /** @type {import('.').IntlManager_resolveLocale } */
+  /** @type {import('./index.d.ts').IntlManager_resolveLocale } */
   resolveLocale(locale) {
     const { defaultLocale, locales, localesMap = {} } = this.manifest;
 
@@ -56,7 +56,7 @@ export class IntlManager {
     return defaultLocale;
   }
 
-  /** @type {import('.').IntlManager_init } */
+  /** @type {import('./index.d.ts').IntlManager_init } */
   init() {
     if (isBrowser) {
       const content = (document.getElementById('GasketIntl') ?? {}).textContent;
@@ -76,7 +76,7 @@ export class IntlManager {
     }
   }
 
-  /** @type {import('.').IntlManager_load } */
+  /** @type {import('./index.d.ts').IntlManager_load } */
   load(localeFileKey) {
     // Debounce multiple requests for the same locale
     // `load` cannot be async/await as that makes a new promise
@@ -113,19 +113,19 @@ export class IntlManager {
     return promise;
   }
 
-  /** @type {import('.').IntlManager_getMessages } */
+  /** @type {import('./index.d.ts').IntlManager_getMessages } */
   getMessages(localeFileKey) {
     return this.messagesRegister[localeFileKey];
   }
 
-  /** @type {import('.').IntlManager_getStatus } */
+  /** @type {import('./index.d.ts').IntlManager_getStatus } */
   getStatus(localeFileKey) {
     return this.statusRegister[localeFileKey] ?? LocaleFileStatus.notLoaded;
   }
 
-  /** @type {import('.').IntlManager_handleLocale } */
+  /** @type {import('./index.d.ts').IntlManager_handleLocale } */
   handleLocale(locale) {
-    /** @type {import('.').IntlManager } */
+    /** @type {import('./index.d.ts').IntlManager } */
     const manager = this;
 
     if (isBrowser) {

@@ -2,7 +2,7 @@ import { cookies, headers } from 'next/headers';
 
 const reqCache = new WeakMap();
 
-/** @type {import('.').request} */
+/** @type {import('./index.d.ts').request} */
 export async function request(query) {
   console.warn('DEPRECATED: use async `request` from @gasket/nextjs/request');
 

@@ -134,7 +134,7 @@ export class GasketTrace {
  * Wrap a lifecycle function to trace start and end.
  * A GasketTrace instance is passed to the lifecycle function
  * to allow for tracing and further branching.
- * @type {import('.').isolateLifecycle<any>}
+ * @type {import('@gasket/core').isolateLifecycle<any>}
  */
 function isolateLifecycle(source, name, fn) {
   const instance = new GasketTrace(source._proxy);
@@ -169,7 +169,7 @@ function isolateLifecycle(source, name, fn) {
  * Wrap an action function to trace start and end.
  * A GasketTrace instance is passed to the action function
  * to allow for tracing and further branching.
- * @type {import('.').isolateAction<any>}
+ * @type {import('@gasket/core').isolateAction<any>}
  */
 function isolateAction(source, name, fn) {
   const instance = new GasketTrace(source._proxy);
@@ -193,7 +193,7 @@ function isolateAction(source, name, fn) {
 /**
  * Create a proxy of actions to intercept the functions
  * and return a traceable version.
- * @type {import('.').interceptActions}
+ * @type {import('@gasket/core').interceptActions}
  */
 function interceptActions(source, actions) {
   return new Proxy(actions, {
@@ -208,7 +208,7 @@ function interceptActions(source, actions) {
 
 /**
  * Create a new GasketTrace instance from a Gasket.
- * @type {import('.').makeTraceBranch}
+ * @type {import('@gasket/core').makeTraceBranch}
  */
 export function makeTraceBranch(gasket) {
   const instance = new GasketTrace(gasket, GasketTrace._nextBranchId++);

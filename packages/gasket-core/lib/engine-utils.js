@@ -3,7 +3,7 @@ let dynamicNamingId = 0;
 /**
  * Lifecycle method names available on the engine.
  * Used for dynamically binding context for destructured methods.
- * @type {import('.').lifecycleMethods}
+ * @type {import('@gasket/core').lifecycleMethods}
  */
 export const lifecycleMethods = [
   'exec', 'execSync',
@@ -14,7 +14,7 @@ export const lifecycleMethods = [
 
 /**
  * Normalize hook to ensure it is in the { handler, timing } shape
- * @type {import('.').normalizeHook}
+ * @type {import('@gasket/core').normalizeHook}
  */
 export function normalizeHook(hook) {
   return typeof hook === 'function' ? { handler: hook } : hook;
@@ -22,7 +22,7 @@ export function normalizeHook(hook) {
 
 /**
  * Create a thunk for async plugin execution
- * @type {import('.').createAsyncThunk}
+ * @type {import('@gasket/core').createAsyncThunk}
  */
 export function createAsyncThunk(plugin, subscriber, event, traceHookStart) {
   return (gasket, pluginTasks, ...args) => {
@@ -39,7 +39,7 @@ export function createAsyncThunk(plugin, subscriber, event, traceHookStart) {
 
 /**
  * Create a thunk for sync plugin execution
- * @type {import('.').createSyncThunk}
+ * @type {import('@gasket/core').createSyncThunk}
  */
 export function createSyncThunk(plugin, subscriber, event, traceHookStart) {
   return (gasket, ...args) => {
@@ -53,7 +53,7 @@ export function createSyncThunk(plugin, subscriber, event, traceHookStart) {
 /**
  * Generate a unique plugin name for dynamically registered hooks.
  * Used when no `pluginName` is provided explicitly.
- * @type {import('.').getDynamicPluginName}
+ * @type {import('@gasket/core').getDynamicPluginName}
  */
 export function getDynamicPluginName() {
   return `dynamic-${dynamicNamingId++}`;

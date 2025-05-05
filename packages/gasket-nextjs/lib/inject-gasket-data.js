@@ -25,7 +25,7 @@ function selectBody(children) {
 
 /**
  * Renders a script tag with JSON gasketData
- * @type {import('.').injectGasketData}
+ * @type {import('./index.d.ts').injectGasketData}
  */
 export function injectGasketData(html, gasketData, lookupIndex, insertIndex = -1) {
   // html is declared as a ReactElement in types, but needs an explicit cast here

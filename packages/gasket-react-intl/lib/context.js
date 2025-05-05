@@ -2,7 +2,7 @@ import React from 'react';
 import { needsToLoad } from './utils.js';
 import { LocaleFileStatus } from '@gasket/intl';
 
-/** @type {import('.').GasketIntlContext} */
+/** @type {import('./index.d.ts').GasketIntlContext} */
 const defaultContext = {
   getStatus: () => LocaleFileStatus.notLoaded,
   load: () => { },
@@ -11,10 +11,10 @@ const defaultContext = {
 
 export const GasketIntlContext = React.createContext(defaultContext);
 
-/** @type {import('.').makeContext} */
+/** @type {import('./index.d.ts').makeContext} */
 export function makeContext(localeHandler, messages, setMessages) {
 
-  /** @type {import('.').IntlContext_load} */
+  /** @type {import('./index.d.ts').IntlContext_load} */
   function load(...localeFilePaths) {
     const status = localeHandler.getStatus(...localeFilePaths);
 
@@ -27,7 +27,7 @@ export function makeContext(localeHandler, messages, setMessages) {
     }
   }
 
-  /** @type {import('.').IntlContext_status} */
+  /** @type {import('./index.d.ts').IntlContext_status} */
   function getStatus(...localeFilePaths) {
     return localeHandler.getStatus(...localeFilePaths);
   }

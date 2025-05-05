@@ -4,11 +4,13 @@
     "checkJs": true,
     "esModuleInterop": true,
     "jsx": "react",
-    "moduleResolution": "bundler",
+    "moduleResolution": "nodenext",
+    "module": "NodeNext",
     "noEmit": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "target": "ES2020",
+    "allowImportingTsExtensions": true,
     "lib": [
       "esnext",
       "dom"

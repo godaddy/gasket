@@ -12,7 +12,7 @@ export const getRequestFromContext = (ctx) =>
   'ctx' in ctx ? ctx.ctx?.req : ctx.req;
 
 
-/** @type {import('.').withLocaleInitialProps} */
+/** @type {import('./index.d.ts').withLocaleInitialProps} */
 export function withLocaleInitialProps(gasket) {
   return function wrapper(Component) {
     const originalGetInitialProps = Component.getInitialProps;

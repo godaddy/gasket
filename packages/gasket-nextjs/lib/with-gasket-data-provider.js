@@ -3,7 +3,7 @@ import hoistNonReactStatics from 'hoist-non-react-statics';
 import { resolveGasketData } from '@gasket/data';
 import { GasketDataProvider } from './gasket-data-provider.js';
 
-/** @type {import('.').withGasketDataProvider} */
+/** @type {import('./index.d.ts').withGasketDataProvider} */
 export function withGasketDataProvider(gasket) {
   return function wrapper(Component) {
     const displayName = Component.displayName || Component.name || 'Component';

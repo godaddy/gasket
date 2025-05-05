@@ -1,7 +1,7 @@
 import { IntlManager } from './intl-manager.js';
 import { LocaleFileStatus } from './constants.js';
 
-/** @type {import('.').makeIntlManager } */
+/** @type {import('./index.d.ts').makeIntlManager } */
 function makeIntlManager(manifest) {
   return new IntlManager(manifest);
 }
