@@ -118,7 +118,6 @@ async function startServer(gasket) {
     } = serverOpts;
 
     if (_http) {
-      // @ts-ignore - http may not be an object, but we account for that
       let _port = (typeof _http === 'number' ? _http : _http.port) ?? '';
       if (_port) _port = `:${_port}`;
 
@@ -126,7 +125,6 @@ async function startServer(gasket) {
     }
 
     if (_https || _http2) {
-      // @ts-ignore - http2 may be an array, but we account for that
       let _port = (_https ?? _http2).port ?? '';
       if (_port) _port = `:${_port}`;
 

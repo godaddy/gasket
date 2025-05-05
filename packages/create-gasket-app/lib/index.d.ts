@@ -548,3 +548,11 @@ declare module '@gasket/core' {
     ): MaybeAsync<void>;
   }
 }
+
+declare global {
+  namespace NodeJS {
+    interface Process {
+      noDeprecation?: boolean;
+    }
+  }
+}

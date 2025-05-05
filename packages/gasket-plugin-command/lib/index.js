@@ -7,10 +7,11 @@ import commands from './commands.js';
 import ready from './ready.js';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
-const { name, version, description } = require('../package.json');
+const pkgJson = require('../package.json');
+const { name, version, description } = pkgJson;
 
 /** @type {import('@gasket/core').Plugin} */
-export default {
+const plugin = {
   name,
   version,
   description,
@@ -50,3 +51,5 @@ export default {
     }
   }
 };
+
+export default plugin;

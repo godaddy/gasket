@@ -4,17 +4,23 @@ import type { Request, Response } from 'express';
 import type { Gasket } from '@gasket/core';
 
 export interface WorkboxConfig {
-  /** path of directory to copy Workbox libraries to (default:
-         * ./build/workbox) */
+  /**
+   * path of directory to copy Workbox libraries to (default:
+   * ./build/workbox)
+   */
   outputDir?: string;
 
-  /** change the default path to /_workbox endpoint by adding a path prefix
+  /**
+   * change the default path to /_workbox endpoint by adding a path prefix
    * here. (default: ''). Used for setting up CDN support for Workbox
-   * files. */
+   * files.
+   */
   basePath?: string;
 
-  /** Any initial workbox config options which will be merged with those
-   * from any workbox lifecycle hooks. */
+  /**
+   * Any initial workbox config options which will be merged with those
+   * from any workbox lifecycle hooks.
+   */
   config?: PartialRecursive<GenerateSWConfig>;
   libraryVersion?: string;
 }

@@ -20,7 +20,6 @@ const gasketBin = program
 
 async function main() {
   // Suppress deprecation warning for punycode in node 22
-  // @ts-ignore
   process.noDeprecation = true;
   const { command, hidden, isDefault } = processCommand(createCommand);
   await warnIfOutdated(pkg.name, pkg.version);

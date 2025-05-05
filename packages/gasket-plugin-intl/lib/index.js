@@ -1,4 +1,3 @@
-/// <reference types="@gasket/plugin-command" />
 /// <reference types="@gasket/plugin-metadata" />
 
 const { name, version, description } = require('../package.json');
@@ -9,7 +8,7 @@ const serviceWorkerCacheKey = require('./service-worker-cache-key');
 const apmTransaction = require('./apm-transaction');
 const publicGasketData = require('./public-gasket-data');
 
-const { getIntlConfig } = require('./configure');
+const { getIntlConfig } = require('./utils/configure-utils');
 const create = require('./create');
 const postCreate = require('./post-create');
 const prompt = require('./prompt');

@@ -4,7 +4,7 @@ import useLocaleFile from './use-locale-file.js';
 
 /**
  * Component that loads a locale file before rendering children
- * @type {import('.').LocaleFileRequired}
+ * @type {import('./index.d.ts').LocaleFileRequired}
  */
 export default function LocaleFileRequired(props) {
   const {

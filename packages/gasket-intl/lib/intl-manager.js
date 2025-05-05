@@ -1,22 +1,22 @@
 import { isBrowser, LocaleFileStatus } from './constants.js';
 import { LocaleHandler } from './locale-handler.js';
 
-/** @type {import('.').LocaleHandler} */
+/** @type {import('./index.d.ts').LocaleHandler} */
 let _browserSingletonHandler;
 
 /**
  * Utility class for loading locale files
- * @type {import('.').IntlManager}
+ * @type {import('./index.d.ts').IntlManager}
  */
 export class IntlManager {
-  /** @type {import('./types').MessagesRegister } */
+  /** @type {import('./index.d.ts').MessagesRegister } */
   messagesRegister = {};
-  /** @type {import('./types').StatusRegister } */
+  /** @type {import('./index.d.ts').StatusRegister } */
   statusRegister = {};
-  /** @type {import('./types').PromiseRegister } */
-  promiseRegister = {};
+  /** @type {import('./index.d.ts').PromisesRegister } */
+  promisesRegister = {};
 
-  /** @type {import('./types').IntlManager_constructor } */
+  /** @type {import('./index.d.ts').IntlManager_constructor } */
   constructor(manifest) {
     this.manifest = manifest;
     this.managedLocales = [...this.locales, ...Object.keys(this.manifest.localesMap ?? {})];
@@ -36,7 +36,7 @@ export class IntlManager {
     return this.manifest.staticLocaleFilePaths ?? [];
   }
 
-  /** @type {import('./types').IntlManager_resolveLocale } */
+  /** @type {import('./index.d.ts').IntlManager_resolveLocale } */
   resolveLocale(locale) {
     const { defaultLocale, locales, localesMap = {} } = this.manifest;
 
@@ -56,7 +56,7 @@ export class IntlManager {
     return defaultLocale;
   }
 
-  /** @type {import('./types').IntlManager_init } */
+  /** @type {import('./index.d.ts').IntlManager_init } */
   init() {
     if (isBrowser) {
       const content = (document.getElementById('GasketIntl') ?? {}).textContent;
@@ -76,12 +76,12 @@ export class IntlManager {
     }
   }
 
-  /** @type {import('./types').IntlManager_load } */
+  /** @type {import('./index.d.ts').IntlManager_load } */
   load(localeFileKey) {
     // Debounce multiple requests for the same locale
     // `load` cannot be async/await as that makes a new promise
-    if (this.promiseRegister[localeFileKey]) {
-      return this.promiseRegister[localeFileKey];
+    if (this.promisesRegister[localeFileKey]) {
+      return this.promisesRegister[localeFileKey];
     }
 
     if (this.messagesRegister[localeFileKey]) {
@@ -98,35 +98,34 @@ export class IntlManager {
     this.statusRegister[localeFileKey] = LocaleFileStatus.loading;
     const promise = importer()
       .then((mod) => {
-        delete this.promiseRegister[localeFileKey];
+        delete this.promisesRegister[localeFileKey];
         this.messagesRegister[localeFileKey] = mod.default;
         this.statusRegister[localeFileKey] = LocaleFileStatus.loaded;
       })
       .catch((error) => {
-        delete this.promiseRegister[localeFileKey];
+        delete this.promisesRegister[localeFileKey];
         // eslint-disable-next-line no-console
         console.error(`Failed to load locale path ${localeFileKey}`, error);
         this.statusRegister[localeFileKey] = LocaleFileStatus.error;
       });
 
-    this.promiseRegister[localeFileKey] = promise;
+    this.promisesRegister[localeFileKey] = promise;
     return promise;
   }
 
-  /** @type {import('./types').IntlManager_getMessages } */
+  /** @type {import('./index.d.ts').IntlManager_getMessages } */
   getMessages(localeFileKey) {
     return this.messagesRegister[localeFileKey];
   }
 
-  /** @type {import('./types').IntlManager_getStatus } */
+  /** @type {import('./index.d.ts').IntlManager_getStatus } */
   getStatus(localeFileKey) {
     return this.statusRegister[localeFileKey] ?? LocaleFileStatus.notLoaded;
   }
 
-  /** @type {import('./types').IntlManager_handleLocale } */
+  /** @type {import('./index.d.ts').IntlManager_handleLocale } */
   handleLocale(locale) {
-    /** @type {import('.').IntlManager } */
-    // @ts-ignore - tsc confused with imports
+    /** @type {import('./index.d.ts').IntlManager } */
     const manager = this;
 
     if (isBrowser) {

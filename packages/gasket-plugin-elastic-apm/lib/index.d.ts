@@ -27,7 +27,7 @@ declare module '@gasket/core' {
     apmTransaction(
       transaction: Transaction,
       context: {
-        req: GasketRequest;
+        req: import('@gasket/request').GasketRequest; // TS is getting confused with the GasketRequest from @gasket/core
       }
     ): MaybeAsync<void>;
   }

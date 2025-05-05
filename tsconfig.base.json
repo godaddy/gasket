@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "esModuleInterop": true,
+    "jsx": "react",
+    "moduleResolution": "nodenext",
+    "module": "NodeNext",
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "target": "ES2020",
+    "allowImportingTsExtensions": true,
+    "lib": [
+      "esnext",
+      "dom"
+    ],
+    "types": [
+      "@types/jest",
+      "@types/node"
+    ]
+  },
+  "exclude": [
+    "**/test",
+    "**/coverage",
+    "**/generator",
+    "**/cjs"
+  ]
+}

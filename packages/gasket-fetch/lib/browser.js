@@ -1,17 +1,21 @@
 /**
- * Wrapper to access window.fetch in case of polyfill or monkey patch
- * @type {import('.').fetch}
+ * A wrapper around window.fetch to allow polyfills or monkey-patching.
+ *
+ * This function behaves like the native fetch but is exposed as a module export,
+ * with support for CommonJS and TypeScript interop. It also exposes the standard
+ * fetch-related constructors as static properties.
+ * @type {import('.').fetchWrapper}
+ * @see https://developer.mozilla.org/docs/Web/API/fetch
  */
 function fetchWrapper(input, init) {
   return window.fetch(input, init);
 }
 
-// @ts-ignore - TS doesn't like adding properties to a function
-exports = fetchWrapper; // To import fetch from @gasket/fetch
-exports.default = fetchWrapper; // For TypeScript consumers without esModuleInterop.
-exports.Headers = window.Headers;
-exports.Request = window.Request;
-exports.Response = window.Response;
-exports.AbortController = window.AbortController;
+// Attach additional properties for compatibility and polyfill support
+fetchWrapper.default = fetchWrapper; // For TypeScript consumers without esModuleInterop
+fetchWrapper.Headers = window.Headers;
+fetchWrapper.Request = window.Request;
+fetchWrapper.Response = window.Response;
+fetchWrapper.AbortController = window.AbortController;
 
-module.exports = exports;
+module.exports = fetchWrapper;
