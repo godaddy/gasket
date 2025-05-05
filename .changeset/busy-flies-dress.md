@@ -1,5 +1,5 @@
 ---
-"@gasket/plugin-nextjs": minor
+"@gasket/plugin-nextjs": patch
 ---
 
 Document environment variable
