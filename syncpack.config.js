@@ -8,23 +8,19 @@ const config = {
     devDependencies: {
       strategy: 'versionsByName',
       path: 'devDependencies'
-    },
-    peerDependencies: {
-      strategy: 'versionsByName',
-      path: 'peerDependencies'
     }
   },
-  dependencyTypes: ['dependencies', 'devDependencies', 'peerDependencies'],
+  dependencyTypes: ['dependencies', 'devDependencies'],
   semverGroups: [
     {
       range: '',
       packages: ['**'],
-      dependencyTypes: ['dependencies', 'devDependencies', 'peerDependencies'],
+      dependencyTypes: ['dependencies', 'devDependencies'],
       dependencies: ['nx']
     },
     {
       range: '^',
-      dependencyTypes: ['dependencies', 'devDependencies', 'peerDependencies'],
+      dependencyTypes: ['dependencies', 'devDependencies'],
       dependencies: ['**'],
       packages: ['**']
     }

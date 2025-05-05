@@ -1,5 +1,19 @@
 # `@gasket/plugin-nextjs`
 
+## 7.4.2
+
+### Patch Changes
+
+- a490392: Ensure create hook runs before docusaurus plugin
+  - @gasket/plugin-webpack@7.3.3
+
+## 7.4.1
+
+### Patch Changes
+
+- d5ee612: The nextConfig lifecycle hooks can be async
+- ea983c6: Adjust peer dep ranges for next and react versions
+
 ## 7.4.0
 
 ### Minor Changes

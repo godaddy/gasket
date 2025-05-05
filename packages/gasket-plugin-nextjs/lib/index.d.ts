@@ -15,6 +15,7 @@ export type NextConfigFunction = (phase: string, context: {
 }) => Promise<NextConfig>;
 
 declare module '@gasket/core' {
+  import type { GasketRequest } from '@gasket/request' with { 'resolution-mode': 'import' };
 
   export interface GasketActions {
     getNextConfig?: (config?: NextConfig | NextConfigFunction) => (phase: string, context?: { defaultConfig?: NextConfig }) => Promise<NextConfig>

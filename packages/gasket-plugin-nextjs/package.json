@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-nextjs",
-  "version": "7.4.0",
+  "version": "7.4.2",
   "description": "Adds Next support to your application",
   "types": "lib/index.d.ts",
   "files": [
@@ -73,7 +73,7 @@
     "eslint-plugin-unicorn": "^55.0.0",
     "jest": "^29.7.0",
     "lodash.merge": "^4.6.2",
-    "next": "^15.2.3",
+    "next": "^15.2.5",
     "nodemon": "^3.1.9",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -81,8 +81,8 @@
   },
   "peerDependencies": {
     "@gasket/plugin-webpack": "workspace:*",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react": ">=18 <20",
+    "react-dom": ">=18 <20"
   },
   "eslintConfig": {
     "extends": [

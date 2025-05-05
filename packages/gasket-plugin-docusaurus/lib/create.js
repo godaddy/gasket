@@ -17,12 +17,18 @@ module.exports = function create(gasket, { pkg, gasketConfig, readme, useDocusau
     [name]: `^${version}`,
     '@docusaurus/core': devDependencies['@docusaurus/core'],
     '@docusaurus/preset-classic': devDependencies['@docusaurus/preset-classic'],
-    'react': devDependencies.react,
-    'react-dom': devDependencies['react-dom'],
     'ajv': devDependencies.ajv,
     'typescript': devDependencies.typescript,
     'search-insights': devDependencies['search-insights']
   });
+
+  // If used with non-react apps, add react and react-dom
+  if (!pkg.has('dependencies', 'react')) {
+    pkg.add('devDependencies', {
+      'react': devDependencies.react,
+      'react-dom': devDependencies['react-dom']
+    });
+  }
 
   readme
     .subHeading('Docusaurus')
