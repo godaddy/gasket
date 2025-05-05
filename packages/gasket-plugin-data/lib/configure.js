@@ -1,12 +1,13 @@
+/// <reference types="@gasket/core" />
 /// <reference types="@gasket/plugin-command" />
 
-const { applyConfigOverrides } = require('@gasket/utils/config');
+const { applyConfigOverrides } = require('@gasket/utils');
 const { baseDataMap } = require('./actions');
 
 /**
- * @type {import('@gasket/core').HookHandler<'configure'>}
+ * @type {import('@gasket/core', { with: { "resolution-mode": "import" } }).HookHandler<'configure'>}
  */
-function configure(gasket, baseConfig) {
+async function configure(gasket, baseConfig) {
   const { config: { env, command } } = gasket;
   if ('data' in baseConfig) {
     const data = applyConfigOverrides(

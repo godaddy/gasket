@@ -80,7 +80,6 @@ const plugin = {
 
         app.use(
           apiDocsRoute,
-          // @ts-ignore
           swaggerUi.serve,
           swaggerUi.setup(swaggerSpec, ui)
         );

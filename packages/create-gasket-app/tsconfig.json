@@ -1,22 +1,3 @@
 {
-  "compilerOptions": {
-    "allowJs": true,
-    "checkJs": true,
-    "noEmit": true,
-    "skipLibCheck": false,
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "lib": [
-      "esnext",
-      "dom"
-    ],
-    "types": [
-      "@types/jest"
-    ]
-  },
-  "include": [
-    "lib"
-  ]
+  "extends": "../../tsconfig.base.json"
 }

@@ -3,7 +3,7 @@
 const path = require('path');
 const fs = require('fs').promises;
 const { promisify } = require('util');
-const { getIntlConfig } = require('./configure');
+const { getIntlConfig } = require('./utils/configure-utils');
 
 // TODO: Need to review for native promise usage
 const glob = promisify(require('glob'));

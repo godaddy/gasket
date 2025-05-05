@@ -4,7 +4,7 @@ import { ensureArray, needsToLoad } from './utils.js';
 
 /**
  * React hook that dispatches locale file load and returns status
- * @type {import('.').useLocaleFile}
+ * @type {import('./index.d.ts').useLocaleFile}
  */
 export default function useLocaleFile(...localeFilePaths) {
   const paths = ensureArray(localeFilePaths);

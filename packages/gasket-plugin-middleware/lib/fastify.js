@@ -19,6 +19,9 @@ module.exports = async function fastify(gasket, app) {
   // Enable middleware for fastify@3
   await app.register(require('@fastify/express'));
 
+  // Access the underlying Express app
+  const expressApp = app.express;
+
   // Add express-like `res.locals` object attaching data
   app.addHook('preHandler', function attachLocals(req, res, next) {
     res.locals = {};
@@ -27,8 +30,8 @@ module.exports = async function fastify(gasket, app) {
 
   const middlewarePattern = middlewareInclusionRegex || excludedRoutesRegex;
 
-  applyCookieParser(app, middlewarePattern);
-  applyCompression(app, compressionConfig);
+  applyCookieParser(expressApp, middlewarePattern);
+  applyCompression(expressApp, compressionConfig);
 
-  executeMiddlewareLifecycle(gasket, app, middlewarePattern);
+  executeMiddlewareLifecycle(gasket, expressApp, middlewarePattern);
 };

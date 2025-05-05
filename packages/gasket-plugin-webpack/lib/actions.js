@@ -17,6 +17,7 @@ function setupContext(context) {
 function getWebpackConfig(gasket, initConfig, context) {
   const WebpackMetricsPlugin = require('./webpack-metrics-plugin');
 
+  /** @type {import('webpack').Configuration} */
   const baseConfig = {
     ...initConfig,
     plugins: [
@@ -27,8 +28,11 @@ function getWebpackConfig(gasket, initConfig, context) {
 
   baseConfig.resolve ??= {};
   baseConfig.resolve.alias ??= {};
-  // @ts-ignore -- ensure webpack does not bundle itself
-  baseConfig.resolve.alias.webpack = false;
+
+
+  const alias = /** @type {Record<string, string | false>} */ (baseConfig.resolve.alias);
+  alias.webpack = false;
+  baseConfig.resolve.alias = alias;
 
   // eslint-disable-next-line no-sync
   return gasket.execWaterfallSync('webpackConfig', baseConfig, setupContext(context));

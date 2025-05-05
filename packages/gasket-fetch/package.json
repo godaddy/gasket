@@ -12,10 +12,9 @@
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
     "posttest": "pnpm run lint && pnpm run typecheck",
-    "test": "pnpm run test:runner",
-    "test:browser": "jest --detectOpenHandles --env=jsdom test/browser.spec.js",
-    "test:runner": "pnpm run test:server && pnpm run test:browser",
-    "test:server": "jest --env=node test/server.spec.js",
+    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
@@ -52,10 +51,13 @@
     "jest": "^29.7.0",
     "jsdom": "^20.0.3",
     "regenerator-runtime": "^0.14.1",
-    "typescript": "^5.7.3",
+    "typescript": "^5.8.2",
     "whatwg-fetch": "^3.6.20"
   },
   "eslintConfig": {
+    "env": {
+      "es2020": true
+    },
     "extends": [
       "godaddy",
       "plugin:jest/recommended",

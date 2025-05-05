@@ -3,62 +3,96 @@ import type {
   FunctionComponent,
   PropsWithChildren,
   ReactNode,
-  Ref
+  Ref,
+  ForwardRefExoticComponent
 } from 'react';
 import type {
   LocaleFilePath,
   LocaleFileStatus,
+  LocaleHandler,
   IntlManager,
   Messages
 } from '@gasket/intl';
 
+//
+// Shared Types
+//
+
 export { LocaleFileStatus };
 
-export { GasketIntlContext } from './types';
-
 export interface LocaleFileRequiredProps {
-  /** Path containing locale files */
+  /** Path(s) containing locale files */
   localeFilePath: LocaleFilePath | LocaleFilePath[];
-  /** Custom component to show while loading */
+  /** Optional custom component shown while loading */
   loading?: ReactNode;
-  /** @deprecated use localeFilePath */
+  /** @deprecated Use localeFilePath */
+  // deprecatedLocalePath?: any;
 }
 
-/**
- * Component that loads a locale file before rendering children
- */
+//
+// Locale File Loader Component
+//
+
 export type LocaleFileRequired = FunctionComponent<PropsWithChildren<LocaleFileRequiredProps>>;
 
 export interface LocaleFileRequiredHOCProps extends LocaleFileRequiredProps {
-  forwardedRef?: boolean
+  forwardedRef?: boolean;
 }
 
-export type LocaleFileRequiredHOC = FunctionComponent<LocaleFileRequiredHOCProps>;
+export interface WithWrappedComponent {
+  WrappedComponent: ComponentType<any>;
+}
 
-/**
- * Make an HOC that loads a locale file before rendering wrapped component
- */
+export type LocaleFileRequiredHOC =
+  | (FunctionComponent<LocaleFileRequiredHOCProps> & WithWrappedComponent)
+  | (ForwardRefExoticComponent<any> & WithWrappedComponent);
+
 export function withLocaleFileRequired(
-  /** Path containing locale files */
   localeFilePath: LocaleFilePath | LocaleFilePath[],
   options?: {
-    /** Custom component to show while loading */
     loading?: ReactNode;
     forwardRef?: boolean;
   }
-): (
-  Component: ComponentType<any>
-) => LocaleFileRequiredHOC;
+): (Component: ComponentType<any>) => LocaleFileRequiredHOC;
+
+//
+// Intl Context
+//
+
+export type IntlContext_load = (...localeFilePaths: LocaleFilePath[]) => void;
+export type IntlContext_status = (...localeFilePaths: LocaleFilePath[]) => (typeof LocaleFileStatus)[keyof typeof LocaleFileStatus];
+
+export interface GasketIntlContext {
+  load: IntlContext_load;
+  getStatus: IntlContext_status;
+  messages: Messages;
+}
+
+export function makeContext(
+  localeHandler: LocaleHandler,
+  messages: Messages,
+  setMessages: (messages: Messages) => void
+): GasketIntlContext;
+
+//
+// Hooks
+//
 
 /**
- * React that fetches a locale file and returns loading status
+ * Hook to get load status of one or more locale files
  */
 export function useLocaleFile(
-  /** Path containing locale files */
   ...localeFilePath: LocaleFilePath[]
-): typeof LocaleFileStatus;
+): (typeof LocaleFileStatus)[keyof typeof LocaleFileStatus];
 
+/**
+ * Hook to get current loaded messages
+ */
 export function useMessages(): Messages;
+
+//
+// Provider HOC
+//
 
 export interface ProviderProps {
   locale: string;
@@ -75,9 +109,26 @@ export type IntlProviderHOC = FunctionComponent<PropsWithChildren<ProviderProps>
 export function withMessagesProvider(
   intlManager: IntlManager,
   options?: {
-    /** experimental: render additional static locale files */
-    staticLocaleFilePaths?: LocaleFilePath[]
+    /** Optional static locale file paths to pre-render */
+    staticLocaleFilePaths?: LocaleFilePath[];
   }
 ): (
   Component: ComponentType<Partial<MessagesProps>>
 ) => IntlProviderHOC;
+
+//
+// Internal Utilities
+//
+
+export function ensureArray(maybeArray: any): any[];
+export function needsToLoad(status: LocaleFileStatus): boolean;
+
+//
+// Augment React types
+//
+
+declare module 'react' {
+  interface ForwardRefExoticComponent<P> {
+    WrappedComponent?: ComponentType<P>;
+  }
+}

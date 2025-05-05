@@ -2,7 +2,7 @@ import { GasketConfigDefinition, Hook, Gasket } from '@gasket/core';
 import '@gasket/plugin-winston';
 import TransportStream from 'winston-transport';
 
-const fakeTransport = new TransportStream()
+const fakeTransport = new TransportStream();
 
 describe('@gasket/plugin-winston', () => {
   it('adds a winston config section', () => {

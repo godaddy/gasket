@@ -1,4 +1,4 @@
-import type { Plugin } from '@gasket/core';
+import type { Plugin } from '@gasket/core' with { 'resolution-mode': 'import' };
 import type WebpackApi from 'webpack';
 import type { Configuration } from 'webpack';
 

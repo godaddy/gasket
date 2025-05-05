@@ -56,7 +56,6 @@ export default function configureMakeStore(makeStoreOptions = {}, postCreate) {
     }
 
     /** @type {import('redux').Middleware[]} */
-    // @ts-ignore - ThunkMiddleware is not playing nicely with Redux Middleware type checks
     const allMiddleware = [thunkMiddleware, ...middleware];
 
     if (logging) {
@@ -70,7 +69,6 @@ export default function configureMakeStore(makeStoreOptions = {}, postCreate) {
 
     const composer =
       (typeof window !== 'undefined' &&
-        // @ts-ignore - redux devtools extension
         window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
       compose;
     const enhancer = composer(applyMiddleware(...allMiddleware), ...enhancers);

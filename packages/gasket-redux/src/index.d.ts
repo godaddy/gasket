@@ -80,3 +80,9 @@ export function placeholderReducers(
   /** State to preload store with */
   preloadedState?: Record<string, any>
 ): Record<string, Reducer>;
+
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: Function;
+  }
+}
