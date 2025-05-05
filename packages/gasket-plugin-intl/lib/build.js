@@ -2,7 +2,7 @@
 
 /** @type {import('@gasket/core').HookHandler<'build'>} */
 async function build(gasket) {
-  const { getIntlConfig } = require('./configure');
+  const { getIntlConfig } = require('./utils/configure-utils');
   const buildManifest = require('./build-manifest');
   const buildModules = require('./build-modules');
 

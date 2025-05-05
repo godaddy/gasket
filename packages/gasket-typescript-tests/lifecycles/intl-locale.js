@@ -3,9 +3,7 @@
 // @ts-check
 ///<reference types="@gasket/plugin-intl"/>
 
-/** @typedef {import('@gasket/core').Hook<'intlLocale'>} IntlLocaleHandler */
-
-/** @type {IntlLocaleHandler} */
+/** @type {import('@gasket/core').Hook<'intlLocale'>} */
 const handler = (gasket, currentLocale) => {
   // return 3; - does not pass validation
   return currentLocale === 'fr-CA' ? 'fr-FR' : currentLocale;

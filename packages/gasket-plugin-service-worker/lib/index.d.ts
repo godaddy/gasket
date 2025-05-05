@@ -119,7 +119,7 @@ export function getCacheKeys(
 
 export function getComposedContent(
   gasket: Gasket,
-  context: { req: Request; res: Response }
+  context: { req?: Request; res?: Response }
 ): string;
 
 export function loadRegisterScript(config: ServiceWorkerConfig): string;

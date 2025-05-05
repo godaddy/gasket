@@ -8,17 +8,19 @@ const { getAppInstance } = require('./utils.js');
  * use the same middleware lifecycles.
  * @type {import('@gasket/core').HookHandler<'createServers'>}
  */
-// eslint-disable-next-line max-statements
 module.exports = async function createServers(gasket, serverOpts) {
-  const app = getAppInstance(gasket);
+  /** Cast to Fastify + Express hybrid because Gasket adds `.use()` via @fastify/express plugin */
+  const app = /** @type {import('fastify').FastifyInstance & { use: Function }} */ (getAppInstance(gasket));
 
   // allow consuming apps to directly append options to their server
-  // @ts-ignore
   await gasket.exec('fastify', app);
 
   const postRenderingStacks = (await gasket.exec('errorMiddleware')).filter(Boolean);
-  // @ts-ignore
-  postRenderingStacks.forEach((stack) => app.use(stack));
+  postRenderingStacks.forEach((stack) => {
+    /** @type {import('connect').NextHandleFunction} */
+    const middleware = stack;
+    app.use(middleware);
+  });
 
   return {
     ...serverOpts,

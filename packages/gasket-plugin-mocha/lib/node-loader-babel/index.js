@@ -2,8 +2,6 @@
 const babel = require('@babel/core');
 const path = require('path');
 const urlModule = require('url');
-
-// @ts-ignore
 const { loadOptionsAsync, transformAsync } = babel;
 
 /**
@@ -61,7 +59,6 @@ async function load(url, context, defaultLoad) {
     }
 
     const options = await loadOptionsAsync({
-      // @ts-ignore
       sourceType: format || 'module',
       root: `${process.cwd()}/test/`,
       rootMode: 'root',

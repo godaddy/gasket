@@ -5,15 +5,11 @@ const expressApp = {
   all: jest.fn()
 };
 
-const fastifyApp = {
-  decorate: jest.fn(),
-  addHook: jest.fn(),
-  all: jest.fn()
-};
+const nextHandler = jest.fn();
 
 const nextServer = {
   prepare: jest.fn().mockResolvedValue(),
-  getRequestHandler: jest.fn().mockResolvedValue({}),
+  getRequestHandler: () => nextHandler,
   buildId: '1234',
   name: 'testapp'
 };
@@ -197,9 +193,21 @@ describe('express hook', () => {
 describe('fastify hook', () => {
   let plugin, hook;
 
+  const fastifyApp = {
+    decorate: jest.fn(),
+    addHook: jest.fn(),
+    route: jest.fn(),
+    inject: jest.fn()
+  };
+
   beforeEach(() => {
     plugin = require('../lib/');
     hook = plugin.hooks.fastify.handler;
+
+    fastifyApp.decorate.mockClear();
+    fastifyApp.addHook.mockClear();
+    fastifyApp.route.mockClear();
+    fastifyApp.inject.mockClear();
   });
 
   it('timing configured last', async function () {
@@ -281,17 +289,16 @@ describe('fastify hook', () => {
     const gasket = mockGasketApi();
     await hook(gasket, fastifyApp, false);
 
-    const routeHandler =
-      fastifyApp.all.mock.calls[fastifyApp.all.mock.calls.length - 1][1];
+    const routeHandler = fastifyApp.route.mock.calls[0][0].handler;
 
-    const mockReq = { headers: {} };
-    const mockRes = { locals: { gasketData: {} } };
-    const mockNext = jest.fn();
+    const mockReq = { raw: { headers: {} } };
+    const mockRes = { raw: { headersSent: false } };
 
-    await routeHandler(mockReq, mockRes, mockNext);
+    await routeHandler(mockReq, mockRes);
+
     expect(gasket.exec).toHaveBeenCalledWith('nextPreHandling', {
-      req: mockReq,
-      res: mockRes,
+      req: mockReq.raw,
+      res: mockRes.raw,
       nextServer
     });
   });

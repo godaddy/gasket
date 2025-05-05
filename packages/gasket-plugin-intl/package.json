@@ -63,7 +63,7 @@
     "jest": "^29.7.0",
     "react": "^19.0.0",
     "react-intl": "^7.1.6",
-    "typescript": "^5.7.3",
+    "typescript": "^5.8.2",
     "webpack": "^5.98.0"
   },
   "eslintConfig": {

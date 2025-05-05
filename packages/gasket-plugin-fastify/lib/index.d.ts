@@ -20,6 +20,11 @@ export interface FastifyConfig {
   disableRequestLogging?: boolean;
 }
 
+export type FastifyOptions = FastifyServerOptions & {
+  https?: any,
+  http2?: boolean | object
+}
+
 declare module '@gasket/core' {
   export interface GasketActions {
     /** @deprecated */

@@ -73,7 +73,7 @@ function makeGatherDevDeps() {
  * @type {import('./internal').makeRunScriptStr}
  */
 function makeRunScriptStr(context) {
-  let runCmd = `${context.packageManager} run`;
+  const runCmd = `${context.packageManager} run`;
 
   /**
    * Formats the script command for execution.

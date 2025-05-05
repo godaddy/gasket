@@ -1,25 +1,3 @@
 {
-  "compilerOptions": {
-    "moduleResolution": "bundler",
-    "module": "preserve",
-    "allowJs": true,
-    "checkJs": true,
-    "noEmit": true,
-    "skipLibCheck": false,
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "lib": [
-      "esnext",
-      "dom"
-    ],
-    "types": [
-      "@types/jest",
-      "@types/node"
-    ]
-  },
-  "exclude": [
-    "test",
-    "coverage",
-    "generator"
-  ]
+  "extends": "../../tsconfig.base.json"
 }

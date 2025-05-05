@@ -4,7 +4,7 @@ import LocaleFileRequired from './locale-file-required.js';
 
 /**
  * Make an HOC that loads a locale file before rendering wrapped component
- * @type {import('.').withLocaleFileRequired}
+ * @type {import('./index.d.ts').withLocaleFileRequired}
  */
 export default function withLocaleFileRequired(
   localeFilePath,
@@ -12,11 +12,10 @@ export default function withLocaleFileRequired(
 ) {
   const { loading = null, forwardRef = false } = options;
 
-  // @ts-ignore
   return function wrapper(Component) {
     const displayName = Component.displayName || Component.name || 'Component';
 
-    /** @type {import('.').LocaleFileRequiredHOC} */
+    /** @type {import('./index.d.ts').LocaleFileRequiredHOC} */
     function HOC(props) {
       const {
         forwardedRef,
@@ -44,7 +43,7 @@ export default function withLocaleFileRequired(
 
     // Forward ref through the HOC
     if (!forwardRef) {
-      return HOC;
+      return /** @type {import('./index.d.ts').LocaleFileRequiredHOC} */ (HOC);
     }
 
     const ForwardHOC = React.forwardRef((props, ref) =>
@@ -52,9 +51,8 @@ export default function withLocaleFileRequired(
     );
     hoistNonReactStatics(ForwardHOC, Component);
     ForwardHOC.displayName = `ForwardRef(withLocaleFileRequired/${displayName}))`;
-    // @ts-ignore - add WrappedComponent to forwardRef result
     ForwardHOC.WrappedComponent = Component;
 
-    return ForwardHOC;
+    return /** @type {import('./index.d.ts').LocaleFileRequiredHOC} */ (ForwardHOC);
   };
 }

@@ -1,5 +1,5 @@
 const configure = require('../lib/configure');
-const { getIntlConfig } = configure;
+const { getIntlConfig } = require('../lib/utils/configure-utils');
 
 describe('configure', function () {
   let mockGasket;

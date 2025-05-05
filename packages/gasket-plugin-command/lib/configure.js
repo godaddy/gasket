@@ -1,11 +1,11 @@
 import { applyConfigOverrides } from '@gasket/utils';
 const isGasketCommand = /gasket[.-\w]*\.(js|ts|cjs|mjs)$/;
 
-export default {
+/** @type {import('@gasket/core').HookWithTimings<'configure'>} */
+const plugin = {
   timing: {
     first: true
   },
-  /** @type {import('@gasket/core').HookHandler<'configure'>} */
   handler: function configure(gasket, config) {
     const [, maybeGasketFile, commandId] = process.argv;
     const hasGasket = isGasketCommand.test(maybeGasketFile);
@@ -21,3 +21,4 @@ export default {
   }
 };
 
+export default plugin;

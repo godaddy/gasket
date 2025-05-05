@@ -1,7 +1,8 @@
 import plugin from '../lib/index.js';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
-const { name, version } = require('../package.json');
+const pkgJson = require('../package.json');
+const { name, version } = pkgJson;
 
 describe('Plugin', () => {
 

@@ -1,6 +1,10 @@
 import type { Plugin, MaybeAsync, MaybeMultiple, Gasket } from '@gasket/core';
-import type { FastifyInstance } from 'fastify'
-import type { Application as ExpressApplication } from 'express';
+import type { FastifyInstance } from 'fastify';
+import type { Application as ExpressApplication, Request, Response, NextFunction } from 'express';
+
+export function http2Patch(req: Request, res: Response & {
+  _implicitHeader?: () => void;
+}, next: NextFunction): void;
 
 declare module 'fastify' {
   interface FastifyReply {
@@ -26,29 +30,17 @@ declare module '@gasket/plugin-express' {
   }
 }
 
-declare module 'express-serve-static-core' {
-  interface Response {
-    /*
-     * This is a patch for the undocumented _implicitHeader used by the
-     * compression middleware which is not present on the http2 request object.
-     * @see: https://github.com/expressjs/compression/pull/128
-     * and also, by the 'compiled' version in Next.js
-     * @see: https://github.com/vercel/next.js/issues/11669
-     */
-    _implicitHeader?: () => void;
-  }
-}
-
 export type Handler = (req: any, res: any, next: (error?: Error) => void) => void;
 
 type App = FastifyInstance | ExpressApplication;
 
 declare module '@gasket/core' {
   export interface HookExecTypes {
-    middleware(gasket: Gasket, app: App): MaybeAsync<MaybeMultiple<Handler> >;
+    middleware(gasket: Gasket, app: App): MaybeAsync<MaybeMultiple<Handler>>;
   }
 
   export interface GasketConfig {
+    compression?: boolean;
     /** Middleware configuration */
     middleware?: {
       /** Plugin name */
@@ -56,6 +48,8 @@ declare module '@gasket/core' {
       /** Paths for middleware */
       paths?: (string | RegExp)[];
     }[];
+
+    http2?: object;
   }
 }
 

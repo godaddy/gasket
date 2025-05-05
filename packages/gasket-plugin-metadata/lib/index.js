@@ -1,8 +1,6 @@
 import create from './create.js';
 import actions from './actions.js';
 import webpackConfig from './webpack-config.js';
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
 const { name, version, description } = require('../package.json');
 
 /** @type {import('@gasket/core').Plugin} */
