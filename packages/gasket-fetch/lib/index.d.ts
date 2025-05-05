@@ -1,11 +1,14 @@
 /* global RequestInit, RequestInfo */
+import type * as NodeFetch from 'node-fetch';
+import type AbortController from 'abort-controller';
 
-/**
- * Definition for browser fetch
- */
-export function fetch(
-  input: RequestInfo,
+export function fetchWrapper(
+  /** The resource that you wish to fetch. */
+  input: RequestInfo | URL,
+  /** An object containing any custom settings. */
   init?: RequestInit
 ): Promise<Response>;
 
-export default fetch;
+declare const fetch: typeof NodeFetch & {
+  AbortController: typeof AbortController;
+};

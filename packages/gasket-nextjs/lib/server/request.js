@@ -2,14 +2,14 @@ import { cookies, headers } from 'next/headers';
 
 const reqCache = new WeakMap();
 
-/** @type {import('.').request} */
-export function request(query) {
+/** @type {import('./index.d.ts').request} */
+export async function request(query) {
   console.warn('DEPRECATED: use async `request` from @gasket/nextjs/request');
 
   const headerStore = headers();
 
   if (!reqCache.has(headerStore)) {
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
 
     const req = {
       cookies: cookieStore.getAll()
@@ -17,7 +17,7 @@ export function request(query) {
           acc[name] = value;
           return acc;
         }, {}),
-      // @ts-ignore - TODO: entries is not available on Headers here for some reason..
+      // @ts-ignore - next/headers ReadonlyHeaders is iterable even if TS doesn't declare it
       headers: Object.fromEntries(headerStore.entries())
     };
 

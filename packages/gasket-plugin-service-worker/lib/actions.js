@@ -4,7 +4,6 @@ const { loadRegisterScript } = require('./utils/utils');
 async function getSWRegisterScript(gasket) {
   const { serviceWorker: config } = gasket.config;
   const content = await loadRegisterScript(config);
-  // eslint-disable-next-line require-atomic-updates
   return `<script>${content}</script>`;
 }
 

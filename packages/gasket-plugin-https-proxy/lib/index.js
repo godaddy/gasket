@@ -5,7 +5,8 @@ import create from './create.js';
 import { actions } from './actions.js';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
-const { name, version, description } = require('../package.json');
+const pkgJson = require('../package.json');
+const { name, version, description } = pkgJson;
 
 /** @type {import('@gasket/core').Plugin} */
 export default {

@@ -1,19 +1,5 @@
 {
-  "compilerOptions": {
-    "allowJs": true,
-    "checkJs": true,
-    "esModuleInterop": true,
-    "noEmit": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": false,
-    "lib": [
-      "esnext",
-      "dom"
-    ],
-    "types": [
-      "@types/jest"
-    ]
-  },
+  "extends": "../../tsconfig.base.json",
   "include": [
     "lib"
   ]

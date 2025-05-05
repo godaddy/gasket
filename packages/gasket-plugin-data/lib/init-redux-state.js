@@ -1,14 +1,17 @@
+/// <reference types="@gasket/core" />
 /// <reference types="@gasket/plugin-redux" />
 
 /**
- * @typedef {import('@gasket/core').HookHandler<'initReduxState'>}
+ * @type {import('@gasket/core', { with: { "resolution-mode": "import" } }).HookHandler<'initReduxState'>}
  */
 async function initReduxState(gasket, state, { req }) {
+  /** @type {import('.').ReduxState} */
+  const typedState = state || {};
   const publicGasketData = await gasket.actions.getPublicGasketData(req);
   return {
-    ...state,
+    ...typedState,
     gasketData: {
-      ...state.gasketData,
+      ...(typedState.gasketData || {}),
       ...publicGasketData
     }
   };

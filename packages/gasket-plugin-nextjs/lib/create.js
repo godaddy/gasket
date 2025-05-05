@@ -12,7 +12,6 @@ const { name, version, devDependencies } = require('../package.json');
  * @property {boolean} typescript - Selected typescript from prompt
  * @property {Readme} readme - The Gasket Readme API.
  */
-
 async function createAppFiles({
   files,
   generatorDir,

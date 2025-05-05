@@ -1,5 +1,5 @@
 const debug = require('debug')('gasket:plugin:intl:utils');
-const { getIntlConfig } = require('../configure');
+const { getIntlConfig } = require('./configure-utils');
 const Negotiator = require('negotiator');
 
 /**

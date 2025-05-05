@@ -7,8 +7,11 @@ const app = {
   },
   register: jest.fn(),
   use: jest.fn(),
-  addHook: jest.fn()
+  addHook: jest.fn(),
+  express: null
 };
+
+app.express = app;
 
 const mockFastify = jest.fn().mockReturnValue(app);
 const cookieParserMiddleware = jest.fn();

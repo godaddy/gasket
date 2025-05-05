@@ -49,22 +49,22 @@ describe('request', () => {
     jest.clearAllMocks();
   });
 
-  it('returns same instance for repeat request', () => {
-    const results1 = request();
-    const results2 = request();
+  it('returns same instance for repeat request', async () => {
+    const results1 = await request();
+    const results2 = await request();
     expect(results1).toBe(results2);
   });
 
-  it('returns unique instance when headers differ', () => {
+  it('returns unique instance when headers differ', async () => {
     mockHeaders.mockReturnValueOnce({ entries: jest.fn().mockReturnValueOnce([]) });
 
-    const results1 = request();
-    const results2 = request();
+    const results1 = await request();
+    const results2 = await request();
     expect(results1).not.toBe(results2);
   });
 
-  it('cookies is an object', () => {
-    const results = request();
+  it('cookies is an object', async () => {
+    const results = await request();
     expect(results).toEqual(expect.objectContaining({
       cookies: {
         cookie1: 'value1',
@@ -73,8 +73,8 @@ describe('request', () => {
     }));
   });
 
-  it('headers is an object', () => {
-    const results = request();
+  it('headers is an object', async () => {
+    const results = await request();
     expect(results).toEqual(expect.objectContaining({
       headers: {
         header1: 'value1',
@@ -83,20 +83,20 @@ describe('request', () => {
     }));
   });
 
-  it('has query if passed', () => {
+  it('has query if passed', async () => {
     const query = { query1: 'value1', query2: 'value2' };
-    const results = request(query);
+    const results = await request(query);
     expect(results).toEqual(expect.objectContaining({ query }));
   });
 
-  it('no query if not passed', () => {
-    const results = request();
+  it('no query if not passed', async () => {
+    const results = await request();
     expect(results).not.toHaveProperty('query');
   });
 
-  it('allows query to be URLSearchParams', () => {
+  it('allows query to be URLSearchParams', async () => {
     const query = new URLSearchParams({ query1: 'value1', query2: 'value2' });
-    const results = request(query);
+    const results = await request(query);
     expect(results).toEqual(expect.objectContaining({ query: { query1: 'value1', query2: 'value2' } }));
   });
 });

@@ -129,6 +129,28 @@ describe('LocaleHandler', () => {
     });
   });
 
+  describe('.init', () => {
+    it('adds a new static file key and sets dirty flags if not already included', () => {
+      manager = {
+        resolveLocale: (locale) => locale,
+        defaultLocaleFilePath: 'locales/:locale',
+        staticLocaleFilePaths: ['locales/component'], // triggers init logic
+        getMessages: () => ({}),
+        getStatus: () => 'notLoaded',
+        load: jest.fn()
+      };
+
+      const handler = new LocaleHandler(manager, 'en');
+
+      const expectedKey = 'locales/component/en'; // result of getLocaleFileKey
+
+      expect(handler.staticKeys).toContain(expectedKey);
+      expect(handler.handledKeys).toContain(expectedKey);
+      expect(handler.staticsDirty).toBe(true);
+      expect(handler.handledDirty).toBe(true);
+    });
+  });
+
   describe('.loadStatics', () => {
     it('preloads single path', async () => {
       const handler = new LocaleHandler(manager, 'en-US');
@@ -542,5 +564,10 @@ describe('lowestStatus', () => {
 
     statuses.reverse();
     expect(lowestStatus(statuses)).toEqual(LocaleFileStatus.loaded);
+  });
+
+  it('returns notLoaded if no known statuses are provided', () => {
+    const result = lowestStatus(['unknown', 'bogus']);
+    expect(result).toBe(LocaleFileStatus.notLoaded);
   });
 });

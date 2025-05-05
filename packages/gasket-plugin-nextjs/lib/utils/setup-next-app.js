@@ -1,8 +1,8 @@
 /// <reference types="@gasket/plugin-https" />
 
 /**
- * Provide port defaults
- * @param {string} env env property from gasket config
+ * Get a default fallback port depending on the environment.
+ * @param {string} env - Environment string from gasket config
  * @returns {number} Default port number
  * @public
  */
@@ -11,28 +11,61 @@ function getPortFallback(env = '') {
 }
 
 /**
- * Small helper function that creates nextjs app from the gasket configuration.
- * @type {import('../internal').setupNextApp}
+ * Determines the port from HTTP-related config or falls back.
+ * @param {object} config - Gasket config object
+ * @returns {number} Resolved port
+ */
+function resolvePort(config) {
+  const { http, https, http2, env } = config;
+  const _http = http || https || http2;
+  return (_http && _http.port) || _http || getPortFallback(env);
+}
+
+/**
+ * Determine if the server is running in dev mode.
+ * @returns {boolean} True if GASKET_DEV is set
+ */
+function isDevServer() {
+  return Boolean(process.env.GASKET_DEV); // TODO document GASKET_DEV
+}
+
+/**
+ * Type guard to check if serverApp is an Express app.
+ * @param {any} app
+ * @returns {app is import('express').Application}
+ */
+function isExpressApp(app) {
+  return typeof app?.use === 'function' && typeof app?.set === 'function';
+}
+
+/**
+ * Type guard to check if serverApp is a Fastify app.
+ * @param {any} app
+ * @returns {boolean}
+ */
+function isFastifyApp(app) {
+  return typeof app?.route === 'function' && typeof app?.inject === 'function';
+}
+
+/**
+ * Creates and prepares a Next.js app instance based on gasket config.
+ * @type {import('../index').setupNextApp}
  */
 async function setupNextApp(gasket) {
   const { config } = gasket;
-  const { hostname, http, https, http2, env } = config;
-  const createNextApp = require('next');
-  const devServer = Boolean(process.env.GASKET_DEV); // TODO document GASKET_DEV
-  const _http = http || https || http2;
-  // @ts-ignore - _http can be a number or an object
-  const port = (_http && _http.port) || _http || getPortFallback(env);
+  const mod = require('next');
+  const createNextApp = typeof mod === 'function' ? mod : mod.default;
 
-  // @ts-ignore - createNextApp.default is not typed
-  const app = createNextApp({
-    dev: devServer,
-    hostname,
-    port
-  });
+  /**
+   * Cast to any because Next.js 15+ does not expose NextServer type publicly.
+   * In real apps, createNextApp() always returns a NextServer shape.
+   */
+  const app = /** @type {any} */ (createNextApp({
+    dev: isDevServer(),
+    hostname: config.hostname,
+    port: resolvePort(config)
+  }));
 
-  // We need to call the `next` lifecycle before we prepare the application as
-  // the prepare step initializes all the routes that a next app can have. If we
-  // wait later, it's possible that our added routes/pages are not recognized.
   await gasket.exec('next', app);
   await app.prepare();
 
@@ -40,23 +73,46 @@ async function setupNextApp(gasket) {
 }
 
 /**
- * Sets up the next.js request handler to be called after all other middleware
- * @type {import('../internal').setupNextHandling}
+ * Sets up the Next.js request handler as the final middleware handler.
+ *
+ * Supports both Express and Fastify servers.
+ * @type {import('../index').setupNextHandling}
  */
 function setupNextHandling(nextServer, serverApp, gasket) {
   const nextHandler = nextServer.getRequestHandler();
   const gasketRoot = gasket.traceRoot();
 
-  serverApp.all('*', async (req, res, next) => {
-    try {
-      await gasketRoot.exec('nextPreHandling', { req, res, nextServer });
-      if (!res.headersSent) {
-        nextHandler(req, res);
+  if (isExpressApp(serverApp)) {
+    serverApp.all('*', async (req, res, next) => {
+      try {
+        await gasketRoot.exec('nextPreHandling', { req, res, nextServer });
+
+        if (!res.headersSent) {
+          nextHandler(req, res);
+        }
+      } catch (err) {
+        return next(err);
       }
-    } catch (err) {
-      return next(err);
-    }
-  });
+    });
+  } else if (isFastifyApp(serverApp)) {
+    serverApp.route({
+      method: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+      url: '*',
+      handler: async (req, res) => {
+        await gasketRoot.exec('nextPreHandling', {
+          req: req.raw,
+          res: res.raw,
+          nextServer
+        });
+
+        if (!res.raw.headersSent) {
+          nextHandler(req.raw, res.raw);
+        }
+      }
+    });
+  } else {
+    throw new Error('Unsupported server type passed to setupNextHandling');
+  }
 }
 
 module.exports = {

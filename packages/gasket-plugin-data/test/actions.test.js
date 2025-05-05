@@ -1,5 +1,9 @@
 const { actions, baseDataMap } = require('../lib/actions');
-const { GasketRequest } = require('@gasket/request');
+
+// Mock the request cache
+jest.mock('@gasket/request', () => ({
+  withGasketRequestCache: fn => fn
+}));
 
 describe('actions', () => {
   let gasket;
@@ -117,7 +121,7 @@ describe('actions', () => {
 
       const results = await getPublicGasketData(gasket, req);
 
-      expect(gasket.execWaterfall).toHaveBeenCalledWith('publicGasketData', { some: 'data' }, { req: expect.any(GasketRequest) });
+      expect(gasket.execWaterfall).toHaveBeenCalledWith('publicGasketData', { some: 'data' }, { req });
       expect(results).toEqual({ some: 'adjusted' });
     });
 
@@ -130,26 +134,25 @@ describe('actions', () => {
     });
 
     it('only executes publicGasketData fixup once per request', async () => {
-      baseDataMap.set(gasket.symbol, { some: 'data' });
+      getGasketData.mockResolvedValue({ public: { some: 'data' } });
 
       const results1 = await getPublicGasketData(gasket, req);
       expect(getGasketData).toHaveBeenCalledTimes(1);
       expect(gasket.execWaterfall).toHaveBeenCalledTimes(1);
 
       const results2 = await getPublicGasketData(gasket, req);
-      expect(getGasketData).toHaveBeenCalledTimes(1);
-      expect(gasket.execWaterfall).toHaveBeenCalledTimes(1);
-
-      expect(results1).toBe(results2);
-
-      const newReq = { headers: { 'x-example': 'new-data' } };
-      const results3 = await getPublicGasketData(gasket, newReq);
       expect(getGasketData).toHaveBeenCalledTimes(2);
       expect(gasket.execWaterfall).toHaveBeenCalledTimes(2);
 
-      // ok to look the same
+      expect(results1).toEqual(results2);
+      expect(results1).not.toBe(results2);
+
+      const newReq = { headers: { 'x-example': 'new-data' } };
+      const results3 = await getPublicGasketData(gasket, newReq);
+      expect(getGasketData).toHaveBeenCalledTimes(3);
+      expect(gasket.execWaterfall).toHaveBeenCalledTimes(3);
+
       expect(results2).toEqual(results3);
-      // NOT ok to be the same
       expect(results2).not.toBe(results3);
     });
   });

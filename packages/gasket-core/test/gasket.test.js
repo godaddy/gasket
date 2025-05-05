@@ -149,7 +149,7 @@ describe('makeGasket', () => {
       plugins: [mockPlugin, nullishPlugin, emptyPlugin, dummyPlugin, faultyPlugin]
     };
 
-    expect(() => makeGasket(initConfig)).toThrow(/must have a hooks/);
+    expect(() => makeGasket(initConfig)).toThrow('Plugin (faulty) must have hooks');
   });
 
   describe('config lifecycle', () => {
