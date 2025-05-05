@@ -18,7 +18,7 @@ async function setupNextApp(gasket) {
   const { config } = gasket;
   const { hostname, http, https, http2, env } = config;
   const createNextApp = require('next');
-  const devServer = Boolean(process.env.GASKET_DEV); // TODO document GASKET_DEV
+  const devServer = Boolean(process.env.GASKET_DEV);
   const _http = http || https || http2;
   // @ts-ignore - _http can be a number or an object
   const port = (_http && _http.port) || _http || getPortFallback(env);
