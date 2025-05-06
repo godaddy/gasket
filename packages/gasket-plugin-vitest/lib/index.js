@@ -25,9 +25,13 @@ const plugin = {
         const isReactProject = pkg.has('dependencies', 'react');
 
         pkg.add('devDependencies', {
-          vitest: devDependencies.vitest,
-          '@vitest/coverage-v8': devDependencies['@vitest/coverage-v8'],
-          '@vitest/ui': devDependencies['@vitest/ui']
+          vitest: devDependencies.vitest
+        });
+
+        pkg.add('scripts', {
+          test: 'vitest run',
+          'test:watch': 'vitest',
+          'test:coverage': 'vitest run --coverage'
         });
 
         if (isReactProject && !apiApp) {
@@ -36,34 +40,35 @@ const plugin = {
             `${generatorDir}/**/*`
           );
 
-          pkg.add('devDependencies', {
-            '@testing-library/react': devDependencies['@testing-library/react'],
-            '@testing-library/jest-dom': devDependencies['@testing-library/jest-dom'],
-            '@testing-library/user-event': devDependencies['@testing-library/user-event'],
-            '@testing-library/dom': devDependencies['@testing-library/dom']
-          });
-
-          pkg.add('scripts', {
-            test: 'vitest run',
-            'test:watch': 'vitest',
-            'test:coverage': 'vitest run --coverage'
-          });
-        } else if (apiApp) {
           if (typescript) {
             pkg.add('devDependencies', {
-              '@types/vitest': devDependencies['@types/vitest'],
-              'ts-jest': devDependencies['ts-jest'],
-              'ts-node': devDependencies['ts-node']
-            });
-
-            pkg.add('scripts', {
-              test: 'vitest run',
-              'test:watch': 'vitest',
-              'test:coverage': 'vitest run --coverage'
+              'vite-tsconfig-paths': devDependencies['vite-tsconfig-paths']
             });
           }
+
+          pkg.add('devDependencies', {
+            '@vitejs/plugin-react': devDependencies['@vitejs/plugin-react'],
+            '@testing-library/react': devDependencies['@testing-library/react'],
+            '@testing-library/dom': devDependencies['@testing-library/dom'],
+            'jsdom': devDependencies.jsdom
+          });
         }
+      }
+    },
+    metadata(gasket, meta) {
+      return {
+        ...meta,
+        structures: [{
+          name: 'test/',
+          description: 'Test files'
+        }, {
+          name: 'vitest.config.js',
+          description: 'Vitest configuration file',
+          link: 'https://vitest.dev/config/'
+        }]
       }
     }
   }
 };
+
+export default plugin;

@@ -2,6 +2,7 @@
   "name": "@gasket/plugin-vitest",
   "version": "0.0.1",
   "description": "Integrates Vitest based testing in to your Gasket application",
+  "type": "module",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
@@ -34,9 +35,14 @@
   "devDependencies": {
     "@gasket/core": "workspace:*",
     "@gasket/plugin-metadata": "workspace:*",
+    "@testing-library/dom": "10.4.0",
+    "@testing-library/react": "16.3.0",
+    "@vitejs/plugin-react": "^4.4.1",
     "@vitest/eslint-plugin": "^1.1.44",
     "create-gasket-app": "workspace:*",
     "eslint": "^8.57.1",
-    "vitest": "^3.0.7"
+    "jsdom": "^26.1.0",
+    "vitest": "^3.0.7",
+    "vite-tsconfig-paths": "^5.1.4"
   }
 }
