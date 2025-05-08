@@ -44,5 +44,14 @@
     "jsdom": "^26.1.0",
     "vitest": "^3.0.7",
     "vite-tsconfig-paths": "^5.1.4"
+  },
+  "eslintConfig": {
+    "extends": [
+      "godaddy",
+      "plugin:@vitest/legacy-recommended"
+    ],
+    "plugins": [
+      "@vitest"
+    ]
   }
 }

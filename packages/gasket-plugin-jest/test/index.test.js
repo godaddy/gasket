@@ -12,7 +12,7 @@ describe('Plugin', function () {
     const pkg = {};
 
     await plugin.hooks.create.handler({}, {
-      pkg: {
+      pkg: { 
         add: (key, value) => {
           pkg[key] = pkg[key] || {};
           pkg[key] = { ...pkg[key], ...value };

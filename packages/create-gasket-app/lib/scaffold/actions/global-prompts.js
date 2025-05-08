@@ -62,7 +62,8 @@ async function chooseTestPlugins(context, prompt) {
   const knownTestPlugins = {
     unit: {
       jest: '@gasket/plugin-jest',
-      mocha: '@gasket/plugin-mocha'
+      mocha: '@gasket/plugin-mocha',
+      vitest: '@gasket/plugin-vitest'
     },
     integration: {
       cypress: '@gasket/plugin-cypress'
