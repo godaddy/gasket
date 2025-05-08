@@ -1,5 +1,12 @@
 # `@gasket/plugin-lint`
 
+## 7.3.6
+
+### Patch Changes
+
+- 0b6c4f6: force eslint-plugin-react-hooks version on different code styles
+- eb403a8: Audit ts-ignores.
+
 ## 7.3.5
 
 ### Patch Changes

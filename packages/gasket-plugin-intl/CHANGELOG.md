@@ -1,5 +1,13 @@
 # `@gasket/plugin-intl`
 
+## 7.4.1
+
+### Patch Changes
+
+- eb403a8: Audit ts-ignores.
+- Updated dependencies [eb403a8]
+  - @gasket/request@7.3.5
+
 ## 7.4.0
 
 ### Minor Changes

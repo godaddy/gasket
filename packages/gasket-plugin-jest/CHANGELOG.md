@@ -1,5 +1,11 @@
 # `@gasket/plugin-jest`
 
+## 7.4.2
+
+### Patch Changes
+
+- eb403a8: Audit ts-ignores.
+
 ## 7.4.1
 
 ### Patch Changes

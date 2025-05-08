@@ -1,5 +1,14 @@
 # `@gasket/nextjs`
 
+## 7.4.2
+
+### Patch Changes
+
+- eb403a8: Audit ts-ignores.
+- Updated dependencies [eb403a8]
+  - @gasket/request@7.3.5
+  - @gasket/data@7.3.4
+
 ## 7.4.1
 
 ### Patch Changes
