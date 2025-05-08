@@ -1,5 +1,14 @@
 # `@gasket/plugin-nextjs`
 
+## 7.4.3
+
+### Patch Changes
+
+- 3abfe68: Document environment variable
+- eb403a8: Audit ts-ignores.
+- Updated dependencies [eb403a8]
+  - @gasket/plugin-webpack@7.3.4
+
 ## 7.4.2
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # `@gasket/plugin-middleware`
 
+## 7.3.6
+
+### Patch Changes
+
+- eb403a8: Audit ts-ignores.
+
 ## 7.3.5
 
 ### Patch Changes

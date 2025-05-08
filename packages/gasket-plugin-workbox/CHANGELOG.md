@@ -1,5 +1,11 @@
 # `@gasket/plugin-workbox`
 
+## 7.3.4
+
+### Patch Changes
+
+- eb403a8: Audit ts-ignores.
+
 ## 7.3.3
 
 ### Patch Changes

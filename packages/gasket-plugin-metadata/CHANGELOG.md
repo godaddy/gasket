@@ -1,5 +1,14 @@
 # `@gasket/plugin-metadata`
 
+## 7.3.7
+
+### Patch Changes
+
+- eb403a8: Audit ts-ignores.
+- Updated dependencies [eb403a8]
+  - @gasket/plugin-logger@7.3.4
+  - @gasket/core@7.4.1
+
 ## 7.3.6
 
 ### Patch Changes
