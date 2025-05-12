@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import IndexPage from '../app/page.tsx';
+import IndexPage from '../app/page.jsx';
 import { expect } from 'vitest';
 
 describe('IndexPage', () => {

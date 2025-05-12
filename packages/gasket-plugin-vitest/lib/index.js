@@ -2,11 +2,7 @@
 /// <reference types="create-gasket-app" />
 /// <reference types="@gasket/plugin-metadata" />
 
-import {
-  name,
-  version,
-  description,
-  devDependencies } from '../package.json';
+const { name, version, description, devDependencies } = require('../package.json');
 
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {
@@ -71,4 +67,4 @@ const plugin = {
   }
 };
 
-export default plugin;
+module.exports = plugin;

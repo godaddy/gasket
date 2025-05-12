@@ -42,6 +42,7 @@
     "@gasket/plugin-mocha": "workspace:*",
     "@gasket/plugin-nextjs": "workspace:*",
     "@gasket/plugin-typescript": "workspace:*",
+    "@gasket/plugin-vitest": "workspace:*",
     "@gasket/plugin-webpack": "workspace:*",
     "@gasket/plugin-winston": "workspace:*",
     "@gasket/utils": "workspace:*"

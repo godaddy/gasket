@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import IndexPage from '../pages/index.js';
-import { expect } from 'vitest';
+import IndexPage from '../pages/index.tsx';
+import { expect, describe, it } from 'vitest';
 {{#if hasGasketIntl}}
 import { IntlProvider } from '{{reactIntlPkg}}';
 import { createRequire } from 'module';

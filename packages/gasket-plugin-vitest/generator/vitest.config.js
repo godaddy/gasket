@@ -1,13 +1,15 @@
 import {defineConfig} from 'vitest/config';
 import react from '@vitejs/plugin-react';
-// import tsConfigPaths from 'vite-tsconfig-paths';
+{{#if typescript}}
+import tsConfigPaths from 'vite-tsconfig-paths';
+{{/if}}
 
 export default defineConfig({
   plugins: [
     react(),
-    // {{#if typescript}}
-    // tsConfigPaths()
-    // {{/if}}
+    {{#if typescript}}
+    tsConfigPaths()
+    {{/if}}
   ],
   test: {
     environment: 'jsdom',
