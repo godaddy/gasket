@@ -294,6 +294,42 @@ export default({
 
 - Remove deprecated function `applyEnvironmentOverrides`.
 
+## Update configuration hooks
+
+The `configure` lifecycle now requires synchronous hooks. This allows the Gasket
+instance to be created and used in early synchronous setup code.
+
+```diff
+- async configure(gasket, config) {
++ configure(gasket, config) {
+  // ...
+}
+```
+
+If your app needs asynchronous configuration, you can use the
+`prepare` lifecycle instead.
+
+```diff
+- async configure(gasket, config) {
++ async prepare(gasket, config) {
+  // ...
+}
+```
+
+The `prepare` lifecycle is the first asynchronous lifecycle executed after the
+`configure` lifecycle. It is used to add any additional setup that requires
+asynchronous operations.
+
+Your app code and other hooks check for the readiness of the async prepare
+configuration by evaluating the `gasket.isReady` property. For example:
+
+```js
+import gasket from './gasket.js';
+gasket.isReady.then(() => {
+  gasket.actions.startServer();
+});
+```
+
 ## Switch to Docusaurus
 
 We no longer support `docsify` as a plugin for viewing local Gasket docs.
