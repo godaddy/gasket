@@ -102,10 +102,10 @@ lifecycles are executed.
 const name = 'gasket-plugin-example';
 
 const hooks = {
-  configure(gasket, gasketConfig) {
+  configure(gasket, config) {
     // Modify the configuration
     return {
-      ...gasketConfig,
+      ...config,
       example: true
     };
   }
@@ -129,10 +129,10 @@ The `prepare` lifecycle is the first asynchronous lifecycle executed after the `
 const name = 'gasket-plugin-example';
 
 const hooks = {
-  async prepare(gasket) {
+  async prepare(gasket, config) {
     const asyncConfig = await getAsyncConfig();
-    gasket.config = {
-      ...gasket.config,
+    return {
+      ...config,
       ...asyncConfig
     };   
   }
