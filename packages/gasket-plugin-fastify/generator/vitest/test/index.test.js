@@ -1,4 +1,4 @@
-import { vi } from 'vitest';
+import { vi, expect } from 'vitest';
 import { defaultHandler } from '../plugins/routes-plugin.js';
 
 describe('Routes', () => {

@@ -2681,6 +2681,9 @@ importers:
       '@gasket/plugin-typescript':
         specifier: workspace:*
         version: link:../gasket-plugin-typescript
+      '@gasket/plugin-vitest':
+        specifier: workspace:*
+        version: link:../gasket-plugin-vitest
       '@gasket/plugin-winston':
         specifier: workspace:*
         version: link:../gasket-plugin-winston

@@ -1,5 +1,5 @@
-import {defaultHeader} from '../plugins/routes-plugin.js';
-import { vi } from 'vitest';
+import { defaultHandler } from '../plugins/routes-plugin.js';
+import { vi, expect } from 'vitest';
 
 describe('Routes', () => {
   let mockRequest, mockResponse;
@@ -11,8 +11,8 @@ describe('Routes', () => {
     };
   });
 
-  it('defaultHeader should use expected message', async () => {
-    await defaultHeader(mockRequest, mockResponse);
+  it('defaultHandler should use expected message', async () => {
+    await defaultHandler(mockRequest, mockResponse);
     expect(mockResponse.json).toHaveBeenCalledWith({
       message: 'Welcome to your default route...'
     });

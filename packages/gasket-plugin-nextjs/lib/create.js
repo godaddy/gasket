@@ -21,7 +21,7 @@ async function createAppFiles({
   typescript,
   readme
 }) {
-  const globIgnore = typescript ? '!(*.js|.jsx)' : '!(*.ts|*.tsx)';
+  const globIgnore = typescript ? '!(*.js|*.jsx)' : '!(*.ts|*.tsx)';
 
   files.add(
     `${generatorDir}/app/${appStructure}/**/${globIgnore}`

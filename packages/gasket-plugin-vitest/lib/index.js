@@ -32,8 +32,8 @@ const plugin = {
 
         if (isReactProject && !apiApp) {
           files.add(
-            `${generatorDir}/*`,
-            `${generatorDir}/**/*`
+            `${generatorDir}/react/*`,
+            `${generatorDir}/react/**/*`
           );
 
           if (typescript) {
@@ -48,6 +48,11 @@ const plugin = {
             '@testing-library/dom': devDependencies['@testing-library/dom'],
             'jsdom': devDependencies.jsdom
           });
+        } else if (apiApp) {
+          files.add(
+            `${generatorDir}/api/*`,
+            `${generatorDir}/api/**/*`
+          );
         }
       }
     },
