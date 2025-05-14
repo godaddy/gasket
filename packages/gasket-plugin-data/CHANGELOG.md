@@ -1,5 +1,11 @@
 # `@gasket/plugin-data`
 
+## 7.3.5
+
+### Patch Changes
+
+- a5cd008: make configure hook sync
+
 ## 7.3.4
 
 ### Patch Changes
