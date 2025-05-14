@@ -117,10 +117,8 @@ Available lifecycles
 | [intlLocale]                                               | Set the language for which locale files to load               |
 | [manifest]                                                 | Modify the the web manifest for a request                     |
 | [metadata]                                                 | Allows plugins to adjust their metadata                       |
-| [middleware]                                               | Add Express style middleware for Fastify                      |
-| [middleware][3]                                            | Add Express style middleware                                  |
 | [next]                                                     | Update the Next.js app instance before preparing for Express  |
-| [next][4]                                                  | Update the Next.js app instance before preparing for Fastify  |
+| [next][3]                                                  | Update the Next.js app instance before preparing for Fastify  |
 | [nextConfig]                                               | Setup the Next.js config                                      |
 | [nextExpress]                                              | Access the prepared Next.js app and Express instance          |
 | [nextFastify]                                              | Access the prepared Next.js app and Fastify instance          |
@@ -159,8 +157,8 @@ Available presets
 
 | Name                    | Version | Description                          |
 | ----------------------- | ------- | ------------------------------------ |
-| [@gasket/preset-api]    | 7.2.2   | Create Express-based API with Gasket |
-| [@gasket/preset-nextjs] | 7.2.2   | Basic NextJS Framework               |
+| [@gasket/preset-api]    | 7.3.9   | Create Express-based API with Gasket |
+| [@gasket/preset-nextjs] | 7.3.9   | Basic NextJS Framework               |
 
 ## Plugins
 
@@ -168,38 +166,38 @@ Available plugins
 
 | Name                             | Version | Description                                                               |
 | -------------------------------- | ------- | ------------------------------------------------------------------------- |
-| [@gasket/plugin-analyze]         | 7.2.2   | Gasket Analyzer Plugin                                                    |
-| [@gasket/plugin-command]         | 7.2.2   | Plugin to enable other plugins to inject new gasket commands              |
-| [@gasket/plugin-cypress]         | 7.2.2   | Integrates Cypress based testing into your Gasket application             |
-| [@gasket/plugin-data]            | 7.2.2   | Supports application-specific settings and configurations                 |
-| [@gasket/plugin-docs]            | 7.2.2   | Centralize doc files from plugins and modules                             |
-| [@gasket/plugin-docs-graphs]     | 7.2.0   | Generate mermaid graphs of an applications gasket lifecycles              |
-| [@gasket/plugin-docusaurus]      | 7.2.2   | Gasket plugin for docusaurus                                              |
-| [@gasket/plugin-dynamic-plugins] | 7.2.2   |                                                                           |
-| [@gasket/plugin-elastic-apm]     | 7.2.2   | Adds Elastic APM instrumentation to your application                      |
-| [@gasket/plugin-express]         | 7.2.2   | Adds express support to your application                                  |
-| [@gasket/plugin-fastify]         | 7.2.2   | Adds fastify support to your application                                  |
-| [@gasket/plugin-git]             | 7.2.2   | Adds git support to your application                                      |
-| [@gasket/plugin-happyfeet]       | 7.2.0   | A gasket plugin to enable happyfeet healthchecks                          |
-| [@gasket/plugin-https]           | 7.2.2   | Create http/s servers with graceful termination                           |
-| [@gasket/plugin-https-proxy]     | 7.2.2   | Adds support for running an https proxy                                   |
-| [@gasket/plugin-intl]            | 7.2.2   | NodeJS script to build localization files.                                |
-| [@gasket/plugin-jest]            | 7.2.0   | Integrated jest into your application.                                    |
-| [@gasket/plugin-lint]            | 7.2.2   | Adds GoDaddy standard linting to your application                         |
-| [@gasket/plugin-logger]          | 7.2.2   | Gasket plugin for logging                                                 |
-| [@gasket/plugin-manifest]        | 7.2.2   | The web app manifest for progressive Gasket applications                  |
-| [@gasket/plugin-metadata]        | 7.2.2   | Adds metadata to gasket lifecycles                                        |
-| [@gasket/plugin-middleware]      | 7.2.0   | Handles common server engine setups for routing and executing lifecycles. |
-| [@gasket/plugin-mocha]           | 7.2.0   | Integrates mocha based testing in to your Gasket application              |
-| [@gasket/plugin-morgan]          | 7.2.2   | Adds morgan request logger to your app                                    |
-| [@gasket/plugin-nextjs]          | 7.2.2   | Adds Next support to your application                                     |
-| [@gasket/plugin-redux]           | 7.2.2   | DEPRECATED Gasket Redux Setup                                             |
-| [@gasket/plugin-service-worker]  | 7.2.2   | Gasket Service Worker Plugin                                              |
-| [@gasket/plugin-swagger]         | 7.2.2   | Generate and serve swagger docs                                           |
-| [@gasket/plugin-typescript]      | 7.2.0   | Gasket plugin for TypeScript support                                      |
-| [@gasket/plugin-webpack]         | 7.2.2   | Adds webpack support to your application                                  |
-| [@gasket/plugin-winston]         | 7.2.2   | Gasket logger based on Winston                                            |
-| [@gasket/plugin-workbox]         | 7.2.2   | Gasket Workbox Plugin                                                     |
+| [@gasket/plugin-analyze]         | 7.3.5   | Gasket Analyzer Plugin                                                    |
+| [@gasket/plugin-command]         | 7.3.6   | Plugin to enable other plugins to inject new gasket commands              |
+| [@gasket/plugin-cypress]         | 7.4.1   | Integrates Cypress based testing into your Gasket application             |
+| [@gasket/plugin-data]            | 7.3.5   | Supports application-specific settings and configurations                 |
+| [@gasket/plugin-docs]            | 7.3.6   | Centralize doc files from plugins and modules                             |
+| [@gasket/plugin-docs-graphs]     | 7.3.4   | Generate mermaid graphs of an applications gasket lifecycles              |
+| [@gasket/plugin-docusaurus]      | 7.4.2   | Gasket plugin for docusaurus                                              |
+| [@gasket/plugin-dynamic-plugins] | 7.3.5   |                                                                           |
+| [@gasket/plugin-elastic-apm]     | 7.3.4   | Adds Elastic APM instrumentation to your application                      |
+| [@gasket/plugin-express]         | 7.3.5   | Adds express support to your application                                  |
+| [@gasket/plugin-fastify]         | 7.3.6   | Adds fastify support to your application                                  |
+| [@gasket/plugin-git]             | 7.3.4   | Adds git support to your application                                      |
+| [@gasket/plugin-happyfeet]       | 7.3.4   | A gasket plugin to enable happyfeet healthchecks                          |
+| [@gasket/plugin-https]           | 7.3.5   | Create http/s servers with graceful termination                           |
+| [@gasket/plugin-https-proxy]     | 7.3.5   | Adds support for running an https proxy                                   |
+| [@gasket/plugin-intl]            | 7.4.1   | NodeJS script to build localization files.                                |
+| [@gasket/plugin-jest]            | 7.4.2   | Integrated jest into your application.                                    |
+| [@gasket/plugin-lint]            | 7.3.6   | Adds GoDaddy standard linting to your application                         |
+| [@gasket/plugin-logger]          | 7.3.4   | Gasket plugin for logging                                                 |
+| [@gasket/plugin-manifest]        | 7.3.4   | The web app manifest for progressive Gasket applications                  |
+| [@gasket/plugin-metadata]        | 7.3.9   | Adds metadata to gasket lifecycles                                        |
+| [@gasket/plugin-middleware]      | 7.3.6   | Handles common server engine setups for routing and executing lifecycles. |
+| [@gasket/plugin-mocha]           | 7.4.1   | Integrates mocha based testing in to your Gasket application              |
+| [@gasket/plugin-morgan]          | 7.3.4   | Adds morgan request logger to your app                                    |
+| [@gasket/plugin-nextjs]          | 7.4.3   | Adds Next support to your application                                     |
+| [@gasket/plugin-redux]           | 7.4.1   | DEPRECATED Gasket Redux Setup                                             |
+| [@gasket/plugin-service-worker]  | 7.4.1   | Gasket Service Worker Plugin                                              |
+| [@gasket/plugin-swagger]         | 7.3.5   | Generate and serve swagger docs                                           |
+| [@gasket/plugin-typescript]      | 7.3.4   | Gasket plugin for TypeScript support                                      |
+| [@gasket/plugin-webpack]         | 7.3.4   | Adds webpack support to your application                                  |
+| [@gasket/plugin-winston]         | 7.3.4   | Gasket logger based on Winston                                            |
+| [@gasket/plugin-workbox]         | 7.3.4   | Gasket Workbox Plugin                                                     |
 
 
 
@@ -207,84 +205,75 @@ Available plugins
 
 Supporting modules
 
-| Name                 | Version | Description                                                              |
-| -------------------- | ------- | ------------------------------------------------------------------------ |
-| [@gasket/assets]     | 7.2.0   | Gasket assets                                                            |
-| [@gasket/core]       | 7.2.2   | Entry point to setting up Gasket instances                               |
-| [@gasket/data]       | 7.2.0   | Helper package for accessing embedded Gasket Data in the browser         |
-| [@gasket/intl]       | 7.2.0   | Internationalization managers for translation files and locale handling. |
-| [@gasket/nextjs]     | 7.2.0   | Gasket integrations for Next.js apps                                     |
-| [@gasket/react-intl] | 7.2.0   | React component library to enable localization for gasket apps.          |
-| [@gasket/redux]      | 7.2.2   | Gasket Redux Configuration                                               |
-| [@gasket/request]    | 7.2.0   | Utilities for working with request objects in Gasket                     |
-| [@gasket/utils]      | 7.2.2   | Reusable utilities for Gasket internals                                  |
+| Name              | Version | Description                                |
+| ----------------- | ------- | ------------------------------------------ |
+| [@gasket/core]    | 7.4.1   | Entry point to setting up Gasket instances |
+| create-gasket-app | 7.3.9   | starter pack for creating a gasket app     |
 
 ## Configurations
 
 Available configuration options in the `gasket.js`
 
-| Name                                                                                 | Description                                                                                           | Type                                   | Default                        |
-| ------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------- | -------------------------------------- | ------------------------------ |
-| [bundleAnalyzerConfig]                                                               | Tune both browser and server Webpack analysis reports                                                 | object                                 |                                |
-| [docs][5]                                                                            | Docs config object                                                                                    | object                                 |                                |
-| [docs.outputDir]                                                                     | Output directory for generated docs                                                                   | string                                 | .docs                          |
-| [docusaurus]                                                                         | Docusaurus plugin config                                                                              | object                                 |                                |
-| [docusaurus.docsDir]                                                                 | Sub-directory for the generated markdown from the docs plugin                                         | string                                 | docs                           |
-| [docusaurus.host]                                                                    | Hostname to serve the docs from                                                                       | string                                 | localhost                      |
-| [docusaurus.port]                                                                    | Port number to serve docs site                                                                        | number                                 | 3000                           |
-| [docusaurus.rootDir]                                                                 | Root Docusaurus directory                                                                             | string                                 | .docs                          |
-| [dynamicPlugins]                                                                     | Specify which plugins to load dynamically into gasket                                                 | array                                  |                                |
-| [elasticAPM]                                                                         | Configuration to provide additional setup helpers                                                     | object                                 |                                |
-| [elasticAPM.sensitiveCookies]                                                        | List of sensitive cookies to filter                                                                   | string[]                               | []                             |
-| [express][6]                                                                         | Express plugin configuration                                                                          | object                                 |                                |
-| [express.compression]                                                                | Automatic compression                                                                                 | boolean                                | true                           |
-| [express.excludedRoutesRegex (deprecated)][express.excludedRoutesRegex (deprecated)] | Routes to be included for Gasket middleware, based on a regex                                         | RegExp                                 |                                |
-| [express.middlewareInclusionRegex]                                                   | Routes to be included for Gasket middleware, based on a regex                                         | RegExp                                 |                                |
-| [fastify][7]                                                                         | Fastify configuration object                                                                          | object                                 |                                |
-| [fastify.compression]                                                                | Automatic compression                                                                                 | boolean                                | true                           |
-| [fastify.excludedRoutesRegex]                                                        | Routes to be excluded based on a regex                                                                | RegExp                                 |                                |
-| [http]                                                                               | HTTP port or config object                                                                            | number | object                        |                                |
-| [http2]                                                                              | HTTP2 config object                                                                                   | object                                 |                                |
-| [https]                                                                              | HTTPS config object                                                                                   | object                                 |                                |
-| [httpsProxy][8]                                                                      | http-proxy config object                                                                              | object                                 |                                |
-| [intl]                                                                               | Intl config object                                                                                    | object                                 |                                |
-| [intl.defaultLocale]                                                                 | Locale to fallback to when loading files                                                              | string                                 | en                             |
-| [intl.defaultLocaleFilePath]                                                         | Lookup path to locale files                                                                           | string                                 | locales                        |
-| [intl.locales]                                                                       | Ordered list of accepted locales                                                                      | string[]                               |                                |
-| [intl.localesDir]                                                                    | Path to on-disk directory where locale files exists                                                   | string                                 | ./locales                      |
-| [intl.localesMap]                                                                    | Mapping of locales to share files                                                                     | object                                 |                                |
-| [intl.managerFilename]                                                               | Change the name of the IntlManager file                                                               | string                                 | intl.js                        |
-| [intl.modules]                                                                       | Enable locale files collation from node modules                                                       | boolean | object                       |                                |
-| [intl.nextRouting]                                                                   | Enable Next.js Routing when used with @gasket/plugin-nextjs                                           | boolean                                | true                           |
-| [manifest][9]                                                                        | Manifest plugin config                                                                                | object                                 |                                |
-| [morgan]                                                                             | Morgan plugin configuration                                                                           | object                                 |                                |
-| [morgan.format]                                                                      | Log format to print                                                                                   | string                                 | tiny                           |
-| [morgan.options]                                                                     | Morgan options                                                                                        | object                                 |                                |
-| [nextConfig][10]                                                                     | Everything that can be configured in `next.config.js` can be added here.                              | object                                 |                                |
-| [redux (deprecated)][redux (deprecated)]                                             | Redux plugin config object                                                                            | object                                 |                                |
-| [redux.initState]                                                                    | Initial state to include in the store                                                                 | object                                 |                                |
-| [redux.makeStore]                                                                    | Relative path to a custom makeStore configuration                                                     | string                                 | store.js                       |
-| [serviceWorker]                                                                      | Service worker plugin config object                                                                   | object                                 |                                |
-| [serviceWorker.cache]                                                                | Adjust the content cache settings using the lru-cache options                                         | object                                 |                                |
-| [serviceWorker.cacheKeys]                                                            | Optional cache key functions that accept the request object as argument and return a string           | function[]                             |                                |
-| [serviceWorker.content]                                                              | The JavaScript content to be served                                                                   | string                                 |                                |
-| [serviceWorker.minify]                                                               | Minification options to be used on the composed JavaScript                                            | object                                 |                                |
-| [serviceWorker.scope]                                                                | From where to intercept requests                                                                      | string                                 | /                              |
-| [serviceWorker.staticOutput]                                                         | If `true`, a static `sw.js` will be output to the `./public` dir                                      | string | boolean                       | false                          |
-| [serviceWorker.url]                                                                  | Name of the service worker file                                                                       | string                                 | /sw.js                         |
-| [serviceWorker.webpackRegister]                                                      | By default, a service worker registration script will be injected to the webpack entry modules        | string | string[] | function | boolean |                                |
-| [swagger]                                                                            | Swagger config object                                                                                 | object                                 |                                |
-| [swagger.apiDocsRoute]                                                               | Route to Swagger UI                                                                                   | string                                 | /api-docs                      |
-| [swagger.definitionFile]                                                             | Target swagger spec file, either json or yaml                                                         | string                                 | swagger.json                   |
-| [swagger.jsdoc]                                                                      | If set, the definitionFile will be generated based on JSDocs in the configured files                  | object                                 |                                |
-| [swagger.ui]                                                                         | Optional custom UI options                                                                            | object                                 |                                |
-| [terminus][11]                                                                       | Terminus config object                                                                                | object                                 |                                |
-| [terminus.healthcheck]                                                               | Custom Terminus healthcheck endpoint names                                                            | string[]                               | /healthcheck,/healthcheck.html |
-| [winston]                                                                            | Setup and customize winston logger                                                                    | object                                 |                                |
-| [workbox][12]                                                                        | Workbox config object                                                                                 | object                                 |                                |
-| [workbox.basePath]                                                                   | Change the default path to `/_workbox` endpoint by adding a path prefix here                          | string                                 |                                |
-| [workbox.config]                                                                     | Any initial workbox config options which will be merged with those from any `workbox` lifecycle hooks | object                                 |                                |
-| [workbox.outputDir]                                                                  | The path to the directory in which the Workbox libraries should be copied                             | string                                 | ./build/workbox                |
+| Name                                     | Description                                                                                           | Type                                   | Default                        |
+| ---------------------------------------- | ----------------------------------------------------------------------------------------------------- | -------------------------------------- | ------------------------------ |
+| [bundleAnalyzerConfig]                   | Tune both browser and server Webpack analysis reports                                                 | object                                 |                                |
+| [docs][4]                                | Docs config object                                                                                    | object                                 |                                |
+| [docs.outputDir]                         | Output directory for generated docs                                                                   | string                                 | .docs                          |
+| [docusaurus]                             | Docusaurus plugin config                                                                              | object                                 |                                |
+| [docusaurus.docsDir]                     | Sub-directory for the generated markdown from the docs plugin                                         | string                                 | docs                           |
+| [docusaurus.host]                        | Hostname to serve the docs from                                                                       | string                                 | localhost                      |
+| [docusaurus.port]                        | Port number to serve docs site                                                                        | number                                 | 3000                           |
+| [docusaurus.rootDir]                     | Root Docusaurus directory                                                                             | string                                 | .docs                          |
+| [dynamicPlugins]                         | Specify which plugins to load dynamically into gasket                                                 | array                                  |                                |
+| [elasticAPM]                             | Configuration to provide additional setup helpers                                                     | object                                 |                                |
+| [elasticAPM.sensitiveCookies]            | List of sensitive cookies to filter                                                                   | string[]                               | []                             |
+| [express][5]                             | Express plugin configuration                                                                          | object                                 |                                |
+| [express.compression]                    | Automatic compression                                                                                 | boolean                                | true                           |
+| [fastify][6]                             | Fastify configuration object                                                                          | object                                 |                                |
+| [fastify.compression]                    | Automatic compression                                                                                 | boolean                                | true                           |
+| [fastify.excludedRoutesRegex]            | Routes to be excluded based on a regex                                                                | RegExp                                 |                                |
+| [http]                                   | HTTP port or config object                                                                            | number | object                        |                                |
+| [http2]                                  | HTTP2 config object                                                                                   | object                                 |                                |
+| [https]                                  | HTTPS config object                                                                                   | object                                 |                                |
+| [httpsProxy][7]                          | http-proxy config object                                                                              | object                                 |                                |
+| [intl]                                   | Intl config object                                                                                    | object                                 |                                |
+| [intl.defaultLocale]                     | Locale to fallback to when loading files                                                              | string                                 | en                             |
+| [intl.defaultLocaleFilePath]             | Lookup path to locale files                                                                           | string                                 | locales                        |
+| [intl.locales]                           | Ordered list of accepted locales                                                                      | string[]                               |                                |
+| [intl.localesDir]                        | Path to on-disk directory where locale files exists                                                   | string                                 | ./locales                      |
+| [intl.localesMap]                        | Mapping of locales to share files                                                                     | object                                 |                                |
+| [intl.managerFilename]                   | Change the name of the IntlManager file                                                               | string                                 | intl.js                        |
+| [intl.modules]                           | Enable locale files collation from node modules                                                       | boolean | object                       |                                |
+| [intl.nextRouting]                       | Enable Next.js Routing when used with @gasket/plugin-nextjs                                           | boolean                                | true                           |
+| [manifest][8]                            | Manifest plugin config                                                                                | object                                 |                                |
+| [morgan]                                 | Morgan plugin configuration                                                                           | object                                 |                                |
+| [morgan.format]                          | Log format to print                                                                                   | string                                 | tiny                           |
+| [morgan.options]                         | Morgan options                                                                                        | object                                 |                                |
+| [nextConfig][9]                          | Everything that can be configured in `next.config.js` can be added here.                              | object                                 |                                |
+| [redux (deprecated)][redux (deprecated)] | Redux plugin config object                                                                            | object                                 |                                |
+| [redux.initState]                        | Initial state to include in the store                                                                 | object                                 |                                |
+| [redux.makeStore]                        | Relative path to a custom makeStore configuration                                                     | string                                 | store.js                       |
+| [serviceWorker]                          | Service worker plugin config object                                                                   | object                                 |                                |
+| [serviceWorker.cache]                    | Adjust the content cache settings using the lru-cache options                                         | object                                 |                                |
+| [serviceWorker.cacheKeys]                | Optional cache key functions that accept the request object as argument and return a string           | function[]                             |                                |
+| [serviceWorker.content]                  | The JavaScript content to be served                                                                   | string                                 |                                |
+| [serviceWorker.minify]                   | Minification options to be used on the composed JavaScript                                            | object                                 |                                |
+| [serviceWorker.scope]                    | From where to intercept requests                                                                      | string                                 | /                              |
+| [serviceWorker.staticOutput]             | If `true`, a static `sw.js` will be output to the `./public` dir                                      | string | boolean                       | false                          |
+| [serviceWorker.url]                      | Name of the service worker file                                                                       | string                                 | /sw.js                         |
+| [serviceWorker.webpackRegister]          | By default, a service worker registration script will be injected to the webpack entry modules        | string | string[] | function | boolean |                                |
+| [swagger]                                | Swagger config object                                                                                 | object                                 |                                |
+| [swagger.apiDocsRoute]                   | Route to Swagger UI                                                                                   | string                                 | /api-docs                      |
+| [swagger.definitionFile]                 | Target swagger spec file, either json or yaml                                                         | string                                 | swagger.json                   |
+| [swagger.jsdoc]                          | If set, the definitionFile will be generated based on JSDocs in the configured files                  | object                                 |                                |
+| [swagger.ui]                             | Optional custom UI options                                                                            | object                                 |                                |
+| [terminus][10]                           | Terminus config object                                                                                | object                                 |                                |
+| [terminus.healthcheck]                   | Custom Terminus healthcheck endpoint names                                                            | string[]                               | /healthcheck,/healthcheck.html |
+| [winston]                                | Setup and customize winston logger                                                                    | object                                 |                                |
+| [workbox][11]                            | Workbox config object                                                                                 | object                                 |                                |
+| [workbox.basePath]                       | Change the default path to `/_workbox` endpoint by adding a path prefix here                          | string                                 |                                |
+| [workbox.config]                         | Any initial workbox config options which will be merged with those from any `workbox` lifecycle hooks | object                                 |                                |
+| [workbox.outputDir]                      | The path to the directory in which the Workbox libraries should be copied                             | string                                 | ./build/workbox                |
 
 <!-- LINKS -->
 
@@ -338,10 +327,8 @@ Available configuration options in the `gasket.js`
 [intlLocale]:/packages/gasket-plugin-intl/README.md#intlLocale
 [manifest]:/packages/gasket-plugin-manifest/README.md#manifest
 [metadata]:/packages/gasket-plugin-metadata/README.md#metadata
-[middleware]:/packages/gasket-plugin-fastify/README.md#middleware
-[3]:/packages/gasket-plugin-express/README.md#middleware
 [next]:/packages/gasket-plugin-nextjs/README.md#next
-[4]:/packages/gasket-plugin-nextjs/README.md#next
+[3]:/packages/gasket-plugin-nextjs/README.md#next
 [nextConfig]:/packages/gasket-plugin-nextjs/README.md#nextConfig
 [nextExpress]:/packages/gasket-plugin-nextjs/README.md#nextExpress
 [nextFastify]:/packages/gasket-plugin-nextjs/README.md#nextFastify
@@ -398,17 +385,9 @@ Available configuration options in the `gasket.js`
 [@gasket/plugin-webpack]:/packages/gasket-plugin-webpack/README.md
 [@gasket/plugin-winston]:/packages/gasket-plugin-winston/README.md
 [@gasket/plugin-workbox]:/packages/gasket-plugin-workbox/README.md
-[@gasket/assets]:/packages/gasket-assets/README.md
 [@gasket/core]:/packages/gasket-core/README.md
-[@gasket/data]:/packages/gasket-data/README.md
-[@gasket/intl]:/packages/gasket-intl/README.md
-[@gasket/nextjs]:/packages/gasket-nextjs/README.md
-[@gasket/react-intl]:/packages/gasket-react-intl/README.md
-[@gasket/redux]:/packages/gasket-redux/README.md
-[@gasket/request]:/packages/gasket-request/README.md
-[@gasket/utils]:/packages/gasket-utils/README.md
 [bundleAnalyzerConfig]:/packages/gasket-plugin-analyze/README.md#configuration
-[5]:/packages/gasket-plugin-docs/README.md#configuration
+[4]:/packages/gasket-plugin-docs/README.md#configuration
 [docs.outputDir]:/packages/gasket-plugin-docs/README.md#configuration
 [docusaurus]:/packages/gasket-plugin-docusaurus/README.md#configuration
 [docusaurus.docsDir]:/packages/gasket-plugin-docusaurus/README.md#configuration
@@ -418,17 +397,15 @@ Available configuration options in the `gasket.js`
 [dynamicPlugins]:/packages/gasket-plugin-dynamic-plugins/README.md#configuration
 [elasticAPM]:/packages/gasket-plugin-elastic-apm/README.md#configuration
 [elasticAPM.sensitiveCookies]:/packages/gasket-plugin-elastic-apm/README.md#configuration
-[6]:/packages/gasket-plugin-express/README.md#configuration
+[5]:/packages/gasket-plugin-express/README.md#configuration
 [express.compression]:/packages/gasket-plugin-express/README.md#configuration
-[express.excludedRoutesRegex (deprecated)]:/packages/gasket-plugin-express/README.md#configuration
-[express.middlewareInclusionRegex]:/packages/gasket-plugin-express/README.md#configuration
-[7]:/packages/gasket-plugin-fastify/README.md#configuration
+[6]:/packages/gasket-plugin-fastify/README.md#configuration
 [fastify.compression]:/packages/gasket-plugin-fastify/README.md#configuration
 [fastify.excludedRoutesRegex]:/packages/gasket-plugin-fastify/README.md#configuration
 [http]:/packages/gasket-plugin-https/README.md#configuration
 [http2]:/packages/gasket-plugin-https/README.md#configuration
 [https]:/packages/gasket-plugin-https/README.md#configuration
-[8]:/packages/gasket-plugin-https-proxy/README.md#configuration
+[7]:/packages/gasket-plugin-https-proxy/README.md#configuration
 [intl]:/packages/gasket-plugin-intl/README.md#configuration
 [intl.defaultLocale]:/packages/gasket-plugin-intl/README.md#configuration
 [intl.defaultLocaleFilePath]:/packages/gasket-plugin-intl/README.md#configuration
@@ -438,11 +415,11 @@ Available configuration options in the `gasket.js`
 [intl.managerFilename]:/packages/gasket-plugin-intl/README.md#configuration
 [intl.modules]:/packages/gasket-plugin-intl/README.md#configuration
 [intl.nextRouting]:/packages/gasket-plugin-intl/README.md#configuration
-[9]:/packages/gasket-plugin-manifest/README.md#configuration
+[8]:/packages/gasket-plugin-manifest/README.md#configuration
 [morgan]:/packages/gasket-plugin-morgan/README.md#configuration
 [morgan.format]:/packages/gasket-plugin-morgan/README.md#configuration
 [morgan.options]:/packages/gasket-plugin-morgan/README.md#configuration
-[10]:/packages/gasket-plugin-nextjs/README.md#configuration
+[9]:/packages/gasket-plugin-nextjs/README.md#configuration
 [redux (deprecated)]:/packages/gasket-plugin-redux/README.md#configuration
 [redux.initState]:/packages/gasket-plugin-redux/README.md#configuration
 [redux.makeStore]:/packages/gasket-plugin-redux/README.md#configuration
@@ -460,10 +437,10 @@ Available configuration options in the `gasket.js`
 [swagger.definitionFile]:/packages/gasket-plugin-swagger/README.md#configuration
 [swagger.jsdoc]:/packages/gasket-plugin-swagger/README.md#configuration
 [swagger.ui]:/packages/gasket-plugin-swagger/README.md#configuration
-[11]:/packages/gasket-plugin-https/README.md#configuration
+[10]:/packages/gasket-plugin-https/README.md#configuration
 [terminus.healthcheck]:/packages/gasket-plugin-https/README.md#configuration
 [winston]:/packages/gasket-plugin-winston/README.md#configuration
-[12]:/packages/gasket-plugin-workbox/README.md#configuration
+[11]:/packages/gasket-plugin-workbox/README.md#configuration
 [workbox.basePath]:/packages/gasket-plugin-workbox/README.md#configuration
 [workbox.config]:/packages/gasket-plugin-workbox/README.md#configuration
 [workbox.outputDir]:/packages/gasket-plugin-workbox/README.md#configuration
