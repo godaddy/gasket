@@ -24,8 +24,6 @@ build-cmd(build) --> initWebpack;
 middleware -- execWaterfallSync --> intlLocale;
 middleware -- execWaterfall --> manifest;
 init -- execApply --> metadata;
-createServers -- exec --> middleware;
-createServers -- exec --> middleware;
 express -- exec --> next;
 fastify -- exec --> next;
 express -- execWaterfall --> nextConfig;
