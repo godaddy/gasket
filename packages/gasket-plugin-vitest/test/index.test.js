@@ -1,6 +1,7 @@
 import self from '../package.json';
 import plugin from '../lib/index.js';
-import { name, version, description, devDependencies } from '../package';
+import { name, version, description } from '../package';
+import { expect } from 'vitest';
 
 describe('Plugin', function () {
   /**
@@ -87,8 +88,8 @@ describe('Plugin', function () {
     it('includes a glob for the generator/vitest.config.js file', async function () {
       const { files } = await createReact();
 
-      expect(files[0]).toContain('../generator/*');
-      expect(files[1]).toContain('../generator/**/*');
+      expect(files[0]).toContain('../generator/react/*');
+      expect(files[1]).toContain('../generator/react/**/*');
     });
 
     describe('adds react specific dependencies', function () {
@@ -145,7 +146,7 @@ describe('Plugin', function () {
     it('uses the same scripts in our package.json', async function () {
       const { pkg } = await create();
 
-      expect( typeof pkg.scripts).toBe('object');
+      expect(typeof pkg.scripts).toBe('object');
       Object.keys(pkg.scripts).forEach((key) => {
         expect(self.scripts).toHaveProperty(key);
         expect(self.scripts[key]).toEqual(pkg.scripts[key]);

@@ -1,18 +1,20 @@
 {
   "compilerOptions": {
+    "target": "ESNext",
+    "moduleResolution": "nodenext",
+    "module": "NodeNext",
     "allowJs": true,
     "checkJs": true,
     "noEmit": true,
-    "skipLibCheck": false,
+    "skipLibCheck": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "downlevelIteration": true,
     "lib": [
       "esnext",
       "dom"
     ],
     "types": [
-      "vitest/globals",
+      "@types/jest"
     ]
   },
   "exclude": [

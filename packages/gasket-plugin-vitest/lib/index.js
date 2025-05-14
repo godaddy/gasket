@@ -25,7 +25,7 @@ const plugin = {
         });
 
         pkg.add('scripts', {
-          test: 'vitest run',
+          'test': 'vitest run',
           'test:watch': 'vitest',
           'test:coverage': 'vitest run --coverage'
         });
@@ -67,7 +67,7 @@ const plugin = {
           description: 'Vitest configuration file',
           link: 'https://vitest.dev/config/'
         }]
-      }
+      };
     }
   }
 };
