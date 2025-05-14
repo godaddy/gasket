@@ -1,5 +1,13 @@
 # `@gasket/plugin-metadata`
 
+## 7.3.8
+
+### Patch Changes
+
+- 6cf18c2: Fix to create require
+  - @gasket/core@7.4.1
+  - @gasket/plugin-logger@7.3.4
+
 ## 7.3.7
 
 ### Patch Changes
