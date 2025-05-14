@@ -22,6 +22,14 @@ export default makeGasket({
 });
 ```
 
+### Environment Variables
+
+The `GASKET_DEV` environment variable is used to signal the programmatic execution of the Next.js development server when working with a **custom Next.js server**. Set this variable to a truthy value in order to run the Next.js development server.
+
+```bash
+GASKET_DEV=1 npm run local
+```
+
 ## Configuration
 
 It is also possible for apps to config Next.js using the `gasket.js`

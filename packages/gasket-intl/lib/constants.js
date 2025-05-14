@@ -1,4 +1,4 @@
-/** @type {import('./types').LocaleFileStatus} */
+/** @type {import('./index.d.ts').LocaleFileStatus} */
 export const LocaleFileStatus = {
   notHandled: 'notHandled',
   notLoaded: 'notLoaded',
@@ -7,7 +7,7 @@ export const LocaleFileStatus = {
   error: 'error'
 };
 
-/** @type {import('./types').LocaleFileStatus[]} */
+/** @type {import('./index.d.ts').LocaleFileStatus[]} */
 export const LocaleFileStatusPriority = [
   LocaleFileStatus.notHandled,
   LocaleFileStatus.notLoaded,

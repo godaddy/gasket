@@ -17,7 +17,8 @@ describe('actions', () => {
         root: `${__dirname}/fixtures/gasket-root`,
         intl: {
           managerFilename: 'intl.js',
-          defaultLocale: 'en'
+          defaultLocale: 'en',
+          experimentalImportAttributes: true
         }
       }
     };

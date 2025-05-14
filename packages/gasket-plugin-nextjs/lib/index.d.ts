@@ -4,8 +4,8 @@ import type { NextServer } from 'next/dist/server/next';
 import type { Application } from 'express';
 import type { FastifyInstance } from 'fastify';
 import type { Gasket, Plugin } from '@gasket/core';
-import type { CreateContext, CreatePrompt } from 'create-gasket-app' with { 'resolution-mode': 'import' };
-import type { GasketRequest } from '@gasket/request' with { 'resolution-mode': 'import' };
+import type { CreateContext, CreatePrompt } from 'create-gasket-app';
+import type { GasketRequest } from '@gasket/request';
 
 export { NextConfig, NextServer };
 
@@ -15,10 +15,11 @@ export type NextConfigFunction = (phase: string, context: {
 }) => Promise<NextConfig>;
 
 declare module '@gasket/core' {
+  import type { GasketRequest } from '@gasket/request' with { 'resolution-mode': 'import' };
 
   export interface GasketActions {
     getNextConfig?: (config?: NextConfig | NextConfigFunction) => (phase: string, context?: { defaultConfig?: NextConfig }) => Promise<NextConfig>
-    getNextRoute?: (req: GasketRequest) => Promise<null | {
+    getNextRoute?: (req: import('@gasket/request').GasketRequest) => Promise<null | {
       page: string;
       regex: RegExp;
       routeKeys: Record<string, string>;
@@ -59,12 +60,6 @@ declare module '@gasket/core' {
   }
 }
 
-declare module 'http' {
-  export interface IncomingMessage {
-    path?: string;
-  }
-}
-
 declare module 'create-gasket-app' {
   export interface CreateContext {
     addSitemap?: boolean;
@@ -75,42 +70,56 @@ declare module 'create-gasket-app' {
   }
 }
 
-declare module '@gasket/plugin-nextjs' {
-  /** Gets the NextJS route matching the request */
-  export function getNextRoute(
-    gasket: Gasket,
-    req: IncomingMessage
-  ): Promise<null | {
-    page: string;
-    regex: RegExp;
-    routeKeys: Record<string, string>;
-    namedRegex: RegExp;
-  }> {
-    return Promise.resolve(null);
-  }
+/** Gets the NextJS route matching the request */
+export function getNextRoute(
+  gasket: Gasket,
+  req: import('@gasket/request').GasketRequest
+): Promise<{
+  page: string;
+  regex: RegExp;
+  routeKeys: Record<string, string>;
+  namedRegex: RegExp;
+} | null>;
 
-  /* Exported prompts */
-  export function promptAppRouter(
-    context: CreateContext,
-    prompt: CreatePrompt
-  ): Promise<undefined>
+/* Exported prompts */
+export function promptAppRouter(
+  context: CreateContext,
+  prompt: CreatePrompt
+): Promise<undefined>
 
-  export function promptNextServerType(
-    context: CreateContext,
-    prompt: CreatePrompt
-  ): Promise<undefined>
+export function promptNextServerType(
+  context: CreateContext,
+  prompt: CreatePrompt
+): Promise<undefined>
 
-  export function promptNextDevProxy(
-    context: CreateContext,
-    prompt: CreatePrompt
-  ): Promise<undefined>
+export function promptNextDevProxy(
+  context: CreateContext,
+  prompt: CreatePrompt
+): Promise<undefined>
 
-  export function promptSitemap(
-    context: CreateContext,
-    prompt: CreatePrompt
-  ): Promise<undefined>
-}
+export function promptSitemap(
+  context: CreateContext,
+  prompt: CreatePrompt
+): Promise<undefined>
+
+/**
+ * Small helper function that creates nextjs app from the gasket configuration.
+ */
+export function setupNextApp(gasket: Gasket): NextServer & {
+  prepare(): Promise<void>;
+  getRequestHandler(): (req, res) => void;
+};
+
+/**
+ * Sets up the next.js request handler to be called after all other middleware
+ */
+export function setupNextHandling(
+  nextServer: NextServer,
+  serverApp: Application | FastifyInstance,
+  gasket: Gasket
+): void;
 
 declare const plugin: Plugin;
 
 export default plugin;
+

@@ -1,5 +1,5 @@
 const plugin = require('../lib/index');
-const { name, version, description } = require('../package');
+const { name, version, description } = require('../package.json');
 
 describe('Plugin', function () {
 

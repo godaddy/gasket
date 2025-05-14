@@ -31,7 +31,10 @@ describe('create hook', () => {
   });
 
   it('has expected timings', async function () {
-    expect(create.timing.before).toEqual(['@gasket/plugin-intl']);
+    expect(create.timing.before).toEqual([
+      '@gasket/plugin-intl',
+      '@gasket/plugin-docusaurus'
+    ]);
   });
 
   it('has handler function', async function () {

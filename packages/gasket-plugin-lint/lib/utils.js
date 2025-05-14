@@ -14,8 +14,8 @@ function makeGatherDevDeps() {
   var eslintImport = { 'eslint-plugin-import': '^2.27.5' };
 
   var dependencies = {
-    'eslint-config-godaddy': { ...eslintBaseDeps, 'eslint-config-godaddy': '^7.1.1' },
-    'eslint-config-godaddy-react': { ...eslintBaseDeps, 'eslint-config-godaddy-react': '^9.1.0', ...babelCore },
+    'eslint-config-godaddy': { ...eslintBaseDeps, 'eslint-config-godaddy': '^7.1.1', 'eslint-plugin-react-hooks': '^4.6.0' },
+    'eslint-config-godaddy-react': { ...eslintBaseDeps, 'eslint-config-godaddy-react': '^9.1.0', 'eslint-plugin-react-hooks': '^4.6.0', ...babelCore },
     'eslint-config-godaddy-flow': { ...eslintBaseDeps, 'eslint-config-godaddy-flow': '^6.0.2', ...babelCore },
     'eslint-config-godaddy-react-flow': { ...eslintBaseDeps, 'eslint-config-godaddy-react-flow': '^6.0.2', ...babelCore },
     '@godaddy/eslint-plugin-react-intl': { ...eslintBaseDeps, '@godaddy/eslint-plugin-react-intl': '^1.3.0' },
@@ -73,7 +73,7 @@ function makeGatherDevDeps() {
  * @type {import('./internal').makeRunScriptStr}
  */
 function makeRunScriptStr(context) {
-  let runCmd = `${context.packageManager} run`;
+  const runCmd = `${context.packageManager} run`;
 
   /**
    * Formats the script command for execution.

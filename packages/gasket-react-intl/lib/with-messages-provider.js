@@ -5,7 +5,7 @@ import htmlescape from 'htmlescape';
 import { createElement, useState } from 'react';
 import { GasketIntlContext, makeContext } from './context.js';
 
-/** @type {import('.').withMessagesProvider} */
+/** @type {import('./index.d.ts').withMessagesProvider} */
 export function withMessagesProvider(
   intlManager,
   options
@@ -15,7 +15,7 @@ export function withMessagesProvider(
   return function wrapper(Component) {
     const displayName = Component.displayName || Component.name || 'Component';
 
-    /** @type {import('.').IntlProviderHOC} */
+    /** @type {import('./index.d.ts').IntlProviderHOC} */
     function HOC(props) {
       // TODO (PFX-689): explore a localeFileKey callback here which
       //  would be passed to the handler allowing tuning a localeFileKey

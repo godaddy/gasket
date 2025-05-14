@@ -12,7 +12,6 @@ const { name, version, devDependencies } = require('../package.json');
  * @property {boolean} typescript - Selected typescript from prompt
  * @property {Readme} readme - The Gasket Readme API.
  */
-
 async function createAppFiles({
   files,
   generatorDir,
@@ -206,7 +205,10 @@ function addConfig({ gasketConfig, nextDevProxy, nextServerType }) {
 
 module.exports = {
   timing: {
-    before: ['@gasket/plugin-intl']
+    before: [
+      '@gasket/plugin-intl',
+      '@gasket/plugin-docusaurus'
+    ]
   },
   /**
    * Add files & extend package.json for new apps.

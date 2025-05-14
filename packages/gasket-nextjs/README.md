@@ -156,6 +156,7 @@ and client side friendly and can be added at the app level or component level.
 // pages/_app.js
 import { AppProps } from 'next/app';
 import { withGasketDataProvider } from '@gasket/nextjs';
+import gasket from '../gasket.js';
 
 
 const Root = ({ Page, pageProps }) => {
@@ -164,7 +165,7 @@ const Root = ({ Page, pageProps }) => {
   );
 };
 
-export default withGasketDataProvider()(Root);
+export default withGasketDataProvider(gasket)(Root);
 ```
 
 ### useGasketData

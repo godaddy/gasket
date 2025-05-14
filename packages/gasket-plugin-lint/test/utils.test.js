@@ -23,8 +23,32 @@ describe('utils', () => {
     });
 
     it('gatherDevDeps returns hardcoded version', () => {
-      const results = gatherDevDeps('eslint-config-airbnb');
+      const results = gatherDevDeps('stylelint-config-airbnb');
       expect(results).toEqual({
+        'stylelint-config-airbnb': '^0.0.0',
+        'stylelint': '^8.0.0',
+        'stylelint-order': '^0.7.0',
+        'stylelint-scss': '^1.2.1'
+      });
+    });
+
+    it('defines eslint-plugin-react-hooks for relevant packages', () => {
+      const results = gatherDevDeps('eslint-config-godaddy-react');
+      expect(results).toEqual({
+        'eslint-config-godaddy-react': '^9.1.0',
+        'eslint': '^8.57.1',
+        '@babel/core': '>=7',
+        'eslint-plugin-react-hooks': '^4.6.0'
+      });
+
+      const results2 = gatherDevDeps('eslint-config-godaddy-flow');
+      expect(results2).toEqual({
+        'eslint-config-godaddy-flow': '^6.0.2',
+        'eslint': '^8.57.1',
+        '@babel/core': '>=7'
+      });
+      const results3 = gatherDevDeps('eslint-config-airbnb');
+      expect(results3).toEqual({
         'eslint-config-airbnb': '^19.0.4',
         'eslint': '^8.57.1',
         'eslint-plugin-import': '^2.27.5',

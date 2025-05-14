@@ -9,12 +9,12 @@ class MockCookieStore {
     this.cookies = cookies;
   }
 
-  async getAll() {
+  getAll() {
     return this.cookies;
   }
 }
 
-const mockCookies = jest.fn().mockResolvedValue(
+const mockCookies = jest.fn().mockReturnValue(
   new MockCookieStore([
     { name: 'cookie1', value: 'value1' },
     { name: 'cookie2', value: 'value2' }

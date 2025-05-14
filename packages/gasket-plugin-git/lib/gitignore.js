@@ -1,6 +1,6 @@
 /**
  * Class to add content to gitignore
- * @type {import('./internal').Gitignore}
+ * @type {import('./internal.js').Gitignore}
  */
 module.exports = class Gitignore {
   constructor() {
