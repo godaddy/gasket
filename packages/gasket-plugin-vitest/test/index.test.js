@@ -6,7 +6,7 @@ import { expect } from 'vitest';
 describe('Plugin', function () {
   /**
    * Create a new project
-   * @param rest
+   * @param {object} rest - additional context
    * @returns {Promise<object>} project
    */
   async function create(rest = {}) {
@@ -27,6 +27,7 @@ describe('Plugin', function () {
   }
   /**
    * Create a new React project
+   * @param {object} rest additional context
    * @returns {Promise<object>} project
    */
   async function createReact(rest = {}) {
