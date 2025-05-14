@@ -1,5 +1,17 @@
 # `@gasket/react-intl`
 
+## 7.4.1
+
+### Patch Changes
+
+- eb403a8: Audit ts-ignores.
+- Updated dependencies [e7ee793]
+- Updated dependencies [eb403a8]
+  - @gasket/plugin-intl@7.4.1
+  - @gasket/fetch@7.3.4
+  - @gasket/data@7.3.4
+  - @gasket/intl@7.3.4
+
 ## 7.4.0
 
 ### Minor Changes

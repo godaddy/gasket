@@ -4,9 +4,8 @@
 const debug = require('debug')('gasket:plugin:intl:apmTransaction');
 
 /** @type {import('@gasket/core').HookHandler<'apmTransaction'>} */
-module.exports = function apmTransaction(_gasket, transaction, { res }) {
-  // TODO: convert to actions
-  const { locale } = res.locals.gasketData ?? {};
+module.exports = async function apmTransaction(gasket, transaction, { req }) {
+  const locale = await gasket.actions.getIntlLocale(req);
 
   if (locale) {
     debug(`Setting locale label for transaction to ${locale}`);
