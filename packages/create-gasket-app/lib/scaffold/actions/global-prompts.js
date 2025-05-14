@@ -98,7 +98,7 @@ async function chooseTestPlugins(context, prompt) {
           `Do you want to use ${name} for ${type} testing?`,
           isDefault
         );
-
+        
         if (plugin) testPlugins.push(testPlugin);
       }
     }
