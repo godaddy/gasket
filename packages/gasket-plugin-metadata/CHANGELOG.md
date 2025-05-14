@@ -1,5 +1,13 @@
 # `@gasket/plugin-metadata`
 
+## 7.3.9
+
+### Patch Changes
+
+- 4f08df2: Fix to create require in all places
+  - @gasket/core@7.4.1
+  - @gasket/plugin-logger@7.3.4
+
 ## 7.3.8
 
 ### Patch Changes
