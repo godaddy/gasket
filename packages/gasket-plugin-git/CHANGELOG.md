@@ -1,5 +1,13 @@
 # `@gasket/plugin-git`
 
+## 7.3.4
+
+### Patch Changes
+
+- eb403a8: Audit ts-ignores.
+- Updated dependencies [eb403a8]
+  - @gasket/utils@7.3.4
+
 ## 7.3.3
 
 ### Patch Changes
