@@ -1,5 +1,11 @@
 # `@gasket/plugin-analyze`
 
+## 7.3.5
+
+### Patch Changes
+
+- eb403a8: Audit ts-ignores.
+
 ## 7.3.4
 
 ### Patch Changes
