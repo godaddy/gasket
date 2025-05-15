@@ -144,6 +144,6 @@ for the newly added dynamic plugins.
 
 [MIT](./LICENSE.md)
 
-[environments]: ../../docs/configuration.md#environments
-[commands]: ../../docs/configuration.md#commands
-[prepare]: ../gasket-core/README.md#prepare
+[environments]: /docs/configuration.md#environments
+[commands]: /docs/configuration.md#commands
+[prepare]: /packages/gasket-core/README.md#prepare
