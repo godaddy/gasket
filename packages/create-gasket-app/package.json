@@ -1,6 +1,6 @@
 {
   "name": "create-gasket-app",
-  "version": "7.3.9",
+  "version": "7.3.10",
   "description": "starter pack for creating a gasket app",
   "type": "module",
   "bin": {
