@@ -1,5 +1,11 @@
 # `@gasket/intl`
 
+## 7.3.5
+
+### Patch Changes
+
+- db3bf54: Add CJS transpile to ESM packages
+
 ## 7.3.4
 
 ### Patch Changes
