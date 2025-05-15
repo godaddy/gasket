@@ -1,0 +1,82 @@
+{
+  "name": "@gasket/plugin-vitest",
+  "version": "0.0.1",
+  "description": "Integrates Vitest based testing in to your Gasket application",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "generator",
+    "lib"
+  ],
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "pnpm run lint --fix",
+    "posttest": "pnpm run lint && pnpm run typecheck",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest",
+    "typecheck": "tsc",
+    "typecheck:watch": "tsc --watch"
+  },
+  "repository": "godaddy/gasket.git",
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "gasket",
+    "vitest",
+    "plugin"
+  ],
+  "author": "GoDaddy Operating Company, LLC",
+  "license": "MIT",
+  "bugs": "https://github.com/godaddy/gasket/issues",
+  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-vitest",
+  "devDependencies": {
+    "@gasket/core": "workspace:*",
+    "@gasket/plugin-metadata": "workspace:*",
+    "@testing-library/dom": "10.4.0",
+    "@testing-library/react": "16.3.0",
+    "@typescript-eslint/utils": "^8.29.1",
+    "@vitejs/plugin-react": "^4.4.1",
+    "@vitest/eslint-plugin": "^1.1.44",
+    "create-gasket-app": "workspace:*",
+    "eslint": "^8.57.1",
+    "eslint-config-godaddy": "^7.1.1",
+    "eslint-config-godaddy-typescript": "^4.0.3",
+    "eslint-plugin-unicorn": "^55.0.0",
+    "jsdom": "^26.1.0",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.0.7"
+  },
+  "eslintIgnore": [
+    "generator"
+  ],
+  "eslintConfig": {
+    "extends": [
+      "godaddy",
+      "plugin:@vitest/legacy-recommended",
+      "plugin:jsdoc/recommended-typescript-flavor"
+    ],
+    "plugins": [
+      "@vitest",
+      "jsdoc",
+      "unicorn"
+    ],
+    "rules": {
+      "unicorn/filename-case": "error"
+    },
+    "overrides": [
+      {
+        "files": [
+          "lib/*.ts"
+        ],
+        "extends": [
+          "godaddy-typescript"
+        ],
+        "rules": {
+          "jsdoc/*": "off"
+        }
+      }
+    ]
+  }
+}

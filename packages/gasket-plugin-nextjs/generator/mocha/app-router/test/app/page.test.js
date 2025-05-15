@@ -3,7 +3,7 @@ import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import React from 'react';
 
-import IndexPage from '../../app/page.js';
+import IndexPage from '../../app/page.jsx';
 
 //
 // The following test utilities are also available:

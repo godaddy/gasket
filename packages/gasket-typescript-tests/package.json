@@ -66,6 +66,7 @@
     "@gasket/plugin-service-worker": "workspace:*",
     "@gasket/plugin-swagger": "workspace:*",
     "@gasket/plugin-typescript": "workspace:*",
+    "@gasket/plugin-vitest": "workspace:*",
     "@gasket/plugin-webpack": "workspace:*",
     "@gasket/plugin-winston": "workspace:*",
     "@gasket/plugin-workbox": "workspace:*",

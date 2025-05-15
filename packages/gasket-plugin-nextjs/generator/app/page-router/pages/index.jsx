@@ -3,7 +3,7 @@ import React from 'react';
 {{#if hasGasketIntl}}
 import { FormattedMessage } from '{{reactIntlPkg}}';
 {{/if}}
-import Head from '../components/head.js';
+import Head from '../components/head.jsx';
 import GasketEmblem from '@gasket/assets/react/gasket-emblem.js';
 
 const pageStyle = { textAlign: 'center' };

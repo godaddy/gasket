@@ -54,6 +54,7 @@
     "@gasket/plugin-mocha": "workspace:*",
     "@gasket/plugin-swagger": "workspace:*",
     "@gasket/plugin-typescript": "workspace:*",
+    "@gasket/plugin-vitest": "workspace:*",
     "@gasket/plugin-winston": "workspace:*"
   },
   "devDependencies": {
