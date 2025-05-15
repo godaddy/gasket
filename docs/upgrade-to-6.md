@@ -662,11 +662,11 @@ _Impacted Plugins/Packages: `@gasket/resolve`, `@gasket/engine`_
 
 [next.js routing documentation]: https://nextjs.org/docs/routing/introduction
 [webpack website]: https://webpack.js.org/configuration/node/
-[gasket data script tag]: /packages/gasket-data/README.md#usage
+[gasket data script tag]: https://github.com/godaddy/gasket/tree/lts/packages/gasket-data/README.md#usage
 [new utility HOC]: #inject-gasket-data
-[@gasket/data]: /packages/gasket-data/README.md
-[@gasket/plugin-workbox]: /packages/gasket-data/README.md
-[@gasket/plugin-service-worker]: /packages/gasket-data/README.md
+[@gasket/data]: https://github.com/godaddy/gasket/tree/lts/packages/gasket-data/README.md
+[@gasket/plugin-workbox]: https://github.com/godaddy/gasket/tree/lts/packages/gasket-data/README.md
+[@gasket/plugin-service-worker]: https://github.com/godaddy/gasket/tree/lts/packages/gasket-data/README.md
 [naming convention]: /docs/authoring-plugins.md#recommended-naming-convention
 
 <!-- LINKS -->
@@ -674,17 +674,17 @@ _Impacted Plugins/Packages: `@gasket/resolve`, `@gasket/engine`_
 [Gasket Data]: #gasket-data
 [Updates for next-redux-wrapper]: #updates-for-next-redux-wrapper
 
-[@gasket/plugin-intl]: /packages/gasket-plugin-intl/README.md
-[config options]: /packages/gasket-plugin-intl/README.md#options
-[localesPath]: /packages/gasket-plugin-intl/README.md#locales-path
-[withLocaleRequired]: /packages/gasket-plugin-intl/README.md#withlocalerequired
-[select locale message example]: /packages/gasket-plugin-intl/README.md#selectlocalemessage
-[@gasket/react-intl]: /packages/gasket-react-intl/README.md
-[@gasket/plugin-nextjs]: /packages/gasket-plugin-nextjs/README.md
-[@gasket/plugin-redux]: /packages/gasket-plugin-redux/README.md
-[Redux configuration]: /packages/gasket-plugin-redux/README.md#configuration
-[@gasket/plugin-webpack]: /packages/gasket-plugin-webpack/README.md
-[configure webpack]: /packages/gasket-plugin-webpack/docs/webpack.md#gasket-webpack-config
+[@gasket/plugin-intl]: https://github.com/godaddy/gasket/tree/lts/packages/gasket-plugin-intl/README.md
+[config options]: https://github.com/godaddy/gasket/tree/lts/packages/gasket-plugin-intl/README.md#options
+[localesPath]: https://github.com/godaddy/gasket/tree/lts/packages/gasket-plugin-intl#locales-path
+[withLocaleRequired]: https://github.com/godaddy/gasket/tree/lts/packages/gasket-plugin-intl/README.md#withlocalerequired
+[select locale message example]: https://github.com/godaddy/gasket/tree/lts/packages/gasket-plugin-intl/README.md#selectlocalemessage
+[@gasket/react-intl]: https://github.com/godaddy/gasket/tree/lts/packages/gasket-react-intl/README.md
+[@gasket/plugin-nextjs]: https://github.com/godaddy/gasket/tree/lts/packages/gasket-plugin-nextjs/README.md
+[@gasket/plugin-redux]: https://github.com/godaddy/gasket/tree/lts/packages/gasket-plugin-redux/README.md
+[Redux configuration]: https://github.com/godaddy/gasket/tree/lts/packages/gasket-plugin-redux/README.md#configuration
+[@gasket/plugin-webpack]: https://github.com/godaddy/gasket/tree/lts/packages/gasket-plugin-webpack/README.md
+[configure webpack]: https://github.com/godaddy/gasket/tree/lts/packages/gasket-plugin-webpack/docs/webpack.md#gasket-webpack-config
 
 [next-redux-wrapper]: https://github.com/kirill-konshin/next-redux-wrapper
 [hydrate handler]: https://github.com/kirill-konshin/next-redux-wrapper#usage

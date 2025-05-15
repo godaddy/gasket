@@ -198,11 +198,11 @@ such as for sensitive cookies.
 
 <!-- LINKS -->
 
-[init]:packages/gasket-plugin-command/README.md#init
-[middleware]:/packages/gasket-plugin-express/README.md#middleware
+[init]:/packages/gasket-core/README.md#init
+[middleware]:/packages/gasket-plugin-middleware/README.md#middleware
 [configuration options documentation]:https://www.elastic.co/guide/en/apm/agent/nodejs/current/configuration.html
 [start recommendations]:https://www.elastic.co/guide/en/apm/agent/nodejs/master/agent-api.html#apm-start
 [Elastic APM docs]:https://www.elastic.co/guide/en/apm/agent/nodejs/master/agent-api.html
 [sanitizeFieldNames]:https://www.elastic.co/guide/en/apm/agent/nodejs/4.x/configuration.html#sanitize-field-names
 [APM Add Filter API]:https://www.elastic.co/guide/en/apm/agent/nodejs/4.x/agent-api.html#apm-add-filter
-[Transaction]:(https://www.elastic.co/guide/en/apm/agent/nodejs/current/transaction-api.html)
+[Transaction]:https://www.elastic.co/guide/en/apm/agent/nodejs/current/transaction-api.html
