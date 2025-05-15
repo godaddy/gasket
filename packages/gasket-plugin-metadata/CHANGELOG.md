@@ -1,5 +1,13 @@
 # `@gasket/plugin-metadata`
 
+## 7.3.10
+
+### Patch Changes
+
+- db3bf54: Add CJS transpile to ESM packages
+  - @gasket/core@7.4.1
+  - @gasket/plugin-logger@7.3.4
+
 ## 7.3.9
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # `@gasket/react-intl`
 
+## 7.4.2
+
+### Patch Changes
+
+- db3bf54: Add CJS transpile to ESM packages
+- Updated dependencies [db3bf54]
+  - @gasket/intl@7.3.5
+  - @gasket/plugin-intl@7.4.1
+
 ## 7.4.1
 
 ### Patch Changes
