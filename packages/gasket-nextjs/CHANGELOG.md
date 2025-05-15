@@ -1,5 +1,11 @@
 # `@gasket/nextjs`
 
+## 7.4.3
+
+### Patch Changes
+
+- db3bf54: Add CJS transpile to ESM packages
+
 ## 7.4.2
 
 ### Patch Changes

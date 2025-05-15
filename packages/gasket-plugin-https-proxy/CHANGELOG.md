@@ -1,5 +1,11 @@
 # `@gasket/plugin-https-proxy`
 
+## 7.3.6
+
+### Patch Changes
+
+- db3bf54: Add CJS transpile to ESM packages
+
 ## 7.3.5
 
 ### Patch Changes

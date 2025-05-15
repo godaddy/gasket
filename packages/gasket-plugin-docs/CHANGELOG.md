@@ -1,5 +1,12 @@
 # `@gasket/plugin-docs`
 
+## 7.3.7
+
+### Patch Changes
+
+- Updated dependencies [db3bf54]
+  - @gasket/plugin-command@7.3.7
+
 ## 7.3.6
 
 ### Patch Changes
