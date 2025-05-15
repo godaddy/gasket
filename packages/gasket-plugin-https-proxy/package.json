@@ -3,15 +3,28 @@
   "version": "7.3.5",
   "description": "Adds support for running an https proxy",
   "type": "module",
-  "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
-    "lib"
+    "lib",
+    "cjs"
   ],
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js",
+      "require": "./cjs/index.js",
+      "default": "./cjs/index.js"
+    },
+    "./package.json": "./package.json"
+  },
   "scripts": {
+    "build": "swc lib -d cjs --delete-dir-on-start --strip-leading-paths && cp lib/index.d.ts cjs/",
+    "build:watch": "pnpm run build --watch",
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
+    "postbuild": "node -e \"require('fs').writeFileSync('cjs/package.json', '{}')\"",
     "posttest": "pnpm run lint && pnpm run typecheck",
+    "prepublishOnly": "pnpm run build",
     "test": "vitest --watch=false",
     "test:coverage": "pnpm run test --coverage",
     "test:watch": "vitest",
@@ -40,6 +53,8 @@
     "@gasket/plugin-https": "workspace:*",
     "@gasket/plugin-logger": "workspace:*",
     "@gasket/plugin-metadata": "workspace:*",
+    "@swc/cli": "^0.6.0",
+    "@swc/core": "^1.10.18",
     "@types/jest": "^29.5.14",
     "@types/node": "^20.17.19",
     "create-gasket-app": "workspace:*",
@@ -77,5 +92,8 @@
         }
       }
     ]
-  }
+  },
+  "eslintIgnore": [
+    "cjs"
+  ]
 }
