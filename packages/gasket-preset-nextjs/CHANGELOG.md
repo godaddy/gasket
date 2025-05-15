@@ -1,5 +1,34 @@
 # `@gasket/preset-nextjs`
 
+## 7.3.9
+
+### Patch Changes
+
+- eb403a8: Audit ts-ignores.
+- Updated dependencies [3abfe68]
+- Updated dependencies [e7ee793]
+- Updated dependencies [0b6c4f6]
+- Updated dependencies [eb403a8]
+  - @gasket/plugin-nextjs@7.4.3
+  - @gasket/plugin-intl@7.4.1
+  - @gasket/plugin-lint@7.3.6
+  - @gasket/plugin-dynamic-plugins@7.3.5
+  - @gasket/plugin-https-proxy@7.3.5
+  - @gasket/plugin-docusaurus@7.4.2
+  - @gasket/plugin-typescript@7.3.4
+  - @gasket/plugin-command@7.3.6
+  - @gasket/plugin-cypress@7.4.1
+  - @gasket/plugin-express@7.3.5
+  - @gasket/plugin-webpack@7.3.4
+  - @gasket/plugin-winston@7.3.4
+  - @gasket/plugin-logger@7.3.4
+  - @gasket/plugin-https@7.3.5
+  - @gasket/plugin-mocha@7.4.1
+  - @gasket/plugin-docs@7.3.6
+  - @gasket/plugin-jest@7.4.2
+  - @gasket/plugin-git@7.3.4
+  - @gasket/utils@7.3.4
+
 ## 7.3.8
 
 ### Patch Changes

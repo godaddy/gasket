@@ -97,7 +97,7 @@ function assertPost(fetch) {
 function assertAbort(fetch, AbortController) {
   return async () => {
     const controller = new AbortController();
-    const timeout = setTimeout(controller.abort.bind(controller), 10);
+    const timeout = setTimeout(controller.abort.bind(controller), 2);
     let res;
 
     try {
