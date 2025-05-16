@@ -1,5 +1,11 @@
 # `@gasket/plugin-elastic-apm`
 
+## 7.3.6
+
+### Patch Changes
+
+- bb11ab9: Fix to only exec apmTransaction lifecycle once per request
+
 ## 7.3.5
 
 ### Patch Changes
