@@ -1,5 +1,12 @@
 # `@gasket/plugin-command`
 
+## 7.3.8
+
+### Patch Changes
+
+- 6041519: Add npm exports support to loading presets in the cli
+  - @gasket/core@7.4.1
+
 ## 7.3.7
 
 ### Patch Changes

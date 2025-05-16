@@ -1,5 +1,16 @@
 # `@gasket/react-intl`
 
+## 7.4.3
+
+### Patch Changes
+
+- 6041519: Add npm exports support to loading presets in the cli
+- Updated dependencies [6041519]
+  - @gasket/fetch@7.3.5
+  - @gasket/intl@7.3.6
+  - @gasket/plugin-intl@7.4.1
+  - @gasket/data@7.3.4
+
 ## 7.4.2
 
 ### Patch Changes
