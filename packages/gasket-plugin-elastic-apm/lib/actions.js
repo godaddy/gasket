@@ -1,7 +1,7 @@
-const { withGasketRequest } = require('@gasket/request');
+const { withGasketRequestCache } = require('@gasket/request');
 
 /** @type {import('@gasket/core').ActionHandler<'getApmTransaction'>} */
-const getApmTransaction = withGasketRequest(
+const getApmTransaction = withGasketRequestCache(
   async function getApmTransaction(gasket, req) {
     const apm = require('elastic-apm-node');
 
