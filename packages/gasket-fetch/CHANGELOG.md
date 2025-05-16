@@ -1,5 +1,11 @@
 # `@gasket/fetch`
 
+## 7.3.5
+
+### Patch Changes
+
+- 6041519: Add npm exports support to loading presets in the cli
+
 ## 7.3.4
 
 ### Patch Changes
