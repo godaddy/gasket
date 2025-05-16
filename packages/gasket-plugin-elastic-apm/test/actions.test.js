@@ -45,6 +45,17 @@ describe('actions', () => {
     );
   });
 
+  it('only executes the apmTransaction lifecycle once per request', async () => {
+    await actions.getApmTransaction(mockGasket, mockReq);
+    await actions.getApmTransaction(mockGasket, mockReq);
+    expect(mockGasket.exec).toHaveBeenCalledTimes(1);
+
+    const anotherReq = { ...mockReq, headers: {} };
+    await actions.getApmTransaction(mockGasket, anotherReq);
+    await actions.getApmTransaction(mockGasket, anotherReq);
+    expect(mockGasket.exec).toHaveBeenCalledTimes(2);
+  });
+
   it('returns undefined if no transaction', async () => {
     // eslint-disable-next-line no-undefined
     apm.currentTransaction = undefined;
