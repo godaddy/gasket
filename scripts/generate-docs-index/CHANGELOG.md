@@ -1,5 +1,14 @@
 # generate-docs-index
 
+## 7.3.16
+
+### Patch Changes
+
+- Updated dependencies [bb11ab9]
+  - @gasket/plugin-elastic-apm@7.3.6
+  - @gasket/plugin-intl@7.4.1
+  - @gasket/plugin-nextjs@7.4.3
+
 ## 7.3.15
 
 ### Patch Changes
