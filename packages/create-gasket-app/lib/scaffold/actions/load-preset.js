@@ -35,7 +35,7 @@ async function loadPresets({ context }) {
       // Import the preset via the package file attrs, name and main
       // We can't specify the cwd for the import, so we need to use the full path
       // expects type:module & "main": "lib/fullpath.js"
-      const entryPath = pkgFile.main || pkgFile.exports['.'].default;
+      const entryPath = pkgFile.main || pkgFile.exports['.'].import; || pkgFile.exports['.'].default;
       const mod = await import(`${modPath}/${name}/${entryPath}`);
       return mod.default?.default || mod.default || mod;
     } catch (err) {
