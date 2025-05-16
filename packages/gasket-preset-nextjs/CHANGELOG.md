@@ -1,5 +1,30 @@
 # `@gasket/preset-nextjs`
 
+## 7.3.10
+
+### Patch Changes
+
+- db3bf54: Add CJS transpile to ESM packages
+- Updated dependencies [db3bf54]
+  - @gasket/plugin-dynamic-plugins@7.3.6
+  - @gasket/plugin-https-proxy@7.3.6
+  - @gasket/plugin-command@7.3.7
+  - @gasket/plugin-cypress@7.4.1
+  - @gasket/plugin-docs@7.3.7
+  - @gasket/plugin-docusaurus@7.4.2
+  - @gasket/plugin-express@7.3.5
+  - @gasket/plugin-git@7.3.4
+  - @gasket/plugin-https@7.3.5
+  - @gasket/plugin-intl@7.4.1
+  - @gasket/plugin-jest@7.4.2
+  - @gasket/plugin-lint@7.3.6
+  - @gasket/plugin-logger@7.3.4
+  - @gasket/plugin-mocha@7.4.1
+  - @gasket/plugin-nextjs@7.4.3
+  - @gasket/plugin-typescript@7.3.4
+  - @gasket/plugin-webpack@7.3.4
+  - @gasket/plugin-winston@7.3.4
+
 ## 7.3.9
 
 ### Patch Changes

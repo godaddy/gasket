@@ -7,7 +7,7 @@ const { baseDataMap } = require('./actions');
 /**
  * @type {import('@gasket/core', { with: { "resolution-mode": "import" } }).HookHandler<'configure'>}
  */
-async function configure(gasket, baseConfig) {
+function configure(gasket, baseConfig) {
   const { config: { env, command } } = gasket;
   if ('data' in baseConfig) {
     const data = applyConfigOverrides(

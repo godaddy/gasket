@@ -1,17 +1,30 @@
 {
   "name": "@gasket/react-intl",
-  "version": "7.4.1",
+  "version": "7.4.2",
   "description": "React component library to enable localization for gasket apps.",
   "type": "module",
-  "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
-    "lib"
+    "lib",
+    "cjs"
   ],
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js",
+      "require": "./cjs/index.js",
+      "default": "./cjs/index.js"
+    },
+    "./package.json": "./package.json"
+  },
   "scripts": {
+    "build": "swc lib -d cjs --delete-dir-on-start --strip-leading-paths && cp lib/index.d.ts cjs/",
+    "build:watch": "pnpm run build --watch",
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
+    "postbuild": "node -e \"require('fs').writeFileSync('cjs/package.json', '{}')\"",
     "posttest": "pnpm run lint && pnpm run typecheck",
+    "prepublishOnly": "pnpm run build",
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
     "test:coverage": "pnpm run test --coverage",
     "test:watch": "pnpm run test --watch",
@@ -39,6 +52,8 @@
     "just-extend": "^6.2.0"
   },
   "devDependencies": {
+    "@swc/cli": "^0.6.0",
+    "@swc/core": "^1.10.18",
     "@testing-library/react": "^16.2.0",
     "@types/jest": "^29.5.14",
     "@types/node": "^20.17.19",
@@ -90,5 +105,8 @@
         }
       }
     ]
-  }
+  },
+  "eslintIgnore": [
+    "cjs"
+  ]
 }
