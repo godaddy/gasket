@@ -48,7 +48,7 @@ async function loadPresets({ context }) {
     try {
       await pkgManager.exec(pkgVerb, [localPresetPath]);
       const pkgFile = require(path.join(localPresetPath, 'package.json'));
-      const entryPath = pkgFile.main || pkgFile.exports['.'].default;
+      const entryPath = pkgFile.main ?? pkgFile.exports['.'].import ?? pkgFile.exports['.'].default;
       const mod = await import(`${modPath}/${pkgFile.name}/${entryPath}`);
       return mod.default?.default || mod.default || mod;
     } catch (err) {
