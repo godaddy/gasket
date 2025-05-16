@@ -38,12 +38,14 @@ jest.unstable_mockModule('path', () => ({
 
 const presetDefaults = { default: { name: '@gasket/preset-default-export', hooks: {} } };
 const presetDoubleDefaults = { default: { default: { name: '@gasket/preset-double-default-export', hooks: {} } } };
+const presetNpmExports = { name: '@gasket/preset-npm-exports', hooks: {} };
 const presetBogus = { name: '@gasket/preset-bogus', hooks: {} };
 const presetAllIEverWanted = { name: '@gasket/preset-all-i-ever-wanted', hooks: {} };
 const presetSome = { name: '@gasket/preset-some', hooks: {} };
 const presetLocal = { name: '@gasket/test-preset', hooks: {} };
 jest.unstable_mockModule('@gasket/preset-default-exports', () => (presetDefaults));
 jest.unstable_mockModule('@gasket/preset-double-default-exports', () => (presetDoubleDefaults));
+jest.unstable_mockModule('@gasket/preset-npm-exports', () => (presetNpmExports));
 jest.unstable_mockModule('@gasket/preset-bogus', () => (presetBogus));
 jest.unstable_mockModule('@gasket/preset-all-i-ever-wanted', () => (presetAllIEverWanted));
 jest.unstable_mockModule('@gasket/preset-some', () => (presetSome));
@@ -265,5 +267,14 @@ describe('loadPreset', () => {
       expect.objectContaining(presetBogus)
     ]);
     expect(mockContext.presets).toHaveLength(1);
+  });
+
+  it('supports preset with npm exports', async () => {
+    mockContext.rawPresets = ['@gasket/preset-npm-exports'];
+
+    await loadPreset({ context: mockContext });
+    expect(mockContext).toHaveProperty('presets', [
+      expect.objectContaining(presetNpmExports)
+    ]);
   });
 });
