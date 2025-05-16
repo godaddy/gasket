@@ -35,7 +35,8 @@ async function loadPresets({ context }) {
       // Import the preset via the package file attrs, name and main
       // We can't specify the cwd for the import, so we need to use the full path
       // expects type:module & "main": "lib/fullpath.js"
-      const mod = await import(`${modPath}/${name}/${pkgFile.main}`);
+      const entryPath = pkgFile.main || pkgFile.exports['.'].default;
+      const mod = await import(`${modPath}/${name}/${entryPath}`);
       return mod.default?.default || mod.default || mod;
     } catch (err) {
       throw new Error(`Failed to install preset ${name}${version}: ${err.message}`);
@@ -47,7 +48,8 @@ async function loadPresets({ context }) {
     try {
       await pkgManager.exec(pkgVerb, [localPresetPath]);
       const pkgFile = require(path.join(localPresetPath, 'package.json'));
-      const mod = await import(`${modPath}/${pkgFile.name}/${pkgFile.main}`);
+      const entryPath = pkgFile.main || pkgFile.exports['.'].default;
+      const mod = await import(`${modPath}/${pkgFile.name}/${entryPath}`);
       return mod.default?.default || mod.default || mod;
     } catch (err) {
       throw new Error(`Failed to install local preset ${localPresetPath}`);
