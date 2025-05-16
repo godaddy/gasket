@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-elastic-apm",
-  "version": "7.3.4",
+  "version": "7.3.5",
   "description": "Adds Elastic APM instrumentation to your application",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

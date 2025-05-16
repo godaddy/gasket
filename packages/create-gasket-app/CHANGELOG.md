@@ -1,5 +1,20 @@
 # `create-gasket-app`
 
+## 7.3.11
+
+### Patch Changes
+
+- 6041519: Add npm exports support to loading presets in the cli
+- Updated dependencies [6041519]
+  - @gasket/plugin-dynamic-plugins@7.3.7
+  - @gasket/plugin-metadata@7.3.11
+  - @gasket/plugin-command@7.3.8
+  - @gasket/plugin-docs@7.3.8
+  - @gasket/core@7.4.1
+  - @gasket/plugin-docusaurus@7.4.2
+  - @gasket/plugin-git@7.3.4
+  - @gasket/plugin-logger@7.3.4
+
 ## 7.3.10
 
 ### Patch Changes
