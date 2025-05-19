@@ -1,5 +1,46 @@
 # `@gasket/plugin-metadata`
 
+## 7.3.11
+
+### Patch Changes
+
+- 6041519: Add npm exports support to loading presets in the cli
+  - @gasket/core@7.4.1
+  - @gasket/plugin-logger@7.3.4
+
+## 7.3.10
+
+### Patch Changes
+
+- db3bf54: Add CJS transpile to ESM packages
+  - @gasket/core@7.4.1
+  - @gasket/plugin-logger@7.3.4
+
+## 7.3.9
+
+### Patch Changes
+
+- 4f08df2: Fix to create require in all places
+  - @gasket/core@7.4.1
+  - @gasket/plugin-logger@7.3.4
+
+## 7.3.8
+
+### Patch Changes
+
+- 6cf18c2: Fix to create require
+  - @gasket/core@7.4.1
+  - @gasket/plugin-logger@7.3.4
+
+## 7.3.7
+
+### Patch Changes
+
+- eb403a8: Audit ts-ignores.
+- Updated dependencies [eb403a8]
+  - @gasket/plugin-logger@7.3.4
+  - @gasket/core@7.4.1
+
 ## 7.3.6
 
 ### Patch Changes

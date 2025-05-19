@@ -1,5 +1,37 @@
 # `@gasket/react-intl`
 
+## 7.4.3
+
+### Patch Changes
+
+- 6041519: Add npm exports support to loading presets in the cli
+- Updated dependencies [6041519]
+  - @gasket/fetch@7.3.5
+  - @gasket/intl@7.3.6
+  - @gasket/plugin-intl@7.4.1
+  - @gasket/data@7.3.4
+
+## 7.4.2
+
+### Patch Changes
+
+- db3bf54: Add CJS transpile to ESM packages
+- Updated dependencies [db3bf54]
+  - @gasket/intl@7.3.5
+  - @gasket/plugin-intl@7.4.1
+
+## 7.4.1
+
+### Patch Changes
+
+- eb403a8: Audit ts-ignores.
+- Updated dependencies [e7ee793]
+- Updated dependencies [eb403a8]
+  - @gasket/plugin-intl@7.4.1
+  - @gasket/fetch@7.3.4
+  - @gasket/data@7.3.4
+  - @gasket/intl@7.3.4
+
 ## 7.4.0
 
 ### Minor Changes

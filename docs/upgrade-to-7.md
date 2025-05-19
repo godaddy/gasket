@@ -4,34 +4,32 @@ This guide will take you through updating `@gasket/*` packages to `7.x`.
 
 ## Table of Contents
 
-- [Upgrade to v7 (Active)](#upgrade-to-v7-active)
-  - [Table of Contents](#table-of-contents)
-  - [Update Dependency Versions](#update-dependency-versions)
-  - [Switch to makeGasket](#switch-to-makegasket)
-    - [Switch to ESM (Optional)](#switch-to-esm-optional)
-    - [Update Plugin Imports](#update-plugin-imports)
-    - [Update Command Scripts](#update-command-scripts)
-    - [Update Next.js Scripts](#update-nextjs-scripts)
-  - [Update Next.js](#update-nextjs)
-  - [Switch to GasketActions](#switch-to-gasketactions)
-    - [Motivation](#motivation)
-    - [Example](#example)
-  - [Update configurations](#update-configurations)
-  - [Switch to Docusaurus](#switch-to-docusaurus)
-  - [Update Lifecycles Contexts](#update-lifecycles-contexts)
-  - [Update ElasticAPM Start](#update-elasticapm-start)
-  - [Switch to GasketData](#switch-to-gasketdata)
-  - [Switch Redux to GasketData](#switch-redux-to-gasketdata)
-    - [Initialize Redux with GasketData](#initialize-redux-with-gasketdata)  
-  - [Switch to @gasket/plugin-logger](#switch-to-gasketplugin-logger)
-  - [Update Intl](#update-intl)
-    - [Bring your Own Intl Provider](#bring-your-own-intl-provider)
-    - [Switch to Intl Manager](#switch-to-intl-manager)
-    - [Move locale files (Optional)](#move-locale-files-optional)
-  - [Update Custom Commands](#update-custom-commands)
-  - [Update App Plugins](#update-app-plugins)
-  - [Update App Lifecycles](#update-app-lifecycles)
-  - [Update Mocha Tests](#update-mocha-tests)
+- [Update Dependency Versions](#update-dependency-versions)
+- [Switch to makeGasket](#switch-to-makegasket)
+  - [Switch to ESM (Optional)](#switch-to-esm-optional)
+  - [Update Plugin Imports](#update-plugin-imports)
+  - [Update Command Scripts](#update-command-scripts)
+  - [Update Next.js Scripts](#update-nextjs-scripts)
+- [Update Next.js](#update-nextjs)
+- [Switch to GasketActions](#switch-to-gasketactions)
+  - [Motivation](#motivation)
+  - [Example](#example)
+- [Update configurations](#update-configurations)
+- [Switch to Docusaurus](#switch-to-docusaurus)
+- [Update Lifecycles Contexts](#update-lifecycles-contexts)
+- [Update ElasticAPM Start](#update-elasticapm-start)
+- [Switch to GasketData](#switch-to-gasketdata)
+- [Switch Redux to GasketData](#switch-redux-to-gasketdata)
+  - [Initialize Redux with GasketData](#initialize-redux-with-gasketdata)  
+- [Switch to @gasket/plugin-logger](#switch-to-gasketplugin-logger)
+- [Update Intl](#update-intl)
+  - [Bring your Own Intl Provider](#bring-your-own-intl-provider)
+  - [Switch to Intl Manager](#switch-to-intl-manager)
+  - [Move locale files (Optional)](#move-locale-files-optional)
+- [Update Custom Commands](#update-custom-commands)
+- [Update App Plugins](#update-app-plugins)
+- [Update App Lifecycles](#update-app-lifecycles)
+- [Update Mocha Tests](#update-mocha-tests)
 
 ## Update Dependency Versions
 
@@ -1023,7 +1021,7 @@ register('@gasket/plugin-mocha/node-loader-babel', pathToFileURL('./test'));
 ```
 
 <!-- Links -->
-[middleware paths]:https://github.com/godaddy/gasket/blob/main/packages/gasket-plugin-express/README.md#middleware-paths
+[middleware paths]:/packages/gasket-plugin-middleware/README.md#middleware-paths
 [streaming]: https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming
 [App Router]: https://nextjs.org/docs/app/building-your-application/routing
 [Next.js 14]: https://nextjs.org/docs/pages/building-your-application/upgrading/version-14
@@ -1031,20 +1029,20 @@ register('@gasket/plugin-mocha/node-loader-babel', pathToFileURL('./test'));
 [next-redux-wrapper]: https://github.com/kirill-konshin/next-redux-wrapper#app
 
 <!-- Packages -->
-[@gasket/plugin-command]: ../packages/gasket-plugin-command/README.md
-[@gasket/plugin-intl]: ../packages/gasket-plugin-intl/README.md
-[@gasket/intl]: ../packages/gasket-intl/README.md
-[@gasket/react-intl]: ../packages/gasket-react-intl/README.md
-[@gasket/plugin-data]: ../packages/gasket-plugin-data/README.md
-[@gasket/data]: ../packages/gasket-data/README.md
-[@gasket/plugin-docusaurus]: ../packages/gasket-plugin-docusaurus/README.md
-[@gasket/plugin-workbox]: ../packages/gasket-plugin-workbox/README.md
-[@gasket/plugin-nextjs]: ../packages/gasket-plugin-nextjs/README.md
-[@gasket/plugin-redux]: ../packages/gasket-plugin-redux/README.md
-[@gasket/plugin-logger]: ../packages/gasket-plugin-logger/README.md
-[@gasket/plugin-webpack]: ../packages/gasket-plugin-webpack/README.md
-[@gasket/plugin-elastic-apm]: ../packages/gasket-plugin-elastic-apm/README.md
-[@gasket/utils]: ../packages/gasket-utils/README.md
+[@gasket/plugin-command]: /packages/gasket-plugin-command/README.md
+[@gasket/plugin-intl]: /packages/gasket-plugin-intl/README.md
+[@gasket/intl]: /packages/gasket-intl/README.md
+[@gasket/react-intl]: /packages/gasket-react-intl/README.md
+[@gasket/plugin-data]: /packages/gasket-plugin-data/README.md
+[@gasket/data]: /packages/gasket-data/README.md
+[@gasket/plugin-docusaurus]: /packages/gasket-plugin-docusaurus/README.md
+[@gasket/plugin-workbox]: /packages/gasket-plugin-workbox/README.md
+[@gasket/plugin-nextjs]: /packages/gasket-plugin-nextjs/README.md
+[@gasket/plugin-redux]: /packages/gasket-plugin-redux/README.md
+[@gasket/plugin-logger]: /packages/gasket-plugin-logger/README.md
+[@gasket/plugin-webpack]: /packages/gasket-plugin-webpack/README.md
+[@gasket/plugin-elastic-apm]: /packages/gasket-plugin-elastic-apm/README.md
+[@gasket/utils]: /packages/gasket-utils/README.md
 [babel-register]: https://babeljs.io/docs/babel-register
 
 <!-- Anchors -->

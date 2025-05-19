@@ -221,4 +221,4 @@ It is also much easier to follow the flow of the code when debugging.
 
 By avoiding decorating `req` with properties, we can avoid some of the pitfalls encountered with what Express expects and what Fastify expects, and more easily open the door for other server frameworks to use Gasket.
 
-[v7 upgrade guide]: /docs/upgrade-to-7.md#migrating-away-from-reqres-attachments
+[v7 upgrade guide]: /docs/upgrade-to-7.md#switch-to-gasketactions

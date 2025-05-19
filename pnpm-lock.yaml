@@ -406,6 +406,12 @@ importers:
       '@jest/globals':
         specifier: ^29.7.0
         version: 29.7.0
+      '@swc/cli':
+        specifier: ^0.6.0
+        version: 0.6.0(@swc/core@1.10.18(@swc/helpers@0.5.15))
+      '@swc/core':
+        specifier: ^1.10.18
+        version: 1.10.18(@swc/helpers@0.5.15)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -461,6 +467,12 @@ importers:
       '@jest/globals':
         specifier: ^29.7.0
         version: 29.7.0
+      '@swc/cli':
+        specifier: ^0.6.0
+        version: 0.6.0(@swc/core@1.10.18(@swc/helpers@0.5.15))
+      '@swc/core':
+        specifier: ^1.10.18
+        version: 1.10.18(@swc/helpers@0.5.15)
       '@testing-library/dom':
         specifier: ^10.0.0
         version: 10.4.0
@@ -592,6 +604,12 @@ importers:
       '@jest/globals':
         specifier: ^29.7.0
         version: 29.7.0
+      '@swc/cli':
+        specifier: ^0.6.0
+        version: 0.6.0(@swc/core@1.10.18(@swc/helpers@0.5.15))
+      '@swc/core':
+        specifier: ^1.10.18
+        version: 1.10.18(@swc/helpers@0.5.15)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -953,6 +971,12 @@ importers:
       '@gasket/plugin-metadata':
         specifier: workspace:*
         version: link:../gasket-plugin-metadata
+      '@swc/cli':
+        specifier: ^0.6.0
+        version: 0.6.0(@swc/core@1.10.18(@swc/helpers@0.5.15))
+      '@swc/core':
+        specifier: ^1.10.18
+        version: 1.10.18(@swc/helpers@0.5.15)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -1353,6 +1377,12 @@ importers:
       '@gasket/plugin-metadata':
         specifier: workspace:*
         version: link:../gasket-plugin-metadata
+      '@swc/cli':
+        specifier: ^0.6.0
+        version: 0.6.0(@swc/core@1.10.18(@swc/helpers@0.5.15))
+      '@swc/core':
+        specifier: ^1.10.18
+        version: 1.10.18(@swc/helpers@0.5.15)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -1756,6 +1786,12 @@ importers:
       '@godaddy/dmd':
         specifier: ^1.0.4
         version: 1.0.4
+      '@swc/cli':
+        specifier: ^0.6.0
+        version: 0.6.0(@swc/core@1.10.18(@swc/helpers@0.5.15))
+      '@swc/core':
+        specifier: ^1.10.18
+        version: 1.10.18(@swc/helpers@0.5.15)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -2712,6 +2748,12 @@ importers:
       '@gasket/plugin-metadata':
         specifier: workspace:*
         version: link:../gasket-plugin-metadata
+      '@swc/cli':
+        specifier: ^0.6.0
+        version: 0.6.0(@swc/core@1.10.18(@swc/helpers@0.5.15))
+      '@swc/core':
+        specifier: ^1.10.18
+        version: 1.10.18(@swc/helpers@0.5.15)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -2812,6 +2854,12 @@ importers:
         specifier: workspace:*
         version: link:../gasket-utils
     devDependencies:
+      '@swc/cli':
+        specifier: ^0.6.0
+        version: 0.6.0(@swc/core@1.10.18(@swc/helpers@0.5.15))
+      '@swc/core':
+        specifier: ^1.10.18
+        version: 1.10.18(@swc/helpers@0.5.15)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -2867,6 +2915,12 @@ importers:
         specifier: ^6.2.0
         version: 6.2.0
     devDependencies:
+      '@swc/cli':
+        specifier: ^0.6.0
+        version: 0.6.0(@swc/core@1.10.18(@swc/helpers@0.5.15))
+      '@swc/core':
+        specifier: ^1.10.18
+        version: 1.10.18(@swc/helpers@0.5.15)
       '@testing-library/react':
         specifier: ^16.2.0
         version: 16.2.0(@testing-library/dom@10.4.0)(@types/react-dom@19.0.4(@types/react@19.0.12))(@types/react@19.0.12)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)

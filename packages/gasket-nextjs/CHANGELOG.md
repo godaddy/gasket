@@ -1,5 +1,27 @@
 # `@gasket/nextjs`
 
+## 7.4.4
+
+### Patch Changes
+
+- 6041519: Add npm exports support to loading presets in the cli
+  - @gasket/data@7.3.4
+
+## 7.4.3
+
+### Patch Changes
+
+- db3bf54: Add CJS transpile to ESM packages
+
+## 7.4.2
+
+### Patch Changes
+
+- eb403a8: Audit ts-ignores.
+- Updated dependencies [eb403a8]
+  - @gasket/request@7.3.5
+  - @gasket/data@7.3.4
+
 ## 7.4.1
 
 ### Patch Changes

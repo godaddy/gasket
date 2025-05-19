@@ -144,8 +144,8 @@ export default {
 
 <!-- LINKS -->
 
-[ModuleData]: docs/api.md#ModuleData
+[ModuleData]: docs/api.md#moduledata
 
-[metadata object]: docs/api.md#DetailData
+[metadata object]: docs/api.md#detaildata
 
 [@gasket/plugin-docs]: /packages/gasket-plugin-docs/README.md

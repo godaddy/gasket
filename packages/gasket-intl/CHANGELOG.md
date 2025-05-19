@@ -1,5 +1,23 @@
 # `@gasket/intl`
 
+## 7.3.6
+
+### Patch Changes
+
+- 6041519: Add npm exports support to loading presets in the cli
+
+## 7.3.5
+
+### Patch Changes
+
+- db3bf54: Add CJS transpile to ESM packages
+
+## 7.3.4
+
+### Patch Changes
+
+- eb403a8: Audit ts-ignores.
+
 ## 7.3.3
 
 ### Patch Changes

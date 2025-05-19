@@ -1,5 +1,28 @@
 # `@gasket/plugin-docs`
 
+## 7.3.8
+
+### Patch Changes
+
+- 6041519: Add npm exports support to loading presets in the cli
+- Updated dependencies [6041519]
+  - @gasket/plugin-command@7.3.8
+
+## 7.3.7
+
+### Patch Changes
+
+- Updated dependencies [db3bf54]
+  - @gasket/plugin-command@7.3.7
+
+## 7.3.6
+
+### Patch Changes
+
+- eb403a8: Audit ts-ignores.
+- Updated dependencies [eb403a8]
+  - @gasket/plugin-command@7.3.6
+
 ## 7.3.5
 
 ### Patch Changes

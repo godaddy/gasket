@@ -1,5 +1,26 @@
 # `@gasket/plugin-data`
 
+## 7.3.6
+
+### Patch Changes
+
+- 6041519: Add npm exports support to loading presets in the cli
+
+## 7.3.5
+
+### Patch Changes
+
+- a5cd008: make configure hook sync
+
+## 7.3.4
+
+### Patch Changes
+
+- eb403a8: Audit ts-ignores.
+- Updated dependencies [eb403a8]
+  - @gasket/request@7.3.5
+  - @gasket/utils@7.3.4
+
 ## 7.3.3
 
 ### Patch Changes

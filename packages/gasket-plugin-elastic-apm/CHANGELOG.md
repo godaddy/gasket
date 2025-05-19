@@ -1,5 +1,25 @@
 # `@gasket/plugin-elastic-apm`
 
+## 7.3.6
+
+### Patch Changes
+
+- bb11ab9: Fix to only exec apmTransaction lifecycle once per request
+
+## 7.3.5
+
+### Patch Changes
+
+- 6041519: Add npm exports support to loading presets in the cli
+
+## 7.3.4
+
+### Patch Changes
+
+- eb403a8: Audit ts-ignores.
+- Updated dependencies [eb403a8]
+  - @gasket/request@7.3.5
+
 ## 7.3.3
 
 ### Patch Changes
