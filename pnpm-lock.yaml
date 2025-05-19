@@ -2484,6 +2484,9 @@ importers:
       '@testing-library/react':
         specifier: ^16.3.0
         version: 16.3.0(@testing-library/dom@10.4.0)(@types/react-dom@19.0.4(@types/react@19.0.12))(@types/react@19.0.12)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@types/node':
+        specifier: ^20.17.19
+        version: 20.17.19
       '@typescript-eslint/utils':
         specifier: ^8.29.1
         version: 8.29.1(eslint@8.57.1)(typescript@5.8.2)
