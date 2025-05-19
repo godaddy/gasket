@@ -60,7 +60,7 @@
     "eslint-config-godaddy": "^7.1.1",
     "eslint-config-godaddy-typescript": "^4.0.3",
     "eslint-plugin-unicorn": "^55.0.0",
-    "jsdom": "^26.1.0",
+    "jsdom": "^20.0.3",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.0.7"
   },
