@@ -56,7 +56,7 @@ const packageUtils = {
     } else if (packageUtils.hasDependency(pkg, 'devDependencies', 'vitest')) {
       env = 'vitest';
     }
-    
+
     if (env) {
       pkg.add('standard', { env: [env] });
     }
