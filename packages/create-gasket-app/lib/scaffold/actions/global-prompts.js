@@ -84,7 +84,7 @@ async function chooseTestPlugins(context, prompt) {
       plugin: '@gasket/plugin-cypress',
       isDefault: false
     }
-  }
+  };
 
   if (!('testPlugins' in context)) {
     for (const type of testTypes) {
@@ -98,7 +98,7 @@ async function chooseTestPlugins(context, prompt) {
           `Do you want to use ${name} for ${type} testing?`,
           isDefault
         );
-        
+
         if (plugin) testPlugins.push(testPlugin);
       }
     }
