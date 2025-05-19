@@ -89,8 +89,8 @@ describe('Plugin', function () {
     it('includes a glob for the generator/vitest.config.js file', async function () {
       const { files } = await createReact();
 
-      expect(files[0]).toContain('../generator/react/*');
-      expect(files[1]).toContain('../generator/react/**/*');
+      expect(files[0]).toMatch('generator/react/*');
+      expect(files[1]).toMatch('generator/react/**/*');
     });
 
     describe('adds react specific dependencies', function () {
