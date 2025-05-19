@@ -2,7 +2,9 @@
 /// <reference types="create-gasket-app" />
 /// <reference types="@gasket/plugin-metadata" />
 
+import path from 'path';
 import { createRequire } from 'module';
+import { fileURLToPath } from 'url';
 const require = createRequire(import.meta.url);
 const pkgJson = require('../package.json');
 const {
@@ -25,7 +27,8 @@ const plugin = {
       },
       handler: async function create(gasket, context) {
         const { files, pkg, typescript, apiApp } = context;
-        const generatorDir = `${__dirname}/../generator`;
+        const __dirname = fileURLToPath(import.meta.url);
+        const generatorDir = path.join(__dirname, '..', '..', 'generator');
         const isReactProject = pkg.has('dependencies', 'react');
 
         pkg.add('devDependencies', {
