@@ -146,8 +146,8 @@ function addDependencies({ pkg, typescript }) {
  */
 function addNpmScripts({ pkg, nextServerType, nextDevProxy, typescript, hasGasketIntl }) {
   const fileExtension = typescript ? 'ts' : 'js';
-  const bin = typescript ? 'tsx' : 'node';
-  const watcher = typescript ? 'tsx watch' : 'nodemon';
+  const bin = typescript ? 'node --import tsx' : 'node';
+  const watcher = typescript ? 'node --import tsx --watch' : 'nodemon';
   const prebuild = hasGasketIntl ? { prebuild: `${bin} gasket.${fileExtension} build` } : {};
 
   const scripts = {
