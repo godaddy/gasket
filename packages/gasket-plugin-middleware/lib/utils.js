@@ -1,27 +1,19 @@
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
+// @ts-ignore
 const diagnostics = require('diagnostics');
 
 const debug = diagnostics('gasket:middleware');
-
-/**
- * Type guard to detect if the app is an Express app.
- * @type {import('./internal').canUseMiddleware}
- */
-function canUseMiddleware(app) {
-  return typeof app?.use === 'function' && typeof app?.set === 'function';
-}
 
 /**
  * Applies the cookie parser based on the middleware pattern.
  * @type {import('./internal').applyCookieParser}
  */
 function applyCookieParser(app, middlewarePattern) {
-  const middleware = cookieParser();
   if (middlewarePattern) {
-    app.use(middlewarePattern, middleware);
+    app.use(middlewarePattern, cookieParser());
   } else {
-    app.use(middleware);
+    app.use(cookieParser());
   }
 }
 
@@ -52,8 +44,10 @@ function applyMiddlewareConfig(middleware, plugin, middlewareConfig, middlewareP
   const configEntry = middlewareConfig.find(mw => mw.plugin === pluginName);
 
   if (configEntry) {
-    middleware.paths = configEntry.paths || [];
+    // @ts-ignore
+    middleware.paths = configEntry.paths;
     if (middlewarePattern) {
+      // @ts-ignore
       middleware.paths.push(middlewarePattern);
     }
   }
@@ -61,21 +55,20 @@ function applyMiddlewareConfig(middleware, plugin, middlewareConfig, middlewareP
 
 /**
  * Attaches the middleware layers to the app.
- * @type {import('./internal').applyMiddlewaresToApp}
+ *  @type {import('./internal').applyMiddlewaresToApp}
  */
 function applyMiddlewaresToApp(app, middlewares, middlewarePattern) {
-  if (!canUseMiddleware(app)) {
-    debug('Skipping middleware application – not an Express app');
-    return;
-  }
-
-  middlewares.forEach(({ handler, paths }) => {
+  middlewares.forEach(async (layer) => {
+    const { paths } = layer;
     if (paths) {
-      app.use(paths, handler);
+      // @ts-ignore
+      app.use(paths, layer);
     } else if (middlewarePattern) {
-      app.use(middlewarePattern, handler);
+      // @ts-ignore
+      app.use(middlewarePattern, layer);
     } else {
-      app.use(handler);
+      // @ts-ignore
+      app.use(layer);
     }
   });
 }
@@ -89,14 +82,8 @@ async function executeMiddlewareLifecycle(gasket, app, middlewarePattern) {
   const middlewareConfig = config.middleware || [];
   const middlewares = [];
 
-  if (canUseMiddleware(app)) {
-    applyCookieParser(app, middlewarePattern);
-    applyCompression(app, config.compression);
-  } else {
-    debug('Skipping Express-specific middleware: app is not Express');
-  }
-
   await gasket.execApply('middleware', async (plugin, handler) => {
+    // @ts-ignore - TS is unable to infer that `app` can be either an Express application or a Fastify instance
     const middleware = await handler(app);
 
     if (isValidMiddleware(middleware)) {
@@ -106,18 +93,12 @@ async function executeMiddlewareLifecycle(gasket, app, middlewarePattern) {
   });
 
   debug('applied %s middleware layers', middlewares.length);
-
-  if (canUseMiddleware(app)) {
-    applyMiddlewaresToApp(app, middlewares, middlewarePattern);
-  }
+  // @ts-ignore
+  applyMiddlewaresToApp(app, middlewares, middlewarePattern);
 }
 
 module.exports = {
   applyCookieParser,
   applyCompression,
-  executeMiddlewareLifecycle,
-  isValidMiddleware,
-  applyMiddlewareConfig,
-  applyMiddlewaresToApp,
-  canUseMiddleware
+  executeMiddlewareLifecycle
 };

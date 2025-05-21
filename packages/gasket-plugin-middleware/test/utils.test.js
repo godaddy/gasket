@@ -5,8 +5,7 @@ const app = {
     emit: jest.fn()
   },
   register: jest.fn(),
-  use: jest.fn(),
-  set: jest.fn()
+  use: jest.fn()
 };
 
 const cookieParserMiddleware = jest.fn();
@@ -29,23 +28,22 @@ describe('utils', function () {
       jest.clearAllMocks();
     });
 
-    it('adds the cookie-parser middleware before plugin middleware', () => {
+    it('adds the cookie-parser middleware before plugin middleware', async () => {
       applyCookieParser(app, middlewarePattern);
 
       const cookieParserUsage = findCall(
         app.use,
-        (mw) => mw === cookieParserMiddleware
-      );
+        (mw) => mw === cookieParserMiddleware);
       expect(cookieParserUsage).not.toBeNull();
     });
 
-    it('adds the cookie-parser middleware with a pattern', () => {
+    it('adds the cookie-parser middleware with a excluded path', async () => {
       middlewarePattern = /somerandompattern/;
       applyCookieParser(app, middlewarePattern);
 
       const cookieParserUsage = findCall(
         app.use,
-        (url, mw) => url === middlewarePattern && mw === cookieParserMiddleware
+        (url, mw) => mw === cookieParserMiddleware
       );
       expect(cookieParserUsage).not.toBeNull();
     });
@@ -58,7 +56,7 @@ describe('utils', function () {
       jest.clearAllMocks();
     });
 
-    it('adds the compression middleware when enabled', () => {
+    it('adds the compression middleware when enabled', async () => {
       compressionConfig = true;
       applyCompression(app, compressionConfig);
 
@@ -69,7 +67,7 @@ describe('utils', function () {
       expect(compressionUsage).not.toBeNull();
     });
 
-    it('does not add the compression middleware when disabled', () => {
+    it('does not add the compression middleware when disabled', async () => {
       compressionConfig = false;
       applyCompression(app, compressionConfig);
 
@@ -84,25 +82,26 @@ describe('utils', function () {
   describe('executeMiddlewareLifecycle', function () {
     let gasket, mockMwPlugins, middlewarePattern, lifecycles;
     const sandbox = jest.fn();
-
     beforeEach(() => {
       mockMwPlugins = [];
+
       lifecycles = {
         middleware: jest.fn().mockResolvedValue([])
       };
 
       gasket = {
-        config: {},
+        middleware: {},
         logger: {
           warn: jest.fn()
         },
-        exec: jest.fn().mockImplementation((lifecycle, ...args) =>
-          lifecycles[lifecycle](...args)
-        ),
+        config: {},
+        exec: jest.fn().mockImplementation((lifecycle, ...args) => lifecycles[lifecycle](args)),
         execApply: sandbox.mockImplementation(async function (lifecycle, fn) {
-          for (const plugin of mockMwPlugins) {
-            await fn(plugin, plugin.handler);
+          for (let i = 0; i < mockMwPlugins.length; i++) {
+            // eslint-disable-next-line  no-loop-func
+            fn(mockMwPlugins[i], () => mockMwPlugins[i]);
           }
+          return jest.fn();
         })
       };
 
@@ -110,62 +109,40 @@ describe('utils', function () {
     });
 
     it('executes the `middleware` lifecycle', async function () {
-      await executeMiddlewareLifecycle(gasket, app, middlewarePattern);
+      executeMiddlewareLifecycle(gasket, app, middlewarePattern);
       expect(gasket.execApply).toHaveBeenCalledWith(
         'middleware',
         expect.any(Function)
       );
     });
 
-    it('does not apply empty middleware arrays', async function () {
-      mockMwPlugins = [
-        { name: 'empty', handler: () => [] }
-      ];
-      await executeMiddlewareLifecycle(gasket, app, middlewarePattern);
+    it('does not use empty middleware arrays', async function () {
+      mockMwPlugins = [{ name: 'middleware-1' }, []];
+      executeMiddlewareLifecycle(gasket, app, middlewarePattern);
 
       expect(app.use).not.toHaveBeenCalledWith([]);
     });
 
-    it('applies middleware with inclusion regex', async function () {
-      const middlewareFn = jest.fn();
+    it('gates middleware between an inclusion regex', async function () {
+      const mockMiddlewares = [function () { }, function () { }];
       middlewarePattern = /^\/gaskety\/routes\//;
-      mockMwPlugins = [
-        { name: 'middleware-1', handler: () => ({ handler: middlewareFn }) }
-      ];
+      gasket.config.express = { middlewareInclusionRegex: middlewarePattern };
+      mockMwPlugins = [{ name: 'middleware-1' }, mockMiddlewares];
 
       await executeMiddlewareLifecycle(gasket, app, middlewarePattern);
 
-      expect(app.use).toHaveBeenCalledWith(middlewarePattern, middlewareFn);
-    });
-
-    it('applies middleware config paths if configured', async function () {
-      const middlewareFn = jest.fn();
-      const mockMiddleware = { handler: middlewareFn, paths: [] };
-
-      gasket.config.middleware = [
-        { plugin: 'middleware-1', paths: ['/custom'] }
-      ];
-      mockMwPlugins = [
-        {
-          name: 'middleware-1',
-          handler: () => mockMiddleware
-        }
-      ];
-
-      await executeMiddlewareLifecycle(gasket, app);
-
-      expect(app.use).toHaveBeenCalledWith(['/custom'], middlewareFn);
+      expect(app.use).toHaveBeenCalledWith(middlewarePattern, mockMiddlewares);
     });
   });
 
   /**
    * Find the first call in a spy that matches a predicate
-   * @param {jest.SpyInstance} aSpy
-   * @param {(args: any) => boolean} aPredicate
+   * @param aSpy
+   * @param aPredicate
    * @returns {any}
    */
   function findCall(aSpy, aPredicate) {
-    const callIdx = aSpy.mock.calls.findIndex(args => aPredicate(...args));
+    const callIdx = aSpy.mock.calls.map(args => aPredicate(...args)).indexOf(true);
     return callIdx === -1 ? null : aSpy.mock.calls[callIdx][0];
   }
 });
