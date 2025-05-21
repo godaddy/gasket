@@ -11,7 +11,7 @@ export interface PackageManagerOptions {
 /**
  * Wrapper class for executing commands for a given package manager
  */
-export interface PackageManager {
+export class PackageManager {
   constructor(options: PackageManagerOptions): void;
 
   /** Name of manager, either `npm` (default) or `yarn` */
