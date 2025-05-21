@@ -179,6 +179,63 @@ describe('utils', function () {
       expect(app.use).toHaveBeenCalledWith(['/obj'], objectStyleMiddleware.handler);
     });
 
+    it('applies arrays of middleware functions from a plugin', async function () {
+      const mwFn1 = jest.fn();
+      const mwFn2 = jest.fn();
+
+      mockMwPlugins = [
+        {
+          name: 'plugin-array',
+          handler: () => [mwFn1, mwFn2]
+        }
+      ];
+
+      await executeMiddlewareLifecycle(gasket, app);
+
+      expect(app.use).toHaveBeenCalledWith(mwFn1);
+      expect(app.use).toHaveBeenCalledWith(mwFn2);
+    });
+
+    it('ignores invalid middleware entries that normalize to { handler: undefined }', async function () {
+      const invalidMiddleware = { handler: 'not-a-function' };
+
+      mockMwPlugins = [
+        { name: 'plugin-invalid', handler: () => invalidMiddleware }
+      ];
+
+      await executeMiddlewareLifecycle(gasket, app);
+
+      // app.use may be called for cookieParser or compression – so we check *how* it was called
+      const calledWithInvalid = app.use.mock.calls.some(([arg1]) =>
+        arg1 === invalidMiddleware || arg1 === invalidMiddleware.handler
+      );
+
+      expect(calledWithInvalid).toBe(false);
+    });
+
+    it('appends middlewarePattern to middleware.paths if config entry exists', async function () {
+      const middlewareFn = jest.fn();
+      const mockMiddleware = { handler: middlewareFn, paths: [] };
+
+      middlewarePattern = /^\/api\//;
+
+      // Plugin-specific config defines one path
+      gasket.config.middleware = [
+        { plugin: 'middleware-1', paths: ['/custom'] }
+      ];
+
+      mockMwPlugins = [
+        {
+          name: 'middleware-1',
+          handler: () => mockMiddleware
+        }
+      ];
+
+      await executeMiddlewareLifecycle(gasket, app, middlewarePattern);
+
+      // Verify the final paths include both /custom and the middlewarePattern
+      expect(app.use).toHaveBeenCalledWith(['/custom', middlewarePattern], middlewareFn);
+    });
   });
 
   /**
