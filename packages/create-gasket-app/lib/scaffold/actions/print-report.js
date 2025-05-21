@@ -24,7 +24,7 @@ const toSpaceCase = str => str.replace(/([A-Z])/g, ' $1')
 
 /**
  * Builds the report object from context
- * @type {import('../../internal').buildReport}
+ * @type {import('../../internal.js').buildReport}
  * @private
  */
 function buildReport(context) {
@@ -53,7 +53,7 @@ function buildReport(context) {
 
 /**
  * Outputs create command details to the console
- * @type {import('../../internal').printReport}
+ * @type {import('../../internal.js').printReport}
  */
 async function printReport({ context }) {
   const report = buildReport(context);

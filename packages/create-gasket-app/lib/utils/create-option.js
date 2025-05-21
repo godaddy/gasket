@@ -2,7 +2,7 @@ import { Option } from 'commander';
 
 /**
  * createOption - Create a commander option
- * @type {import('../internal').createOption}
+ * @type {import('../internal.js').createOption}
  */
 export function createOption(definition) {
   const option = new Option(...definition.options);

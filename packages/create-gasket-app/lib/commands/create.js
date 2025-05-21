@@ -22,7 +22,7 @@ import printReport from '../scaffold/actions/print-report.js';
 
 /**
  * Parses comma separated option input to array
- * @type {import('../internal').commasToArray}
+ * @type {import('../internal.js').commasToArray}
  */
 const commasToArray = input => input.split(',').map(name => name.trim());
 
@@ -92,7 +92,7 @@ const createCommand = {
 
 /**
  * createCommand action
- * @type {import('../index').createCommandAction}
+ * @type {import('../index.js').createCommandAction}
  */
 createCommand.action = async function run(appname, options, command) {
   // eslint-disable-next-line no-process-env
