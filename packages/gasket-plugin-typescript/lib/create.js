@@ -37,11 +37,11 @@ module.exports = async function create(gasket, context) {
   // Scripts & files for API apps
   if (apiApp) {
     pkg.add('scripts', {
-      prebuild: 'tsx gasket.ts build',
+      prebuild: 'node --import tsx gasket.ts build',
       build: 'tsc',
       preview: 'npm run build && npm run start',
       start: 'node dist/server.js',
-      local: 'tsx watch server.ts'
+      local: 'node --import tsx --watch server.ts'
     });
 
     if (testPlugins?.length && testPlugins.includes('@gasket/plugin-jest')) {
