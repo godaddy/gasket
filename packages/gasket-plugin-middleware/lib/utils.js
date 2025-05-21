@@ -44,6 +44,49 @@ function isValidMiddleware(middleware) {
 }
 
 /**
+ * Determines whether a value is a middleware object with a `handler` property.
+ * @type {import('./internal').isMiddlewareObject}
+ */
+function isMiddlewareObject(value) {
+  return (
+    typeof value === 'object' &&
+    value != null &&
+    'handler' in value &&
+    typeof value.handler === 'function'
+  );
+}
+
+/**
+ * Normalizes a middleware entry into a consistent { handler, paths } shape.
+ * @type {import('./internal').normalizeMiddlewareEntry}
+ */
+function normalizeMiddlewareEntry(entry) {
+  if (typeof entry === 'function') {
+    return { handler: entry };
+  }
+
+  if (isMiddlewareObject(entry)) {
+    return { handler: entry.handler, paths: entry.paths };
+  }
+
+  return { handler: void 0 };
+}
+
+/**
+ * Applies a single middleware entry to the app using the appropriate path logic.
+ * @type {import('./internal').applyMiddlewareToApp}
+ */
+function applyMiddlewareToApp(app, handler, paths, middlewarePattern) {
+  if (paths) {
+    app.use(paths, handler);
+  } else if (middlewarePattern) {
+    app.use(middlewarePattern, handler);
+  } else {
+    app.use(handler);
+  }
+}
+
+/**
  * Applies configuration settings to the middleware based on the plugin.
  * @type {import('./internal').applyMiddlewareConfig}
  */
@@ -60,8 +103,8 @@ function applyMiddlewareConfig(middleware, plugin, middlewareConfig, middlewareP
 }
 
 /**
-  * Attaches middleware layers to an Express app, using optional paths or a global pattern.
- * Supports both function-style and object-style middleware entries.
+ * Applies a list of middleware layers to an Express app.
+ * Handles various formats: function, object with `handler`, or arrays of both.
  * @type {import('./internal').applyMiddlewaresToApp}
  */
 function applyMiddlewaresToApp(app, middlewares, middlewarePattern) {
@@ -70,21 +113,13 @@ function applyMiddlewaresToApp(app, middlewares, middlewarePattern) {
     return;
   }
 
-  middlewares.forEach((layer) => {
-    // Normalize: allow either direct middleware function or object with { handler, paths }
-    const paths = layer.paths;
-    const handler = typeof layer === 'function' ? layer : layer.handler;
+  middlewares.flat().forEach((layer) => {
+    if (!layer) return;
 
-    if (!handler) return; // Skip if handler is missing or invalid
+    const { handler, paths } = normalizeMiddlewareEntry(layer);
+    if (!handler) return;
 
-    // Apply the middleware to specified paths, a global pattern, or directly to the app
-    if (paths) {
-      app.use(paths, handler);
-    } else if (middlewarePattern) {
-      app.use(middlewarePattern, handler);
-    } else {
-      app.use(handler);
-    }
+    applyMiddlewareToApp(app, handler, paths, middlewarePattern);
   });
 }
 
