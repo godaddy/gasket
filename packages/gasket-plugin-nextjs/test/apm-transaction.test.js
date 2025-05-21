@@ -28,7 +28,7 @@ describe('The apmTransaction hook', () => {
       namedRegex: /^\/customer\/(?<id>[^/]+)(?:\/)?$/
     });
     const req = {
-      url: '/customer/123'
+      path: '/customer/123'
     };
 
     await apmTransaction(mockGasket, transaction, { req });
@@ -48,7 +48,7 @@ describe('The apmTransaction hook', () => {
       namedRegex: /^\/cohorts\/(?<cohortId>[^/]+)(?:\/)?$/
     });
     const req = {
-      url: '/cohorts/Rad%20People'
+      path: '/cohorts/Rad%20People'
     };
 
     await apmTransaction(mockGasket, transaction, { req });
@@ -62,7 +62,7 @@ describe('The apmTransaction hook', () => {
       namedRegex: /^\/cohorts\/(?<cohortId>[^/]+)(?:\/)?$/
     });
     const req = {
-      url: '/cohorts/TopTen%'
+      path: '/cohorts/TopTen%'
     };
 
     await apmTransaction(mockGasket, transaction, { req });
@@ -76,7 +76,8 @@ describe('The apmTransaction hook', () => {
       namedRegex: /^\/cohorts\/(?<cohortId>[^/]+)(?:\/)?$/
     });
     const req = {
-      url: '/cohorts/Rad%20People?utm_source=TDFS_DASLNC&utm_medium=parkedpages&utm_campaign=x_corp_tdfs-daslnc_base&traffic_type=TDFS_DASLNC&traffic_id=daslnc&sayfa=20&act=ul&listurun=12&sublastcat=&subcat=61&marka=&sort=2&catname=Realistik%20Belden%20Ba%F0lamal%FD'
+      // path should never contain a query but this is a safety check
+      path: '/cohorts/Rad%20People?utm_source=TDFS_DASLNC&utm_medium=parkedpages&utm_campaign=x_corp_tdfs-daslnc_base&traffic_type=TDFS_DASLNC&traffic_id=daslnc&sayfa=20&act=ul&listurun=12&sublastcat=&subcat=61&marka=&sort=2&catname=Realistik%20Belden%20Ba%F0lamal%FD'
     };
 
     await apmTransaction(mockGasket, transaction, { req });
