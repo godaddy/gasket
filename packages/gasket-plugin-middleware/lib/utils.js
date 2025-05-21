@@ -5,7 +5,7 @@ const diagnostics = require('diagnostics');
 const debug = diagnostics('gasket:middleware');
 
 /**
- * Type guard to detect if the app is an Express app.
+ * Ensures the app supports Express-style middleware (i.e., has .use and .set)
  * @type {import('./internal').canUseMiddleware}
  */
 function canUseMiddleware(app) {
@@ -60,7 +60,8 @@ function applyMiddlewareConfig(middleware, plugin, middlewareConfig, middlewareP
 }
 
 /**
- * Attaches the middleware layers to the app.
+  * Attaches middleware layers to an Express app, using optional paths or a global pattern.
+ * Supports both function-style and object-style middleware entries.
  * @type {import('./internal').applyMiddlewaresToApp}
  */
 function applyMiddlewaresToApp(app, middlewares, middlewarePattern) {
@@ -69,7 +70,14 @@ function applyMiddlewaresToApp(app, middlewares, middlewarePattern) {
     return;
   }
 
-  middlewares.forEach(({ handler, paths }) => {
+  middlewares.forEach((layer) => {
+    // Normalize: allow either direct middleware function or object with { handler, paths }
+    const paths = layer.paths;
+    const handler = typeof layer === 'function' ? layer : layer.handler;
+
+    if (!handler) return; // Skip if handler is missing or invalid
+
+    // Apply the middleware to specified paths, a global pattern, or directly to the app
     if (paths) {
       app.use(paths, handler);
     } else if (middlewarePattern) {

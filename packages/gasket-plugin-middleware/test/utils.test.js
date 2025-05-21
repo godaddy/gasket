@@ -156,6 +156,29 @@ describe('utils', function () {
 
       expect(app.use).toHaveBeenCalledWith(['/custom'], middlewareFn);
     });
+
+    it('handles both function-style and object-style middleware entries', async function () {
+      const functionStyleMiddleware = jest.fn();
+      const objectStyleMiddleware = { handler: jest.fn(), paths: ['/obj'] };
+
+      mockMwPlugins = [
+        { name: 'plugin-fn', handler: () => functionStyleMiddleware },
+        { name: 'plugin-obj', handler: () => objectStyleMiddleware }
+      ];
+
+      gasket.config.middleware = [
+        { plugin: 'plugin-obj', paths: ['/obj'] }
+      ];
+
+      await executeMiddlewareLifecycle(gasket, app);
+
+      // Function-style should be applied directly
+      expect(app.use).toHaveBeenCalledWith(functionStyleMiddleware);
+
+      // Object-style should use configured paths and handler
+      expect(app.use).toHaveBeenCalledWith(['/obj'], objectStyleMiddleware.handler);
+    });
+
   });
 
   /**
