@@ -125,7 +125,7 @@ export interface LifecycleDocsConfig extends DetailDocsConfig {
  */
 export interface DocsConfigSet extends PluginData {
   /** Name of the documentation */
-  name: string;
+  name?: string;
   /** Configuration for the app */
   app: ModuleDocsConfig;
   /** Root directory of the documentation */
