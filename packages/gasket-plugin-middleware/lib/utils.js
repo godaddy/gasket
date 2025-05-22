@@ -62,7 +62,7 @@ function isMiddlewareObject(value) {
  */
 function normalizeMiddlewareEntry(entry) {
   if (typeof entry === 'function') {
-    return { handler: entry };
+    return { handler: /** @type {import('express').Handler} */ (entry) };
   }
 
   if (isMiddlewareObject(entry)) {
