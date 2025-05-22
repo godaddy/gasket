@@ -2,7 +2,7 @@ import { withSpinner } from '../with-spinner.js';
 
 /**
  * Links local packages using the selected package manager
- * @type {import('../../internal').linkModules}
+ * @type {import('../../internal.js').linkModules}
  */
 async function linkModules({ context, spinner }) {
   const { pkgLinks, pkgManager } = context;

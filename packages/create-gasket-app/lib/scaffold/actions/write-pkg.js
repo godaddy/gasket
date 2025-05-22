@@ -4,7 +4,7 @@ import { withSpinner } from '../with-spinner.js';
 
 /**
  * Writes the contents of `pkg` to the app's package.json.
- * @type {import('../../internal').writePkg}
+ * @type {import('../../internal.js').writePkg}
  */
 async function writePkg({ context }) {
   const { dest, pkg, generatedFiles } = context;
