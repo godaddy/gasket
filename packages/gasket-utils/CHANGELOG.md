@@ -1,5 +1,11 @@
 # `@gasket/utils`
 
+## 7.3.5
+
+### Patch Changes
+
+- 63ba7ba: Adjustments to types
+
 ## 7.3.4
 
 ### Patch Changes
