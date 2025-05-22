@@ -1,5 +1,12 @@
 # `@gasket/plugin-git`
 
+## 7.3.5
+
+### Patch Changes
+
+- Updated dependencies [63ba7ba]
+  - @gasket/utils@7.3.5
+
 ## 7.3.4
 
 ### Patch Changes

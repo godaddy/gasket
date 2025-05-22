@@ -1,5 +1,25 @@
 # `create-gasket-app`
 
+## 7.3.12
+
+### Patch Changes
+
+- 63ba7ba: Adjustments to types
+- Updated dependencies [63ba7ba]
+- Updated dependencies [0c8f998]
+- Updated dependencies [63ba7ba]
+- Updated dependencies [63ba7ba]
+  - @gasket/plugin-docs@7.3.9
+  - @gasket/request@7.3.6
+  - @gasket/utils@7.3.5
+  - @gasket/core@7.4.2
+  - @gasket/plugin-docusaurus@7.4.2
+  - @gasket/plugin-command@7.3.9
+  - @gasket/plugin-dynamic-plugins@7.3.7
+  - @gasket/plugin-git@7.3.5
+  - @gasket/plugin-logger@7.3.4
+  - @gasket/plugin-metadata@7.3.12
+
 ## 7.3.11
 
 ### Patch Changes
