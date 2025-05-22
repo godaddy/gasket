@@ -46,13 +46,7 @@ const plugin = {
             `${generatorDir}/react/*`,
             `${generatorDir}/react/**/*`
           );
-
-          if (typescript) {
-            pkg.add('devDependencies', {
-              'vite-tsconfig-paths': devDependencies['vite-tsconfig-paths']
-            });
-          }
-
+          
           pkg.add('devDependencies', {
             '@vitejs/plugin-react': devDependencies['@vitejs/plugin-react'],
             '@testing-library/react': devDependencies['@testing-library/react'],
