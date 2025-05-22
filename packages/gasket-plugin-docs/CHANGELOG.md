@@ -1,5 +1,13 @@
 # `@gasket/plugin-docs`
 
+## 7.3.9
+
+### Patch Changes
+
+- 63ba7ba: Adjustments to types
+- 0c8f998: Opt for node bin over tsx
+  - @gasket/plugin-command@7.3.9
+
 ## 7.3.8
 
 ### Patch Changes

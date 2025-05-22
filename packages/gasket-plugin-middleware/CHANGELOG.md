@@ -1,5 +1,11 @@
 # `@gasket/plugin-middleware`
 
+## 7.3.7
+
+### Patch Changes
+
+- 29fe550: Add support for mixed middleware formats in applyMiddlewaresToApp.
+
 ## 7.3.6
 
 ### Patch Changes

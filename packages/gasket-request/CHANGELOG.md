@@ -1,5 +1,12 @@
 # `@gasket/request`
 
+## 7.3.6
+
+### Patch Changes
+
+- 63ba7ba: Adjustments to types
+- 63ba7ba: Fix GasketRequest does not export a url prop
+
 ## 7.3.5
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # `@gasket/plugin-typescript`
 
+## 7.3.5
+
+### Patch Changes
+
+- 0c8f998: Opt for node bin over tsx
+
 ## 7.3.4
 
 ### Patch Changes
