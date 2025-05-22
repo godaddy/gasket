@@ -2514,6 +2514,9 @@ importers:
       jsdom:
         specifier: ^20.0.3
         version: 20.0.3
+      typescript:
+        specifier: ^5.4.5
+        version: 5.8.2
       vite-tsconfig-paths:
         specifier: ^5.1.4
         version: 5.1.4(typescript@5.8.2)(vite@6.1.1(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
