@@ -63,8 +63,7 @@
     "eslint-plugin-unicorn": "^55.0.0",
     "jsdom": "^20.0.3",
     "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^3.0.7",
-    "typescript": "^5.4.5"
+    "vitest": "^3.0.7"
   },
   "eslintConfig": {
     "extends": [
