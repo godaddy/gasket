@@ -6,7 +6,7 @@ const program = new Command();
 
 /**
  * isValidCommand - Validates the command configuration
- * @type {import('../internal').isValidCommand}
+ * @type {import('../internal.js').isValidCommand}
  */
 function isValidCommand(command) {
   const keys = Object.keys(command);
@@ -21,7 +21,7 @@ function isValidCommand(command) {
 
 /**
  * processCommand - Process the command configuration
- * @type {import('../internal').processCommand}
+ * @type {import('../internal.js').processCommand}
  */
 export function processCommand(command) {
   if (!isValidCommand(command)) throw new Error('Invalid command configuration');

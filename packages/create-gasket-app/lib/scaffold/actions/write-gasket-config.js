@@ -5,7 +5,7 @@ import { withSpinner } from '../with-spinner.js';
 
 /**
  * writePluginImports - Write string imports as value(s)
- * @type {import('../../internal').writePluginImports}
+ * @type {import('../../internal.js').writePluginImports}
  */
 function writePluginImports(plugins) {
   return plugins.reduce((acc, cur, index) => {
@@ -16,7 +16,7 @@ function writePluginImports(plugins) {
 
 /**
  * writeImports - Write imports to file using key value pairs
- * @type {import('../../internal').writeImports}
+ * @type {import('../../internal.js').writeImports}
  */
 function writeImports(imports) {
   if (!imports) return '';
@@ -25,7 +25,7 @@ function writeImports(imports) {
 
 /**
  * createInjectionAssignments - replace object path with a temp string value
- * @type {import('../../internal').createInjectionAssignments}
+ * @type {import('../../internal.js').createInjectionAssignments}
  */
 function createInjectionAssignments(config, assignments) {
   if (!assignments) return '';
@@ -44,7 +44,7 @@ function createInjectionAssignments(config, assignments) {
 
 /**
  * replaceInjectionAssignments - replace temp string value with actual value
- * @type {import('../../internal').replaceInjectionAssignments}
+ * @type {import('../../internal.js').replaceInjectionAssignments}
  */
 function replaceInjectionAssignments(content, assignments) {
   if (!assignments) return content;
@@ -57,7 +57,7 @@ function replaceInjectionAssignments(content, assignments) {
 
 /**
  * writeExpressions - Write expressions to file
- * @type {import('../../internal').writeExpressions}
+ * @type {import('../../internal.js').writeExpressions}
  */
 function writeExpressions(expressions) {
   if (!expressions) return '';
@@ -66,7 +66,7 @@ function writeExpressions(expressions) {
 
 /**
  * cleanupFields - Remove fields from config object
- * @type {import('../../internal').cleanupFields}
+ * @type {import('../../internal.js').cleanupFields}
  */
 function cleanupFields(config) {
   delete config.fields.imports;
@@ -77,7 +77,7 @@ function cleanupFields(config) {
 
 /**
  * Writes the contents of `pkg` to the app's package.json.
- * @type {import('../../internal').writeGasketConfig}
+ * @type {import('../../internal.js').writeGasketConfig}
  */
 async function writeGasketConfig({ context }) {
   const { dest, gasketConfig, generatedFiles, typescript } = context;

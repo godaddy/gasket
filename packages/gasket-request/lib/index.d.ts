@@ -57,7 +57,7 @@ export type RequestLike = {
  * @see https://developer.mozilla.org/en-US/docs/Web/API/CookieStore/getAll
  */
 export function objectFromCookieStore(
-  cookieStore: CookieStore
+  cookieStore: Partial<CookieStore> | CookieStore
 ): Promise<Record<string, string>>;
 
 /**
@@ -81,7 +81,6 @@ export class GasketRequest {
   cookies: Record<string, string>;
   query: Record<string, string>;
   path: string;
-  url: string;
 }
 
 /**

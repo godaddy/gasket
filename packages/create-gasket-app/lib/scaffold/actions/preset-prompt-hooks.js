@@ -3,7 +3,7 @@ import { withGasketSpinner } from '../with-spinner.js';
 
 /**
  * presetPromptHooks - exec `presetPrompt` hook
- * @type {import('../../internal').presetPromptHooks}
+ * @type {import('../../internal.js').presetPromptHooks}
  */
 async function presetPromptHooks({ gasket, context }) {
   const prompt = context.prompts ? inquirer.createPromptModule() : () => ({});

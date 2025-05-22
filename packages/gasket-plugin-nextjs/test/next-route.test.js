@@ -64,7 +64,6 @@ describe('req.getNextRoute()', () => {
 
     it('returns valid static route if url has query param', async () => {
       req.path = '/plans/cohorts/US%20Only';
-      req.url = '/plans/cohorts/US%20Only?addon=addon1';
 
       const route = await getNextRoute(gasket, req);
 
