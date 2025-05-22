@@ -2,11 +2,7 @@
 
 import { GasketEngine, lifecycleMethods } from './engine.js';
 import { makeTraceBranch } from './trace.js';
-
-
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
-const { applyConfigOverrides } = require('@gasket/utils/config');
+import { applyConfigOverrides } from '@gasket/utils/config';
 
 /**
  * Get the environment to use for the gasket instance.

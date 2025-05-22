@@ -20,7 +20,7 @@ const splitSep = pthStr => pthStr.split(reSep);
  * Find all duplicate target files and reduce to single descriptor.
  * Keeps track of overrides.
  * Last in wins.
- * @type {import('../../internal').reduceDescriptors}
+ * @type {import('../../internal.js').reduceDescriptors}
  */
 function reduceDescriptors(descriptors) {
   const reduced = descriptors.reduce((acc, desc) => {
@@ -41,7 +41,7 @@ function reduceDescriptors(descriptors) {
 
 /**
  * Assemble the description objects from glob results
- * @type {import('../../internal').assembleDescriptors}
+ * @type {import('../../internal.js').assembleDescriptors}
  */
 function assembleDescriptors(dest, from, pattern, srcPaths) {
   const output = joinSep(splitSep(dest));
@@ -64,7 +64,7 @@ function assembleDescriptors(dest, from, pattern, srcPaths) {
 
 /**
  * Build a list of descriptions of all files we want to generate
- * @type {import('../../internal').getDescriptors}
+ * @type {import('../../internal.js').getDescriptors}
  */
 async function getDescriptors(context) {
   const { dest, files } = context;
@@ -85,7 +85,7 @@ async function getDescriptors(context) {
 
 /**
  * Read file content, apply templating, then write out target file.
- * @type {import('../../internal').performGenerate}
+ * @type {import('../../internal.js').performGenerate}
  */
 async function performGenerate(context, descriptors) {
   const { warnings, errors, generatedFiles } = context;
@@ -151,7 +151,7 @@ async function performGenerate(context, descriptors) {
 
 /**
  * Generate the app files and templates using context
- * @type {import('../../internal').generateFiles}
+ * @type {import('../../internal.js').generateFiles}
  */
 async function generateFiles({ context, spinner }) {
   const { files } = context;

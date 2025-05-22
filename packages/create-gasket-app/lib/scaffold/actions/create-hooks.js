@@ -6,7 +6,7 @@ import Readme from '../readme.js';
 /**
  * Executes the `create` hook for all registered plugins.
  * Adds `files` to context for plugins to add their files and templates.
- * @type {import('../../internal').createHooks}
+ * @type {import('../../internal.js').createHooks}
  */
 async function createHooks({ gasket, context }) {
   const { warnings } = context;

@@ -10,7 +10,7 @@ module.exports = async function apmTransaction(gasket, transaction, { req }) {
 
   transaction.name = route.page;
 
-  const match = route.namedRegex.exec(req.url.replace(/\?.*$/, ''));
+  const match = route.namedRegex.exec(req.path.replace(/\?.*$/, ''));
   const groups = match && match.groups;
 
   if (!groups) {

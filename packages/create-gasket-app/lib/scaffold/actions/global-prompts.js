@@ -3,7 +3,7 @@ import { withSpinner } from '../with-spinner.js';
 
 /**
  * What is your app description?
- * @type {import('../../internal').chooseAppDescription}
+ * @type {import('../../internal.js').chooseAppDescription}
  */
 async function chooseAppDescription(context, prompt) {
   if (!('appDescription' in context)) {
@@ -22,7 +22,7 @@ async function chooseAppDescription(context, prompt) {
 
 /**
  * What package manager do you want to use?
- * @type {import('../../internal').choosePackageManager}
+ * @type {import('../../internal.js').choosePackageManager}
  */
 async function choosePackageManager(context, prompt) {
   const packageManager =
@@ -56,7 +56,7 @@ async function choosePackageManager(context, prompt) {
 
 /**
  * Choose your unit test suite and integration test suite
- * @type {import('../../internal').chooseTestPlugins}
+ * @type {import('../../internal.js').chooseTestPlugins}
  */
 async function chooseTestPlugins(context, prompt) {
   const knownTestPlugins = {
@@ -111,7 +111,7 @@ async function chooseTestPlugins(context, prompt) {
 
 /**
  *
- * @type {import('../../internal').promptForTestPlugin}
+ * @type {import('../../internal.js').promptForTestPlugin}
  */
 async function promptForTestPlugin(prompt, message, isDefault) {
   const { testPlugin } = await prompt([
@@ -129,7 +129,7 @@ async function promptForTestPlugin(prompt, message, isDefault) {
 /**
  * Given that gasket is creating in an already existing directory, it should
  * confirm with the user that it's intentionally overwriting that directory
- * @type {import('../../internal').allowExtantOverwriting}
+ * @type {import('../../internal.js').allowExtantOverwriting}
  */
 async function allowExtantOverwriting(context, prompt) {
   const { dest, extant } = context;
@@ -156,7 +156,7 @@ export const questions = [
 
 /**
  * Fire off prompts for user input
- * @type {import('../../internal').globalPrompts}
+ * @type {import('../../internal.js').globalPrompts}
  */
 async function globalPrompts({ context }) {
   const prompt = context.prompts ? inquirer.createPromptModule() : () => ({});
