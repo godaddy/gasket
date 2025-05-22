@@ -89,7 +89,7 @@ export function isMiddlewareObject(value: any): value is { handler: Handler; pat
  * @returns {{ handler: Handler | undefined, paths?: string | RegExp | Array<string | RegExp> }}
  */
 export function normalizeMiddlewareEntry(
-  entry: any
+  entry: unknown
 ): {
   handler: Handler | undefined;
   paths?: string | RegExp | Array<string | RegExp>;
