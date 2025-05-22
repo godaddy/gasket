@@ -2,4 +2,4 @@
 "@gasket/plugin-middleware": patch
 ---
 
-Fix support for object-style middleware in applyMiddlewaresToApp.
+Add support for mixed middleware formats in applyMiddlewaresToApp.
