@@ -1,5 +1,13 @@
 # `@gasket/core`
 
+## 7.4.2
+
+### Patch Changes
+
+- 63ba7ba: Fix to not import from node module package
+- Updated dependencies [63ba7ba]
+  - @gasket/utils@7.3.5
+
 ## 7.4.1
 
 ### Patch Changes

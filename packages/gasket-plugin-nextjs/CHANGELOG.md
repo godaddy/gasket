@@ -1,5 +1,14 @@
 # `@gasket/plugin-nextjs`
 
+## 7.4.4
+
+### Patch Changes
+
+- 63ba7ba: Adjustments to types
+- 0c8f998: Opt for node bin over tsx
+- 63ba7ba: Fix GasketRequest does not export a url prop
+  - @gasket/plugin-webpack@7.3.4
+
 ## 7.4.3
 
 ### Patch Changes

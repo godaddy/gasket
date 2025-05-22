@@ -1,5 +1,12 @@
 # `@gasket/react-intl`
 
+## 7.4.4
+
+### Patch Changes
+
+- @gasket/plugin-intl@7.4.2
+- @gasket/data@7.3.5
+
 ## 7.4.3
 
 ### Patch Changes
