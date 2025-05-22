@@ -1,6 +1,6 @@
 /**
  * isValidArg - Validates the argument configuration
- * @type {import('../internal').isValidArg}
+ * @type {import('../internal.js').isValidArg}
  */
 function isValidArg(arg) {
   const keys = Object.keys(arg);
@@ -12,7 +12,7 @@ function isValidArg(arg) {
 
 /**
  * processArgs - Process the arguments configuration
- * @type {import('../internal').processArgs}
+ * @type {import('../internal.js').processArgs}
  */
 export function processArgs(args) {
   if (!Array.isArray(args) || !args.every(isValidArg)) throw new Error('Invalid argument(s) configuration');

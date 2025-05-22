@@ -3,7 +3,7 @@ import { runShellCommand } from '@gasket/utils';
 
 /**
  * Executes the `postCreate` hook for all registered plugins.
- * @type {import('../../internal').postCreateHooks}
+ * @type {import('../../internal.js').postCreateHooks}
  */
 async function postCreateHooks({ gasket, context }) {
   const { dest, packageManager } = context;

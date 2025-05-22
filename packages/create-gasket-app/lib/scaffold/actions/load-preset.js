@@ -9,7 +9,7 @@ const hasVersionOrTag = /@([\^~]?\d+\.\d+\.\d+(?:-[\d\w.-]+)?|[\^~]?\d+\.\d+\.\d
 
 /**
  * loadPresets - Load presets to temp directory
- * @type {import('../../internal').loadPresets}
+ * @type {import('../../internal.js').loadPresets}
  */
 async function loadPresets({ context }) {
   const tmpDir = await mkdtemp(path.join(os.tmpdir(), `gasket-create-${context.appName}`));
