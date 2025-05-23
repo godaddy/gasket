@@ -139,14 +139,44 @@ describe('globalPrompts', () => {
       expect(mockPromptStub.mock.calls[1][0][0]).toHaveProperty('name', 'testPlugin');
     });
 
-    it('sets testPlugin in context', async () => {
+    it('sets vitest testPlugin in context if true', async () => {
       delete mockContext.testPlugin;
       mockPromptStub
-        .mockReturnValueOnce({ testPlugin: 'firstValue' })
-        .mockReturnValueOnce({ testPlugin: 'secondValue' });
+        .mockReturnValueOnce({ testPlugin: true })
+        .mockReturnValueOnce({ testPlugin: false });
       await chooseTestPlugins(mockContext, mockPromptStub);
 
-      expect(mockContext).toHaveProperty('testPlugins', ['firstValue', 'secondValue']);
+      expect(mockContext).toHaveProperty('testPlugins', ['@gasket/plugin-vitest']);
+    });
+
+    it('sets cypress testPlugin in context if true', async () => {
+      delete mockContext.testPlugin;
+      mockPromptStub
+        .mockReturnValueOnce({ testPlugin: false })
+        .mockReturnValueOnce({ testPlugin: true });
+      await chooseTestPlugins(mockContext, mockPromptStub);
+
+      expect(mockContext).toHaveProperty('testPlugins', ['@gasket/plugin-cypress']);
+    });
+
+    it('sets both vitest and cypress testPlugins in context if true', async () => {
+      delete mockContext.testPlugin;
+      mockPromptStub
+        .mockReturnValueOnce({ testPlugin: true })
+        .mockReturnValueOnce({ testPlugin: true });
+      await chooseTestPlugins(mockContext, mockPromptStub);
+
+      expect(mockContext).toHaveProperty('testPlugins', ['@gasket/plugin-vitest', '@gasket/plugin-cypress']);
+    });
+
+    it('does not set testPlugins in context if false', async () => {
+      delete mockContext.testPlugin;
+      mockPromptStub
+        .mockReturnValueOnce({ testPlugin: false })
+        .mockReturnValueOnce({ testPlugin: false });
+      await chooseTestPlugins(mockContext, mockPromptStub);
+
+      expect(mockContext).not.toHaveProperty('testPlugins');
     });
 
     it('does not prompt if unitTestSuite and integrationTestSuite is defined in context', async () => {

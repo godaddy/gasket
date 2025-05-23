@@ -5,7 +5,7 @@ const { name, version, devDependencies } = require('../package.json');
 
 const createTestFiles = ({ files, generatorDir, testPlugins, globIgnore }) => {
   if (!testPlugins || testPlugins.length === 0) return;
-  const unit = ['jest', 'mocha'];
+  const unit = ['jest', 'mocha', 'vitest'];
   const integration = ['cypress'];
   const frameworks = [...unit, ...integration];
   const frameworksRegex = new RegExp(frameworks.join('|'));

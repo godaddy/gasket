@@ -99,7 +99,7 @@ export function chooseTestPlugins(context: PartialCreateContext, prompt: CreateP
 export function promptForTestPlugin(
   prompt: CreatePrompt,
   message: string,
-  choices: { name: string; value: string; }[]
+  isDefault: boolean
 ): Promise<string | null>;
 export function allowExtantOverwriting(context: PartialCreateContext, prompt: CreatePrompt): Promise<void>;
 export function globalPrompts(params: { context: PartialCreateContext }): Promise<void>;
