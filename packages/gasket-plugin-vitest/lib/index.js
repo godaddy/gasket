@@ -26,13 +26,14 @@ const plugin = {
         before: ['@gasket/plugin-lint']
       },
       handler: async function create(gasket, context) {
-        const { files, pkg, typescript, apiApp } = context;
+        const { files, pkg, apiApp } = context;
         const __dirname = fileURLToPath(import.meta.url);
         const generatorDir = path.join(__dirname, '..', '..', 'generator');
         const isReactProject = pkg.has('dependencies', 'react');
 
         pkg.add('devDependencies', {
-          vitest: devDependencies.vitest
+          'vitest': devDependencies.vitest,
+          '@vitest/coverage-v8': devDependencies['@vitest/coverage-v8']
         });
 
         pkg.add('scripts', {
@@ -46,7 +47,7 @@ const plugin = {
             `${generatorDir}/react/*`,
             `${generatorDir}/react/**/*`
           );
-          
+
           pkg.add('devDependencies', {
             '@vitejs/plugin-react': devDependencies['@vitejs/plugin-react'],
             '@testing-library/react': devDependencies['@testing-library/react'],

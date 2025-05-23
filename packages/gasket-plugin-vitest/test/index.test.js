@@ -116,20 +116,15 @@ describe('Plugin', function () {
           expect(self.devDependencies[key]).toEqual(pkg.devDependencies[key]);
         });
       });
-
-      it('adds vite-tsconfig-paths to devDependencies if using typescript', async function () {
-        const { pkg } = await createReact({ typescript: true });
-
-        expect(pkg.devDependencies).toHaveProperty('vite-tsconfig-paths');
-      });
     });
   });
 
   describe('dependencies', function () {
-    it('adds vitest to the devDependencies', async function () {
+    it('adds vitest and @vitest/coverage-v8 to the devDependencies', async function () {
       const { pkg } = await create();
 
       expect(pkg.devDependencies).toHaveProperty('vitest');
+      expect(pkg.devDependencies).toHaveProperty('@vitest/coverage-v8');
     });
 
     it('depends on the same versions', async function () {
