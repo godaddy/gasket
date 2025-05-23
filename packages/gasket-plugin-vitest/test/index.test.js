@@ -139,14 +139,23 @@ describe('Plugin', function () {
   });
 
   describe('scripts', function () {
-    it('uses the same scripts in our package.json', async function () {
+    it('uses the same scripts in our package.json except for coverage', async function () {
       const { pkg } = await create();
 
       expect(typeof pkg.scripts).toBe('object');
+      delete pkg.scripts['test:coverage'];
       Object.keys(pkg.scripts).forEach((key) => {
         expect(self.scripts).toHaveProperty(key);
         expect(self.scripts[key]).toEqual(pkg.scripts[key]);
       });
+    });
+
+    it('uses correct coverage script', async function () {
+      const { pkg } = await create();
+
+      expect(typeof pkg.scripts).toBe('object');
+      expect(pkg.scripts).toHaveProperty('test:coverage');
+      expect(pkg.scripts['test:coverage']).toEqual('vitest run --coverage');
     });
 
     it('uses vitest for test coverage in the test script', async function () {

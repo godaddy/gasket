@@ -27,7 +27,7 @@
     "posttest": "pnpm run lint && pnpm run typecheck",
     "prepublishOnly": "pnpm run build",
     "test": "vitest run",
-    "test:coverage": "vitest run --coverage",
+    "test:coverage": "pnpm run test --coverage",
     "test:watch": "vitest",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
