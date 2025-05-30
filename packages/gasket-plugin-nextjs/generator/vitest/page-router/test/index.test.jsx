@@ -14,7 +14,7 @@ describe('IndexPage', () => {
 {{#if hasGasketIntl}}
       <IntlProvider locale={ 'en-US' } messages={ messages }>
 {{/if}}
-      <IndexPage />
+        <IndexPage />
 {{#if hasGasketIntl}}
       </IntlProvider>
 {{/if}}
