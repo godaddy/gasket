@@ -53,6 +53,8 @@ const packageUtils = {
       env = 'jest';
     } else if (packageUtils.hasDependency(pkg, 'devDependencies', 'mocha')) {
       env = 'mocha';
+    } else if (packageUtils.hasDependency(pkg, 'devDependencies', 'vitest')) {
+      env = 'vitest';
     }
 
     if (env) {

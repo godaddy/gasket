@@ -20,7 +20,7 @@ async function createAppFiles({
   typescript,
   readme
 }) {
-  const globIgnore = typescript ? '!(*.js|.jsx)' : '!(*.ts|*.tsx)';
+  const globIgnore = typescript ? '!(*.js|*.jsx)' : '!(*.ts|*.tsx)';
 
   files.add(
     `${generatorDir}/app/${appStructure}/**/${globIgnore}`
@@ -49,7 +49,7 @@ async function createAppFiles({
  */
 function createTestFiles({ files, generatorDir, testPlugins, appStructure, typescript }) {
   if (!testPlugins || testPlugins.length === 0) return;
-  const unit = ['jest', 'mocha'];
+  const unit = ['jest', 'mocha', 'vitest'];
   const integration = ['cypress'];
   const frameworks = [...unit, ...integration];
   const frameworksRegex = new RegExp(frameworks.join('|'));
