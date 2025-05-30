@@ -150,6 +150,7 @@ export default {
         const transaction = await gasket.actions.getApmTransaction(req);
         const locale = await gasket.actions.getIntlLocale(req);
         transaction.setLabel('locale', locale);
+        next();
       });
     }
   }
@@ -160,6 +161,27 @@ In the above example, we are hooking the express lifecycle to add middleware
 to decorate the transaction.
 Calling `getApmTransaction` will also allow other plugins to decorate the
 transaction by hooking the `apmTransaction` lifecycle discussed next.
+
+At a minimum, the `getApmTransaction` action must be invoked to execute
+the `apmTransaction` lifecycle described below.
+This can be adjusted to only run for specific requests.
+
+```js
+export default {
+  name: 'example-plugin',
+  hooks: {
+    express(gasket, app) {
+      app.use(async (req, res, next) => {
+        // Only decorate APM transaction for non-API requests
+        if(!req.path.startsWith('/api')) {
+          await gasket.actions.getApmTransaction(req);
+        }
+        next();
+      });
+    }
+  }
+}
+```
 
 ## Lifecycles
 
