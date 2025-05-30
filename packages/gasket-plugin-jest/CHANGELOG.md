@@ -1,5 +1,11 @@
 # `@gasket/plugin-jest`
 
+## 7.5.0
+
+### Minor Changes
+
+- 30833cb: add generated code for vitest and include vitest plugin in dependencies
+
 ## 7.4.2
 
 ### Patch Changes
