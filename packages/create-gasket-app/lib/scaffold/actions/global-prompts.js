@@ -62,7 +62,8 @@ async function chooseTestPlugins(context, prompt) {
   const knownTestPlugins = {
     unit: {
       jest: '@gasket/plugin-jest',
-      mocha: '@gasket/plugin-mocha'
+      mocha: '@gasket/plugin-mocha',
+      vitest: '@gasket/plugin-vitest'
     },
     integration: {
       cypress: '@gasket/plugin-cypress'
@@ -72,19 +73,33 @@ async function chooseTestPlugins(context, prompt) {
   const testTypes = ['unit', 'integration'];
   const testPlugins = [];
 
+  const testPromptOptions = {
+    unit: {
+      name: 'Vitest',
+      plugin: '@gasket/plugin-vitest',
+      isDefault: true
+    },
+    integration: {
+      name: 'Cypress',
+      plugin: '@gasket/plugin-cypress',
+      isDefault: false
+    }
+  };
+
   if (!('testPlugins' in context)) {
     for (const type of testTypes) {
       if (type + 'TestSuite' in context) {
         const testSuite = knownTestPlugins[type][context[type + 'TestSuite']];
         if (testSuite) testPlugins.push(testSuite);
       } else {
+        const { name, isDefault, plugin: testPlugin } = testPromptOptions[type];
         const plugin = await promptForTestPlugin(
           prompt,
-          `Choose your ${type} test suite`,
-          Object.entries(knownTestPlugins[type]).map(([name, value]) => ({ name, value }))
+          `Do you want to use ${name} for ${type} testing?`,
+          isDefault
         );
 
-        if (plugin) testPlugins.push(plugin);
+        if (plugin) testPlugins.push(testPlugin);
       }
     }
 
@@ -98,13 +113,13 @@ async function chooseTestPlugins(context, prompt) {
  *
  * @type {import('../../internal.js').promptForTestPlugin}
  */
-async function promptForTestPlugin(prompt, message, choices) {
+async function promptForTestPlugin(prompt, message, isDefault) {
   const { testPlugin } = await prompt([
     {
       name: 'testPlugin',
       message,
-      type: 'list',
-      choices: [{ name: 'none', value: 'none' }, ...choices]
+      type: 'confirm',
+      default: isDefault
     }
   ]);
 
