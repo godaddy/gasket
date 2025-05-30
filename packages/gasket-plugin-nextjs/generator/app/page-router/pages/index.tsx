@@ -11,9 +11,9 @@ const logoStyle: CSSProperties = { width: '250px', height: '250px' };
 
 function IndexPage() {
   return (
-    <div style={pageStyle}>
+    <div style={ pageStyle }>
       <Head title='{{{appName}}}' description='{{{appDescription}}}'/>
-      <GasketEmblem style={logoStyle}/>
+      <GasketEmblem style={ logoStyle }/>
 {{#if hasGasketIntl}}
       <h1><FormattedMessage id='gasket_welcome' /></h1>
       <p><FormattedMessage id='gasket_learn' /></p>
@@ -24,7 +24,7 @@ function IndexPage() {
       <p><a href='https://gasket.dev'>Learn Gasket</a></p>
 {{/if}}
     </div>
-  )
+  );
 }
 
 export default IndexPage;

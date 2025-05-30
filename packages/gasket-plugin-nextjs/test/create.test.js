@@ -62,7 +62,7 @@ describe('create hook', () => {
       mockContext.typescript = true;
       await create.handler({}, mockContext);
       expect(mockContext.files.add).toHaveBeenCalledWith(
-        `${root}/../generator/app/page-router/**/!(*.js|.jsx)`
+        `${root}/../generator/app/page-router/**/!(*.js|*.jsx)`
       );
     });
 

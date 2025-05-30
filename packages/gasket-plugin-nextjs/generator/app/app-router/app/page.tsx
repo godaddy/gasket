@@ -13,8 +13,8 @@ const logoStyle: CSSProperties = { width: '250px', height: '250px' };
 
 function IndexPage() {
   return (
-    <div style={pageStyle}>
-      <GasketEmblem style={logoStyle} />
+    <div style={ pageStyle }>
+      <GasketEmblem style={ logoStyle } />
       <h1>Welcome to Gasket!</h1>
       <p>To get started, edit <code>app/page.tsx</code> and save to reload.</p>
       <p><a href='https://gasket.dev'>Learn Gasket</a></p>
