@@ -1,5 +1,11 @@
 # @gasket/typescript-tests
 
+## 7.4.0
+
+### Minor Changes
+
+- 30833cb: add generated code for vitest and include vitest plugin in dependencies
+
 ## 7.3.5
 
 ### Patch Changes

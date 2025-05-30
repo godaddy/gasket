@@ -1,5 +1,33 @@
 # `@gasket/preset-api`
 
+## 7.4.0
+
+### Minor Changes
+
+- 30833cb: add generated code for vitest and include vitest plugin in dependencies
+
+### Patch Changes
+
+- Updated dependencies [30833cb]
+- Updated dependencies [30833cb]
+  - @gasket/plugin-typescript@7.4.0
+  - @gasket/plugin-command@7.4.0
+  - @gasket/plugin-cypress@7.5.0
+  - @gasket/plugin-express@7.4.0
+  - @gasket/plugin-fastify@7.4.0
+  - @gasket/plugin-mocha@7.5.0
+  - @gasket/plugin-docs@7.4.0
+  - @gasket/plugin-jest@7.5.0
+  - @gasket/plugin-lint@7.4.0
+  - @gasket/plugin-git@7.4.0
+  - @gasket/plugin-vitest@1.0.0
+  - @gasket/plugin-docusaurus@7.4.2
+  - @gasket/plugin-dynamic-plugins@7.3.7
+  - @gasket/plugin-https@7.3.5
+  - @gasket/plugin-logger@7.3.4
+  - @gasket/plugin-swagger@7.3.5
+  - @gasket/plugin-winston@7.3.4
+
 ## 7.3.12
 
 ### Patch Changes

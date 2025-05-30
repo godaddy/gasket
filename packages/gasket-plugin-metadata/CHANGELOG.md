@@ -1,5 +1,17 @@
 # `@gasket/plugin-metadata`
 
+## 7.4.0
+
+### Minor Changes
+
+- 30833cb: add generated code for vitest and include vitest plugin in dependencies
+
+### Patch Changes
+
+- Updated dependencies [30833cb]
+  - @gasket/core@7.5.0
+  - @gasket/plugin-logger@7.3.4
+
 ## 7.3.12
 
 ### Patch Changes
