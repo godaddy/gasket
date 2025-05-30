@@ -1,5 +1,16 @@
 # `@gasket/plugin-docs`
 
+## 7.4.0
+
+### Minor Changes
+
+- 30833cb: add generated code for vitest and include vitest plugin in dependencies
+
+### Patch Changes
+
+- Updated dependencies [30833cb]
+  - @gasket/plugin-command@7.4.0
+
 ## 7.3.9
 
 ### Patch Changes

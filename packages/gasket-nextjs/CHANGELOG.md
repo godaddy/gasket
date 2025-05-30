@@ -1,5 +1,17 @@
 # `@gasket/nextjs`
 
+## 7.5.0
+
+### Minor Changes
+
+- 30833cb: add generated code for vitest and include vitest plugin in dependencies
+
+### Patch Changes
+
+- Updated dependencies [30833cb]
+  - @gasket/request@7.4.0
+  - @gasket/data@7.4.0
+
 ## 7.4.5
 
 ### Patch Changes
