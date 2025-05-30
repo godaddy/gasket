@@ -1,6 +1,6 @@
 # `@gasket/plugin-vitest`
 
-## 1.0.0
+## 7.0.0
 
 ### Major Changes
 
