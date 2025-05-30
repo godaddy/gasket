@@ -138,18 +138,20 @@ Available lifecycles
 
 Available structure
 
-| Name             | Description                                  |
-| ---------------- | -------------------------------------------- |
-| [.docs/docs/]    | Output of the docs command                   |
-| [locales/]       | Locale JSON files with translation strings   |
-| [pages/]         | NextJS routing                               |
-| [public/]        | NextJS static files                          |
-| test/            | Test files                                   |
-| test/            | Test files                                   |
-| [cypress.json]   | Cypress configuration                        |
-| [gasket-data.js] | App configuration with environment overrides |
-| [jest.config.js] | Jest configuration                           |
-| [redux/store.js] | Setup to make Redux store                    |
+| Name               | Description                                  |
+| ------------------ | -------------------------------------------- |
+| [.docs/docs/]      | Output of the docs command                   |
+| [locales/]         | Locale JSON files with translation strings   |
+| [pages/]           | NextJS routing                               |
+| [public/]          | NextJS static files                          |
+| test/              | Test files                                   |
+| test/              | Test files                                   |
+| test/              | Test files                                   |
+| [cypress.json]     | Cypress configuration                        |
+| [gasket-data.js]   | App configuration with environment overrides |
+| [jest.config.js]   | Jest configuration                           |
+| [redux/store.js]   | Setup to make Redux store                    |
+| [vitest.config.js] | Vitest configuration file                    |
 
 ## Presets
 
@@ -157,8 +159,8 @@ Available presets
 
 | Name                    | Version | Description                          |
 | ----------------------- | ------- | ------------------------------------ |
-| [@gasket/preset-api]    | 7.3.9   | Create Express-based API with Gasket |
-| [@gasket/preset-nextjs] | 7.3.9   | Basic NextJS Framework               |
+| [@gasket/preset-api]    | 7.4.0   | Create Express-based API with Gasket |
+| [@gasket/preset-nextjs] | 7.4.0   | Basic NextJS Framework               |
 
 ## Plugins
 
@@ -167,34 +169,35 @@ Available plugins
 | Name                             | Version | Description                                                               |
 | -------------------------------- | ------- | ------------------------------------------------------------------------- |
 | [@gasket/plugin-analyze]         | 7.3.5   | Gasket Analyzer Plugin                                                    |
-| [@gasket/plugin-command]         | 7.3.6   | Plugin to enable other plugins to inject new gasket commands              |
-| [@gasket/plugin-cypress]         | 7.4.1   | Integrates Cypress based testing into your Gasket application             |
-| [@gasket/plugin-data]            | 7.3.5   | Supports application-specific settings and configurations                 |
-| [@gasket/plugin-docs]            | 7.3.6   | Centralize doc files from plugins and modules                             |
+| [@gasket/plugin-command]         | 7.4.0   | Plugin to enable other plugins to inject new gasket commands              |
+| [@gasket/plugin-cypress]         | 7.5.0   | Integrates Cypress based testing into your Gasket application             |
+| [@gasket/plugin-data]            | 7.4.0   | Supports application-specific settings and configurations                 |
+| [@gasket/plugin-docs]            | 7.4.0   | Centralize doc files from plugins and modules                             |
 | [@gasket/plugin-docs-graphs]     | 7.3.4   | Generate mermaid graphs of an applications gasket lifecycles              |
 | [@gasket/plugin-docusaurus]      | 7.4.2   | Gasket plugin for docusaurus                                              |
-| [@gasket/plugin-dynamic-plugins] | 7.3.5   |                                                                           |
-| [@gasket/plugin-elastic-apm]     | 7.3.4   | Adds Elastic APM instrumentation to your application                      |
-| [@gasket/plugin-express]         | 7.3.5   | Adds express support to your application                                  |
-| [@gasket/plugin-fastify]         | 7.3.6   | Adds fastify support to your application                                  |
-| [@gasket/plugin-git]             | 7.3.4   | Adds git support to your application                                      |
+| [@gasket/plugin-dynamic-plugins] | 7.3.7   |                                                                           |
+| [@gasket/plugin-elastic-apm]     | 7.4.0   | Adds Elastic APM instrumentation to your application                      |
+| [@gasket/plugin-express]         | 7.4.0   | Adds express support to your application                                  |
+| [@gasket/plugin-fastify]         | 7.4.0   | Adds fastify support to your application                                  |
+| [@gasket/plugin-git]             | 7.4.0   | Adds git support to your application                                      |
 | [@gasket/plugin-happyfeet]       | 7.3.4   | A gasket plugin to enable happyfeet healthchecks                          |
 | [@gasket/plugin-https]           | 7.3.5   | Create http/s servers with graceful termination                           |
-| [@gasket/plugin-https-proxy]     | 7.3.5   | Adds support for running an https proxy                                   |
-| [@gasket/plugin-intl]            | 7.4.1   | NodeJS script to build localization files.                                |
-| [@gasket/plugin-jest]            | 7.4.2   | Integrated jest into your application.                                    |
-| [@gasket/plugin-lint]            | 7.3.6   | Adds GoDaddy standard linting to your application                         |
+| [@gasket/plugin-https-proxy]     | 7.3.7   | Adds support for running an https proxy                                   |
+| [@gasket/plugin-intl]            | 7.5.0   | NodeJS script to build localization files.                                |
+| [@gasket/plugin-jest]            | 7.5.0   | Integrated jest into your application.                                    |
+| [@gasket/plugin-lint]            | 7.4.0   | Adds GoDaddy standard linting to your application                         |
 | [@gasket/plugin-logger]          | 7.3.4   | Gasket plugin for logging                                                 |
 | [@gasket/plugin-manifest]        | 7.3.4   | The web app manifest for progressive Gasket applications                  |
-| [@gasket/plugin-metadata]        | 7.3.9   | Adds metadata to gasket lifecycles                                        |
-| [@gasket/plugin-middleware]      | 7.3.6   | Handles common server engine setups for routing and executing lifecycles. |
-| [@gasket/plugin-mocha]           | 7.4.1   | Integrates mocha based testing in to your Gasket application              |
+| [@gasket/plugin-metadata]        | 7.4.0   | Adds metadata to gasket lifecycles                                        |
+| [@gasket/plugin-middleware]      | 7.4.0   | Handles common server engine setups for routing and executing lifecycles. |
+| [@gasket/plugin-mocha]           | 7.5.0   | Integrates mocha based testing in to your Gasket application              |
 | [@gasket/plugin-morgan]          | 7.3.4   | Adds morgan request logger to your app                                    |
-| [@gasket/plugin-nextjs]          | 7.4.3   | Adds Next support to your application                                     |
+| [@gasket/plugin-nextjs]          | 7.5.0   | Adds Next support to your application                                     |
 | [@gasket/plugin-redux]           | 7.4.1   | DEPRECATED Gasket Redux Setup                                             |
 | [@gasket/plugin-service-worker]  | 7.4.1   | Gasket Service Worker Plugin                                              |
 | [@gasket/plugin-swagger]         | 7.3.5   | Generate and serve swagger docs                                           |
-| [@gasket/plugin-typescript]      | 7.3.4   | Gasket plugin for TypeScript support                                      |
+| [@gasket/plugin-typescript]      | 7.4.0   | Gasket plugin for TypeScript support                                      |
+| [@gasket/plugin-vitest]          | 7.0.0   | Integrates Vitest based testing in to your Gasket application             |
 | [@gasket/plugin-webpack]         | 7.3.4   | Adds webpack support to your application                                  |
 | [@gasket/plugin-winston]         | 7.3.4   | Gasket logger based on Winston                                            |
 | [@gasket/plugin-workbox]         | 7.3.4   | Gasket Workbox Plugin                                                     |
@@ -207,8 +210,8 @@ Supporting modules
 
 | Name              | Version | Description                                |
 | ----------------- | ------- | ------------------------------------------ |
-| [@gasket/core]    | 7.4.1   | Entry point to setting up Gasket instances |
-| create-gasket-app | 7.3.9   | starter pack for creating a gasket app     |
+| [@gasket/core]    | 7.5.0   | Entry point to setting up Gasket instances |
+| create-gasket-app | 7.4.0   | starter pack for creating a gasket app     |
 
 ## Configurations
 
@@ -351,6 +354,7 @@ Available configuration options in the `gasket.js`
 [gasket-data.js]:/packages/gasket-plugin-data/README.md
 [jest.config.js]:https://jestjs.io/docs/configuration
 [redux/store.js]:/packages/gasket-plugin-redux/README.md
+[vitest.config.js]:https://vitest.dev/config/
 [@gasket/preset-api]:/packages/gasket-preset-api/README.md
 [@gasket/preset-nextjs]:/packages/gasket-preset-nextjs/README.md
 [@gasket/plugin-analyze]:/packages/gasket-plugin-analyze/README.md
@@ -382,6 +386,7 @@ Available configuration options in the `gasket.js`
 [@gasket/plugin-service-worker]:/packages/gasket-plugin-service-worker/README.md
 [@gasket/plugin-swagger]:/packages/gasket-plugin-swagger/README.md
 [@gasket/plugin-typescript]:/packages/gasket-plugin-typescript/README.md
+[@gasket/plugin-vitest]:/packages/gasket-plugin-vitest/README.md
 [@gasket/plugin-webpack]:/packages/gasket-plugin-webpack/README.md
 [@gasket/plugin-winston]:/packages/gasket-plugin-winston/README.md
 [@gasket/plugin-workbox]:/packages/gasket-plugin-workbox/README.md
