@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import IndexPage from '../pages/index.js';
+import IndexPage from '../pages/index.jsx';
 import { expect } from '@jest/globals';
 {{#if hasGasketIntl}}
 import { IntlProvider } from '{{reactIntlPkg}}';
