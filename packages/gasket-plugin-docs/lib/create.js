@@ -29,7 +29,7 @@ module.exports = function create(gasket, {
   });
 
   const docsScript = typescript
-    ? 'node --import tsx gasket.ts docs'
+    ? 'tsx gasket.ts docs'
     : 'node gasket.js docs';
   pkg.add('scripts', {
     docs: docsScript
