@@ -1,7 +1,7 @@
 {
   "name": "@gasket/typescript-tests",
   "private": true,
-  "version": "7.4.0",
+  "version": "7.4.1",
   "description": "Not a published package; hosts unit tests to verify TypeScript support",
   "files": [
     "lib"
@@ -90,7 +90,7 @@
     "redux": "^5.0.1",
     "ts-jest": "^29.2.5",
     "typescript": "^5.8.2",
-    "vitest": "^3.0.7",
+    "vitest": "^3.2.0",
     "winston-transport": "^4.9.0",
     "workbox-build": "^4.3.1"
   },

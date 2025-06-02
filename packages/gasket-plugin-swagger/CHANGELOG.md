@@ -1,5 +1,11 @@
 # `@gasket/plugin-swagger`
 
+## 7.3.6
+
+### Patch Changes
+
+- c456fba: bump dependencies
+
 ## 7.3.5
 
 ### Patch Changes
