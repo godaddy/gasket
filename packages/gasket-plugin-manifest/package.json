@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-manifest",
-  "version": "7.3.4",
+  "version": "7.3.5",
   "description": "The web app manifest for progressive Gasket applications",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
