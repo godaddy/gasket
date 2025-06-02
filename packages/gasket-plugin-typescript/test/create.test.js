@@ -56,11 +56,11 @@ describe('create hook', () => {
       mockContext.apiApp = true;
       create({}, mockContext);
       expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
-        prebuild: 'node --import tsx gasket.ts build',
+        prebuild: 'tsx gasket.ts build',
         build: 'tsc',
         preview: 'npm run build && npm run start',
         start: 'node dist/server.js',
-        local: 'node --import tsx --watch server.ts'
+        local: 'tsx watch server.ts'
       });
     });
 
