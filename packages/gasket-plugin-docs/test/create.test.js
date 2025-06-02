@@ -71,7 +71,7 @@ describe('the create hook', () => {
     create({}, { ...mockContext, typescript: true });
 
     expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
-      docs: 'node --import tsx gasket.ts docs'
+      docs: 'tsx gasket.ts docs'
     });
   });
 
