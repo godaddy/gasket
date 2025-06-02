@@ -1,5 +1,11 @@
 # `@gasket/plugin-vitest`
 
+## 7.0.2
+
+### Patch Changes
+
+- 116aa96: Fix local script watcher
+
 ## 7.0.1
 
 ### Patch Changes
