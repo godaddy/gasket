@@ -304,7 +304,7 @@ describe('create hook', () => {
         start: 'next start',
         local: 'next dev',
         preview: 'npm run build && npm run start',
-        prebuild: 'node --import tsx gasket.ts build'
+        prebuild: 'tsx gasket.ts build'
       });
     });
 
@@ -319,8 +319,8 @@ describe('create hook', () => {
         'build': 'npm run build:tsc && next build',
         'start': 'node dist/server.js',
         'preview': 'npm run build && npm run start',
-        'local': 'concurrently "npm run build:tsc:watch" "GASKET_DEV=1 node --import tsx --watch server.ts"',
-        'prebuild': 'node --import tsx gasket.ts build'
+        'local': 'concurrently "npm run build:tsc:watch" "GASKET_DEV=1 tsx watch server.ts"',
+        'prebuild': 'tsx gasket.ts build'
       });
     });
 
@@ -332,14 +332,14 @@ describe('create hook', () => {
       await create.handler({}, mockContext);
       expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
         'start:https': 'node dist/server.js',
-        'local:https': 'node --import tsx --watch server.ts',
+        'local:https': 'tsx watch server.ts',
         'start': 'npm run start:https & next start',
         'local': 'concurrently "npm run build:tsc:watch" "npm run local:https" "next dev"',
         'build:tsc': 'tsc -p ./tsconfig.server.json',
         'build:tsc:watch': 'tsc -p ./tsconfig.server.json --watch',
         'build': 'npm run build:tsc && next build',
         'preview': 'npm run build && npm run start',
-        'prebuild': 'node --import tsx gasket.ts build'
+        'prebuild': 'tsx gasket.ts build'
       });
     });
   });
