@@ -1,5 +1,12 @@
 # `@gasket/plugin-nextjs`
 
+## 7.5.2
+
+### Patch Changes
+
+- 116aa96: Fix local script watcher
+  - @gasket/plugin-webpack@7.3.4
+
 ## 7.5.1
 
 ### Patch Changes

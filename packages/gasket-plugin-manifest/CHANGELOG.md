@@ -1,5 +1,11 @@
 # `@gasket/plugin-manifest`
 
+## 7.3.6
+
+### Patch Changes
+
+- 116aa96: Fix local script watcher
+
 ## 7.3.5
 
 ### Patch Changes

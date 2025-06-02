@@ -1,5 +1,12 @@
 # `@gasket/plugin-docs`
 
+## 7.4.1
+
+### Patch Changes
+
+- 116aa96: Fix local script watcher
+  - @gasket/plugin-command@7.4.0
+
 ## 7.4.0
 
 ### Minor Changes

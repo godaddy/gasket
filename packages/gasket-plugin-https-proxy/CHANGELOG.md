@@ -1,5 +1,11 @@
 # `@gasket/plugin-https-proxy`
 
+## 7.3.9
+
+### Patch Changes
+
+- 116aa96: Fix local script watcher
+
 ## 7.3.8
 
 ### Patch Changes
