@@ -1,5 +1,11 @@
 # `@gasket/plugin-service-worker`
 
+## 7.4.3
+
+### Patch Changes
+
+- 116aa96: Fix local script watcher
+
 ## 7.4.2
 
 ### Patch Changes

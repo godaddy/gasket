@@ -1,5 +1,13 @@
 # `@gasket/plugin-metadata`
 
+## 7.4.2
+
+### Patch Changes
+
+- 116aa96: Fix local script watcher
+  - @gasket/core@7.5.0
+  - @gasket/plugin-logger@7.3.4
+
 ## 7.4.1
 
 ### Patch Changes
