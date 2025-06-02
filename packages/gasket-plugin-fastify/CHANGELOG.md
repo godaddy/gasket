@@ -1,5 +1,11 @@
 # `@gasket/plugin-fastify`
 
+## 7.4.1
+
+### Patch Changes
+
+- c456fba: bump dependencies
+
 ## 7.4.0
 
 ### Minor Changes

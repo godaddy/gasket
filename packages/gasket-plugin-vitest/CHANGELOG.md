@@ -1,5 +1,11 @@
 # `@gasket/plugin-vitest`
 
+## 7.0.1
+
+### Patch Changes
+
+- c456fba: bump dependencies
+
 ## 7.0.0
 
 ### Major Changes
