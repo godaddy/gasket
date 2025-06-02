@@ -1,5 +1,11 @@
 # @gasket/typescript-tests
 
+## 7.4.2
+
+### Patch Changes
+
+- 116aa96: Fix local script watcher
+
 ## 7.4.1
 
 ### Patch Changes
