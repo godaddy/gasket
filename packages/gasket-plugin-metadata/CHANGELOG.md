@@ -1,5 +1,13 @@
 # `@gasket/plugin-metadata`
 
+## 7.4.1
+
+### Patch Changes
+
+- c456fba: bump dependencies
+  - @gasket/core@7.5.0
+  - @gasket/plugin-logger@7.3.4
+
 ## 7.4.0
 
 ### Minor Changes

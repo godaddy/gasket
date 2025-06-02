@@ -1,5 +1,11 @@
 # `@gasket/plugin-https-proxy`
 
+## 7.3.8
+
+### Patch Changes
+
+- c456fba: bump dependencies
+
 ## 7.3.7
 
 ### Patch Changes

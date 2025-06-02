@@ -1,5 +1,11 @@
 # `@gasket/plugin-manifest`
 
+## 7.3.5
+
+### Patch Changes
+
+- c456fba: bump dependencies
+
 ## 7.3.4
 
 ### Patch Changes

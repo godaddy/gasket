@@ -1,5 +1,12 @@
 # `@gasket/plugin-nextjs`
 
+## 7.5.1
+
+### Patch Changes
+
+- c456fba: bump dependencies
+  - @gasket/plugin-webpack@7.3.4
+
 ## 7.5.0
 
 ### Minor Changes
