@@ -8,6 +8,24 @@ const require = createRequire(import.meta.url);
 const hasVersionOrTag = /@([\^~]?\d+\.\d+\.\d+(?:-[\d\w.-]+)?|[\^~]?\d+\.\d+\.\d+|[a-zA-Z]+|file:.+)$/;
 
 /**
+ * validatePresetName - Validate the preset name
+ * @param {string} preset - The preset name
+ * @returns {void}
+ */
+function validatePresetName(preset) {
+  const isNotShortName = preset.includes('/gasket-preset-') || preset.includes('@gasket/preset-');
+  const isMispelled = preset.endsWith('-preset');
+
+  if (isMispelled) {
+    throw new Error(`Invalid preset name: ${preset}. Please check the name and try again.`);
+  }
+
+  if (!isNotShortName) {
+    throw new Error(`Invalid preset short name: ${preset}. Presets must be a full name.`);
+  }
+}
+
+/**
  * loadPresets - Load presets to temp directory
  * @type {import('../../internal.js').loadPresets}
  */
@@ -23,6 +41,7 @@ async function loadPresets({ context }) {
   const pkgVerb = pkgManager.manager === 'npm' ? 'install' : 'add';
 
   const remotePresets = context.rawPresets.map(async preset => {
+    validatePresetName(preset);
     const parts = hasVersionOrTag.test(preset) && preset.split('@').filter(Boolean);
     const name = parts ? `@${parts[0]}` : preset;
     const version = parts ? `@${parts[1]}` : '@latest';
@@ -39,12 +58,16 @@ async function loadPresets({ context }) {
       const mod = await import(`${modPath}/${name}/${entryPath}`);
       return mod.default?.default || mod.default || mod;
     } catch (err) {
-      throw new Error(`Failed to install preset ${name}${version}: ${err.message}`);
+      const errorMessage = err.stderr || err.message;
+      if (err.stderr && err.stderr.includes('is not in this registry')) {
+        throw new Error(`Preset not found in registry: ${name}${version}. Use npm_config_registry=<registry> to use privately scoped presets.`);
+      }
+
+      throw new Error(`Failed to install preset ${name}${version}: ${errorMessage}`);
     }
   });
 
   const localPresets = context.localPresets.map(async localPresetPath => {
-
     try {
       await pkgManager.exec(pkgVerb, [localPresetPath]);
       const pkgFile = require(path.join(localPresetPath, 'package.json'));

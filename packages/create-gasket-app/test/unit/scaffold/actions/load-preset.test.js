@@ -50,6 +50,12 @@ jest.unstable_mockModule('@gasket/preset-bogus', () => (presetBogus));
 jest.unstable_mockModule('@gasket/preset-all-i-ever-wanted', () => (presetAllIEverWanted));
 jest.unstable_mockModule('@gasket/preset-some', () => (presetSome));
 jest.unstable_mockModule('gasket-preset-local', () => (presetLocal));
+jest.unstable_mockModule('@gasket/preset-bogus-not-found', () => {
+  const err = new Error('some npm error');
+  err.stderr = "'@gasket/preset-bogus-not-found' is not in this registry.";
+  err.code = 404;
+  throw err;
+});
 
 const loadPreset = (await import('../../../../lib/scaffold/actions/load-preset.js')).default;
 
@@ -276,5 +282,29 @@ describe('loadPreset', () => {
     expect(mockContext).toHaveProperty('presets', [
       expect.objectContaining(presetNpmExports)
     ]);
+  });
+
+  it('throws error if preset name is short name', async () => {
+    mockContext.rawPresets = ['@gasket/bogus'];
+
+    await expect(async () => {
+      await loadPreset({ context: mockContext });
+    }).rejects.toThrow('Invalid preset short name: @gasket/bogus. Presets must be a full name.');
+  });
+
+  it('throws error if preset name is mispelled', async () => {
+    mockContext.rawPresets = ['@gasket/bogus-preset'];
+
+    await expect(async () => {
+      await loadPreset({ context: mockContext });
+    }).rejects.toThrow('Invalid preset name: @gasket/bogus-preset. Please check the name and try again.');
+  });
+
+  it('throws error if preset is not found in registry', async () => {
+    mockContext.rawPresets = ['@gasket/preset-bogus-not-found'];
+
+    await expect(async () => {
+      await loadPreset({ context: mockContext });
+    }).rejects.toThrow('Preset not found in registry: @gasket/preset-bogus-not-found@latest. Use npm_config_registry=<registry> to use privately scoped presets.');
   });
 });
