@@ -1,5 +1,11 @@
 # `@gasket/fetch`
 
+## 7.3.6
+
+### Patch Changes
+
+- bd598ff: Fix fetch type, enhance error messaging in cli
+
 ## 7.3.5
 
 ### Patch Changes

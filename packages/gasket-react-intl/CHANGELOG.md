@@ -1,5 +1,13 @@
 # `@gasket/react-intl`
 
+## 8.0.1
+
+### Patch Changes
+
+- Updated dependencies [bd598ff]
+  - @gasket/fetch@7.3.6
+  - @gasket/plugin-intl@7.5.0
+
 ## 8.0.0
 
 ### Minor Changes
