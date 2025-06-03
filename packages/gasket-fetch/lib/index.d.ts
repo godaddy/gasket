@@ -2,7 +2,7 @@
 import type * as NodeFetch from 'node-fetch';
 import type AbortController from 'abort-controller';
 
-export function fetchWrapper(
+export default function fetchWrapper(
   /** The resource that you wish to fetch. */
   input: RequestInfo | URL,
   /** An object containing any custom settings. */

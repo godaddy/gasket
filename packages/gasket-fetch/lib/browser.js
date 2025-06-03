@@ -4,7 +4,7 @@
  * This function behaves like the native fetch but is exposed as a module export,
  * with support for CommonJS and TypeScript interop. It also exposes the standard
  * fetch-related constructors as static properties.
- * @type {import('.').fetchWrapper}
+ * @type {import('.').default}
  * @see https://developer.mozilla.org/docs/Web/API/fetch
  */
 function fetchWrapper(input, init) {
