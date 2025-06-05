@@ -89,6 +89,7 @@ declare module '@gasket/core' {
   }
 
   export interface GasketActions {
+    prepareServer?: () => Promise<void>;
     startServer?: () => Promise<void>;
   }
 

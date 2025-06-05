@@ -4,12 +4,22 @@ module.exports = function metadata(gasket, meta) {
     ...meta,
     actions: [
       {
+        name: 'prepareServer',
+        description: 'Prepare the server',
+        link: 'README.md#prepareServer'
+      },
+      {
         name: 'startServer',
         description: 'Start the server',
         link: 'README.md#startServer'
       }
     ],
     lifecycles: [
+      {
+        name: 'preboot',
+        description: 'Executed before the server is started.',
+        link: 'README.md#preboot'
+      },
       {
         name: 'devProxy',
         method: 'execWaterfall',

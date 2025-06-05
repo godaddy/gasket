@@ -100,6 +100,16 @@ export default makeGasket({
 
 ## Actions
 
+### prepareServer
+
+This action allows for plugins to execute operations before the server is started. It will execute the `preboot` lifecycle.
+
+```js
+import gasket from './gasket.js';
+gasket.actions.prepareServer();
+```
+
+> **Best Practice**: This action is automatically called by `startServer`, so you typically don't need to call it directly unless you need to run preparation steps separately.
 ### startServer
 
 This action kicks off the machinery to get your Gasket app running.
@@ -114,6 +124,22 @@ This action will execute several of the lifecycles mentioned next, allowing apps
 and plugins to further set the server up.
 
 ## Lifecycles
+
+### preboot
+
+This lifecycle is executed before the server is started. It is a good place to
+execute operations that need to happen before the server is started.
+
+```js
+/**
+ * Executed before the server is started.
+ *
+ * @param {Gasket} gasket Gasket API.
+ */
+preboot: async function preboot(gasket) {
+  // async operations
+}
+```
 
 ### devProxy
 

@@ -29,6 +29,7 @@ describe('Plugin', function () {
 
   it('has expected actions', () => {
     const expected = [
+      'prepareProxyServer',
       'startProxyServer'
     ];
 

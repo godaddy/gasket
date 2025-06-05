@@ -25,6 +25,7 @@ declare module '@gasket/core' {
   }
 
   export interface GasketActions {
+    prepareProxyServer: () => Promise<void>;
     startProxyServer: () => Promise<ProxyServer>;
   }
 }

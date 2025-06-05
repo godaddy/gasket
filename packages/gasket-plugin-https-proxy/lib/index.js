@@ -21,12 +21,22 @@ export default {
         ...meta,
         actions: [
           {
+            name: 'prepareProxyServer',
+            description: 'Prepare the proxy server',
+            link: 'README.md#prepareProxyServer'
+          },
+          {
             name: 'startProxyServer',
             description: 'Start the proxy server',
             link: 'README.md#startProxyServer'
           }
         ],
         lifecycles: [
+          {
+            name: 'preboot',
+            description: 'Executed before the server is started.',
+            link: 'README.md#preboot'
+          },
           {
             name: 'httpsProxy',
             method: 'execWaterfall',
