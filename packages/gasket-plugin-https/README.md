@@ -109,6 +109,7 @@ import gasket from './gasket.js';
 gasket.actions.prepareServer();
 ```
 
+> **Best Practice**: This action is automatically called by `startServer`, so you typically don't need to call it directly unless you need to run preparation steps separately.
 ### startServer
 
 This action kicks off the machinery to get your Gasket app running.
