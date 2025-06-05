@@ -2,7 +2,7 @@
 
 Create an HTTPS proxy server with Gasket to use as a sidecar for frameworks that
 do not handle HTTPS, such as Next.js. This can be useful for local development
-when you want to test HTTPS features and use secure cookies for 
+when you want to test HTTPS features and use secure cookies for
 authentication, etc.
 It can also be used in production if it is necessary for your application to
 handle HTTPS requests on the container.
@@ -93,6 +93,15 @@ export default makeGasket({
 
 ## Actions
 
+### prepareProxyServer
+
+This action allows for plugins to execute operations before the proxy server is started. It will execute the `preboot` lifecycle.
+
+```js
+import gasket from './gasket.js';
+gasket.actions.prepareProxyServer();
+```
+
 ### startProxyServer
 
 Use this action to start the HTTPS proxy server.
@@ -103,6 +112,22 @@ gasket.actions.startProxyServer();
 ```
 
 ## Lifecycles
+
+### preboot
+
+This lifecycle is executed before the proxy server is started. It is a good place to
+execute operations that need to happen before the proxy server is started.
+
+```js
+/**
+ * Executed before the proxy server is started.
+ *
+ * @param {Gasket} gasket Gasket API.
+ */
+preboot: async function preboot(gasket) {
+  // async operations
+}
+```
 
 ### httpsProxy
 

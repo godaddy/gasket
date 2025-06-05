@@ -35,7 +35,8 @@ describe('actions', () => {
       logger: {
         info: jest.fn(),
         error: jest.fn()
-      }
+      },
+      actions: { prepareServer: jest.fn().mockResolvedValue() }
     };
     handler = jest.fn().mockImplementation(fn => fn());
     gasketAPI.exec.mockResolvedValue([handler]);
@@ -397,6 +398,60 @@ describe('actions', () => {
       await lifecycle();
 
       expect(mockExec).toHaveBeenCalledWith('healthcheck', mockHealthCheckError);
+    });
+  });
+
+  describe('prepareServer', () => {
+
+    it('is exported', () => {
+      expect(actions.prepareServer).toBeInstanceOf(Function);
+    });
+
+    it('calls preboot', async () => {
+      await actions.prepareServer(gasketAPI);
+      expect(gasketAPI.exec).toHaveBeenCalledWith('preboot');
+    });
+
+    it('waits for isReady before calling preboot', async () => {
+      let readyResolved = false;
+      const isReady = new Promise(resolve => setTimeout(() => {
+        readyResolved = true;
+        resolve();
+      }, 10));
+      const exec = jest.fn();
+      const gasket = { exec, isReady };
+
+      await actions.prepareServer(gasket);
+
+      expect(readyResolved).toBe(true);
+      expect(exec).toHaveBeenCalledWith('preboot');
+    });
+
+    it('calls exec(\"preboot\") exactly once', async () => {
+      const exec = jest.fn();
+      const isReady = Promise.resolve();
+      const gasket = { exec, isReady };
+
+      await actions.prepareServer(gasket);
+
+      expect(exec).toHaveBeenCalledTimes(1);
+      expect(exec).toHaveBeenCalledWith('preboot');
+    });
+
+    it('propagates errors from isReady', async () => {
+      const exec = jest.fn();
+      const isReady = Promise.reject(new Error('fail'));
+      const gasket = { exec, isReady };
+
+      await expect(actions.prepareServer(gasket)).rejects.toThrow('fail');
+    });
+
+    it('propagates errors from exec(\"preboot\")', async () => {
+      const exec = jest.fn().mockRejectedValue(new Error('preboot fail'));
+      const isReady = Promise.resolve();
+      const gasket = { exec, isReady };
+
+      await expect(actions.prepareServer(gasket)).rejects.toThrow('preboot fail');
     });
   });
 });
