@@ -111,6 +111,14 @@ import gasket from './gasket.js';
 gasket.actions.startProxyServer();
 ```
 
+This action follows the pattern: `prepareProxyServer` → `preboot` lifecycle → proxy server initialization.
+
+The complete flow is:
+
+1. Waits for `gasket.isReady` (ensuring async configuration is complete)
+2. Executes the `preboot` lifecycle (one-time initialization)
+3. Executes the `httpsProxy` lifecycle for dynamic configuration
+4. Creates and starts the proxy server
 ## Lifecycles
 
 ### preboot
