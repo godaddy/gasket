@@ -102,6 +102,7 @@ import gasket from './gasket.js';
 gasket.actions.prepareProxyServer();
 ```
 
+> **Best Practice**: This action is automatically called by `startProxyServer`, so you typically don't need to call it directly unless you need to run preparation steps separately.
 ### startProxyServer
 
 Use this action to start the HTTPS proxy server.
