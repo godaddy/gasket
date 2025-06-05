@@ -427,7 +427,7 @@ describe('actions', () => {
       expect(exec).toHaveBeenCalledWith('preboot');
     });
 
-    it('calls exec(\"preboot\") exactly once', async () => {
+    it('calls exec("preboot") exactly once', async () => {
       const exec = jest.fn();
       const isReady = Promise.resolve();
       const gasket = { exec, isReady };
@@ -446,7 +446,7 @@ describe('actions', () => {
       await expect(actions.prepareServer(gasket)).rejects.toThrow('fail');
     });
 
-    it('propagates errors from exec(\"preboot\")', async () => {
+    it('propagates errors from exec("preboot")', async () => {
       const exec = jest.fn().mockRejectedValue(new Error('preboot fail'));
       const isReady = Promise.resolve();
       const gasket = { exec, isReady };
