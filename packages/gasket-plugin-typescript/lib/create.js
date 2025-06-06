@@ -11,9 +11,11 @@ module.exports = async function create(gasket, context) {
     apiApp,
     gitignore,
     readme,
-    testPlugins
+    testPlugins,
+    packageManager
   } = context;
   const depType = apiApp ? 'devDependencies' : 'dependencies';
+  const runCmd = packageManager === 'yarn' ? 'yarn' : packageManager === 'pnpm' ? 'pnpm' : 'npm run';
 
   // Shared dependencies
   pkg.add(depType, {
@@ -39,7 +41,7 @@ module.exports = async function create(gasket, context) {
     pkg.add('scripts', {
       prebuild: 'tsx gasket.ts build',
       build: 'tsc',
-      preview: 'npm run build && npm run start',
+      preview: `${runCmd} build && ${runCmd} start`,
       start: 'node dist/server.js',
       local: 'tsx watch server.ts'
     });
