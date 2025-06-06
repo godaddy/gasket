@@ -143,18 +143,20 @@ function addDependencies({ pkg, typescript }) {
  * @property {boolean} nextDevProxy - Selected dev proxy from prompt
  * @property {boolean} typescript - Selected typescript from prompt
  * @property {boolean} hasGasketIntl - Selected gasket-intl from prompt
+ * @property {string} packageManager - Selected package manager
  */
-function addNpmScripts({ pkg, nextServerType, nextDevProxy, typescript, hasGasketIntl }) {
+function addNpmScripts({ pkg, nextServerType, nextDevProxy, typescript, hasGasketIntl, packageManager }) {
   const fileExtension = typescript ? 'ts' : 'js';
   const bin = typescript ? 'tsx' : 'node';
   const watcher = typescript ? 'tsx watch' : 'nodemon';
+  const runCmd = packageManager === 'yarn' ? 'yarn' : packageManager === 'pnpm' ? 'pnpm' : 'npm run';
   const prebuild = hasGasketIntl ? { prebuild: `${bin} gasket.${fileExtension} build` } : {};
 
   const scripts = {
     build: 'next build',
     start: 'next start',
     local: 'next dev',
-    preview: 'npm run build && npm run start',
+    preview: `${runCmd} build && ${runCmd} start`,
     ...prebuild
   };
 
@@ -164,21 +166,21 @@ function addNpmScripts({ pkg, nextServerType, nextDevProxy, typescript, hasGaske
     if (typescript) {
       scripts['build:tsc'] = 'tsc -p ./tsconfig.server.json';
       scripts['build:tsc:watch'] = 'tsc -p ./tsconfig.server.json --watch';
-      scripts.build = 'npm run build:tsc && next build';
+      scripts.build = `${runCmd} build:tsc && next build`;
       scripts.start = 'node dist/server.js';
-      scripts.local = `concurrently "npm run build:tsc:watch" "GASKET_DEV=1 ${watcher} server.${fileExtension}"`;
+      scripts.local = `concurrently "${runCmd} build:tsc:watch" "GASKET_DEV=1 ${watcher} server.${fileExtension}"`;
     }
   } else if (nextDevProxy) {
     scripts['start:https'] = `node server.js`;
     scripts['local:https'] = `${watcher} server.${fileExtension}`;
-    scripts.start = `npm run start:https & next start`;
-    scripts.local = `npm run local:https & next dev`;
+    scripts.start = `${runCmd} start:https & next start`;
+    scripts.local = `${runCmd} local:https & next dev`;
     if (typescript) {
       scripts['build:tsc:watch'] = 'tsc -p ./tsconfig.server.json --watch';
       scripts['build:tsc'] = 'tsc -p ./tsconfig.server.json';
-      scripts.build = 'npm run build:tsc && next build';
+      scripts.build = `${runCmd} build:tsc && next build`;
       scripts['start:https'] = `node dist/server.js`;
-      scripts.local = 'concurrently "npm run build:tsc:watch" "npm run local:https" "next dev"';
+      scripts.local = `concurrently "${runCmd} build:tsc:watch" "${runCmd} local:https" "next dev"`;
     }
   }
 
@@ -240,7 +242,7 @@ module.exports = {
     createTestFiles({ files, generatorDir, testPlugins, appStructure, typescript });
     createNextFiles({ files, generatorDir, nextDevProxy, typescript, nextServerType });
     addDependencies({ pkg, typescript });
-    addNpmScripts({ pkg, nextServerType, nextDevProxy, typescript, hasGasketIntl });
+    addNpmScripts({ pkg, nextServerType, nextDevProxy, typescript, hasGasketIntl, packageManager: context.packageManager });
     addConfig(context);
     if (addSitemap) configureSitemap({ files, pkg, generatorDir });
   }
