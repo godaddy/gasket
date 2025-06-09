@@ -21,11 +21,6 @@ export default {
         ...meta,
         actions: [
           {
-            name: 'prepareProxyServer',
-            description: 'Prepare the proxy server',
-            link: 'README.md#prepareProxyServer'
-          },
-          {
             name: 'startProxyServer',
             description: 'Start the proxy server',
             link: 'README.md#startProxyServer'
@@ -33,9 +28,9 @@ export default {
         ],
         lifecycles: [
           {
-            name: 'preboot',
-            description: 'Executed before the server is started.',
-            link: 'README.md#preboot'
+            name: 'prebootHttpsProxy',
+            description: 'Executed before the proxy server is started.',
+            link: 'README.md#prebootHttpsProxy'
           },
           {
             name: 'httpsProxy',

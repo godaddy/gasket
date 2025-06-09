@@ -93,15 +93,6 @@ export default makeGasket({
 
 ## Actions
 
-### prepareProxyServer
-
-This action allows for plugins to execute operations before the proxy server is started. It will execute the `preboot` lifecycle.
-
-```js
-import gasket from './gasket.js';
-gasket.actions.prepareProxyServer();
-```
-
 ### startProxyServer
 
 Use this action to start the HTTPS proxy server.
@@ -113,7 +104,7 @@ gasket.actions.startProxyServer();
 
 ## Lifecycles
 
-### preboot
+### prebootHttpsProxy
 
 This lifecycle is executed before the proxy server is started. It is a good place to
 execute operations that need to happen before the proxy server is started.
@@ -124,7 +115,7 @@ execute operations that need to happen before the proxy server is started.
  *
  * @param {Gasket} gasket Gasket API.
  */
-preboot: async function preboot(gasket) {
+prebootHttpsProxy: async function prebootHttpsProxy(gasket) {
   // async operations
 }
 ```

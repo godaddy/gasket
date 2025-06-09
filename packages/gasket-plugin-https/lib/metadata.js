@@ -4,11 +4,6 @@ module.exports = function metadata(gasket, meta) {
     ...meta,
     actions: [
       {
-        name: 'prepareServer',
-        description: 'Prepare the server',
-        link: 'README.md#prepareServer'
-      },
-      {
         name: 'startServer',
         description: 'Start the server',
         link: 'README.md#startServer'

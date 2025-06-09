@@ -1,19 +1,9 @@
 import proxy from 'http-proxy';
 
-/**
- * Gasket action: prepareProxyServer
- * @param {import('@gasket/core').Gasket} gasket Gasket instance
- * @returns {Promise<void>} promise
- * @public
- */
-export async function prepareProxyServer(gasket) {
-  await gasket.isReady;
-  await gasket.exec('preboot');
-}
-
 /** @type {import('@gasket/core').ActionHandler<'startProxyServer'>} */
 export async function startProxyServer(gasket) {
-  await gasket.actions.prepareProxyServer();
+  await gasket.isReady;
+  await gasket.exec('prebootHttpsProxy');
   const { httpsProxy } = gasket.config;
   const { logger } = gasket;
 
@@ -33,6 +23,5 @@ export async function startProxyServer(gasket) {
 }
 
 export const actions = {
-  prepareProxyServer,
   startProxyServer
 };

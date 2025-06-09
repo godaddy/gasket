@@ -1,6 +1,6 @@
 import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
 import proxy from 'http-proxy';
-import { startProxyServer, prepareProxyServer } from '../lib/actions.js';
+import { startProxyServer } from '../lib/actions.js';
 
 describe('actions', () => {
   let mockGasket, mockExecWaterfall, mockLogger, mockCreateServer;
@@ -26,8 +26,7 @@ describe('actions', () => {
       execWaterfall: mockExecWaterfall,
       exec: vi.fn(),
       isReady: Promise.resolve(),
-      logger: mockLogger,
-      actions: { prepareProxyServer: vi.fn().mockResolvedValue() }
+      logger: mockLogger
     };
   });
 
@@ -36,6 +35,43 @@ describe('actions', () => {
   });
 
   describe('startProxyServer', () => {
+
+    it('calls preboot', async () => {
+      await startProxyServer(mockGasket);
+      expect(mockGasket.exec).toHaveBeenCalledWith('prebootHttpsProxy');
+    });
+
+    it('waits for isReady before calling preboot', async () => {
+      let readyResolved = false;
+      mockGasket.isReady = new Promise(resolve => setTimeout(() => {
+        readyResolved = true;
+        resolve();
+      }, 10));
+
+      await startProxyServer(mockGasket);
+
+      expect(readyResolved).toBe(true);
+      expect(mockGasket.exec).toHaveBeenCalledWith('prebootHttpsProxy');
+    });
+
+    it('propagates errors from isReady', async () => {
+      mockGasket.isReady = Promise.reject(new Error('fail'));
+
+      await expect(startProxyServer(mockGasket)).rejects.toThrow('fail');
+    });
+
+    it('propagates errors from exec("preboot")', async () => {
+      mockGasket.exec = vi.fn().mockRejectedValue(new Error('preboot fail'));
+
+      await expect(startProxyServer(mockGasket)).rejects.toThrow('preboot fail');
+    });
+
+    it('calls exec("preboot") exactly once', async () => {
+      await startProxyServer(mockGasket);
+
+      expect(mockGasket.exec).toHaveBeenCalledTimes(1);
+      expect(mockGasket.exec).toHaveBeenCalledWith('prebootHttpsProxy');
+    });
 
     it('starts the proxy server with default options', async () => {
       await startProxyServer(mockGasket);
@@ -85,58 +121,5 @@ describe('actions', () => {
     });
   });
 
-  describe('prepareProxyServer', () => {
-
-    it('is exported', () => {
-      expect(prepareProxyServer).toBeInstanceOf(Function);
-    });
-
-    it('calls preboot', async () => {
-      await prepareProxyServer(mockGasket);
-      expect(mockGasket.exec).toHaveBeenCalledWith('preboot');
-    });
-
-    it('waits for isReady before calling preboot', async () => {
-      let readyResolved = false;
-      const isReady = new Promise(resolve => setTimeout(() => {
-        readyResolved = true;
-        resolve();
-      }, 10));
-      const exec = vi.fn();
-      const gasket = { exec, isReady };
-
-      await prepareProxyServer(gasket);
-
-      expect(readyResolved).toBe(true);
-      expect(exec).toHaveBeenCalledWith('preboot');
-    });
-
-    it('propagates errors from isReady', async () => {
-      const exec = vi.fn();
-      const isReady = Promise.reject(new Error('fail'));
-      const gasket = { exec, isReady };
-
-      await expect(prepareProxyServer(gasket)).rejects.toThrow('fail');
-    });
-
-    it('propagates errors from exec("preboot")', async () => {
-      const exec = vi.fn().mockRejectedValue(new Error('preboot fail'));
-      const isReady = Promise.resolve();
-      const gasket = { exec, isReady };
-
-      await expect(prepareProxyServer(gasket)).rejects.toThrow('preboot fail');
-    });
-
-    it('calls exec("preboot") exactly once', async () => {
-      const exec = vi.fn();
-      const isReady = Promise.resolve();
-      const gasket = { exec, isReady };
-
-      await prepareProxyServer(gasket);
-
-      expect(exec).toHaveBeenCalledTimes(1);
-      expect(exec).toHaveBeenCalledWith('preboot');
-    });
-  });
 
 });

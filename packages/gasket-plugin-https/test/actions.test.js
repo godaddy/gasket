@@ -35,8 +35,7 @@ describe('actions', () => {
       logger: {
         info: jest.fn(),
         error: jest.fn()
-      },
-      actions: { prepareServer: jest.fn().mockResolvedValue() }
+      }
     };
     handler = jest.fn().mockImplementation(fn => fn());
     gasketAPI.exec.mockResolvedValue([handler]);
@@ -326,6 +325,39 @@ describe('actions', () => {
     expect(mockDebugStub.mock.calls[0][1].http2.code).toEqual('EADDRINUSE');
   });
 
+  it('calls preboot', async () => {
+    await actions.startServer(gasketAPI);
+    expect(gasketAPI.exec).toHaveBeenCalledWith('preboot');
+  });
+
+  it('waits for isReady before calling preboot', async () => {
+    let readyResolved = false;
+    gasketAPI.isReady = new Promise(resolve => setTimeout(() => {
+      readyResolved = true;
+      resolve();
+    }, 10));
+
+    await actions.startServer(gasketAPI);
+
+    expect(readyResolved).toBe(true);
+    expect(gasketAPI.exec).toHaveBeenCalledWith('preboot');
+  });
+
+  it('calls exec("preboot") exactly once', async () => {
+    await actions.startServer(gasketAPI);
+    expect(gasketAPI.exec).toHaveBeenCalledWith('preboot');
+  });
+
+  it('propagates errors from isReady', async () => {
+    gasketAPI.isReady = Promise.reject(new Error('fail'));
+    await expect(actions.startServer(gasketAPI)).rejects.toThrow('fail');
+  });
+
+  it('propagates errors from exec("preboot")', async () => {
+    gasketAPI.exec = jest.fn().mockRejectedValue(new Error('preboot fail'));
+    await expect(actions.startServer(gasketAPI)).rejects.toThrow('preboot fail');
+  });
+
   describe('terminus', function () {
     const aServer = {};
     const servers = { http: aServer };
@@ -398,60 +430,6 @@ describe('actions', () => {
       await lifecycle();
 
       expect(mockExec).toHaveBeenCalledWith('healthcheck', mockHealthCheckError);
-    });
-  });
-
-  describe('prepareServer', () => {
-
-    it('is exported', () => {
-      expect(actions.prepareServer).toBeInstanceOf(Function);
-    });
-
-    it('calls preboot', async () => {
-      await actions.prepareServer(gasketAPI);
-      expect(gasketAPI.exec).toHaveBeenCalledWith('preboot');
-    });
-
-    it('waits for isReady before calling preboot', async () => {
-      let readyResolved = false;
-      const isReady = new Promise(resolve => setTimeout(() => {
-        readyResolved = true;
-        resolve();
-      }, 10));
-      const exec = jest.fn();
-      const gasket = { exec, isReady };
-
-      await actions.prepareServer(gasket);
-
-      expect(readyResolved).toBe(true);
-      expect(exec).toHaveBeenCalledWith('preboot');
-    });
-
-    it('calls exec("preboot") exactly once', async () => {
-      const exec = jest.fn();
-      const isReady = Promise.resolve();
-      const gasket = { exec, isReady };
-
-      await actions.prepareServer(gasket);
-
-      expect(exec).toHaveBeenCalledTimes(1);
-      expect(exec).toHaveBeenCalledWith('preboot');
-    });
-
-    it('propagates errors from isReady', async () => {
-      const exec = jest.fn();
-      const isReady = Promise.reject(new Error('fail'));
-      const gasket = { exec, isReady };
-
-      await expect(actions.prepareServer(gasket)).rejects.toThrow('fail');
-    });
-
-    it('propagates errors from exec("preboot")', async () => {
-      const exec = jest.fn().mockRejectedValue(new Error('preboot fail'));
-      const isReady = Promise.resolve();
-      const gasket = { exec, isReady };
-
-      await expect(actions.prepareServer(gasket)).rejects.toThrow('preboot fail');
     });
   });
 });

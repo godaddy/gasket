@@ -6,24 +6,15 @@ const errs = require('errs');
 const { getPortFallback, portInUseError, startProxy, getRawServerConfig } = require('./utils');
 
 /**
- * Gasket action: prepareServer
- * @param {import('@gasket/core').Gasket} gasket Gasket instance
- * @returns {Promise<void>} promise
- * @public
- */
-async function prepareServer(gasket) {
-  await gasket.isReady;
-  await gasket.exec('preboot');
-}
-
-/**
  * Gasket action: startServer
  * @param {import('@gasket/core').Gasket} gasket Gasket instance
  * @returns {Promise<void>} promise
  * @public
  */
 async function startServer(gasket) {
-  await gasket.actions.prepareServer();
+  await gasket.isReady;
+  await gasket.exec('preboot');
+
   const { terminus, env, devProxy } = gasket.config;
   const { logger } = gasket;
 
@@ -147,6 +138,5 @@ async function startServer(gasket) {
 }
 
 module.exports = {
-  prepareServer,
   startServer
 };
