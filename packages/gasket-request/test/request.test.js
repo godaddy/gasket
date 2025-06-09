@@ -286,6 +286,17 @@ describe('makeGasketRequest', () => {
     expect(result.path).toEqual('/path/to/page');
   });
 
+  it('parses cookie header if cookies property is missing', async () => {
+    const headers = {
+      cookie: 'cookie1=value1; cookie2=value2'
+    };
+    const requestLike = { headers };
+
+    const result = await makeGasketRequest(requestLike);
+
+    expect(result.cookies).toEqual({ cookie1: 'value1', cookie2: 'value2' });
+  });
+
   it('handles parallel executions', async () => {
     const headers = new Map([['header1', 'value1'], ['header2', 'value2']]);
     const cookies = new MockCookieStore([

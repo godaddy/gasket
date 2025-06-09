@@ -1,4 +1,5 @@
 import { WeakPromiseKeeper } from './keeper.js';
+import { parse } from 'cookie';
 
 /**
  * Represents a normalized Gasket request.
@@ -51,7 +52,7 @@ export async function makeGasketRequest(requestLike) {
     return requestLike;
   }
 
-  const { headers: rawHeaders, cookies = {} } = requestLike;
+  const { headers: rawHeaders } = requestLike;
 
   if (!rawHeaders) {
     throw new Error('request argument must have headers');
@@ -90,6 +91,12 @@ export async function makeGasketRequest(requestLike) {
 
       query ??= {};
       path ??= '';
+
+      // handle cookies if not already parsed
+      let cookies = requestLike.cookies;
+      if (!cookies) {
+        cookies = 'cookie' in headers ? parse(headers.cookie) : {};
+      }
 
       return new GasketRequest(Object.seal({
         headers,
