@@ -103,7 +103,8 @@
           "godaddy-typescript"
         ],
         "rules": {
-          "jsdoc/*": "off"
+          "jsdoc/require-returns": "off",
+          "jsdoc/require-param": "off"
         }
       }
     ]
