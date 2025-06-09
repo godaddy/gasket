@@ -88,7 +88,7 @@ declare module '@gasket/core' {
     terminus?: TerminusOptions & { healthcheck?: string[] };
   }
 
-  export interface Actions {
+  export interface GasketActions {
     startServer: () => Promise<void>;
   }
 
