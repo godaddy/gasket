@@ -17,6 +17,7 @@ describe('setupNextApp', () => {
   beforeEach(() => {
     module = getModule();
     jest.clearAllMocks();
+    // eslint-disable-next-line no-process-env
     delete process.env.GASKET_DEV;
   });
 
@@ -35,6 +36,7 @@ describe('setupNextApp', () => {
 
     it('creates devServer when GASKET_DEV is set', async function () {
       gasket = mockGasketApi();
+      // eslint-disable-next-line no-process-env
       process.env.GASKET_DEV = '1';
       await module.setupNextApp(gasket);
       expect(mockNext).toHaveBeenCalledWith({
@@ -82,9 +84,9 @@ describe('setupNextApp', () => {
 });
 
 describe('setupNextHandling', () => {
-  const nextHandler = jest.fn();
+  const mockNextHandler = jest.fn();
   const nextServer = {
-    getRequestHandler: () => nextHandler
+    getRequestHandler: () => mockNextHandler
   };
 
   const gasket = {
@@ -108,7 +110,7 @@ describe('setupNextHandling', () => {
     const res = { raw: { headersSent: false } };
     await handler(req, res);
 
-    expect(nextHandler).toHaveBeenCalledWith(req.raw, res.raw);
+    expect(mockNextHandler).toHaveBeenCalledWith(req.raw, res.raw);
   });
 });
 

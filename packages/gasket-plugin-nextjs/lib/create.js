@@ -1,16 +1,27 @@
 /// <reference types="@gasket/plugin-intl" />
 /// <reference types="create-gasket-app" />
 
+/**
+ * Type definitions for create-gasket-app APIs.
+ * These typedefs allow us to use short, readable type names throughout the file
+ * instead of repeating the long import statements with resolution-mode syntax.
+ * @typedef {import('create-gasket-app', { with: { "resolution-mode": "require" } }).Files} Files
+ * @typedef {import('create-gasket-app', { with: { "resolution-mode": "require" } }).PackageJsonBuilder} PackageJsonBuilder
+ * @typedef {import('create-gasket-app', { with: { "resolution-mode": "require" } }).Readme} Readme
+ * @typedef {import('create-gasket-app', { with: { "resolution-mode": "require" } }).ConfigBuilder} ConfigBuilder
+ */
+
 const { name, version, devDependencies } = require('../package.json');
 
 /**
  * createAppFiles
- * @property {Files} files - The Gasket Files API.
- * @property {string} generatorDir - The directory of the generator.
- * @property {string} nextServerType - Selected server type from prompt
- * @property {string} appStructure - Structure of the app
- * @property {boolean} typescript - Selected typescript from prompt
- * @property {Readme} readme - The Gasket Readme API.
+ * @param {object} options - Configuration options
+ * @param {Files} options.files - The Gasket Files API.
+ * @param {string} options.generatorDir - The directory of the generator.
+ * @param {string} options.nextServerType - Selected server type from prompt
+ * @param {string} options.appStructure - Structure of the app
+ * @param {boolean} options.typescript - Selected typescript from prompt
+ * @param {Readme} options.readme - The Gasket Readme API.
  */
 async function createAppFiles({
   files,
@@ -41,11 +52,12 @@ async function createAppFiles({
 
 /**
  * createTestFiles
- * @property {Files} files - The Gasket Files API.
- * @property {generatorDir} - The directory of the generator.
- * @property {testPlugins} - Array of selected test plugins
- * @property {appStructure} - Structure of the app
- * @property {typescript} - Selected typescript from prompt
+ * @param {object} options - Configuration options
+ * @param {Files} options.files - The Gasket Files API.
+ * @param {string} options.generatorDir - The directory of the generator.
+ * @param {Array<string>} options.testPlugins - Array of selected test plugins
+ * @param {string} options.appStructure - Structure of the app
+ * @param {boolean} options.typescript - Selected typescript from prompt
  */
 function createTestFiles({ files, generatorDir, testPlugins, appStructure, typescript }) {
   if (!testPlugins || testPlugins.length === 0) return;
@@ -60,7 +72,10 @@ function createTestFiles({ files, generatorDir, testPlugins, appStructure, types
     if (match) {
       const matchedFramework = match[0];
       if (unit.includes(matchedFramework)) {
-        files.add(`${generatorDir}/${matchedFramework}/${appStructure}/*`, `${generatorDir}/${matchedFramework}/${appStructure}/**/${globIgnore}`);
+        files.add(
+          `${generatorDir}/${matchedFramework}/${appStructure}/*`,
+          `${generatorDir}/${matchedFramework}/${appStructure}/**/${globIgnore}`
+        );
       } else {
         files.add(`${generatorDir}/${matchedFramework}/*`, `${generatorDir}/${matchedFramework}/**/*`);
       }
@@ -70,10 +85,12 @@ function createTestFiles({ files, generatorDir, testPlugins, appStructure, types
 
 /**
  * createNextFiles - Add next.config.js & server.mjs to files
- * @property {Files} files - The Gasket Files API.
- * @property {generatorDir} - The directory of the generator.
- * @property {nextDevProxy} - Selected dev proxy from prompt
- * @property {typescript} - Selected typescript from prompt
+ * @param {object} options - Configuration options
+ * @param {Files} options.files - The Gasket Files API.
+ * @param {string} options.generatorDir - The directory of the generator.
+ * @param {boolean} options.nextDevProxy - Selected dev proxy from prompt
+ * @param {boolean} options.typescript - Selected typescript from prompt
+ * @param {string} options.nextServerType - Selected server type from prompt
  */
 function createNextFiles({ files, generatorDir, nextDevProxy, typescript, nextServerType }) {
   let glob;
@@ -94,9 +111,10 @@ function createNextFiles({ files, generatorDir, nextDevProxy, typescript, nextSe
 
 /**
  * configureSitemap
- * @property {Files} files - The Gasket Files API.
- * @property {PackageJsonBuilder} pkg - The Gasket PackageJson API.
- * @property {generatorDir} - The directory of the generator.
+ * @param {object} options - Configuration options
+ * @param {Files} options.files - The Gasket Files API.
+ * @param {PackageJsonBuilder} options.pkg - The Gasket PackageJson API.
+ * @param {string} options.generatorDir - The directory of the generator.
  */
 function configureSitemap({ files, pkg, generatorDir }) {
   pkg.add('dependencies', {
@@ -111,8 +129,9 @@ function configureSitemap({ files, pkg, generatorDir }) {
 
 /**
  * addDependencies
- * @property {PackageJsonBuilder} pkg - The Gasket PackageJson API.
- * @property {boolean} typescript - Selected typescript from prompt
+ * @param {object} options - Configuration options
+ * @param {PackageJsonBuilder} options.pkg - The Gasket PackageJson API.
+ * @param {boolean} options.typescript - Selected typescript from prompt
  */
 function addDependencies({ pkg, typescript }) {
   pkg.add('dependencies', {
@@ -137,28 +156,75 @@ function addDependencies({ pkg, typescript }) {
 }
 
 /**
+ * getRunCommand - Get the run command based on package manager
+ * @param {string} packageManager - Selected package manager
+ * @returns {string} - The run command
+ */
+function getRunCommand(packageManager) {
+  if (packageManager === 'yarn') return 'yarn';
+  if (packageManager === 'pnpm') return 'pnpm';
+  return 'npm run';
+}
+
+/**
+ * addCustomServerScripts - Add scripts for custom server setup
+ * @param {Record<string, string>} scripts - Scripts object to modify
+ * @param {object} options - Configuration options
+ * @param {string} options.runCmd - Run command
+ * @param {string} options.watcher - Watcher command
+ * @param {string} options.fileExtension - File extension
+ * @param {boolean} options.typescript - Whether typescript is enabled
+ */
+function addCustomServerScripts(scripts, { runCmd, watcher, fileExtension, typescript }) {
+  scripts.start = 'node server.js';
+  scripts.local = `GASKET_DEV=1 ${watcher} server.${fileExtension}`;
+  if (typescript) {
+    scripts['build:tsc'] = 'tsc -p ./tsconfig.server.json';
+    scripts['build:tsc:watch'] = 'tsc -p ./tsconfig.server.json --watch';
+    scripts.build = `${runCmd} build:tsc && next build`;
+    scripts.start = 'node dist/server.js';
+    scripts.local = `concurrently "${runCmd} build:tsc:watch" "GASKET_DEV=1 ${watcher} server.${fileExtension}"`;
+  }
+}
+
+/**
+ * addDevProxyScripts - Add scripts for dev proxy setup
+ * @param {Record<string, string>} scripts - Scripts object to modify
+ * @param {object} options - Configuration options
+ * @param {string} options.runCmd - Run command
+ * @param {string} options.watcher - Watcher command
+ * @param {string} options.fileExtension - File extension
+ * @param {boolean} options.typescript - Whether typescript is enabled
+ */
+function addDevProxyScripts(scripts, { runCmd, watcher, fileExtension, typescript }) {
+  scripts['start:https'] = `node server.js`;
+  scripts['local:https'] = `${watcher} server.${fileExtension}`;
+  scripts.start = `${runCmd} start:https & next start`;
+  scripts.local = `${runCmd} local:https & next dev`;
+  if (typescript) {
+    scripts['build:tsc:watch'] = 'tsc -p ./tsconfig.server.json --watch';
+    scripts['build:tsc'] = 'tsc -p ./tsconfig.server.json';
+    scripts.build = `${runCmd} build:tsc && next build`;
+    scripts['start:https'] = `node dist/server.js`;
+    scripts.local = `concurrently "${runCmd} build:tsc:watch" "${runCmd} local:https" "next dev"`;
+  }
+}
+
+/**
  * addNpmScripts
- * @property {PackageJsonBuilder} pkg - The Gasket PackageJson API.
- * @property {string} nextServerType - Selected server type from prompt
- * @property {boolean} nextDevProxy - Selected dev proxy from prompt
- * @property {boolean} typescript - Selected typescript from prompt
- * @property {boolean} hasGasketIntl - Selected gasket-intl from prompt
- * @property {string} packageManager - Selected package manager
+ * @param {object} options - Configuration options
+ * @param {PackageJsonBuilder} options.pkg - The Gasket PackageJson API.
+ * @param {string} options.nextServerType - Selected server type from prompt
+ * @param {boolean} options.nextDevProxy - Selected dev proxy from prompt
+ * @param {boolean} options.typescript - Selected typescript from prompt
+ * @param {boolean} options.hasGasketIntl - Selected gasket-intl from prompt
+ * @param {string} options.packageManager - Selected package manager
  */
 function addNpmScripts({ pkg, nextServerType, nextDevProxy, typescript, hasGasketIntl, packageManager }) {
   const fileExtension = typescript ? 'ts' : 'js';
   const bin = typescript ? 'tsx' : 'node';
   const watcher = typescript ? 'tsx watch' : 'nodemon';
-
-  let runCmd;
-  if (packageManager === 'yarn') {
-    runCmd = 'yarn';
-  } else if (packageManager === 'pnpm') {
-    runCmd = 'pnpm';
-  } else {
-    runCmd = 'npm run';
-  }
-
+  const runCmd = getRunCommand(packageManager);
   const prebuild = hasGasketIntl ? { prebuild: `${bin} gasket.${fileExtension} build` } : {};
 
   const scripts = {
@@ -170,32 +236,21 @@ function addNpmScripts({ pkg, nextServerType, nextDevProxy, typescript, hasGaske
   };
 
   if (nextServerType === 'customServer') {
-    scripts.start = 'node server.js';
-    scripts.local = `GASKET_DEV=1 ${watcher} server.${fileExtension}`;
-    if (typescript) {
-      scripts['build:tsc'] = 'tsc -p ./tsconfig.server.json';
-      scripts['build:tsc:watch'] = 'tsc -p ./tsconfig.server.json --watch';
-      scripts.build = `${runCmd} build:tsc && next build`;
-      scripts.start = 'node dist/server.js';
-      scripts.local = `concurrently "${runCmd} build:tsc:watch" "GASKET_DEV=1 ${watcher} server.${fileExtension}"`;
-    }
+    addCustomServerScripts(scripts, { runCmd, watcher, fileExtension, typescript });
   } else if (nextDevProxy) {
-    scripts['start:https'] = `node server.js`;
-    scripts['local:https'] = `${watcher} server.${fileExtension}`;
-    scripts.start = `${runCmd} start:https & next start`;
-    scripts.local = `${runCmd} local:https & next dev`;
-    if (typescript) {
-      scripts['build:tsc:watch'] = 'tsc -p ./tsconfig.server.json --watch';
-      scripts['build:tsc'] = 'tsc -p ./tsconfig.server.json';
-      scripts.build = `${runCmd} build:tsc && next build`;
-      scripts['start:https'] = `node dist/server.js`;
-      scripts.local = `concurrently "${runCmd} build:tsc:watch" "${runCmd} local:https" "next dev"`;
-    }
+    addDevProxyScripts(scripts, { runCmd, watcher, fileExtension, typescript });
   }
 
   pkg.add('scripts', scripts);
 }
 
+/**
+ * addConfig
+ * @param {object} options - Configuration options
+ * @param {ConfigBuilder} options.gasketConfig - The Gasket config API
+ * @param {boolean} options.nextDevProxy - Selected dev proxy from prompt
+ * @param {string} options.nextServerType - Selected server type from prompt
+ */
 function addConfig({ gasketConfig, nextDevProxy, nextServerType }) {
   gasketConfig.addPlugin('pluginNextjs', name);
 
@@ -223,7 +278,7 @@ module.exports = {
   },
   /**
    * Add files & extend package.json for new apps.
-   * @type {import('@gasket/core').HookHandler<'create'>}
+   * @type {import('@gasket/core', { with: { "resolution-mode": "require" } }).HookHandler<'create'>}
    */
   handler: async function create(gasket, context) {
     const {
