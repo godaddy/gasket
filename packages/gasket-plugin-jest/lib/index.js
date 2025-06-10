@@ -22,9 +22,18 @@ const plugin = {
         before: ['@gasket/plugin-lint']
       },
       handler: async function create(gasket, context) {
-        const { files, pkg, typescript, apiApp } = context;
+        const { files, pkg, typescript, apiApp, packageManager } = context;
         const generatorDir = `${__dirname}/../generator`;
         const isReactProject = pkg.has('dependencies', 'react');
+
+        let runCmd;
+        if (packageManager === 'yarn') {
+          runCmd = 'yarn';
+        } else if (packageManager === 'pnpm') {
+          runCmd = 'pnpm';
+        } else {
+          runCmd = 'npm run';
+        }
 
         pkg.add('devDependencies', {
           jest: devDependencies.jest
@@ -59,8 +68,8 @@ const plugin = {
 
             pkg.add('scripts', {
               'test': "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
-              'test:watch': 'npm run test -- --watchAll',
-              'test:coverage': 'npm run test -- --coverage'
+              'test:watch': `${runCmd} test -- --watchAll`,
+              'test:coverage': `${runCmd} test -- --coverage`
             });
           } else {
             pkg.add('devDependencies', {
@@ -68,8 +77,8 @@ const plugin = {
             });
             pkg.add('scripts', {
               'test': "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
-              'test:watch': 'npm run test -- --watch',
-              'test:coverage': 'npm run test -- --coverage'
+              'test:watch': `${runCmd} test -- --watch`,
+              'test:coverage': `${runCmd} test -- --coverage`
             });
           }
         } else {

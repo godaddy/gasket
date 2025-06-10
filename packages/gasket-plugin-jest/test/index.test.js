@@ -19,6 +19,7 @@ describe('Plugin', function () {
         },
         has: (key, value) => !!pkg[key] && !!pkg[key][value]
       },
+      packageManager: 'npm',
       ...rest
     });
 
@@ -49,7 +50,8 @@ describe('Plugin', function () {
         add: (...args) => {
           files.push(...args);
         }
-      }
+      },
+      packageManager: 'npm'
     });
 
     return {
@@ -68,7 +70,7 @@ describe('Plugin', function () {
     expect(plugin).toHaveProperty('description', description);
   });
 
-  it('has expected hooks', function ()  {
+  it('has expected hooks', function () {
     const expected = [
       'create',
       'metadata'
@@ -176,6 +178,30 @@ describe('Plugin', function () {
       });
     });
 
+    it('sets up an API app with yarn', async function () {
+      mockContext.packageManager = 'yarn';
+      const { pkg } = await create(mockContext);
+
+      expect(pkg.devDependencies['cross-env']).toEqual(devDependencies['cross-env']);
+      expect(pkg.scripts).toEqual({
+        'test': "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
+        'test:watch': 'yarn test -- --watch',
+        'test:coverage': 'yarn test -- --coverage'
+      });
+    });
+
+    it('sets up an API app with pnpm', async function () {
+      mockContext.packageManager = 'pnpm';
+      const { pkg } = await create(mockContext);
+
+      expect(pkg.devDependencies['cross-env']).toEqual(devDependencies['cross-env']);
+      expect(pkg.scripts).toEqual({
+        'test': "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
+        'test:watch': 'pnpm test -- --watch',
+        'test:coverage': 'pnpm test -- --coverage'
+      });
+    });
+
     it('sets up an apiApp with typescript', async function () {
       mockContext.typescript = true;
       const { pkg } = await create(mockContext);
@@ -187,6 +213,36 @@ describe('Plugin', function () {
         'test': "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
         'test:watch': 'npm run test -- --watchAll',
         'test:coverage': 'npm run test -- --coverage'
+      });
+    });
+
+    it('sets up an apiApp with typescript and yarn', async function () {
+      mockContext.typescript = true;
+      mockContext.packageManager = 'yarn';
+      const { pkg } = await create(mockContext);
+
+      expect(pkg.devDependencies['@types/jest']).toEqual(devDependencies['@types/jest']);
+      expect(pkg.devDependencies['ts-jest']).toEqual(devDependencies['ts-jest']);
+      expect(pkg.devDependencies['ts-node']).toEqual(devDependencies['ts-node']);
+      expect(pkg.scripts).toEqual({
+        'test': "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
+        'test:watch': 'yarn test -- --watchAll',
+        'test:coverage': 'yarn test -- --coverage'
+      });
+    });
+
+    it('sets up an apiApp with typescript and pnpm', async function () {
+      mockContext.typescript = true;
+      mockContext.packageManager = 'pnpm';
+      const { pkg } = await create(mockContext);
+
+      expect(pkg.devDependencies['@types/jest']).toEqual(devDependencies['@types/jest']);
+      expect(pkg.devDependencies['ts-jest']).toEqual(devDependencies['ts-jest']);
+      expect(pkg.devDependencies['ts-node']).toEqual(devDependencies['ts-node']);
+      expect(pkg.scripts).toEqual({
+        'test': "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
+        'test:watch': 'pnpm test -- --watchAll',
+        'test:coverage': 'pnpm test -- --coverage'
       });
     });
 

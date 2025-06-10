@@ -1,6 +1,7 @@
-# Logs (npm-debug.log, yarn-error.log, etc)
+# Logs (npm-debug.log, yarn-error.log, pnpm-debug.log, etc)
 logs
 *.log
+.pnpm-debug.log
 
 # Runtime data
 pids
@@ -38,6 +39,10 @@ typings/
 
 # Optional npm cache directory
 .npm
+
+# Optional pnpm cache directory
+.pnpm
+.pnpm-store
 
 # OSX Finder cache files
 .DS_Store
