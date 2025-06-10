@@ -1,5 +1,11 @@
 # `@gasket/plugin-typescript`
 
+## 7.4.2
+
+### Patch Changes
+
+- 388c23f: Updates to allow dynamically generating scripts and commands for npm, yarn, and pnpm instead of being hardcoded to specific package managers.
+
 ## 7.4.1
 
 ### Patch Changes
