@@ -1,5 +1,12 @@
 # `@gasket/plugin-intl`
 
+## 7.5.1
+
+### Patch Changes
+
+- Updated dependencies [39e41cb]
+  - @gasket/request@7.4.1
+
 ## 7.5.0
 
 ### Minor Changes

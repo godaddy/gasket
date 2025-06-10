@@ -325,6 +325,39 @@ describe('actions', () => {
     expect(mockDebugStub.mock.calls[0][1].http2.code).toEqual('EADDRINUSE');
   });
 
+  it('calls preboot', async () => {
+    await actions.startServer(gasketAPI);
+    expect(gasketAPI.exec).toHaveBeenCalledWith('preboot');
+  });
+
+  it('waits for isReady before calling preboot', async () => {
+    let readyResolved = false;
+    gasketAPI.isReady = new Promise(resolve => setTimeout(() => {
+      readyResolved = true;
+      resolve();
+    }, 10));
+
+    await actions.startServer(gasketAPI);
+
+    expect(readyResolved).toBe(true);
+    expect(gasketAPI.exec).toHaveBeenCalledWith('preboot');
+  });
+
+  it('calls exec("preboot") exactly once', async () => {
+    await actions.startServer(gasketAPI);
+    expect(gasketAPI.exec).toHaveBeenCalledWith('preboot');
+  });
+
+  it('propagates errors from isReady', async () => {
+    gasketAPI.isReady = Promise.reject(new Error('fail'));
+    await expect(actions.startServer(gasketAPI)).rejects.toThrow('fail');
+  });
+
+  it('propagates errors from exec("preboot")', async () => {
+    gasketAPI.exec = jest.fn().mockRejectedValue(new Error('preboot fail'));
+    await expect(actions.startServer(gasketAPI)).rejects.toThrow('preboot fail');
+  });
+
   describe('terminus', function () {
     const aServer = {};
     const servers = { http: aServer };

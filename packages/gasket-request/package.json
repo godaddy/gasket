@@ -1,6 +1,6 @@
 {
   "name": "@gasket/request",
-  "version": "7.4.0",
+  "version": "7.4.1",
   "description": "Utilities for working with request objects in Gasket",
   "type": "module",
   "types": "lib/index.d.ts",
@@ -48,6 +48,7 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-request",
   "dependencies": {
+    "cookie": "^1.0.2",
     "debug": "^4.4.0"
   },
   "devDependencies": {
@@ -102,7 +103,8 @@
           "godaddy-typescript"
         ],
         "rules": {
-          "jsdoc/*": "off"
+          "jsdoc/require-returns": "off",
+          "jsdoc/require-param": "off"
         }
       }
     ]
