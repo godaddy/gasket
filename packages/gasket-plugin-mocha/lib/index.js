@@ -30,7 +30,15 @@ const plugin = {
           typescript,
           apiApp
         } = context;
-        const runCmd = packageManager === 'yarn' ? 'yarn' : packageManager === 'pnpm' ? 'pnpm' : 'npm run';
+        let runCmd;
+        if (packageManager === 'yarn') {
+          runCmd = 'yarn';
+        } else if (packageManager === 'pnpm') {
+          runCmd = 'pnpm';
+        } else {
+          runCmd = 'npm run';
+        }
+
         const generatorDir = `${__dirname}/../generator`;
         const isReactProject = pkg.has('dependencies', 'react');
         const fileExtension = typescript ? 'ts' : 'js';

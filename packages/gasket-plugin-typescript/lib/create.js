@@ -15,7 +15,15 @@ module.exports = async function create(gasket, context) {
     packageManager
   } = context;
   const depType = apiApp ? 'devDependencies' : 'dependencies';
-  const runCmd = packageManager === 'yarn' ? 'yarn' : packageManager === 'pnpm' ? 'pnpm' : 'npm run';
+
+  let runCmd;
+  if (packageManager === 'yarn') {
+    runCmd = 'yarn';
+  } else if (packageManager === 'pnpm') {
+    runCmd = 'pnpm';
+  } else {
+    runCmd = 'npm run';
+  }
 
   // Shared dependencies
   pkg.add(depType, {

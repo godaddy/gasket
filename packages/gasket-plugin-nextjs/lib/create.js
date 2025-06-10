@@ -149,7 +149,16 @@ function addNpmScripts({ pkg, nextServerType, nextDevProxy, typescript, hasGaske
   const fileExtension = typescript ? 'ts' : 'js';
   const bin = typescript ? 'tsx' : 'node';
   const watcher = typescript ? 'tsx watch' : 'nodemon';
-  const runCmd = packageManager === 'yarn' ? 'yarn' : packageManager === 'pnpm' ? 'pnpm' : 'npm run';
+
+  let runCmd;
+  if (packageManager === 'yarn') {
+    runCmd = 'yarn';
+  } else if (packageManager === 'pnpm') {
+    runCmd = 'pnpm';
+  } else {
+    runCmd = 'npm run';
+  }
+
   const prebuild = hasGasketIntl ? { prebuild: `${bin} gasket.${fileExtension} build` } : {};
 
   const scripts = {
