@@ -1,6 +1,10 @@
 const { setupNextApp, setupNextHandling } = require('./utils/setup-next-app');
 
-/** Sets the build ID in the Express app */
+/**
+ * Sets the build ID in the Express app
+ * @param {import('express', { with: { "resolution-mode": "require" } }).Application} expressApp - Express application instance
+ * @param {any} app - Next.js application instance (Next.js doesn't expose public types for server instances)
+ */
 function registerBuildId(expressApp, app) {
   const buildIdKey = ['buildId', app.name].filter(Boolean).join('/');
   expressApp.set(buildIdKey, app.buildId);
@@ -13,6 +17,7 @@ function registerBuildId(expressApp, app) {
  * to let NextJS know that it has already been detected. We can do this by
  * forcing the `NEXT_LOCALE` cookie:
  * https://github.com/vercel/Next.js/blob/canary/docs/advanced-features/i18n-routing.md#leveraging-the-next_locale-cookie
+ * @param {import('express', { with: { "resolution-mode": "require" } }).Application} expressApp - Express application instance
  */
 function addNextLocaleMiddleware(expressApp) {
   expressApp.use(function setNextLocale(req, res, next) {
@@ -24,7 +29,7 @@ function addNextLocaleMiddleware(expressApp) {
   });
 }
 
-/** @type {import('@gasket/core').HookHandler<'express'>} */
+/** @type {import('@gasket/core', { with: { "resolution-mode": "require" } }).HookHandler<'express'>} */
 async function expressHandler(gasket, expressApp) {
   const app = await setupNextApp(gasket);
   registerBuildId(expressApp, app);

@@ -2,7 +2,7 @@ const plugin = require('../lib');
 const { name, version, description } = require('../package');
 
 describe('Plugin', () => {
-  let spyFunc, filesAddStub, addPluginStub, create, createReact;
+  let filesAddStub, addPluginStub, create, createReact;
 
   beforeEach(async function () {
     filesAddStub = jest.fn();
@@ -24,6 +24,7 @@ describe('Plugin', () => {
           },
           has: (key, value) => !!pkg[key] && !!pkg[key][value]
         },
+        packageManager: 'npm',
         ...context
       });
 
@@ -58,13 +59,14 @@ describe('Plugin', () => {
         gasketConfig: {
           addPlugin: addPluginStub
         },
+        packageManager: 'npm',
         ...context
       });
 
       return { pkg };
     };
 
-    spyFunc = jest.fn();
+
   });
 
   it('is an object', () => {
@@ -235,38 +237,40 @@ describe('Plugin', () => {
       expect(pkg.scripts['test:coverage']).toContain('nyc');
     });
 
-    it('adds appropriate scripts for npm', function () {
-      const expected = 'npm run';
+    it('generates npm scripts by default', async function () {
+      const { pkg } = await create();
 
-      spyFunc('scripts', {
-        'test': `npm run test:runner`,
-        'test:coverage': `nyc --reporter=text --reporter=json-summary ${expected} test:runner`,
-        'test:runner': 'mocha --require setup-env --recursive "test/**/*.*(test|spec).js"',
-        'test:watch': `${expected} test:runner -- --watch`
-      });
-
-      expect(spyFunc).toHaveBeenCalledWith('scripts', {
-        'test': `npm run test:runner`,
-        'test:coverage': `nyc --reporter=text --reporter=json-summary npm run test:runner`,
-        'test:runner': 'mocha --require setup-env --recursive "test/**/*.*(test|spec).js"',
-        'test:watch': `npm run test:runner -- --watch`
-      });
+      expect(pkg.scripts.test).toEqual('npm run test:runner');
+      expect(pkg.scripts['test:coverage']).toEqual('nyc --reporter=text --reporter=json-summary npm run test:runner');
+      expect(pkg.scripts['test:watch']).toEqual('npm run test:runner -- --watch --parallel');
     });
 
-    it('adds appropriate scripts for yarn', function () {
-      const expected = 'yarn';
+    it('generates yarn scripts when packageManager is yarn', async function () {
+      const { pkg } = await create({ packageManager: 'yarn' });
 
-      spyFunc('scripts', {
-        'test': `nyc --reporter=text --reporter=json-summary ${expected} test:runner`,
-        'test:runner': 'mocha --require setup-env --recursive "test/**/*.*(test|spec).js"',
-        'test:watch': `${expected} test:runner -- --watch`
-      });
+      expect(pkg.scripts.test).toEqual('yarn test:runner');
+      expect(pkg.scripts['test:coverage']).toEqual('nyc --reporter=text --reporter=json-summary yarn test:runner');
+      expect(pkg.scripts['test:watch']).toEqual('yarn test:runner -- --watch --parallel');
+    });
 
-      expect(spyFunc).toHaveBeenCalledWith('scripts', {
-        'test': `nyc --reporter=text --reporter=json-summary yarn test:runner`,
-        'test:runner': 'mocha --require setup-env --recursive "test/**/*.*(test|spec).js"',
-        'test:watch': `yarn test:runner -- --watch`
-      });
+    it('generates pnpm scripts when packageManager is pnpm', async function () {
+      const { pkg } = await create({ packageManager: 'pnpm' });
+
+      expect(pkg.scripts.test).toEqual('pnpm test:runner');
+      expect(pkg.scripts['test:coverage']).toEqual('nyc --reporter=text --reporter=json-summary pnpm test:runner');
+      expect(pkg.scripts['test:watch']).toEqual('pnpm test:runner -- --watch --parallel');
+    });
+
+    it('generates yarn scripts for React projects when packageManager is yarn', async function () {
+      const { pkg } = await createReact({ packageManager: 'yarn' });
+
+      expect(pkg.scripts['test:watch']).toEqual('yarn test:runner -- --watch --parallel -r ./test/mocha-watch-cleanup-after-each.js');
+    });
+
+    it('generates pnpm scripts for API apps when packageManager is pnpm', async function () {
+      const { pkg } = await create({ packageManager: 'pnpm', apiApp: true });
+
+      expect(pkg.scripts['test:watch']).toEqual('pnpm test:runner -- --watch --parallel');
     });
   });
 });

@@ -22,7 +22,8 @@ describe('create hook', () => {
       gasketConfig: {
         add: jest.fn(),
         addPlugin: jest.fn()
-      }
+      },
+      packageManager: 'npm'
     };
   });
 
@@ -258,6 +259,28 @@ describe('create hook', () => {
       });
     });
 
+    it('uses yarn commands when packageManager is yarn', async function () {
+      mockContext.packageManager = 'yarn';
+      await create.handler({}, mockContext);
+      expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
+        build: 'next build',
+        start: 'next start',
+        local: 'next dev',
+        preview: 'yarn build && yarn start'
+      });
+    });
+
+    it('uses pnpm commands when packageManager is pnpm', async function () {
+      mockContext.packageManager = 'pnpm';
+      await create.handler({}, mockContext);
+      expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
+        build: 'next build',
+        start: 'next start',
+        local: 'next dev',
+        preview: 'pnpm build && pnpm start'
+      });
+    });
+
     it('adds prebuild script for gasket-intl', async function () {
       mockContext.hasGasketIntl = true;
       await create.handler({}, mockContext);
@@ -324,6 +347,23 @@ describe('create hook', () => {
       });
     });
 
+    it('adjusts scripts for custom server & typescript with yarn', async function () {
+      mockContext.nextServerType = 'customServer';
+      mockContext.typescript = true;
+      mockContext.hasGasketIntl = true;
+      mockContext.packageManager = 'yarn';
+      await create.handler({}, mockContext);
+      expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
+        'build:tsc': 'tsc -p ./tsconfig.server.json',
+        'build:tsc:watch': 'tsc -p ./tsconfig.server.json --watch',
+        'build': 'yarn build:tsc && next build',
+        'start': 'node dist/server.js',
+        'preview': 'yarn build && yarn start',
+        'local': 'concurrently "yarn build:tsc:watch" "GASKET_DEV=1 tsx watch server.ts"',
+        'prebuild': 'tsx gasket.ts build'
+      });
+    });
+
     it('adjusts scripts for nextDevProxy & typescript', async function () {
       mockContext.nextServerType = 'appRouter';
       mockContext.nextDevProxy = true;
@@ -339,6 +379,26 @@ describe('create hook', () => {
         'build:tsc:watch': 'tsc -p ./tsconfig.server.json --watch',
         'build': 'npm run build:tsc && next build',
         'preview': 'npm run build && npm run start',
+        'prebuild': 'tsx gasket.ts build'
+      });
+    });
+
+    it('adjusts scripts for nextDevProxy & typescript with pnpm', async function () {
+      mockContext.nextServerType = 'appRouter';
+      mockContext.nextDevProxy = true;
+      mockContext.typescript = true;
+      mockContext.hasGasketIntl = true;
+      mockContext.packageManager = 'pnpm';
+      await create.handler({}, mockContext);
+      expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
+        'start:https': 'node dist/server.js',
+        'local:https': 'tsx watch server.ts',
+        'start': 'pnpm start:https & next start',
+        'local': 'concurrently "pnpm build:tsc:watch" "pnpm local:https" "next dev"',
+        'build:tsc': 'tsc -p ./tsconfig.server.json',
+        'build:tsc:watch': 'tsc -p ./tsconfig.server.json --watch',
+        'build': 'pnpm build:tsc && next build',
+        'preview': 'pnpm build && pnpm start',
         'prebuild': 'tsx gasket.ts build'
       });
     });

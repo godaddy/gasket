@@ -77,6 +77,7 @@ describe('The apmTransaction hook', () => {
     });
     const req = {
       // path should never contain a query but this is a safety check
+      // eslint-disable-next-line max-len
       path: '/cohorts/Rad%20People?utm_source=TDFS_DASLNC&utm_medium=parkedpages&utm_campaign=x_corp_tdfs-daslnc_base&traffic_type=TDFS_DASLNC&traffic_id=daslnc&sayfa=20&act=ul&listurun=12&sublastcat=&subcat=61&marka=&sort=2&catname=Realistik%20Belden%20Ba%F0lamal%FD'
     };
 
