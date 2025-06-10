@@ -1,5 +1,11 @@
 # `@gasket/plugin-https-proxy`
 
+## 7.3.10
+
+### Patch Changes
+
+- c46c389: Bring back preboot lifecycle with prepare server actions
+
 ## 7.3.9
 
 ### Patch Changes

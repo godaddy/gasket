@@ -1,5 +1,20 @@
 # `@gasket/preset-api`
 
+## 7.4.3
+
+### Patch Changes
+
+- 388c23f: Updates to allow dynamically generating scripts and commands for npm, yarn, and pnpm instead of being hardcoded to specific package managers.
+- Updated dependencies [388c23f]
+- Updated dependencies [c46c389]
+  - @gasket/plugin-typescript@7.4.2
+  - @gasket/plugin-mocha@7.5.1
+  - @gasket/plugin-jest@7.5.1
+  - @gasket/plugin-https@7.3.6
+  - @gasket/plugin-express@7.4.0
+  - @gasket/plugin-fastify@7.4.2
+  - @gasket/plugin-logger@7.3.4
+
 ## 7.4.2
 
 ### Patch Changes
