@@ -11,6 +11,11 @@ module.exports = function metadata(gasket, meta) {
     ],
     lifecycles: [
       {
+        name: 'preboot',
+        description: 'Executed before the server is started.',
+        link: 'README.md#preboot'
+      },
+      {
         name: 'devProxy',
         method: 'execWaterfall',
         description: 'Setup the devProxy options',

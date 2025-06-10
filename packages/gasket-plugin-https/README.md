@@ -115,6 +115,22 @@ and plugins to further set the server up.
 
 ## Lifecycles
 
+### preboot
+
+This lifecycle is executed before the server is started. It is a good place to
+execute operations that need to happen before the server is started.
+
+```js
+/**
+ * Executed before the server is started.
+ *
+ * @param {Gasket} gasket Gasket API.
+ */
+preboot: async function preboot(gasket) {
+  // async operations
+}
+```
+
 ### devProxy
 
 Adjust and configure `devProxy` options for a proxy server during local development.

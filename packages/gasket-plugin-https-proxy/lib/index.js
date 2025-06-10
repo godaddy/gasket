@@ -28,6 +28,11 @@ export default {
         ],
         lifecycles: [
           {
+            name: 'prebootHttpsProxy',
+            description: 'Executed before the proxy server is started.',
+            link: 'README.md#prebootHttpsProxy'
+          },
+          {
             name: 'httpsProxy',
             method: 'execWaterfall',
             description: 'Setup the httpsProxy options',

@@ -89,7 +89,7 @@ declare module '@gasket/core' {
   }
 
   export interface GasketActions {
-    startServer?: () => Promise<void>;
+    startServer: () => Promise<void>;
   }
 
   type CreatedServers = {
@@ -106,6 +106,7 @@ declare module '@gasket/core' {
     onSendFailureDuringShutdown(): MaybeAsync<void>;
     onShutdown(): MaybeAsync<void>;
     onSignal(): MaybeAsync<void>;
+    preboot(): MaybeAsync<void>;
     serverConfig(serverConfig: Omit<ServerOptions, 'handler'>): MaybeAsync<ServerOptions>;
     servers(servers: CreatedServers): MaybeAsync<void>;
     terminus(
