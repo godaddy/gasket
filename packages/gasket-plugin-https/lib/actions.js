@@ -13,6 +13,8 @@ const { getPortFallback, portInUseError, startProxy, getRawServerConfig } = requ
  */
 async function startServer(gasket) {
   await gasket.isReady;
+  await gasket.exec('preboot');
+
   const { terminus, env, devProxy } = gasket.config;
   const { logger } = gasket;
 
