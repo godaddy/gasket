@@ -1,5 +1,16 @@
 # `@gasket/react-intl`
 
+## 7.5.0
+
+### Minor Changes
+
+- 2a1ae31: Fix published version
+
+### Patch Changes
+
+- @gasket/plugin-intl@7.5.1
+- @gasket/data@7.4.1
+
 ### Minor Changes
 
 - 30833cb: add generated code for vitest and include vitest plugin in dependencies
@@ -7,7 +18,6 @@
 - Updated dependencies [bd598ff]
   - @gasket/fetch@7.3.6
   - @gasket/plugin-intl@7.5.0
-  
 - Updated dependencies [30833cb]
   - @gasket/plugin-intl@7.5.0
   - @gasket/data@7.4.0
