@@ -1,5 +1,5 @@
 /* eslint-disable max-params */
-const { spawn } = require('child_process');
+const spawn = require('cross-spawn');
 const concat = require('concat-stream');
 
 /** @type {import('@gasket/utils').runShellCommand} */
