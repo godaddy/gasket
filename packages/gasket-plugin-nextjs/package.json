@@ -89,7 +89,7 @@
     "extends": [
       "godaddy",
       "plugin:jest/recommended",
-      "plugin:jsdoc/recommended-typescript-flavor"
+      "plugin:jsdoc/recommended"
     ],
     "globals": {
       "expect": "readonly"
@@ -110,6 +110,17 @@
         "extends": [
           "godaddy-react"
         ]
+      },
+      {
+        "files": [
+          "lib/**/*.js"
+        ],
+        "extends": [
+          "plugin:jsdoc/recommended-typescript-flavor"
+        ],
+        "rules": {
+          "jsdoc/valid-types": "off"
+        }
       },
       {
         "files": [
