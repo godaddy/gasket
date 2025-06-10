@@ -1,5 +1,11 @@
 # `@gasket/request`
 
+## 7.4.1
+
+### Patch Changes
+
+- 39e41cb: Parse cookie header if cookies not on request-like object
+
 ## 7.4.0
 
 ### Minor Changes
