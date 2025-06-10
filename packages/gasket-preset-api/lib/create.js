@@ -6,7 +6,17 @@ const { devDependencies } = require('../package.json');
 
 /** @type {import('@gasket/core').HookHandler<'create'>} */
 export default function create(gasket, context) {
-  const { pkg, files } = context;
+  const { pkg, files, packageManager } = context;
+
+  let runCmd;
+  if (packageManager === 'yarn') {
+    runCmd = 'yarn';
+  } else if (packageManager === 'pnpm') {
+    runCmd = 'pnpm';
+  } else {
+    runCmd = 'npm run';
+  }
+
   const __dirname = fileURLToPath(import.meta.url);
   const generatorDir = path.join(__dirname, '..', '..', 'generator');
   files.add(`${generatorDir}/*.md`);
@@ -21,7 +31,7 @@ export default function create(gasket, context) {
     pkg.add('scripts', {
       start: 'node server.js',
       local: 'nodemon server.js',
-      preview: 'npm run start'
+      preview: `${runCmd} start`
     });
   }
 }

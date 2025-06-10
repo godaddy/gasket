@@ -17,7 +17,8 @@ describe('create', function () {
       files: {
         add: mockFilesAdd
       },
-      typescript: false
+      typescript: false,
+      packageManager: 'npm'
     };
 
     createHook = preset.hooks.create;
@@ -54,6 +55,26 @@ describe('create', function () {
       start: 'node server.js',
       local: 'nodemon server.js',
       preview: 'npm run start'
+    });
+  });
+
+  it('adds scripts with yarn commands when packageManager is yarn', async function () {
+    mockContext.packageManager = 'yarn';
+    await createHook({}, mockContext);
+    expect(mockPkgAdd).toHaveBeenCalledWith('scripts', {
+      start: 'node server.js',
+      local: 'nodemon server.js',
+      preview: 'yarn start'
+    });
+  });
+
+  it('adds scripts with pnpm commands when packageManager is pnpm', async function () {
+    mockContext.packageManager = 'pnpm';
+    await createHook({}, mockContext);
+    expect(mockPkgAdd).toHaveBeenCalledWith('scripts', {
+      start: 'node server.js',
+      local: 'nodemon server.js',
+      preview: 'pnpm start'
     });
   });
 

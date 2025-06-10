@@ -7,6 +7,7 @@ describe('create hook', () => {
   beforeEach(() => {
     mockContext = {
       apiApp: false,
+      packageManager: 'npm',
       gitignore: {
         add: jest.fn()
       },
@@ -59,6 +60,32 @@ describe('create hook', () => {
         prebuild: 'tsx gasket.ts build',
         build: 'tsc',
         preview: 'npm run build && npm run start',
+        start: 'node dist/server.js',
+        local: 'tsx watch server.ts'
+      });
+    });
+
+    it('adds scripts with yarn commands when packageManager is yarn', () => {
+      mockContext.apiApp = true;
+      mockContext.packageManager = 'yarn';
+      create({}, mockContext);
+      expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
+        prebuild: 'tsx gasket.ts build',
+        build: 'tsc',
+        preview: 'yarn build && yarn start',
+        start: 'node dist/server.js',
+        local: 'tsx watch server.ts'
+      });
+    });
+
+    it('adds scripts with pnpm commands when packageManager is pnpm', () => {
+      mockContext.apiApp = true;
+      mockContext.packageManager = 'pnpm';
+      create({}, mockContext);
+      expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
+        prebuild: 'tsx gasket.ts build',
+        build: 'tsc',
+        preview: 'pnpm build && pnpm start',
         start: 'node dist/server.js',
         local: 'tsx watch server.ts'
       });

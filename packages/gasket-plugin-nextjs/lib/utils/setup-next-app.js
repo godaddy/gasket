@@ -12,13 +12,22 @@ function getPortFallback(env = '') {
 
 /**
  * Determines the port from HTTP-related config or falls back.
- * @param {object} config - Gasket config object
+ * @param {import('@gasket/core', { with: { "resolution-mode": "require" } }).GasketConfig} config - Gasket config object
  * @returns {number} Resolved port
  */
 function resolvePort(config) {
   const { http, https, http2, env } = config;
   const _http = http || https || http2;
-  return (_http && _http.port) || _http || getPortFallback(env);
+
+  // Handle different config shapes: number, object with port, or array
+  if (typeof _http === 'number') {
+    return _http;
+  }
+  if (_http && typeof _http === 'object' && !Array.isArray(_http) && _http.port) {
+    return _http.port;
+  }
+
+  return getPortFallback(env);
 }
 
 /**
@@ -26,25 +35,32 @@ function resolvePort(config) {
  * @returns {boolean} True if GASKET_DEV is set
  */
 function isDevServer() {
+  // eslint-disable-next-line no-process-env
   return Boolean(process.env.GASKET_DEV); // TODO document GASKET_DEV
 }
 
 /**
  * Type guard to check if serverApp is an Express app.
- * @param {any} app
- * @returns {app is import('express').Application}
+ * @param {unknown} app - The server application to check
+ * @returns {app is import('express').Application} True if app is an Express application
  */
 function isExpressApp(app) {
-  return typeof app?.use === 'function' && typeof app?.set === 'function';
+  return app != null &&
+    typeof app === 'object' &&
+    typeof /** @type {any} */ (app).use === 'function' &&
+    typeof /** @type {any} */ (app).set === 'function';
 }
 
 /**
  * Type guard to check if serverApp is a Fastify app.
- * @param {any} app
- * @returns {boolean}
+ * @param {unknown} app - The server application to check
+ * @returns {boolean} True if app is a Fastify application
  */
 function isFastifyApp(app) {
-  return typeof app?.route === 'function' && typeof app?.inject === 'function';
+  return app != null &&
+    typeof app === 'object' &&
+    typeof /** @type {any} */ (app).route === 'function' &&
+    typeof /** @type {any} */ (app).inject === 'function';
 }
 
 /**

@@ -30,7 +30,15 @@ const plugin = {
           typescript,
           apiApp
         } = context;
-        const runCmd = packageManager === 'npm' ? `npm run` : packageManager;
+        let runCmd;
+        if (packageManager === 'yarn') {
+          runCmd = 'yarn';
+        } else if (packageManager === 'pnpm') {
+          runCmd = 'pnpm';
+        } else {
+          runCmd = 'npm run';
+        }
+
         const generatorDir = `${__dirname}/../generator`;
         const isReactProject = pkg.has('dependencies', 'react');
         const fileExtension = typescript ? 'ts' : 'js';
@@ -107,7 +115,7 @@ const plugin = {
         }
 
         pkg.add('scripts', {
-          'test': 'npm run test:runner',
+          'test': `${runCmd} test:runner`,
           'test:coverage': `nyc --reporter=text --reporter=json-summary ${runCmd} test:runner`
         });
       }
