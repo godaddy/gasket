@@ -127,7 +127,7 @@ prebootHttpsProxy: async function prebootHttpsProxy(gasket) {
 }
 ```
 
-#### When to use `preboot` vs `prepare`
+#### When to use `prebootHttpsProxy` vs `prepare`
 
 The `preboot` lifecycle runs **once** when the proxy server starts, while the `prepare` lifecycle runs for **every** Gasket instance creation. Use `preboot` for:
 
