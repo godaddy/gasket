@@ -1,5 +1,26 @@
 # generate-docs-index
 
+## 7.4.5
+
+### Patch Changes
+
+- Updated dependencies [388c23f]
+- Updated dependencies [c46c389]
+  - @gasket/plugin-typescript@7.4.2
+  - @gasket/plugin-nextjs@7.5.3
+  - @gasket/plugin-mocha@7.5.1
+  - @gasket/plugin-jest@7.5.1
+  - @gasket/preset-api@7.4.3
+  - @gasket/plugin-https-proxy@7.3.10
+  - @gasket/plugin-https@7.3.6
+  - @gasket/preset-nextjs@7.4.4
+  - @gasket/plugin-intl@7.5.1
+  - @gasket/plugin-express@7.4.0
+  - @gasket/plugin-fastify@7.4.2
+  - @gasket/plugin-happyfeet@7.3.4
+  - @gasket/plugin-logger@7.3.4
+  - @gasket/plugin-middleware@7.4.2
+
 ## 7.4.4
 
 ### Patch Changes
