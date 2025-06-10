@@ -1,7 +1,5 @@
 # `@gasket/react-intl`
 
-## 7.5.0
-
 ### Minor Changes
 
 - 30833cb: add generated code for vitest and include vitest plugin in dependencies
