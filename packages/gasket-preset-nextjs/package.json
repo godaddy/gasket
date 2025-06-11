@@ -1,6 +1,6 @@
 {
   "name": "@gasket/preset-nextjs",
-  "version": "7.4.4",
+  "version": "7.4.5",
   "description": "Basic NextJS Framework",
   "type": "module",
   "types": "lib/index.d.ts",
