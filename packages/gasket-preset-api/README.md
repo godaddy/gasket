@@ -5,7 +5,7 @@ Framework for building API's using Gasket.
 ## Installation
 
 ```bash
-npx create-gasket-app <app-name> --presets @gasket/preset-api
+npx create-gasket-app@latest <app-name> --presets @gasket/preset-api
 ```
 
 ## Docs

@@ -9,7 +9,7 @@ To create a new app, you may choose one of the following methods:
 ### npx
 
 ```sh
-npx create-gasket-app my-app
+npx create-gasket-app@latest my-app
 ```
 
 ### npm
@@ -30,7 +30,7 @@ Use to create a new Gasket app.
 
 ```
 Usage: choose one of the following methods
-- npx create-gasket-app <appname> [options]
+- npx create-gasket-app@latest <appname> [options]
 - npm init gasket-app <appname> [options]
 - yarn create gasket-app <appname> [options]
 
@@ -63,7 +63,7 @@ particular `create-gasket-app` run, you can set the
 For example, to configure the registry for a `gasket create` run:
 
 ```
-npm_config_registry=https://custom-registry.com npx create-gasket-app -p @gasket/nextjs
+npm_config_registry=https://custom-registry.com npx create-gasket-app@latest -p @gasket/nextjs
 ```
 
 #### Test Suites

@@ -5,7 +5,7 @@
 To get started creating a new app, use a package runner with `create-gasket-app`:
 
 ```bash
-npx create-gasket-app --help
+npx create-gasket-app@latest --help
 # OR
 yarn create gasket-app --help
 ```
@@ -13,7 +13,7 @@ yarn create gasket-app --help
 In this example we will create a Next.js app by specifying the app name along with the preset `@gasket/preset-nextjs`:
 
 ```bash
-npx create-gasket-app <app-name> --presets @gasket/preset-nextjs
+npx create-gasket-app@latest <app-name> --presets @gasket/preset-nextjs
 ```
 
 This will create a new directory with the name of your app.
