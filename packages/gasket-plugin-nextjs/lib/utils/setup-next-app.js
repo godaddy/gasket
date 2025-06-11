@@ -46,7 +46,7 @@ function isDevServer() {
  */
 function isExpressApp(app) {
   return app != null &&
-    typeof app === 'object' &&
+    typeof app === 'function' &&
     typeof /** @type {any} */ (app).use === 'function' &&
     typeof /** @type {any} */ (app).set === 'function';
 }
