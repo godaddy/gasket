@@ -1,9 +1,9 @@
 /* eslint-disable no-sync, max-statements */
-const expressApp = {
+const expressApp = Object.assign(jest.fn(), {
   set: jest.fn(),
   use: jest.fn(),
   all: jest.fn()
-};
+});
 
 const nextHandler = jest.fn();
 
