@@ -1,5 +1,13 @@
 # `@gasket/plugin-command`
 
+## 7.4.1
+
+### Patch Changes
+
+- Updated dependencies [9a98fd0]
+  - @gasket/utils@7.4.1
+  - @gasket/core@7.5.1
+
 ## 7.4.0
 
 ### Minor Changes
