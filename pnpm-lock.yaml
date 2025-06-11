@@ -3331,6 +3331,9 @@ importers:
       concat-stream:
         specifier: ^2.0.0
         version: 2.0.0
+      cross-spawn:
+        specifier: ^7.0.6
+        version: 7.0.6
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
@@ -22874,7 +22877,7 @@ snapshots:
   http-proxy-agent@7.0.2:
     dependencies:
       agent-base: 7.1.3
-      debug: 4.4.0(supports-color@5.5.0)
+      debug: 4.4.1
     transitivePeerDependencies:
       - supports-color
     optional: true
@@ -22922,7 +22925,7 @@ snapshots:
   https-proxy-agent@7.0.6:
     dependencies:
       agent-base: 7.1.3
-      debug: 4.4.0(supports-color@5.5.0)
+      debug: 4.4.1
     transitivePeerDependencies:
       - supports-color
     optional: true

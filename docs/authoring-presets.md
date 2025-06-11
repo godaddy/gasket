@@ -15,7 +15,7 @@ See the [recommended naming conventions] for how to best name a preset.
 To create a new Gasket app using a preset, use the `--preset` flag with `create-gasket-app`:
 
 ```sh
-npx create-gasket-app <app-name> --presets <@your/gasket-preset-example>
+npx create-gasket-app@latest <app-name> --presets <@your/gasket-preset-example>
 ```
 
 ## Composition
@@ -183,7 +183,7 @@ export default makeGasket({
 You can also add configuration to the `context` object through the command line by using `create-gasket-app` with the `--config` flag, followed by a stringified object containing the values you wish to add.
 
 ```sh
-npx create-gasket-app <app-name> --presets <@your/gasket-preset-example> --config "{\"my\": \"value\"}"
+npx create-gasket-app@latest <app-name> --presets <@your/gasket-preset-example> --config "{\"my\": \"value\"}"
 ```
 
 [recommended naming conventions]: /docs/authoring-plugins.md#recommended-naming-convention
