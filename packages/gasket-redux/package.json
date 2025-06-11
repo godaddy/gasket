@@ -43,7 +43,7 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.20.7",
     "@babel/plugin-transform-runtime": "^7.26.9",
     "@babel/preset-env": "^7.26.9",
-    "@gasket/plugin-logger": "workspace:*",
+    "@gasket/plugin-logger": "workspace:^",
     "@types/jest": "^29.5.14",
     "@types/node": "^20.17.19",
     "babel-core": "7.0.0-bridge.0",

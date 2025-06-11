@@ -47,7 +47,7 @@
     "semver": "^7.7.1"
   },
   "devDependencies": {
-    "@gasket/core": "workspace:*",
+    "@gasket/core": "workspace:^",
     "@types/concat-stream": "^2.0.3",
     "@types/cross-spawn": "^6.0.6",
     "@types/jest": "^29.5.14",

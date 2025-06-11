@@ -8,9 +8,13 @@ const config = {
     devDependencies: {
       strategy: 'versionsByName',
       path: 'devDependencies'
+    },
+    peerDependencies: {
+      strategy: 'versionsByName',
+      path: 'peerDependencies'
     }
   },
-  dependencyTypes: ['dependencies', 'devDependencies'],
+  dependencyTypes: ['dependencies', 'devDependencies', 'peerDependencies'],
   semverGroups: [
     {
       range: '',
@@ -23,6 +27,13 @@ const config = {
       dependencyTypes: ['dependencies', 'devDependencies'],
       dependencies: ['**'],
       packages: ['**']
+    },
+    {
+      range: '^',
+      dependencyTypes: ['peerDependencies'],
+      dependencies: ['**'],
+      packages: ['**'],
+      precision: 'major' // Use major version only for peer dependencies (e.g., ^18 instead of ^18.0.0)
     }
   ],
   sortFirst: [
@@ -62,8 +73,18 @@ const config = {
         'create-gasket-app',
         '@gasket/*',
       ],
-      dependencyTypes: ['dependencies', 'devDependencies'],
-      pinVersion: 'workspace:*'
+      dependencyTypes: ['dependencies', 'devDependencies', 'peerDependencies'],
+      pinVersion: 'workspace:^'
+    },
+    {
+      label: 'external-peer-dependencies',
+      dependencies: [
+        '**', // All dependencies
+        '!create-gasket-app', // Exclude workspace packages
+        '!@gasket/*' // Exclude @gasket scoped packages
+      ],
+      dependencyTypes: ['peerDependencies'],
+      policy: 'sameRange' // Ensure same range for external peer dependencies (e.g., all packages use "react": "^18.0.0")
     }],
   "lintFormatting": true,
   "lintSemverRanges": true,
