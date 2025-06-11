@@ -1,5 +1,11 @@
 # `@gasket/plugin-nextjs`
 
+## 7.5.4
+
+### Patch Changes
+
+- 2b90013: Fixed isExpressApp function to check for the correct "function" type.
+
 ## 7.5.3
 
 ### Patch Changes
