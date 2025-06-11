@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-typescript",
-  "version": "7.4.2",
+  "version": "7.4.3",
   "description": "Gasket plugin for TypeScript support",
   "types": "lib/index.d.ts",
   "files": [

@@ -1,5 +1,12 @@
 # `@gasket/core`
 
+## 7.5.1
+
+### Patch Changes
+
+- Updated dependencies [9a98fd0]
+  - @gasket/utils@7.4.1
+
 ## 7.5.0
 
 ### Minor Changes
