@@ -1,6 +1,6 @@
 import { jest } from '@jest/globals';
 import { fileURLToPath } from 'url';
-import path from 'path';
+import nodePath from 'path';
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const mockConstructorStub = jest.fn();
 const mockExecStub = jest.fn();
@@ -23,16 +23,23 @@ jest.mock('@gasket/utils', () => {
 
 jest.unstable_mockModule('fs/promises', () => {
   return {
-    mkdtemp: mockMkTemp.mockResolvedValue(path.join(__dirname, '..', '..', '..', '__mocks__'))
+    mkdtemp: mockMkTemp.mockResolvedValue(nodePath.join(__dirname, '..', '..', '..', '__mocks__'))
   };
+});
+
+const mockPathJoin = jest.fn().mockImplementation((...args) => {
+  const p = args.join('/');
+  return p.replace('/node_modules', '');
+});
+
+const mockPathResolve = jest.fn().mockImplementation((...args) => {
+  return nodePath.resolve(...args);
 });
 
 jest.unstable_mockModule('path', () => ({
   default: {
-    join: jest.fn().mockImplementation((...args) => {
-      const p = args.join('/');
-      return p.replace('/node_modules', '');
-    })
+    join: mockPathJoin,
+    resolve: mockPathResolve
   }
 }));
 
@@ -91,7 +98,7 @@ describe('loadPreset', () => {
       await loadPreset({ context: mockContext });
       expect(mockConstructorStub).toHaveBeenCalled();
       expect(mockConstructorStub.mock.calls[0][0]).toHaveProperty('packageManager', 'npm');
-      expect(mockConstructorStub.mock.calls[0][0]).toHaveProperty('dest', `${path.join(__dirname, '..', '..', '..', '__mocks__')}`);
+      expect(mockConstructorStub.mock.calls[0][0]).toHaveProperty('dest', `${nodePath.join(__dirname, '..', '..', '..', '__mocks__')}`);
     });
 
     it('determines the correct pkg manager verb', async () => {
@@ -262,7 +269,7 @@ describe('loadPreset', () => {
   });
 
   it('supports preset with file version', async () => {
-    const filePath = path.resolve(__dirname, '..', '..', '..', '__mocks__', '@gasket', 'preset-bogus');
+    const filePath = nodePath.resolve(__dirname, '..', '..', '..', '__mocks__', '@gasket', 'preset-bogus');
 
     mockContext.rawPresets = [
       `@gasket/preset-bogus@file:${filePath}`
@@ -306,5 +313,18 @@ describe('loadPreset', () => {
     await expect(async () => {
       await loadPreset({ context: mockContext });
     }).rejects.toThrow('Preset not found in registry: @gasket/preset-bogus-not-found@latest. Use npm_config_registry=<registry> to use privately scoped presets.');
+  });
+
+  it('uses path.resolve for proper path construction in pathToFileURL', async () => {
+    mockContext.rawPresets = ['@gasket/preset-bogus@^1.0.0'];
+
+    await loadPreset({ context: mockContext });
+
+    // Verify path.resolve was called for constructing paths
+    expect(mockPathResolve).toHaveBeenCalled();
+    const resolveCall = mockPathResolve.mock.calls[0];
+    expect(resolveCall).toHaveLength(3); // modPath, name, entryPath
+    expect(resolveCall[1]).toBe('@gasket/preset-bogus'); // package name
+    expect(resolveCall[2]).toBe('index.js'); // entry path from package.json
   });
 });
