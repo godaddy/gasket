@@ -15,7 +15,7 @@ See [@gasket/plugin-intl] for more information on how to configure the plugin.
 With a `intl.js` built by [@gasket/plugin-intl], you can use the IntlManager to
 get messages for locales.
 
-### Basic Usage
+### Example messages for a Locale
 
 ```js
 import intlManager from '../path/to/intl.js';
@@ -27,46 +27,35 @@ const localeHandler = intlManager.handleLocale('en-US');
 const messages = localeHandler.getAllMessages();
 ```
 
-## API
+### Example resolving a supported locale
 
-### IntlManager
+The IntlManager can also be used to resolve locale based on the supported locales that have been configured for
+[@gasket/plugin-intl].
 
-The `IntlManager` is the public API for internationalization. It provides a simplified interface to the underlying internationalization system.
+```js
+import intlManager from '../path/to/intl.js';
 
-#### Properties
+// Resolve a locale to a supported locale
+const resolvedLocale = intlManager.resolveLocale('fr-CA');
+// If fr-CA is not supported but fr is, resolvedLocale will be 'fr'
+// If neither is supported, it will fall back to the default locale
+```
 
-- `locales` - Array of supported locales
-- `defaultLocaleFilePath` - Default path to locale files
-- `staticLocaleFilePaths` - Array of paths to locale files for static/SSR rendering
+To list all supported locales, you can use:
 
-#### Methods
+```js
+import intlManager from '../path/to/intl.js';
 
-- `resolveLocale(locale)` - Resolves a locale to a supported locale
-- `handleLocale(locale)` - Returns a LocaleHandler for a locale
+// Get all supported locales
+const supportedLocales = intlManager.locales;
+```
 
-### LocaleHandler
+## Advanced Usage
 
-The `LocaleHandler` class manages resolving and loading of locale files for a specific locale.
+While the above examples cover the most common use cases, the `@gasket/intl` package also provides advanced features for
+managing locale files and their loading status. These are useful for scenarios where the React components from
+[@gasket/react-intl] are not available or when you need to manage locale files directly.
 
-#### Methods
-
-- `load(...localeFilePaths)` - Loads locale files
-- `loadStatics(...localeFilePaths)` - Loads static locale files for SSR
-- `getStatus(...localeFilePaths)` - Gets the loading status for locale file paths
-- `getAllMessages()` - Gets all loaded messages for the locale
-- `getStaticsRegister()` - Gets the registry of static messages for SSR
-
-### LocaleFileStatus
-
-Constants representing the status of locale file loading:
-
-- `notHandled` - The locale file has not been handled yet
-- `notLoaded` - The locale file has not been loaded yet
-- `loading` - The locale file is currently loading
-- `loaded` - The locale file has been loaded successfully
-- `error` - There was an error loading the locale file
-
-## Examples
 
 ### Loading Multiple Locale Files
 
@@ -109,18 +98,6 @@ if (status === LocaleFileStatus.loading) {
 }
 ```
 
-### Resolving Locales
-
-```js
-import intlManager from '../path/to/intl.js';
-
-// Resolve a locale to a supported locale
-const resolvedLocale = intlManager.resolveLocale('fr-CA');
-
-// If fr-CA is not supported but fr is, resolvedLocale will be 'fr'
-// If neither is supported, it will fall back to the default locale
-```
-
 ### Server-Side Rendering
 
 ```js
@@ -143,3 +120,4 @@ const staticsRegister = localeHandler.getStaticsRegister();
 <!-- LINKS -->
 
 [@gasket/plugin-intl]: /packages/gasket-plugin-intl/README.md
+[@gasket/react-intl]: /packages/gasket-react-intl/README.md
