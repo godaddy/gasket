@@ -1,8 +1,30 @@
 /* eslint-disable no-use-before-define */
-import { LocaleFilePath, LocaleFileKey, Locale, LocaleMessages, MessagesRegister, StatusRegister, PromisesRegister, LocaleManifest, LocaleFileStatusType, LocaleHandler } from './index.d.ts';
+import {
+  LocaleFilePath,
+  LocaleFileKey,
+  Locale,
+  LocaleMessages,
+  MessagesRegister,
+  StatusRegister,
+  PromisesRegister,
+  LocaleManifest,
+  LocaleFileStatusType,
+  LocaleHandler
+} from './index.d.ts';
 
 // Re-export types needed by JavaScript files
-export { LocaleFilePath, LocaleFileKey, Locale, LocaleMessages, MessagesRegister, StatusRegister, PromisesRegister, LocaleManifest, LocaleFileStatusType, LocaleHandler };
+export {
+  LocaleFilePath,
+  LocaleFileKey,
+  Locale,
+  LocaleMessages,
+  MessagesRegister,
+  StatusRegister,
+  PromisesRegister,
+  LocaleManifest,
+  LocaleFileStatusType,
+  LocaleHandler
+};
 
 // Export utility function types
 export type safePaths = (paths: LocaleFilePath[], defaultPath: LocaleFilePath) => LocaleFilePath[];

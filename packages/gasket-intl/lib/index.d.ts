@@ -86,16 +86,11 @@ export const LocaleFileStatusPriority: LocaleFileStatusType[];
 
 /**
  * Returns the lowest status from an array of statuses based on priority
- * @param statuses - Array of locale file statuses
- * @returns The lowest status
  */
 export function lowestStatus(statuses: LocaleFileStatusType[]): LocaleFileStatusType;
 
 /**
  * Ensures there's at least one path to use
- * @param paths - Array of locale file paths
- * @param defaultPath - Default locale file path to use if paths is empty
- * @returns Array of locale file paths
  */
 export function safePaths(paths: LocaleFilePath[], defaultPath: LocaleFilePath): LocaleFilePath[];
 
@@ -106,34 +101,26 @@ export function safePaths(paths: LocaleFilePath[], defaultPath: LocaleFilePath):
 export class LocaleHandler {
   /**
    * Loads locale files
-   * @param localeFilePaths - Paths to locale files
-   * @returns Promise that resolves when all files are loaded
    */
   load(...localeFilePaths: LocaleFilePath[]): Promise<PromiseSettledResult<void>[]>;
 
   /**
    * Loads static locale files for SSR
-   * @param localeFilePaths - Paths to locale files
-   * @returns Promise that resolves when all files are loaded
    */
   loadStatics(...localeFilePaths: LocaleFilePath[]): Promise<PromiseSettledResult<void>[]>;
 
   /**
    * Gets the loading status for locale file paths
-   * @param localeFilePaths - Paths to locale files
-   * @returns The loading status
    */
   getStatus(...localeFilePath: LocaleFilePath[]): LocaleFileStatusType;
 
   /**
    * Gets all loaded messages for the locale
-   * @returns All loaded messages
    */
   getAllMessages(): LocaleMessages;
 
   /**
    * Gets the registry of static messages for SSR
-   * @returns The static messages register
    */
   getStaticsRegister(): MessagesRegister;
 }
@@ -159,22 +146,16 @@ export class IntlManager {
 
   /**
    * Resolves a locale to a supported locale
-   * @param locale - The locale to resolve
-   * @returns The resolved locale
    */
   resolveLocale(locale: Locale): Locale;
 
   /**
    * Gets a locale handler for a locale
-   * @param locale - The locale to handle
-   * @returns A locale handler
    */
   handleLocale(locale: Locale): LocaleHandler;
 }
 
 /**
  * Creates an IntlManager instance
- * @param manifest - The locale manifest
- * @returns An IntlManager instance
  */
 export function makeIntlManager(manifest: LocaleManifest): IntlManager;

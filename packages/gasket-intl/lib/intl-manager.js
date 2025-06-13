@@ -1,9 +1,10 @@
 /**
  * Public API for internationalization
+ * @type {import('./index.d.ts').IntlManager}
  */
 class IntlManager {
   /**
-   * @param {Object} manager - The internal IntlManager instance
+   * @param {import('./internal.d.ts').InternalIntlManager} manager - The internal IntlManager instance
    */
   constructor(manager) {
     this._manager = manager;
@@ -11,7 +12,7 @@ class IntlManager {
 
   /**
    * Gets the list of supported locales
-   * @returns {string[]} Array of supported locales
+   * @type {import('./index.d.ts').IntlManager['locales']}
    */
   get locales() {
     return this._manager.locales;
@@ -19,7 +20,7 @@ class IntlManager {
 
   /**
    * Gets the default locale file path
-   * @returns {string} Default locale file path
+   * @type {import('./index.d.ts').IntlManager['defaultLocaleFilePath']}
    */
   get defaultLocaleFilePath() {
     return this._manager.defaultLocaleFilePath;
@@ -27,7 +28,7 @@ class IntlManager {
 
   /**
    * Gets the static locale file paths
-   * @returns {string[]} Array of static locale file paths
+   * @type {import('./index.d.ts').IntlManager['staticLocaleFilePaths']}
    */
   get staticLocaleFilePaths() {
     return this._manager.staticLocaleFilePaths;
@@ -35,8 +36,7 @@ class IntlManager {
 
   /**
    * Resolves a locale to a supported locale
-   * @param {string} locale - The locale to resolve
-   * @returns {string} The resolved locale
+   * @type {import('./index.d.ts').IntlManager['resolveLocale']}
    */
   resolveLocale(locale) {
     return this._manager.resolveLocale(locale);
@@ -44,8 +44,7 @@ class IntlManager {
 
   /**
    * Gets a locale handler for a locale
-   * @param {string} locale - The locale to handle
-   * @returns {Object} A locale handler
+   * @type {import('./index.d.ts').IntlManager['handleLocale']}
    */
   handleLocale(locale) {
     // Pass the internal manager to the LocaleHandler

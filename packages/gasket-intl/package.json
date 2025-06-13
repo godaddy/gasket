@@ -80,7 +80,8 @@
           "godaddy-typescript"
         ],
         "rules": {
-          "jsdoc/*": "off"
+          "jsdoc/require-param": "off",
+          "jsdoc/require-returns": "off"
         }
       }
     ]

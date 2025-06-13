@@ -5,8 +5,7 @@ import { safePaths, lowestStatus } from './locale-handler.js';
 
 /**
  * Creates an IntlManager instance
- * @param {Object} manifest - The locale manifest
- * @returns {IntlManager} An IntlManager instance
+ * @type {import('./index.d.ts').makeIntlManager}
  */
 function makeIntlManager(manifest) {
   const manager = new InternalIntlManager(manifest);
