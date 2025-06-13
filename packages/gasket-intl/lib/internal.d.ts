@@ -61,7 +61,7 @@ export type IntlManager_handleLocale = (locale: Locale) => LocaleHandler;
 /**
  * @internal
  */
-export type LocaleHandler_constructor = (manager: IntlManager, locale: Locale) => void;
+export type LocaleHandler_constructor = (manager: InternalIntlManager, locale: Locale) => void;
 
 /**
  * @internal
@@ -103,7 +103,7 @@ export type LocaleHandler_getStaticsRegister = () => MessagesRegister;
  * Only deals with resolved localeFileKeys.
  * @internal
  */
-export class IntlManager {
+export class InternalIntlManager {
   messagesRegister: MessagesRegister;
   statusRegister: StatusRegister;
   promisesRegister: PromisesRegister;

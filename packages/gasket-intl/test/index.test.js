@@ -13,7 +13,7 @@ describe('makeIntlManager', () => {
     }
   };
 
-  it('creates an IntlProvider instance with the given manifest', () => {
+  it('creates an IntlManager instance with the given manifest', () => {
     const provider = makeIntlManager(mockManifest);
 
     expect(provider).toBeDefined();

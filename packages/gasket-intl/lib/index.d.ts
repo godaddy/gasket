@@ -141,7 +141,7 @@ export class LocaleHandler {
 /**
  * Public API for internationalization
  */
-export class IntlProvider {
+export class IntlManager {
   /**
    * Gets the list of supported locales
    */
@@ -173,8 +173,8 @@ export class IntlProvider {
 }
 
 /**
- * Creates an IntlProvider instance
+ * Creates an IntlManager instance
  * @param manifest - The locale manifest
- * @returns An IntlProvider instance
+ * @returns An IntlManager instance
  */
-export function makeIntlManager(manifest: LocaleManifest): IntlProvider;
+export function makeIntlManager(manifest: LocaleManifest): IntlManager;

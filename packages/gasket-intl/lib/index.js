@@ -1,70 +1,16 @@
 import { IntlManager } from './intl-manager.js';
+import { InternalIntlManager } from './internal-intl-manager.js';
 import { LocaleFileStatus, LocaleFileStatusPriority } from './constants.js';
 import { safePaths, lowestStatus } from './locale-handler.js';
 
 /**
- * Public API for internationalization
- */
-class IntlProvider {
-  /**
-   * @param {Object} manager - The internal IntlManager instance
-   */
-  constructor(manager) {
-    this._manager = manager;
-  }
-
-  /**
-   * Gets the list of supported locales
-   * @returns {string[]} Array of supported locales
-   */
-  get locales() {
-    return this._manager.locales;
-  }
-
-  /**
-   * Gets the default locale file path
-   * @returns {string} Default locale file path
-   */
-  get defaultLocaleFilePath() {
-    return this._manager.defaultLocaleFilePath;
-  }
-
-  /**
-   * Gets the static locale file paths
-   * @returns {string[]} Array of static locale file paths
-   */
-  get staticLocaleFilePaths() {
-    return this._manager.staticLocaleFilePaths;
-  }
-
-  /**
-   * Resolves a locale to a supported locale
-   * @param {string} locale - The locale to resolve
-   * @returns {string} The resolved locale
-   */
-  resolveLocale(locale) {
-    return this._manager.resolveLocale(locale);
-  }
-
-  /**
-   * Gets a locale handler for a locale
-   * @param {string} locale - The locale to handle
-   * @returns {Object} A locale handler
-   */
-  handleLocale(locale) {
-    // Pass the internal manager to the LocaleHandler
-    return this._manager.handleLocale(locale);
-  }
-}
-
-/**
- * Creates an IntlProvider instance
+ * Creates an IntlManager instance
  * @param {Object} manifest - The locale manifest
- * @returns {IntlProvider} An IntlProvider instance
+ * @returns {IntlManager} An IntlManager instance
  */
 function makeIntlManager(manifest) {
-  const manager = new IntlManager(manifest);
-  return new IntlProvider(manager);
+  const manager = new InternalIntlManager(manifest);
+  return new IntlManager(manager);
 }
 
 export {
