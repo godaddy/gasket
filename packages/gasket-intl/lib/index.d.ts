@@ -79,103 +79,102 @@ export const LocaleFileStatus: {
 
 export type LocaleFileStatusType = typeof LocaleFileStatus[keyof typeof LocaleFileStatus];
 
+/**
+ * Array of LocaleFileStatus values in priority order
+ */
+export const LocaleFileStatusPriority: LocaleFileStatusType[];
+
+/**
+ * Returns the lowest status from an array of statuses based on priority
+ * @param statuses - Array of locale file statuses
+ * @returns The lowest status
+ */
 export function lowestStatus(statuses: LocaleFileStatusType[]): LocaleFileStatusType;
 
+/**
+ * Ensures there's at least one path to use
+ * @param paths - Array of locale file paths
+ * @param defaultPath - Default locale file path to use if paths is empty
+ * @returns Array of locale file paths
+ */
 export function safePaths(paths: LocaleFilePath[], defaultPath: LocaleFilePath): LocaleFilePath[];
-
-//
-// -- CLASS METHODS --
-//
-
-export type IntlManager_constructor = (manifest: LocaleManifest) => void;
-
-/**
- * On the server, this will prepare all locales files
- * so that they are ready for SSR
- *
- * In the browser, this will prepare all loaded messages
- * rendered to the document.
- *
- * This is called automatically by the constructor.
- * @private
- */
-export type IntlManager_init = () => void;
-
-/**
- * Fallback to the lang part of a locale or to defaultLocale.
- * Strategy is:
- *  <locale>
- *  <lang>
- *  <default locale>
- *
- * Here's an example using da-DK/da with en-US as defaultLocale
- * da-DK ==> da ==> en-US
- */
-export type IntlManager_resolveLocale = (locale: Locale) => Locale;
-export type IntlManager_load = (localeFileKey: LocaleFileKey) => Promise<void>;
-export type IntlManager_getMessages = (localeFileKey: LocaleFileKey) => LocaleMessages;
-export type IntlManager_getStatus = (localeFileKey: LocaleFileKey) => LocaleFileStatusType;
-export type IntlManager_handleLocale = (locale: Locale) => LocaleHandler;
-
-export type LocaleHandler_constructor = (manager: IntlManager, locale: Locale) => void;
-export type LocaleHandler_init = () => void;
-
-export type LocaleHandler_getLocaleFileKey = (localeFilePath: LocaleFilePath) => LocaleFileKey;
-export type LocaleHandler_loadStatics = (...localeFilePaths: LocaleFilePath[]) => PromiseSettledResult<void>[];
-export type LocaleHandler_load = (...localeFilePaths: LocaleFilePath[]) => Promise<PromiseSettledResult<void>[]>;
-export type LocaleHandler_getStatus = (...localeFilePath: LocaleFilePath[]) => LocaleFileStatusType;
-export type LocaleHandler_getAllMessages = () => LocaleMessages;
-export type LocaleHandler_getStaticsRegister = () => MessagesRegister;
-
-//
-// -- CLASSES --
-//
-
-/**
- * Manages loading and caching of locale files.
- * Only deals with resolved localeFileKeys.
- */
-export class IntlManager {
-  messagesRegister: MessagesRegister;
-  statusRegister: StatusRegister;
-  promisesRegister: PromisesRegister;
-
-  constructor(manifest: LocaleManifest);
-
-  managedLocales: Locale[];
-  get locales(): Locale[];
-  get defaultLocaleFilePath(): LocaleFilePath;
-  get staticLocaleFilePaths(): LocaleFilePath[];
-
-  init: IntlManager_init;
-  resolveLocale: IntlManager_resolveLocale;
-  load: IntlManager_load;
-  getMessages: IntlManager_getMessages;
-  getStatus: IntlManager_getStatus;
-
-  handleLocale: IntlManager_handleLocale;
-}
 
 /**
  * Manages resolving and loading of locale files for a locale.
  * Only deals with unresolved localeFilePaths.
  */
 export class LocaleHandler {
-  private handledKeys: LocaleFileKey[];
-  private loadKeys: LocaleFileKey[];
-  private handledDirty: boolean;
-  private loadDirty: boolean;
-  private messages: LocaleMessages;
-  private staticsRegister: MessagesRegister;
+  /**
+   * Loads locale files
+   * @param localeFilePaths - Paths to locale files
+   * @returns Promise that resolves when all files are loaded
+   */
+  load(...localeFilePaths: LocaleFilePath[]): Promise<PromiseSettledResult<void>[]>;
 
-  constructor(manager: IntlManager, locale: Locale);
+  /**
+   * Loads static locale files for SSR
+   * @param localeFilePaths - Paths to locale files
+   * @returns Promise that resolves when all files are loaded
+   */
+  loadStatics(...localeFilePaths: LocaleFilePath[]): Promise<PromiseSettledResult<void>[]>;
 
-  private getLocaleFileKey: LocaleHandler_getLocaleFileKey;
-  loadStatics: LocaleHandler_loadStatics;
-  load: LocaleHandler_load;
-  getStatus: LocaleHandler_getStatus;
-  getAllMessages: LocaleHandler_getAllMessages;
-  getStaticsRegister: LocaleHandler_getStaticsRegister;
+  /**
+   * Gets the loading status for locale file paths
+   * @param localeFilePaths - Paths to locale files
+   * @returns The loading status
+   */
+  getStatus(...localeFilePath: LocaleFilePath[]): LocaleFileStatusType;
+
+  /**
+   * Gets all loaded messages for the locale
+   * @returns All loaded messages
+   */
+  getAllMessages(): LocaleMessages;
+
+  /**
+   * Gets the registry of static messages for SSR
+   * @returns The static messages register
+   */
+  getStaticsRegister(): MessagesRegister;
 }
 
-export function makeIntlManager(manifest: LocaleManifest): IntlManager;
+/**
+ * Public API for internationalization
+ */
+export class IntlProvider {
+  /**
+   * Gets the list of supported locales
+   */
+  get locales(): Locale[];
+
+  /**
+   * Gets the default locale file path
+   */
+  get defaultLocaleFilePath(): LocaleFilePath;
+
+  /**
+   * Gets the static locale file paths
+   */
+  get staticLocaleFilePaths(): LocaleFilePath[];
+
+  /**
+   * Resolves a locale to a supported locale
+   * @param locale - The locale to resolve
+   * @returns The resolved locale
+   */
+  resolveLocale(locale: Locale): Locale;
+
+  /**
+   * Gets a locale handler for a locale
+   * @param locale - The locale to handle
+   * @returns A locale handler
+   */
+  handleLocale(locale: Locale): LocaleHandler;
+}
+
+/**
+ * Creates an IntlProvider instance
+ * @param manifest - The locale manifest
+ * @returns An IntlProvider instance
+ */
+export function makeIntlManager(manifest: LocaleManifest): IntlProvider;

@@ -12,34 +12,129 @@ See [@gasket/plugin-intl] for more information on how to configure the plugin.
 
 ## Usage
 
-With a `intl.js` built by [@gasket/plugin-intl], you can use the manager to
+With a `intl.js` built by [@gasket/plugin-intl], you can use the IntlProvider to
 get messages for locales.
 
-To get all messages for a locale:
+### Basic Usage
 
 ```js
-import intlManager from '../path/to/intl.js';
+import intlProvider from '../path/to/intl.js';
 
-const messages = intlManager.getLocale('en-US').getAllMessages();
+// Get a locale handler for a specific locale
+const localeHandler = intlProvider.handleLocale('en-US');
+
+// Get all loaded messages for the locale
+const messages = localeHandler.getAllMessages();
 ```
+
+## API
+
+### IntlProvider
+
+The `IntlProvider` is the public API for internationalization. It provides a simplified interface to the underlying internationalization system.
+
+#### Properties
+
+- `locales` - Array of supported locales
+- `defaultLocaleFilePath` - Default path to locale files
+- `staticLocaleFilePaths` - Array of paths to locale files for static/SSR rendering
+
+#### Methods
+
+- `resolveLocale(locale)` - Resolves a locale to a supported locale
+- `handleLocale(locale)` - Returns a LocaleHandler for a locale
 
 ### LocaleHandler
 
-This will return a handler with the following methods:
+The `LocaleHandler` class manages resolving and loading of locale files for a specific locale.
+
+#### Methods
+
+- `load(...localeFilePaths)` - Loads locale files
+- `loadStatics(...localeFilePaths)` - Loads static locale files for SSR
+- `getStatus(...localeFilePaths)` - Gets the loading status for locale file paths
+- `getAllMessages()` - Gets all loaded messages for the locale
+- `getStaticsRegister()` - Gets the registry of static messages for SSR
+
+### LocaleFileStatus
+
+Constants representing the status of locale file loading:
+
+- `notHandled` - The locale file has not been handled yet
+- `notLoaded` - The locale file has not been loaded yet
+- `loading` - The locale file is currently loading
+- `loaded` - The locale file has been loaded successfully
+- `error` - There was an error loading the locale file
+
+## Examples
+
+### Loading Multiple Locale Files
 
 ```js
+import intlProvider from '../path/to/intl.js';
 
-// Access a locale handler
-const localeHandler = intlManager.getLocale('en-US');
+const localeHandler = intlProvider.handleLocale('en-US');
 
-// locale files can be dynamically loaded
-await localeHandler.load('locales/examples')
+// Load multiple locale files
+await localeHandler.load(
+  'locales/common',
+  'locales/homepage',
+  'locales/user-profile'
+);
 
-// Get all loaded messages for a locale
-localeHandler.getAllMessages();
+// Get all loaded messages
+const messages = localeHandler.getAllMessages();
 ```
 
-### _TODO: more examples coming_
+### Checking Loading Status
+
+```js
+import intlProvider from '../path/to/intl.js';
+import { LocaleFileStatus } from '@gasket/intl';
+
+const localeHandler = intlProvider.handleLocale('en-US');
+
+// Start loading a locale file
+localeHandler.load('locales/common');
+
+// Check the status
+const status = localeHandler.getStatus('locales/common');
+
+if (status === LocaleFileStatus.loading) {
+  console.log('Locale file is still loading...');
+} else if (status === LocaleFileStatus.loaded) {
+  console.log('Locale file has been loaded successfully!');
+} else if (status === LocaleFileStatus.error) {
+  console.error('Failed to load locale file');
+}
+```
+
+### Resolving Locales
+
+```js
+import intlProvider from '../path/to/intl.js';
+
+// Resolve a locale to a supported locale
+const resolvedLocale = intlProvider.resolveLocale('fr-CA');
+
+// If fr-CA is not supported but fr is, resolvedLocale will be 'fr'
+// If neither is supported, it will fall back to the default locale
+```
+
+### Server-Side Rendering
+
+```js
+import intlProvider from '../path/to/intl.js';
+
+// On the server, preload all static locale files
+const localeHandler = intlProvider.handleLocale('en-US');
+await localeHandler.loadStatics();
+
+// Get the static messages register for SSR
+const staticsRegister = localeHandler.getStaticsRegister();
+
+// Pass this to the client for hydration
+```
 
 ## License
 
