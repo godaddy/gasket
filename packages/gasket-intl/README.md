@@ -12,16 +12,16 @@ See [@gasket/plugin-intl] for more information on how to configure the plugin.
 
 ## Usage
 
-With a `intl.js` built by [@gasket/plugin-intl], you can use the IntlProvider to
+With a `intl.js` built by [@gasket/plugin-intl], you can use the IntlManager to
 get messages for locales.
 
 ### Basic Usage
 
 ```js
-import intlProvider from '../path/to/intl.js';
+import intlManager from '../path/to/intl.js';
 
 // Get a locale handler for a specific locale
-const localeHandler = intlProvider.handleLocale('en-US');
+const localeHandler = intlManager.handleLocale('en-US');
 
 // Get all loaded messages for the locale
 const messages = localeHandler.getAllMessages();
@@ -29,9 +29,9 @@ const messages = localeHandler.getAllMessages();
 
 ## API
 
-### IntlProvider
+### IntlManager
 
-The `IntlProvider` is the public API for internationalization. It provides a simplified interface to the underlying internationalization system.
+The `IntlManager` is the public API for internationalization. It provides a simplified interface to the underlying internationalization system.
 
 #### Properties
 
@@ -71,9 +71,9 @@ Constants representing the status of locale file loading:
 ### Loading Multiple Locale Files
 
 ```js
-import intlProvider from '../path/to/intl.js';
+import intlManager from '../path/to/intl.js';
 
-const localeHandler = intlProvider.handleLocale('en-US');
+const localeHandler = intlManager.handleLocale('en-US');
 
 // Load multiple locale files
 await localeHandler.load(
@@ -89,10 +89,10 @@ const messages = localeHandler.getAllMessages();
 ### Checking Loading Status
 
 ```js
-import intlProvider from '../path/to/intl.js';
+import intlManager from '../path/to/intl.js';
 import { LocaleFileStatus } from '@gasket/intl';
 
-const localeHandler = intlProvider.handleLocale('en-US');
+const localeHandler = intlManager.handleLocale('en-US');
 
 // Start loading a locale file
 localeHandler.load('locales/common');
@@ -112,10 +112,10 @@ if (status === LocaleFileStatus.loading) {
 ### Resolving Locales
 
 ```js
-import intlProvider from '../path/to/intl.js';
+import intlManager from '../path/to/intl.js';
 
 // Resolve a locale to a supported locale
-const resolvedLocale = intlProvider.resolveLocale('fr-CA');
+const resolvedLocale = intlManager.resolveLocale('fr-CA');
 
 // If fr-CA is not supported but fr is, resolvedLocale will be 'fr'
 // If neither is supported, it will fall back to the default locale
@@ -124,10 +124,10 @@ const resolvedLocale = intlProvider.resolveLocale('fr-CA');
 ### Server-Side Rendering
 
 ```js
-import intlProvider from '../path/to/intl.js';
+import intlManager from '../path/to/intl.js';
 
 // On the server, preload all static locale files
-const localeHandler = intlProvider.handleLocale('en-US');
+const localeHandler = intlManager.handleLocale('en-US');
 await localeHandler.loadStatics();
 
 // Get the static messages register for SSR
