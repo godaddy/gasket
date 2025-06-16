@@ -36,14 +36,14 @@
     "split": "^1.0.1"
   },
   "devDependencies": {
-    "@gasket/core": "workspace:*",
-    "@gasket/plugin-express": "workspace:*",
-    "@gasket/plugin-metadata": "workspace:*",
-    "@gasket/plugin-middleware": "workspace:*",
+    "@gasket/core": "workspace:^",
+    "@gasket/plugin-express": "workspace:^",
+    "@gasket/plugin-metadata": "workspace:^",
+    "@gasket/plugin-middleware": "workspace:^",
     "@types/jest": "^29.5.14",
     "@types/morgan": "^1.9.9",
     "@types/node": "^20.17.19",
-    "create-gasket-app": "workspace:*",
+    "create-gasket-app": "workspace:^",
     "cross-env": "^7.0.3",
     "eslint": "^8.57.1",
     "eslint-config-godaddy": "^7.1.1",
@@ -54,7 +54,7 @@
     "typescript": "^5.8.2"
   },
   "peerDependencies": {
-    "@gasket/plugin-logger": "workspace:*",
+    "@gasket/plugin-logger": "^7",
     "express": "^4.21.2"
   },
   "eslintConfig": {

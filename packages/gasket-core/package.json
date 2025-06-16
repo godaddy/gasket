@@ -47,11 +47,11 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-core",
   "dependencies": {
-    "@gasket/utils": "workspace:*",
+    "@gasket/utils": "workspace:^",
     "debug": "^4.4.0"
   },
   "devDependencies": {
-    "@gasket/plugin-metadata": "workspace:*",
+    "@gasket/plugin-metadata": "workspace:^",
     "@jest/globals": "^29.7.0",
     "@swc/cli": "^0.6.0",
     "@swc/core": "^1.10.18",

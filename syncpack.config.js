@@ -1,4 +1,4 @@
-/** @type {import("syncpack").RcFile} */
+/** @type {import('syncpack').RcFile} */
 const config = {
   customTypes: {
     dependencies: {
@@ -55,19 +55,18 @@ const config = {
     'eslintIgnore',
     'gasket'
   ],
-  versionGroups: [
-    {
-      label: 'workspace-packages',
-      dependencies: [
+  versionGroups: [{
+    label: 'workspace-packages',
+    dependencies: [
         'create-gasket-app',
         '@gasket/*',
-      ],
-      dependencyTypes: ['dependencies', 'devDependencies'],
-      pinVersion: 'workspace:*'
-    }],
-  "lintFormatting": true,
-  "lintSemverRanges": true,
-  "lintVersions": true,
+    ],
+    dependencyTypes: ['dependencies', 'devDependencies'],
+    pinVersion: 'workspace:^'
+  }],
+  'lintFormatting': true,
+  'lintSemverRanges': true,
+  'lintVersions': true
 };
 
 module.exports = config;
