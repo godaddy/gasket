@@ -1,12 +1,21 @@
 import { IntlManager } from './intl-manager.js';
-import { LocaleFileStatus } from './constants.js';
+import { InternalIntlManager } from './internal-intl-manager.js';
+import { LocaleFileStatus, LocaleFileStatusPriority } from './constants.js';
+import { safePaths, lowestStatus } from './locale-handler.js';
 
-/** @type {import('./index.d.ts').makeIntlManager } */
+/**
+ * Creates an IntlManager instance
+ * @type {import('./index.d.ts').makeIntlManager}
+ */
 function makeIntlManager(manifest) {
-  return new IntlManager(manifest);
+  const manager = new InternalIntlManager(manifest);
+  return new IntlManager(manager);
 }
 
 export {
   makeIntlManager,
-  LocaleFileStatus
+  LocaleFileStatus,
+  LocaleFileStatusPriority,
+  safePaths,
+  lowestStatus
 };
