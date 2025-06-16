@@ -40,7 +40,7 @@
   "include": [
     "./routes",
     "./plugins",
-    "lib/*.ts",
+    "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
   ]
