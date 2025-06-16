@@ -48,7 +48,7 @@ export type PromisesRegister = Record<LocaleFileKey, Promise<any>>;
  */
 export interface LocaleManifestConfig {
   /** Locale to fallback to when loading files */
-  defaultLocale?: Locale;
+  defaultLocale: Locale;
   /** Array of supported locales */
   locales: Locale[];
   /** Mapping of locales to supported locales */
