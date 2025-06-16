@@ -38,7 +38,7 @@ export type Lang = string;
  */
 export type Locale = Lang;
 
-export type LocaleMessages = Record<string, any>;
+export type LocaleMessages = Record<string, string | LocaleMessages>;
 export type MessagesRegister = Record<LocaleFileKey, LocaleMessages>;
 export type StatusRegister = Record<LocaleFileKey, LocaleFileStatusType>;
 export type PromisesRegister = Record<LocaleFileKey, Promise<any>>;
