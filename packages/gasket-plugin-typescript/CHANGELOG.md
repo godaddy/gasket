@@ -1,5 +1,13 @@
 # `@gasket/plugin-typescript`
 
+## 7.4.3
+
+### Patch Changes
+
+- 7642bea: Update generated tsconfig
+- 9a98fd0: - Better windows OS support when using create-gasket-app
+  - Updated create-gasket-app docs to include @latest dist tag
+
 ## 7.4.2
 
 ### Patch Changes
