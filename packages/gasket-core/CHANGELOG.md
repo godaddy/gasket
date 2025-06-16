@@ -1,5 +1,13 @@
 # `@gasket/core`
 
+## 7.5.1
+
+### Patch Changes
+
+- 39a8007: Adjust gasket.symbol type and docs
+- Updated dependencies [9a98fd0]
+  - @gasket/utils@7.4.1
+
 ## 7.5.0
 
 ### Minor Changes
