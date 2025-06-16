@@ -258,6 +258,17 @@ This method will exit the current branch's trace history
 and start a fresh trace.
 Use this sparingly, such as tracing handling for new requests.
 
+### Gasket Symbol
+
+Because each lifecycle will receive a traceable proxy object, you cannot
+use the `gasket` instance directly as a key in a `WeakMap` or `WeakSet`.
+Instead, you can use the `gasket.symbol` property to get a unique symbol
+for the current base Gasket instance.
+
+It is possible for multiple Gasket instances to exist in the same app.
+Therefore, is especially useful for memoization or caching purposes, as it
+allows plugins to store specific data related to the Gasket instance.
+
 ## Recursion Protection
 
 Gasket uses the trace history to catch and prevent infinite recursion.
