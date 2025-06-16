@@ -1,18 +1,18 @@
 # Contributing
 
 Everyone is welcome to contribute to GoDaddy's Open Source Software.
-Contributing doesn’t just mean submitting pull requests. To get involved you can
+Contributing doesn't just mean submitting pull requests. To get involved you can
 report or triage bugs and participate in discussions on the evolution of each
 project.
 
-No matter how you want to get involved, we ask that you first learn what’s
+No matter how you want to get involved, we ask that you first learn what's
 expected of anyone who participates in the project by reading the Contribution
 Guidelines.
 
 ## Answering Questions
 
 One of the most important and immediate ways you can support this project is to
-answer questions on  [Github][issues]. Whether you’re helping a newcomer
+answer questions on  [Github][issues]. Whether you're helping a newcomer
 understand a feature or troubleshooting an edge case with a seasoned developer,
 your knowledge and experience with JS can go a long way to help others.
 
@@ -36,7 +36,7 @@ Submit a ticket for your issue, assuming one does not already exist:
   - Describe the environment that (re)produced the problem.
 
 > For a bug to be actionable, it needs to be reproducible. If you or
-> contributors can’t reproduce the bug, try to figure out why. Please take care
+> contributors can't reproduce the bug, try to figure out why. Please take care
 > to stay involved in discussions around solving the problem.
 
 ## Triaging bugs or contributing code
@@ -75,11 +75,11 @@ Sometimes code reviews will take longer than you would hope for, especially for
 larger features. Here are some accepted ways to speed up review times for your
 patches:
 
-- Review other people’s changes. If you help out, everybody will be more willing
+- Review other people's changes. If you help out, everybody will be more willing
   to do the same for you. Good will is our currency.
 - Split your change into multiple smaller changes. The smaller your change, the
   higher the probability that somebody will take a quick look at it.
-- Remember that you’re asking for valuable time from other professional
+- Remember that you're asking for valuable time from other professional
   developers.
 
 **Note that anyone is welcome to review and give feedback on a change, but only
@@ -187,7 +187,7 @@ Some additional rules to note:
 Remember to run the `align-packages` script for new packages. This has been an
 issue in the past with `docs-graphs` missing the `publishConfig` field which
 messed with `lerna publish`. Without this, we had to step into each package and
-manually re-publish the ones that didn’t make it out.
+manually re-publish the ones that didn't make it out.
 
 ## File and Directory Naming
 
@@ -201,19 +201,20 @@ example-directory-name/
 
 ## Submit a changeset
 
-This repository utilizes [changesets] to handle versioning and publishing as you submit a pull-request.
-A changeset should be included with your pull-request to help the maintainers
-understand the changes and to help with the release process.
+This repository utilizes [changesets] to handle versioning and publishing. 
+For detailed information about our changeset workflow, configuration, and limitations, 
+please refer to our [changeset documentation](./docs/changeset.md).
 
-To initiate a changeset run:
+### Quick Start
+
+To create a changeset for your pull request:
 
 ```bash
 pnpm run changeset
 ```
 
-After which follow the command prompts to select which packages and which version each package should receive.
-
-Commit and push the changeset to your branch to be included with your pull-request.
+Follow the prompts to select packages and version bumps, then commit the generated 
+changeset file with your PR.
 
 ## Publishing
 

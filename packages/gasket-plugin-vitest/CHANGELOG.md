@@ -1,5 +1,11 @@
 # `@gasket/plugin-vitest`
 
+## 7.0.3
+
+### Patch Changes
+
+- 8dba71e: Update workspace dependencies from workspace:\* to workspace:^.
+
 ## 7.0.2
 
 ### Patch Changes

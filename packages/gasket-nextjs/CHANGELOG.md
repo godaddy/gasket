@@ -1,5 +1,14 @@
 # `@gasket/nextjs`
 
+## 7.5.3
+
+### Patch Changes
+
+- 8dba71e: Update workspace dependencies from workspace:\* to workspace:^.
+- Updated dependencies [8dba71e]
+  - @gasket/request@7.4.3
+  - @gasket/data@7.4.3
+
 ## 7.5.2
 
 ### Patch Changes

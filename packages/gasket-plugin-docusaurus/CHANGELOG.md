@@ -1,5 +1,13 @@
 # `@gasket/plugin-docusaurus`
 
+## 7.4.3
+
+### Patch Changes
+
+- 8dba71e: Update workspace dependencies from workspace:\* to workspace:^.
+- Updated dependencies [8dba71e]
+  - @gasket/plugin-logger@7.3.5
+
 ## 7.4.2
 
 ### Patch Changes
