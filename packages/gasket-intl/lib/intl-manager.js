@@ -52,8 +52,17 @@ class IntlManager {
   }
 
   /**
-   * Gets a locale handler for a locale
+   * Gets a locale handler for the specified locale.
+   * 
+   * If the locale is not supported, it will automatically fall back to:
+   * 1. The language part of the locale (e.g., 'fr-CA' -> 'fr')
+   * 2. The default locale if the language isn't supported
+   * 
    * @type {import('./index.d.ts').IntlManager['handleLocale']}
+   * @example
+   * const handler = intlManager.handleLocale('fr-CA');
+   * // Even if 'fr-CA' isn't supported, you'll get a valid handler
+   * // for either 'fr' or the default locale
    */
   handleLocale(locale) {
     // Pass the internal manager to the LocaleHandler
