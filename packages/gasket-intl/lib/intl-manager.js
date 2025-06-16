@@ -1,5 +1,14 @@
 /**
- * Public API for internationalization
+* Public API wrapper for internationalization functionality.
+ * 
+ * This class provides a stable public interface while keeping internal
+ * implementation details private. This allows the internal logic to
+ * change without breaking code that depends on this package.
+ * 
+ * @example
+ * const intlManager = makeIntlManager(manifest);
+ * const handler = intlManager.handleLocale('fr-FR');
+ * const messages = handler.getAllMessages();
  * @type {import('./index.d.ts').IntlManager}
  */
 class IntlManager {
