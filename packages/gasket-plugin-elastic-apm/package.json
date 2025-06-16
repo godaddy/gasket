@@ -32,14 +32,14 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-elastic-apm",
   "dependencies": {
-    "@gasket/request": "workspace:*"
+    "@gasket/request": "workspace:^"
   },
   "devDependencies": {
-    "@gasket/core": "workspace:*",
-    "@gasket/plugin-metadata": "workspace:*",
+    "@gasket/core": "workspace:^",
+    "@gasket/plugin-metadata": "workspace:^",
     "@types/jest": "^29.5.14",
     "@types/node": "^20.17.19",
-    "create-gasket-app": "workspace:*",
+    "create-gasket-app": "workspace:^",
     "cross-env": "^7.0.3",
     "dotenv": "^16.4.7",
     "elastic-apm-node": "^4.11.0",

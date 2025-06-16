@@ -52,7 +52,7 @@
     "debug": "^4.4.0"
   },
   "devDependencies": {
-    "@gasket/core": "workspace:*",
+    "@gasket/core": "workspace:^",
     "@jest/globals": "^29.7.0",
     "@swc/cli": "^0.6.0",
     "@swc/core": "^1.10.18",
