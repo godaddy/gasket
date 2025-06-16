@@ -1,5 +1,11 @@
 # `@gasket/plugin-happyfeet`
 
+## 7.3.5
+
+### Patch Changes
+
+- 8dba71e: Update workspace dependencies from workspace:\* to workspace:^.
+
 ## 7.3.4
 
 ### Patch Changes

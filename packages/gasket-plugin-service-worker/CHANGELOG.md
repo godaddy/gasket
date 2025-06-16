@@ -1,5 +1,11 @@
 # `@gasket/plugin-service-worker`
 
+## 7.4.4
+
+### Patch Changes
+
+- 8dba71e: Update workspace dependencies from workspace:\* to workspace:^.
+
 ## 7.4.3
 
 ### Patch Changes

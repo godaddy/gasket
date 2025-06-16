@@ -1,5 +1,11 @@
 # @gasket/plugin-cypress
 
+## 7.5.1
+
+### Patch Changes
+
+- 8dba71e: Update workspace dependencies from workspace:\* to workspace:^.
+
 ## 7.5.0
 
 ### Minor Changes
