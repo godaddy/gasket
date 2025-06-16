@@ -1,5 +1,14 @@
 # `@gasket/plugin-metadata`
 
+## 7.4.4
+
+### Patch Changes
+
+- 8dba71e: Update workspace dependencies from workspace:\* to workspace:^.
+- Updated dependencies [8dba71e]
+  - @gasket/plugin-logger@7.3.5
+  - @gasket/core@7.5.2
+
 ## 7.4.3
 
 ### Patch Changes

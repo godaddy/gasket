@@ -1,5 +1,11 @@
 # `@gasket/plugin-swagger`
 
+## 7.3.8
+
+### Patch Changes
+
+- 8dba71e: Update workspace dependencies from workspace:\* to workspace:^.
+
 ## 7.3.7
 
 ### Patch Changes

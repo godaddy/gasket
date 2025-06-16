@@ -1,5 +1,22 @@
 # `create-gasket-app`
 
+## 7.4.6
+
+### Patch Changes
+
+- 8dba71e: Update workspace dependencies from workspace:\* to workspace:^.
+- Updated dependencies [8dba71e]
+  - @gasket/plugin-dynamic-plugins@7.3.8
+  - @gasket/plugin-docusaurus@7.4.3
+  - @gasket/plugin-metadata@7.4.4
+  - @gasket/plugin-command@7.4.2
+  - @gasket/plugin-logger@7.3.5
+  - @gasket/plugin-docs@7.4.3
+  - @gasket/plugin-git@7.4.2
+  - @gasket/request@7.4.3
+  - @gasket/utils@7.4.2
+  - @gasket/core@7.5.2
+
 ## 7.4.5
 
 ### Patch Changes

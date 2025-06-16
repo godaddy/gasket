@@ -1,5 +1,13 @@
 # `@gasket/plugin-nextjs`
 
+## 7.5.6
+
+### Patch Changes
+
+- 8dba71e: Update workspace dependencies from workspace:\* to workspace:^.
+- Updated dependencies [8dba71e]
+  - @gasket/plugin-webpack@7.3.5
+
 ## 7.5.5
 
 ### Patch Changes

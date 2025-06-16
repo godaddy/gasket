@@ -1,5 +1,13 @@
 # `@gasket/plugin-morgan`
 
+## 7.3.5
+
+### Patch Changes
+
+- 8dba71e: Update workspace dependencies from workspace:\* to workspace:^.
+- Updated dependencies [8dba71e]
+  - @gasket/plugin-logger@7.3.5
+
 ## 7.3.4
 
 ### Patch Changes

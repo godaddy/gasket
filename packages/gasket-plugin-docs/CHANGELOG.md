@@ -1,5 +1,13 @@
 # `@gasket/plugin-docs`
 
+## 7.4.3
+
+### Patch Changes
+
+- 8dba71e: Update workspace dependencies from workspace:\* to workspace:^.
+- Updated dependencies [8dba71e]
+  - @gasket/plugin-command@7.4.2
+
 ## 7.4.2
 
 ### Patch Changes
