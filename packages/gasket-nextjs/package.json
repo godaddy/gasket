@@ -68,14 +68,14 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-nextjs",
   "dependencies": {
-    "@gasket/data": "workspace:*",
-    "@gasket/request": "workspace:*",
+    "@gasket/data": "workspace:^",
+    "@gasket/request": "workspace:^",
     "hoist-non-react-statics": "^3.3.2",
     "htmlescape": "^1.1.1"
   },
   "devDependencies": {
-    "@gasket/plugin-data": "workspace:*",
-    "@gasket/plugin-intl": "workspace:*",
+    "@gasket/plugin-data": "workspace:^",
+    "@gasket/plugin-intl": "workspace:^",
     "@jest/globals": "^29.7.0",
     "@swc/cli": "^0.6.0",
     "@swc/core": "^1.10.18",
