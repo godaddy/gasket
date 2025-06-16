@@ -1,5 +1,12 @@
 # `@gasket/plugin-https`
 
+## 7.3.7
+
+### Patch Changes
+
+- 9a98fd0: - Better windows OS support when using create-gasket-app
+  - Updated create-gasket-app docs to include @latest dist tag
+
 ## 7.3.6
 
 ### Patch Changes

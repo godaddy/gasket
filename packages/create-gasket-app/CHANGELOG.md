@@ -1,5 +1,24 @@
 # `create-gasket-app`
 
+## 7.4.5
+
+### Patch Changes
+
+- 9a98fd0: - Better windows OS support when using create-gasket-app
+  - Updated create-gasket-app docs to include @latest dist tag
+- Updated dependencies [39a8007]
+- Updated dependencies [9a98fd0]
+  - @gasket/core@7.5.1
+  - @gasket/request@7.4.2
+  - @gasket/utils@7.4.1
+  - @gasket/plugin-command@7.4.1
+  - @gasket/plugin-docs@7.4.2
+  - @gasket/plugin-docusaurus@7.4.2
+  - @gasket/plugin-dynamic-plugins@7.3.7
+  - @gasket/plugin-git@7.4.1
+  - @gasket/plugin-logger@7.3.4
+  - @gasket/plugin-metadata@7.4.3
+
 ## 7.4.4
 
 ### Patch Changes
