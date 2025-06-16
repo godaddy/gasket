@@ -1,10 +1,9 @@
 /**
-* Public API wrapper for internationalization functionality.
- * 
+ * Public API wrapper for internationalization functionality.
+ *
  * This class provides a stable public interface while keeping internal
  * implementation details private. This allows the internal logic to
  * change without breaking code that depends on this package.
- * 
  * @example
  * const intlManager = makeIntlManager(manifest);
  * const handler = intlManager.handleLocale('fr-FR');
@@ -53,11 +52,10 @@ class IntlManager {
 
   /**
    * Gets a locale handler for the specified locale.
-   * 
+   *
    * If the locale is not supported, it will automatically fall back to:
    * 1. The language part of the locale (e.g., 'fr-CA' -> 'fr')
    * 2. The default locale if the language isn't supported
-   * 
    * @type {import('./index.d.ts').IntlManager['handleLocale']}
    * @example
    * const handler = intlManager.handleLocale('fr-CA');
