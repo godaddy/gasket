@@ -467,7 +467,7 @@ export interface Gasket {
   hook: GasketEngine['hook'];
 
   /** Unique symbol for this instance */
-  symbol: Symbol;
+  symbol: symbol;
 
   /** Resolves when app is fully ready */
   isReady: Promise<void>;
