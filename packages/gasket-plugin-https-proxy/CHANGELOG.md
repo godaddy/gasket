@@ -1,5 +1,11 @@
 # `@gasket/plugin-https-proxy`
 
+## 7.3.12
+
+### Patch Changes
+
+- 8dba71e: Update workspace dependencies from workspace:\* to workspace:^.
+
 ## 7.3.11
 
 ### Patch Changes

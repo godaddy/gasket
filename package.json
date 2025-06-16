@@ -20,7 +20,6 @@
     "postpublish": "node scripts/mark-deprecated.mjs",
     "posttest": "pnpm run lint",
     "preinstall": "npx only-allow pnpm",
-    "publish": "pnpm changeset publish",
     "publish:canary": "pnpm changeset version --snapshot canary && pnpm changeset publish --tag canary",
     "publish:next": "pnpm changeset version --pre next && pnpm changeset publish --tag next --force-publish --exact",
     "release": "changeset publish",

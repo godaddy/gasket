@@ -889,7 +889,7 @@ importers:
   packages/gasket-plugin-docusaurus:
     dependencies:
       '@gasket/plugin-logger':
-        specifier: ^7
+        specifier: ^7.3.5
         version: link:../gasket-plugin-logger
       lodash.defaultsdeep:
         specifier: ^4.6.1
@@ -2001,7 +2001,7 @@ importers:
   packages/gasket-plugin-morgan:
     dependencies:
       '@gasket/plugin-logger':
-        specifier: ^7
+        specifier: ^7.3.5
         version: link:../gasket-plugin-logger
       express:
         specifier: ^4.21.2
@@ -2918,7 +2918,7 @@ importers:
         specifier: workspace:^
         version: link:../gasket-intl
       '@gasket/plugin-intl':
-        specifier: ^7
+        specifier: ^7.5.3
         version: link:../gasket-plugin-intl
       hoist-non-react-statics:
         specifier: ^3.3.2

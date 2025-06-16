@@ -1,5 +1,11 @@
 # `@gasket/request`
 
+## 7.4.3
+
+### Patch Changes
+
+- 8dba71e: Update workspace dependencies from workspace:\* to workspace:^.
+
 ## 7.4.2
 
 ### Patch Changes

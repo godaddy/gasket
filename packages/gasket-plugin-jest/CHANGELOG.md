@@ -1,5 +1,11 @@
 # `@gasket/plugin-jest`
 
+## 7.5.3
+
+### Patch Changes
+
+- 8dba71e: Update workspace dependencies from workspace:\* to workspace:^.
+
 ## 7.5.2
 
 ### Patch Changes
