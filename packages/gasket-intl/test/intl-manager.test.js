@@ -16,7 +16,7 @@ const expectedRegister = {
   'locales/ar-AE': { key: 'قيمة' }
 };
 
-describe('IntlManager', () => {
+describe('InternalIntlManager', () => {
   let IntlManager, initSpy, loadSpy;
   let manager, mockManifest, localeFileKey;
 
@@ -33,8 +33,8 @@ describe('IntlManager', () => {
       }
     };
 
-    const mod = await import('../lib/intl-manager.js');
-    IntlManager = mod.IntlManager;
+    const mod = await import('../lib/internal-intl-manager.js');
+    IntlManager = mod.InternalIntlManager;
     initSpy = jest.spyOn(IntlManager.prototype, 'init');
     loadSpy = jest.spyOn(IntlManager.prototype, 'load');
   });
