@@ -26,8 +26,8 @@ describe('LocaleHandler', () => {
       }
     };
 
-    const mod = await import('../lib/intl-manager.js');
-    IntlManager = mod.IntlManager;
+    const mod = await import('../lib/internal-intl-manager.js');
+    IntlManager = mod.InternalIntlManager;
     managerLoadSpy = jest.spyOn(IntlManager.prototype, 'load');
     managerGetStatusSpy = jest.spyOn(IntlManager.prototype, 'getStatus');
     manager = new IntlManager(mockManifest);
