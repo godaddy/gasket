@@ -32,14 +32,14 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-git",
   "dependencies": {
-    "@gasket/utils": "workspace:*"
+    "@gasket/utils": "workspace:^"
   },
   "devDependencies": {
-    "@gasket/core": "workspace:*",
-    "@gasket/plugin-metadata": "workspace:*",
+    "@gasket/core": "workspace:^",
+    "@gasket/plugin-metadata": "workspace:^",
     "@types/jest": "^29.5.14",
     "@types/node": "^20.17.19",
-    "create-gasket-app": "workspace:*",
+    "create-gasket-app": "workspace:^",
     "cross-env": "^7.0.3",
     "eslint": "^8.57.1",
     "eslint-config-godaddy": "^7.1.1",

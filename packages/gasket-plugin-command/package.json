@@ -45,18 +45,18 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-command",
   "dependencies": {
-    "@gasket/core": "workspace:*",
-    "@gasket/utils": "workspace:*",
+    "@gasket/core": "workspace:^",
+    "@gasket/utils": "workspace:^",
     "commander": "^12.1.0"
   },
   "devDependencies": {
-    "@gasket/plugin-metadata": "workspace:*",
+    "@gasket/plugin-metadata": "workspace:^",
     "@jest/globals": "^29.7.0",
     "@swc/cli": "^0.6.0",
     "@swc/core": "^1.10.18",
     "@types/jest": "^29.5.14",
     "@types/node": "^20.17.19",
-    "create-gasket-app": "workspace:*",
+    "create-gasket-app": "workspace:^",
     "cross-env": "^7.0.3",
     "eslint": "^8.57.1",
     "eslint-config-godaddy": "^7.1.1",
