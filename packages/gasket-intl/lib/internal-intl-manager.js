@@ -59,7 +59,8 @@ export class InternalIntlManager {
   /** @type {import('./internal.d.ts').IntlManager_init } */
   init() {
     if (isBrowser) {
-      const content = (document.getElementById('GasketIntl') ?? {}).textContent;
+      const element = document.getElementById('GasketIntl');
+      const content = element?.textContent;
       const data = content ? JSON.parse(content) : {};
       Object.keys(data).forEach((localeFileKey) => {
         this.statusRegister[localeFileKey] = LocaleFileStatus.loaded;
