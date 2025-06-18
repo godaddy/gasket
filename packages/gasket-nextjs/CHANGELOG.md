@@ -1,5 +1,13 @@
 # `@gasket/nextjs`
 
+## 7.5.4
+
+### Patch Changes
+
+- Updated dependencies [8a7d6d7]
+  - @gasket/request@7.4.4
+  - @gasket/data@7.4.4
+
 ## 7.5.3
 
 ### Patch Changes
