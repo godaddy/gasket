@@ -76,6 +76,9 @@ typings/
 # CJS generated files
 cjs
 
+# Cursor files
+.cursor
+
 # package-specific generated files
 packages/gasket-redux/lib
 packages/gasket-assets/react
