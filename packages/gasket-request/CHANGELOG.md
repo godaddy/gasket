@@ -1,5 +1,11 @@
 # `@gasket/request`
 
+## 7.4.4
+
+### Patch Changes
+
+- 8a7d6d7: Expand the RequestLike headers shape
+
 ## 7.4.3
 
 ### Patch Changes
