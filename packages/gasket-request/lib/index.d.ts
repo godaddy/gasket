@@ -1,4 +1,5 @@
 import type { Gasket, MaybeAsync } from '@gasket/core';
+import { IncomingHttpHeaders } from 'http';
 
 interface Cookie {
   domain: string;
@@ -40,12 +41,17 @@ interface CookieStore {
 }
 
 /**
+ * Represents potential headers shapes in a request-like objects.
+ */
+export type HeadersLike = Headers | IncomingHttpHeaders | Record<string, string> & {
+    entries?: Function;
+}
+
+/**
  * Represents a request-like object for Gasket.
  */
 export type RequestLike = {
-  headers: Headers | Record<string, string> & {
-    entries?: Function;
-  };
+  headers: HeadersLike;
   cookies?: CookieStore | Record<string, string>;
   query?: URLSearchParams | Record<string, string | string[]>;
   url?: string;

@@ -16,7 +16,7 @@ export class GasketRequest {
 
 /**
  * Weak reference cache for request headers
- * @type {import('@gasket/request').WeakPromiseKeeper<Headers|Record<string,string>, GasketRequest>}
+ * @type {import('@gasket/request').WeakPromiseKeeper<import('@gasket/request').HeadersLike, GasketRequest>}
  */
 const keeper = new WeakPromiseKeeper();
 
@@ -62,7 +62,9 @@ export async function makeGasketRequest(requestLike) {
     const normalize = async () => {
 
       // handle Headers objects
-      const headers = 'entries' in rawHeaders ? Object.fromEntries(rawHeaders.entries()) : rawHeaders;
+      const headers = 'entries' in rawHeaders && typeof rawHeaders.entries === 'function' ?
+        Object.fromEntries(rawHeaders.entries()) :
+        rawHeaders;
 
       // handle when header values are arrays
       // https://nodejs.org/api/http.html#messageheadersdistinct
