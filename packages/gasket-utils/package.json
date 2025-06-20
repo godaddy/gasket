@@ -11,23 +11,25 @@
     ".": {
       "types": "./lib/index.d.ts",
       "import": "./lib/index.js",
-      "require": "./cjs/index.js",
-      "default": "./cjs/index.js"
+      "require": "./cjs/index.cjs",
+      "default": "./cjs/index.cjs"
     },
     "./config": {
       "types": "./lib/config.d.ts",
       "import": "./lib/config.js",
-      "require": "./cjs/config.js",
-      "default": "./cjs/config.js"
+      "require": "./cjs/config.cjs",
+      "default": "./cjs/config.cjs"
     },
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "swc lib -d cjs --delete-dir-on-start --strip-leading-paths && cp lib/index.d.ts cjs/ && cp lib/config.d.ts cjs/",
+    "build": "swc lib -d cjs --delete-dir-on-start --strip-leading-paths --out-file-extension cjs",
     "build:watch": "pnpm run build --watch",
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
-    "postbuild": "node -e \"require('fs').writeFileSync('cjs/package.json', '{}')\"",
+    "postbuild": "pnpm run postbuild:package && pnpm run postbuild:replace",
+    "postbuild:package": "node -e \"require('fs').writeFileSync('cjs/package.json', '{}')\"",
+    "postbuild:replace": "replace '.js' '.cjs' cjs -r",
     "posttest": "pnpm run lint && pnpm run typecheck",
     "prepublishOnly": "pnpm run build",
     "test": "vitest run --globals",
@@ -73,6 +75,7 @@
     "eslint-config-godaddy": "^7.1.1",
     "eslint-config-godaddy-typescript": "^4.0.3",
     "eslint-plugin-unicorn": "^55.0.0",
+    "replace": "^1.2.2",
     "typescript": "^5.8.2",
     "vitest": "^3.2.0"
   },
