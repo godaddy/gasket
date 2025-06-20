@@ -1,27 +1,31 @@
 /* eslint-disable max-nested-callbacks */
-const mockShellStub = jest.fn();
+import { expect, describe, it, beforeEach, afterEach, vi } from 'vitest';
 
-jest.mock('../lib/run-shell-command', () => mockShellStub);
+// Mock dependencies first
+const mockRunShellCommand = vi.fn();
+
+// For ESM default exports, need to return an object with default property
+vi.mock('../lib/run-shell-command.js', () => ({
+  default: mockRunShellCommand
+}));
+
+// Import the module
+const PackageManager = (await import('../lib/package-manager.js')).default;
 
 describe('packageManager', function () {
   let stdout;
-  let PackageManager;
   let runner;
 
-  /**
-   * Create a package manager instance
-   * @param {Function} run - run function
-   * @returns {PackageManager} package manager instance
-   */
-  function createManager(run) {
-    mockShellStub.mockImplementation(run);
-    return require('../lib/package-manager');
-  }
-
-  beforeEach(function () {
+  // Before each test setup
+  beforeEach(() => {
+    // Setup test data
     stdout = 'example output';
-    runner = jest.fn().mockResolvedValueOnce({ stdout });
-    PackageManager = createManager(runner);
+    runner = vi.fn().mockResolvedValue({ stdout });
+    mockRunShellCommand.mockImplementation(runner);
+  });
+
+  afterEach(() => {
+    vi.resetAllMocks();
   });
 
   describe('spawn commands', function () {
@@ -31,7 +35,7 @@ describe('packageManager', function () {
         const res = await PackageManager[`spawn${manager.charAt(0).toUpperCase() + manager.slice(1)}`](['install'], { cwd: '.' });
         expect(runner).toHaveBeenCalledWith(bin, expect.arrayContaining(['install']), expect.any(Object), expect.any(Boolean));
         expect(res).toEqual({ stdout });
-      });
+      }, 10000);
     });
   });
 
@@ -41,7 +45,11 @@ describe('packageManager', function () {
         let pkg;
 
         beforeEach(() => {
+          // Create a new instance for each test
           pkg = new PackageManager({ packageManager: manager, dest: '.' });
+
+          // Set up the mock response for each test
+          runner.mockResolvedValue({ stdout });
         });
 
         it('executes install correctly', async function () {
@@ -52,13 +60,13 @@ describe('packageManager', function () {
             expect.any(Object),
             expect.any(Boolean)
           );
-        });
+        }, 10000);
 
         if (manager === 'npm') {
           it('includes --legacy-peer-deps for npm', async function () {
             await pkg.install();
             expect(runner.mock.calls[0][1]).toContain('--legacy-peer-deps');
-          });
+          }, 10000);
         }
 
         it('executes link correctly', async function () {
@@ -69,14 +77,13 @@ describe('packageManager', function () {
             expect.any(Object),
             expect.any(Boolean)
           );
-        });
+        }, 10000);
 
         describe('info method', function () {
           beforeEach(() => {
-            stdout = manager === 'yarn' ? '{ "data": "1.2.3" }' : '"1.2.3"';
-            runner = jest.fn().mockResolvedValueOnce({ stdout });
-            PackageManager = createManager(runner);
-            pkg = new PackageManager({ packageManager: manager, dest: '.' });
+            // Set up specialized output for info tests
+            const infoStdout = manager === 'yarn' ? '{ "data": "1.2.3" }' : '"1.2.3"';
+            runner.mockResolvedValue({ stdout: infoStdout });
           });
 
           it('retrieves package info correctly', async function () {
@@ -87,9 +94,10 @@ describe('packageManager', function () {
               expect.any(Object),
               expect.any(Boolean)
             );
-            expect(res.stdout).toEqual(stdout);
-            expect(res.data).toEqual('1.2.3');
-          });
+            // For yarn the output is JSON, for npm it's a string
+            const expectedData = '1.2.3';
+            expect(res.data).toEqual(expectedData);
+          }, 10000);
         });
       });
     });

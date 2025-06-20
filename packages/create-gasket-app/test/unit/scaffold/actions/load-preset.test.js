@@ -5,8 +5,10 @@ const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const mockConstructorStub = jest.fn();
 const mockExecStub = jest.fn();
 const mockMkTemp = jest.fn();
+const mockReadFile = jest.fn();
+const mockWriteFile = jest.fn();
 
-jest.mock('@gasket/utils', () => {
+jest.unstable_mockModule('@gasket/utils', () => {
   return {
     PackageManager: class MockPackageManager {
       constructor({ packageManager, dest }) {
@@ -23,7 +25,9 @@ jest.mock('@gasket/utils', () => {
 
 jest.unstable_mockModule('fs/promises', () => {
   return {
-    mkdtemp: mockMkTemp.mockResolvedValue(nodePath.join(__dirname, '..', '..', '..', '__mocks__'))
+    mkdtemp: mockMkTemp.mockResolvedValue(nodePath.join(__dirname, '..', '..', '..', '__mocks__')),
+    readFile: mockReadFile,
+    writeFile: mockWriteFile
   };
 });
 
@@ -39,7 +43,8 @@ const mockPathResolve = jest.fn().mockImplementation((...args) => {
 jest.unstable_mockModule('path', () => ({
   default: {
     join: mockPathJoin,
-    resolve: mockPathResolve
+    resolve: mockPathResolve,
+    dirname: nodePath.dirname
   }
 }));
 

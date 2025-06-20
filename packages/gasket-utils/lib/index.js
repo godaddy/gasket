@@ -1,10 +1,10 @@
-const { applyConfigOverrides } = require('./config');
-const runShellCommand = require('./run-shell-command');
-const PackageManager = require('./package-manager');
-const warnIfOutdated = require('./warn-if-outdated');
-const getPackageLatestVersion = require('./get-package-latest-version');
+import { applyConfigOverrides } from './config.js';
+import runShellCommand from './run-shell-command.js';
+import PackageManager from './package-manager.js';
+import warnIfOutdated from './warn-if-outdated.js';
+import getPackageLatestVersion from './get-package-latest-version.js';
 
-module.exports = {
+export {
   applyConfigOverrides,
   runShellCommand,
   PackageManager,

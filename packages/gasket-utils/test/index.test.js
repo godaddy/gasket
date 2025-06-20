@@ -1,7 +1,9 @@
+import { expect, describe, it } from 'vitest';
+import * as utils from '../lib/index.js';
+
 describe('index', () => {
   it('exposes expected function', () => {
-    const utils = require('../lib');
-
+    // List all expected functions
     const expected = [
       'applyConfigOverrides',
       'runShellCommand',
@@ -10,7 +12,11 @@ describe('index', () => {
       'getPackageLatestVersion'
     ];
 
+    // Make sure all expected keys exist
     expect(expected.every(k => k in utils)).toBe(true);
-    expect(Object.keys(utils)).toHaveLength(expected.length);
+
+    // Make sure the utils only exports what we expect
+    const actualKeys = Object.keys(utils);
+    expect(actualKeys.length).toEqual(expected.length);
   });
 });

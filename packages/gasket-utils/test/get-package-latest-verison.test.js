@@ -1,13 +1,22 @@
 /* eslint-disable no-control-regex */
-const runShellCommand = require('../lib/run-shell-command');
-const getPackageLatestVersion = require('../lib/get-package-latest-version');
+import { expect, describe, it, vi } from 'vitest';
 
-const latestVersion = '1.1.1';
+// Define constants
 const pkgName = 'pkgName';
+const latestVersion = '1.1.1';
 
-jest.mock('../lib/run-shell-command', () => jest.fn().mockResolvedValue({ stdout: latestVersion }));
+// Create mock function
+const mockRunShellCommand = vi.fn().mockResolvedValue({ stdout: latestVersion });
 
-describe('warnIfOutdated', function () {
+// Mock the modules - for ESM default exports, need to return an object with default property
+vi.mock('../lib/run-shell-command.js', () => ({
+  default: mockRunShellCommand
+}));
+
+// Import the module under test
+const getPackageLatestVersion = (await import('../lib/get-package-latest-version.js')).default;
+
+describe('getPackageLatestVersion', function () {
   it('returns the latest version', async function () {
     const result = await getPackageLatestVersion(pkgName, {});
 
@@ -17,7 +26,7 @@ describe('warnIfOutdated', function () {
   it('uses options when calling runShellCommand', async function () {
     const result = await getPackageLatestVersion(pkgName, { cwd: 'path' });
 
-    expect(runShellCommand).toHaveBeenCalledWith('npm', ['view', pkgName, 'version'], { cwd: 'path' });
+    expect(mockRunShellCommand).toHaveBeenCalledWith('npm', ['view', pkgName, 'version'], { cwd: 'path' });
     expect(result).toEqual(latestVersion);
   });
 });

@@ -1,5 +1,6 @@
-/* eslint-disable jest/no-conditional-expect */
-const { applyConfigOverrides } = require('../lib/config');
+/* eslint-disable @vitest/no-conditional-expect */
+import { expect, describe, it, beforeEach } from 'vitest';
+import { applyConfigOverrides } from '../lib/config.js';
 
 describe('applyConfigOverrides', () => {
   let results, mockContext, mockConfig;

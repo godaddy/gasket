@@ -1,11 +1,13 @@
-const deepmerge = require('deepmerge');
-const debug = require('diagnostics')('gasket:utils');
-const { isPlainObject } = require('is-plain-object');
+import deepmerge from 'deepmerge';
+import diagnostics from 'diagnostics';
+import { isPlainObject } from 'is-plain-object';
+
+const debug = diagnostics('gasket:utils');
 
 /**
  * Normalize the config by applying any overrides for environments, commands,
  * or local-only config file.
- * @type {import('.').applyConfigOverrides}
+ * @type {import('./index.js').applyConfigOverrides}
  */
 function applyConfigOverrides(config, { env = '', commandId }) {
   const potentialConfigs = [...getPotentialConfigs(config, { env, commandId })].reverse();
@@ -16,9 +18,9 @@ function applyConfigOverrides(config, { env = '', commandId }) {
 
 /**
  * Generator function to yield potential configurations
- * @type {import('.').getPotentialConfigs}
+ * @type {import('./index.js').getPotentialConfigs}
  */
-function* getPotentialConfigs(config, { env, commandId }) {
+function *getPotentialConfigs(config, { env, commandId }) {
   // Separate environment-specific config from another config
   const { environments = {}, commands = {}, ...baseConfig } = config;
   const isLocalEnv = env === 'local';
@@ -37,9 +39,9 @@ function* getPotentialConfigs(config, { env, commandId }) {
 
 /**
  * Generator function to yield command overrides
- * @type {import('.').getCommandOverrides}
+ * @type {import('./index.js').getCommandOverrides}
  */
-function* getCommandOverrides(commands, commandId) {
+function *getCommandOverrides(commands, commandId) {
   const commandOverrides = commandId && commands[commandId];
   if (commandOverrides) {
     debug('Including config overrides for command', commandId);
@@ -49,9 +51,9 @@ function* getCommandOverrides(commands, commandId) {
 
 /**
  * Generator function to yield sub-environment overrides
- * @type {import('.').getSubEnvironmentOverrides}
+ * @type {import('./index.js').getSubEnvironmentOverrides}
  */
-function* getSubEnvironmentOverrides(env, environments) {
+function *getSubEnvironmentOverrides(env, environments) {
   const envParts = env.split('.');
 
   // Iterate over any `.` delimited parts (e.g. `production.subEnv`) and
@@ -68,9 +70,9 @@ function* getSubEnvironmentOverrides(env, environments) {
 
 /**
  * Generator function to yield development overrides
- * @type {import('.').getDevOverrides}
+ * @type {import('./index.js').getDevOverrides}
  */
-function* getDevOverrides(isLocalEnv, environments) {
+function *getDevOverrides(isLocalEnv, environments) {
   // Special case for the local environment, which inherits from the
   // development environment
   const devEnv = isLocalEnv && (environments.development || environments.dev);
@@ -80,6 +82,6 @@ function* getDevOverrides(isLocalEnv, environments) {
   }
 }
 
-module.exports = {
+export {
   applyConfigOverrides
 };

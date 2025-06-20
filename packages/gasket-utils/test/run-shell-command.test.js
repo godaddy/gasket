@@ -1,6 +1,16 @@
-/* eslint-disable jest/no-conditional-expect */
-const AbortController = require('abort-controller');
-const runShellCommand = require('../lib/run-shell-command');
+/* eslint-disable @vitest/no-conditional-expect */
+import { expect, describe, it, beforeEach } from 'vitest';
+import AbortController from 'abort-controller';
+
+// Import the module - dynamic import is needed for ESM
+const runShellCommand = (await import('../lib/run-shell-command.js')).default;
+
+// ESM doesn't have __dirname, so we need to calculate it
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const cwd = __dirname;
 const failMode = true;

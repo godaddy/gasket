@@ -1,10 +1,10 @@
-const runShellCommand = require('./run-shell-command');
+import runShellCommand from './run-shell-command.js';
 
 /**
  * Get the latest version of a package from npm
- * @type {import('@gasket/utils').getPackageLatestVersion}
+ * @type {import('./index.js').getPackageLatestVersion}
  */
-module.exports = async function getPackageLatestVersion(pkgName, options = {}) {
+export default async function getPackageLatestVersion(pkgName, options = {}) {
   const cmdResult = await runShellCommand('npm', ['view', pkgName, 'version'], options);
   return cmdResult.stdout.trim();
-};
+}

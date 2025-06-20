@@ -1,11 +1,11 @@
 /* eslint-disable no-process-env */
-const runShellCommand = require('./run-shell-command');
+import runShellCommand from './run-shell-command.js';
 
 /**
  * Wrapper class for executing commands for a given package manager
  */
 class PackageManager {
-  /** @param {import('./index').PackageManagerOptions} options -  Options */
+  /** @param {import('./index.js').PackageManagerOptions} options -  Options */
   constructor({ packageManager = 'pnpm', dest }) {
     this.manager = packageManager;
     this.dest = dest;
@@ -15,7 +15,7 @@ class PackageManager {
    * Executes the appropriate npm binary with the verbatim `argv` and
    * `spawnWith` options provided. Passes appropriate debug flag for
    * npm based on process.env.
-   * @type {import('@gasket/utils').PackageManager_spawnNpm}
+   * @type {import('./index.js').PackageManager_spawnNpm}
    * @public
    */
   static spawnNpm(argv, spawnWith) {
@@ -56,7 +56,7 @@ class PackageManager {
    * Executes the appropriate yarn binary with the verbatim `argv` and
    * `spawnWith` options provided. Passes appropriate debug flag for
    * npm based on process.env.
-   * @type {import('@gasket/utils').PackageManager_spawnYarn}
+   * @type {import('./index.js').PackageManager_spawnYarn}
    * @public
    */
   static spawnYarn(argv, spawnWith) {
@@ -77,7 +77,7 @@ class PackageManager {
   /**
    * Executes npm in the application directory `this.dest`.
    * This installation can be run multiple times.
-   * @type {import('@gasket/utils').PackageManager_exec}
+   * @type {import('./index.js').PackageManager_exec}
    * @public
    */
   async exec(cmd, args = []) {
@@ -121,7 +121,7 @@ class PackageManager {
 
   /**
    * Executes npm link in the application directory `this.dest`.
-   * @type {import('@gasket/utils').PackageManager_link}
+   * @type {import('./index.js').PackageManager_link}
    * @public
    */
   async link(packages = []) {
@@ -131,7 +131,7 @@ class PackageManager {
   /**
    * Executes npm install in the application directory `this.dest`.
    * This installation can be run multiple times.
-   * @type {import('@gasket/utils').PackageManager_install}
+   * @type {import('./index.js').PackageManager_install}
    * @public
    */
   async install(args = []) {
@@ -147,7 +147,7 @@ class PackageManager {
 
   /**
    * Executes yarn or npm info, and returns parsed JSON data results.
-   * @type {import('@gasket/utils').PackageManager_info}
+   * @type {import('./index.js').PackageManager_info}
    * @public
    */
   async info(args = []) {
@@ -165,4 +165,4 @@ class PackageManager {
   }
 }
 
-module.exports = PackageManager;
+export default PackageManager;

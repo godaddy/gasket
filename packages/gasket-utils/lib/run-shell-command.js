@@ -1,8 +1,8 @@
 /* eslint-disable max-params */
-const spawn = require('cross-spawn');
-const concat = require('concat-stream');
+import spawn from 'cross-spawn';
+import concat from 'concat-stream';
 
-/** @type {import('@gasket/utils').runShellCommand} */
+/** @type {import('./index.js').runShellCommand} */
 function runShellCommand(cmd, argv, options = {}, debug = false) {
   const { signal, ...opts } = options;
   /** @type {string} */
@@ -65,4 +65,4 @@ function runShellCommand(cmd, argv, options = {}, debug = false) {
   });
 }
 
-module.exports = runShellCommand;
+export default runShellCommand;
