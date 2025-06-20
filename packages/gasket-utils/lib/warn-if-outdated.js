@@ -6,10 +6,9 @@ import { fileURLToPath } from 'url';
 import getPackageLatestVersion from './get-package-latest-version.js';
 
 // ESM doesn't have __dirname, so we need to construct it
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const _dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const cachePath = path.join(__dirname, '..', '.cache'); // Place at root of package
+const cachePath = path.join(_dirname, '..', '.cache'); // Place at root of package
 const LATEST_VERSION = 'latestVersion';
 const LATEST_VERSION_UPDATE_TIME = 'latestVersionUpdateTime';
 
