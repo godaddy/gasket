@@ -1,5 +1,11 @@
 # `@gasket/utils`
 
+## 7.5.0
+
+### Minor Changes
+
+- 06999d5: Convert gasket-utils to ESM with CommonJS compatibility
+
 ## 7.4.2
 
 ### Patch Changes
