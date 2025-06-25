@@ -1,10 +1,14 @@
-const semver = require('semver');
-const chalk = require('chalk');
-const { readFile, writeFile } = require('fs/promises');
-const path = require('path');
-const getPackageLatestVersion = require('./get-package-latest-version');
+import semver from 'semver';
+import chalk from 'chalk';
+import { readFile, writeFile } from 'fs/promises';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import getPackageLatestVersion from './get-package-latest-version.js';
 
-const cachePath = path.join(__dirname, '..', '.cache'); // Place at root of package
+// ESM doesn't have __dirname, so we need to construct it
+const _dirname = path.dirname(fileURLToPath(import.meta.url));
+
+const cachePath = path.join(_dirname, '..', '.cache'); // Place at root of package
 const LATEST_VERSION = 'latestVersion';
 const LATEST_VERSION_UPDATE_TIME = 'latestVersionUpdateTime';
 
@@ -53,7 +57,7 @@ async function getLatestVersion(pkgName, currentTime, cache) {
  * @param {string} pkgName - package name
  * @param {string} currentVersion - current version of the package
  */
-module.exports = async function warnIfOutdated(pkgName, currentVersion) {
+export default async function warnIfOutdated(pkgName, currentVersion) {
   const currentTime = new Date().getTime();
   let cache = {};
 
@@ -73,4 +77,4 @@ module.exports = async function warnIfOutdated(pkgName, currentVersion) {
       `Warning: ${pkgName} update available from ${chalk.green(latestVersion)} to ${chalk.green(currentVersion)}`
     );
   }
-};
+}
