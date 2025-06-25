@@ -9,7 +9,7 @@ class MockPackageManager {
   }
 }
 
-jest.mock('@gasket/utils', () => ({
+jest.unstable_mockModule('@gasket/utils', () => ({
   PackageManager: MockPackageManager
 }));
 
