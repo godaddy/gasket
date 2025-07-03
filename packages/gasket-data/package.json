@@ -12,12 +12,12 @@
     ".": {
       "types": "./lib/index.d.ts",
       "import": "./lib/index.js",
-      "require": "./cjs/index.cjs"
+      "require": "./cjs/index.js"
     },
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "swc lib -d cjs --delete-dir-on-start --strip-leading-paths --out-file-extension cjs",
+    "build": "swc lib -d cjs --delete-dir-on-start --strip-leading-paths",
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
     "postbuild": "node -e \"require('fs').writeFileSync('cjs/package.json', '{}')\"",
