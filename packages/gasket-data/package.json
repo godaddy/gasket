@@ -20,7 +20,9 @@
     "build": "swc lib -d cjs --delete-dir-on-start --strip-leading-paths --out-file-extension cjs",
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
-    "postbuild": "node -e \"require('fs').writeFileSync('cjs/package.json', '{}')\"",
+    "postbuild": "pnpm run postbuild:cjs:package && pnpm run postbuild:cjs:replace",
+    "postbuild:cjs:package": "node -e \"require('fs').writeFileSync('cjs/package.json', '{}')\"",
+    "postbuild:cjs:replace": "replace '\\.js\"' '.cjs\"' ./cjs -r -q",
     "posttest": "pnpm run lint && pnpm run typecheck",
     "prepublishOnly": "pnpm run build",
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
@@ -61,6 +63,7 @@
     "eslint-plugin-unicorn": "^55.0.0",
     "jest": "^29.7.0",
     "jsdom": "^20.0.3",
+    "replace": "^1.2.2",
     "typescript": "^5.8.2"
   },
   "eslintConfig": {
