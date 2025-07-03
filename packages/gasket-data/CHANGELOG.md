@@ -1,5 +1,12 @@
 # `@gasket/data`
 
+## 7.4.5
+
+### Patch Changes
+
+- d4a15f9: Fix cjs requires
+  - @gasket/request@7.4.4
+
 ## 7.4.4
 
 ### Patch Changes
