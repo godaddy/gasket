@@ -5,7 +5,10 @@
     "outDir": "./dist",
     "noEmit": true,
     "allowJs": true,
-    "checkJs": false
+    "checkJs": false,
+    "types": [
+      "@types/node"
+    ]
   },
   "include": [
     "lib/**/*.d.ts"
