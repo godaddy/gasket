@@ -12,13 +12,13 @@
       "types": "./lib/index.d.ts",
       "import": "./lib/index.js",
       "require": "./cjs/index.js",
-      "default": "./cjs/index.cjs"
+      "default": "./cjs/index.js"
     },
     "./config": {
       "types": "./lib/config.d.ts",
       "import": "./lib/config.js",
-      "require": "./cjs/config.cjs",
-      "default": "./cjs/config.cjs"
+      "require": "./cjs/config.js",
+      "default": "./cjs/config.js"
     },
     "./package.json": "./package.json"
   },
@@ -27,9 +27,8 @@
     "build:watch": "pnpm run build --watch",
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
-    "postbuild": "pnpm run postbuild:package && pnpm run postbuild:replace",
+    "postbuild": "pnpm run postbuild:package",
     "postbuild:package": "node -e \"require('fs').writeFileSync('cjs/package.json', '{}')\"",
-    "postbuild:replace": "replace '.js' '.cjs' cjs -r",
     "posttest": "pnpm run lint && pnpm run typecheck",
     "prepublishOnly": "pnpm run build",
     "test": "vitest run --globals",
