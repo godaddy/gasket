@@ -28,36 +28,24 @@ program
       process.exit(1);
     }
 
-    console.log(`🔄 Transpiling ESM to CJS...`);
-    console.log(`   Source: ${absoluteSourceDir}`);
-    console.log(`   Output: ${absoluteOutputDir}`);
-    console.log('');
+    console.log(`Transpiling ${sourceDir} → ${outputDir}`);
 
     try {
       const result = await transpile(absoluteSourceDir, absoluteOutputDir, {
-        onProgress: ({ file, current, total }) => {
-          const percentage = Math.round((current / total) * 100);
-          const fileName = file.split('/').pop();
-          console.log(`   [${current}/${total}] ${percentage}% - ${fileName}`);
+        onProgress: ({ current, total }) => {
+          process.stdout.write(`\r${current}/${total} files processed`);
         }
       });
 
-      console.log('');
-      console.log(`✅ Transpilation complete!`);
-      console.log(`   Successfully transpiled: ${result.successful.length} files`);
+      console.log(`\n✅ ${result.successful.length} files transpiled`);
 
       if (result.failed.length > 0) {
-        console.log(`   Failed: ${result.failed.length} files`);
-        console.log('');
-        console.log('❌ Failed files:');
+        console.log(`❌ ${result.failed.length} files failed:`);
         result.failed.forEach(failure => {
-          console.log(`   - ${failure.inputPath}: ${failure.error}`);
+          console.log(`  ${failure.inputPath}: ${failure.error}`);
         });
         process.exit(1);
       }
-
-      console.log(`   Output directory: ${result.outputDir}`);
-      console.log('');
 
     } catch (error) {
       console.error(`❌ Error during transpilation: ${error.message}`);
