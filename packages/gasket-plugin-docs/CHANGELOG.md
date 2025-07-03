@@ -1,5 +1,11 @@
 # `@gasket/plugin-docs`
 
+## 7.4.4
+
+### Patch Changes
+
+- @gasket/plugin-command@7.4.3
+
 ## 7.4.3
 
 ### Patch Changes
