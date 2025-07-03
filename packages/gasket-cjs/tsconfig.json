@@ -1,0 +1,18 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "./lib",
+    "outDir": "./dist",
+    "noEmit": true,
+    "allowJs": true,
+    "checkJs": false
+  },
+  "include": [
+    "lib/**/*.d.ts"
+  ],
+  "exclude": [
+    "test/**/*",
+    "node_modules/**/*",
+    "lib/**/*.js"
+  ]
+}
