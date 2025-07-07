@@ -1,11 +1,11 @@
-# gasket-cjs
+# @gasket/cjs
 
 Utility for transpiling ESM to CJS with .cjs extensions
 
 ## Installation
 
 ```bash
-pnpm install gasket-cjs
+pnpm install @gasket/cjs
 ```
 
 ## Usage
@@ -26,7 +26,7 @@ gasket-cjs ./src ./dist/cjs
 ### Programmatic API
 
 ```javascript
-import { transpile } from 'gasket-cjs';
+import { transpile } from '@gasket/cjs';
 
 // Basic usage
 const result = await transpile('./src', './cjs');
@@ -61,7 +61,6 @@ The utility uses SWC for transpilation with the following default configuration:
 - ✅ Preserves directory structure
 - ✅ CLI and programmatic interfaces
 - ✅ Progress reporting
-- ✅ TypeScript definitions
 
 ## API Reference
 
