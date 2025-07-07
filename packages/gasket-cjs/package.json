@@ -36,11 +36,11 @@
     "access": "public"
   },
   "keywords": [
+    "build-tool",
     "cjs",
     "esm",
-    "transpile",
     "gasket",
-    "build-tool"
+    "transpile"
   ],
   "author": "GoDaddy Operating Company, LLC",
   "license": "MIT",
