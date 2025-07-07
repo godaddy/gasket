@@ -1,5 +1,11 @@
 # `@gasket/plugin-vitest`
 
+## 7.1.0
+
+### Minor Changes
+
+- 660cf7a: Update CJS transpilation to use @gasket/cjs
+
 ## 7.0.3
 
 ### Patch Changes
