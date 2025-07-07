@@ -50,9 +50,9 @@
     "debug": "^4.4.0"
   },
   "devDependencies": {
+    "@gasket/cjs": "workspace:^",
     "@gasket/core": "workspace:^",
     "@jest/globals": "^29.7.0",
-    "gasket-cjs": "workspace:^",
     "@types/jest": "^29.5.14",
     "@types/node": "^20.17.19",
     "cross-env": "^7.0.3",

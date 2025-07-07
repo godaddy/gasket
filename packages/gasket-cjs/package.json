@@ -1,5 +1,5 @@
 {
-  "name": "gasket-cjs",
+  "name": "@gasket/cjs",
   "version": "7.0.0",
   "description": "Utility for transpiling ESM to CJS with .cjs extensions",
   "type": "module",

@@ -45,9 +45,9 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-vitest",
   "devDependencies": {
+    "@gasket/cjs": "workspace:^",
     "@gasket/core": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",
-    "gasket-cjs": "workspace:^",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.3.0",
     "@types/node": "^20.17.19",

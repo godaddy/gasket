@@ -276,6 +276,9 @@ importers:
         specifier: ^4.4.0
         version: 4.4.0(supports-color@5.5.0)
     devDependencies:
+      '@gasket/cjs':
+        specifier: workspace:^
+        version: link:../gasket-cjs
       '@gasket/plugin-metadata':
         specifier: workspace:^
         version: link:../gasket-plugin-metadata
@@ -306,9 +309,6 @@ importers:
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
-      gasket-cjs:
-        specifier: workspace:^
-        version: link:../gasket-cjs
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.15))(@types/node@20.17.19)(typescript@5.8.2))
@@ -322,6 +322,9 @@ importers:
         specifier: workspace:^
         version: link:../gasket-request
     devDependencies:
+      '@gasket/cjs':
+        specifier: workspace:^
+        version: link:../gasket-cjs
       '@gasket/core':
         specifier: workspace:^
         version: link:../gasket-core
@@ -355,9 +358,6 @@ importers:
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
-      gasket-cjs:
-        specifier: workspace:^
-        version: link:../gasket-cjs
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.15))(@types/node@20.17.19)(typescript@5.8.2))
@@ -434,6 +434,9 @@ importers:
 
   packages/gasket-intl:
     devDependencies:
+      '@gasket/cjs':
+        specifier: workspace:^
+        version: link:../gasket-cjs
       '@jest/globals':
         specifier: ^29.7.0
         version: 29.7.0
@@ -461,9 +464,6 @@ importers:
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
-      gasket-cjs:
-        specifier: workspace:^
-        version: link:../gasket-cjs
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.15))(@types/node@20.17.19)(typescript@5.8.2))
@@ -486,6 +486,9 @@ importers:
         specifier: ^1.1.1
         version: 1.1.1
     devDependencies:
+      '@gasket/cjs':
+        specifier: workspace:^
+        version: link:../gasket-cjs
       '@gasket/plugin-data':
         specifier: workspace:^
         version: link:../gasket-plugin-data
@@ -534,9 +537,6 @@ importers:
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
-      gasket-cjs:
-        specifier: workspace:^
-        version: link:../gasket-cjs
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.15))(@types/node@20.17.19)(typescript@5.8.2))
@@ -623,6 +623,9 @@ importers:
         specifier: ^12.1.0
         version: 12.1.0
     devDependencies:
+      '@gasket/cjs':
+        specifier: workspace:^
+        version: link:../gasket-cjs
       '@gasket/plugin-metadata':
         specifier: workspace:^
         version: link:../gasket-plugin-metadata
@@ -656,9 +659,6 @@ importers:
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
-      gasket-cjs:
-        specifier: workspace:^
-        version: link:../gasket-cjs
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.15))(@types/node@20.17.19)(typescript@5.8.2))
@@ -987,6 +987,9 @@ importers:
         specifier: ^4.1.2
         version: 4.1.2
     devDependencies:
+      '@gasket/cjs':
+        specifier: workspace:^
+        version: link:../gasket-cjs
       '@gasket/core':
         specifier: workspace:^
         version: link:../gasket-core
@@ -1020,9 +1023,6 @@ importers:
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
-      gasket-cjs:
-        specifier: workspace:^
-        version: link:../gasket-cjs
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.15))(@types/node@20.17.19)(typescript@5.8.2))
@@ -1384,6 +1384,9 @@ importers:
         specifier: ^1.18.1
         version: 1.18.1
     devDependencies:
+      '@gasket/cjs':
+        specifier: workspace:^
+        version: link:../gasket-cjs
       '@gasket/core':
         specifier: workspace:^
         version: link:../gasket-core
@@ -1420,9 +1423,6 @@ importers:
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
-      gasket-cjs:
-        specifier: workspace:^
-        version: link:../gasket-cjs
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1796,6 +1796,9 @@ importers:
         specifier: workspace:^
         version: link:../gasket-plugin-logger
     devDependencies:
+      '@gasket/cjs':
+        specifier: workspace:^
+        version: link:../gasket-cjs
       '@gasket/plugin-webpack':
         specifier: workspace:^
         version: link:../gasket-plugin-webpack
@@ -1826,9 +1829,6 @@ importers:
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
-      gasket-cjs:
-        specifier: workspace:^
-        version: link:../gasket-cjs
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -2482,6 +2482,9 @@ importers:
 
   packages/gasket-plugin-vitest:
     devDependencies:
+      '@gasket/cjs':
+        specifier: workspace:^
+        version: link:../gasket-cjs
       '@gasket/core':
         specifier: workspace:^
         version: link:../gasket-core
@@ -2524,9 +2527,6 @@ importers:
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
-      gasket-cjs:
-        specifier: workspace:^
-        version: link:../gasket-cjs
       jsdom:
         specifier: ^20.0.3
         version: 20.0.3
@@ -2770,6 +2770,9 @@ importers:
         specifier: workspace:^
         version: link:../gasket-plugin-winston
     devDependencies:
+      '@gasket/cjs':
+        specifier: workspace:^
+        version: link:../gasket-cjs
       '@gasket/plugin-metadata':
         specifier: workspace:^
         version: link:../gasket-plugin-metadata
@@ -2800,9 +2803,6 @@ importers:
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
-      gasket-cjs:
-        specifier: workspace:^
-        version: link:../gasket-cjs
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.15))(@types/node@20.17.19)(typescript@5.8.2))
@@ -2876,6 +2876,9 @@ importers:
         specifier: workspace:^
         version: link:../gasket-utils
     devDependencies:
+      '@gasket/cjs':
+        specifier: workspace:^
+        version: link:../gasket-cjs
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -2900,9 +2903,6 @@ importers:
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
-      gasket-cjs:
-        specifier: workspace:^
-        version: link:../gasket-cjs
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.15))(@types/node@20.17.19)(typescript@5.8.2))
@@ -2934,6 +2934,9 @@ importers:
         specifier: ^6.2.0
         version: 6.2.0
     devDependencies:
+      '@gasket/cjs':
+        specifier: workspace:^
+        version: link:../gasket-cjs
       '@testing-library/react':
         specifier: ^16.3.0
         version: 16.3.0(@testing-library/dom@10.4.0)(@types/react-dom@19.0.4(@types/react@19.0.12))(@types/react@19.0.12)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -2970,9 +2973,6 @@ importers:
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
-      gasket-cjs:
-        specifier: workspace:^
-        version: link:../gasket-cjs
       intl:
         specifier: ^1.2.5
         version: 1.2.5
@@ -3089,6 +3089,9 @@ importers:
         specifier: ^4.4.0
         version: 4.4.0(supports-color@5.5.0)
     devDependencies:
+      '@gasket/cjs':
+        specifier: workspace:^
+        version: link:../gasket-cjs
       '@gasket/core':
         specifier: workspace:^
         version: link:../gasket-core
@@ -3119,9 +3122,6 @@ importers:
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
-      gasket-cjs:
-        specifier: workspace:^
-        version: link:../gasket-cjs
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.15))(@types/node@20.17.19)(typescript@5.8.2))
@@ -3342,6 +3342,9 @@ importers:
         specifier: ^7.7.1
         version: 7.7.1
     devDependencies:
+      '@gasket/cjs':
+        specifier: workspace:^
+        version: link:../gasket-cjs
       '@gasket/core':
         specifier: workspace:^
         version: link:../gasket-core
@@ -3381,9 +3384,6 @@ importers:
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
-      gasket-cjs:
-        specifier: workspace:^
-        version: link:../gasket-cjs
       typescript:
         specifier: ^5.8.2
         version: 5.8.2

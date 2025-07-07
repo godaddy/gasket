@@ -45,6 +45,7 @@
     "@gasket/request": "workspace:^"
   },
   "devDependencies": {
+    "@gasket/cjs": "workspace:^",
     "@gasket/core": "workspace:^",
     "@gasket/plugin-data": "workspace:^",
     "@jest/globals": "^29.7.0",
@@ -56,7 +57,6 @@
     "eslint-config-godaddy-typescript": "^4.0.3",
     "eslint-plugin-jest": "^27.9.0",
     "eslint-plugin-unicorn": "^55.0.0",
-    "gasket-cjs": "workspace:^",
     "jest": "^29.7.0",
     "jsdom": "^20.0.3",
     "typescript": "^5.8.2"

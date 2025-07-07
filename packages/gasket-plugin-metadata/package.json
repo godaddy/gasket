@@ -48,9 +48,9 @@
     "@gasket/plugin-logger": "workspace:^"
   },
   "devDependencies": {
+    "@gasket/cjs": "workspace:^",
     "@gasket/plugin-webpack": "workspace:^",
     "@godaddy/dmd": "^1.0.4",
-    "gasket-cjs": "workspace:^",
     "@types/jest": "^29.5.14",
     "@types/node": "^20.17.19",
     "create-gasket-app": "workspace:^",

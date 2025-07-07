@@ -60,7 +60,7 @@
     "@gasket/utils": "workspace:^"
   },
   "devDependencies": {
-    "gasket-cjs": "workspace:^",
+    "@gasket/cjs": "workspace:^",
     "@types/jest": "^29.5.14",
     "@types/node": "^20.17.19",
     "cross-env": "^7.0.3",
