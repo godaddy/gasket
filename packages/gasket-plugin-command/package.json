@@ -12,17 +12,16 @@
     ".": {
       "types": "./lib/index.d.ts",
       "import": "./lib/index.js",
-      "require": "./cjs/index.js",
-      "default": "./cjs/index.js"
+      "require": "./cjs/index.cjs",
+      "default": "./cjs/index.cjs"
     },
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "swc lib -d cjs --delete-dir-on-start --strip-leading-paths && cp lib/index.d.ts cjs/",
+    "build": "gasket-cjs ./lib",
     "build:watch": "pnpm run build --watch",
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
-    "postbuild": "node -e \"require('fs').writeFileSync('cjs/package.json', '{}')\"",
     "posttest": "pnpm run lint && pnpm run typecheck",
     "prepublishOnly": "pnpm run build",
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
@@ -52,8 +51,7 @@
   "devDependencies": {
     "@gasket/plugin-metadata": "workspace:^",
     "@jest/globals": "^29.7.0",
-    "@swc/cli": "^0.6.0",
-    "@swc/core": "^1.10.18",
+    "gasket-cjs": "workspace:^",
     "@types/jest": "^29.5.14",
     "@types/node": "^20.17.19",
     "create-gasket-app": "workspace:^",

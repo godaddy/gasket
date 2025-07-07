@@ -23,13 +23,10 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "swc lib -d cjs --delete-dir-on-start --strip-leading-paths --out-file-extension cjs",
+    "build": "gasket-cjs ./lib",
     "build:watch": "pnpm run build --watch",
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
-    "postbuild": "pnpm run postbuild:package && pnpm run postbuild:replace",
-    "postbuild:package": "node -e \"require('fs').writeFileSync('cjs/package.json', '{}')\"",
-    "postbuild:replace": "replace '.js' '.cjs' cjs -r",
     "posttest": "pnpm run lint && pnpm run typecheck",
     "prepublishOnly": "pnpm run build",
     "test": "vitest run --globals",
@@ -61,8 +58,7 @@
   },
   "devDependencies": {
     "@gasket/core": "workspace:^",
-    "@swc/cli": "^0.6.0",
-    "@swc/core": "^1.10.18",
+    "gasket-cjs": "workspace:^",
     "@types/concat-stream": "^2.0.3",
     "@types/cross-spawn": "^6.0.6",
     "@types/jest": "^29.5.14",
@@ -75,7 +71,6 @@
     "eslint-config-godaddy": "^7.1.1",
     "eslint-config-godaddy-typescript": "^4.0.3",
     "eslint-plugin-unicorn": "^55.0.0",
-    "replace": "^1.2.2",
     "typescript": "^5.8.2",
     "vitest": "^3.2.0"
   },
