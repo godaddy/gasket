@@ -1,6 +1,6 @@
 import { transform } from '@swc/core';
 import globPkg from 'glob';
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync, rmSync } from 'fs';
 import { dirname, join, relative } from 'path';
 
 const { glob } = globPkg;
@@ -63,6 +63,17 @@ export async function transpileFile(filePath, outputPath, swcConfig = DEFAULT_SW
   }
 }
 
+
+/**
+ * Clean output directory if it exists
+ * @param {string} outputDir - Output directory path
+ */
+export function cleanOutputDirectory(outputDir) {
+  if (existsSync(outputDir)) {
+    rmSync(outputDir, { recursive: true, force: true });
+  }
+}
+
 /**
  * Transpile all JavaScript files in a directory from ESM to CJS
  * @param {string} sourceDir - Source directory path
@@ -71,6 +82,7 @@ export async function transpileFile(filePath, outputPath, swcConfig = DEFAULT_SW
  * @param {object} options.swcConfig - Custom SWC configuration
  * @param {string[]} options.extensions - File extensions to process
  * @param {boolean} options.createPackageJson - Create package.json in output dir
+ * @param {boolean} options.clean - Clean output directory before transpilation
  * @param {Function} options.onProgress - Progress callback
  * @returns {Promise<Array>} Array of transpilation results
  */
@@ -79,8 +91,14 @@ export async function transpileDirectory(sourceDir, outputDir = 'cjs', options =
     swcConfig = DEFAULT_SWC_CONFIG,
     extensions = ['.js', '.mjs'],
     createPackageJson = true,
+    clean = true,
     onProgress
   } = options;
+
+  // Clean output directory if requested
+  if (clean) {
+    cleanOutputDirectory(outputDir);
+  }
 
   // Find all JavaScript files
   const pattern = `${sourceDir}/**/*.{${extensions.map(ext => ext.slice(1)).join(',')}}`;

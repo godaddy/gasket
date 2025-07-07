@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander';
-import { transpile } from '../lib/index.js';
 import { resolve } from 'path';
 import { existsSync, readFileSync } from 'fs';
+import { transpile } from '../lib/index.js';
 
 const program = new Command();
 
@@ -31,11 +31,7 @@ program
     console.log(`Transpiling ${sourceDir} → ${outputDir}`);
 
     try {
-      const result = await transpile(absoluteSourceDir, absoluteOutputDir, {
-        onProgress: ({ current, total }) => {
-          process.stdout.write(`\r${current}/${total} files processed`);
-        }
-      });
+      const result = await transpile(absoluteSourceDir, absoluteOutputDir);
 
       console.log(`\n✅ ${result.successful.length} files transpiled`);
 
