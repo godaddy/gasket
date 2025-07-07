@@ -89,7 +89,8 @@
     "extends": [
       "godaddy",
       "plugin:jest/recommended",
-      "plugin:jsdoc/recommended"
+      "plugin:jsdoc/recommended",
+      "plugin:jsdoc/recommended-typescript-flavor"
     ],
     "globals": {
       "expect": "readonly"
