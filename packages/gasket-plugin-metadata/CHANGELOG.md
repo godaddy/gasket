@@ -1,5 +1,17 @@
 # `@gasket/plugin-metadata`
 
+## 7.5.0
+
+### Minor Changes
+
+- 660cf7a: Update CJS transpilation to use @gasket/cjs
+
+### Patch Changes
+
+- Updated dependencies [660cf7a]
+  - @gasket/core@7.6.0
+  - @gasket/plugin-logger@7.3.5
+
 ## 7.4.5
 
 ### Patch Changes

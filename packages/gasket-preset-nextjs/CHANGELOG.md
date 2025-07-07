@@ -1,5 +1,35 @@
 # `@gasket/preset-nextjs`
 
+## 7.5.0
+
+### Minor Changes
+
+- 660cf7a: Update CJS transpilation to use @gasket/cjs
+
+### Patch Changes
+
+- Updated dependencies [660cf7a]
+  - @gasket/plugin-dynamic-plugins@7.4.0
+  - @gasket/plugin-https-proxy@7.4.0
+  - @gasket/plugin-command@7.5.0
+  - @gasket/plugin-nextjs@7.6.0
+  - @gasket/plugin-vitest@7.1.0
+  - @gasket/utils@7.6.0
+  - @gasket/plugin-cypress@7.5.1
+  - @gasket/plugin-docs@7.4.5
+  - @gasket/plugin-docusaurus@7.4.3
+  - @gasket/plugin-express@7.4.1
+  - @gasket/plugin-git@7.4.4
+  - @gasket/plugin-https@7.3.8
+  - @gasket/plugin-intl@7.5.5
+  - @gasket/plugin-jest@7.5.3
+  - @gasket/plugin-lint@7.4.1
+  - @gasket/plugin-logger@7.3.5
+  - @gasket/plugin-mocha@7.5.3
+  - @gasket/plugin-typescript@7.4.4
+  - @gasket/plugin-webpack@7.3.5
+  - @gasket/plugin-winston@7.3.5
+
 ## 7.4.9
 
 ### Patch Changes
