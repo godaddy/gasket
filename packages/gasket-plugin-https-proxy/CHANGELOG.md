@@ -1,5 +1,11 @@
 # `@gasket/plugin-https-proxy`
 
+## 7.4.0
+
+### Minor Changes
+
+- 660cf7a: Update CJS transpilation to use @gasket/cjs
+
 ## 7.3.12
 
 ### Patch Changes

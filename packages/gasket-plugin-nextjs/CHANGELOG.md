@@ -1,5 +1,15 @@
 # `@gasket/plugin-nextjs`
 
+## 7.6.0
+
+### Minor Changes
+
+- 660cf7a: Update CJS transpilation to use @gasket/cjs
+
+### Patch Changes
+
+- @gasket/plugin-webpack@7.3.5
+
 ## 7.5.6
 
 ### Patch Changes

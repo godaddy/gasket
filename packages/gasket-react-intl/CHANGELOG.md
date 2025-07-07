@@ -1,5 +1,18 @@
 # `@gasket/react-intl`
 
+## 7.6.0
+
+### Minor Changes
+
+- 660cf7a: Update CJS transpilation to use @gasket/cjs
+
+### Patch Changes
+
+- Updated dependencies [660cf7a]
+  - @gasket/data@7.5.0
+  - @gasket/intl@7.5.0
+  - @gasket/plugin-intl@7.5.5
+
 ## 7.5.4
 
 ### Patch Changes
