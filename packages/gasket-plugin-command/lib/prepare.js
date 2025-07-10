@@ -9,7 +9,9 @@ export default function prepare(gasket, config) {
   /** @type {import('./index.d.ts').GasketCommandDefinition[]} */
   const cmdDefs = gasket.execSync('commands');
 
-  cmdDefs.forEach((cmdDef) => {
+  const commandArray = cmdDefs.flat().filter(Boolean);
+
+  commandArray.forEach((cmdDef) => {
     const { command, hidden, isDefault } = processCommand(cmdDef);
     gasketBin.addCommand(command, { hidden, isDefault });
   });
