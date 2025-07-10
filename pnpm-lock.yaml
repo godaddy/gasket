@@ -2922,7 +2922,7 @@ importers:
         specifier: workspace:^
         version: link:../gasket-intl
       '@gasket/plugin-intl':
-        specifier: ^7.5.4
+        specifier: ^7.5.5
         version: link:../gasket-plugin-intl
       hoist-non-react-statics:
         specifier: ^3.3.2
