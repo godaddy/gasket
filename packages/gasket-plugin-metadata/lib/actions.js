@@ -91,7 +91,45 @@ async function getMetadata(gasket) {
           //
           // get gasket module details if installed
           //
-          const modPkg = tryRequire(`${name}/package.json`);
+          let modPkg = null;
+          let modulePath = null;
+
+          try {
+            // First try to resolve the module from the current workspace
+            const resolvedPath = require.resolve(name);
+            console.log('Resolved:', name, resolvedPath);
+
+            // Then try to get its package.json
+            modPkg = tryRequire(`${name}/package.json`);
+
+            if (modPkg) {
+              modulePath = path.dirname(path.join(resolvedPath, '..'));
+            }
+                              } catch (error) {
+            // If module resolution fails, check if we're in a monorepo and look for local packages
+            // Try multiple possible paths for the monorepo structure
+            const possiblePaths = [
+              path.join(__dirname, '..', '..', '..', name.replace('@gasket/', 'gasket-'), 'package.json'),
+              path.join(__dirname, '..', '..', '..', 'packages', name.replace('@gasket/', 'gasket-'), 'package.json'),
+              path.join(gasket.config.root, 'packages', name.replace('@gasket/', 'gasket-'), 'package.json')
+            ];
+
+                        let found = false;
+            for (const localPackagePath of possiblePaths) {
+              modPkg = tryRequire(localPackagePath);
+
+              if (modPkg) {
+                modulePath = path.dirname(localPackagePath);
+                found = true;
+                break;
+              }
+            }
+
+            if (!found) {
+              console.log('Could not resolve package:', name);
+            }
+          }
+
           if (modPkg) {
             modulesMap[name] = {
               name: modPkg.name,
@@ -99,7 +137,7 @@ async function getMetadata(gasket) {
               description: modPkg.description,
               metadata: {
                 link: 'README.md',
-                path: path.dirname(path.join(require.resolve(name), '..'))
+                path: modulePath
               }
             };
           }
@@ -110,7 +148,6 @@ async function getMetadata(gasket) {
     //
     // Update module metadata with gasket.metadata from the package.json if set.
     //
-    console.log('modulesMap', modulesMap);
     const modules = Object.values(modulesMap).map((modInfo) => {
       const modPkg = tryRequire(path.join(`${modInfo.name}/package.json`));
       modInfo.metadata = {
