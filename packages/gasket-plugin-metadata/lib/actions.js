@@ -110,6 +110,7 @@ async function getMetadata(gasket) {
     //
     // Update module metadata with gasket.metadata from the package.json if set.
     //
+    console.log('modulesMap', modulesMap);
     const modules = Object.values(modulesMap).map((modInfo) => {
       const modPkg = tryRequire(path.join(`${modInfo.name}/package.json`));
       modInfo.metadata = {
@@ -118,7 +119,7 @@ async function getMetadata(gasket) {
       };
       return modInfo;
     });
-
+    console.log('modules', modules);
     _metadata = { app, plugins, modules, presets };
   }
 
