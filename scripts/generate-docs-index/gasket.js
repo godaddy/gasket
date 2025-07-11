@@ -30,6 +30,9 @@ const presetDirs = await Promise.all(packageDirs
   }));
 
 export default makeGasket({
-  plugins: presetDirs.concat([configPlugin, siteDocsPlugin], pluginDirs)
+  plugins: presetDirs.concat([configPlugin, siteDocsPlugin], pluginDirs),
+  docs: {
+    graphs: false
+  }
 });
 
