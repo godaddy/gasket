@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@gasket/assets": "workspace:^",
+    "@gasket/cjs": "workspace:^",
     "@gasket/core": "workspace:^",
     "@gasket/data": "workspace:^",
     "@gasket/fetch": "workspace:^",
