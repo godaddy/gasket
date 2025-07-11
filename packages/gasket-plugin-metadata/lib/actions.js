@@ -1,8 +1,10 @@
 import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
 import path from 'path';
+import { fileURLToPath } from 'url';
 import { tryRequire } from './utils.js';
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const require = createRequire(import.meta.url);
 const isModulePath = /^[/.]|^[a-zA-Z]:\\|node_modules/;
 const isGasketModule = /(@gasket\/|gasket-)(?!plugin)(?!preset).+/;
 const isGasketPreset = /(gasket-preset)|(@gasket\/preset-)/;
