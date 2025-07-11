@@ -15,10 +15,6 @@ module.exports = {
     defaultLocale: 'en',
     locales: ['en'],
   },
-  markdown: {
-    mermaid: true,
-  },
-  themes: ['@docusaurus/theme-mermaid'],
   presets: [
     [
       'classic',
@@ -150,9 +146,7 @@ module.exports = {
         theme: themes.github,
         darkTheme: themes.dracula,
       },
-      mermaid: {
-        theme: { light: 'neutral', dark: 'dark' },
-      },
+
       algolia: {
         appId: 'OB26TYFNYK',
         apiKey: '6ac9413965486a885b0d332087335ead',

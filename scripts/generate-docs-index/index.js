@@ -16,11 +16,6 @@ const targetPath = path.join(projectRoot, 'README.md');
 async function main() {
   await runShellCommand('node', ['gasket.js', 'docs', '--no-view'], { cwd: __dirname });
 
-  // copy over generated docs generated-docs
-  const genSrc = path.join(__dirname, '.docs', 'docs', 'generated-docs');
-  const genTgt = path.join(projectRoot, 'docs', 'generated-docs');
-  await cp(genSrc, genTgt, { recursive: true });
-
   let content = await readFile(sourcePath, 'utf-8');
 
   // fix up the generated docs index
