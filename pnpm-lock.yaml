@@ -3393,6 +3393,9 @@ importers:
       '@gasket/assets':
         specifier: workspace:^
         version: link:../../packages/gasket-assets
+      '@gasket/cjs':
+        specifier: workspace:^
+        version: link:../../packages/gasket-cjs
       '@gasket/core':
         specifier: workspace:^
         version: link:../../packages/gasket-core

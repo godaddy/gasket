@@ -209,17 +209,19 @@ Available plugins
 
 Supporting modules
 
-| Name                 | Version | Description                                                      |
-| -------------------- | ------- | ---------------------------------------------------------------- |
-| [@gasket/assets]     | 7.4.1   | Gasket assets                                                    |
-| [@gasket/cjs]        | 7.0.0   | Utility for transpiling ESM to CJS with .cjs extensions          |
-| [@gasket/core]       | 7.6.0   | Entry point to setting up Gasket instances                       |
-| [@gasket/data]       | 7.5.0   | Helper package for accessing embedded Gasket Data in the browser |
-| [@gasket/nextjs]     | 7.6.0   | Gasket integrations for Next.js apps                             |
-| [@gasket/react-intl] | 7.6.0   | React component library to enable localization for gasket apps.  |
-| [@gasket/redux]      | 7.3.5   | Gasket Redux Configuration                                       |
-| [@gasket/utils]      | 7.6.0   | Reusable utilities for Gasket internals                          |
-| create-gasket-app    | 7.4.9   | starter pack for creating a gasket app                           |
+| Name                 | Version | Description                                                              |
+| -------------------- | ------- | ------------------------------------------------------------------------ |
+| [@gasket/assets]     | 7.4.1   | Gasket assets                                                            |
+| [@gasket/cjs]        | 7.0.0   | Utility for transpiling ESM to CJS with .cjs extensions                  |
+| [@gasket/core]       | 7.6.0   | Entry point to setting up Gasket instances                               |
+| [@gasket/data]       | 7.5.0   | Helper package for accessing embedded Gasket Data in the browser         |
+| [@gasket/intl]       | 7.5.0   | Internationalization managers for translation files and locale handling. |
+| [@gasket/nextjs]     | 7.6.0   | Gasket integrations for Next.js apps                                     |
+| [@gasket/react-intl] | 7.6.0   | React component library to enable localization for gasket apps.          |
+| [@gasket/redux]      | 7.3.5   | Gasket Redux Configuration                                               |
+| [@gasket/request]    | 7.5.0   | Utilities for working with request objects in Gasket                     |
+| [@gasket/utils]      | 7.6.0   | Reusable utilities for Gasket internals                                  |
+| create-gasket-app    | 7.4.9   | starter pack for creating a gasket app                                   |
 
 ## Configurations
 
@@ -403,9 +405,11 @@ Available configuration options in the `gasket.js`
 [@gasket/cjs]:/packages/gasket-cjs/README.md
 [@gasket/core]:/packages/gasket-core/README.md
 [@gasket/data]:/packages/gasket-data/README.md
+[@gasket/intl]:/packages/gasket-intl/README.md
 [@gasket/nextjs]:/packages/gasket-nextjs/README.md
 [@gasket/react-intl]:/packages/gasket-react-intl/README.md
 [@gasket/redux]:/packages/gasket-redux/README.md
+[@gasket/request]:/packages/gasket-request/README.md
 [@gasket/utils]:/packages/gasket-utils/README.md
 [bundleAnalyzerConfig]:/packages/gasket-plugin-analyze/README.md#configuration
 [4]:/packages/gasket-plugin-docs/README.md#configuration
