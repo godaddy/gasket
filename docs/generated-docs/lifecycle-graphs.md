@@ -30,6 +30,8 @@ express -- execWaterfall --> nextConfig;
 express -- exec --> nextExpress;
 fastify -- exec --> nextFastify;
 express -- exec --> nextPreHandling;
+gasket/plugin-https --> preboot;
+gasket/plugin-https-proxy --> prebootHttpsProxy;
 gasket/core -- execWaterfall --> prepare;
 gasket/plugin-data -- execWaterfall --> publicGasketData;
 gasket/core -- exec --> ready;
