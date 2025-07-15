@@ -108,7 +108,7 @@ This plugin automatically prevents `process.env.GASKET_ENV` from being bundled i
 
 ### Recommended Alternatives
 
-Instead of using `process.env.GASKET_ENV` in browser code:
+Instead of using `process.env.GASKET_ENV` in any code:
 
 1. **Use `gasket.config.env`** for environment-specific configuration:
    ```js
