@@ -211,9 +211,10 @@ GASKET_ENV=prod npm run build
 
 ## Best Practices Summary
 
-1. **Use `gasket.config.env`** to access the current environment in server-side code
-2. **Use `@gasket/data`** to pass server-side configuration to the client
-3. **Create API endpoints** for dynamic configuration needs
-4. **Never expose sensitive data** like secrets, internal URLs, or infrastructure details
-5. **Keep client bundles environment-agnostic** when possible
-6. **Use the GASKET_ENV protection** to catch accidental leaks early
+1. **Use environment-specific configuration** in your `gasket.js` file
+2. **Use `gasket.config.env`** to access the current environment in server-side code only when necessary
+3. **Use `@gasket/data`** to pass server-side configuration to the client
+4. **Create API endpoints** for dynamic configuration needs
+5. **Never expose sensitive data** like secrets, internal URLs, or infrastructure details
+6. **Keep client bundles environment-agnostic** when possible
+7. **Use the GASKET_ENV protection** to catch accidental leaks early
