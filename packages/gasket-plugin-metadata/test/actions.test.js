@@ -1,3 +1,4 @@
+/* eslint-disable max-statements */
 import { vi } from 'vitest';
 
 vi.mock('../lib/utils.js', { spy: true });
@@ -22,14 +23,17 @@ describe('actions', () => {
   let gasket,
     applyStub,
     handlerStub,
-    tryRequire,
+    tryImport,
     actions;
 
   beforeEach(async function () {
     actions = (await import('../lib/actions.js')).default;
     applyStub = vi.fn();
     handlerStub = vi.fn();
-    tryRequire = (await import('../lib/utils.js')).tryRequire;
+    tryImport = (await import('../lib/utils.js')).tryImport;
+
+    // Set up default mock for tryImport to return null for missing files
+    tryImport.mockImplementation(() => Promise.resolve(null));
 
     gasket = {
       config: {
@@ -125,26 +129,30 @@ describe('actions', () => {
   });
 
   it('augments moduleInfo metadata for modules declared modules', async () => {
-    tryRequire.mockImplementation((pkgName) => {
-      if (pkgName === 'fake-one/package.json') {
-        return {
-          name: 'fake-one',
-          gasket: {
-            metadata: {
-              lifecycle: [{
-                name: 'init'
-              }]
+    tryImport.mockImplementation((pkgName) => {
+      return new Promise((resolve) => {
+        if (pkgName.endsWith('fake-one/package.json')) {
+          resolve({
+            name: 'fake-one',
+            gasket: {
+              metadata: {
+                lifecycle: [{
+                  name: 'init'
+                }]
+              }
             }
-          }
-        };
-      }
+          });
+        } else {
+          resolve(null);
+        }
+      });
     });
 
     const result = await actions.getMetadata(gasket);
 
     expect(result).toHaveProperty('modules');
     expect(result.modules).toHaveLength(2);
-    expect(tryRequire).toHaveBeenCalledTimes(2);
+    expect(tryImport).toHaveBeenCalledTimes(3);
 
     expect(result.modules[0]).toHaveProperty('metadata');
     expect(result.modules[0].metadata).toHaveProperty('lifecycle');
