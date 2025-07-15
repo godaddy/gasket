@@ -1,7 +1,7 @@
 import { runShellCommand } from '../../packages/gasket-utils/lib/index.js';
 import copySiteDocs from './utils/copy-site-docs.js';
 import wait from './utils/wait.js';
-import { readFile, writeFile, cp } from 'fs/promises';
+import { readFile, writeFile } from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -15,11 +15,6 @@ const targetPath = path.join(projectRoot, 'README.md');
 
 async function main() {
   await runShellCommand('node', ['gasket.js', 'docs', '--no-view'], { cwd: __dirname });
-
-  // copy over generated docs generated-docs
-  const genSrc = path.join(__dirname, '.docs', 'docs', 'generated-docs');
-  const genTgt = path.join(projectRoot, 'docs', 'generated-docs');
-  await cp(genSrc, genTgt, { recursive: true });
 
   let content = await readFile(sourcePath, 'utf-8');
 

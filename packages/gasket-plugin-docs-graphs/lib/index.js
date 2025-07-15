@@ -13,6 +13,7 @@ const plugin = {
   description,
   hooks: {
     async docsGenerate(gasket, docsConfigSet) {
+      if (gasket.config?.docs?.graphs === false) return;
       const { docsRoot } = docsConfigSet;
       const targetRoot = path.join(docsRoot, 'generated-docs');
       const target = path.join(targetRoot, 'lifecycle-graphs.md');
