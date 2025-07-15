@@ -36,8 +36,8 @@
     "lodash.defaultsdeep": "^4.6.1"
   },
   "devDependencies": {
-    "@docusaurus/core": "^3.7.0",
-    "@docusaurus/preset-classic": "^3.7.0",
+    "@docusaurus/core": "^3.8.1",
+    "@docusaurus/preset-classic": "^3.8.1",
     "@gasket/core": "workspace:^",
     "@gasket/plugin-docs": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",

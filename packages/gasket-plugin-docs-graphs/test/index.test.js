@@ -5,11 +5,14 @@ const plugin = require('../lib');
 const hook = plugin.hooks.docsGenerate;
 
 describe('docs graph plugin', function () {
-  let docsConfigSet;
+  let mockGasket, docsConfigSet;
   beforeEach(function () {
     docsConfigSet = {
       docsRoot: path.join(__dirname, 'fixtures'),
       lifecycles: []
+    };
+    mockGasket = {
+      config: {}
     };
   });
 
@@ -24,7 +27,7 @@ describe('docs graph plugin', function () {
   });
 
   it('provides proper metadata', async function () {
-    const data = await hook({}, docsConfigSet);
+    const data = await hook(mockGasket, docsConfigSet);
     expect(data.name).toEqual('Lifecycle Flowchart');
     expect(data.description).toEqual('A flowchart detailing how lifecycles are interrelated.');
     expect(data.link).toEqual('/lifecycle-graphs.md');
@@ -32,14 +35,14 @@ describe('docs graph plugin', function () {
   });
 
   it('provides a mermaid markdown block', async function () {
-    const { targetRoot, link } = await hook({}, docsConfigSet);
+    const { targetRoot, link } = await hook(mockGasket, docsConfigSet);
     const content = await read(path.join(targetRoot, link), 'utf-8');
     expect(content).toMatch(/^```mermaid\n/);
     expect(content).toMatch(/\n```$/);
   });
 
   it('provides a left to right mermaid graph', async function () {
-    const { targetRoot, link } = await hook({}, docsConfigSet);
+    const { targetRoot, link } = await hook(mockGasket, docsConfigSet);
     const content = await read(path.join(targetRoot, link), 'utf-8');
     expect(content).toMatch(/graph LR;/);
   });
@@ -54,7 +57,7 @@ describe('docs graph plugin', function () {
       method: 'exec'
     }];
 
-    const { targetRoot, link } = await hook({}, docsConfigSet);
+    const { targetRoot, link } = await hook(mockGasket, docsConfigSet);
     const content = await read(path.join(targetRoot, link), 'utf-8');
 
     expect(content).toMatch('snap --> crackle;');
@@ -72,7 +75,7 @@ describe('docs graph plugin', function () {
       method: 'exec'
     }];
 
-    const { targetRoot, link } = await hook({}, docsConfigSet);
+    const { targetRoot, link } = await hook(mockGasket, docsConfigSet);
     const content = await read(path.join(targetRoot, link), 'utf-8');
 
     expect(content).toContain('snap --> crackle;');
@@ -100,7 +103,7 @@ describe('docs graph plugin', function () {
       from: 'Caladan'
     }];
 
-    const { targetRoot, link } = await hook({}, docsConfigSet);
+    const { targetRoot, link } = await hook(mockGasket, docsConfigSet);
     const content = await read(path.join(targetRoot, link), 'utf8');
 
     expect(content).toMatch(lc[0].parent + ' --> ' + lc[0].name);
@@ -116,9 +119,15 @@ describe('docs graph plugin', function () {
       command: 'Do the thing'
     }];
 
-    const { targetRoot, link } = await hook({}, docsConfigSet);
+    const { targetRoot, link } = await hook(mockGasket, docsConfigSet);
     const content = await read(path.join(targetRoot, link), 'utf8');
 
     expect(content).toContain('style Do the thing-cmd fill: red;');
+  });
+
+  it('does not generate graphs if docs.graphs is false', async function () {
+    mockGasket.config.docs = { graphs: false };
+    const results = await hook(mockGasket, docsConfigSet);
+    expect(results).toBeUndefined();
   });
 });

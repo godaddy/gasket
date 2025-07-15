@@ -15,10 +15,6 @@ module.exports = {
     defaultLocale: 'en',
     locales: ['en'],
   },
-  markdown: {
-    mermaid: true,
-  },
-  themes: ['@docusaurus/theme-mermaid'],
   presets: [
     [
       'classic',
@@ -149,9 +145,6 @@ module.exports = {
       prism: {
         theme: themes.github,
         darkTheme: themes.dracula,
-      },
-      mermaid: {
-        theme: { light: 'neutral', dark: 'dark' },
       },
       algolia: {
         appId: 'OB26TYFNYK',
