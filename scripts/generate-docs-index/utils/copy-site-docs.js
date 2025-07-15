@@ -59,16 +59,6 @@ async function copyPackageDocs(sourceRoot, targetRoot) {
 }
 
 /**
- * copyLifecyleGraph - Copy the lifecycle graph to the site docs
- * @param {string} targetRoot The root of the target docs
- */
-async function copyLifecyleGraph(targetRoot) {
-  const genSrc = path.join(__dirname, '..', '.docs', 'docs', 'generated-docs', 'lifecycle-graphs.md');
-  const { content, filename } = transformFile(await readFile(genSrc, 'utf8'), 'lifecycle-graphs.md');
-  await writeFile(path.join(targetRoot, filename), content, 'utf8');
-}
-
-/**
  * copyRootDocs - Copy the root docs to the site docs
  * @param {string} projectRoot The root of the project
  * @param {string} targetRoot The root of the target docs
@@ -129,6 +119,5 @@ export default async function copySiteDocs(projectRoot) {
   const targetRoot = path.join(projectRoot, 'site', 'docs');
   await copyPackageDocs(sourceRoot, targetRoot);
   await copyCreateGasketApp(projectRoot);
-  await copyLifecyleGraph(targetRoot);
   await copyRootDocs(projectRoot, targetRoot);
 }
