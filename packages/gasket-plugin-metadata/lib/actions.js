@@ -1,7 +1,6 @@
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
 import path from 'path';
-import { tryRequire } from './utils.js';
+import { fileURLToPath } from 'url';
+import { tryImport } from './utils.js';
 
 const isModulePath = /^[/.]|^[a-zA-Z]:\\|node_modules/;
 const isGasketModule = /(@gasket\/|gasket-)(?!plugin)(?!preset).+/;
@@ -13,14 +12,15 @@ let _metadata;
  *
  * @param gasket
  */
-function getAppInfo(gasket) {
-  const { config: { root } } = gasket;
+async function getAppInfo(gasket) {
+  const { config: { appRoot } } = gasket;
+  const root = appRoot || gasket.config.root;
   const tryPath = isModulePath.test(root) ? path.join(root, 'package.json') : `${root}/package.json`;
   let app;
 
   try {
-    const pkgPath = require.resolve(tryPath, { paths: [root] });
-    const pkg = require(pkgPath);
+    const pkgPath = fileURLToPath(import.meta.resolve(tryPath));
+    const pkg = await tryImport(pkgPath);
     app = {
       package: pkg,
       version: pkg.version,
@@ -41,7 +41,7 @@ function getAppInfo(gasket) {
 /** @type {import('@gasket/core').ActionHandler<'getMetadata'>} */
 async function getMetadata(gasket) {
   if (!_metadata) {
-    const app = getAppInfo(gasket);
+    const app = await getAppInfo(gasket);
     const plugins = [];
     const presets = [];
     const modulesMap = {};
@@ -65,15 +65,15 @@ async function getMetadata(gasket) {
         pluginData.metadata.path = path.join(app.metadata.path, 'plugins');
         plugins.push(pluginData);
       } else {
-        let resolvedPath;
+
         try {
-          resolvedPath = require.resolve(pluginData.name, { paths: [gasket.config.root] });
+          pluginData.metadata.path  = fileURLToPath(import.meta.resolve(path.join(gasket.config.root, 'node_modules', pluginData.name)));
         } catch (error) {
           gasket.logger.error(`Error resolving plugin ${pluginData.name}: ${error.message}`);
           return;
         }
-        pluginData.metadata.path = path.dirname(path.join(resolvedPath, '..'));
-        const { dependencies, devDependencies } = require(path.join(pluginData.metadata.path, 'package.json'));
+
+        const { dependencies, devDependencies } = await tryImport(path.join(pluginData.metadata.path, 'package.json'));
 
         if (isPreset) {
           presets.push(pluginData);
@@ -89,7 +89,7 @@ async function getMetadata(gasket) {
           //
           // get gasket module details if installed
           //
-          const modPkg = tryRequire(`${name}/package.json`);
+          const modPkg = await tryImport(path.join(gasket.config.root, 'node_modules', name, 'package.json'));
           if (modPkg) {
             modulesMap[name] = {
               name: modPkg.name,
@@ -97,7 +97,7 @@ async function getMetadata(gasket) {
               description: modPkg.description,
               metadata: {
                 link: 'README.md',
-                path: path.dirname(path.join(require.resolve(name), '..'))
+                path: fileURLToPath(import.meta.resolve(path.join(gasket.config.root, 'node_modules', name)))
               }
             };
           }
@@ -108,14 +108,14 @@ async function getMetadata(gasket) {
     //
     // Update module metadata with gasket.metadata from the package.json if set.
     //
-    const modules = Object.values(modulesMap).map((modInfo) => {
-      const modPkg = tryRequire(path.join(`${modInfo.name}/package.json`));
+    const modules = await Promise.all(Object.values(modulesMap).map(async (modInfo) => {
+      const modPkg = await tryImport(path.join(gasket.config.root, 'node_modules', modInfo.name, 'package.json'));
       modInfo.metadata = {
         ...modInfo.metadata,
         ...modPkg?.gasket?.metadata
       };
       return modInfo;
-    });
+    }));
 
     _metadata = { app, plugins, modules, presets };
   }
