@@ -43,6 +43,12 @@ describe('init webpack', function () {
       expect(results.plugins[0].constructor.name).toBe('WebpackMetricsPlugin');
     });
 
+    it('configures gasket env guard plugin', function () {
+      const results = getWebpackConfig(mockGasket, mockConfig, mockContext);
+      expect(results).toHaveProperty('plugins');
+      expect(results.plugins[1].constructor.name).toBe('GasketEnvGuardPlugin');
+    });
+
     it('aliases out webpack', function () {
       const results = getWebpackConfig(mockGasket, mockConfig, mockContext);
       expect(results).toHaveProperty('resolve.alias');

@@ -16,13 +16,15 @@ function setupContext(context) {
 /** @type {import('@gasket/core').ActionHandler<'getWebpackConfig'>} */
 function getWebpackConfig(gasket, initConfig, context) {
   const WebpackMetricsPlugin = require('./webpack-metrics-plugin');
+  const GasketEnvGuardPlugin = require('./gasket-env-guard-plugin');
 
   /** @type {import('webpack').Configuration} */
   const baseConfig = {
     ...initConfig,
     plugins: [
       ...(initConfig && initConfig.plugins ? initConfig.plugins : []),
-      new WebpackMetricsPlugin({ gasket })
+      new WebpackMetricsPlugin({ gasket }),
+      new GasketEnvGuardPlugin()
     ].filter(Boolean)
   };
 
