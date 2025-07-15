@@ -1,25 +1,23 @@
 import path from 'path';
-import { fileURLToPath } from 'url';
 import { tryImport } from './utils.js';
 
-const isModulePath = /^[/.]|^[a-zA-Z]:\\|node_modules/;
 const isGasketModule = /(@gasket\/|gasket-)(?!plugin)(?!preset).+/;
 const isGasketPreset = /(gasket-preset)|(@gasket\/preset-)/;
 const isGasketPlugin = /(gasket-plugin)|(@gasket\/plugin-)/;
 let _metadata;
 
 /**
- *
- * @param gasket
+ * Get application information from package.json
+ * @param {import('@gasket/core').Gasket & { config: { appRoot?: string } }} gasket - Gasket instance
+ * @returns {Promise<object>} Application info object
  */
 async function getAppInfo(gasket) {
   const { config: { appRoot } } = gasket;
   const root = appRoot || gasket.config.root;
-  const tryPath = isModulePath.test(root) ? path.join(root, 'package.json') : `${root}/package.json`;
   let app;
 
   try {
-    const pkgPath = fileURLToPath(import.meta.resolve(tryPath));
+    const pkgPath = path.resolve(root, 'package.json');
     const pkg = await tryImport(pkgPath);
     app = {
       package: pkg,
@@ -33,6 +31,16 @@ async function getAppInfo(gasket) {
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error(`Error loading app metadata: ${err.message}`);
+    // Return default app object when package.json fails to load
+    app = {
+      package: null,
+      version: 'unknown',
+      name: 'unknown',
+      metadata: {
+        name: 'unknown',
+        path: root
+      }
+    };
   }
 
   return app;
@@ -67,7 +75,7 @@ async function getMetadata(gasket) {
       } else {
 
         try {
-          pluginData.metadata.path  = fileURLToPath(import.meta.resolve(path.join(gasket.config.root, 'node_modules', pluginData.name)));
+          pluginData.metadata.path = path.resolve(gasket.config.root, 'node_modules', pluginData.name);
         } catch (error) {
           gasket.logger.error(`Error resolving plugin ${pluginData.name}: ${error.message}`);
           return;
@@ -97,7 +105,7 @@ async function getMetadata(gasket) {
               description: modPkg.description,
               metadata: {
                 link: 'README.md',
-                path: fileURLToPath(import.meta.resolve(path.join(gasket.config.root, 'node_modules', name)))
+                path: path.resolve(gasket.config.root, 'node_modules', name)
               }
             };
           }
