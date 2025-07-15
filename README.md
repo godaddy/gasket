@@ -44,16 +44,15 @@ apps and making your frameworks.
 
 Help and explanations docs
 
-| Name                          | Description                                            |
-| ----------------------------- | ------------------------------------------------------ |
-| [Quick Start Guide]           | Get up and running on Gasket                           |
-| [Upgrades Guide]              | Steps necessary to upgrade major versions              |
-| [Gasket Actions Guide]        | How to use access data and invoke lifecycles           |
-| [Lifecycle Flowchart]         | A flowchart detailing how lifecycles are interrelated. |
-| [Express Setup Guide]         | Adding middleware and routes for Express               |
-| [Next.js Routing Guide]       | Basic and advance routing for Next.js                  |
-| [Next.js Deployment Guide]    | Steps to deploy a Next.js Gasket app                   |
-| [Webpack Configuration Guide] | Configuring Webpack in Gasket apps                     |
+| Name                          | Description                                  |
+| ----------------------------- | -------------------------------------------- |
+| [Quick Start Guide]           | Get up and running on Gasket                 |
+| [Upgrades Guide]              | Steps necessary to upgrade major versions    |
+| [Gasket Actions Guide]        | How to use access data and invoke lifecycles |
+| [Express Setup Guide]         | Adding middleware and routes for Express     |
+| [Next.js Routing Guide]       | Basic and advance routing for Next.js        |
+| [Next.js Deployment Guide]    | Steps to deploy a Next.js Gasket app         |
+| [Webpack Configuration Guide] | Configuring Webpack in Gasket apps           |
 
 ## Commands
 
@@ -294,7 +293,6 @@ Available configuration options in the `gasket.js`
 [Quick Start Guide]:docs/quick-start.md
 [Upgrades Guide]:docs/upgrades.md
 [Gasket Actions Guide]:docs/gasket-actions.md
-[Lifecycle Flowchart]:/docs/generated-docs/lifecycle-graphs.md
 [Express Setup Guide]:/packages/gasket-plugin-express/docs/setup.md
 [Next.js Routing Guide]:/packages/gasket-plugin-nextjs/docs/routing.md
 [Next.js Deployment Guide]:/packages/gasket-plugin-nextjs/docs/deployment.md
