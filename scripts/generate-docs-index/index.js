@@ -1,7 +1,7 @@
 import { runShellCommand } from '../../packages/gasket-utils/lib/index.js';
 import copySiteDocs from './utils/copy-site-docs.js';
 import wait from './utils/wait.js';
-import { readFile, writeFile, cp } from 'fs/promises';
+import { readFile, writeFile } from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
