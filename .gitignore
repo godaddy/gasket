@@ -88,3 +88,11 @@ packages/create-gasket-app/.cache
 packages/create-gasket-app/test/fixtures/create/*
 !packages/create-gasket-app/test/fixtures/create/.gitkeep
 packages/gasket-core/cjs
+
+# Generated LLM rules - md2llm
+.cursor/*
+.cursorrules
+.junie/*
+.github/copilot-instructions.md
+CLAUDE.md
+.claude/*
