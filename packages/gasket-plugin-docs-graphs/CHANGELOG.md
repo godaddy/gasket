@@ -1,5 +1,11 @@
 # `@gasket/plugin-docs-graph`
 
+## 7.3.6
+
+### Patch Changes
+
+- 696b43f: Fix missing modules on docs site, upgrade docusaurus, remove require from metadata plugin, remove lifecycle graphs
+
 ## 7.3.5
 
 ### Patch Changes
