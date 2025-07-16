@@ -26,6 +26,7 @@ declare module '@gasket/core' {
     host?: string;
     timeout?: number;
     handler?: Function;
+    keepAliveTimeout?: number;
   };
 
   type CertInput = string | Buffer;
