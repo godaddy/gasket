@@ -1,5 +1,12 @@
 # `@gasket/plugin-nextjs`
 
+## 7.6.1
+
+### Patch Changes
+
+- Updated dependencies [871b8fe]
+  - @gasket/plugin-webpack@7.3.6
+
 ## 7.6.0
 
 ### Minor Changes
