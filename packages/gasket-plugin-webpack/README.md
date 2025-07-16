@@ -102,6 +102,50 @@ export default {
 
 For more details, see the additional [webpack documentation].
 
+## GASKET_ENV Protection
+
+This plugin automatically prevents `process.env.GASKET_ENV` from being bundled in browser code to avoid exposing server-side configuration. If detected, the build will fail with a helpful error message.
+
+### Recommended Alternatives
+
+Instead of using `process.env.GASKET_ENV` in any code:
+
+1. **Use `gasket.config.env`** for environment-specific configuration:
+   ```js
+   // gasket.js
+   export default makeGasket({
+     environments: {
+       dev: { apiUrl: 'http://localhost:3000' },
+       prod: { apiUrl: 'https://api.example.com' }
+     }
+   });
+   ```
+
+2. **Use `@gasket/data`** to pass server data to the client:
+   ```js
+   // Server-side (in a lifecycle hook)
+   export default {
+     name: 'config-plugin',
+     hooks: {
+       publicGasketData(gasket, data) {
+         return {
+           ...data,
+           apiUrl: gasket.config.apiUrl,
+           env: gasket.config.env
+         };
+       }
+     }
+   };
+
+   // Client-side
+   import { gasketData } from '@gasket/data';
+   const { apiUrl } = gasketData();
+   ```
+
+3. **Move environment logic to server-side code** and expose only necessary data through APIs or `@gasket/data`.
+
+For more guidance, see the [environment configuration recipes].
+
 ## License
 
 [MIT](./LICENSE.md)
@@ -111,3 +155,4 @@ For more details, see the additional [webpack documentation].
 [webpack-merge]: https://github.com/survivejs/webpack-merge
 [webpackConfig]: #webpackconfig
 [webpack documentation]: ./docs/webpack.md
+[environment configuration recipes]: ./docs/environment-configuration.md
