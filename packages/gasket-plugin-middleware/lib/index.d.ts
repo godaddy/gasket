@@ -30,7 +30,12 @@ declare module '@gasket/plugin-express' {
   }
 }
 
-export type Handler = (req: any, res: any, next: (error?: Error) => void) => void;
+export type Handler = (
+  req: any,
+  res: any,
+  // Need more than Error to be compatible with express handlers
+  next: (error?: Error | string | 'route' | 'router') => void
+) => void;
 
 type App = FastifyInstance | ExpressApplication;
 

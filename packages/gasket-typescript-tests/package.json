@@ -81,6 +81,7 @@
     "@types/node": "^20.17.19",
     "create-gasket-app": "workspace:^",
     "cross-env": "^7.0.3",
+    "fastify": "^5.4.0",
     "eslint": "^8.57.1",
     "eslint-config-godaddy-react-typescript": "^4.0.3",
     "eslint-config-godaddy-typescript": "^4.0.3",

@@ -1,5 +1,7 @@
 import type { Gasket, MaybeAsync } from '@gasket/core';
 import { IncomingHttpHeaders } from 'http';
+import type { Request as ExpressRequest } from 'express';
+import type { FastifyRequest } from 'fastify';
 
 interface Cookie {
   domain: string;
@@ -53,7 +55,7 @@ export type HeadersLike = Headers | IncomingHttpHeaders | Record<string, string>
 export type RequestLike = {
   headers: HeadersLike;
   cookies?: CookieStore | Record<string, string>;
-  query?: URLSearchParams | Record<string, string | string[]>;
+  query?: URLSearchParams | Record<string, string | string[]> | ExpressRequest['query'] | FastifyRequest['query'];
   url?: string;
   [key: string]: any;
 };
