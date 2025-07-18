@@ -45,7 +45,7 @@ interface CookieStore {
 /**
  * Represents potential headers shapes in a request-like objects.
  */
-export type HeadersLike = Headers | IncomingHttpHeaders | Record<string, string> & {
+export type HeadersLike = Headers | IncomingHttpHeaders | ExpressRequest['headers'] | Record<string, string> & {
     entries?: Function;
 }
 
