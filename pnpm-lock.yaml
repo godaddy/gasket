@@ -1113,8 +1113,8 @@ importers:
         specifier: workspace:^
         version: link:../gasket-plugin-metadata
       '@types/express':
-        specifier: ^4.17.21
-        version: 4.17.21
+        specifier: ^4.17.23
+        version: 4.17.23
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -1745,8 +1745,8 @@ importers:
         specifier: workspace:^
         version: link:../gasket-plugin-service-worker
       '@types/express':
-        specifier: ^4.17.21
-        version: 4.17.21
+        specifier: ^4.17.23
+        version: 4.17.23
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -1871,10 +1871,10 @@ importers:
         version: 1.7.5
       '@types/cookie-parser':
         specifier: ^1.4.8
-        version: 1.4.8(@types/express@4.17.21)
+        version: 1.4.8(@types/express@4.17.23)
       '@types/express':
-        specifier: ^4.17.21
-        version: 4.17.21
+        specifier: ^4.17.23
+        version: 4.17.23
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -2130,8 +2130,8 @@ importers:
         specifier: workspace:^
         version: link:../gasket-request
       '@types/express':
-        specifier: ^4.17.21
-        version: 4.17.21
+        specifier: ^4.17.23
+        version: 4.17.23
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -2674,8 +2674,8 @@ importers:
         specifier: workspace:^
         version: link:../gasket-plugin-service-worker
       '@types/express':
-        specifier: ^4.17.21
-        version: 4.17.21
+        specifier: ^4.17.23
+        version: 4.17.23
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -3264,8 +3264,8 @@ importers:
         specifier: workspace:^
         version: link:../gasket-utils
       '@types/express':
-        specifier: ^4.17.21
-        version: 4.17.21
+        specifier: ^4.17.23
+        version: 4.17.23
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -3293,6 +3293,9 @@ importers:
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
+      fastify:
+        specifier: ^4.29.1
+        version: 4.29.1
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.15))(@types/node@20.17.19)(typescript@5.8.2))
@@ -6168,8 +6171,8 @@ packages:
   '@types/express-serve-static-core@5.0.6':
     resolution: {integrity: sha512-3xhRnjJPkULekpSzgtoNYYcTWgEZkp4myc+Saevii5JPnHNvHMRlBSHDbs7Bh1iPPoVTERHEZXyhyLbMEsExsA==}
 
-  '@types/express@4.17.21':
-    resolution: {integrity: sha512-ejlPM315qwLpaQlQDTjPdsUFSc6ZsP4AN6AlWnogPjQ7CVi7PYF3YVz+CY3jE2pwYf7E/7HlDAN0rV2GxTG0HQ==}
+  '@types/express@4.17.23':
+    resolution: {integrity: sha512-Crp6WY9aTYP3qPi2wGDo9iUe/rceX01UMhnF1jmwDcKCFM6cx7YhGP/Mpr3y9AASpfHixIG0E6azCcL5OcDHsQ==}
 
   '@types/graceful-fs@4.1.9':
     resolution: {integrity: sha512-olP3sd1qOEe5dXTSaFvQG+02VdRXcdytWLAZsAq1PecU8uqQAhkrnbli7DagjtXKW/Bl7YJbUsa8MPcuc8LHEQ==}
@@ -18243,7 +18246,7 @@ snapshots:
 
   '@types/compression@1.7.5':
     dependencies:
-      '@types/express': 4.17.21
+      '@types/express': 4.17.23
 
   '@types/concat-stream@2.0.3':
     dependencies:
@@ -18258,9 +18261,9 @@ snapshots:
     dependencies:
       '@types/node': 20.17.19
 
-  '@types/cookie-parser@1.4.8(@types/express@4.17.21)':
+  '@types/cookie-parser@1.4.8(@types/express@4.17.23)':
     dependencies:
-      '@types/express': 4.17.21
+      '@types/express': 4.17.23
 
   '@types/cross-spawn@6.0.6':
     dependencies:
@@ -18302,7 +18305,7 @@ snapshots:
       '@types/range-parser': 1.2.7
       '@types/send': 0.17.4
 
-  '@types/express@4.17.21':
+  '@types/express@4.17.23':
     dependencies:
       '@types/body-parser': 1.19.5
       '@types/express-serve-static-core': 4.19.6
@@ -18446,7 +18449,7 @@ snapshots:
 
   '@types/serve-index@1.9.4':
     dependencies:
-      '@types/express': 4.17.21
+      '@types/express': 4.17.23
 
   '@types/serve-static@1.15.7':
     dependencies:
@@ -21844,7 +21847,7 @@ snapshots:
   happy-feet@2.2.0:
     dependencies:
       '@types/connect': 3.4.38
-      '@types/express': 4.17.21
+      '@types/express': 4.17.23
       typed-emitter: 2.1.0
 
   has-bigints@1.1.0: {}
@@ -22118,7 +22121,7 @@ snapshots:
       - supports-color
     optional: true
 
-  http-proxy-middleware@2.0.7(@types/express@4.17.21):
+  http-proxy-middleware@2.0.7(@types/express@4.17.23):
     dependencies:
       '@types/http-proxy': 1.17.16
       http-proxy: 1.18.1
@@ -22126,7 +22129,7 @@ snapshots:
       is-plain-obj: 3.0.0
       micromatch: 4.0.8
     optionalDependencies:
-      '@types/express': 4.17.21
+      '@types/express': 4.17.23
     transitivePeerDependencies:
       - debug
 
@@ -26964,7 +26967,7 @@ snapshots:
     dependencies:
       '@types/bonjour': 3.5.13
       '@types/connect-history-api-fallback': 1.5.4
-      '@types/express': 4.17.21
+      '@types/express': 4.17.23
       '@types/serve-index': 1.9.4
       '@types/serve-static': 1.15.7
       '@types/sockjs': 0.3.36
@@ -26979,7 +26982,7 @@ snapshots:
       express: 4.21.2
       graceful-fs: 4.2.11
       html-entities: 2.5.2
-      http-proxy-middleware: 2.0.7(@types/express@4.17.21)
+      http-proxy-middleware: 2.0.7(@types/express@4.17.23)
       ipaddr.js: 2.2.0
       launch-editor: 2.10.0
       open: 8.4.2
@@ -27004,7 +27007,7 @@ snapshots:
     dependencies:
       '@types/bonjour': 3.5.13
       '@types/connect-history-api-fallback': 1.5.4
-      '@types/express': 4.17.21
+      '@types/express': 4.17.23
       '@types/serve-index': 1.9.4
       '@types/serve-static': 1.15.7
       '@types/sockjs': 0.3.36
@@ -27019,7 +27022,7 @@ snapshots:
       express: 4.21.2
       graceful-fs: 4.2.11
       html-entities: 2.5.2
-      http-proxy-middleware: 2.0.7(@types/express@4.17.21)
+      http-proxy-middleware: 2.0.7(@types/express@4.17.23)
       ipaddr.js: 2.2.0
       launch-editor: 2.10.0
       open: 8.4.2
