@@ -1,5 +1,12 @@
 # `@gasket/data`
 
+## 7.5.1
+
+### Patch Changes
+
+- Updated dependencies [84fd13d]
+  - @gasket/request@7.5.1
+
 ## 7.5.0
 
 ### Minor Changes
