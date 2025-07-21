@@ -57,44 +57,6 @@
   "peerDependencies": {
     "fastify": "^4.29.1"
   },
-  "eslintConfig": {
-    "extends": [
-      "godaddy",
-      "plugin:jest/recommended",
-      "plugin:jsdoc/recommended-typescript-flavor"
-    ],
-    "plugins": [
-      "unicorn",
-      "jsdoc"
-    ],
-    "rules": {
-      "unicorn/filename-case": "error"
-    },
-    "overrides": [
-      {
-        "files": [
-          "lib/*.ts"
-        ],
-        "extends": [
-          "godaddy-typescript"
-        ],
-        "rules": {
-          "jsdoc/*": "off"
-        }
-      },
-      {
-        "files": [
-          "test/**/*.js"
-        ],
-        "rules": {
-          "jsdoc/require-jsdoc": "off"
-        }
-      }
-    ]
-  },
-  "eslintIgnore": [
-    "generator"
-  ],
   "jest": {
     "rootDir": "test"
   }

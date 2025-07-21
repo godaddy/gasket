@@ -73,51 +73,5 @@
     "eslint-plugin-unicorn": "^55.0.0",
     "typescript": "^5.8.2",
     "vitest": "^3.2.0"
-  },
-  "eslintConfig": {
-    "ignorePatterns": [
-      "cjs/"
-    ],
-    "extends": [
-      "godaddy",
-      "plugin:@vitest/legacy-recommended",
-      "plugin:jsdoc/recommended-typescript-flavor"
-    ],
-    "plugins": [
-      "@vitest",
-      "unicorn",
-      "jsdoc"
-    ],
-    "rules": {
-      "unicorn/filename-case": "error"
-    },
-    "overrides": [
-      {
-        "files": [
-          "test/**/*.js"
-        ],
-        "rules": {
-          "jsdoc/require-jsdoc": "off",
-          "jsdoc/require-param-type": "off",
-          "jsdoc/require-returns-description": "off"
-        }
-      },
-      {
-        "files": [
-          "lib/*.ts"
-        ],
-        "extends": [
-          "godaddy-typescript"
-        ],
-        "rules": {
-          "jsdoc/require-returns": "off",
-          "jsdoc/require-param-type": "off",
-          "jsdoc/require-param-description": "off"
-        }
-      }
-    ]
-  },
-  "eslintIgnore": [
-    "test/fixtures"
-  ]
+  }
 }

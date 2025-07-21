@@ -60,32 +60,5 @@
   },
   "peerDependencies": {
     "@gasket/plugin-logger": "^7.3.5"
-  },
-  "eslintConfig": {
-    "extends": [
-      "godaddy",
-      "plugin:jest/recommended",
-      "plugin:jsdoc/recommended-typescript-flavor"
-    ],
-    "plugins": [
-      "unicorn",
-      "jsdoc"
-    ],
-    "rules": {
-      "unicorn/filename-case": "error"
-    },
-    "overrides": [
-      {
-        "files": [
-          "lib/*.ts"
-        ],
-        "extends": [
-          "godaddy-typescript"
-        ],
-        "rules": {
-          "jsdoc/*": "off"
-        }
-      }
-    ]
   }
 }

@@ -101,37 +101,6 @@
     "next": ">=14 <16",
     "react": ">=18 <20"
   },
-  "eslintConfig": {
-    "extends": [
-      "godaddy-react",
-      "plugin:jest/recommended",
-      "plugin:jsdoc/recommended-typescript-flavor"
-    ],
-    "plugins": [
-      "unicorn",
-      "jsdoc"
-    ],
-    "rules": {
-      "unicorn/filename-case": "error"
-    },
-    "overrides": [
-      {
-        "files": [
-          "lib/*.ts"
-        ],
-        "extends": [
-          "godaddy-typescript"
-        ],
-        "rules": {
-          "jsdoc/*": "off"
-        }
-      }
-    ]
-  },
-  "eslintIgnore": [
-    "lib",
-    "cjs"
-  ],
   "jest": {
     "testEnvironment": "jsdom",
     "transform": {}

@@ -54,36 +54,6 @@
     "typescript": "^5.8.2",
     "whatwg-fetch": "^3.6.20"
   },
-  "eslintConfig": {
-    "env": {
-      "es2020": true
-    },
-    "extends": [
-      "godaddy",
-      "plugin:jest/recommended",
-      "plugin:jsdoc/recommended-typescript-flavor"
-    ],
-    "plugins": [
-      "unicorn",
-      "jsdoc"
-    ],
-    "rules": {
-      "unicorn/filename-case": "error"
-    },
-    "overrides": [
-      {
-        "files": [
-          "lib/*.ts"
-        ],
-        "extends": [
-          "godaddy-typescript"
-        ],
-        "rules": {
-          "jsdoc/*": "off"
-        }
-      }
-    ]
-  },
   "babel": {
     "presets": [
       "@babel/preset-env"

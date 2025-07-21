@@ -47,19 +47,5 @@
     "recursive-readdir": "^2.2.3",
     "rimraf": "^3.0.2",
     "typescript": "^5.8.2"
-  },
-  "eslintConfig": {
-    "extends": [
-      "godaddy"
-    ],
-    "plugins": [
-      "unicorn"
-    ],
-    "rules": {
-      "unicorn/filename-case": "error"
-    }
-  },
-  "eslintIgnore": [
-    "react"
-  ]
+  }
 }

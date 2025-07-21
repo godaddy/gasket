@@ -56,35 +56,5 @@
     "eslint-plugin-unicorn": "^55.0.0",
     "jest": "^29.7.0",
     "typescript": "^5.8.2"
-  },
-  "eslintConfig": {
-    "extends": [
-      "godaddy",
-      "plugin:jest/recommended",
-      "plugin:jsdoc/recommended-typescript-flavor"
-    ],
-    "plugins": [
-      "unicorn",
-      "jsdoc"
-    ],
-    "rules": {
-      "unicorn/filename-case": "error"
-    },
-    "overrides": [
-      {
-        "files": [
-          "lib/*.ts"
-        ],
-        "extends": [
-          "godaddy-typescript"
-        ],
-        "rules": {
-          "jsdoc/*": "off"
-        }
-      }
-    ]
-  },
-  "eslintIgnore": [
-    "__mocks__"
-  ]
+  }
 }

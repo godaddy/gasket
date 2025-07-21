@@ -72,23 +72,6 @@
     "nodemon": "^3.1.9",
     "typescript": "^5.8.2"
   },
-  "eslintConfig": {
-    "extends": [
-      "godaddy",
-      "plugin:jest/recommended"
-    ],
-    "plugins": [
-      "unicorn"
-    ],
-    "rules": {
-      "unicorn/filename-case": "error"
-    }
-  },
-  "eslintIgnore": [
-    "test/fixtures",
-    "generator",
-    "cjs"
-  ],
   "jest": {
     "transform": {}
   }
