@@ -1,5 +1,12 @@
 # `@gasket/plugin-docusaurus`
 
+## 7.4.4
+
+### Patch Changes
+
+- 696b43f: Fix missing modules on docs site, upgrade docusaurus, remove require from metadata plugin, remove lifecycle graphs
+  - @gasket/plugin-logger@7.3.5
+
 ## 7.4.3
 
 ### Patch Changes

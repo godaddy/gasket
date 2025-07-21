@@ -1,5 +1,11 @@
 # `@gasket/plugin-middleware`
 
+## 7.4.4
+
+### Patch Changes
+
+- 84fd13d: Fix types so they are compatible with Express handlers
+
 ## 7.4.3
 
 ### Patch Changes

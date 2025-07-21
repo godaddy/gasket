@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-metadata",
-  "version": "7.5.0",
+  "version": "7.5.1",
   "description": "Adds metadata to gasket lifecycles",
   "type": "module",
   "types": "lib/index.d.ts",
