@@ -97,7 +97,7 @@ describe('actionWrapper', () => {
 
       try {
         await mockAction({ context: mockContext });
-      } catch (e) {
+      } catch {
         // continue
       }
       expect(mockFailStub).toHaveBeenCalled();
@@ -123,7 +123,7 @@ describe('actionWrapper', () => {
 
       try {
         await mockAction({ context: mockContext });
-      } catch (e) {
+      } catch {
         // continue
       }
 

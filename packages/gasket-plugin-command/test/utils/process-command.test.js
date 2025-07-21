@@ -124,7 +124,7 @@ describe('process-command', () => {
 
     try {
       await bin.parseAsync(['node', 'process-command-test', '--help']);
-    } catch (error) {
+    } catch {
       // ignore
     }
 
@@ -173,7 +173,7 @@ describe('process-command', () => {
 
     try {
       await bin.parseAsync(['node', 'process-command-test']);
-    } catch (error) {
+    } catch {
       // ignore
     }
 

@@ -78,7 +78,7 @@ async function loadPresets({ context }) {
       const fullPath = path.resolve(modPath, pkgFile.name, entryPath);
       const mod = await import(pathToFileURL(fullPath).href);
       return mod.default?.default || mod.default || mod;
-    } catch (err) {
+    } catch {
       throw new Error(`Failed to install local preset ${localPresetPath}`);
     }
   });

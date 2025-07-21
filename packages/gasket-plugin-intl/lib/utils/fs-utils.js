@@ -10,7 +10,7 @@ async function packageName(targetDir) {
   try {
     const pkg = await fs.readJson(path.join(targetDir, 'package.json'));
     return pkg.name;
-  } catch (e) {
+  } catch {
     // skip;
   }
 }

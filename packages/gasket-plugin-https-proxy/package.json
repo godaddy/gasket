@@ -53,15 +53,7 @@
     "@gasket/plugin-https": "workspace:^",
     "@gasket/plugin-logger": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",
-    "@types/jest": "^29.5.14",
-    "@types/node": "^20.17.19",
     "create-gasket-app": "workspace:^",
-    "eslint": "^8.57.1",
-    "eslint-config-godaddy": "^7.1.1",
-    "eslint-config-godaddy-typescript": "^4.0.3",
-    "eslint-plugin-jest": "^29.0.0",
-    "eslint-plugin-unicorn": "^55.0.0",
-    "typescript": "^5.8.2",
     "vitest": "^3.2.0"
   }
 }

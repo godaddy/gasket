@@ -26,7 +26,7 @@ function checkDevDependencies() {
   try {
     require('@docusaurus/preset-classic');
     require('@docusaurus/core/package.json');
-  } catch (err) {
+  } catch {
     throw new Error(
       'Missing devDependencies. Please run `npm i -D @docusaurus/core @docusaurus/preset-classic`'
     );

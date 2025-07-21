@@ -127,7 +127,7 @@ class BuildModules {
     try {
       const pkg = await fs.readJson(path.join(pkgDir, 'package.json'));
       return pkg.name || this.getPackageNameFromDir(srcDir);
-    } catch (e) {
+    } catch {
       return this.getPackageNameFromDir(srcDir);
     }
   }
@@ -169,7 +169,7 @@ class BuildModules {
           if (stat.isDirectory()) {
             results.push([pkgName, buildDir]);
           }
-        } catch (e) {
+        } catch {
           // ignore
         }
       }
@@ -207,7 +207,7 @@ class BuildModules {
           if (stat.isDirectory()) {
             return [pkgName, buildDir];
           }
-        } catch (e) {
+        } catch {
           // skip
         }
 

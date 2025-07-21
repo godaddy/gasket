@@ -44,16 +44,6 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-intl",
   "devDependencies": {
     "@gasket/cjs": "workspace:^",
-    "@jest/globals": "^29.7.0",
-    "@types/jest": "^29.5.14",
-    "@types/node": "^20.17.19",
-    "cross-env": "^7.0.3",
-    "eslint": "^8.57.1",
-    "eslint-config-godaddy": "^7.1.1",
-    "eslint-config-godaddy-typescript": "^4.0.3",
-    "eslint-plugin-jest": "^29.0.0",
-    "eslint-plugin-unicorn": "^55.0.0",
-    "jest": "^29.7.0",
-    "typescript": "^5.8.2"
+    "jest": "^29.7.0"
   }
 }
