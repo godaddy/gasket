@@ -2199,159 +2199,146 @@ importers:
   scripts/generate-docs-index:
     dependencies:
       '@gasket/assets':
-        specifier: workspace:^
+        specifier: ^7.4.1
         version: link:../../packages/gasket-assets
       '@gasket/cjs':
-        specifier: workspace:^
+        specifier: ^7.0.0
         version: link:../../packages/gasket-cjs
       '@gasket/core':
-        specifier: workspace:^
+        specifier: ^7.6.0
         version: link:../../packages/gasket-core
       '@gasket/data':
-        specifier: workspace:^
+        specifier: ^7.5.1
         version: link:../../packages/gasket-data
       '@gasket/fetch':
-        specifier: workspace:^
+        specifier: ^7.3.6
         version: link:../../packages/gasket-fetch
       '@gasket/intl':
-        specifier: workspace:^
+        specifier: ^7.5.0
         version: link:../../packages/gasket-intl
       '@gasket/nextjs':
-        specifier: workspace:^
+        specifier: ^7.6.1
         version: link:../../packages/gasket-nextjs
       '@gasket/plugin-analyze':
-        specifier: workspace:^
+        specifier: ^7.3.6
         version: link:../../packages/gasket-plugin-analyze
       '@gasket/plugin-command':
-        specifier: workspace:^
+        specifier: ^7.5.0
         version: link:../../packages/gasket-plugin-command
       '@gasket/plugin-cypress':
-        specifier: workspace:^
+        specifier: ^7.5.1
         version: link:../../packages/gasket-plugin-cypress
       '@gasket/plugin-data':
-        specifier: workspace:^
+        specifier: ^7.4.7
         version: link:../../packages/gasket-plugin-data
       '@gasket/plugin-docs':
-        specifier: workspace:^
+        specifier: ^7.4.5
         version: link:../../packages/gasket-plugin-docs
       '@gasket/plugin-docs-graphs':
-        specifier: workspace:^
+        specifier: ^7.3.6
         version: link:../../packages/gasket-plugin-docs-graphs
       '@gasket/plugin-docusaurus':
-        specifier: workspace:^
+        specifier: ^7.4.4
         version: link:../../packages/gasket-plugin-docusaurus
       '@gasket/plugin-dynamic-plugins':
-        specifier: workspace:^
+        specifier: ^7.4.0
         version: link:../../packages/gasket-plugin-dynamic-plugins
       '@gasket/plugin-elastic-apm':
-        specifier: workspace:^
+        specifier: ^7.4.6
         version: link:../../packages/gasket-plugin-elastic-apm
       '@gasket/plugin-express':
-        specifier: workspace:^
+        specifier: ^7.4.1
         version: link:../../packages/gasket-plugin-express
       '@gasket/plugin-fastify':
-        specifier: workspace:^
+        specifier: ^7.4.3
         version: link:../../packages/gasket-plugin-fastify
       '@gasket/plugin-git':
-        specifier: workspace:^
+        specifier: ^7.4.4
         version: link:../../packages/gasket-plugin-git
       '@gasket/plugin-happyfeet':
-        specifier: workspace:^
+        specifier: ^7.3.5
         version: link:../../packages/gasket-plugin-happyfeet
       '@gasket/plugin-https':
-        specifier: workspace:^
+        specifier: ^7.3.9
         version: link:../../packages/gasket-plugin-https
       '@gasket/plugin-https-proxy':
-        specifier: workspace:^
+        specifier: ^7.4.0
         version: link:../../packages/gasket-plugin-https-proxy
       '@gasket/plugin-intl':
-        specifier: workspace:^
+        specifier: ^7.5.6
         version: link:../../packages/gasket-plugin-intl
       '@gasket/plugin-jest':
-        specifier: workspace:^
+        specifier: ^7.5.3
         version: link:../../packages/gasket-plugin-jest
       '@gasket/plugin-lint':
-        specifier: workspace:^
+        specifier: ^7.4.1
         version: link:../../packages/gasket-plugin-lint
       '@gasket/plugin-logger':
-        specifier: workspace:^
+        specifier: ^7.3.5
         version: link:../../packages/gasket-plugin-logger
       '@gasket/plugin-manifest':
-        specifier: workspace:^
+        specifier: ^7.3.7
         version: link:../../packages/gasket-plugin-manifest
       '@gasket/plugin-metadata':
-        specifier: workspace:^
+        specifier: ^7.5.1
         version: link:../../packages/gasket-plugin-metadata
       '@gasket/plugin-middleware':
-        specifier: workspace:^
+        specifier: ^7.4.4
         version: link:../../packages/gasket-plugin-middleware
       '@gasket/plugin-mocha':
-        specifier: workspace:^
+        specifier: ^7.5.3
         version: link:../../packages/gasket-plugin-mocha
       '@gasket/plugin-morgan':
-        specifier: workspace:^
+        specifier: ^7.3.5
         version: link:../../packages/gasket-plugin-morgan
       '@gasket/plugin-nextjs':
-        specifier: workspace:^
+        specifier: ^7.6.1
         version: link:../../packages/gasket-plugin-nextjs
       '@gasket/plugin-redux':
-        specifier: workspace:^
+        specifier: ^7.4.2
         version: link:../../packages/gasket-plugin-redux
       '@gasket/plugin-service-worker':
-        specifier: workspace:^
+        specifier: ^7.4.4
         version: link:../../packages/gasket-plugin-service-worker
       '@gasket/plugin-swagger':
-        specifier: workspace:^
+        specifier: ^7.3.8
         version: link:../../packages/gasket-plugin-swagger
       '@gasket/plugin-typescript':
-        specifier: workspace:^
+        specifier: ^7.4.4
         version: link:../../packages/gasket-plugin-typescript
       '@gasket/plugin-vitest':
-        specifier: workspace:^
+        specifier: ^7.1.0
         version: link:../../packages/gasket-plugin-vitest
       '@gasket/plugin-webpack':
-        specifier: workspace:^
+        specifier: ^7.3.6
         version: link:../../packages/gasket-plugin-webpack
       '@gasket/plugin-winston':
-        specifier: workspace:^
+        specifier: ^7.3.5
         version: link:../../packages/gasket-plugin-winston
       '@gasket/plugin-workbox':
-        specifier: workspace:^
+        specifier: ^7.3.5
         version: link:../../packages/gasket-plugin-workbox
       '@gasket/preset-api':
-        specifier: workspace:^
+        specifier: ^7.5.1
         version: link:../../packages/gasket-preset-api
       '@gasket/preset-nextjs':
-        specifier: workspace:^
+        specifier: ^7.5.1
         version: link:../../packages/gasket-preset-nextjs
       '@gasket/react-intl':
-        specifier: workspace:^
+        specifier: ^7.6.1
         version: link:../../packages/gasket-react-intl
       '@gasket/redux':
-        specifier: workspace:^
+        specifier: ^7.3.5
         version: link:../../packages/gasket-redux
       '@gasket/request':
-        specifier: workspace:^
+        specifier: ^7.5.1
         version: link:../../packages/gasket-request
       '@gasket/utils':
-        specifier: workspace:^
+        specifier: ^7.6.0
         version: link:../../packages/gasket-utils
       create-gasket-app:
-        specifier: workspace:^
+        specifier: ^7.4.10
         version: link:../../packages/create-gasket-app
-    devDependencies:
-      '@types/jest':
-        specifier: ^29.5.14
-        version: 29.5.14
-      '@types/node':
-        specifier: ^20.17.19
-        version: 20.17.19
-      eslint:
-        specifier: ^8.57.1
-        version: 8.57.1
-      eslint-plugin-unicorn:
-        specifier: ^55.0.0
-        version: 55.0.0(eslint@8.57.1)
 
 packages:
 
