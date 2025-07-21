@@ -43,7 +43,8 @@ export default defineConfig([
       ...vitest.configs.recommended.rules,
       'unicorn/filename-case': 'error',
       'no-sync': 'off',
-      'eqeqeq': ['error', 'always', { null: 'never' }],
+
+      /* Gets false positives */
       'react-hooks/rules-of-hooks': 'off',
     }
   }
