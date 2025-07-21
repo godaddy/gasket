@@ -1,5 +1,12 @@
 # `@gasket/plugin-data`
 
+## 7.4.7
+
+### Patch Changes
+
+- Updated dependencies [84fd13d]
+  - @gasket/request@7.5.1
+
 ## 7.4.6
 
 ### Patch Changes
