@@ -1,4 +1,3 @@
-/* eslint-disable @vitest/no-conditional-expect */
 import { expect, describe, it, beforeEach } from 'vitest';
 import AbortController from 'abort-controller';
 
