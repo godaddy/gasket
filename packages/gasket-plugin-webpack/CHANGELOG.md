@@ -1,5 +1,11 @@
 # `@gasket/plugin-webpack`
 
+## 7.3.6
+
+### Patch Changes
+
+- 871b8fe: Add webpack plugin to guard against GASKET_ENV client bundle usage
+
 ## 7.3.5
 
 ### Patch Changes

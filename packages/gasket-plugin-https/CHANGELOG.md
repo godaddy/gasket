@@ -1,5 +1,11 @@
 # `@gasket/plugin-https`
 
+## 7.3.9
+
+### Patch Changes
+
+- d0a34d9: Add typing for keepAliveTimeout gasket config option
+
 ## 7.3.8
 
 ### Patch Changes

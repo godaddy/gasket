@@ -1,5 +1,11 @@
 # `@gasket/request`
 
+## 7.5.1
+
+### Patch Changes
+
+- 84fd13d: Fix types so they are compatible with Express handlers
+
 ## 7.5.0
 
 ### Minor Changes
