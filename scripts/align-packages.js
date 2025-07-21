@@ -1,8 +1,12 @@
 /* eslint-disable no-console */
 
-const fs = require('fs');
-const path = require('path');
-const { promisify } = require('util');
+import fs from 'fs';
+import path from 'path';
+import { promisify } from 'util';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
