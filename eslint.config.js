@@ -13,8 +13,7 @@ export default defineConfig([
   ...goddaddyTypescript,
   ...goddaddyReact,
   ...goddaddyReactTypescript,
-  {
-    ignores: [
+  globalIgnores([
       '**/node_modules/**',
       '**/dist/**',
       '**/cjs/**',
@@ -23,8 +22,7 @@ export default defineConfig([
       '**/__mocks__/**',
       '**/test/fixtures/**',
       '**/gasket-redux/lib'
-    ]
-  },
+    ]),
   {
     plugins: {
       jest,
