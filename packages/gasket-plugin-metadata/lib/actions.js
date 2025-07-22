@@ -12,8 +12,7 @@ let _metadata;
  * @returns {Promise<object>} Application info object
  */
 async function getAppInfo(gasket) {
-  const { config: { appRoot } } = gasket;
-  const root = appRoot || gasket.config.root;
+  const root = gasket.config.appRoot || gasket.config.root;
   let app;
 
   try {
@@ -29,8 +28,7 @@ async function getAppInfo(gasket) {
       }
     };
   } catch (err) {
-    // eslint-disable-next-line no-console
-    console.error(`Error loading app metadata: ${err.message}`);
+    gasket.logger.error(`Error loading app metadata: ${err.message}`);
     // Return default app object when package.json fails to load
     app = {
       package: null,
