@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-intl",
-  "version": "7.5.6",
+  "version": "7.5.7",
   "description": "NodeJS script to build localization files.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

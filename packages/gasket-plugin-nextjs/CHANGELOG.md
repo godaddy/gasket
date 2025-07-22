@@ -1,5 +1,13 @@
 # `@gasket/plugin-nextjs`
 
+## 7.6.2
+
+### Patch Changes
+
+- 5d38a2e: Eslint version 9
+- Updated dependencies [5d38a2e]
+  - @gasket/plugin-webpack@7.3.7
+
 ## 7.6.1
 
 ### Patch Changes

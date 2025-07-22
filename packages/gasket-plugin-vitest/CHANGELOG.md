@@ -1,5 +1,11 @@
 # `@gasket/plugin-vitest`
 
+## 7.1.1
+
+### Patch Changes
+
+- 5d38a2e: Eslint version 9
+
 ## 7.1.0
 
 ### Minor Changes

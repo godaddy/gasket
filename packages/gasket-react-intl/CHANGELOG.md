@@ -1,5 +1,16 @@
 # `@gasket/react-intl`
 
+## 7.6.2
+
+### Patch Changes
+
+- 5d38a2e: Eslint version 9
+- Updated dependencies [5d38a2e]
+  - @gasket/plugin-intl@7.5.7
+  - @gasket/fetch@7.3.7
+  - @gasket/data@7.5.2
+  - @gasket/intl@7.5.1
+
 ## 7.6.1
 
 ### Patch Changes
