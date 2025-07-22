@@ -1,4 +1,3 @@
-/* eslint-disable no-sync */
 const { createConfig } = require('../lib/utils/config');
 
 const baseWebpackConfig = {

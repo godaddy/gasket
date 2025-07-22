@@ -59,7 +59,6 @@ describe('@gasket/plugin-morgan', () => {
 
       const [morganMiddleware] = Plugin.hooks.middleware(gasketMock);
 
-      // eslint-disable-next-line max-nested-callbacks
       morganMiddleware(reqMock, resMock, function next() {
         expect(loggerMock.info).toHaveBeenCalledWith('GET /foobar');
       });

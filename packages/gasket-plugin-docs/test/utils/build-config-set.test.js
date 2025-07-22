@@ -1,5 +1,3 @@
-/* eslint-disable max-nested-callbacks, max-len */
-
 const builderConstructorStub = jest.fn();
 const addAppStub = jest.fn();
 const addPluginStub = jest.fn();

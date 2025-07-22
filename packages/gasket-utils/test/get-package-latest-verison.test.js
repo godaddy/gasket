@@ -1,4 +1,3 @@
-/* eslint-disable no-control-regex */
 import { expect, describe, it, vi } from 'vitest';
 
 // Define constants

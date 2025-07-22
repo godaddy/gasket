@@ -20,7 +20,6 @@ module.exports = function configure(gasket, baseConfig) {
       path.resolve(root, 'redux', 'store.js'),
       path.resolve(root, 'store.js')
     ];
-    // eslint-disable-next-line no-sync
     makeStorePath = possible.find((p) => fs.existsSync(p));
   }
 

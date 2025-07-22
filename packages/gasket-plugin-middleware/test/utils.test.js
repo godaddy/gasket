@@ -1,4 +1,3 @@
-/* eslint-disable max-nested-callbacks */
 const app = {
   ready: jest.fn(),
   server: {

@@ -1,4 +1,3 @@
-/* eslint-disable no-sync */
 const actions = require('../lib/actions');
 
 describe('actions', () => {

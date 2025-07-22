@@ -36,7 +36,6 @@ function getWebpackConfig(gasket, initConfig, context) {
   alias.webpack = false;
   baseConfig.resolve.alias = alias;
 
-  // eslint-disable-next-line no-sync
   return gasket.execWaterfallSync('webpackConfig', baseConfig, setupContext(context));
 }
 

@@ -146,7 +146,6 @@ describe('process-command', () => {
     const defaultCmd = {
       id: 'default-cmd',
       description: 'test command',
-      // eslint-disable-next-line no-console
       action: () => {
         console.log('default-cmd output greatness');
       },

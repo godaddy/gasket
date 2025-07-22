@@ -1,6 +1,4 @@
-/* eslint-disable max-nested-callbacks, max-len */
 const path = require('path');
-
 const mockReadFileStub = jest.fn().mockResolvedValue('mock-content');
 const mockWriteFileStub = jest.fn();
 const mockCopyFileStub = jest.fn();

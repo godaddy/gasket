@@ -1,4 +1,3 @@
-/* eslint-disable no-sync */
 import { jest } from '@jest/globals';
 
 const mockAddCommand = jest.fn();
