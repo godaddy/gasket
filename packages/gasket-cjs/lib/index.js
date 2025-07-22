@@ -127,6 +127,13 @@ export async function transpileDirectory(sourceDir, outputDir = 'cjs', options =
   return results;
 }
 
+// Only match relative .js/.mjs paths in double quotes
+// Example: "./foo.js", "../bar.mjs", "/baz.js"
+const reFileRef = /(?<=")(\.{1,2}\/|\/)[^"]*?(\.m?js)(?=")/g;
+
+// Match .js or .mjs file extensions
+const reFileExt = /\.(m?js)$/;
+
 /**
  * Fix import/require statements to use .cjs extensions
  * @param {string} outputDir - Directory containing transpiled files
@@ -135,12 +142,14 @@ export async function fixImportExtensions(outputDir) {
   const pattern = `${outputDir}/**/*.cjs`;
   const files = glob.sync(pattern);
 
+
   for (const file of files) {
     let content = readFileSync(file, 'utf-8');
 
-    // Replace .js" with .cjs" in require statements
-    content = content.replace(/\.js"/g, '.cjs"');
-    content = content.replace(/\.mjs"/g, '.cjs"');
+    // Replace only local/relative .js/.mjs with .cjs
+    content = content.replace(reFileRef, (match) => {
+      return match.replace(reFileExt, '.cjs');
+    });
 
     writeFileSync(file, content, 'utf-8');
   }
@@ -167,4 +176,3 @@ export async function transpile(sourceDir, outputDir = 'cjs', options = {}) {
     outputDir
   };
 }
-
