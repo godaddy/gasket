@@ -9,6 +9,7 @@ import jsdoc from 'eslint-plugin-jsdoc';
 export default defineConfig([
   ...goddaddyTypescript,
   ...goddaddyReactTypescript,
+  vitest.configs.recommended,
   globalIgnores([
     '**/node_modules/**',
     '**/dist/**',
@@ -22,18 +23,15 @@ export default defineConfig([
   {
     plugins: {
       jest,
-      vitest,
       unicorn,
       jsdoc
     },
     languageOptions: {
       globals: {
-        ...vitest.environments.env.globals,
         ...jest.environments.globals.globals,
       },
     },
     rules: {
-      ...vitest.configs.recommended.rules,
       ...jest.configs.recommended.rules,
       'unicorn/filename-case': 'error',
       'no-sync': 'warn'
