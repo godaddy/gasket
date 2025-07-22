@@ -45,7 +45,7 @@
     "jest": "^29.7.0"
   },
   "peerDependencies": {
-    "@gasket/plugin-logger": "^7.3.6",
+    "@gasket/plugin-logger": "^7.3.x",
     "express": "^4.21.2"
   }
 }
