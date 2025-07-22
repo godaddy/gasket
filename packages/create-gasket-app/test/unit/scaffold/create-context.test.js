@@ -1,4 +1,4 @@
-/* eslint-disable max-statements */
+/* eslint-disable max-statements, jest/no-conditional-expect */
 import { jest } from '@jest/globals';
 import path from 'path';
 const { CreateContext, makeCreateContext } = await import('../../../lib/scaffold/create-context');

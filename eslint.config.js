@@ -1,8 +1,6 @@
-import { defineConfig } from "eslint/config";
+import { defineConfig, globalIgnores } from 'eslint/config';
 import jest from 'eslint-plugin-jest';
-import godaddy from 'eslint-config-godaddy';
 import goddaddyTypescript from 'eslint-config-godaddy-typescript';
-import goddaddyReact from 'eslint-config-godaddy-react';
 import goddaddyReactTypescript from 'eslint-config-godaddy-react-typescript';
 import unicorn from 'eslint-plugin-unicorn';
 import vitest from '@vitest/eslint-plugin';
@@ -12,15 +10,15 @@ export default defineConfig([
   ...goddaddyTypescript,
   ...goddaddyReactTypescript,
   globalIgnores([
-      '**/node_modules/**',
-      '**/dist/**',
-      '**/cjs/**',
-      '**/react/**',
-      '**/generator/**',
-      '**/__mocks__/**',
-      '**/test/fixtures/**',
-      '**/gasket-redux/lib'
-    ]),
+    '**/node_modules/**',
+    '**/dist/**',
+    '**/cjs/**',
+    '**/react/**',
+    '**/generator/**',
+    '**/__mocks__/**',
+    '**/test/fixtures/**',
+    '**/gasket-redux/lib'
+  ]),
   {
     plugins: {
       jest,
@@ -36,11 +34,9 @@ export default defineConfig([
     },
     rules: {
       ...vitest.configs.recommended.rules,
+      ...jest.configs.recommended.rules,
       'unicorn/filename-case': 'error',
-      'no-sync': 'off',
-
-      /* Gets false positives */
-      'react-hooks/rules-of-hooks': 'off',
+      'no-sync': 'warn'
     }
   }
 ]);

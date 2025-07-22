@@ -30,7 +30,7 @@ const supportedModuleFormats = ['module', 'commonjs'];
  * @type {import('./index.js').load}
  */
 async function load(url, context, defaultLoad) {
-  if (useLoader(url)) {
+  if (isLoader(url)) {
     if (url.endsWith('.ts') || url.endsWith('.tsx')) {
       // defaultLoad throws ERR_UNKNOWN_FILE_EXTENSION unless we tell it a module format
       // We assume typescript users are using ESM rather than CJS, for simplicity
@@ -82,7 +82,7 @@ async function load(url, context, defaultLoad) {
  *
  * @param url
  */
-function useLoader(url) {
+function isLoader(url) {
   return !/node_modules/.test(url) && !/node:/.test(url);
 }
 
