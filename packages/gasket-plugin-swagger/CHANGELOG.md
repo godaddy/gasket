@@ -1,5 +1,11 @@
 # `@gasket/plugin-swagger`
 
+## 7.3.9
+
+### Patch Changes
+
+- 5d38a2e: Eslint version 9
+
 ## 7.3.8
 
 ### Patch Changes

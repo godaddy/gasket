@@ -1,5 +1,13 @@
 # `@gasket/plugin-git`
 
+## 7.4.5
+
+### Patch Changes
+
+- 5d38a2e: Eslint version 9
+- Updated dependencies [5d38a2e]
+  - @gasket/utils@7.6.1
+
 ## 7.4.4
 
 ### Patch Changes

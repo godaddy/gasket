@@ -1,5 +1,11 @@
 # `@gasket/plugin-mocha`
 
+## 7.5.4
+
+### Patch Changes
+
+- 5d38a2e: Eslint version 9
+
 ## 7.5.3
 
 ### Patch Changes

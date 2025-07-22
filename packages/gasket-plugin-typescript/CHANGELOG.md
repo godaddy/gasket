@@ -1,5 +1,11 @@
 # `@gasket/plugin-typescript`
 
+## 7.4.5
+
+### Patch Changes
+
+- 5d38a2e: Eslint version 9
+
 ## 7.4.4
 
 ### Patch Changes
