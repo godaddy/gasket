@@ -1,5 +1,11 @@
 # `@gasket/plugin-dynamic-plugins`
 
+## 7.4.1
+
+### Patch Changes
+
+- 5d38a2e: Eslint version 9
+
 ## 7.4.0
 
 ### Minor Changes

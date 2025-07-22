@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-logger",
-  "version": "7.3.5",
+  "version": "7.3.6",
   "description": "Gasket plugin for logging",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

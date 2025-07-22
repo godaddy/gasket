@@ -1,5 +1,11 @@
 # @gasket/plugin-cypress
 
+## 7.5.2
+
+### Patch Changes
+
+- 5d38a2e: Eslint version 9
+
 ## 7.5.1
 
 ### Patch Changes

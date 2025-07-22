@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-command",
-  "version": "7.5.0",
+  "version": "7.5.1",
   "description": "Plugin to enable other plugins to inject new gasket commands",
   "type": "module",
   "types": "lib/index.d.ts",

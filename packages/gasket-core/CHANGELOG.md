@@ -1,5 +1,13 @@
 # `@gasket/core`
 
+## 7.6.1
+
+### Patch Changes
+
+- 5d38a2e: Eslint version 9
+- Updated dependencies [5d38a2e]
+  - @gasket/utils@7.6.1
+
 ## 7.6.0
 
 ### Minor Changes

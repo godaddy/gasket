@@ -1,5 +1,23 @@
 # `create-gasket-app`
 
+## 7.4.11
+
+### Patch Changes
+
+- 5d38a2e: Eslint version 9
+- Updated dependencies [c3ff29f]
+- Updated dependencies [5d38a2e]
+  - @gasket/plugin-metadata@7.5.2
+  - @gasket/plugin-dynamic-plugins@7.4.1
+  - @gasket/plugin-docusaurus@7.4.5
+  - @gasket/plugin-command@7.5.1
+  - @gasket/plugin-logger@7.3.6
+  - @gasket/plugin-docs@7.4.6
+  - @gasket/plugin-git@7.4.5
+  - @gasket/request@7.5.2
+  - @gasket/utils@7.6.1
+  - @gasket/core@7.6.1
+
 ## 7.4.10
 
 ### Patch Changes
