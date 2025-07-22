@@ -2,7 +2,7 @@
 /// <reference types="@gasket/plugin-https" />
 /// <reference types="@gasket/plugin-metadata" />
 
-/* eslint-disable no-console, no-sync */
+/* eslint-disable no-console */
 const { name, version, description } = require('../package.json');
 const { createChildLogger, verifyLoggerLevels } = require('./utils');
 

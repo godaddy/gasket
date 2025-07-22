@@ -34,5 +34,5 @@ export function withGasketDataProvider(gasket) {
     HOC.WrappedComponent = Component;
 
     return HOC;
-  }
+  };
 }

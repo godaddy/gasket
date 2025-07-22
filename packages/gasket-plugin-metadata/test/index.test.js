@@ -1,4 +1,3 @@
-/* eslint-disable max-statements */
 import plugin from '../lib/index.js';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);

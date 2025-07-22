@@ -1,4 +1,3 @@
-/* eslint-disable no-sync */
 // hoisting requires the order below
 const mockReadFileStub = jest.fn();
 

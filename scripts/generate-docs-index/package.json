@@ -56,22 +56,5 @@
     "@gasket/request": "workspace:^",
     "@gasket/utils": "workspace:^",
     "create-gasket-app": "workspace:^"
-  },
-  "devDependencies": {
-    "@types/jest": "^29.5.14",
-    "@types/node": "^20.17.19",
-    "eslint": "^8.57.1",
-    "eslint-plugin-unicorn": "^55.0.0"
-  },
-  "eslintConfig": {
-    "extends": [
-      "godaddy"
-    ],
-    "plugins": [
-      "unicorn"
-    ],
-    "rules": {
-      "unicorn/filename-case": "error"
-    }
   }
 }

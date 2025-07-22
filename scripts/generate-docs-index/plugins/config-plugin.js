@@ -1,4 +1,4 @@
-/* eslint-disable no-console, no-sync */
+
 export default {
   name: 'config-plugin',
   hooks: {

@@ -42,7 +42,7 @@ module.exports = async function express(gasket, app) {
 
   const middlewarePattern = middlewareInclusionRegex || excludedRoutesRegex;
 
-  const useForAllowedPaths = (...middleware) =>
+  const applyForAllowedPaths = (...middleware) =>
     middleware.forEach((mw) => {
       if (excludedRoutesRegex) {
         app.use(excludedRoutesRegex, mw);
@@ -70,12 +70,12 @@ module.exports = async function express(gasket, app) {
     };
   }
 
-  useForAllowedPaths((req, res, next) => {
+  applyForAllowedPaths((req, res, next) => {
     req.logger = gasket.logger;
     attachLogEnhancer(req);
     next();
   });
-  useForAllowedPaths(cookieParser());
+  applyForAllowedPaths(cookieParser());
 
   applyCookieParser(app, middlewarePattern);
   applyCompression(app, compressionConfig);

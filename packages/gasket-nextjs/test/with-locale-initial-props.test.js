@@ -50,7 +50,6 @@ describe('withLocaleInitialProps', () => {
     const HocMockComponent = withLocaleInitialProps(mockGasket)(MockComponent);
     await HocMockComponent.getInitialProps({});
 
-    // eslint-disable-next-line no-undefined
     expect(mockResolveGasketData).toHaveBeenCalledWith(mockGasket, browserCtxReq);
   });
 });

@@ -1,4 +1,4 @@
-/* eslint-disable no-console, no-sync */
+
 import fs from 'fs';
 import path from 'path';
 import { makeGasket } from '@gasket/core';

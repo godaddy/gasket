@@ -1,4 +1,4 @@
-/* eslint-disable no-sync, no-console */
+/* eslint-disable no-console */
 import glob from 'glob';
 import { createRequire } from 'module';
 import * as path from 'path';

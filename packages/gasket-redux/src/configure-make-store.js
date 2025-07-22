@@ -36,7 +36,6 @@ export default function configureMakeStore(makeStoreOptions = {}, postCreate) {
    * browser.
    * @type {import('./index').MakeStoreFn}
    */
-  // eslint-disable-next-line max-statements
   function makeStore(state = {}, options = {}) {
     const { req, logger = console } = options;
     const {

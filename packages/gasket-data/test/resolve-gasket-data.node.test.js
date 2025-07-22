@@ -1,4 +1,4 @@
-/** @jest-environment node */ // eslint-disable-line
+/** @jest-environment node */
 
 import { jest } from '@jest/globals';
 

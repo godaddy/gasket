@@ -1,4 +1,4 @@
-/* eslint-disable max-nested-callbacks, max-len */
+/* eslint-disable max-nested-callbacks */
 const path = require('path');
 
 const emptyDocsConfigSet = {

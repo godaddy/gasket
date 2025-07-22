@@ -25,7 +25,7 @@ export function withLocaleInitialProps(gasket) {
       return {
         ...(originalGetInitialProps ? await originalGetInitialProps(ctx) : {}),
         locale
-      }
+      };
     };
 
     return Component;

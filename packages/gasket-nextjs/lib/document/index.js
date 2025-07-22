@@ -1,3 +1,4 @@
+/* eslint-disable new-cap */
 /// <reference types="@gasket/plugin-data" />
 
 import { Main, NextScript } from 'next/document.js';  // Conflicts with package.json exports - extensions required

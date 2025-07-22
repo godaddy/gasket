@@ -1,4 +1,3 @@
-/* eslint-disable valid-jsdoc */
 /* eslint-disable spaced-comment */
 // @ts-check
 ///<reference types="@gasket/plugin-intl"/>
