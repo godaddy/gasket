@@ -1,4 +1,3 @@
-/* eslint-disable no-sync */
 const transformSync = require('@swc/core').transformSync;
 const { getComposedContent } = require('../lib/utils/utils');
 const { getCacheKeys, getSWConfig, loadRegisterScript } = require('../lib/utils/utils');

@@ -44,8 +44,8 @@ function isValidVersion(v) {
   // registry to see what dist-tags are available. This is not feasible.
   //
   return v === 'latest'
-    || v.match(versionTypes.uri) != null    // eslint-disable-line eqeqeq
-    || v.match(versionTypes.github) != null // eslint-disable-line eqeqeq
+    || v.match(versionTypes.uri) != null
+    || v.match(versionTypes.github) != null
     || !!semver.validRange(v);
 }
 

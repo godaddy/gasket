@@ -10,7 +10,7 @@ export default async function createDir(targetRoot, dir) {
   const tpath = path.join(targetRoot, dir);
   try {
     await stat(tpath);
-  } catch (err) {
+  } catch {
     await mkdir(tpath, { recursive: true });
   }
 }

@@ -11,7 +11,7 @@ describe('load function', () => {
     jest.resetAllMocks();
   });
 
-  it('should return defaultLoad result if useLoader returns false', async () => {
+  it('should return defaultLoad result if isLoader returns false', async () => {
     const defaultLoad = jest.fn().mockResolvedValue('defaultLoadResult');
     const result = await load('/node_modules/', {}, defaultLoad);
     expect(result).toBe('defaultLoadResult');

@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 const { name, version, description } = require('../package');
 
 const plugin = require('../lib');

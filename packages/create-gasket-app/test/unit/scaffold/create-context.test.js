@@ -55,7 +55,7 @@ describe('CreateRuntime', () => {
 
     try {
       runtime.appName = 'proxied';
-    } catch (err) {
+    } catch {
       expect(runtime.appName).toEqual('proxied');
       expect(runtime.appName).not.toEqual(appName);
     }
@@ -68,7 +68,7 @@ describe('CreateRuntime', () => {
       runtime.files = '';
       runtime.pkg = '';
       runtime.source = '';
-    } catch (err) {
+    } catch {
       expect(runtime.files).toEqual(files);
       expect(runtime.pkg).toEqual(pkg);
       expect(runtime.source).toEqual(source);

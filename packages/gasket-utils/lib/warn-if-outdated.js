@@ -64,7 +64,7 @@ export default async function warnIfOutdated(pkgName, currentVersion) {
   try {
     const file = await readFile(cachePath, 'utf8');
     cache = JSON.parse(file);
-  } catch (error) {
+  } catch {
     // console.error('Error reading cache file:', error);
   }
 

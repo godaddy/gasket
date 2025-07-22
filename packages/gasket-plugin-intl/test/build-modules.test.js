@@ -1,4 +1,3 @@
-/* eslint-disable max-nested-callbacks */
 const fs = require('fs-extra');
 const { getPackageDirs, saveJsonFile } = require('../lib/utils/fs-utils');
 const { BuildModules } = require('../lib/build-modules');

@@ -1,4 +1,4 @@
-/* eslint-disable no-console, no-sync */
+/* eslint-disable no-console */
 const plugin = require('../lib'); // Update the path accordingly
 const { name, version, description } = require('../package');
 
@@ -49,7 +49,6 @@ describe('@gasket/plugin-logger', () => {
         expect(gasket.logger).toEqual(fakeLogger);
       });
 
-      // eslint-disable-next-line max-statements
       it('should set logger to default if no loggers are hooked', async () => {
         gasket.execSync.mockReturnValue([]);
 

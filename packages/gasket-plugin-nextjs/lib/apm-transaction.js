@@ -23,7 +23,7 @@ module.exports = async function apmTransaction(gasket, transaction, { req }) {
         let decodedValue = value;
         try {
           decodedValue = decodeURIComponent(value);
-        } catch (e) {
+        } catch {
           // ignore
         }
         return [key, decodedValue];

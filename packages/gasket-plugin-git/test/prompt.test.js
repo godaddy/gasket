@@ -22,7 +22,6 @@ describe('prompt', function () {
     mockContext.gitInit = false;
     await prompt({}, mockContext, mockUtils);
 
-    // eslint-disable-next-line require-atomic-updates
     mockContext.gitInit = true;
     await prompt({}, mockContext, mockUtils);
 

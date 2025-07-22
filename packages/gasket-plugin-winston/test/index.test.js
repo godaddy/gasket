@@ -1,4 +1,3 @@
-/* eslint-disable no-sync */
 const { makeGasket } = require('@gasket/core');
 const PluginLogger = require('@gasket/plugin-logger');
 const plugin = require('../lib/index');

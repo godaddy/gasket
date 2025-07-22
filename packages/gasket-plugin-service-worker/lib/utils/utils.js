@@ -93,7 +93,6 @@ async function loadRegisterScript(config) {
     const { url, scope } = config;
     const template = require.resolve('./sw-register.template.js');
 
-    // eslint-disable-next-line require-atomic-updates
     __script = (await fs.readFile(template, 'utf8'))
       .replace('{URL}', url)
       .replace('{SCOPE}', scope);

@@ -37,7 +37,7 @@ async function loadSwaggerSpec(root, definitionFile, logger) {
       } else {
         __swaggerSpec = require(target);
       }
-    } catch (err) {
+    } catch {
       logger.error(`Missing ${definitionFile} file...`);
     }
   }

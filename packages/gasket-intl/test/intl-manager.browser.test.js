@@ -1,4 +1,4 @@
-/** @jest-environment jsdom */ // eslint-disable-line
+/** @jest-environment jsdom */
 
 import { jest } from '@jest/globals';
 import { LocaleHandler } from '../lib/locale-handler.js';

@@ -206,7 +206,7 @@ describe('processOptions', () => {
 
     try {
       await bin.parseAsync(['node', 'process-option-test', 'test']);
-    } catch (error) {
+    } catch {
       // ignore
     }
 
