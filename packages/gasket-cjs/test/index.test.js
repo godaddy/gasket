@@ -104,10 +104,13 @@ describe('gasket-cjs', () => {
   });
 
   describe('fixImportExtensions', () => {
-    it('should fix .js extensions to .cjs', async () => {
-      mkdirSync(outputDir, { recursive: true });
+    const testFile = join(outputDir, 'test.cjs');
 
-      const testFile = join(outputDir, 'test.cjs');
+    beforeEach(() => {
+      mkdirSync(outputDir, { recursive: true });
+    });
+
+    it('should fix .js extensions to .cjs', async () => {
       writeFileSync(testFile, 'const helper = require("./helper.js");');
 
       await fixImportExtensions(outputDir);
@@ -116,6 +119,51 @@ describe('gasket-cjs', () => {
       expect(content).toContain('./helper.cjs');
       expect(content).not.toContain('./helper.js');
     });
+
+    it('replaces local .js and .mjs imports with .cjs (double quotes only)', async () => {
+      const code = `
+        const a = require("./foo.js");
+        import b from "../bar.mjs";
+        import c from "/baz.js";
+      `;
+      writeFileSync(testFile, code, 'utf-8');
+
+      await fixImportExtensions(outputDir);
+
+      const result = readFileSync(testFile, 'utf-8');
+      expect(result).toContain('require("./foo.cjs")');
+      expect(result).toContain('import b from "../bar.cjs"');
+      expect(result).toContain('import c from "/baz.cjs"');
+    });
+
+    it('does not replace bare imports or single-quoted paths', async () => {
+      const code = `
+        const d = require('next/document.js');
+        import e from 'next/foo.mjs';
+        import f from 'react.js';
+      `;
+      writeFileSync(testFile, code, 'utf-8');
+
+      await fixImportExtensions(outputDir);
+
+      const result = readFileSync(testFile, 'utf-8');
+      expect(result).toContain("require('next/document.js')");
+      expect(result).toContain("import e from 'next/foo.mjs'");
+      expect(result).toContain("import f from 'react.js'");
+    });
+
+    it('does not replace imports without .js/.mjs extension', async () => {
+      const code = `
+        import g from "./foo";
+        const h = require("../bar");
+      `;
+      writeFileSync(testFile, code, 'utf-8');
+
+      await fixImportExtensions(outputDir);
+
+      const result = readFileSync(testFile, 'utf-8');
+      expect(result).toContain('import g from "./foo"');
+      expect(result).toContain('require("../bar")');
+    });
   });
 });
-
