@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-docusaurus",
-  "version": "7.4.4",
+  "version": "7.4.5",
   "description": "Gasket plugin for docusaurus",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -51,6 +51,6 @@
     "typescript": "^5.8.2"
   },
   "peerDependencies": {
-    "@gasket/plugin-logger": "^7.3.5"
+    "@gasket/plugin-logger": "^7.3.6"
   }
 }

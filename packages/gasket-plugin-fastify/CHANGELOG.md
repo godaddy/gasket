@@ -1,5 +1,11 @@
 # `@gasket/plugin-fastify`
 
+## 7.4.4
+
+### Patch Changes
+
+- 5d38a2e: Eslint version 9
+
 ## 7.4.3
 
 ### Patch Changes

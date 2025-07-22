@@ -1,5 +1,13 @@
 # `@gasket/plugin-elastic-apm`
 
+## 7.4.7
+
+### Patch Changes
+
+- 5d38a2e: Eslint version 9
+- Updated dependencies [5d38a2e]
+  - @gasket/request@7.5.2
+
 ## 7.4.6
 
 ### Patch Changes

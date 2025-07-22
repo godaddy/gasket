@@ -1,5 +1,13 @@
 # `@gasket/plugin-morgan`
 
+## 7.3.6
+
+### Patch Changes
+
+- 5d38a2e: Eslint version 9
+- Updated dependencies [5d38a2e]
+  - @gasket/plugin-logger@7.3.6
+
 ## 7.3.5
 
 ### Patch Changes

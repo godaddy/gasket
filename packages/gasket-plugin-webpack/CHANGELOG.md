@@ -1,5 +1,11 @@
 # `@gasket/plugin-webpack`
 
+## 7.3.7
+
+### Patch Changes
+
+- 5d38a2e: Eslint version 9
+
 ## 7.3.6
 
 ### Patch Changes

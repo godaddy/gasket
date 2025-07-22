@@ -1,5 +1,15 @@
 # `@gasket/plugin-metadata`
 
+## 7.5.2
+
+### Patch Changes
+
+- c3ff29f: Fix to not load devDeps of plugins and use gasket.logger
+- 5d38a2e: Eslint version 9
+- Updated dependencies [5d38a2e]
+  - @gasket/plugin-logger@7.3.6
+  - @gasket/core@7.6.1
+
 ## 7.5.1
 
 ### Patch Changes
