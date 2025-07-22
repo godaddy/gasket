@@ -1,4 +1,4 @@
-/* eslint-disable max-nested-callbacks, max-len, max-statements */
+/* eslint-disable max-len, max-statements */
 const path = require('path');
 const glob = require('glob');
 const DocsConfigSetBuilder = require('../../lib/utils/config-set-builder');

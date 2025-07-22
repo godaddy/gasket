@@ -1,5 +1,3 @@
-/* eslint-disable jsdoc/require-jsdoc */
-
 class MockApp {
   constructor() {
     this.ready = jest.fn();

@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "description": "Robust, pluggable, & render agnostic framework for rapid delivery of modern web applications.",
+  "type": "module",
   "scripts": {
     "align-packages": "node ./scripts/align-packages",
     "build": "pnpm run -r build",
@@ -14,6 +15,7 @@
     "docs-view": "pnpm run generate-docs-index && cd site && docusaurus start",
     "generate-docs-index": "node scripts/generate-docs-index",
     "lint": "eslint scripts",
+    "lint:all": "pnpm run lint && pnpm run -r lint",
     "lint:fix": "pnpm run lint --fix",
     "lint:fix:all": "pnpm run lint:fix && pnpm run -r lint:fix",
     "postinstall": "pnpm run build",
@@ -51,12 +53,27 @@
     "@changesets/cli": "^2.28.1",
     "@docusaurus/core": "^3.8.1",
     "@docusaurus/preset-classic": "^3.8.1",
-    "@typescript-eslint/eslint-plugin": "^6.21.0",
-    "@typescript-eslint/parser": "^6.21.0",
-    "eslint": "^8.57.1",
-    "eslint-config-godaddy": "^7.1.1",
-    "eslint-config-godaddy-typescript": "^4.0.3",
-    "eslint-plugin-unicorn": "^55.0.0",
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.31.0",
+    "@jest/globals": "^29.7.0",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/react": "^16.3.0",
+    "@types/express": "^4.17.23",
+    "@types/inquirer": "^9.0.7",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^20.17.19",
+    "@types/react": "^19.0.12",
+    "@typescript-eslint/eslint-plugin": "^8.38.0",
+    "@vitest/eslint-plugin": "^1.1.44",
+    "cross-env": "^7.0.3",
+    "eslint": "^9.31.0",
+    "eslint-config-godaddy-react-typescript": "^5.0.0",
+    "eslint-config-godaddy-typescript": "^5.0.0",
+    "eslint-plugin-jest": "^29.0.0",
+    "eslint-plugin-jsdoc": "^50.6.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react": "^7.37.4",
+    "eslint-plugin-unicorn": "^59.0.1",
     "glob": "^8.1.0",
     "js-yaml": "^4.1.0",
     "jsdom": "^20.0.3",
@@ -67,23 +84,6 @@
     "syncpack": "^13.0.3",
     "typescript": "^5.8.2"
   },
-  "eslintConfig": {
-    "extends": [
-      "godaddy",
-      "plugin:jsdoc/recommended-typescript-flavor"
-    ],
-    "ignorePatterns": [
-      "node_modules/",
-      "coverage/"
-    ],
-    "plugins": [
-      "unicorn",
-      "jsdoc"
-    ],
-    "rules": {
-      "unicorn/filename-case": "error"
-    }
-  },
   "engines": {
     "pnpm": ">=8",
     "npm": "please-use-pnpm",
@@ -93,13 +93,7 @@
   "packageManager": "pnpm@10.4.1",
   "pnpm": {
     "overrides": {
-      "@typescript-eslint/parser": "^6.21.0",
       "react-json-view-lite": "^2.3.0"
-    },
-    "peerDependencyRules": {
-      "allowedVersions": {
-        "@typescript-eslint/parser": "^6.21.0"
-      }
     }
   },
   "workspaces": [

@@ -1,4 +1,3 @@
-// eslint-disable-next-line jsdoc/check-tag-names
 /** @jest-environment node */
 
 import { jest } from '@jest/globals';

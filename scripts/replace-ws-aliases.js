@@ -1,8 +1,13 @@
-/* eslint-disable no-sync */
 
-const fs = require('fs');
-const path = require('path');
-const yaml = require('js-yaml');
+
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import yaml from 'js-yaml';
+
+// Get __dirname equivalent for ESM
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Resolve paths relative to the monorepo root
 const rootDir = path.resolve(__dirname, '..'); // Move up from `scripts/`

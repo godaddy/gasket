@@ -38,7 +38,6 @@ const plugin = {
         configTransports = [new transports.Console()];
       }
 
-      // eslint-disable-next-line no-sync
       const pluginTransports = gasket.execSync('winstonTransports');
       const defaultFormat = gasket.config.env.startsWith('local') ?
         format.simple() :

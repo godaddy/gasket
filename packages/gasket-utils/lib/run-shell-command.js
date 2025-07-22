@@ -1,4 +1,3 @@
-/* eslint-disable max-params */
 import spawn from 'cross-spawn';
 import concat from 'concat-stream';
 

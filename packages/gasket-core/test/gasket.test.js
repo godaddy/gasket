@@ -3,7 +3,6 @@
 const { GasketTrace } = await import('../lib/trace.js');
 const { Gasket, makeGasket } = await import('../lib/gasket.js');
 
-// eslint-disable-next-line no-unused-vars
 const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {
 });
 const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {

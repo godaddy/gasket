@@ -1,4 +1,3 @@
-/* eslint-disable max-params */
 const path = require('path');
 
 const isGasketScope = /^@gasket/;

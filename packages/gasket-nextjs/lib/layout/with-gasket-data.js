@@ -1,5 +1,5 @@
 import { request } from '../request/index.js';
-import { injectGasketData } from '../inject-gasket-data.js'
+import { injectGasketData } from '../inject-gasket-data.js';
 import NextScript from 'next/script';
 
 /**
@@ -34,5 +34,5 @@ export function withGasketData(gasket, options = { index: -1 }) {
     const gasketData = req ? await gasket.actions.getPublicGasketData?.(req) ?? {} : {};
     const html = await layout({ ...props });
     return injectGasketData(html, gasketData, lookupIndex, index);
-  }
+  };
 }

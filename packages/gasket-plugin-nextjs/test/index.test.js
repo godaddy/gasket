@@ -1,4 +1,4 @@
-/* eslint-disable no-sync, max-statements */
+/* eslint-disable max-statements */
 const expressApp = Object.assign(jest.fn(), {
   set: jest.fn(),
   use: jest.fn(),

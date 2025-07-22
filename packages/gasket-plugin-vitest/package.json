@@ -50,50 +50,10 @@
     "@gasket/plugin-metadata": "workspace:^",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.3.0",
-    "@types/node": "^20.17.19",
-    "@typescript-eslint/utils": "^8.29.1",
     "@vitejs/plugin-react": "^4.4.1",
     "@vitest/coverage-v8": "^3.2.0",
-    "@vitest/eslint-plugin": "^1.1.44",
     "create-gasket-app": "workspace:^",
-    "eslint": "^8.57.1",
-    "eslint-config-godaddy": "^7.1.1",
-    "eslint-config-godaddy-typescript": "^4.0.3",
-    "eslint-plugin-unicorn": "^55.0.0",
     "jsdom": "^20.0.3",
-    "typescript": "^5.8.2",
     "vitest": "^3.2.0"
-  },
-  "eslintConfig": {
-    "extends": [
-      "godaddy",
-      "plugin:@vitest/legacy-recommended",
-      "plugin:jsdoc/recommended-typescript-flavor"
-    ],
-    "plugins": [
-      "@vitest",
-      "jsdoc",
-      "unicorn"
-    ],
-    "rules": {
-      "unicorn/filename-case": "error"
-    },
-    "overrides": [
-      {
-        "files": [
-          "lib/*.ts"
-        ],
-        "extends": [
-          "godaddy-typescript"
-        ],
-        "rules": {
-          "jsdoc/*": "off"
-        }
-      }
-    ]
-  },
-  "eslintIgnore": [
-    "generator",
-    "cjs"
-  ]
+  }
 }

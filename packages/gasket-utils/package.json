@@ -61,63 +61,8 @@
     "@gasket/core": "workspace:^",
     "@types/concat-stream": "^2.0.3",
     "@types/cross-spawn": "^6.0.6",
-    "@types/jest": "^29.5.14",
-    "@types/node": "^20.17.19",
     "@vitest/coverage-v8": "^3.2.0",
-    "@vitest/eslint-plugin": "^1.1.44",
     "abort-controller": "^3.0.0",
-    "cross-env": "^7.0.3",
-    "eslint": "^8.57.1",
-    "eslint-config-godaddy": "^7.1.1",
-    "eslint-config-godaddy-typescript": "^4.0.3",
-    "eslint-plugin-unicorn": "^55.0.0",
-    "typescript": "^5.8.2",
     "vitest": "^3.2.0"
-  },
-  "eslintConfig": {
-    "ignorePatterns": [
-      "cjs/"
-    ],
-    "extends": [
-      "godaddy",
-      "plugin:@vitest/legacy-recommended",
-      "plugin:jsdoc/recommended-typescript-flavor"
-    ],
-    "plugins": [
-      "@vitest",
-      "unicorn",
-      "jsdoc"
-    ],
-    "rules": {
-      "unicorn/filename-case": "error"
-    },
-    "overrides": [
-      {
-        "files": [
-          "test/**/*.js"
-        ],
-        "rules": {
-          "jsdoc/require-jsdoc": "off",
-          "jsdoc/require-param-type": "off",
-          "jsdoc/require-returns-description": "off"
-        }
-      },
-      {
-        "files": [
-          "lib/*.ts"
-        ],
-        "extends": [
-          "godaddy-typescript"
-        ],
-        "rules": {
-          "jsdoc/require-returns": "off",
-          "jsdoc/require-param-type": "off",
-          "jsdoc/require-param-description": "off"
-        }
-      }
-    ]
-  },
-  "eslintIgnore": [
-    "test/fixtures"
-  ]
+  }
 }

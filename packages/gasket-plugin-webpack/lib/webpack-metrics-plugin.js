@@ -48,7 +48,7 @@ class WebpackMetricsPlugin {
         const packageJSON = require(`${context}/package.json`);
 
         name = packageJSON.name;
-      } catch (e) {
+      } catch {
         name = 'Gasket App';
       }
 

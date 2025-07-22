@@ -1,4 +1,4 @@
-/** @jest-environment jsdom */ // eslint-disable-line
+/** @jest-environment jsdom */
 
 import { jest, expect } from '@jest/globals';
 import { createElement } from 'react';

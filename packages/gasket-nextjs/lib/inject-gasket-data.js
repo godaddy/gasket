@@ -9,7 +9,7 @@ import { GasketDataScript } from './gasket-data-script.js';
  * @returns {node is React.ReactElement}
  */
 function isReactElement(node) {
-  return typeof node === 'object' && node !== null && 'type' in node;
+  return typeof node === 'object' && node != null && 'type' in node;
 }
 
 function selectBody(children) {

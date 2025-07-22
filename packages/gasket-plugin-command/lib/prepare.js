@@ -1,4 +1,3 @@
-/* eslint-disable no-sync */
 import { gasketBin } from './cli.js';
 import { processCommand } from './utils/process-command.js';
 
