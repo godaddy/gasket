@@ -9,9 +9,7 @@ import vitest from '@vitest/eslint-plugin';
 import jsdoc from 'eslint-plugin-jsdoc';
 
 export default defineConfig([
-  ...godaddy,
   ...goddaddyTypescript,
-  ...goddaddyReact,
   ...goddaddyReactTypescript,
   globalIgnores([
       '**/node_modules/**',
