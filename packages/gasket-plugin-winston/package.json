@@ -39,7 +39,6 @@
   "devDependencies": {
     "@gasket/core": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",
-    "babel-eslint": "^10.1.0",
     "create-gasket-app": "workspace:^",
     "jest": "^29.7.0",
     "triple-beam": "^1.4.1"

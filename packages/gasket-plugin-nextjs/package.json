@@ -63,7 +63,6 @@
     "@types/node": "^20.17.19",
     "@types/react": "^19.0.12",
     "@types/webpack": "^5.28.5",
-    "babel-eslint": "^10.1.0",
     "create-gasket-app": "workspace:^",
     "jest": "^29.7.0",
     "lodash.merge": "^4.6.2",

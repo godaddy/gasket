@@ -1,5 +1,4 @@
 import { defineConfig } from "eslint/config";
-import js from '@eslint/js';
 import jest from 'eslint-plugin-jest';
 import godaddy from 'eslint-config-godaddy';
 import goddaddyTypescript from 'eslint-config-godaddy-typescript';
