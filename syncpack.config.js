@@ -69,4 +69,4 @@ const config = {
   'lintVersions': true
 };
 
-module.exports = config;
+export default config;
