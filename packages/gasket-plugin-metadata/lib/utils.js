@@ -19,7 +19,7 @@ export async function tryImport(tryPath) {
     }
     return mod.default || mod;
   } catch (err) {
-    if (err.code === 'MODULE_NOT_FOUND' || err.code === 'ERR_MODULE_NOT_FOUND') {
+    if (err.code === 'MODULE_NOT_FOUND' || err.code === 'ERR_MODULE_NOT_FOUND' || err.code === 'ENOENT') {
       return null;
     }
     throw err;

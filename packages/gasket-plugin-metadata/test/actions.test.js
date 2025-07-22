@@ -19,6 +19,11 @@ const mockPlugin = {
   }
 };
 
+const mockAppPkg = {
+  name: 'gasket-app',
+  version: '1.0.0'
+};
+
 describe('actions', () => {
   let gasket,
     applyStub,
@@ -33,11 +38,20 @@ describe('actions', () => {
     tryImport = (await import('../lib/utils.js')).tryImport;
 
     // Set up default mock for tryImport to return null for missing files
-    tryImport.mockImplementation(() => Promise.resolve(null));
+    tryImport.mockImplementation(async (pth) => {
+      if (pth.endsWith('/test/app/package.json')) {
+        return mockAppPkg;
+      }
+      Promise.resolve(null);
+    });
 
     gasket = {
       config: {
-        root: process.cwd()
+        root: process.cwd(),
+        appRoot: '/test/app'
+      },
+      logger: {
+        error: vi.fn()
       },
       execApply: async (event, fn) => {
         await applyStub(event);
@@ -83,7 +97,31 @@ describe('actions', () => {
 
   it('adds moduleInfo for app', async () => {
     const result = await actions.getMetadata(gasket);
-    expect(result).toHaveProperty('app');
+
+    expect(result).toHaveProperty('app', expect.objectContaining({
+      ...mockAppPkg,
+      metadata: expect.objectContaining({
+        name: mockAppPkg.name
+      })
+    }));
+
+    expect(gasket.logger.error).not.toHaveBeenCalled();
+  });
+
+  it('logs errors with fallback if cannot find app package', async () => {
+    tryImport.mockResolvedValue(null);
+    const result = await actions.getMetadata(gasket);
+
+    expect(result).toHaveProperty('app', expect.objectContaining({
+      name: 'unknown',
+      metadata: expect.objectContaining({
+        name: 'unknown'
+      })
+    }));
+
+    expect(gasket.logger.error).toHaveBeenCalledWith(
+      expect.stringContaining('Error loading app metadata')
+    );
   });
 
   it('adds presetInfo from loaded config', async () => {
