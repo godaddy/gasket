@@ -81,7 +81,7 @@ async function getMetadata(gasket) {
           return;
         }
 
-        const { dependencies, devDependencies } = await tryImport(path.join(pluginData.metadata.path, 'package.json'));
+        const { dependencies } = await tryImport(path.join(pluginData.metadata.path, 'package.json'));
 
         if (isPreset) {
           presets.push(pluginData);
@@ -89,7 +89,7 @@ async function getMetadata(gasket) {
           plugins.push(pluginData);
         }
 
-        for (const name of Object.keys({ ...dependencies, ...devDependencies })) {
+        for (const name of Object.keys({ ...dependencies })) {
           const isModule = isGasketModule.test(name);
           // eslint-disable-next-line no-continue
           if (!isModule) continue;
