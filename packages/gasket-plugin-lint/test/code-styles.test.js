@@ -1,6 +1,10 @@
 const codeStyles = require('../lib/code-styles');
 const { devDependencies } = require('../package.json');
 
+// Temporary version pin until ESLint9 app upgrades are complete
+const eslintConfigNext = '^13.2.1';
+devDependencies['eslint-config-next'] = eslintConfigNext;
+
 describe('code styles', () => {
   let context, utils, pkgHas, pkgAdd;
 
