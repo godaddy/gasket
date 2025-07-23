@@ -1,5 +1,8 @@
 const { devDependencies } = require('../package.json');
 
+// Temporary version pin until ESLint9 app upgrades are complete
+const eslintConfigNext = '^13.2.1';
+
 const packageUtils = {
   hasDependency(pkg, type, name) {
     return pkg.has(type, name);
@@ -25,7 +28,7 @@ const packageUtils = {
 
   async setupNext(pkg) {
     pkg.add('devDependencies', {
-      'eslint-config-next': devDependencies['eslint-config-next'],
+      'eslint-config-next': eslintConfigNext,
       'typescript': devDependencies.typescript
     });
     packageUtils.addEslintConfig(pkg, ['next']);
@@ -108,7 +111,7 @@ const standard = {
     setupTestEnv(pkg);
 
     if (hasDependency(pkg, 'dependencies', 'next')) {
-      pkg.add('devDependencies', { 'eslint-config-next': devDependencies['eslint-config-next'] });
+      pkg.add('devDependencies', { 'eslint-config-next': eslintConfigNext });
       addEslintConfig(pkg, ['next']);
     }
   }
@@ -210,7 +213,7 @@ const common = {
 
       if (hasNext) {
         pkg.add('devDependencies', {
-          'eslint-config-next': devDependencies['eslint-config-next']
+          'eslint-config-next': eslintConfigNext
         });
         pkg.add('eslintConfig', { extends: ['next'] });
       }

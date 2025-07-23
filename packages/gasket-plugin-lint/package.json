@@ -40,7 +40,6 @@
     "@gasket/plugin-metadata": "workspace:^",
     "@typescript-eslint/parser": "^8.38.0",
     "create-gasket-app": "workspace:^",
-    "eslint-config-next": "^15.0.0",
     "jest": "^29.7.0",
     "typescript": "^5.8.2"
   }
