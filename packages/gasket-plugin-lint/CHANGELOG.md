@@ -1,5 +1,11 @@
 # `@gasket/plugin-lint`
 
+## 7.4.3
+
+### Patch Changes
+
+- 026d359: Fix missing dep
+
 ## 7.4.2
 
 ### Patch Changes

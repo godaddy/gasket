@@ -1,5 +1,14 @@
 # generate-docs-index
 
+## 7.4.14
+
+### Patch Changes
+
+- Updated dependencies [026d359]
+  - @gasket/plugin-lint@7.4.3
+  - @gasket/preset-api@7.5.3
+  - @gasket/preset-nextjs@7.5.3
+
 ## 7.4.13
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # `@gasket/preset-nextjs`
 
+## 7.5.3
+
+### Patch Changes
+
+- Updated dependencies [026d359]
+  - @gasket/plugin-lint@7.4.3
+
 ## 7.5.2
 
 ### Patch Changes
