@@ -1,7 +1,7 @@
 {
   "name": "generate-docs-index",
   "private": true,
-  "version": "7.4.13",
+  "version": "7.4.14",
   "description": "Generate the overview index",
   "type": "module",
   "scripts": {
