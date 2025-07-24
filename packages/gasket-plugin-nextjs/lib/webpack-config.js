@@ -35,7 +35,7 @@ function externalizeGasketCore(ctx, callback) {
 
 /**
  * Setup webpack resolve aliases
- * @param {import('webpack', { with: { "resolution-mode": "require" } }).Configuration} webpackConfig
+ * @param {import('webpack').Configuration} webpackConfig
  *   The webpack configuration object
  * @param {string} root - Gasket config root path
  * @returns {Function} Exclude function to exclude modules from the bundle
@@ -59,7 +59,7 @@ function setupResolveAliases(webpackConfig, root) {
 
 /**
  * Setup client-side externals
- * @param {import('webpack', { with: { "resolution-mode": "require" } }).Configuration} webpackConfig
+ * @param {import('webpack').Configuration} webpackConfig
  *   The webpack configuration object
  * @param {Function} exclude - Function to exclude modules from the bundle
  * @returns {void}
@@ -78,8 +78,8 @@ function setupClientExternals(webpackConfig, exclude) {
 
 /**
  * Webpack configuration hook for Next.js integration
- * @type {import('@gasket/core', { with: { "resolution-mode": "require" } }).HookHandler<'webpackConfig'>}
- * @returns {import('webpack', { with: { "resolution-mode": "require" } }).Configuration} Modified webpack configuration
+ * @type {import('@gasket/core').HookHandler<'webpackConfig'>}
+ * @returns {import('webpack').Configuration} Modified webpack configuration
  */
 function webpackConfigHook(gasket, webpackConfig, { webpack, isServer }) {
   const exclude = setupResolveAliases(webpackConfig, gasket.config.root);

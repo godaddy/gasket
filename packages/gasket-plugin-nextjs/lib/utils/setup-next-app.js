@@ -12,7 +12,7 @@ function getPortFallback(env = '') {
 
 /**
  * Determines the port from HTTP-related config or falls back.
- * @param {import('@gasket/core', { with: { "resolution-mode": "require" } }).GasketConfig} config - Gasket config object
+ * @param {import('@gasket/core').GasketConfig} config - Gasket config object
  * @returns {number} Resolved port
  */
 function resolvePort(config) {

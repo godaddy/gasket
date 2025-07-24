@@ -16,6 +16,10 @@ describe('Plugin dependencies', () => {
     };
   });
 
+  /**
+   *
+   * @param plugins
+   */
   function withPlugins(plugins) {
     return new GasketEngine(plugins);
   }

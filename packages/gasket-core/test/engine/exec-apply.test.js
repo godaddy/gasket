@@ -71,6 +71,11 @@ describe('The execApply method', () => {
     const spy = jest.spyOn(gasket.engine, 'execApply');
     const branch = gasket.traceBranch();
 
+    /**
+     *
+     * @param plugin
+     * @param handler
+     */
     async function applyHandler(plugin, handler) {
       return handler(new Wrapper(plugin));
     }
@@ -138,6 +143,11 @@ describe('The execApply method', () => {
   it('has expected trace output', async () => {
     mockDebug.mockClear();
 
+    /**
+     *
+     * @param plugin
+     * @param handler
+     */
     async function applyHandler(plugin, handler) {
       return handler(new Wrapper(plugin));
     }

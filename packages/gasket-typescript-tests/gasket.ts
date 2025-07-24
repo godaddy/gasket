@@ -1,4 +1,4 @@
-/* eslint-disable spaced-comment */
+
 import type { GasketConfigDefinition } from '@gasket/core';
 
 import pluginAnalyze from '@gasket/plugin-analyze';
@@ -65,6 +65,7 @@ const config: GasketConfigDefinition = {
   compression: 'garbage',
   http: 8080,
   intl: {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
     defaultLocale: 2
   }

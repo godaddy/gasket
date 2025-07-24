@@ -15,10 +15,19 @@ const mockReadFile = vi.fn();
 const mockWriteFile = vi.fn();
 
 // Create helper functions
+/**
+ *
+ * @param time
+ * @param version
+ */
 function createCacheData(time, version) {
   return JSON.stringify({ latestVersionUpdateTime: time, latestVersion: version });
 }
 
+/**
+ *
+ * @param str
+ */
 function stripAnsi(str) {
   // Regular expression to match ANSI escape codes
   const ansiRegex = /\u001b\[[0-9;]*m/g;

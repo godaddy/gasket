@@ -15,8 +15,8 @@ function isDocumentClass(maybeClass) {
  * To avoid polluting <head/>, we want to render our JSON in the <body/>
  * but before our other scripts so that it is available to query.
  * In a basic Next.js app, this is between the Main and NextScript tags.*
- *
  * @param {Array} bodyChildren - Children of body element
+ * @param index
  * @returns {number} index
  * @private
  */
@@ -35,7 +35,6 @@ function lookupIndex(bodyChildren, index = -1) {
 /**
  * Make a wrapper to extend the Next.js Document, injecting a script with the
  * `gasketData` from the response object.
- *
  * @type {import('./index.d.ts').withGasketData}
  */
 export function withGasketData(
@@ -46,6 +45,10 @@ export function withGasketData(
 
   return Document => {
 
+    /**
+     *
+     * @param ctx
+     */
     async function getInitialProps(ctx) {
       const gasketData = ctx.req ? await gasket.actions.getPublicGasketData?.(ctx.req) ?? {} : {};
 
@@ -74,6 +77,10 @@ export function withGasketData(
       };
     }
 
+    /**
+     *
+     * @param props
+     */
     function WrappedDocument(props) {
       const html = Document(props);
       const { gasketData } = props;

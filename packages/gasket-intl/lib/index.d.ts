@@ -1,4 +1,3 @@
-/* eslint-disable no-use-before-define */
 /**
  * Partial URL representing a directory containing locale .json files
  * or a URL template with a `:locale` path param to a file.
@@ -86,11 +85,14 @@ export const LocaleFileStatusPriority: LocaleFileStatusType[];
 
 /**
  * Returns the lowest status from an array of statuses based on priority
+ * @param statuses
  */
 export function lowestStatus(statuses: LocaleFileStatusType[]): LocaleFileStatusType;
 
 /**
  * Ensures there's at least one path to use
+ * @param paths
+ * @param defaultPath
  */
 export function safePaths(paths: LocaleFilePath[], defaultPath: LocaleFilePath): LocaleFilePath[];
 
@@ -157,5 +159,6 @@ export class IntlManager {
 
 /**
  * Creates an IntlManager instance
+ * @param manifest
  */
 export function makeIntlManager(manifest: LocaleManifest): IntlManager;

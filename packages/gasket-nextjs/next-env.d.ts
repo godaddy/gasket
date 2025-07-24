@@ -37,4 +37,4 @@ declare module 'next/document' {
     render(): JSX.Element;
   }
   export default Document;
-} 
+}

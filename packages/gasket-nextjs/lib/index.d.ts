@@ -33,7 +33,11 @@ export type GasketHOC = <P = {}>(
   Component: ComponentWithInitialProps<P>
 ) => ComponentWithInitialProps<P & WithGasketDataProps>;
 
-/** Renders a script tag with JSON gasketData */
+/**
+ * Renders a script tag with JSON gasketData
+ * @param props
+ * @param props.data
+ */
 export function GasketDataScript(props: { data: GasketData }): ReactElement;
 
 /** React hook that fetches GasketData in elements context and returns it */
@@ -49,6 +53,7 @@ export const GasketDataProvider: FunctionComponent<
 /**
  * Make an HOC that adds a provider for the GasketData.
  * This can be used to wrap a Next.js App or Page component.
+ * @param gasket
  */
 export function withGasketDataProvider(gasket: Gasket): GasketHOC;
 
@@ -59,11 +64,16 @@ export type LocaleHOC = <P = {}>(
 /**
  * Make an HOC that attaches getInitialProps to inject the intl locale.
  * This can be used to wrap a Next.js App or Page component.
+ * @param gasket
  */
 export function withLocaleInitialProps(gasket: Gasket): LocaleHOC;
 
 /**
  * Injects GasketData into html React element
+ * @param html
+ * @param gasketData
+ * @param lookupIndex
+ * @param insertIndex
  */
 export function injectGasketData(
   html: ReactElement,

@@ -50,7 +50,7 @@ const frontMatterConfig = {
  * addFrontMatter - Add front matter to the content
  * @param {string} content The content of the file
  * @param {string} filename The name of the file
- * @returns {Object} The content with front matter & filename with possible extension change
+ * @returns {object} The content with front matter & filename with possible extension change
  */
 export default function addFrontMatter(content, filename) {
   // File specific transforms

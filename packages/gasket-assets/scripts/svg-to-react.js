@@ -24,7 +24,6 @@ const babelOptions = {
 
 /**
  * Reads and converts an svg file to react component and transform with babel.
- *
  * @param {string} file - Path of file to process
  * @returns {Promise} promise
  */
@@ -60,7 +59,6 @@ async function processFile(file) {
 /**
  * Find all the *.svg files in the ./svgs dir, and convert them to browser
  * compatible React components into the ./react dir.
- *
  * @returns {Promise} promise
  */
 async function main() {

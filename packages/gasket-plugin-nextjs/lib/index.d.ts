@@ -70,7 +70,11 @@ declare module 'create-gasket-app' {
   }
 }
 
-/** Gets the NextJS route matching the request */
+/**
+ * Gets the NextJS route matching the request
+ * @param gasket
+ * @param req
+ */
 export function getNextRoute(
   gasket: Gasket,
   req: import('@gasket/request').GasketRequest
@@ -104,6 +108,7 @@ export function promptSitemap(
 
 /**
  * Small helper function that creates nextjs app from the gasket configuration.
+ * @param gasket
  */
 export function setupNextApp(gasket: Gasket): NextServer & {
   prepare(): Promise<void>;
@@ -112,6 +117,9 @@ export function setupNextApp(gasket: Gasket): NextServer & {
 
 /**
  * Sets up the next.js request handler to be called after all other middleware
+ * @param nextServer
+ * @param serverApp
+ * @param gasket
  */
 export function setupNextHandling(
   nextServer: NextServer,

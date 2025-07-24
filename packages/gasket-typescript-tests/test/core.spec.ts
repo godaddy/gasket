@@ -27,7 +27,7 @@ const PluginExample = {
 
 describe('@gasket/core', () => {
   it('exposes the constructor interface', () => {
-    // eslint-disable-next-line no-new
+
     makeGasket({
       plugins: [PluginExample],
       someConfigSection: {
@@ -38,7 +38,7 @@ describe('@gasket/core', () => {
   });
 
   it('checks constructor arguments', () => {
-    // eslint-disable-next-line no-new
+
     makeGasket({
       plugins: [PluginExample],
       someConfigSection: {

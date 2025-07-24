@@ -1,4 +1,4 @@
-/* eslint-disable no-use-before-define, jsdoc/require-param, jsdoc/require-returns */
+/* eslint-disable jsdoc/require-param, jsdoc/require-returns */
 
 /* ----------------------- *
  *    Utility Types       *
@@ -438,7 +438,7 @@ export type GasketConfigDefinition = Omit<PreNormalizedGasketConfig, 'root' | 'e
   commands?: Record<string, GasketConfigOverrides>;
 };
 
-type PartialRecursive<T> = T extends Object
+type PartialRecursive<T> = T extends object
   ? { [K in keyof T]?: PartialRecursive<T[K]> } | undefined
   : T | undefined;
 

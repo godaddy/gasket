@@ -52,6 +52,9 @@ export interface SpinnerOptions {
 
 /**
  * Wraps a task with a spinner, handling success and failure states.
+ * @param label
+ * @param task
+ * @param options
  */
 export function wrapWithSpinner(
   label: string,
@@ -63,6 +66,9 @@ export function wrapWithSpinner(
 
 /**
  * Wraps a task with a spinner, using both gasket and context.
+ * @param label
+ * @param task
+ * @param options
  */
 export function withGasketSpinner(
   label: string,
@@ -72,6 +78,9 @@ export function withGasketSpinner(
 
 /**
  * Wraps a task with a spinner, using only context.
+ * @param label
+ * @param task
+ * @param options
  */
 export function withSpinner(
   label: string,
