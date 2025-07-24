@@ -5,11 +5,14 @@ import goddaddyReactTypescript from 'eslint-config-godaddy-react-typescript';
 import unicorn from 'eslint-plugin-unicorn';
 import vitest from '@vitest/eslint-plugin';
 import jsdoc from 'eslint-plugin-jsdoc';
+import typescriptParser from '@typescript-eslint/parser';
+import typescriptPlugin from '@typescript-eslint/eslint-plugin';
 
 export default defineConfig([
   ...goddaddyTypescript,
   ...goddaddyReactTypescript,
   vitest.configs.recommended,
+  jsdoc.configs['flat/recommended'],
   globalIgnores([
     '**/node_modules/**',
     '**/dist/**',
@@ -21,10 +24,78 @@ export default defineConfig([
     '**/gasket-redux/lib'
   ]),
   {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      typescriptPlugin.configs['flat/recommended']
+    ],
+    plugins: {
+      '@typescript-eslint': typescriptPlugin
+    },
+    languageOptions: {
+      parser: typescriptParser,
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+        ecmaFeatures: {
+          jsx: true
+        }
+      }
+    },
+    rules: {
+      'no-unused-vars': 'off',
+      'no-unused-expressions': 'off',
+      'no-unused-labels': 'off',
+      'no-unused-labels': 'off',
+      'no-undef': 'warn',
+      'camelcase': 'off',
+      'spaced-comment': 'off',
+      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-unsafe-function-type': 'warn',
+      '@typescript-eslint/no-unused-vars': 'warn',
+      '@typescript-eslint/no-empty-object-type': 'off'
+    }
+  },
+  {
+    files: ['**/*.test.ts', '**/*.test.tsx', '**/*.spec.ts', '**/*.spec.tsx'],
+    extends: [typescriptPlugin.configs['flat/recommended']],
+    plugins: {
+      '@typescript-eslint': typescriptPlugin
+    },
+    languageOptions: {
+      parser: typescriptParser,
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+        ecmaFeatures: {
+          jsx: true
+        }
+      }
+    },
+    rules: {
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+      '@typescript-eslint/no-unsafe-call': 'off',
+      '@typescript-eslint/no-unsafe-return': 'off',
+      '@typescript-eslint/ban-ts-comment': 'off',
+
+      'camelcase': 'off',
+      'spaced-comment': 'off',
+      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-unsafe-function-type': 'warn',
+      '@typescript-eslint/no-unused-vars': 'off',
+      '@typescript-eslint/no-empty-object-type': 'off',
+      '@typescript-eslint/triple-slash-reference': 'warn',
+      '@typescript-eslint/no-wrapper-object-types': 'off'
+    }
+  },
+  {
     plugins: {
       jest,
       unicorn,
       jsdoc
+    },
+    linterOptions: {
+      reportUnusedDisableDirectives: 'error'
     },
     languageOptions: {
       globals: {
@@ -34,7 +105,8 @@ export default defineConfig([
     rules: {
       ...jest.configs.recommended.rules,
       'unicorn/filename-case': 'error',
-      'no-sync': 'warn'
+      'no-sync': 'warn',
+      'vitest/expect-expect': 'warn'
     }
   }
 ]);

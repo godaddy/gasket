@@ -10,15 +10,24 @@ export function handleMetrics(
 /**
  * This plugin will calculate the sizes of the directories from the webpack
  * bundle sent to the browser and call the metrics lifecycle with the data.
+ * @param compiler
  */
 export function apply(compiler: Compiler): void;
 
-/** Sets up a context object with special getters */
+/**
+ * Sets up a context object with special getters
+ * @param context
+ */
 export function setupContext(
   context: any
 ): any;
 
-/** Sets up the initial webpack configuration */
+/**
+ * Sets up the initial webpack configuration
+ * @param gasket
+ * @param initConfig
+ * @param context
+ */
 export function initWebpack(
   gasket: Gasket,
   /** Initial webpack config */

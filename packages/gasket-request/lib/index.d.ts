@@ -62,6 +62,7 @@ export type RequestLike = {
 
 /**
  * Captures cookies from the CookieStore as a key-value object.
+ * @param cookieStore
  * @see https://developer.mozilla.org/en-US/docs/Web/API/CookieStore/getAll
  */
 export function objectFromCookieStore(
@@ -70,6 +71,7 @@ export function objectFromCookieStore(
 
 /**
  * Captures search parameters from URLSearchParams as a key-value object.
+ * @param searchParams
  * @see https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
  */
 export function objectFromSearchParams(searchParams: URLSearchParams): Record<string, string>;
@@ -94,7 +96,7 @@ export class GasketRequest {
 /**
  * A cache that holds promises for weakly referenced objects.
  */
-// eslint-disable-next-line no-undef
+
 export class WeakPromiseKeeper<Key extends WeakKey = WeakKey, Value = any> {
   set(key: Key, value: Promise<Value>): this;
   get(key: Key): Promise<Value> | Value;
@@ -104,6 +106,7 @@ export class WeakPromiseKeeper<Key extends WeakKey = WeakKey, Value = any> {
 
 /**
  * Normalizes a request into a GasketRequest object.
+ * @param req
  */
 export function makeGasketRequest(req: RequestLike): MaybeAsync<GasketRequest>;
 
@@ -127,6 +130,7 @@ type RequestActionWrapperFn<Result, Args extends Array<unknown>> = (
 
 /**
  * Wraps a request action function, ensuring it receives a GasketRequest.
+ * @param actionFn
  */
 export function withGasketRequest<Result, Args extends Array<unknown>>(
   actionFn: RequestActionFn<Result, Args>
@@ -134,6 +138,7 @@ export function withGasketRequest<Result, Args extends Array<unknown>>(
 
 /**
  * Wraps a request action function with caching enabled.
+ * @param actionFn
  */
 export function withGasketRequestCache<Result, Args extends Array<unknown>>(
   actionFn: RequestActionFn<Result, Args>

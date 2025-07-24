@@ -25,6 +25,9 @@ type DocumentFunction = typeof FunctionComponent & {
 /**
  * Make a wrapper to extend the Next.js Document, injecting a script with the
  * `gasketData` from the response object.
+ * @param gasket
+ * @param options
+ * @param options.index
  */
 export function withGasketData(
   gasket: Gasket,

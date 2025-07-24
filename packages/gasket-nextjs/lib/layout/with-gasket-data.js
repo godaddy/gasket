@@ -5,8 +5,8 @@ import NextScript from 'next/script';
 /**
  * To avoid polluting <head/>, we want to render our JSON in the <body/>
  * but before our other scripts so that it is available to query.
- *
  * @param {Array} bodyChildren - Children of body element
+ * @param index
  * @returns {number} index
  * @private
  */
@@ -23,7 +23,6 @@ function lookupIndex(bodyChildren, index = -1) {
 /**
  * Make a wrapper to around the Root Layout, injecting a script with the
  * `gasketData`.
- *
  * @type {import('./index.d.ts').withGasketData}
  */
 export function withGasketData(gasket, options = { index: -1 }) {

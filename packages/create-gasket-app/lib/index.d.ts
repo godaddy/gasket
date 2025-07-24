@@ -505,7 +505,7 @@ export interface CreateContext {
 
   /** Use to add content to the README.md */
   readme: Readme;
-
+  // eslint-disable-next-line @typescript-eslint/no-misused-new
   constructor(initContext?: Partial<CreateContext>);
   runWith(plugin: Plugin): CreateContext;
   /** Flag indicating if typescript is enabled */

@@ -50,6 +50,7 @@ if (fs.existsSync(workspaceYamlPath)) {
 
 /**
  * Update a given package.json file
+ * @param packageJsonPath
  */
 function updatePackageJson(packageJsonPath) {
   if (!fs.existsSync(packageJsonPath)) return;
@@ -57,6 +58,10 @@ function updatePackageJson(packageJsonPath) {
   const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
   let updated = false;
 
+  /**
+   *
+   * @param depType
+   */
   function replaceDependencyVersions(depType) {
     if (packageJson[depType]) {
       Object.keys(packageJson[depType]).forEach(pkg => {

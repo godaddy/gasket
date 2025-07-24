@@ -38,11 +38,14 @@ declare module 'express' {
 
 /**
  * Type guard to detect if the app is an Express app.
+ * @param app
  */
 export function canUseMiddleware(app: any): app is ExpressApp;
 
 /**
  * Applies the cookie parser based on the middleware pattern.
+ * @param app
+ * @param middlewarePattern
  */
 export function applyCookieParser(
   app: ExpressApp | FastifyApp,
@@ -51,6 +54,8 @@ export function applyCookieParser(
 
 /**
  * Applies compression to the application if a compression config is present.
+ * @param app
+ * @param compressionConfig
  */
 export function applyCompression(
   app: ExpressApp,
@@ -60,6 +65,9 @@ export function applyCompression(
 
 /**
  * Executes the middleware lifecycle for the application.
+ * @param gasket
+ * @param app
+ * @param middlewarePattern
  */
 export function executeMiddlewareLifecycle(
   gasket: Gasket,
@@ -69,13 +77,13 @@ export function executeMiddlewareLifecycle(
 
 /**
  * Attaches a log enhancer to the Express Request object.
+ * @param req
  */
 export function attachLogEnhancer(req: ExpressRequest): void;
 export function isValidMiddleware(middleware: Function | Function[]): boolean;
 
 /**
  * Checks whether a given value is a middleware object with a `handler` function.
- *
  * @param {any} value - The value to check
  * @returns {value is { handler: Handler; paths?: string | RegExp | Array<string | RegExp> }} True if the value is a middleware object
  */
@@ -84,7 +92,6 @@ export function isMiddlewareObject(value: any): value is { handler: Handler; pat
 /**
  * Normalizes a middleware entry into a consistent `{ handler, paths }` format.
  * Accepts either a function, an object with a `handler`, or an invalid entry.
- *
  * @param {any} entry - The middleware entry to normalize
  * @returns {{ handler: Handler | undefined, paths?: string | RegExp | Array<string | RegExp> }}
  */
@@ -98,7 +105,6 @@ export function normalizeMiddlewareEntry(
 /**
  * Applies a single middleware function to the app using either specific paths
  * or a fallback middleware pattern.
- *
  * @param {ExpressApp} app - The Express app instance
  * @param {Handler} handler - The middleware function to apply
  * @param {string | RegExp | Array<string | RegExp>} [paths] - Optional specific paths

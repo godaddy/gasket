@@ -12,6 +12,10 @@ function isReactElement(node) {
   return typeof node === 'object' && node != null && 'type' in node;
 }
 
+/**
+ *
+ * @param children
+ */
 function selectBody(children) {
   const bodyIdx = children.findIndex(t =>
     t.type === 'body'

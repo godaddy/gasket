@@ -1,6 +1,10 @@
 /* eslint-disable vitest/expect-expect */
 const { Gasket }  = await import('../../lib/gasket.js');
 
+/**
+ *
+ * @param withOrderingSpecs
+ */
 function setupLoadedPlugins(withOrderingSpecs) {
   return Object.entries(withOrderingSpecs).map(([name, timing]) => ({
     name,
@@ -13,10 +17,21 @@ function setupLoadedPlugins(withOrderingSpecs) {
   }));
 }
 
+/**
+ *
+ * @param plugins
+ */
 function setupGasket(plugins) {
   return new Gasket({ plugins });
 }
 
+/**
+ *
+ * @param root0
+ * @param root0.withOrderingSpecs
+ * @param root0.expectOrder
+ * @param root0.expectError
+ */
 async function verify({ withOrderingSpecs, expectOrder, expectError }) {
   const plugins = setupLoadedPlugins(withOrderingSpecs);
   const gasket = setupGasket(plugins);

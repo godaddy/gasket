@@ -10,6 +10,9 @@ jest.unstable_mockModule('htmlescape', () => {
   };
 });
 
+/**
+ *
+ */
 function MockComponent() {
   return createElement('div', {}, 'MockComponent');
 }
