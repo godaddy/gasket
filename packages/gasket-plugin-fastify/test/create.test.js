@@ -4,10 +4,6 @@ const createHook = require('../lib/create');
 describe('create', () => {
   let mockContext;
 
-  /**
-   *
-   * @param assertFn
-   */
   function expectCreatedWith(assertFn) {
     return async function expectCreated() {
       await createHook({}, mockContext);

@@ -53,11 +53,6 @@ function makeCreateRuntime(context, source) {
   });
 }
 
-/**
- *
- * @param acc
- * @param values
- */
 function flatten(acc, values) {
   return acc.concat(values);
 }

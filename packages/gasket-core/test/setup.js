@@ -5,11 +5,6 @@ global.expect = expect;
 // eslint-disable-next-line no-process-env
 process.env.GASKET_ENV = 'test';
 
-/**
- *
- * @param actual
- * @param branch
- */
 function traceProxyOf(actual, branch) {
   if (
     actual !== branch &&

@@ -44,11 +44,7 @@ export interface ConfigureMakeStoreOptions {
   thunkMiddleware?: ThunkMiddleware;
 }
 
-/**
- * Compose the reducer
- * @param allReducers
- * @param rootReducer
- */
+/** Compose the reducer */
 export function prepareReducer(
   /** Map of identifiers and reducers */
   allReducers: Record<string, Reducer>,
@@ -58,8 +54,6 @@ export function prepareReducer(
 
 /**
  * Set up redux store configuration and return a makeStore function
- * @param options
- * @param postCreate
  */
 export function configureMakeStore(
   options?: ConfigureMakeStoreOptions | ((options: MakeStoreFnOptions) => ConfigureMakeStoreOptions),
@@ -69,7 +63,6 @@ export function configureMakeStore(
 /**
  * Helper to check for an existing store on context, otherwise make a new
  * instance.
- * @param fallbackMakeStore
  */
 export function getOrCreateStore(
   /** A makeStore function to create new stores */
@@ -81,8 +74,6 @@ export function getOrCreateStore(
  * reducers, for consistency between browser and server rendering. As such, if
  * keys in preloadedState do not have corresponding reducers, this will add
  * placeholders.
- * @param reducers
- * @param preloadedState
  */
 export function placeholderReducers(
   reducers?: Record<string, Reducer>,

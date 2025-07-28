@@ -143,9 +143,6 @@ export interface LinkTransform {
 
 /**
  * Function to find plugin data from metadata for a given plugin.
- * @param plugin
- * @param pluginsDatas
- * @param logger
  */
 export function findPluginData(
   /** Plugin instance to look up info for */
@@ -163,7 +160,6 @@ export function findPluginData(
  * - metadata for plugins without docsSetup hook
  * - metadata for modules not processed with plugins
  * - metadata for presets
- * @param gasket
  */
 export function buildDocsConfigSet(
   gasket: Gasket
@@ -171,10 +167,6 @@ export function buildDocsConfigSet(
 
 /**
  * Function to find all documentation files for a module.
- * @param moduleData
- * @param docsSetup
- * @param link
- * @param sourceRoot
  */
 export function _findAllFiles(
   /** Metadata for the module. */
@@ -189,7 +181,6 @@ export function _findAllFiles(
 
 /**
  * Function to segregate global and local transforms from a docsSetup.
- * @param transforms
  */
 export function _segregateTransforms(
   /** Transforms to segregate */
@@ -198,9 +189,6 @@ export function _segregateTransforms(
 
 /**
  * Function to build the documentation configuration for a module.
- * @param moduleData
- * @param docsSetup
- * @param overrides
  */
 export function _buildDocsConfig(
   /** Metadata for module */
@@ -214,7 +202,6 @@ export function _buildDocsConfig(
 /**
  * Flattens all detail types from plugins' metadata. Add a from property with
  * name of parent plugin.
- * @param type
  */
 export function _flattenDetails(
   /** Detail type in metadata */
@@ -225,7 +212,6 @@ export function _flattenDetails(
  * Adds additional docsSetup for modules, merging duplicates with a first in
  * wins approach. When a module is then add to be configured, a docSetup will
  * be looked up from what's been added by plugins here.
- * @param moduleDocsSetup
  */
 export function _addModuleDocsSetup(
   /** Setups for modules */
@@ -234,8 +220,6 @@ export function _addModuleDocsSetup(
 
 /**
  * Function to add documentation configuration for the app.
- * @param moduleData
- * @param docsSetup
  */
 export function addApp(
   /** Metadata for app module */
@@ -246,8 +230,6 @@ export function addApp(
 
 /**
  * Function to add documentation configuration for a plugin.
- * @param pluginData
- * @param docsSetup
  */
 export function addPlugin(
   /** Metadata for the plugin. */
@@ -258,7 +240,6 @@ export function addPlugin(
 
 /**
  * Function to add documentation configuration for multiple plugins.
- * @param pluginsDatas
  */
 export function addPlugins(
   /** Metadata for multiple plugins. */
@@ -267,8 +248,6 @@ export function addPlugins(
 
 /**
  * Function to add documentation configuration for a preset.
- * @param presetData
- * @param docsSetup
  */
 export function addPreset(
   /** Metadata for the preset. */
@@ -279,7 +258,6 @@ export function addPreset(
 
 /**
  * Function to add documentation configuration for multiple presets.
- * @param presetsDatas
  */
 export function addPresets(
   /** Metadata for multiple presets. */
@@ -288,8 +266,6 @@ export function addPresets(
 
 /**
  * Function to add documentation configuration for a module.
- * @param moduleData
- * @param docsSetup
  */
 export function addModule(
   /** Metadata for the module. */
@@ -300,7 +276,6 @@ export function addModule(
 
 /**
  * Function to add documentation configuration for multiple modules.
- * @param modulesDatas
  */
 export function addModules(
   /** Metadata for multiple modules. */

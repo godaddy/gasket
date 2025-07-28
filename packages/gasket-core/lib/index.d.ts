@@ -1,5 +1,3 @@
-/* eslint-disable jsdoc/require-param, jsdoc/require-returns */
-
 /* ----------------------- *
  *    Utility Types       *
  * ----------------------- */

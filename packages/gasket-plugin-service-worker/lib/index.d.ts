@@ -24,7 +24,6 @@ export interface ServiceWorkerConfig {
    * Optional cache key functions that accept the request object as
    * argument and return a string.
    */
-
   cacheKeys?: Array<(request: IncomingMessage) => string>;
 
   /**
@@ -78,7 +77,6 @@ declare module '@gasket/core' {
     ): MaybeAsync<string>;
 
     serviceWorkerCacheKey(): MaybeAsync<
-
       (req: Request, res: Response) => MaybeAsync<string>
     >;
   }
@@ -106,22 +104,14 @@ export function serviceWorkerMiddleware(
   next: (err?: any) => void
 ): Promise<void>;
 
-/**
- * Get the service worker configuration from the gasket config
- * @param param
- * @param param.config
- */
+/** Get the service worker configuration from the gasket config */
 export function getSWConfig(param: {
   config: GasketConfig
 }): ServiceWorkerConfig;
 
-/**
- * Gathers thunks to key caches of composed sw scripts, based on req
- * @param gasket
- */
+/** Gathers thunks to key caches of composed sw scripts, based on req */
 export function getCacheKeys(
   gasket: Gasket
-
 ): Promise<Array<(req: Request | FastifyRequest, res: Response | FastifyReply) => MaybeAsync<string>>>;
 
 export function getComposedContent(

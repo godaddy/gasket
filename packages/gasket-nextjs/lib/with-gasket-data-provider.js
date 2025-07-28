@@ -8,11 +8,6 @@ export function withGasketDataProvider(gasket) {
   return function wrapper(Component) {
     const displayName = Component.displayName || Component.name || 'Component';
 
-    /**
-     *
-     * @param {object} root0
-     * @param root0.gasketData
-     */
     function HOC({ gasketData, ...props }) {
       return (
         createElement(GasketDataProvider, { gasketData },

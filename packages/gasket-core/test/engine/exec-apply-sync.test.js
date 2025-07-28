@@ -46,11 +46,6 @@ describe('The execApplySync method', () => {
     }
   };
 
-  /**
-   *
-   * @param plugin
-   * @param handler
-   */
   function mockApplyHandler(plugin, handler) {
     return handler(new Wrapper(plugin));
   }

@@ -2,13 +2,7 @@ import type { Gasket } from '@gasket/core';
 import type { IncomingMessage } from 'http';
 import type { GasketRequest } from '@gasket/request';
 
-/**
- * Get the preferred locale from the request headers.
- * @param gasket
- * @param req
- * @param locales
- * @param defaultLocale
- */
+/** Get the preferred locale from the request headers. */
 export function getLocaleFromHeaders(
   gasket: Gasket,
   req: GasketRequest | IncomingMessage,
@@ -16,11 +10,7 @@ export function getLocaleFromHeaders(
   defaultLocale: string
 ): string;
 
-/**
- * Get the preferred locale from the request headers.
- * @param gasket
- * @param req
- */
+/** Get the preferred locale from the request headers. */
 export function getPreferredLocale(
   gasket: Gasket,
   req: GasketRequest | IncomingMessage,

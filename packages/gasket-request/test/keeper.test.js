@@ -2,9 +2,6 @@ import { expect } from '@jest/globals';
 import { WeakPromiseKeeper } from '../lib/keeper.js';
 import { setTimeout } from 'node:timers/promises';
 
-/**
- *
- */
 function resolvablePromise() {
   let resolve, reject;
   const promise = new Promise((doResolve, doReject) => {

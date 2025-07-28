@@ -104,21 +104,11 @@ describe('createServers', () => {
     expect(errorIndex).toEqual(mockApp.use.mock.calls.length - 1);
   });
 
-  /**
-   *
-   * @param aSpy
-   * @param aPredicate
-   */
   function findCall(aSpy, aPredicate) {
     const callIdx = findCallIndex(aSpy, aPredicate);
     return callIdx === -1 ? null : aSpy.mock.calls[callIdx][0];
   }
 
-  /**
-   *
-   * @param aSpy
-   * @param aPredicate
-   */
   function findCallIndex(aSpy, aPredicate) {
     return aSpy.mock.calls.map((args) => aPredicate(...args)).indexOf(true);
   }

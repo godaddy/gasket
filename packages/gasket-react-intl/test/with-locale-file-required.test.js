@@ -13,9 +13,6 @@ jest.unstable_mockModule('../lib/use-locale-file.js', () => {
   };
 });
 
-/**
- *
- */
 function MockComponent() {
   return createElement('div', {}, 'MockComponent');
 }

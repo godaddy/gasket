@@ -17,10 +17,6 @@ const gasketBin = program
   .version(pkg.version)
   .addHelpText('beforeAll', logo);
 
-
-/**
- *
- */
 async function main() {
   // Suppress deprecation warning for punycode in node 22
   process.noDeprecation = true;

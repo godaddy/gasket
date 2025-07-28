@@ -2,10 +2,6 @@
 module.exports = function configure(gasket, config) {
   const { root } = config;
 
-  /**
-   *
-   * @param serverConfig
-   */
   function setRoot(serverConfig) {
     if (!serverConfig) return;
     if (serverConfig.root) return;
