@@ -23,6 +23,32 @@ export default defineConfig([
     '**/test/fixtures/**',
     '**/gasket-redux/lib'
   ]),
+  //
+  // Configurations for Jest and Unicorn
+  //
+  {
+    plugins: {
+      jest,
+      unicorn
+    },
+    linterOptions: {
+      reportUnusedDisableDirectives: 'error'
+    },
+    languageOptions: {
+      globals: {
+        ...jest.environments.globals.globals
+      }
+    },
+    rules: {
+      ...jest.configs.recommended.rules,
+      'unicorn/filename-case': 'error',
+      'no-sync': 'warn',
+      'vitest/expect-expect': 'warn'
+    }
+  },
+  //
+  // Configurations for TypeScript files
+  //
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
@@ -42,7 +68,6 @@ export default defineConfig([
       }
     },
     rules: {
-      // ...jsdoc.configs['flat/recommended'].rules,
       'no-unused-vars': 'off',
       'no-unused-expressions': 'off',
       'no-unused-labels': 'off',
@@ -57,68 +82,25 @@ export default defineConfig([
       'jsdoc/require-param': 'off'
     }
   },
+  //
+  // Disable certain rules for TypeScript test files
+  //
   {
     files: ['**/*.test.{ts,tsx}', '**/*.spec.{ts,tsx}'],
-    extends: [typescriptPlugin.configs['flat/recommended']],
-    plugins: {
-      '@typescript-eslint': typescriptPlugin
-    },
-    languageOptions: {
-      parser: typescriptParser,
-      parserOptions: {
-        ecmaVersion: 'latest',
-        sourceType: 'module',
-        ecmaFeatures: {
-          jsx: true
-        }
-      }
-    },
     rules: {
-      '@typescript-eslint/no-unsafe-assignment': 'off',
-      '@typescript-eslint/no-unsafe-member-access': 'off',
-      '@typescript-eslint/no-unsafe-call': 'off',
-      '@typescript-eslint/no-unsafe-return': 'off',
       '@typescript-eslint/ban-ts-comment': 'off',
-      '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/no-unsafe-function-type': 'warn',
-      '@typescript-eslint/no-unused-vars': 'off',
-      '@typescript-eslint/no-empty-object-type': 'off',
-      '@typescript-eslint/triple-slash-reference': 'warn',
-      '@typescript-eslint/no-wrapper-object-types': 'off',
-
-      'jsdoc/require-returns': 'off',
-      'jsdoc/require-param': 'off',
-
-      'camelcase': 'off',
-      'spaced-comment': 'off'
+      '@typescript-eslint/no-unused-vars': 'off'
     }
   },
+  //
+  // Disable JSDoc rules for test files
+  //
   {
     files: ['**/*.test.{js,jsx}', '**/*.spec.{js,jsx}'],
     rules: {
       'jsdoc/require-jsdoc': 'off',
       'jsdoc/require-returns': 'off',
       'jsdoc/require-param': 'off'
-    }
-  },
-  {
-    plugins: {
-      jest,
-      unicorn
-    },
-    linterOptions: {
-      reportUnusedDisableDirectives: 'error'
-    },
-    languageOptions: {
-      globals: {
-        ...jest.environments.globals.globals
-      }
-    },
-    rules: {
-      ...jest.configs.recommended.rules,
-      'unicorn/filename-case': 'error',
-      'no-sync': 'warn',
-      'vitest/expect-expect': 'warn'
     }
   }
 ]);
