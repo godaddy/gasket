@@ -45,10 +45,7 @@ export function withGasketData(
 
   return Document => {
 
-    /**
-     *
-     * @param ctx
-     */
+    // eslint-disable-next-line jsdoc/require-jsdoc
     async function getInitialProps(ctx) {
       const gasketData = ctx.req ? await gasket.actions.getPublicGasketData?.(ctx.req) ?? {} : {};
 
@@ -77,10 +74,7 @@ export function withGasketData(
       };
     }
 
-    /**
-     *
-     * @param props
-     */
+    // eslint-disable-next-line jsdoc/require-jsdoc
     function WrappedDocument(props) {
       const html = Document(props);
       const { gasketData } = props;
