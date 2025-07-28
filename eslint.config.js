@@ -42,9 +42,9 @@ export default defineConfig([
       }
     },
     rules: {
+      // ...jsdoc.configs['flat/recommended'].rules,
       'no-unused-vars': 'off',
       'no-unused-expressions': 'off',
-      'no-unused-labels': 'off',
       'no-unused-labels': 'off',
       'no-undef': 'warn',
       'camelcase': 'off',
@@ -58,7 +58,7 @@ export default defineConfig([
     }
   },
   {
-    files: ['**/*.test.ts', '**/*.test.tsx', '**/*.spec.ts', '**/*.spec.tsx'],
+    files: ['**/*.test.{ts,tsx}', '**/*.spec.{ts,tsx}'],
     extends: [typescriptPlugin.configs['flat/recommended']],
     plugins: {
       '@typescript-eslint': typescriptPlugin
@@ -79,30 +79,40 @@ export default defineConfig([
       '@typescript-eslint/no-unsafe-call': 'off',
       '@typescript-eslint/no-unsafe-return': 'off',
       '@typescript-eslint/ban-ts-comment': 'off',
-
-      'camelcase': 'off',
-      'spaced-comment': 'off',
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-unsafe-function-type': 'warn',
       '@typescript-eslint/no-unused-vars': 'off',
       '@typescript-eslint/no-empty-object-type': 'off',
       '@typescript-eslint/triple-slash-reference': 'warn',
-      '@typescript-eslint/no-wrapper-object-types': 'off'
+      '@typescript-eslint/no-wrapper-object-types': 'off',
+
+      'jsdoc/require-returns': 'off',
+      'jsdoc/require-param': 'off',
+
+      'camelcase': 'off',
+      'spaced-comment': 'off'
+    }
+  },
+  {
+    files: ['**/*.test.{js,jsx}', '**/*.spec.{js,jsx}'],
+    rules: {
+      'jsdoc/require-jsdoc': 'off',
+      'jsdoc/require-returns': 'off',
+      'jsdoc/require-param': 'off'
     }
   },
   {
     plugins: {
       jest,
-      unicorn,
-      jsdoc
+      unicorn
     },
     linterOptions: {
       reportUnusedDisableDirectives: 'error'
     },
     languageOptions: {
       globals: {
-        ...jest.environments.globals.globals,
-      },
+        ...jest.environments.globals.globals
+      }
     },
     rules: {
       ...jest.configs.recommended.rules,
