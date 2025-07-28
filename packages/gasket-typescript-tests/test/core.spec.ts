@@ -1,3 +1,4 @@
+/* eslint-disable vitest/expect-expect, jest/expect-expect */
 import { Gasket, makeGasket } from '@gasket/core';
 import type { GasketConfigDefinition, MaybeAsync, Plugin  } from '@gasket/core';
 
@@ -104,7 +105,7 @@ describe('@gasket/core', () => {
       // @ts-expect-error
       event: 'unknown',
       // @ts-expect-error
-      handler: (_gasket) => {}
+      handler: (_gasket) => 123
     });
 
     // Invalid return type

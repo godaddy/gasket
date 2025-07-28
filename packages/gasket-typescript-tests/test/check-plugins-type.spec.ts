@@ -1,3 +1,4 @@
+/* eslint-disable vitest/expect-expect, jest/expect-expect */
 import { Plugin }  from '@gasket/core';
 import pluginAnalyze from '@gasket/plugin-analyze';
 import pluginCommand from '@gasket/plugin-command';

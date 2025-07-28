@@ -1,3 +1,4 @@
+/* eslint-disable vitest/expect-expect, jest/expect-expect */
 import { Gasket, GasketConfigDefinition, Hook } from '@gasket/core';
 import '@gasket/plugin-webpack';
 import '@gasket/plugin-nextjs';

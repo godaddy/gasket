@@ -1,3 +1,4 @@
+/* eslint-disable vitest/expect-expect, jest/expect-expect */
 import type { Gasket, Hook, GasketActions } from '@gasket/core';
 import type { PluginData, Metadata } from '@gasket/plugin-metadata';
 

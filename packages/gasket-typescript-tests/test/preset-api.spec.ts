@@ -1,3 +1,4 @@
+/* eslint-disable vitest/expect-expect, jest/expect-expect */
 import type { Gasket, GasketConfigDefinition, Plugin } from '@gasket/core';
 import type { Handler } from '@gasket/plugin-middleware';
 

@@ -1,3 +1,4 @@
+/* eslint-disable vitest/expect-expect, jest/expect-expect */
 import { GasketConfigDefinition, Plugin } from '@gasket/core';
 import { Request } from 'express';
 import '@gasket/plugin-service-worker';
