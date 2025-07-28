@@ -53,9 +53,10 @@ function makeCreateRuntime(context, source) {
   });
 }
 
-function flatten(acc, values) {
+
+const flatten = (acc, values) => {
   return acc.concat(values);
-}
+};
 
 export class CreateContext {
   constructor(initContext = {}) {

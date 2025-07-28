@@ -17,6 +17,10 @@ const gasketBin = program
   .version(pkg.version)
   .addHelpText('beforeAll', logo);
 
+/**
+ * The main entry point for the create-gasket-app CLI.
+ * @returns {Promise<Command>} promise
+ */
 async function main() {
   // Suppress deprecation warning for punycode in node 22
   process.noDeprecation = true;
@@ -29,4 +33,4 @@ async function main() {
   return await gasketBin.parseAsync();
 }
 
-main();
+void main();

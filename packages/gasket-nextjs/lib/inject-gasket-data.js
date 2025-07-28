@@ -5,18 +5,14 @@ import { GasketDataScript } from './gasket-data-script.js';
 
 /**
  * Type guard to check if a ReactNode is a ReactElement.
- * @param {React.ReactNode} node
- * @returns {node is React.ReactElement}
+ * @param {import('react').ReactNode} node - A React node to check.
+ * @returns {node is import('react').ReactElement} results
  */
 function isReactElement(node) {
   return typeof node === 'object' && node != null && 'type' in node;
 }
 
-/**
- *
- * @param children
- */
-function selectBody(children) {
+const selectBody = (children) => {
   const bodyIdx = children.findIndex(t =>
     t.type === 'body'
   );
@@ -25,7 +21,7 @@ function selectBody(children) {
   const body = children[bodyIdx];
 
   return [body, bodyIdx];
-}
+};
 
 /**
  * Renders a script tag with JSON gasketData
