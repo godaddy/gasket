@@ -94,7 +94,6 @@ export class GasketRequest {
 /**
  * A cache that holds promises for weakly referenced objects.
  */
-// eslint-disable-next-line no-undef
 export class WeakPromiseKeeper<Key extends WeakKey = WeakKey, Value = any> {
   set(key: Key, value: Promise<Value>): this;
   get(key: Key): Promise<Value> | Value;

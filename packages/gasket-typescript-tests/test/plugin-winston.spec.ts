@@ -1,3 +1,4 @@
+/* eslint-disable vitest/expect-expect, jest/expect-expect */
 import { GasketConfigDefinition, Hook, Gasket } from '@gasket/core';
 import '@gasket/plugin-winston';
 import TransportStream from 'winston-transport';

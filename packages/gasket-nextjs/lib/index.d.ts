@@ -33,7 +33,9 @@ export type GasketHOC = <P = {}>(
   Component: ComponentWithInitialProps<P>
 ) => ComponentWithInitialProps<P & WithGasketDataProps>;
 
-/** Renders a script tag with JSON gasketData */
+/**
+ * Renders a script tag with JSON gasketData
+ */
 export function GasketDataScript(props: { data: GasketData }): ReactElement;
 
 /** React hook that fetches GasketData in elements context and returns it */

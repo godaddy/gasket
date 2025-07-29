@@ -1,3 +1,4 @@
+/* eslint-disable vitest/expect-expect, jest/expect-expect */
 import type { Gasket, GasketConfigDefinition, Hook } from '@gasket/core';
 import type { Application } from 'express';
 import '@gasket/plugin-express';

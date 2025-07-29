@@ -1,3 +1,4 @@
+/* eslint-disable vitest/expect-expect, jest/expect-expect */
 import type { Gasket, GasketConfigDefinition, Hook } from '@gasket/core';
 import type { NextConfig, NextServer } from '@gasket/plugin-nextjs';
 import { Application } from 'express';

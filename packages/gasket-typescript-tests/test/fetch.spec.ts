@@ -1,3 +1,4 @@
+/* eslint-disable vitest/expect-expect, jest/expect-expect */
 import { fetch } from '@gasket/fetch';
 
 describe('@gasket/fetch', function () {

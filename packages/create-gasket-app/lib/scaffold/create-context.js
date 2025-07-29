@@ -1,4 +1,4 @@
-/* eslint-disable max-len, max-statements */
+/* eslint-disable max-statements */
 import fs from 'fs';
 import path from 'path';
 import { readConfig } from '../scaffold/utils.js';
@@ -53,9 +53,10 @@ function makeCreateRuntime(context, source) {
   });
 }
 
-function flatten(acc, values) {
+
+const flatten = (acc, values) => {
   return acc.concat(values);
-}
+};
 
 export class CreateContext {
   constructor(initContext = {}) {

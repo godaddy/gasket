@@ -13,6 +13,9 @@ const projectRoot = path.resolve(__dirname, '..', '..');
 const sourcePath = path.join(__dirname, '.docs', 'docs', 'README.md');
 const targetPath = path.join(projectRoot, 'README.md');
 
+/**
+ *
+ */
 async function main() {
   await runShellCommand('node', ['gasket.js', 'docs', '--no-view'], { cwd: __dirname });
 
