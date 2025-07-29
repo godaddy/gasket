@@ -80,6 +80,7 @@ export function makeContext(
 
 /**
  * Hook to get load status of one or more locale files
+ * @param {...any} localeFilePath
  */
 export function useLocaleFile(
   ...localeFilePath: LocaleFilePath[]

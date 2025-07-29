@@ -1,3 +1,4 @@
+/* eslint-disable vitest/expect-expect, jest/expect-expect */
 import type { Gasket, GasketConfig, Hook } from '@gasket/core';
 import type { GasketCommandDefinition } from '@gasket/plugin-command';
 
@@ -17,7 +18,7 @@ describe('@gasket/plugin-command', () => {
   it('validates commands return values', () => {
     // @ts-expect-error
     const hook: Hook<'commands'> = (gasket) => {
-      return null;
+      return 123; // This should be a GasketCommandDefinition
     };
   });
 

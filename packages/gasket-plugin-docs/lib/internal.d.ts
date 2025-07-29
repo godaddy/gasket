@@ -13,10 +13,8 @@ export interface DocsTransformHandlerData {
   /** Name of the file */
   filename: string;
   /** Configuration for the documentation module */
-  // eslint-disable-next-line no-use-before-define
   docsConfig: ModuleDocsConfig;
   /** Set of documentation configurations */
-  // eslint-disable-next-line no-use-before-define
   docsConfigSet: DocsConfigSet;
 }
 
@@ -46,7 +44,6 @@ export interface DocsTransform {
  * Configuration for setting up documentation modules.
  */
 export interface DocsSetupModulesConfig {
-  // eslint-disable-next-line no-use-before-define
   [key: string]: DocsSetup;
 }
 

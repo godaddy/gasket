@@ -2,7 +2,7 @@ import type { MaybeAsync, Plugin, Hook, HookId } from '@gasket/core';
 
 export type LogLevel = 'error' | 'warn' | 'info' | 'debug';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+
 type LogMethods = Record<LogLevel, (...args: any[]) => void>;
 
 export interface Logger extends LogMethods {

@@ -8,6 +8,12 @@ export function withGasketDataProvider(gasket) {
   return function wrapper(Component) {
     const displayName = Component.displayName || Component.name || 'Component';
 
+    /**
+     * Higher-order component that provides Gasket data to the wrapped component.
+     * @param {object} props - Props
+     * @param {object} props.gasketData - Gasket data to provide
+     * @returns {import('react').ReactElement} wrapped component
+     */
     function HOC({ gasketData, ...props }) {
       return (
         createElement(GasketDataProvider, { gasketData },
