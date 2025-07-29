@@ -24,7 +24,6 @@ export interface ServiceWorkerConfig {
    * Optional cache key functions that accept the request object as
    * argument and return a string.
    */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   cacheKeys?: Array<(request: IncomingMessage) => string>;
 
   /**
@@ -78,7 +77,6 @@ declare module '@gasket/core' {
     ): MaybeAsync<string>;
 
     serviceWorkerCacheKey(): MaybeAsync<
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       (req: Request, res: Response) => MaybeAsync<string>
     >;
   }
@@ -114,7 +112,6 @@ export function getSWConfig(param: {
 /** Gathers thunks to key caches of composed sw scripts, based on req */
 export function getCacheKeys(
   gasket: Gasket
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
 ): Promise<Array<(req: Request | FastifyRequest, res: Response | FastifyReply) => MaybeAsync<string>>>;
 
 export function getComposedContent(

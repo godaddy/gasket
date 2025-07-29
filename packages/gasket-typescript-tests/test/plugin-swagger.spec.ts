@@ -1,3 +1,4 @@
+/* eslint-disable vitest/expect-expect, jest/expect-expect */
 import { GasketConfigDefinition } from '@gasket/core';
 import '@gasket/plugin-swagger';
 

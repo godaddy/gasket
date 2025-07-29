@@ -1,3 +1,4 @@
+/* eslint-disable vitest/expect-expect, jest/expect-expect, @typescript-eslint/no-explicit-any */
 import type { Gasket, Hook } from '@gasket/core';
 import '@gasket/plugin-logger';
 

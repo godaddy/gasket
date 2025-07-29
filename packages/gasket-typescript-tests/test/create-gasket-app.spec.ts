@@ -1,3 +1,4 @@
+/* eslint-disable vitest/expect-expect, jest/expect-expect */
 import type { Gasket, Hook } from '@gasket/core';
 import { CreateContext } from 'create-gasket-app';
 
@@ -41,13 +42,13 @@ describe('create-gasket-app', () => {
   });
 
   it('defines the prompt hook', () => {
-    const hook: Hook<'prompt'> = async (gasket: Gasket, context: CreateContext, utils: any) => {
+    const hook: Hook<'prompt'> = async (gasket: Gasket, context: CreateContext, utils: unknown) => {
       return context;
     };
   });
 
   it('defines the postCreate hook', () => {
-    const hook: Hook<'postCreate'> = async (gasket: Gasket, context: CreateContext, utils: any) => {
+    const hook: Hook<'postCreate'> = async (gasket: Gasket, context: CreateContext, utils: unknown) => {
       await utils.runScript('echo "hello, world"');
     };
   });

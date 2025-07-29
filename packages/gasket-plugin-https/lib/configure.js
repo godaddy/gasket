@@ -2,7 +2,7 @@
 module.exports = function configure(gasket, config) {
   const { root } = config;
 
-  function setRoot(serverConfig) {
+  const setRoot = (serverConfig) => {
     if (!serverConfig) return;
     if (serverConfig.root) return;
 
@@ -13,7 +13,7 @@ module.exports = function configure(gasket, config) {
     } else {
       serverConfig.root = root;
     }
-  }
+  };
 
   setRoot(config.https);
   setRoot(config.http2);

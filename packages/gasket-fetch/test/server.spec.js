@@ -1,4 +1,3 @@
-/* eslint-disable vitest/expect-expect */
 import { assertExports, assertGet, assertAbort, assertPost } from './utils';
 const fetch = require('../lib/node');
 const { AbortController, Request, Headers, Response } = fetch;

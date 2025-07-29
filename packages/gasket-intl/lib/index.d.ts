@@ -1,4 +1,3 @@
-/* eslint-disable no-use-before-define */
 /**
  * Partial URL representing a directory containing locale .json files
  * or a URL template with a `:locale` path param to a file.

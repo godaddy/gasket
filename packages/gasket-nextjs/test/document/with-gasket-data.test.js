@@ -298,7 +298,7 @@ describe('withGasketData', function () {
     });
 
     it('works with functional components', function () {
-      // eslint-disable-next-line jsdoc/require-jsdoc
+
       function MyFunctionDocument() {
         return (
           createElement(Html, null,
