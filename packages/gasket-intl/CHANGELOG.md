@@ -1,5 +1,12 @@
 # `@gasket/intl`
 
+## 7.5.2
+
+### Patch Changes
+
+- f2ff987: Tune eslint9 configs
+- f2ddbdc: Fix to refresh messages after load
+
 ## 7.5.1
 
 ### Patch Changes

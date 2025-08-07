@@ -1,5 +1,12 @@
 # `@gasket/plugin-docs`
 
+## 7.4.7
+
+### Patch Changes
+
+- f2ff987: Tune eslint9 configs
+  - @gasket/plugin-command@7.5.2
+
 ## 7.4.6
 
 ### Patch Changes

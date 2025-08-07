@@ -1,5 +1,11 @@
 # `@gasket/fetch`
 
+## 7.3.8
+
+### Patch Changes
+
+- f2ff987: Tune eslint9 configs
+
 ## 7.3.7
 
 ### Patch Changes

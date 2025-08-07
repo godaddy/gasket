@@ -1,5 +1,14 @@
 # `@gasket/nextjs`
 
+## 7.6.3
+
+### Patch Changes
+
+- f2ff987: Tune eslint9 configs
+- Updated dependencies [f2ff987]
+  - @gasket/request@7.5.3
+  - @gasket/data@7.5.3
+
 ## 7.6.2
 
 ### Patch Changes

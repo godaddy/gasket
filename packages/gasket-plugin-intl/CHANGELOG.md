@@ -1,5 +1,13 @@
 # `@gasket/plugin-intl`
 
+## 7.5.8
+
+### Patch Changes
+
+- f2ff987: Tune eslint9 configs
+- Updated dependencies [f2ff987]
+  - @gasket/request@7.5.3
+
 ## 7.5.7
 
 ### Patch Changes

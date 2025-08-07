@@ -1,5 +1,11 @@
 # `@gasket/request`
 
+## 7.5.3
+
+### Patch Changes
+
+- f2ff987: Tune eslint9 configs
+
 ## 7.5.2
 
 ### Patch Changes
