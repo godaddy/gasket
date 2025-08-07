@@ -24,12 +24,32 @@ export function lowestStatus(statuses) {
  * @type {import('./index.d.ts').LocaleHandler}
  */
 export class LocaleHandler {
-  /** @type {import('./internal.d.ts').LocaleFileKey[] } */
+
+  /**
+   * This keeps track of all the locale keys that have been loaded
+   * and includes both static and dynamic loads.
+   * @type {import('./internal.d.ts').LocaleFileKey[] }
+   */
   handledKeys = [];
-  /** @type {import('./internal.d.ts').LocaleFileKey[] } */
+
+  /**
+   * This keeps track of all the messages that have been loaded statically
+   * @type {import('./internal.d.ts').LocaleFileKey[] }
+   */
   staticKeys = [];
-  /** @type {import('./internal.d.ts').MessagesRegister } */
+
+  /**
+   * All statically loaded localeFileKeys and their messages
+   * @type {import('./internal.d.ts').MessagesRegister }
+   */
   staticsRegister;
+
+  /**
+   * All loaded messages combined
+   * @type {import('./internal.d.ts').LocaleMessages }
+   */
+  messages;
+
   handledDirty = true;
   staticsDirty = true;
 
@@ -62,13 +82,13 @@ export class LocaleHandler {
   async load(...localeFilePaths) {
     const list = safePaths(localeFilePaths, this.manager.defaultLocaleFilePath);
 
-    return Promise.allSettled(list.map((localeFilePath) => {
+    return Promise.allSettled(list.map(async (localeFilePath) => {
       const localeFileKey = this.getLocaleFileKey(localeFilePath);
       if (!this.handledKeys.includes(localeFileKey)) {
+        await this.manager.load(localeFileKey);
         this.handledDirty = true;
         this.handledKeys.push(localeFileKey);
       }
-      return this.manager.load(localeFileKey);
     }));
   }
 
