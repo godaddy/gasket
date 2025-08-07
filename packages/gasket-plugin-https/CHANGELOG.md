@@ -1,5 +1,11 @@
 # `@gasket/plugin-https`
 
+## 7.3.11
+
+### Patch Changes
+
+- f2ff987: Tune eslint9 configs
+
 ## 7.3.10
 
 ### Patch Changes
