@@ -5,7 +5,7 @@
 ### Patch Changes
 
 - f2ff987: Tune eslint9 configs
-- e8a5b5f: Fix to refresh messages after load
+- f2ddbdc: Fix to refresh messages after load
 
 ## 7.5.1
 
