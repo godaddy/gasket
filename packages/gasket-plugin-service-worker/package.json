@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-service-worker",
-  "version": "7.4.5",
+  "version": "7.4.6",
   "description": "Gasket Service Worker Plugin",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

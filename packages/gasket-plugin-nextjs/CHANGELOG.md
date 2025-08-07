@@ -1,5 +1,13 @@
 # `@gasket/plugin-nextjs`
 
+## 7.6.3
+
+### Patch Changes
+
+- f2ff987: Tune eslint9 configs
+- Updated dependencies [f2ff987]
+  - @gasket/plugin-webpack@7.3.8
+
 ## 7.6.2
 
 ### Patch Changes
