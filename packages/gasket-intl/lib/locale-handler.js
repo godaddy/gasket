@@ -62,13 +62,13 @@ export class LocaleHandler {
   async load(...localeFilePaths) {
     const list = safePaths(localeFilePaths, this.manager.defaultLocaleFilePath);
 
-    return Promise.allSettled(list.map((localeFilePath) => {
+    return Promise.allSettled(list.map(async (localeFilePath) => {
       const localeFileKey = this.getLocaleFileKey(localeFilePath);
       if (!this.handledKeys.includes(localeFileKey)) {
+        await this.manager.load(localeFileKey);
         this.handledDirty = true;
         this.handledKeys.push(localeFileKey);
       }
-      return this.manager.load(localeFileKey);
     }));
   }
 

@@ -121,10 +121,15 @@ describe('LocaleHandler', () => {
       expect(managerLoadSpy).toHaveBeenCalledWith('locales/en-US/grouped');
     });
 
-    it('marks localeFileKeys as handled', () => {
+    it('marks localeFileKeys as handled after load', async () => {
       const handler = new LocaleHandler(manager, 'en-US');
-      handler.load('locales', 'locales/nested', 'locales/:locale/grouped');
 
+      // check not handled before load (no await)
+      const promise = handler.load('locales', 'locales/nested', 'locales/:locale/grouped');
+      expect(handler.handledKeys).toEqual([]);
+
+      // check for handled after load (with await)
+      await promise;
       expect(handler.handledKeys).toEqual(['locales/en-US', 'locales/nested/en-US', 'locales/en-US/grouped']);
     });
   });
@@ -187,9 +192,9 @@ describe('LocaleHandler', () => {
       expect(handler.staticKeys).toEqual(['locales/en-US', 'locales/nested/en-US', 'locales/en-US/grouped']);
     });
 
-    it('marks localeFileKeys as handled and preloaded', () => {
+    it('marks localeFileKeys as handled and preloaded', async () => {
       const handler = new LocaleHandler(manager, 'en-US');
-      handler.loadStatics('locales', 'locales/nested', 'locales/:locale/grouped');
+      await handler.loadStatics('locales', 'locales/nested', 'locales/:locale/grouped');
 
       expect(handler.handledKeys).toEqual(['locales/en-US', 'locales/nested/en-US', 'locales/en-US/grouped']);
       expect(handler.staticKeys).toEqual(['locales/en-US', 'locales/nested/en-US', 'locales/en-US/grouped']);
@@ -295,9 +300,9 @@ describe('LocaleHandler', () => {
     });
 
     // eslint-disable-next-line max-statements
-    it('gets least priority multiple path status', () => {
+    it('gets least priority multiple path status', async () => {
       const handler = new LocaleHandler(manager, 'en-US');
-      handler.load('locales', 'locales/nested', 'locales/:locale/grouped');
+      await handler.load('locales', 'locales/nested', 'locales/:locale/grouped');
 
       let status = handler.getStatus('locales', 'locales/nested', 'locales/:locale/grouped');
       expect(status).toEqual(LocaleFileStatus.error);
