@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-data",
-  "version": "7.4.8",
+  "version": "7.4.9",
   "description": "Supports application-specific settings and configurations",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

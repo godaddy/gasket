@@ -1,5 +1,12 @@
 # `@gasket/plugin-elastic-apm`
 
+## 7.4.8
+
+### Patch Changes
+
+- Updated dependencies [f2ff987]
+  - @gasket/request@7.5.3
+
 ## 7.4.7
 
 ### Patch Changes

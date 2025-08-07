@@ -1,5 +1,17 @@
 # `@gasket/react-intl`
 
+## 7.6.3
+
+### Patch Changes
+
+- f2ff987: Tune eslint9 configs
+- Updated dependencies [f2ff987]
+- Updated dependencies [e8a5b5f]
+  - @gasket/plugin-intl@7.5.8
+  - @gasket/fetch@7.3.8
+  - @gasket/intl@7.5.2
+  - @gasket/data@7.5.3
+
 ## 7.6.2
 
 ### Patch Changes

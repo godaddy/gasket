@@ -51,6 +51,6 @@
     "typescript": "^5.8.2"
   },
   "peerDependencies": {
-    "@gasket/plugin-logger": "^7.3.x"
+    "@gasket/plugin-logger": "^7.3.7"
   }
 }

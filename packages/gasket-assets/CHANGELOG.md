@@ -1,5 +1,11 @@
 # `@gasket/assets`
 
+## 7.4.3
+
+### Patch Changes
+
+- f2ff987: Tune eslint9 configs
+
 ## 7.4.2
 
 ### Patch Changes

@@ -1,5 +1,22 @@
 # `create-gasket-app`
 
+## 7.4.12
+
+### Patch Changes
+
+- f2ff987: Tune eslint9 configs
+- Updated dependencies [f2ff987]
+  - @gasket/plugin-logger@7.3.7
+  - @gasket/plugin-docs@7.4.7
+  - @gasket/request@7.5.3
+  - @gasket/utils@7.6.2
+  - @gasket/core@7.6.2
+  - @gasket/plugin-docusaurus@7.4.5
+  - @gasket/plugin-metadata@7.5.3
+  - @gasket/plugin-command@7.5.2
+  - @gasket/plugin-dynamic-plugins@7.4.1
+  - @gasket/plugin-git@7.4.6
+
 ## 7.4.11
 
 ### Patch Changes

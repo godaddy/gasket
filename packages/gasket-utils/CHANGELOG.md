@@ -1,5 +1,11 @@
 # `@gasket/utils`
 
+## 7.6.2
+
+### Patch Changes
+
+- f2ff987: Tune eslint9 configs
+
 ## 7.6.1
 
 ### Patch Changes

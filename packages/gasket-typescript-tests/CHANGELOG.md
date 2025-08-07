@@ -1,5 +1,11 @@
 # @gasket/typescript-tests
 
+## 7.4.5
+
+### Patch Changes
+
+- f2ff987: Tune eslint9 configs
+
 ## 7.4.4
 
 ### Patch Changes
