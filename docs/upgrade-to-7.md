@@ -384,6 +384,11 @@ require) a setup script.
   }
 ```
 
+If your app was still using the deprecated approach of configuring ElasticAPM
+in the `gasket.config.js`, you will need to remove the `elasticAPM` config
+and use a setup script instead, as described above.
+This will better allow ElasticAPM to fully instrument your app correctly.
+
 See [@gasket/plugin-elastic-apm] for more details about the setup script.
 
 ## Switch to GasketData
