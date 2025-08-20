@@ -120,6 +120,7 @@ function ConditionalFeature() {
     return null;
   }
 
+  // BetaFeature is a placeholder component for demonstration purposes
   return <BetaFeature />;
 }
 ```
