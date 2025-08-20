@@ -144,7 +144,6 @@ await fixImportExtensions('./cjs');
 Clean the output directory before transpilation.
 
 > **Note**: This function is exported from the JavaScript module but not included in the TypeScript definitions.
-
 ```javascript
 import { cleanOutputDirectory } from '@gasket/cjs';
 
