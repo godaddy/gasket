@@ -8,7 +8,7 @@ This document provides comprehensive examples for all components and assets expo
 
 ```jsx
 import React from 'react';
-import GasketLogo from '@gasket/assets/react/gasket-logo';
+import { logo as GasketLogo } from '@gasket/assets/react';
 
 const MyComponent = () => (
   <div>
@@ -21,7 +21,7 @@ const MyComponent = () => (
 
 ```jsx
 import React from 'react';
-import GasketEmblem from '@gasket/assets/react/gasket-emblem';
+import { emblem as GasketEmblem } from '@gasket/assets/react';
 
 const MyComponent = () => (
   <div>
