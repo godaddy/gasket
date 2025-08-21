@@ -34,7 +34,10 @@ export default makeGasket({
     pluginDocusaurus
   ],
   docusaurus: {
-    rootDir: 'documentation',    // Default: '.docs'
+    rootDir: 'documentation',  // Default: '.docs'
+    docsDir: 'content',        // Default: 'docs'
+    port: 8080,                // Default: 3000
+    host: '0.0.0.0'            // Default: 'localhost'
     docsDir: 'content',         // Default: 'docs'
     port: 8080,                 // Default: 3000
     host: '0.0.0.0'            // Default: 'localhost'
