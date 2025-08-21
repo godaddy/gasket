@@ -191,7 +191,7 @@ export default makeGasket({
       ]
     },
     prod: {
-      dynamicPlugins: [] // No dynamic plugins in production
+// No dynamic plugins in production
     }
   }
 });
