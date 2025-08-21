@@ -40,6 +40,9 @@ export default makeGasket({
 
 ```js
 // gasket.js
+import { makeGasket } from '@gasket/core';
+import pluginExpress from '@gasket/plugin-express';
+
 export default makeGasket({
   plugins: [
     pluginExpress
@@ -47,7 +50,7 @@ export default makeGasket({
   express: {
     compression: true,
     trustProxy: (ip) => {
-      // Trust only specific IP ranges
+      // Trust only specific IP addresses
       return ip === '127.0.0.1' || ip === '::1';
     }
   }
