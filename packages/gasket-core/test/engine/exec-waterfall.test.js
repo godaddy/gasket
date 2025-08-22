@@ -83,8 +83,6 @@ describe('The execWaterfall method', () => {
     expect(mockDebug.mock.calls).toEqual([
       ['⋌ root'],
       ['  ◇ execWaterfall(eventA)'],
-      ['⋌ root'],
-      ['  ◇ exec(ready)'],
       ['  ↪ pluginA:eventA'],
       ['  ↪ pluginB:eventA']
     ]);
