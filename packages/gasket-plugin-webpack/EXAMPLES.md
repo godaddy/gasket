@@ -47,6 +47,8 @@ console.log(webpackConfig);
 ### Using getWebpackConfig in a Custom Plugin
 
 ```js
+import webpack from 'webpack';
+
 // my-build-plugin.js
 export default {
   name: 'my-build-plugin',
@@ -63,7 +65,6 @@ export default {
         { isServer: false }
       );
 
-      const webpack = require('webpack');
       const compiler = webpack(webpackConfig);
 
       return new Promise((resolve, reject) => {
