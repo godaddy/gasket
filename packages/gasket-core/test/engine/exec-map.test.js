@@ -92,8 +92,6 @@ describe('The execMap method', () => {
     expect(mockDebug.mock.calls).toEqual([
       ['⋌ root'],
       ['  ◇ execMap(eventA)'],
-      ['⋌ root'],
-      ['  ◇ exec(ready)'],
       ['  ↪ pluginA:eventA'],
       ['  ↪ pluginB:eventA'],
       ['  ↪ pluginC:eventA']
