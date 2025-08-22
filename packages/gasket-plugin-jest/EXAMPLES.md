@@ -17,7 +17,12 @@ npx create-gasket-app@latest my-app --presets @gasket/preset-nextjs
 When creating a React project, the plugin automatically configures Jest with React Testing Library:
 
 ```js
-// Generated jest.config.js for React projects
+### Next.js React Project Configuration
+
+When creating a Next.js React project, the plugin automatically configures Jest with React Testing Library:
+
+```js
+// Generated jest.config.js for Next.js React projects
 import nextJest from 'next/jest.js';
 const pathToApp = 'pages';
 const createJestConfig = nextJest(pathToApp);
