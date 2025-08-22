@@ -28,7 +28,7 @@ export default makeGasket({
     uncaughtExceptionSoftLimit: 1,
     uncaughtExceptionHardLimit: undefined,
     rssSoftLimit: 0.9 * 1024 * 1024 * 1024, // ~900MB
-    rssHardLimit: 1.8 * 1024 * 1024 * 1024, // ~1.9GB
+    rssHardLimit: 1.8 * 1024 * 1024 * 1024, // ~1.8GB
     logOnUnhappy: true
   }
 });
