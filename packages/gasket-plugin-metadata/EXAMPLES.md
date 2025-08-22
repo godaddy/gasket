@@ -18,6 +18,41 @@ export default makeGasket({
 
 ## metadata
 
+```js
+// Complex metadata with configurations
+export default {
+  name: 'gasket-plugin-advanced',
+  hooks: {
+    metadata(gasket, data) {
+      return {
+        ...data,
+        configurations: [{
+          name: 'apiUrl',
+          description: 'API endpoint URL',
+          type: 'string',
+          default: 'https://api.example.com'
+        }, {
+          name: 'enableCache',
+          description: 'Enable caching mechanism',
+          type: 'boolean',
+          default: true
+        }],
+        commands: [{
+          name: 'deploy',
+          description: 'Deploy the application',
+          link: 'docs/deploy.md'
+        }],
+        guides: [{
+          name: 'Getting Started',
+          description: 'Quick start guide',
+          link: 'docs/getting-started.md'
+        }]
+      };
+    }
+  }
+};
+```
+
 Customize plugin metadata at runtime.
 
 ```js
@@ -51,41 +86,6 @@ export default {
             description: 'Helper module for example plugin'
           }
         ]
-      };
-    }
-  }
-};
-```
-
-```js
-// Complex metadata with configurations
-export default {
-  name: 'gasket-plugin-advanced',
-  hooks: {
-    metadata(gasket, data) {
-      return {
-        ...data,
-        configurations: [{
-          name: 'apiUrl',
-          description: 'API endpoint URL',
-          type: 'string',
-          default: 'https://api.example.com'
-        }, {
-          name: 'enableCache',
-          description: 'Enable caching mechanism',
-          type: 'boolean',
-          default: true
-        }],
-        commands: [{
-          name: 'deploy',
-          description: 'Deploy the application',
-          link: 'docs/deploy.md'
-        }],
-        guides: [{
-          name: 'Getting Started',
-          description: 'Quick start guide',
-          link: 'docs/getting-started.md'
-        }]
       };
     }
   }
