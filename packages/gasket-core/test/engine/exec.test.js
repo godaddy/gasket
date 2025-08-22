@@ -169,8 +169,6 @@ describe('The exec method', () => {
     expect(mockDebug.mock.calls).toEqual([
       ['⋌ root'],
       ['  ◇ exec(eventA)'],
-      ['⋌ root'],
-      ['  ◇ exec(ready)'],
       ['  ↪ pluginA:eventA'],
       ['  ↪ pluginB:eventA']
     ]);
