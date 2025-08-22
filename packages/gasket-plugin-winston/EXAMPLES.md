@@ -133,6 +133,7 @@ logger.trace('Trace level debug');
 
 ```js
 // structured-logging.js
+import gasket from './gasket.js';
 const logger = gasket.logger;
 
 // Log with metadata
