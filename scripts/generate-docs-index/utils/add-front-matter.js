@@ -43,6 +43,10 @@ const frontMatterConfig = {
   'LICENSE.md': {
     label: 'License',
     sidebar_position: 10
+  },
+  'EXAMPLES.md': {
+    label: 'Examples',
+    sidebar_position: 50
   }
 };
 
@@ -62,15 +66,23 @@ export default function addFrontMatter(content, filename) {
 
   // Front matter metadata
   // https://docusaurus.io/docs/markdown-features#front-matter
+  const config = frontMatterConfig[filename];
+
   const frontMatter = {
     title: `''`, // empty title to remove redundant title
     hide_title: true,
-    unlisted: frontMatterConfig[filename]?.unlisted || false, // ability to hide from sidebar
-    sidebar_label: frontMatterConfig[filename]?.label || `${formatFilename(filename)}`,
-    sidebar_position: frontMatterConfig[filename]?.sidebar_position || 50
+    unlisted: config?.unlisted || false, // ability to hide from sidebar
+    sidebar_label: config?.label || `${formatFilename(filename)}`,
+    sidebar_position: config?.sidebar_position || 50
   };
 
-  const data = Object.entries(frontMatter).map(([key, value]) => `${key}: ${value}`).join('\n');
+  const data = Object.entries(frontMatter).map(([key, value]) => {
+    // Quote string values that aren't already quoted
+    if (typeof value === 'string' && !value.startsWith("'") && !value.startsWith('"')) {
+      value = `'${value}'`;
+    }
+    return `${key}: ${value}`;
+  }).join('\n');
   const imports = frontMatterConfig[filename]?.imports
     ? `\n${frontMatterConfig[filename].imports.join('\n')}\n`
     : '';

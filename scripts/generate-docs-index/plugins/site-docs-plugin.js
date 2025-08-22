@@ -52,7 +52,10 @@ const txFrontMatter = {
     const frontMatter = {
       title: `''`,
       hide_title: true,
-      sidebar_label: filename === 'README.md' ? `'@gasket/${label}'` : `${formatFilename(filename.split('/').pop())}`
+      // eslint-disable-next-line no-nested-ternary
+      sidebar_label: filename === 'README.md' ? `'@gasket/${label}'` :
+        filename === 'EXAMPLES.md' ? `'Examples'` :
+          `${formatFilename(filename.split('/').pop())}`
     };
 
     const data = Object.entries(frontMatter).map(([key, value]) => `${key}: ${value}`).join('\n');
@@ -74,7 +77,8 @@ export default {
         return {
           files: [
             'README.md',
-            'docs/**/*'
+            'docs/**/*',
+            'EXAMPLES.md'
           ],
           transforms: [
             txFrontMatter,
