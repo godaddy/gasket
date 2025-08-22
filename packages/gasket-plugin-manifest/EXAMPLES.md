@@ -135,37 +135,3 @@ export default {
   }
 };
 ```
-
-### Build-Time Manifest Generation
-
-```js
-// build-manifest-plugin.js
-import { gatherManifestData } from '@gasket/plugin-manifest/lib/utils';
-import { writeFile } from 'fs/promises';
-import path from 'path';
-
-export default {
-  name: 'build-manifest-plugin',
-  hooks: {
-    build: async function(gasket) {
-      // Generate manifest for different environments
-      const contexts = [
-        { name: 'mobile', req: { headers: { 'user-agent': 'Mobile App' } } },
-        { name: 'desktop', req: { headers: { 'user-agent': 'Desktop Browser' } } }
-      ];
-
-      for (const context of contexts) {
-        const manifest = await gatherManifestData(gasket, context);
-        const outputPath = path.join(
-          gasket.config.root,
-          'public',
-          `manifest-${context.name}.json`
-        );
-
-        await writeFile(outputPath, JSON.stringify(manifest, null, 2));
-        gasket.logger.info(`Generated ${context.name} manifest: ${outputPath}`);
-      }
-    }
-  }
-};
-```
