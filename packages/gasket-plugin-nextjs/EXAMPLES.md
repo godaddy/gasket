@@ -115,7 +115,13 @@ export default {
     next(gasket, nextServer) {
       if (gasket.config.env === 'production') {
         nextServer.setAssetPrefix('https://cdn.example.com');
-      }
+    nextConfig(gasket, config) {
+      return {
+        ...config,
+        assetPrefix: gasket.config.env === 'production'
+          ? 'https://cdn.example.com'
+          : config.assetPrefix
+      };
     }
   }
 };
