@@ -271,7 +271,7 @@ export default {
 
         // Check memory usage
         const memUsage = process.memoryUsage();
-        if (memUsage.heapUsed > 100 * 1024 * 1024) { // 100MB threshold
+        if (memUsage.heapUsed > MEMORY_USAGE_THRESHOLD_BYTES) {
           throw new HealthCheckError('High memory usage detected');
         }
 
