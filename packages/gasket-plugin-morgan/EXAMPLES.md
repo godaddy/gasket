@@ -85,7 +85,20 @@ export default makeGasket({
   morgan: {
     format: ':method :url :status :user-id',
     options: {
-      // Note: Custom tokens would need to be defined in morgan directly
+// To use a custom token like ":user-id", you need to define it in Morgan before using it in the format.
+// For example, in your server setup file (e.g., server.js):
+//
+//   import morgan from 'morgan';
+//   morgan.token('user-id', function getUserId(req) {
+//     // Return the user id from the request, or '-' if not available
+//     return req.user ? req.user.id : '-';
+//   });
+//
+// See https://github.com/expressjs/morgan#creating-new-tokens for more details.
+export default makeGasket({
+  morgan: {
+    format: ':method :url :status :user-id',
+    options: {
       // This is just showing the format usage
     }
   }
