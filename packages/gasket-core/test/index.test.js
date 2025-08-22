@@ -1,4 +1,3 @@
-import { expect } from '@jest/globals';
 
 const module  = await import('../lib/gasket.js');
 

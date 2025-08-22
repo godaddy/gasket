@@ -1,22 +1,21 @@
-/* eslint-disable no-process-env */
 
 const { GasketTrace } = await import('../lib/trace.js');
 const { Gasket, makeGasket } = await import('../lib/gasket.js');
 
-const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {
+const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {
 });
-const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {
+const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {
 });
 
 /** @type {import('@gasket/core').Plugin} */
 const mockPlugin = {
   name: 'mockPlugin',
   actions: {
-    doSomething: jest.fn((gasket) => 'the environment is ' + gasket.config.env),
-    doAnotherThing: jest.fn((gasket) => 'the environment is ' + gasket.config.env)
+    doSomething: vi.fn((gasket) => 'the environment is ' + gasket.config.env),
+    doAnotherThing: vi.fn((gasket) => 'the environment is ' + gasket.config.env)
   },
   hooks: {
-    configure: jest.fn().mockImplementation((gasket, config) => {
+    configure: vi.fn().mockImplementation((gasket, config) => {
       return {
         ...config,
         mockStage: 'configure hook'
@@ -29,7 +28,7 @@ const mockPlugin = {
 const mockProdPlugin = {
   name: 'mockProdPlugin',
   hooks: {
-    configure: jest.fn().mockImplementation((gasket, config) => {
+    configure: vi.fn().mockImplementation((gasket, config) => {
       return {
         ...config,
         mockProd: 'configure hook'
@@ -64,7 +63,7 @@ describe('makeGasket', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     delete process.env.GASKET_ENV;
   });
 
@@ -206,7 +205,7 @@ describe('makeGasket', () => {
     });
 
     it('actions are available to configure', () => {
-      const mockAction = jest.fn();
+      const mockAction = vi.fn();
 
       makeGasket({
         plugins: [
@@ -268,7 +267,7 @@ describe('makeGasket', () => {
   });
 
   it('attachments to other branches', () => {
-    const mockAttached = jest.fn();
+    const mockAttached = vi.fn();
 
     makeGasket({
       plugins: [

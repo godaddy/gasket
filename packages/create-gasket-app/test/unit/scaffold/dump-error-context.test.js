@@ -1,11 +1,10 @@
-import { jest } from '@jest/globals';
 import path from 'path';
 
-const mockWriteStub = jest.fn();
-const logStub = jest.spyOn(console, 'log');
-const errorStub = jest.spyOn(console, 'error');
+const mockWriteStub = vi.fn();
+const logStub = vi.spyOn(console, 'log');
+const errorStub = vi.spyOn(console, 'error');
 
-jest.unstable_mockModule('fs/promises', () => ({
+vi.mock('fs/promises', () => ({
   writeFile: mockWriteStub
 }));
 
@@ -25,7 +24,7 @@ describe('dumpErrorContext', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('writes log file to destination', async () => {
