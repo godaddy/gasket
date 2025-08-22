@@ -8,7 +8,7 @@ The plugin's `create` hook automatically runs during app creation. Here are exam
 
 ### API App Configuration
 
-```js
+```json
 // Results in these package.json additions for API apps:
 {
   "devDependencies": {
@@ -28,7 +28,7 @@ The plugin's `create` hook automatically runs during app creation. Here are exam
 
 ### Next.js App Configuration
 
-```js
+```json
 // Results in these package.json additions for Next.js apps:
 {
   "dependencies": {
@@ -49,79 +49,6 @@ The plugin's `create` hook automatically runs during app creation. Here are exam
 // Adds 'dist' to .gitignore and eslintIgnore
 ```
 
-## Generated Files
-
-### API App tsconfig.json
-
-```json
-{
-  "compilerOptions": {
-    "skipLibCheck": true,
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "target": "ESNext",
-    "isolatedModules": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "outDir": "dist",
-    "lib": ["esnext"],
-    "types": ["node"],
-    "baseUrl": "./",
-    "allowJs": true,
-    "strict": false,
-    "incremental": true,
-    "resolveJsonModule": true
-  },
-  "exclude": ["node_modules"],
-  "include": [
-    "./plugins",
-    "./routes",
-    "gasket-data.ts",
-    "server.ts",
-    "gasket.ts"
-  ]
-}
-```
-
-### Next.js App tsconfig.json
-
-```json
-{
-  "compilerOptions": {
-    "skipLibCheck": true,
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "target": "ESNext",
-    "isolatedModules": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "allowImportingTsExtensions": true,
-    "outDir": "dist",
-    "lib": ["esnext", "dom"],
-    "types": ["node"],
-    "baseUrl": ".",
-    "paths": {
-      "@/gasket": ["./dist/gasket.js"]
-    },
-    "allowJs": true,
-    "strict": false,
-    "noEmit": true,
-    "incremental": true,
-    "resolveJsonModule": true,
-    "jsx": "preserve",
-    "plugins": [{ "name": "next" }]
-  },
-  "exclude": ["node_modules"],
-  "include": [
-    "./routes",
-    "./plugins",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts"
-  ]
-}
-```
-
 ### Next.js App tsconfig.server.json
 
 **When generated:** Only for Next.js apps with custom server or HTTPS proxy setup.
@@ -134,35 +61,6 @@ The plugin's `create` hook automatically runs during app creation. Here are exam
 
 **NOT included when:**
 - Standard Next.js setup without custom server or dev proxy
-
-```json
-{
-  "compilerOptions": {
-    "skipLibCheck": true,
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "target": "ESNext",
-    "isolatedModules": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "outDir": "dist",
-    "lib": ["esnext", "dom"],
-    "types": ["node"],
-    "baseUrl": "./",
-    "allowJs": true,
-    "strict": false,
-    "incremental": true,
-    "resolveJsonModule": true
-  },
-  "exclude": ["node_modules"],
-  "include": [
-    "./plugins",
-    "server.ts",
-    "gasket.ts",
-    "gasket-data.ts"
-  ]
-}
-```
 
 **Key differences from main tsconfig.json:**
 - **Module system**: Uses `NodeNext` instead of `bundler` (for Node.js runtime)
