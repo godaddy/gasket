@@ -169,7 +169,7 @@ export default {
 
       // Render Next.js pages
       fastify.get('/special/:id', async (request, reply) => {
-        return next.render(request.raw, reply.raw, '/special-page', {
+        await next.render(request.raw, reply.raw, '/special-page', {
           id: request.params.id
         });
       });
