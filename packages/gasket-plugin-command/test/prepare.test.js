@@ -1,10 +1,10 @@
-import { jest } from '@jest/globals';
 
-const mockAddCommand = jest.fn();
-const mockParse = jest.fn();
-const mockProcessCommand = jest.fn();
 
-jest.unstable_mockModule('../lib/cli.js', () => {
+const mockAddCommand = vi.fn();
+const mockParse = vi.fn();
+const mockProcessCommand = vi.fn();
+
+vi.mock('../lib/cli.js', () => {
   return {
     gasketBin: {
       addCommand: mockAddCommand,
@@ -13,7 +13,7 @@ jest.unstable_mockModule('../lib/cli.js', () => {
   };
 });
 
-jest.unstable_mockModule('../lib/utils/process-command.js', () => {
+vi.mock('../lib/utils/process-command.js', () => {
   return {
     processCommand: mockProcessCommand.mockReturnValue({ command: 'test', hidden: false, isDefault: false })
   };
@@ -25,9 +25,9 @@ describe('prepare', () => {
   let mockGasket, mockConfig;
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     mockGasket = {
-      execSync: jest.fn().mockReturnValue([{ id: 'test', description: 'test', action: jest.fn() }]),
+      execSync: vi.fn().mockReturnValue([{ id: 'test', description: 'test', action: vi.fn() }]),
       config: {
         env: 'development'
       }
