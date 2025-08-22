@@ -10,7 +10,7 @@
 
 The plugin automatically configures Vitest for any project during creation:
 
-```js
+```json
 // Generated package.json scripts
 {
   "scripts": {
@@ -29,7 +29,7 @@ The plugin automatically configures Vitest for any project during creation:
 
 For React projects, additional dependencies and configuration are added:
 
-```js
+```json
 // Additional dependencies for React projects
 {
   "devDependencies": {
