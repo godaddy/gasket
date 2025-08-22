@@ -60,22 +60,6 @@ const supportedLocales = intlManager.locales;
 // ['en-US', 'fr-FR', 'es-ES']
 ```
 
-#### defaultLocaleFilePath
-Get the default locale file path.
-
-```js
-const defaultPath = intlManager.defaultLocaleFilePath;
-// 'locales'
-```
-
-#### staticLocaleFilePaths
-Get the static locale file paths for SSR.
-
-```js
-const staticPaths = intlManager.staticLocaleFilePaths;
-// ['locales/common']
-```
-
 ### Methods
 
 #### resolveLocale(locale)
