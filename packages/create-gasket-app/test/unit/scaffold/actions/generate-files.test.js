@@ -35,7 +35,7 @@ vi.mock('handlebars', () => {
               }
               // Handle jspretty helper for files.globSets
               if (context.files && context.files.globSets) {
-                const prettyJson = JSON.stringify(context.files.globSets, null, 2);
+                const prettyJson = JSON.stringify(context.files.globSets, null, 2).replace(/"/g, "'");
                 result = result.replace(/{{{?\s*jspretty\s+files\.globSets\s*}}}?/g, prettyJson);
               }
               // Check for missing properties and throw error
@@ -53,47 +53,46 @@ vi.mock('handlebars', () => {
   };
 });
 vi.mock('glob', () => ({
-  default: (pattern, options, callback) => {
-    // Mock the callback-style glob function
+  default: vi.fn().mockImplementation((pattern, options, callback) => {
+    // Mock the callback-based glob function that promisify can work with
     if (typeof options === 'function') {
       callback = options;
       options = {};
     }
-    process.nextTick(() => {
-      const fixturesPath = '/Users/jordanpina/dev/gasket-os/gasket/packages/create-gasket-app/test/fixtures/generator';
-      let files;
 
-      if (pattern.includes('/missing/')) {
-        files = [`${fixturesPath}/missing/file-a.md`];
-      } else if (pattern.includes('/other/')) {
-        // Other directory pattern - return template files
-        files = [`${fixturesPath}/other/file-b.md.template`];
-      } else if (pattern.includes('/override/')) {
-        // Override directory pattern - return override files
-        files = [`${fixturesPath}/override/file-a.md`];
-      } else if (pattern.includes('**/*')) {
-        // Recursive pattern - return all files from all directories (5 files)
-        files = [
-          `${fixturesPath}/file-a.md`,
-          `${fixturesPath}/file-b.md`,
-          `${fixturesPath}/missing/file-a.md`,
-          `${fixturesPath}/other/file-b.md.template`,
-          `${fixturesPath}/override/file-a.md`
-        ];
-      } else if (pattern.includes('.*')) {
-        // Dot file pattern - return only dot files (1 file)
-        files = [`${fixturesPath}/.dot-file-a.md`];
-      } else {
-        // Default pattern - return regular files (2 files)
-        files = [
-          `${fixturesPath}/file-a.md`,
-          `${fixturesPath}/file-b.md`
-        ];
-      }
+    const fixturesPath = path.resolve(fileURLToPath(import.meta.url), '..', '..', '..', '..', 'fixtures', 'generator');
+    let files;
 
-      callback(null, files);
-    });
-  }
+    if (pattern.includes('/missing/')) {
+      files = [`${fixturesPath}/missing/file-a.md`];
+    } else if (pattern.includes('/other/')) {
+      // Other directory pattern - return template files
+      files = [`${fixturesPath}/other/file-b.md.template`];
+    } else if (pattern.includes('/override/')) {
+      // Override directory pattern - return override files
+      files = [`${fixturesPath}/override/file-a.md`];
+    } else if (pattern.includes('**/*')) {
+      // Recursive pattern - return all files from all directories (5 files)
+      files = [
+        `${fixturesPath}/file-a.md`,
+        `${fixturesPath}/file-b.md`,
+        `${fixturesPath}/missing/file-a.md`,
+        `${fixturesPath}/other/file-b.md.template`,
+        `${fixturesPath}/override/file-a.md`
+      ];
+    } else if (pattern.includes('.*')) {
+      // Dot file pattern - return only dot files (1 file)
+      files = [`${fixturesPath}/.dot-file-a.md`];
+    } else {
+      // Default pattern - return regular files (2 files)
+      files = [
+        `${fixturesPath}/file-a.md`,
+        `${fixturesPath}/file-b.md`
+      ];
+    }
+
+    process.nextTick(() => callback(null, files));
+  })
 }));
 
 const generateImport = await import('../../../../lib/scaffold/actions/generate-files.js');
@@ -232,7 +231,8 @@ describe('generateFiles', () => {
       await generateFiles({ context: mockContext });
       // get the correct args as calls may be unordered
       const args = mockWriteFileStub.mock.calls.find(call => call[0].includes('file-b.md'));
-      expect(args[1]).toContain(`"source": {\n      "name": "@gasket/plugin-example"\n    }`);
+      expect(args[1]).toContain(`'source': {`);
+      expect(args[1]).toContain(`'name': '@gasket/plugin-example'`);
     });
 
     it('template handles compile errors', async () => {
