@@ -1,4 +1,4 @@
-import { jest, expect } from '@jest/globals';
+
 import { createElement } from 'react';
 import { withGasketData } from '../../lib/document/index.js';
 import NextDocument from 'next/document';
@@ -14,7 +14,7 @@ const NextScript = (props) => createElement('script', { 'data-testid': 'next-scr
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
     // placed on context by render in next@12
-    const defaultGetInitialProps = jest.fn().mockReturnValue({ html: {}, head: {}, styles: {} });
+    const defaultGetInitialProps = vi.fn().mockReturnValue({ html: {}, head: {}, styles: {} });
     const initialProps = await Document.getInitialProps({ ...ctx, defaultGetInitialProps });
     return { ...initialProps };
   }
@@ -35,7 +35,7 @@ class MyDocument extends Document {
 
 MyDocument.getInitialProps = async function getInitialProps(ctx) {
   // placed on context by render in next@12
-  const defaultGetInitialProps = jest.fn().mockReturnValue({ html: {}, head: {}, styles: {} });
+  const defaultGetInitialProps = vi.fn().mockReturnValue({ html: {}, head: {}, styles: {} });
   const initialProps = await Document.getInitialProps({ ...ctx, defaultGetInitialProps });
   return { ...initialProps };
 };
@@ -76,7 +76,7 @@ describe('withGasketData', function () {
   beforeEach(function () {
     mockGasket = {
       actions: {
-        getPublicGasketData: jest.fn().mockReturnValue({})
+        getPublicGasketData: vi.fn().mockReturnValue({})
       }
     };
     mockProps = {
@@ -85,13 +85,13 @@ describe('withGasketData', function () {
       }
     };
     mockContext = {
-      renderPage: jest.fn().mockReturnValue({})
+      renderPage: vi.fn().mockReturnValue({})
     };
   });
 
   describe('#getInitialProps', function () {
     it('executes parent method', async function () {
-      const spy = jest.spyOn(MyDocument, 'getInitialProps');
+      const spy = vi.spyOn(MyDocument, 'getInitialProps');
       WrappedDocument = withGasketData(mockGasket)(MyDocument);
 
       await WrappedDocument.getInitialProps(mockContext);
@@ -118,7 +118,7 @@ describe('withGasketData', function () {
 
     it('gasketData is from action', async function () {
       mockContext.req = {};
-      mockGasket.actions.getPublicGasketData = jest.fn().mockReturnValue({ bogus: true });
+      mockGasket.actions.getPublicGasketData = vi.fn().mockReturnValue({ bogus: true });
 
       WrappedDocument = withGasketData(mockGasket)(MyDocument);
       const results = await WrappedDocument.getInitialProps(mockContext);

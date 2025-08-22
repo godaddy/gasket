@@ -1,4 +1,4 @@
-import { expect } from '@jest/globals';
+
 import { createElement, Children } from 'react';
 import { injectGasketData } from '../lib/inject-gasket-data.js';
 

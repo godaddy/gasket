@@ -1,28 +1,26 @@
-import { jest } from '@jest/globals';
 
-const mockTypescriptPrompt = jest.fn();
 
-jest.mock('@gasket/plugin-typescript/prompts', () => {
-  const mod = jest.requireActual('@gasket/plugin-typescript/prompts');
-  return {
+const mockTypescriptPrompt = vi.fn();
+
+vi.mock('@gasket/plugin-typescript/prompts', () => ({
+  default: {
     promptTypescript: async (context, prompt) => {
-      mod.promptTypescript(context, prompt);
       mockTypescriptPrompt(context, prompt);
+      if (prompt) await prompt();
     }
-  };
-});
+  }
+}));
 
-const mockSwaggerPrompt = jest.fn();
+const mockSwaggerPrompt = vi.fn();
 
-jest.mock('@gasket/plugin-swagger/prompts', () => {
-  const mod = jest.requireActual('@gasket/plugin-swagger/prompts');
-  return {
+vi.mock('@gasket/plugin-swagger/prompts', () => ({
+  default: {
     promptSwagger: async (context, prompt) => {
-      mod.promptSwagger(context, prompt);
       mockSwaggerPrompt(context, prompt);
+      if (prompt) await prompt();
     }
-  };
-});
+  }
+}));
 
 const preset = await import('../lib/index.js');
 
@@ -32,12 +30,12 @@ describe('presetPrompt', () => {
   beforeEach(() => {
     mockContext = {};
     mockAnswers = { typescript: false };
-    mockPrompt = { prompt: jest.fn().mockImplementation(() => mockAnswers) };
+    mockPrompt = { prompt: vi.fn().mockImplementation(() => mockAnswers) };
     presetPrompt = preset.default ? preset.default.hooks.presetPrompt : preset.hooks.presetPrompt;
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('is an async function', () => {
