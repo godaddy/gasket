@@ -231,8 +231,14 @@ describe('generateFiles', () => {
       await generateFiles({ context: mockContext });
       // get the correct args as calls may be unordered
       const args = mockWriteFileStub.mock.calls.find(call => call[0].includes('file-b.md'));
-      expect(args[1]).toContain(`'source': {`);
-      expect(args[1]).toContain(`'name': '@gasket/plugin-example'`);
+      // If the output uses single quotes, convert to double quotes for JSON parsing
+      const jsonStr = args[1].replace(/'/g, '"');
+      const outputObj = JSON.parse(jsonStr);
+      expect(outputObj).toEqual({
+        source: {
+          name: '@gasket/plugin-example'
+        }
+      });
     });
 
     it('template handles compile errors', async () => {
