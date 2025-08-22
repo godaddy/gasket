@@ -122,8 +122,7 @@ import pluginTypescript from '@gasket/plugin-typescript';
 
 export default makeGasket({
   plugins: [
-    pluginExpress,
-    pluginTypescript,
+    pluginExpress
     // ... other plugins
   ]
 });
