@@ -122,6 +122,7 @@ export default makeGasket({
 
 ```js
 // Using custom levels
+import gasket from './gasket.js';
 const logger = gasket.logger;
 
 logger.fatal('Fatal error occurred');
