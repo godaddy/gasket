@@ -48,8 +48,6 @@ export default makeGasket({
       excludes: ['debug', 'lodash']
     },
     nextRouting: true,
-    // Required for getIntlManager action
-    experimentalImportAttributes: true
   }
 });
 ```
