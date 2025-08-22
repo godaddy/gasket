@@ -18,6 +18,8 @@ export default makeGasket({
 });
 ```
 
+> **Note:** The bundle analyzer will only run when the `ANALYZE` environment variable is set or when using the `.analyze` sub-environment (e.g., `GASKET_ENV=local.analyze`). Simply installing the plugin is not sufficient to trigger analysis.
+
 ### Configuration Interface
 
 The plugin extends the `GasketConfig` interface with `bundleAnalyzerConfig`:
@@ -108,6 +110,16 @@ ANALYZE=false next build
 
 # Enable with specific mode
 ANALYZE=server next build
+```
+
+### Conditional Analysis with Sub-Environments
+
+```bash
+# Build without analysis
+GASKET_ENV=local next build
+
+# Build with analysis
+GASKET_ENV=local.analyze next build
 ```
 
 ## Dynamic Plugin Loading
