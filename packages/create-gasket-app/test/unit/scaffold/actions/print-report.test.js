@@ -1,4 +1,3 @@
-import { jest } from '@jest/globals';
 
 const printReport = (await import('../../../../lib/scaffold/actions/print-report')).default;
 
@@ -6,7 +5,7 @@ describe('printReport', () => {
   let mockContext, logStub;
 
   beforeEach(async () => {
-    logStub = jest.spyOn(console, 'log');
+    logStub = vi.spyOn(console, 'log');
 
     mockContext = {
       appName: 'my-app',
@@ -23,7 +22,7 @@ describe('printReport', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('is decorated action', async () => {

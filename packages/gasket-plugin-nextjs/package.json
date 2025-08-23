@@ -17,9 +17,9 @@
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
     "posttest": "pnpm run lint && pnpm run typecheck",
-    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
-    "test:coverage": "pnpm run test --coverage",
-    "test:watch": "pnpm run test --watch",
+    "test": "vitest run --globals",
+    "test:coverage": "vitest run --globals --coverage",
+    "test:watch": "vitest --globals",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
@@ -59,17 +59,16 @@
     "@gasket/plugin-workbox": "workspace:^",
     "@gasket/request": "workspace:^",
     "@types/express": "^4.17.23",
-    "@types/jest": "^29.5.14",
     "@types/node": "^20.17.19",
     "@types/react": "^19.0.12",
     "@types/webpack": "^5.28.5",
     "create-gasket-app": "workspace:^",
-    "jest": "^29.7.0",
     "lodash.merge": "^4.6.2",
     "next": "^15.2.5",
     "nodemon": "^3.1.9",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "vitest": "^3.2.0"
   },
   "peerDependencies": {
     "@gasket/plugin-webpack": "^7.3.8",
@@ -80,8 +79,5 @@
     "presets": [
       "@babel/preset-react"
     ]
-  },
-  "jest": {
-    "rootDir": "test"
   }
 }

@@ -1,4 +1,4 @@
-import { jest, expect } from '@jest/globals';
+
 
 import { withGasketRequestCache, withGasketRequest } from '../lib/wrappers.js';
 import { GasketRequest, makeGasketRequest } from '../lib/request.js';
@@ -13,7 +13,7 @@ describe('withGasketRequestCache', () => {
 
   beforeEach(() => {
     gasket = {};
-    actionFn = jest.fn()
+    actionFn = vi.fn()
       .mockResolvedValueOnce(valueA)
       .mockResolvedValueOnce(valueB);
   });
@@ -86,7 +86,7 @@ describe('withGasketRequestCache', () => {
   it('distinct cached for each wrapped function', async () => {
     const req = { headers: {} };
 
-    const actionFn2 = jest.fn()
+    const actionFn2 = vi.fn()
       .mockResolvedValueOnce(valueC)
       .mockResolvedValueOnce(valueD);
 
@@ -114,7 +114,7 @@ describe('withGasketRequest', () => {
 
   beforeEach(() => {
     gasket = {};
-    actionFn = jest.fn()
+    actionFn = vi.fn()
       .mockResolvedValueOnce(valueA)
       .mockResolvedValueOnce(valueB);
   });

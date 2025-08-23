@@ -1,4 +1,5 @@
-const { GasketEngine }  = await import('../../lib/engine.js');
+
+const { GasketEngine } = await import('../../lib/engine.js');
 
 const mockPlugin = {
   name: '@gasket/plugin-one',
@@ -16,7 +17,7 @@ describe('constructor', () => {
   });
 
   it('calls registerPlugins in the constructor', () => {
-    const spy = jest.spyOn(GasketEngine.prototype, 'registerPlugins');
+    const spy = vi.spyOn(GasketEngine.prototype, 'registerPlugins');
     // eslint-disable-next-line no-new
     new GasketEngine([mockPlugin]);
     expect(spy).toHaveBeenCalledWith([mockPlugin]);

@@ -1,8 +1,8 @@
-import { jest, expect } from '@jest/globals';
+
 import { createElement } from 'react';
 
-const mockResolveGasketData = jest.fn();
-jest.unstable_mockModule('@gasket/data', () => ({ resolveGasketData: mockResolveGasketData }));
+const mockResolveGasketData = vi.fn();
+vi.mock('@gasket/data', () => ({ resolveGasketData: mockResolveGasketData }));
 
 const { withLocaleInitialProps } = await import('../lib/with-locale-initial-props.js');
 
@@ -13,12 +13,12 @@ describe('withLocaleInitialProps', () => {
     mockResolveGasketData.mockResolvedValue({
       intl: { locale: 'en-US' }
     });
-    mockGasket = { actions: { getIntlLocale: jest.fn() } };
+    mockGasket = { actions: { getIntlLocale: vi.fn() } };
     MockComponent = ({ children }) => createElement('div', null, children);
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should inject locale', async () => {

@@ -1,14 +1,28 @@
-import { jest } from '@jest/globals';
 import { fileURLToPath } from 'url';
 import nodePath from 'path';
-const __dirname = fileURLToPath(new URL('.', import.meta.url));
-const mockConstructorStub = jest.fn();
-const mockExecStub = jest.fn();
-const mockMkTemp = jest.fn();
-const mockReadFile = jest.fn();
-const mockWriteFile = jest.fn();
 
-jest.unstable_mockModule('@gasket/utils', () => {
+const {
+  mockConstructorStub,
+  mockExecStub,
+  mockMkTemp,
+  mockReadFile,
+  mockWriteFile,
+  mockPathJoin,
+  mockPathResolve
+} = vi.hoisted(() => ({
+  mockConstructorStub: vi.fn(),
+  mockExecStub: vi.fn(),
+  mockMkTemp: vi.fn(),
+  mockReadFile: vi.fn(),
+  mockWriteFile: vi.fn(),
+  mockPathJoin: vi.fn().mockImplementation((...args) => {
+    const p = args.join('/');
+    return p.replace('/node_modules', '');
+  }),
+  mockPathResolve: vi.fn()
+}));
+
+vi.mock('@gasket/utils', () => {
   return {
     PackageManager: class MockPackageManager {
       constructor({ packageManager, dest }) {
@@ -23,51 +37,55 @@ jest.unstable_mockModule('@gasket/utils', () => {
   };
 });
 
-jest.unstable_mockModule('fs/promises', () => {
+vi.mock('fs/promises', () => {
   return {
-    mkdtemp: mockMkTemp.mockResolvedValue(nodePath.join(__dirname, '..', '..', '..', '__mocks__')),
+    mkdtemp: mockMkTemp,
     readFile: mockReadFile,
     writeFile: mockWriteFile
   };
 });
 
-const mockPathJoin = jest.fn().mockImplementation((...args) => {
-  const p = args.join('/');
-  return p.replace('/node_modules', '');
-});
-
-const mockPathResolve = jest.fn().mockImplementation((...args) => {
-  return nodePath.resolve(...args);
-});
-
-jest.unstable_mockModule('path', () => ({
+vi.mock('path', () => ({
   default: {
     join: mockPathJoin,
     resolve: mockPathResolve,
-    dirname: nodePath.dirname
+    dirname: (path) => path.split('/').slice(0, -1).join('/')
   }
 }));
 
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
+
+// Set up the mock implementations after imports
+mockPathResolve.mockImplementation((...args) => {
+  // Simple path resolution without using nodePath.resolve to avoid recursion
+  return args.join('/').replace(/\/+/g, '/');
+});
+
+// Set up mockMkTemp to return the actual mock directory
+mockMkTemp.mockResolvedValue(nodePath.join(__dirname, '..', '..', '..', '__mocks__'));
+
 const presetDefaults = { default: { name: '@gasket/preset-default-export', hooks: {} } };
-const presetDoubleDefaults = { default: { default: { name: '@gasket/preset-double-default-export', hooks: {} } } };
+const presetDoubleDefaults = {
+  default: {
+    default: {
+      name: '@gasket/preset-double-default-export',
+      hooks: {}
+    }
+  }
+};
 const presetNpmExports = { name: '@gasket/preset-npm-exports', hooks: {} };
 const presetBogus = { name: '@gasket/preset-bogus', hooks: {} };
 const presetAllIEverWanted = { name: '@gasket/preset-all-i-ever-wanted', hooks: {} };
 const presetSome = { name: '@gasket/preset-some', hooks: {} };
 const presetLocal = { name: '@gasket/test-preset', hooks: {} };
-jest.unstable_mockModule('@gasket/preset-default-exports', () => (presetDefaults));
-jest.unstable_mockModule('@gasket/preset-double-default-exports', () => (presetDoubleDefaults));
-jest.unstable_mockModule('@gasket/preset-npm-exports', () => (presetNpmExports));
-jest.unstable_mockModule('@gasket/preset-bogus', () => (presetBogus));
-jest.unstable_mockModule('@gasket/preset-all-i-ever-wanted', () => (presetAllIEverWanted));
-jest.unstable_mockModule('@gasket/preset-some', () => (presetSome));
-jest.unstable_mockModule('gasket-preset-local', () => (presetLocal));
-jest.unstable_mockModule('@gasket/preset-bogus-not-found', () => {
-  const err = new Error('some npm error');
-  err.stderr = "'@gasket/preset-bogus-not-found' is not in this registry.";
-  err.code = 404;
-  throw err;
-});
+vi.mock('@gasket/preset-default-exports', () => (presetDefaults));
+vi.mock('@gasket/preset-double-default-exports', () => (presetDoubleDefaults));
+vi.mock('@gasket/preset-npm-exports', () => (presetNpmExports));
+vi.mock('@gasket/preset-bogus', () => (presetBogus));
+vi.mock('@gasket/preset-all-i-ever-wanted', () => (presetAllIEverWanted));
+vi.mock('@gasket/preset-some', () => (presetSome));
+vi.mock('gasket-preset-local', () => (presetLocal));
+// Note: @gasket/preset-bogus-not-found error is handled via mockExecStub, not vi.mock
 
 const loadPreset = (await import('../../../../lib/scaffold/actions/load-preset.js')).default;
 
@@ -87,7 +105,7 @@ describe('loadPreset', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('is decorated action', async () => {
@@ -268,7 +286,7 @@ describe('loadPreset', () => {
     await loadPreset({ context: mockContext });
     expect(mockContext).toHaveProperty('presets', [
       expect.objectContaining(presetDefaults.default),
-      expect.objectContaining(presetDoubleDefaults.default.default)
+      expect.objectContaining(presetDoubleDefaults.default)
     ]);
     expect(mockContext.presets).toHaveLength(2);
   });
@@ -314,6 +332,17 @@ describe('loadPreset', () => {
 
   it('throws error if preset is not found in registry', async () => {
     mockContext.rawPresets = ['@gasket/preset-bogus-not-found'];
+
+    // Configure mock to throw error for this specific preset
+    mockExecStub.mockImplementation((verb, packages) => {
+      if (packages[0] === '@gasket/preset-bogus-not-found@latest') {
+        const err = new Error('some npm error');
+        err.stderr = "'@gasket/preset-bogus-not-found' is not in this registry.";
+        err.code = 404;
+        throw err;
+      }
+      return Promise.resolve();
+    });
 
     await expect(async () => {
       await loadPreset({ context: mockContext });

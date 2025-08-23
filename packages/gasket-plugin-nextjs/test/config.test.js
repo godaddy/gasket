@@ -182,7 +182,7 @@ describe('createConfig', () => {
   });
 
   it('wraps existing nextConfig webpack hook', async () => {
-    const webpackStub = jest.fn();
+    const webpackStub = vi.fn();
     gasket.config.nextConfig = {
       webpack: webpackStub
     };
@@ -240,16 +240,16 @@ describe('createConfig', () => {
 function mockGasketApi() {
   return {
     actions: {
-      getWebpackConfig: jest.fn().mockImplementation((config) => config)
+      getWebpackConfig: vi.fn().mockImplementation((config) => config)
     },
-    branch: jest.fn().mockReturnThis(),
-    execWaterfall: jest.fn((_, config) => config),
-    execWaterfallSync: jest.fn((_, config) => config),
-    exec: jest.fn().mockResolvedValue({}),
-    execSync: jest.fn().mockReturnValue([]),
-    execApplySync: jest.fn((_, config) => config),
+    branch: vi.fn().mockReturnThis(),
+    execWaterfall: vi.fn((_, config) => config),
+    execWaterfallSync: vi.fn((_, config) => config),
+    exec: vi.fn().mockResolvedValue({}),
+    execSync: vi.fn().mockReturnValue([]),
+    execApplySync: vi.fn((_, config) => config),
     logger: {
-      warn: jest.fn()
+      warn: vi.fn()
     },
     config: {
       root: '/path/to/app',

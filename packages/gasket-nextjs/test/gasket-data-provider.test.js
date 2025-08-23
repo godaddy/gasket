@@ -1,4 +1,4 @@
-import { expect } from '@jest/globals';
+
 import { createElement } from 'react';
 import { render, screen } from '@testing-library/react';
 import { GasketDataProvider } from '../lib/gasket-data-provider.js';

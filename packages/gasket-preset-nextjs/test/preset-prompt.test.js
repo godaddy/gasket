@@ -1,32 +1,29 @@
-import { jest } from '@jest/globals';
 
-const mockNextServerTypePrompt = jest.fn();
-const mockNextDevProxyPrompt = jest.fn();
-const mockTypescriptPrompt = jest.fn();
+const mockNextServerTypePrompt = vi.fn();
+const mockNextDevProxyPrompt = vi.fn();
+const mockTypescriptPrompt = vi.fn();
 
-jest.mock('@gasket/plugin-nextjs/prompts', () => {
-  const mod = jest.requireActual('@gasket/plugin-nextjs/prompts');
-  return {
+vi.mock('@gasket/plugin-nextjs/prompts', () => ({
+  default: {
     promptNextServerType: async (context, prompt) => {
-      mod.promptNextServerType(context, prompt);
       mockNextServerTypePrompt(context, prompt);
+      if (prompt) await prompt();
     },
     promptNextDevProxy: async (context, prompt) => {
-      mod.promptNextDevProxy(context, prompt);
       mockNextDevProxyPrompt(context, prompt);
+      if (prompt) await prompt();
     }
-  };
-});
+  }
+}));
 
-jest.mock('@gasket/plugin-typescript/prompts', () => {
-  const mod = jest.requireActual('@gasket/plugin-typescript/prompts');
-  return {
+vi.mock('@gasket/plugin-typescript/prompts', () => ({
+  default: {
     promptTypescript: async (context, prompt) => {
-      mod.promptTypescript(context, prompt);
       mockTypescriptPrompt(context, prompt);
+      if (prompt) await prompt();
     }
-  };
-});
+  }
+}));
 
 const preset = await import('../lib/index.js');
 
@@ -36,7 +33,7 @@ describe('presetPrompt', () => {
   beforeEach(() => {
     mockContext = {};
     mockAnswers = { typescript: false };
-    mockPrompt = { prompt: jest.fn().mockImplementation(() => mockAnswers) };
+    mockPrompt = { prompt: vi.fn().mockImplementation(() => mockAnswers) };
     presetPrompt = preset.default ? preset.default.hooks.presetPrompt : preset.hooks.presetPrompt;
   });
 

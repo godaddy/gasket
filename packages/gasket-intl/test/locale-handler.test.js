@@ -1,10 +1,9 @@
-import { jest } from '@jest/globals';
 import { LocaleFileStatus } from '../lib/constants.js';
 import { LocaleHandler, lowestStatus } from '../lib/locale-handler.js';
 import { pause } from './helpers.js';
 
-jest.spyOn(console, 'log').mockImplementation(() => { });
-jest.spyOn(console, 'error').mockImplementation(() => { });
+vi.spyOn(console, 'log').mockImplementation(() => { });
+vi.spyOn(console, 'error').mockImplementation(() => { });
 
 
 describe('LocaleHandler', () => {
@@ -20,23 +19,23 @@ describe('LocaleHandler', () => {
       },
       defaultLocaleFilePath: 'locales',
       imports: {
-        'locales/en-US': jest.fn(() => Promise.resolve({ default: { key: 'value' } })),
-        'locales/fr-FR': jest.fn(() => Promise.resolve({ default: { key: 'valeur' } })),
-        'locales/ar-AE': jest.fn(() => Promise.resolve({ default: { key: 'قيمة' } }))
+        'locales/en-US': vi.fn(() => Promise.resolve({ default: { key: 'value' } })),
+        'locales/fr-FR': vi.fn(() => Promise.resolve({ default: { key: 'valeur' } })),
+        'locales/ar-AE': vi.fn(() => Promise.resolve({ default: { key: 'قيمة' } }))
       }
     };
 
     const mod = await import('../lib/internal-intl-manager.js');
     IntlManager = mod.InternalIntlManager;
-    managerLoadSpy = jest.spyOn(IntlManager.prototype, 'load');
-    managerGetStatusSpy = jest.spyOn(IntlManager.prototype, 'getStatus');
+    managerLoadSpy = vi.spyOn(IntlManager.prototype, 'load');
+    managerGetStatusSpy = vi.spyOn(IntlManager.prototype, 'getStatus');
     manager = new IntlManager(mockManifest);
     await pause();
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe('.getLocaleFileKey', () => {
@@ -142,7 +141,7 @@ describe('LocaleHandler', () => {
         staticLocaleFilePaths: ['locales/component'], // triggers init logic
         getMessages: () => ({}),
         getStatus: () => 'notLoaded',
-        load: jest.fn()
+        load: vi.fn()
       };
 
       const handler = new LocaleHandler(manager, 'en');
@@ -330,11 +329,11 @@ describe('LocaleHandler', () => {
 
   describe('.getAllMessages', () => {
     beforeEach(() => {
-      mockManifest.imports['locales/nested/en-US'] = jest.fn(() => Promise.resolve({
+      mockManifest.imports['locales/nested/en-US'] = vi.fn(() => Promise.resolve({
         default:
           { extra: 'extra' }
       }));
-      mockManifest.imports['locales/override/en-US'] = jest.fn(() => Promise.resolve({
+      mockManifest.imports['locales/override/en-US'] = vi.fn(() => Promise.resolve({
         default: {
           extra: 'override',
           key: 'override',
@@ -446,11 +445,11 @@ describe('LocaleHandler', () => {
 
   describe('.getStaticsRegister', () => {
     beforeEach(() => {
-      mockManifest.imports['locales/nested/en-US'] = jest.fn(() => Promise.resolve({
+      mockManifest.imports['locales/nested/en-US'] = vi.fn(() => Promise.resolve({
         default:
           { extra: 'extra' }
       }));
-      mockManifest.imports['locales/override/en-US'] = jest.fn(() => Promise.resolve({
+      mockManifest.imports['locales/override/en-US'] = vi.fn(() => Promise.resolve({
         default: {
           extra: 'override',
           key: 'override',

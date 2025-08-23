@@ -1,4 +1,4 @@
-import { expect } from '@jest/globals';
+
 import { createElement } from 'react';
 import { render, queryByAttribute } from '@testing-library/react';
 import { GasketDataScript } from '../lib/gasket-data-script.js';

@@ -1,8 +1,12 @@
-const { webpackConfig, validateNoGasketCore, externalizeGasketCore } = require('../lib/webpack-config.js');
+vi.mock('../lib/utils/try-resolve.js', () => vi.fn());
+
 const webpack = require('webpack');
 
-jest.mock('../lib/utils/try-resolve.js');
-const tryResolve = require('../lib/utils/try-resolve.js');
+const tryResolveModulePath = require.resolve('../lib/utils/try-resolve.js');
+let tryResolve;
+let webpackConfig;
+let validateNoGasketCore;
+let externalizeGasketCore;
 
 const mockFilename = '/path/to/app/gasket.js';
 
@@ -10,14 +14,24 @@ describe('webpackConfigHook', () => {
   let mockGasket, mockWebpackConfig, mockContext;
 
   beforeEach(() => {
-    tryResolve.mockImplementation((moduleName) => moduleName);
+    // Stub try-resolve with a vi.fn and ensure webpack-config picks it up
+    require.cache[tryResolveModulePath] = {
+      id: tryResolveModulePath,
+      filename: tryResolveModulePath,
+      loaded: true,
+      exports: vi.fn(() => null)
+    };
+    // Re-require webpack-config after stubbing
+    delete require.cache[require.resolve('../lib/webpack-config.js')];
+    ({ webpackConfig, validateNoGasketCore, externalizeGasketCore } = require('../lib/webpack-config.js'));
+    tryResolve = require(tryResolveModulePath);
 
     mockGasket = {
       config: {
         root: '/path/to/app'
       },
       logger: {
-        warn: jest.fn()
+        warn: vi.fn()
       }
     };
     mockWebpackConfig = {
@@ -26,12 +40,13 @@ describe('webpackConfigHook', () => {
       plugins: []
     };
     mockContext = {
-      webpack
+      webpack,
+      isServer: false
     };
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('throws if externals is not an array', () => {
@@ -42,28 +57,27 @@ describe('webpackConfigHook', () => {
   });
 
   it('adds empty alias for try-resolve to avoid bundling', () => {
-    tryResolve.mockReturnValue(mockFilename);
     const target = require.resolve('../lib/utils/try-resolve.js');
     const result = webpackConfig(mockGasket, mockWebpackConfig, mockContext);
     expect(result.resolve.alias).toEqual(expect.objectContaining({ [target]: false }));
   });
 
   it('adds empty alias for gasket.js file in client', () => {
-    tryResolve.mockReturnValue(mockFilename);
+    tryResolve.mockImplementation((moduleName) => moduleName.includes('gasket.js') ? mockFilename : null);
     const result = webpackConfig(mockGasket, mockWebpackConfig, mockContext);
     expect(result.resolve.alias).toEqual(expect.objectContaining({ [mockFilename]: false }));
   });
 
   it('adds empty alias for expected default filenames', () => {
     const mjsFilename = '/path/to/app/gasket.mjs';
-    tryResolve.mockReturnValue(mjsFilename);
+    tryResolve.mockImplementation((moduleName) => moduleName.includes('gasket.mjs') ? mjsFilename : null);
     const result = webpackConfig(mockGasket, mockWebpackConfig, mockContext);
     expect(result.resolve.alias).toEqual(expect.objectContaining({ [mjsFilename]: false }));
   });
 
   it('adds empty alias for gasket.ts file in client', () => {
     const tsFilename = '/path/to/app/gasket.ts';
-    tryResolve.mockReturnValue(tsFilename);
+    tryResolve.mockImplementation((moduleName) => moduleName.includes('gasket.ts') ? tsFilename : null);
     const result = webpackConfig(mockGasket, mockWebpackConfig, mockContext);
     expect(result.resolve.alias).toEqual(expect.objectContaining({ [tsFilename]: false }));
   });
@@ -86,15 +100,14 @@ describe('webpackConfigHook', () => {
   });
 });
 
+const mockCtxTemplate = () => ({ request: '', dependencyType: '' });
+
 describe('externalizeGasketCore', () => {
   let mockCtx, mockCallback;
 
   beforeEach(() => {
-    mockCtx = {
-      request: '',
-      dependencyType: ''
-    };
-    mockCallback = jest.fn();
+    mockCtx = mockCtxTemplate();
+    mockCallback = vi.fn();
   });
 
   it('returns module type for esm dependency when request matches gasket core', () => {
@@ -130,10 +143,8 @@ describe('validateNoGasketCore', () => {
   let mockCtx, mockCallback;
 
   beforeEach(() => {
-    mockCtx = {
-      request: ''
-    };
-    mockCallback = jest.fn();
+    mockCtx = { request: '' };
+    mockCallback = vi.fn();
   });
 
   it('throws error when request matches gasket core', () => {

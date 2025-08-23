@@ -36,7 +36,16 @@ export default defineConfig([
     },
     languageOptions: {
       globals: {
-        ...jest.environments.globals.globals
+        ...jest.environments.globals.globals,
+        vi: 'readonly',
+        expect: 'readonly',
+        describe: 'readonly',
+        it: 'readonly',
+        test: 'readonly',
+        beforeEach: 'readonly',
+        afterEach: 'readonly',
+        beforeAll: 'readonly',
+        afterAll: 'readonly'
       }
     },
     rules: {
@@ -100,7 +109,8 @@ export default defineConfig([
     rules: {
       'jsdoc/require-jsdoc': 'off',
       'jsdoc/require-returns': 'off',
-      'jsdoc/require-param': 'off'
+      'jsdoc/require-param': 'off',
+      'jest/no-conditional-expect': 'off'
     }
   }
 ]);

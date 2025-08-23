@@ -1,6 +1,4 @@
-/** @jest-environment jsdom */
 
-import { jest } from '@jest/globals';
 
 describe('gasketData', function () {
   let getElementByIdStub;
@@ -16,16 +14,16 @@ describe('gasketData', function () {
     });
     Object.defineProperty(global.document, 'getElementById', {
       writable: true,
-      value: jest.fn()
+      value: vi.fn()
     });
   });
 
   beforeEach(function () {
-    getElementByIdStub = jest.spyOn(global.document, 'getElementById');
+    getElementByIdStub = vi.spyOn(global.document, 'getElementById');
   });
 
   afterEach(function () {
-    jest.resetModules();
+    vi.resetModules();
   });
 
   it('returns parsed JSON data parsed', async function () {
@@ -55,7 +53,7 @@ describe('gasketData', function () {
       value: undefined
     });
 
-    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => { });
+    const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => { });
 
     const gasketData = await importFunction();
     const results = gasketData();

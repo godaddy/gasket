@@ -1,15 +1,15 @@
 /** @jest-environment node */
 
-import { jest } from '@jest/globals';
+
 
 const mockCookieStore = {
-  getAll: jest.fn().mockReturnValue([
+  getAll: vi.fn().mockReturnValue([
     { name: 'cookie1', value: 'value1' },
     { name: 'cookie2', value: 'value2' }
   ])
 };
 
-const mockCookies = jest.fn()
+const mockCookies = vi.fn()
   .mockReturnValue(mockCookieStore);
 
 const mockHeaderEntires = [
@@ -18,14 +18,14 @@ const mockHeaderEntires = [
 ];
 
 const mockHeaderStore = {
-  entries: jest.fn().mockReturnValue(mockHeaderEntires)
+  entries: vi.fn().mockReturnValue(mockHeaderEntires)
 };
 
 
-const mockHeaders = jest.fn()
+const mockHeaders = vi.fn()
   .mockReturnValue(mockHeaderStore);
 
-jest.mock('next/headers', () => {
+vi.mock('next/headers', () => {
   return {
     cookies: mockCookies,
     headers: mockHeaders
@@ -41,11 +41,11 @@ describe('request', () => {
   });
 
   beforeEach(() => {
-    mockHeaders.mockReturnValue({ entries: jest.fn().mockReturnValue(mockHeaderEntires) });
+    mockHeaders.mockReturnValue({ entries: vi.fn().mockReturnValue(mockHeaderEntires) });
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('returns same instance for repeat request', async () => {
@@ -55,7 +55,7 @@ describe('request', () => {
   });
 
   it('returns unique instance when headers differ', async () => {
-    mockHeaders.mockReturnValueOnce({ entries: jest.fn().mockReturnValueOnce([]) });
+    mockHeaders.mockReturnValueOnce({ entries: vi.fn().mockReturnValueOnce([]) });
 
     const results1 = await request();
     const results2 = await request();

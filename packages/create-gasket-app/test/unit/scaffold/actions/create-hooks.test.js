@@ -1,8 +1,7 @@
-import { jest } from '@jest/globals';
-const mockHandlerStub = jest.fn();
-const mockExecApplyStub = jest.fn();
+const mockHandlerStub = vi.fn();
+const mockExecApplyStub = vi.fn();
 
-jest.unstable_mockModule('../../../../lib/scaffold/files.js', () => ({ Files: class Files { } }));
+vi.mock('../../../../lib/scaffold/files.js', () => ({ Files: class Files { } }));
 
 const { Files } = await import('../../../../lib/scaffold/files.js');
 const { ConfigBuilder } = await import('../../../../lib/scaffold/config-builder.js');
@@ -23,12 +22,12 @@ describe('createHooks', () => {
       presets: ['bogus-preset'],
       plugins: ['bogus-A-plugin', 'bogus-B-plugin'],
       pkg: {},
-      runWith: jest.fn().mockImplementation(plugin => ({ ...plugin, proxied: true }))
+      runWith: vi.fn().mockImplementation(plugin => ({ ...plugin, proxied: true }))
     };
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('adds files to context', async () => {

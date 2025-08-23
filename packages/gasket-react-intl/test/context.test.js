@@ -1,5 +1,5 @@
 import { LocaleFileStatus } from '@gasket/intl';
-import { jest } from '@jest/globals';
+
 import { makeContext } from '../lib/context.js';
 
 describe('makeContext', () => {
@@ -7,12 +7,12 @@ describe('makeContext', () => {
 
   beforeEach(() => {
     localeHandler = {
-      getStatus: jest.fn().mockReturnValue(LocaleFileStatus.notLoaded),
-      getAllMessages: jest.fn(),
-      load: jest.fn().mockResolvedValue()
+      getStatus: vi.fn().mockReturnValue(LocaleFileStatus.notLoaded),
+      getAllMessages: vi.fn(),
+      load: vi.fn().mockResolvedValue()
     };
     messages = { test_message: 'Test Message' };
-    setMessages = jest.fn();
+    setMessages = vi.fn();
   });
 
   it('should return an object with expected properties', () => {

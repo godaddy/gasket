@@ -1,6 +1,5 @@
-import { jest } from '@jest/globals';
 
-const mockExecWaterfallStub = jest.fn();
+const mockExecWaterfallStub = vi.fn();
 const presetConfigHooks = (await import('../../../../lib/scaffold/actions/preset-config-hooks')).default;
 
 describe('presetConfigHooks', () => {

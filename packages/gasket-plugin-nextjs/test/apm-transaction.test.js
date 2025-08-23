@@ -6,12 +6,12 @@ describe('The apmTransaction hook', () => {
   beforeEach(() => {
     transaction = {
       name: 'GET *',
-      addLabels: jest.fn()
+      addLabels: vi.fn()
     };
 
     mockGasket = {
       actions: {
-        getNextRoute: jest.fn()
+        getNextRoute: vi.fn()
       }
     };
   });

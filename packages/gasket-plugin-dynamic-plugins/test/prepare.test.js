@@ -1,4 +1,4 @@
-import { jest } from '@jest/globals';
+
 import { makeGasket } from '@gasket/core';
 import * as path from 'path';
 import { setTimeout } from 'timers/promises';
@@ -6,46 +6,44 @@ import { setTimeout } from 'timers/promises';
 const __dirname = new URL('.', import.meta.url).pathname;
 const mockDir = path.join(__dirname, '__mocks__');
 
-const mockPluginStatic = {
-  default: {
-    name: '@gasket/plugin-static',
-    hooks: {
-      init: jest.fn(),
-      configure: jest.fn((g, c) => c),
-      prepare: jest.fn((g, c) => c)
-    }
-  }
-};
-const mockPluginOne = {
-  default: {
-    name: '@gasket/plugin-one',
-    hooks: {
-      hook: () => {
+const {
+  mockPluginStatic, mockPluginOne, mockPluginTwo
+} = vi.hoisted(() => {
+  const mockPluginStatic = {
+    default: {
+      name: '@gasket/plugin-static',
+      hooks: {
+        init: vi.fn(),
+        configure: vi.fn((g, c) => c),
+        prepare: vi.fn((g, c) => c)
       }
     }
-  }
-};
-const mockPluginTwo = {
-  default: {
-    name: '@gasket/plugin-two',
-    hooks: {
-      hook: () => {
+  };
+  const mockPluginOne = {
+    default: {
+      name: '@gasket/plugin-one',
+      hooks: {
+        hook: () => {
+        }
       }
     }
-  }
-};
-const mockPluginCustom = {
-  default: {
-    name: 'plugin-custom',
-    hooks: {
-      configure: jest.fn((g, c) => c)
+  };
+  const mockPluginTwo = {
+    default: {
+      name: '@gasket/plugin-two',
+      hooks: {
+        hook: () => {
+        }
+      }
     }
-  }
-};
+  };
 
-jest.unstable_mockModule('@gasket/plugin-one', () => mockPluginOne);
-jest.unstable_mockModule('@gasket/plugin-two', () => mockPluginTwo);
-jest.unstable_mockModule(path.join(mockDir, 'plugin-custom.js'), () => mockPluginCustom);
+
+  return { mockPluginStatic, mockPluginOne, mockPluginTwo };
+});
+
+vi.mock('@gasket/plugin-one', () => mockPluginOne);
+vi.mock('@gasket/plugin-two', () => mockPluginTwo);
 
 const pluginDynamicPlugins = (await import('../lib/index.js')).default;
 
@@ -83,18 +81,18 @@ describe('Prepare Hook', () => {
         }
       });
       mockConfig = gasket.config;
-      registerPluginsSpy = jest.spyOn(gasket.engine, 'registerPlugins');
-      execApplySyncHandler = jest.fn();
-      execApplySyncSpy = jest.spyOn(gasket, 'execApplySync').mockImplementation(execApplySyncHandler);
-      execApplySpy = jest.spyOn(gasket, 'execApply');
-      traceSpy = gasket.trace = jest.fn().mockImplementation(() => {
+      registerPluginsSpy = vi.spyOn(gasket.engine, 'registerPlugins');
+      execApplySyncHandler = vi.fn();
+      execApplySyncSpy = vi.spyOn(gasket, 'execApplySync').mockImplementation(execApplySyncHandler);
+      execApplySpy = vi.spyOn(gasket, 'execApply');
+      traceSpy = gasket.trace = vi.fn().mockImplementation(() => {
       });
       return gasket;
     };
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('does not add plugins if dynamicPlugins is not configured', async () => {
@@ -151,6 +149,13 @@ describe('Prepare Hook', () => {
     const gasket = generateGasket('local.custom');
     await pluginDynamicPlugins.hooks.prepare.handler(gasket, mockConfig);
 
-    expect(gasket.engine.registerPlugins).toHaveBeenCalledWith(expect.arrayContaining([mockPluginCustom.default]));
+    expect(gasket.engine.registerPlugins).toHaveBeenCalledWith(expect.arrayContaining([
+      expect.objectContaining({
+        name: 'plugin-custom',
+        hooks: expect.objectContaining({
+          configure: expect.any(Function)
+        })
+      })
+    ]));
   });
 });

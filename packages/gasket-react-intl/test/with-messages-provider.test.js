@@ -1,10 +1,10 @@
-import { jest } from '@jest/globals';
+
 import { render } from '@testing-library/react';
 import { createElement } from 'react';
 
-const htmleescape = jest.fn();
+const htmleescape = vi.fn();
 
-jest.unstable_mockModule('htmlescape', () => {
+vi.mock('htmlescape', () => {
   return {
     default: htmleescape
   };
@@ -22,16 +22,16 @@ describe('withMessagesProvider', () => {
     withMessagesProvider = mod.withMessagesProvider;
 
     mockLocaleHandler = {
-      getMessages: jest.fn(),
-      loadStatics: jest.fn(),
-      getAllMessages: jest.fn(),
-      getStaticsRegister: jest.fn().mockReturnValue({})
+      getMessages: vi.fn(),
+      loadStatics: vi.fn(),
+      getAllMessages: vi.fn(),
+      getStaticsRegister: vi.fn().mockReturnValue({})
     };
 
     mockIntlManager = {
       defaultLocaleFilePath: 'locales',
-      getMessages: jest.fn(),
-      handleLocale: jest.fn().mockReturnValue(mockLocaleHandler)
+      getMessages: vi.fn(),
+      handleLocale: vi.fn().mockReturnValue(mockLocaleHandler)
     };
   });
 

@@ -1,4 +1,4 @@
-import { jest } from '@jest/globals';
+
 
 // eslint-disable-next-line no-console
 const consoleError = console.error;
@@ -9,7 +9,7 @@ const consoleError = console.error;
  * @returns {MockInstance<Console, any>} mock console.error
  */
 export function mockConsoleError() {
-  return jest.spyOn(console, 'error').mockImplementation((msg) => {
+  return vi.spyOn(console, 'error').mockImplementation((msg) => {
     if (msg.includes('ReactDOMTestUtils.act')) return;
     consoleError(msg);
   });

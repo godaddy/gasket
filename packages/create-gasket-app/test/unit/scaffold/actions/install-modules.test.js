@@ -1,5 +1,4 @@
-import { jest } from '@jest/globals';
-const installStub = jest.fn();
+const installStub = vi.fn();
 const installModules = (await import('../../../../lib/scaffold/actions/install-modules.js')).default;
 
 describe('installModules', () => {

@@ -1,7 +1,6 @@
-import { jest } from '@jest/globals';
 
-const mockDebug = jest.fn();
-jest.unstable_mockModule('debug', () => ({
+const mockDebug = vi.fn();
+vi.mock('debug', () => ({
   default: () => mockDebug
 }));
 
@@ -13,8 +12,8 @@ describe('recursion', () => {
 
   const setupGasket = (...plugins) => {
     gasket = new Gasket({ plugins });
-    waterfallSpy = jest.spyOn(gasket.engine, 'execWaterfall');
-    jest.spyOn(gasket, 'exec').mockImplementation(async (event, ...args) => {
+    waterfallSpy = vi.spyOn(gasket.engine, 'execWaterfall');
+    vi.spyOn(gasket, 'exec').mockImplementation(async (event, ...args) => {
       if (event === 'ready') {
         return 'mocked ready';
       }
@@ -24,14 +23,14 @@ describe('recursion', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   beforeEach(() => {
     pluginA = {
       name: 'pluginA',
       hooks: {
-        eventA: jest.fn((_gasket, value) => {
+        eventA: vi.fn((_gasket, value) => {
           return value * 7;
         })
       }
@@ -40,7 +39,7 @@ describe('recursion', () => {
     pluginB = {
       name: 'pluginB',
       hooks: {
-        eventA: jest.fn(async (_gasket, value) => {
+        eventA: vi.fn(async (_gasket, value) => {
           return await (_gasket.execWaterfall('eventB', value)) + 100;
         })
       }
@@ -49,7 +48,7 @@ describe('recursion', () => {
     pluginDirect = {
       name: 'pluginDirect',
       hooks: {
-        eventA: jest.fn(async (_gasket, value) => {
+        eventA: vi.fn(async (_gasket, value) => {
           return await (_gasket.execWaterfall('eventA', value)) + 100;
         })
       }
@@ -58,10 +57,10 @@ describe('recursion', () => {
     pluginNested = {
       name: 'pluginNested',
       hooks: {
-        eventA: jest.fn(async (_gasket, value) => {
+        eventA: vi.fn(async (_gasket, value) => {
           return await (_gasket.traceBranch().execWaterfall('eventB', value)) + 100;
         }),
-        eventB: jest.fn(async (_gasket, value) => {
+        eventB: vi.fn(async (_gasket, value) => {
           return await (_gasket.traceBranch().execWaterfall('eventA', value)) + 200;
         })
       }
@@ -70,16 +69,16 @@ describe('recursion', () => {
     pluginDeep = {
       name: 'pluginDeep',
       hooks: {
-        eventA: jest.fn(async (_gasket, value) => {
+        eventA: vi.fn(async (_gasket, value) => {
           return await (_gasket.execWaterfall('eventB', value)) + 100;
         }),
-        eventB: jest.fn(async (_gasket, value) => {
+        eventB: vi.fn(async (_gasket, value) => {
           return await (_gasket.exec('eventC', value)) + 200;
         }),
-        eventC: jest.fn(async (_gasket, value) => {
+        eventC: vi.fn(async (_gasket, value) => {
           return await (_gasket.execWaterfall('eventD', value)) + 300;
         }),
-        eventD: jest.fn(async (_gasket, value) => {
+        eventD: vi.fn(async (_gasket, value) => {
           return await (_gasket.execWaterfall('eventA', value)) + 400;
         })
       }
@@ -88,10 +87,10 @@ describe('recursion', () => {
     pluginBranched = {
       name: 'pluginBranched',
       hooks: {
-        eventA: jest.fn(async (_gasket, value) => {
+        eventA: vi.fn(async (_gasket, value) => {
           return await (_gasket.execWaterfall('eventB', value)) + 100;
         }),
-        eventB: jest.fn(async (_gasket, value) => {
+        eventB: vi.fn(async (_gasket, value) => {
           return await (_gasket.execWaterfall('eventA', value)) + 200;
         })
       }
@@ -101,7 +100,7 @@ describe('recursion', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('allows sequential varying lifecycles', async () => {

@@ -7,3 +7,4 @@ export default defineConfig({
     includeSource: ['lib/**/*.{js,jsx,ts,tsx}']
   }
 });
+

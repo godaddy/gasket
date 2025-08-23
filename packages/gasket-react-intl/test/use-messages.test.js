@@ -1,18 +1,19 @@
-import { jest } from '@jest/globals';
+
 import { LocaleFileStatus } from '@gasket/intl';
 
 const mockContext = {
-  getStatus: jest.fn(),
-  load: jest.fn(),
+  getStatus: vi.fn(),
+  load: vi.fn(),
   messages: {}
 };
 
-jest.unstable_mockModule('react', () => {
-  return {
-    default: jest.requireActual('react'),
-    useContext: jest.fn(() => mockContext)
-  };
-});
+vi.mock('react', () => ({
+  default: {
+    createContext: vi.fn(),
+    useContext: vi.fn(() => mockContext)
+  },
+  useContext: vi.fn(() => mockContext)
+}));
 
 describe('useLocaleFile', () => {
   let useLocaleFile;
@@ -24,7 +25,7 @@ describe('useLocaleFile', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('returns the expected status', () => {

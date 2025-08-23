@@ -1,13 +1,12 @@
-import { jest } from '@jest/globals';
 import { LocaleFileStatus } from '../lib/index.js';
 import { LocaleHandler } from '../lib/locale-handler.js';
 import { pause } from './helpers.js';
 
 const allKeys = ['locales/en-US', 'locales/fr-FR', 'locales/ar-AE'];
 
-const consoleLogSpy = jest.spyOn(console, 'log').mockImplementation(() => {
+const consoleLogSpy = vi.spyOn(console, 'log').mockImplementation(() => {
 });
-const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {
+const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {
 });
 
 const expectedRegister = {
@@ -27,20 +26,20 @@ describe('InternalIntlManager', () => {
       defaultLocale: 'en-US',
       locales: ['en-US', 'fr-FR', 'ar-AE'],
       imports: {
-        'locales/en-US': jest.fn(() => Promise.resolve({ default: { key: 'value' } })),
-        'locales/fr-FR': jest.fn(() => Promise.resolve({ default: { key: 'valeur' } })),
-        'locales/ar-AE': jest.fn(() => Promise.resolve({ default: { key: 'قيمة' } }))
+        'locales/en-US': vi.fn(() => Promise.resolve({ default: { key: 'value' } })),
+        'locales/fr-FR': vi.fn(() => Promise.resolve({ default: { key: 'valeur' } })),
+        'locales/ar-AE': vi.fn(() => Promise.resolve({ default: { key: 'قيمة' } }))
       }
     };
 
     const mod = await import('../lib/internal-intl-manager.js');
     IntlManager = mod.InternalIntlManager;
-    initSpy = jest.spyOn(IntlManager.prototype, 'init');
-    loadSpy = jest.spyOn(IntlManager.prototype, 'load');
+    initSpy = vi.spyOn(IntlManager.prototype, 'init');
+    loadSpy = vi.spyOn(IntlManager.prototype, 'load');
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe('.init', () => {
@@ -167,7 +166,7 @@ describe('InternalIntlManager', () => {
 
     beforeEach(() => {
       manager = new IntlManager(mockManifest);
-      mockManifest.imports[mockLocaleFileKey] = jest.fn(async () => {
+      mockManifest.imports[mockLocaleFileKey] = vi.fn(async () => {
         await pause(5);
         return { default: { key: 'fake' } };
       });
@@ -220,7 +219,7 @@ describe('InternalIntlManager', () => {
     it('registers error status for bad imports', async () => {
       const mockError = new Error('BOOM!');
       const badLocaleFileKey = 'missing/locale/key';
-      mockManifest.imports[badLocaleFileKey] = jest.fn(async () => {
+      mockManifest.imports[badLocaleFileKey] = vi.fn(async () => {
         throw mockError;
       });
 
@@ -275,7 +274,7 @@ describe('InternalIntlManager', () => {
     });
 
     it('returns `error`', async () => {
-      mockManifest.imports['locales/en-US'] = jest.fn(async () => {
+      mockManifest.imports['locales/en-US'] = vi.fn(async () => {
         throw new Error('BOOM!');
       });
 

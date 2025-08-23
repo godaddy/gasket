@@ -1,4 +1,4 @@
-import { jest } from '@jest/globals';
+
 import create from '../lib/create.js';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
@@ -10,10 +10,10 @@ describe('create', () => {
   beforeEach(() => {
     mockContext = {
       pkg: {
-        add: jest.fn()
+        add: vi.fn()
       },
       gasketConfig: {
-        addPlugin: jest.fn()
+        addPlugin: vi.fn()
       }
     };
   });

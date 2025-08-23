@@ -1,4 +1,3 @@
-import { jest } from '@jest/globals';
 import { Command } from 'commander';
 import { processCommand } from '../../../lib/utils/index.js';
 
@@ -133,7 +132,7 @@ describe('process-command', () => {
       return program;
     })();
 
-    const spy = jest.spyOn(console, 'log').mockImplementation(() => { });
+    const spy = vi.spyOn(console, 'log').mockImplementation(() => { });
     const defaultCmd = {
       id: 'default-cmd',
       description: 'test command',

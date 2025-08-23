@@ -1,10 +1,11 @@
-import { Gasket } from '../../lib/gasket.js';
+
+const { Gasket } = await import('../../lib/gasket.js');
 
 describe('The hook method', () => {
   let mockGasket, dynamicHook;
 
   beforeEach(() => {
-    dynamicHook = jest.fn();
+    dynamicHook = vi.fn();
 
     const pluginA =
       {
@@ -20,7 +21,7 @@ describe('The hook method', () => {
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('injects lifecycle event hooks into a Gasket instance', async () => {

@@ -48,9 +48,9 @@
     "lint:fix": "pnpm run lint --fix",
     "posttest": "pnpm run lint && pnpm run typecheck",
     "prepublishOnly": "pnpm run build",
-    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
-    "test:coverage": "pnpm run test --coverage",
-    "test:watch": "pnpm run test --watch",
+    "test": "vitest run --globals",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
@@ -79,18 +79,15 @@
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.3.0",
     "@types/react": "^19.0.12",
-    "jest": "^29.7.0",
+    "@vitest/coverage-v8": "^3.2.0",
     "jsdom": "^20.0.3",
     "next": "^15.2.5",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "vitest": "^3.2.0"
   },
   "peerDependencies": {
     "next": ">=14 <16",
     "react": ">=18 <20"
-  },
-  "jest": {
-    "testEnvironment": "jsdom",
-    "transform": {}
   }
 }

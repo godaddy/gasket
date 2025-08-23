@@ -2,7 +2,7 @@
 /** @jest-environment node */
 
 import { GasketRequest } from '@gasket/request';
-import { jest } from '@jest/globals';
+
 
 class MockCookieStore {
   constructor(cookies) {
@@ -14,16 +14,16 @@ class MockCookieStore {
   }
 }
 
-const mockCookies = jest.fn().mockReturnValue(
+const mockCookies = vi.fn().mockReturnValue(
   new MockCookieStore([
     { name: 'cookie1', value: 'value1' },
     { name: 'cookie2', value: 'value2' }
   ])
 );
 
-const mockHeaders = jest.fn();
+const mockHeaders = vi.fn();
 
-jest.mock('next/headers', () => {
+vi.mock('next/headers', () => {
   return {
     cookies: mockCookies,
     headers: mockHeaders
@@ -46,7 +46,7 @@ describe('request', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('returns GasketRequest instance', async () => {
@@ -73,7 +73,7 @@ describe('request', () => {
   });
 
   it('returns unique instance when headers differ', () => {
-    mockHeaders.mockReturnValueOnce({ entries: jest.fn().mockReturnValueOnce([]) });
+    mockHeaders.mockReturnValueOnce({ entries: vi.fn().mockReturnValueOnce([]) });
 
     const results1 = request();
     const results2 = request();

@@ -1,12 +1,12 @@
 /** @jest-environment node */
 
-import { jest, expect } from '@jest/globals';
+
 import { createElement } from 'react';
 
 // eslint-disable-next-line no-console
 const consoleError = console.error;
 // ignore known act() warnings
-jest.spyOn(console, 'error').mockImplementation((msg) => {
+vi.spyOn(console, 'error').mockImplementation((msg) => {
   if (msg.includes('ReactDOMTestUtils.act')) return;
   consoleError(msg);
 });
@@ -17,11 +17,11 @@ describe('withGasketDataProvider', function () {
   let mockGasket;
 
   beforeEach(() => {
-    mockGasket = { actions: { getPublicGasketData: jest.fn() } };
+    mockGasket = { actions: { getPublicGasketData: vi.fn() } };
   });
 
   afterEach(() => {
-    jest.resetModules();
+    vi.resetModules();
   });
 
   it('should inject gasketData when SSR', async () => {

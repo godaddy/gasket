@@ -1,14 +1,21 @@
-const { setupNextHandling } = require('../lib/utils/setup-next-app');
-
+// Mock Next.js FIRST before any other imports
 const nextHandler = {
-  prepare: jest.fn().mockResolvedValue(),
-  getRequestHandler: jest.fn().mockResolvedValue({})
+  prepare: vi.fn().mockResolvedValue(),
+  getRequestHandler: vi.fn().mockResolvedValue({}),
+  buildId: '1234',
+  name: 'testapp'
 };
 
-const mockNext = jest.fn().mockReturnValue(nextHandler);
+// Monkey-patch Node's require to stub `next`
+const Module = require('module');
+const originalRequire = Module.prototype.require;
+const mockNext = vi.fn().mockReturnValue(nextHandler);
+Module.prototype.require = function (id) {
+  if (id === 'next') return mockNext;
+  return originalRequire.apply(this, arguments);
+};
 
-jest.mock('next', () => mockNext);
-
+const { setupNextHandling } = require('../lib/utils/setup-next-app');
 const getModule = () => require('../lib/utils/setup-next-app');
 
 describe('setupNextApp', () => {
@@ -16,7 +23,7 @@ describe('setupNextApp', () => {
 
   beforeEach(() => {
     module = getModule();
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     // eslint-disable-next-line no-process-env
     delete process.env.GASKET_DEV;
   });
@@ -84,21 +91,21 @@ describe('setupNextApp', () => {
 });
 
 describe('setupNextHandling', () => {
-  const mockNextHandler = jest.fn();
+  const mockNextHandler = vi.fn();
   const nextServer = {
     getRequestHandler: () => mockNextHandler
   };
 
   const gasket = {
     traceRoot: () => ({
-      exec: jest.fn()
+      exec: vi.fn()
     })
   };
 
   it('route handler calls nextHandler for Fastify', async () => {
     const fastifyApp = {
-      route: jest.fn(),
-      inject: jest.fn()
+      route: vi.fn(),
+      inject: vi.fn()
     };
 
     setupNextHandling(nextServer, fastifyApp, gasket);
@@ -123,11 +130,11 @@ function mockGasketApi() {
     command: {
       id: 'fake'
     },
-    execWaterfall: jest.fn((_, arg) => arg),
-    exec: jest.fn().mockResolvedValue({}),
-    execSync: jest.fn().mockReturnValue([]),
+    execWaterfall: vi.fn((_, arg) => arg),
+    exec: vi.fn().mockResolvedValue({}),
+    execSync: vi.fn().mockReturnValue([]),
     logger: {
-      warn: jest.fn()
+      warn: vi.fn()
     },
     config: {
       webpack: {}, // user specified webpack config
@@ -136,6 +143,6 @@ function mockGasketApi() {
       http: 3000,
       hostname: 'localhost'
     },
-    traceRoot: jest.fn().mockReturnThis()
+    traceRoot: vi.fn().mockReturnThis()
   };
 }

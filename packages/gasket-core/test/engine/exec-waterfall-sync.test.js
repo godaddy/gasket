@@ -1,7 +1,6 @@
-import { jest } from '@jest/globals';
 
-const mockDebug = jest.fn();
-jest.unstable_mockModule('debug', () => ({
+const mockDebug = vi.fn();
+vi.mock('debug', () => ({
   default: () => mockDebug
 }));
 
@@ -15,7 +14,7 @@ describe('The execWaterfallSync method', () => {
     pluginA = {
       name: 'pluginA',
       hooks: {
-        eventA: jest.fn((gasket, value) => {
+        eventA: vi.fn((gasket, value) => {
           return value * 7;
         }),
         eventB: () => null
@@ -25,7 +24,7 @@ describe('The execWaterfallSync method', () => {
     pluginB = {
       name: 'pluginB',
       hooks: {
-        eventA: jest.fn((gasket, value) => {
+        eventA: vi.fn((gasket, value) => {
           return value + 4;
         }),
         eventB: () => null
@@ -36,7 +35,7 @@ describe('The execWaterfallSync method', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('sequentially transforms a value', () => {
@@ -59,7 +58,7 @@ describe('The execWaterfallSync method', () => {
   });
 
   it('branch isolate passed through', () => {
-    const spy = jest.spyOn(mockGasket.engine, 'execWaterfallSync');
+    const spy = vi.spyOn(mockGasket.engine, 'execWaterfallSync');
     const branch = mockGasket.traceBranch();
     const result = branch.execWaterfallSync('eventA', 5);
 
