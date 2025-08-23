@@ -146,6 +146,8 @@ describe('The execApply method', () => {
     expect(mockDebug.mock.calls).toEqual([
       ['⋌ root'],
       ['  ◇ execApply(eventA)'],
+      ['⋌ root'],
+      ['  ◇ exec(ready)'],
       ['  ↪ pluginA:eventA'],
       ['  ↪ pluginB:eventA'],
       ['  ↪ pluginC:eventA']
