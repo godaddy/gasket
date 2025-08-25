@@ -109,8 +109,7 @@ export default defineConfig([
     rules: {
       'jsdoc/require-jsdoc': 'off',
       'jsdoc/require-returns': 'off',
-      'jsdoc/require-param': 'off',
-      'jest/no-conditional-expect': 'off'
+      'jsdoc/require-param': 'off'
     }
   }
 ]);

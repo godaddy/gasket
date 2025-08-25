@@ -55,7 +55,9 @@ describe('CreateRuntime', () => {
     try {
       runtime.appName = 'proxied';
     } catch {
+      // eslint-disable-next-line jest/no-conditional-expect
       expect(runtime.appName).toEqual('proxied');
+      // eslint-disable-next-line jest/no-conditional-expect
       expect(runtime.appName).not.toEqual(appName);
     }
   });
@@ -68,8 +70,11 @@ describe('CreateRuntime', () => {
       runtime.pkg = '';
       runtime.source = '';
     } catch {
+      // eslint-disable-next-line jest/no-conditional-expect
       expect(runtime.files).toEqual(files);
+      // eslint-disable-next-line jest/no-conditional-expect
       expect(runtime.pkg).toEqual(pkg);
+      // eslint-disable-next-line jest/no-conditional-expect
       expect(runtime.source).toEqual(source);
     }
   });
