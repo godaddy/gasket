@@ -7,6 +7,8 @@ const mockMkdirpStub = vi.fn();
 const mockGlobStub = vi.fn();
 let registerHelperSpy;
 
+const actualHandlebars = await vi.importActual('handlebars');
+
 vi.mock('fs/promises', () => {
   return {
     default: {
@@ -20,32 +22,7 @@ vi.mock('handlebars', () => {
   return {
     default: {
       create: () => {
-        const handlebars = {
-          registerHelper: vi.fn(),
-          compile: vi.fn().mockImplementation((template) => {
-            // Return a function that processes the template with context
-            return (context) => {
-              // Simple template replacement
-              let result = template;
-              if (context.appName) {
-                result = result.replace(/{{{?\s*appName\s*}}}?/g, context.appName);
-              }
-              if (context.source && context.source.name) {
-                result = result.replace(/{{{?\s*json\s+source\s*}}}?/g, JSON.stringify(context.source));
-              }
-              // Handle jspretty helper for files.globSets
-              if (context.files && context.files.globSets) {
-                const prettyJson = JSON.stringify(context.files.globSets, null, 2).replace(/"/g, "'");
-                result = result.replace(/{{{?\s*jspretty\s+files\.globSets\s*}}}?/g, prettyJson);
-              }
-              // Check for missing properties and throw error
-              if (template.includes('{{{ jspretty missing }}}') && !context.missing) {
-                throw new Error("Cannot read properties of undefined (reading 'missing')");
-              }
-              return result;
-            };
-          })
-        };
+        const handlebars = actualHandlebars.default.create();
         registerHelperSpy = vi.spyOn(handlebars, 'registerHelper');
         return handlebars;
       }
@@ -54,7 +31,7 @@ vi.mock('handlebars', () => {
 });
 vi.mock('glob', () => ({
   default: vi.fn().mockImplementation((pattern, options, callback) => {
-    // Mock the callback-based glob function that promisify can work with
+    // Handle callback vs options argument placement
     if (typeof options === 'function') {
       callback = options;
       options = {};
