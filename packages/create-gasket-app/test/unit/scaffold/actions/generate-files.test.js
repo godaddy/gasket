@@ -4,7 +4,6 @@ import path from 'path';
 const mockReadFileStub = vi.fn();
 const mockWriteFileStub = vi.fn();
 const mockMkdirpStub = vi.fn();
-const mockGlobStub = vi.fn();
 let registerHelperSpy;
 
 const actualHandlebars = await vi.importActual('handlebars');
@@ -29,54 +28,18 @@ vi.mock('handlebars', () => {
     }
   };
 });
-vi.mock('glob', () => ({
-  default: vi.fn().mockImplementation((pattern, options, callback) => {
-    // Handle callback vs options argument placement
-    if (typeof options === 'function') {
-      callback = options;
-      options = {};
-    }
-
-    const fixturesPath = path.resolve(fileURLToPath(import.meta.url), '..', '..', '..', '..', 'fixtures', 'generator');
-    let files;
-
-    if (pattern.includes('/missing/')) {
-      files = [`${fixturesPath}/missing/file-a.md`];
-    } else if (pattern.includes('/other/')) {
-      // Other directory pattern - return template files
-      files = [`${fixturesPath}/other/file-b.md.template`];
-    } else if (pattern.includes('/override/')) {
-      // Override directory pattern - return override files
-      files = [`${fixturesPath}/override/file-a.md`];
-    } else if (pattern.includes('**/*')) {
-      // Recursive pattern - return all files from all directories (5 files)
-      files = [
-        `${fixturesPath}/file-a.md`,
-        `${fixturesPath}/file-b.md`,
-        `${fixturesPath}/missing/file-a.md`,
-        `${fixturesPath}/other/file-b.md.template`,
-        `${fixturesPath}/override/file-a.md`
-      ];
-    } else if (pattern.includes('.*')) {
-      // Dot file pattern - return only dot files (1 file)
-      files = [`${fixturesPath}/.dot-file-a.md`];
-    } else {
-      // Default pattern - return regular files (2 files)
-      files = [
-        `${fixturesPath}/file-a.md`,
-        `${fixturesPath}/file-b.md`
-      ];
-    }
-
-    process.nextTick(() => callback(null, files));
-  })
-}));
+vi.mock('glob', async () => {
+  const mod = await vi.importActual('glob');
+  return {
+    default: vi.fn(mod.default)
+  };
+});
 
 const generateImport = await import('../../../../lib/scaffold/actions/generate-files.js');
 const generateFiles = generateImport.default;
 const { _getDescriptors, _assembleDescriptors } = generateImport;
 const fixtures = path.resolve(fileURLToPath(import.meta.url), '..', '..', '..', '..', 'fixtures');
-// glob is now properly mocked via vi.mock
+
 
 describe('generateFiles', () => {
   let mockContext;
@@ -85,10 +48,6 @@ describe('generateFiles', () => {
     mockReadFileStub.mockImplementation(async (file, encoding) => fs.readFileSync(file, encoding)); // eslint-disable-line no-sync
     mockWriteFileStub.mockResolvedValue();
     mockMkdirpStub.mockResolvedValue();
-    mockGlobStub.mockResolvedValue([
-      '/create-gasket-app/test/fixtures/generator/file-a.md',
-      '/create-gasket-app/test/fixtures/generator/file-b.md'
-    ]);
 
     mockContext = {
       appName: 'my-app',
