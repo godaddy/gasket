@@ -202,31 +202,6 @@ export default function CheckoutPage() {
 }
 ```
 
-### Conditional Loading
-
-```javascript
-import { useLocaleFile, LocaleFileStatus, useMessages } from '@gasket/react-intl';
-
-export default function ConditionalComponent({ showAdvanced }) {
-  const basicStatus = useLocaleFile('/locales/basic');
-  const advancedStatus = showAdvanced ? useLocaleFile('/locales/advanced') : LocaleFileStatus.loaded;
-  const messages = useMessages();
-
-  const allLoaded = basicStatus === LocaleFileStatus.loaded && advancedStatus === LocaleFileStatus.loaded;
-
-  if (!allLoaded) {
-    return <div>Loading...</div>;
-  }
-
-  return (
-    <div>
-      <h1>{messages.title}</h1>
-      {showAdvanced && <div>{messages.advancedContent}</div>}
-    </div>
-  );
-}
-```
-
 ## LocaleFileRequired
 
 Component that conditionally renders children based on locale file loading status.
@@ -420,76 +395,6 @@ function ParentComponent() {
       onFocus={() => inputRef.current.select()}
     />
   );
-}
-```
-
-## ensureArray
-
-Utility function that ensures a value is an array and filters out falsy values.
-
-```javascript
-import { ensureArray } from '@gasket/react-intl';
-
-// Single value becomes array
-console.log(ensureArray('single')); // ['single']
-
-// Array stays array
-console.log(ensureArray(['a', 'b', 'c'])); // ['a', 'b', 'c']
-
-// Filters out falsy values
-console.log(ensureArray(['a', null, '', 'b', undefined, 'c'])); // ['a', 'b', 'c']
-
-// Null/undefined becomes empty array
-console.log(ensureArray(null)); // []
-console.log(ensureArray(undefined)); // []
-
-// Practical usage in components
-function MyComponent({ localeFiles }) {
-  const paths = ensureArray(localeFiles);
-
-  return (
-    <div>
-      Loading {paths.length} locale files: {paths.join(', ')}
-    </div>
-  );
-}
-
-// Works with single string or array
-<MyComponent localeFiles="/locales/common" />
-<MyComponent localeFiles={['/locales/common', '/locales/forms']} />
-```
-
-## needsToLoad
-
-Utility function that determines if a locale file status indicates loading is needed.
-
-```javascript
-import { needsToLoad, LocaleFileStatus } from '@gasket/react-intl';
-
-// Check if loading is needed
-console.log(needsToLoad(LocaleFileStatus.notHandled)); // true
-console.log(needsToLoad(LocaleFileStatus.notLoaded));  // true
-console.log(needsToLoad(LocaleFileStatus.loading));    // false
-console.log(needsToLoad(LocaleFileStatus.loaded));     // false
-console.log(needsToLoad(LocaleFileStatus.error));      // false
-
-// Practical usage
-function CustomLocaleLoader({ localeFilePath }) {
-  const status = useLocaleFile(localeFilePath);
-
-  if (needsToLoad(status)) {
-    return <div>Initiating load for {localeFilePath}...</div>;
-  }
-
-  if (status === LocaleFileStatus.loading) {
-    return <div>Loading {localeFilePath}...</div>;
-  }
-
-  if (status === LocaleFileStatus.error) {
-    return <div>Failed to load {localeFilePath}</div>;
-  }
-
-  return <div>Ready! Loaded {localeFilePath}</div>;
 }
 ```
 
