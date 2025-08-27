@@ -34,7 +34,7 @@ declare module '@gasket/core' {
   }
 
   interface HookExecTypes {
-    commands(): GasketCommandDefinition;
+    commands(): GasketCommandDefinition | GasketCommandDefinition[];
     build(): void;
   }
 }
