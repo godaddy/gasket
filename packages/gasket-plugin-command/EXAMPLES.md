@@ -230,6 +230,55 @@ export default {
 };
 ```
 
+### Multiple Commands Hook (Array Return)
+
+```js
+export default {
+  name: 'multi-command-plugin',
+  hooks: {
+    /** @type {import('@gasket/core').HookHandler<'commands'>} */
+    commands(gasket) {
+      return [
+        {
+          id: 'db:migrate',
+          description: 'Run database migrations',
+          action: async () => {
+            console.log('Running migrations...');
+            await gasket.exec('migrate');
+          }
+        },
+        {
+          id: 'db:seed',
+          description: 'Seed the database with initial data',
+          action: async () => {
+            console.log('Seeding database...');
+            await gasket.exec('seed');
+          }
+        },
+        {
+          id: 'db:reset',
+          description: 'Reset the database',
+          options: [
+            {
+              name: 'force',
+              description: 'Force reset without confirmation',
+              type: 'boolean',
+              short: 'f'
+            }
+          ],
+          action: async (options) => {
+            if (options.force || await confirmReset()) {
+              console.log('Resetting database...');
+              await gasket.exec('reset');
+            }
+          }
+        }
+      ];
+    }
+  }
+};
+```
+
 ## Build Lifecycle Hook
 
 ### Build Hook with Configuration
