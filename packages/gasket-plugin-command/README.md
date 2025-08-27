@@ -33,7 +33,8 @@ export default makeGasket({
 
 The `commands` lifecycle is executed during the `configure` hook if the `gasket`
 CLI command is present in the `argv`. You can define commands that include
-arguments, options, and custom parsing logic.
+arguments, options, and custom parsing logic. The hook can return either a
+single command definition object or an array of command definitions.
 
 #### Examples Basic Command
 

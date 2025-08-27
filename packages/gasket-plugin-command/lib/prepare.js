@@ -5,10 +5,13 @@ import { processCommand } from './utils/process-command.js';
 export default function prepare(gasket, config) {
   if (!config.command) return config;
 
-  /** @type {import('./index.d.ts').GasketCommandDefinition[]} */
+  /** @type {(import('./index.d.ts').GasketCommandDefinition | import('./index.d.ts').GasketCommandDefinition[])[]} */
   const cmdDefs = gasket.execSync('commands');
 
-  cmdDefs.forEach((cmdDef) => {
+  // Flatten in case some plugins return arrays
+  const flattenedCmdDefs = cmdDefs.flatMap(cmdDef => Array.isArray(cmdDef) ? cmdDef : [cmdDef]);
+
+  flattenedCmdDefs.forEach((cmdDef) => {
     const { command, hidden, isDefault } = processCommand(cmdDef);
     gasketBin.addCommand(command, { hidden, isDefault });
   });
