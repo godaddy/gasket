@@ -118,7 +118,7 @@ console.log(gasketRequest.headers['content-type']); // 'application/json'
 
 ## withGasketRequest
 
-Higher-order function that wraps action functions to receive a normalized `GasketRequest`.
+Higher-order function that wraps GasketActions functions to receive a normalized `GasketRequest`.
 
 ### Basic Usage
 
