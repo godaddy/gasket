@@ -1,7 +1,6 @@
-import { jest } from '@jest/globals';
-const mockMkdirStub = jest.fn();
+const mockMkdirStub = vi.fn();
 
-jest.unstable_mockModule('fs/promises', () => ({
+vi.mock('fs/promises', () => ({
   mkdir: mockMkdirStub
 }));
 
@@ -22,7 +21,7 @@ describe('mkdir', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('is decorated action', async () => {

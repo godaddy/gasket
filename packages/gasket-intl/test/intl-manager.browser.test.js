@@ -1,6 +1,3 @@
-/** @jest-environment jsdom */
-
-import { jest } from '@jest/globals';
 import { LocaleHandler } from '../lib/locale-handler.js';
 import { pause } from './helpers.js';
 
@@ -21,24 +18,24 @@ describe('InternalIntlManager', () => {
       defaultLocale: 'en-US',
       locales: ['en-US', 'fr-FR', 'ar-AE'],
       imports: {
-        'locales/en-US': jest.fn(() => Promise.resolve({ default: { key: 'value' } })),
-        'locales/fr-FR': jest.fn(() => Promise.resolve({ default: { key: 'valeur' } })),
-        'locales/ar-AE': jest.fn(() => Promise.resolve({ default: { key: 'قيمة' } }))
+        'locales/en-US': vi.fn(() => Promise.resolve({ default: { key: 'value' } })),
+        'locales/fr-FR': vi.fn(() => Promise.resolve({ default: { key: 'valeur' } })),
+        'locales/ar-AE': vi.fn(() => Promise.resolve({ default: { key: 'قيمة' } }))
       }
     };
 
     const mod = await import('../lib/internal-intl-manager.js');
     IntlManager = mod.InternalIntlManager;
-    initSpy = jest.spyOn(IntlManager.prototype, 'init');
-    loadSpy = jest.spyOn(IntlManager.prototype, 'load');
+    initSpy = vi.spyOn(IntlManager.prototype, 'init');
+    loadSpy = vi.spyOn(IntlManager.prototype, 'load');
 
-    getElementByIdSpy = jest.spyOn(document, 'getElementById').mockReturnValue({
+    getElementByIdSpy = vi.spyOn(document, 'getElementById').mockReturnValue({
       textContent: JSON.stringify(expectedRegister)
     });
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe('.init', () => {

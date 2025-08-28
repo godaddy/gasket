@@ -24,9 +24,9 @@
     "lint:fix": "pnpm run lint --fix",
     "posttest": "pnpm run lint && pnpm run typecheck",
     "prepublishOnly": "pnpm run build",
-    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
-    "test:coverage": "pnpm run test --coverage",
-    "test:watch": "pnpm run test --watch",
+    "test": "vitest run --globals",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
@@ -50,10 +50,8 @@
     "@gasket/cjs": "workspace:^",
     "@gasket/core": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",
+    "@vitest/coverage-v8": "^3.2.0",
     "create-gasket-app": "workspace:^",
-    "jest": "^29.7.0"
-  },
-  "jest": {
-    "testEnvironment": "node"
+    "vitest": "^3.2.0"
   }
 }

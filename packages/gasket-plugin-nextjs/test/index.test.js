@@ -1,27 +1,24 @@
 /* eslint-disable max-statements */
-const expressApp = Object.assign(jest.fn(), {
-  set: jest.fn(),
-  use: jest.fn(),
-  all: jest.fn()
-});
 
-const nextHandler = jest.fn();
-
+// Monkey-patch Node's require to stub `next` before any imports
+const Module = require('module');
+const originalRequire = Module.prototype.require;
+const nextHandler = vi.fn();
 const nextServer = {
-  prepare: jest.fn().mockResolvedValue(),
-  getRequestHandler: () => nextHandler,
+  prepare: vi.fn().mockResolvedValue(),
+  getRequestHandler: vi.fn(() => nextHandler),
   buildId: '1234',
   name: 'testapp'
 };
+Module.prototype.require = function (id) {
+  if (id === 'next') return vi.fn(() => nextServer);
+  return originalRequire.apply(this, arguments);
+};
 
-const mockSetupNextAppStub = jest.fn(() => nextServer);
-
-jest.mock('../lib/utils/setup-next-app', () => {
-  const mod = jest.requireActual('../lib/utils/setup-next-app');
-  return {
-    setupNextApp: mockSetupNextAppStub,
-    setupNextHandling: mod.setupNextHandling
-  };
+const expressApp = Object.assign(vi.fn(), {
+  set: vi.fn(),
+  use: vi.fn(),
+  all: vi.fn()
 });
 
 const fastify = require('fastify')({
@@ -33,15 +30,17 @@ describe('Plugin', function () {
   const plugin = require('../lib/');
 
   it('is an object', () => {
-    expect(typeof plugin).toBe('object');
+    expect(plugin).toBeInstanceOf(Object);
   });
 
   it('has expected properties', () => {
-    expect(plugin).toHaveProperty('name', name);
-    expect(plugin).toHaveProperty('version', version);
-    expect(plugin).toHaveProperty('description', description);
-    expect(plugin).toHaveProperty('actions');
-    expect(plugin).toHaveProperty('hooks');
+    expect(plugin).toMatchObject({
+      name,
+      version,
+      description,
+      actions: expect.any(Object),
+      hooks: expect.any(Object)
+    });
   });
 
   it('has expected hooks', () => {
@@ -126,7 +125,7 @@ describe('express hook', () => {
 
     const mockReq = { headers: {} };
     const mockRes = { locals: { gasketData: { intl: { locale: 'fr-FR' } } } };
-    const mockNext = jest.fn();
+    const mockNext = vi.fn();
     fn(mockReq, mockRes, mockNext);
     expect(mockReq.headers).toHaveProperty('cookie', ';NEXT_LOCALE=fr-FR');
   });
@@ -138,7 +137,7 @@ describe('express hook', () => {
     const fn = expressApp.use.mock.calls[0][0];
     const mockReq = { headers: { cookie: 'bogus=data' } };
     const mockRes = { locals: { gasketData: { intl: { locale: 'fr-FR' } } } };
-    const mockNext = jest.fn();
+    const mockNext = vi.fn();
     await fn(mockReq, mockRes, mockNext);
 
     expect(mockReq.headers).toHaveProperty(
@@ -155,7 +154,7 @@ describe('express hook', () => {
 
     const mockReq = { headers: {} };
     const mockRes = { locals: { gasketData: {} } };
-    const mockNext = jest.fn();
+    const mockNext = vi.fn();
     fn(mockReq, mockRes, mockNext);
     expect(mockReq.headers).not.toHaveProperty('cookie');
   });
@@ -179,7 +178,7 @@ describe('express hook', () => {
 
     const mockReq = { headers: {} };
     const mockRes = { locals: { gasketData: {} } };
-    const mockNext = jest.fn();
+    const mockNext = vi.fn();
 
     await routeHandler(mockReq, mockRes, mockNext);
     expect(gasket.exec).toHaveBeenCalledWith('nextPreHandling', {
@@ -194,10 +193,10 @@ describe('fastify hook', () => {
   let plugin, hook;
 
   const fastifyApp = {
-    decorate: jest.fn(),
-    addHook: jest.fn(),
-    route: jest.fn(),
-    inject: jest.fn()
+    decorate: vi.fn(),
+    addHook: vi.fn(),
+    route: vi.fn(),
+    inject: vi.fn()
   };
 
   beforeEach(() => {
@@ -235,7 +234,7 @@ describe('fastify hook', () => {
 
     const mockReq = { headers: {} };
     const mockRes = { locals: { gasketData: { intl: { locale: 'fr-FR' } } } };
-    const mockNext = jest.fn();
+    const mockNext = vi.fn();
     fn(mockReq, mockRes, mockNext);
     expect(mockReq.headers).toHaveProperty('cookie', ';NEXT_LOCALE=fr-FR');
   });
@@ -248,7 +247,7 @@ describe('fastify hook', () => {
 
     const mockReq = { headers: { cookie: 'bogus=data' } };
     const mockRes = { locals: { gasketData: { intl: { locale: 'fr-FR' } } } };
-    const mockNext = jest.fn();
+    const mockNext = vi.fn();
     fn(mockReq, mockRes, mockNext);
     expect(mockReq.headers).toHaveProperty(
       'cookie',
@@ -264,7 +263,7 @@ describe('fastify hook', () => {
 
     const mockReq = { headers: {} };
     const mockRes = { locals: { gasketData: {} } };
-    const mockNext = jest.fn();
+    const mockNext = vi.fn();
     fn(mockReq, mockRes, mockNext);
     expect(mockReq.headers).not.toHaveProperty('cookie');
   });
@@ -468,17 +467,17 @@ function mockGasketApi() {
     command: {
       id: 'fake'
     },
-    execWaterfallSync: jest.fn((_, arg) => arg),
-    exec: jest.fn().mockResolvedValue({}),
-    execSync: jest.fn().mockReturnValue([]),
+    execWaterfallSync: vi.fn((_, arg) => arg),
+    exec: vi.fn().mockResolvedValue({}),
+    execSync: vi.fn().mockReturnValue([]),
     logger: {
-      warn: jest.fn()
+      warn: vi.fn()
     },
     config: {
       webpack: {}, // user specified webpack config
       nextConfig: {}, // user specified next.js config
       root: '/app/path'
     },
-    traceRoot: jest.fn().mockReturnThis()
+    traceRoot: vi.fn().mockReturnThis()
   };
 }

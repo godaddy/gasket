@@ -1,9 +1,8 @@
-import { jest } from '@jest/globals';
 import path from 'path';
 
-const mockWriteStub = jest.fn();
+const mockWriteStub = vi.fn();
 
-jest.unstable_mockModule('fs/promises', () => ({
+vi.mock('fs/promises', () => ({
   writeFile: mockWriteStub.mockResolvedValue()
 }));
 const writeGasketConfig = (await import('../../../../lib/scaffold/actions/write-gasket-config')).default;
@@ -25,7 +24,7 @@ describe('write-gasket-config', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('is decorated action', async () => {

@@ -1,12 +1,11 @@
-import { jest } from '@jest/globals';
 
-const mockExecWaterfallStub = jest.fn();
-const mockInstallStub = jest.fn();
-const mockLinkStub = jest.fn();
-const mockPromptStub = jest.fn();
-const mockCreatePromptModuleStub = jest.fn();
+const mockExecWaterfallStub = vi.fn();
+const mockInstallStub = vi.fn();
+const mockLinkStub = vi.fn();
+const mockPromptStub = vi.fn();
+const mockCreatePromptModuleStub = vi.fn();
 
-jest.mock('inquirer', () => ({ createPromptModule: mockCreatePromptModuleStub }));
+vi.mock('inquirer', () => ({ default: { createPromptModule: mockCreatePromptModuleStub } }));
 
 const { ConfigBuilder } = await import('../../../../lib/scaffold/config-builder.js');
 const promptHooks = (await import('../../../../lib/scaffold/actions/prompt-hooks')).default;
@@ -31,14 +30,14 @@ describe('promptHooks', () => {
       pkgManager: {
         install: mockInstallStub,
         link: mockLinkStub,
-        info: jest.fn().mockImplementation(() => ({ data: '7.8.9-faked' }))
+        info: vi.fn().mockImplementation(() => ({ data: '7.8.9-faked' }))
       },
       prompts: true
     };
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('is decorated action', async () => {

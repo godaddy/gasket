@@ -15,9 +15,9 @@
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
     "posttest": "pnpm run lint && pnpm run typecheck",
-    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
-    "test:coverage": "jest --coverage",
-    "test:watch": "pnpm run test --watch",
+    "test": "vitest run --globals",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
@@ -55,10 +55,8 @@
   "devDependencies": {
     "@gasket/request": "workspace:^",
     "@typescript-eslint/parser": "^8.38.0",
+    "@vitest/coverage-v8": "^3.2.0",
     "dotenv": "^16.4.7",
-    "jest": "^29.7.0"
-  },
-  "jest": {
-    "transform": {}
+    "vitest": "^3.2.0"
   }
 }

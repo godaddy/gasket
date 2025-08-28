@@ -1,5 +1,5 @@
 /* eslint-disable no-undefined */
-import { jest } from '@jest/globals';
+
 import { Command } from 'commander';
 import { processOptions } from '../../lib/utils/process-options.js';
 import { processCommand } from '../../lib/utils/process-command.js';
@@ -266,10 +266,10 @@ describe('processOptions', () => {
       return program;
     })();
 
-    const writeSpy = jest
+    const writeSpy = vi
       .spyOn(process.stderr, 'write')
       .mockImplementation((err) => err);
-    const exitSpy = jest
+    const exitSpy = vi
       .spyOn(process, 'exit')
       .mockImplementation((err) => err);
     const mockCmd = {

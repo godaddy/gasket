@@ -1,5 +1,4 @@
 /* eslint-disable max-statements */
-import { jest } from '@jest/globals';
 const { ConfigBuilder } = await import('../../../lib/scaffold/config-builder');
 
 const pluginOne = {
@@ -14,12 +13,12 @@ describe('ConfigBuilder', () => {
 
   beforeEach(() => {
     pkg = ConfigBuilder.createPackageJson();
-    warnSpy = jest.spyOn(pkg, 'warn');
-    consoleWarnStub = jest.spyOn(console, 'warn');
+    warnSpy = vi.spyOn(pkg, 'warn');
+    consoleWarnStub = vi.spyOn(console, 'warn');
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe('.add(key, value)', () => {
@@ -517,7 +516,7 @@ describe('ConfigBuilder', () => {
 
     it('adds to warnings array if exists instead of console', () => {
       pkg = ConfigBuilder.createPackageJson({}, { warnings });
-      warnSpy = jest.spyOn(pkg, 'warn');
+      warnSpy = vi.spyOn(pkg, 'warn');
 
       pkg.add('dependencies', { 'some-pkg': '^2.2.0' }, pluginOne);
       pkg.add('dependencies', { 'some-pkg': '^1.0.0' }, pluginTwo);

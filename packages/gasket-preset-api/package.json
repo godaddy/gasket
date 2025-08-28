@@ -25,9 +25,9 @@
     "lint:fix": "pnpm run lint --fix",
     "posttest": "pnpm run lint",
     "prepublishOnly": "pnpm run build",
-    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
-    "test:coverage": "jest --coverage",
-    "test:watch": "pnpm run test --watch"
+    "test": "vitest run --globals",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest"
   },
   "repository": "godaddy/gasket.git",
   "publishConfig": {
@@ -59,11 +59,9 @@
   "devDependencies": {
     "@gasket/cjs": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",
+    "@vitest/coverage-v8": "^3.2.0",
     "create-gasket-app": "workspace:^",
-    "jest": "^29.7.0",
-    "nodemon": "^3.1.9"
-  },
-  "jest": {
-    "transform": {}
+    "nodemon": "^3.1.9",
+    "vitest": "^3.2.0"
   }
 }

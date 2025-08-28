@@ -1,7 +1,6 @@
-import { jest } from '@jest/globals';
 
-const mockDebug = jest.fn();
-jest.unstable_mockModule('debug', () => ({
+const mockDebug = vi.fn();
+vi.mock('debug', () => ({
   default: () => mockDebug
 }));
 
@@ -51,15 +50,15 @@ describe('The execApplySync method', () => {
   }
 
   beforeEach(() => {
-    hookASpy = jest.spyOn(pluginA.hooks, 'eventA');
-    hookBSpy = jest.spyOn(pluginB.hooks, 'eventA');
-    hookCSpy = jest.spyOn(pluginC.hooks.eventA, 'handler');
+    hookASpy = vi.spyOn(pluginA.hooks, 'eventA');
+    hookBSpy = vi.spyOn(pluginB.hooks, 'eventA');
+    hookCSpy = vi.spyOn(pluginC.hooks.eventA, 'handler');
 
     mockGasket = new Gasket({ plugins: [pluginA, pluginB, pluginC] });
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('invokes hooks with isolate', () => {
@@ -71,7 +70,7 @@ describe('The execApplySync method', () => {
   });
 
   it('branch isolate passed through', () => {
-    const spy = jest.spyOn(mockGasket.engine, 'execApplySync');
+    const spy = vi.spyOn(mockGasket.engine, 'execApplySync');
     const branch = mockGasket.traceBranch();
 
     branch.execApplySync('eventA', mockApplyHandler);
@@ -122,8 +121,8 @@ describe('The execApplySync method', () => {
   });
 
   it('can be executed with differing callbacks', () => {
-    const stub1 = jest.fn().mockImplementation((plugin, handler) => handler());
-    const stub2 = jest.fn().mockImplementation((plugin, handler) => handler());
+    const stub1 = vi.fn().mockImplementation((plugin, handler) => handler());
+    const stub2 = vi.fn().mockImplementation((plugin, handler) => handler());
 
     mockGasket.execApplySync('eventA', stub1);
     mockGasket.execApplySync('eventA', stub2);
