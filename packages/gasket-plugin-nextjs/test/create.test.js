@@ -9,26 +9,26 @@ describe('create hook', () => {
   beforeEach(() => {
     mockContext = {
       pkg: {
-        add: jest.fn(),
-        has: jest.fn()
+        add: vi.fn(),
+        has: vi.fn()
       },
       readme: {
-        markdownFile: jest.fn(),
-        link: jest.fn()
+        markdownFile: vi.fn(),
+        link: vi.fn()
       },
       files: {
-        add: jest.fn()
+        add: vi.fn()
       },
       gasketConfig: {
-        add: jest.fn(),
-        addPlugin: jest.fn()
+        add: vi.fn(),
+        addPlugin: vi.fn()
       },
       packageManager: 'npm'
     };
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('has expected timings', async function () {

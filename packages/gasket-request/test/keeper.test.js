@@ -1,4 +1,4 @@
-import { expect } from '@jest/globals';
+
 import { WeakPromiseKeeper } from '../lib/keeper.js';
 import { setTimeout } from 'node:timers/promises';
 

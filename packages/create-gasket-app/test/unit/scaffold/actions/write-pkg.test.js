@@ -1,9 +1,8 @@
-import { jest } from '@jest/globals';
 import path from 'path';
 
-const mockWriteStub = jest.fn();
+const mockWriteStub = vi.fn();
 
-jest.unstable_mockModule('fs/promises', () => ({
+vi.mock('fs/promises', () => ({
   writeFile: mockWriteStub
 }));
 

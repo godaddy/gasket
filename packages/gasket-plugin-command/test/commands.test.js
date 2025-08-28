@@ -1,4 +1,4 @@
-import { jest } from '@jest/globals';
+
 import commands from '../lib/commands';
 
 describe('commands', () => {
@@ -6,7 +6,7 @@ describe('commands', () => {
 
   beforeEach(() => {
     mockGasket = {
-      exec: jest.fn()
+      exec: vi.fn()
     };
   });
 

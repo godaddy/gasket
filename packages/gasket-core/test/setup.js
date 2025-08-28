@@ -1,7 +1,4 @@
-import { jest, expect } from '@jest/globals';
 
-global.jest = jest;
-global.expect = expect;
 // eslint-disable-next-line no-process-env
 process.env.GASKET_ENV = 'test';
 

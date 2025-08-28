@@ -1,25 +1,27 @@
 const path = require('path');
 
-describe('req.getNextRoute()', () => {
-  let req, gasket, getNextRoute;
+describe('next-route', () => {
+  let gasket, req, getNextRoute;
 
   beforeEach(() => {
+    // Clear module cache and get fresh import
+    delete require.cache[require.resolve('../lib/utils/next-route')];
+    getNextRoute = require('../lib/utils/next-route');
+
     gasket = {
       config: {
-        root: ''
+        root: path.join(__dirname, 'mock-repo')
       },
       logger: {
-        warn: jest.fn()
+        warn: vi.fn()
       }
     };
 
     req = { path: '/', url: '/' };
-
-    getNextRoute = require('../lib/utils/next-route');
   });
 
   afterEach(() => {
-    jest.resetModules();
+    vi.resetModules();
   });
 
   it('returns null if a valid routes manifest could not be found', async () => {
@@ -70,6 +72,11 @@ describe('req.getNextRoute()', () => {
       expect(route).not.toBeNull();
       expect(route.page).toEqual('/plans/cohorts/[cohort]');
       expect(route.namedRegex.exec(req.path).groups.cohort).toEqual('US%20Only');
+    });
+
+    it('returns correct route for static path', async () => {
+      const route = await getNextRoute(gasket, { path: '/plans' });
+      expect(route.page).toEqual('/plans');
     });
   });
 });

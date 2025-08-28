@@ -14,7 +14,7 @@ describe('metadata', function () {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('outputs expected categories', async function () {

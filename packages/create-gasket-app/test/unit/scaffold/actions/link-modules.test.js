@@ -1,5 +1,4 @@
-import { jest } from '@jest/globals';
-const linkStub = jest.fn();
+const linkStub = vi.fn();
 const linkModules = (await import('../../../../lib/scaffold/actions/link-modules')).default;
 
 describe('linkModules', () => {

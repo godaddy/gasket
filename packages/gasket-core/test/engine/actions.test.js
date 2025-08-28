@@ -1,14 +1,13 @@
-import { jest } from '@jest/globals';
 
-const mockDebug = jest.fn();
-jest.unstable_mockModule('debug', () => ({
+const mockDebug = vi.fn();
+vi.mock('debug', () => ({
   default: () => mockDebug
 }));
 
 const { GasketTrace }  = await import('../../lib/trace.js');
 const { Gasket }  = await import('../../lib/gasket.js');
 
-const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {
+const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {
 });
 
 const pause = (ms) => new Promise(resolve => setTimeout(resolve, ms));
@@ -20,30 +19,30 @@ describe('actions', () => {
     pluginA = {
       name: 'pluginA',
       actions: {
-        getActionsCount: jest.fn((gasket) => {
+        getActionsCount: vi.fn((gasket) => {
           return Object.keys(gasket.actions).length;
         }),
-        getEventA: jest.fn(async (gasket, value) => {
+        getEventA: vi.fn(async (gasket, value) => {
           // for consistent debug ordering for tests
           await pause(value);
           return gasket.execWaterfall('eventA', value);
         }),
-        getEventB: jest.fn(async (gasket, value) => {
+        getEventB: vi.fn(async (gasket, value) => {
           // for consistent debug ordering for tests
           await pause(value);
           return gasket.execWaterfall('eventB', value);
         }),
-        getEvents: jest.fn(async (gasket, value) => {
+        getEvents: vi.fn(async (gasket, value) => {
           const a = await gasket.actions.getEventA(value);
           const b = await gasket.actions.getEventB(value);
           return { a, b };
         })
       },
       hooks: {
-        eventA: jest.fn((gasket, value) => {
+        eventA: vi.fn((gasket, value) => {
           return value + 100;
         }),
-        eventB: jest.fn((gasket, value) => {
+        eventB: vi.fn((gasket, value) => {
           return value + 1000;
         })
       }
@@ -52,14 +51,14 @@ describe('actions', () => {
     pluginB = {
       name: 'pluginB',
       hooks: {
-        eventA: jest.fn((gasket, value) => {
+        eventA: vi.fn((gasket, value) => {
           return value + 4;
         })
       }
     };
 
     mockGasket = new Gasket({ plugins: [pluginA, pluginB] });
-    jest.spyOn(mockGasket, 'exec').mockImplementation(async (event, ...args) => {
+    vi.spyOn(mockGasket, 'exec').mockImplementation(async (event, ...args) => {
       if (event === 'ready') {
         return 'mocked ready';
       }
@@ -69,7 +68,7 @@ describe('actions', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('actions are registered', async () => {
@@ -96,7 +95,7 @@ describe('actions', () => {
   });
 
   it('branch isolate passed through', async () => {
-    const spy = jest.spyOn(mockGasket.engine, 'execWaterfall');
+    const spy = vi.spyOn(mockGasket.engine, 'execWaterfall');
     const branch = mockGasket.traceBranch();
 
     const result = await branch.actions.getEventA(5);
@@ -117,7 +116,7 @@ describe('actions', () => {
   });
 
   it('allows multiple lifecycle chains', async () => {
-    const spy = jest.spyOn(mockGasket.engine, 'execWaterfall');
+    const spy = vi.spyOn(mockGasket.engine, 'execWaterfall');
     const promise1 = mockGasket.actions.getEventA(1);
     const promise2 = mockGasket.actions.getEventA(2);
 
@@ -153,7 +152,7 @@ describe('actions', () => {
 
   it('warns on duplicate action names', () => {
     pluginB.actions = {
-      getActionsCount: jest.fn().mockReturnValue('override?')
+      getActionsCount: vi.fn().mockReturnValue('override?')
     };
     mockGasket = new Gasket({ plugins: [pluginA, pluginB] });
 

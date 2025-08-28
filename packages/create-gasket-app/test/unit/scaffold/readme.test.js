@@ -1,8 +1,7 @@
-import { jest } from '@jest/globals';
 
-const mockReadFile = jest.fn();
+const mockReadFile = vi.fn();
 
-jest.unstable_mockModule('fs/promises', () => ({
+vi.mock('fs/promises', () => ({
   readFile: mockReadFile
 }));
 
@@ -16,7 +15,7 @@ describe('Readme', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('initializes with empty markdown and links', () => {

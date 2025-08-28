@@ -1,11 +1,11 @@
-import { jest } from '@jest/globals';
+
 import { createElement } from 'react';
 import { render } from '@testing-library/react';
 import { LocaleFileStatus } from '@gasket/intl';
 
-const useLocaleFile = jest.fn();
+const useLocaleFile = vi.fn();
 
-jest.unstable_mockModule('../lib/use-locale-file.js', () => {
+vi.mock('../lib/use-locale-file.js', () => {
   return {
     default: useLocaleFile
   };

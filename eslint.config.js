@@ -36,7 +36,16 @@ export default defineConfig([
     },
     languageOptions: {
       globals: {
-        ...jest.environments.globals.globals
+        ...jest.environments.globals.globals,
+        vi: 'readonly',
+        expect: 'readonly',
+        describe: 'readonly',
+        it: 'readonly',
+        test: 'readonly',
+        beforeEach: 'readonly',
+        afterEach: 'readonly',
+        beforeAll: 'readonly',
+        afterAll: 'readonly'
       }
     },
     rules: {

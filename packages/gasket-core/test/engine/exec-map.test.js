@@ -1,7 +1,6 @@
-import { jest } from '@jest/globals';
 
-const mockDebug = jest.fn();
-jest.unstable_mockModule('debug', () => ({
+const mockDebug = vi.fn();
+vi.mock('debug', () => ({
   default: () => mockDebug
 }));
 
@@ -40,15 +39,15 @@ describe('The execMap method', () => {
   };
 
   beforeEach(() => {
-    hookASpy = jest.spyOn(pluginA.hooks, 'eventA');
-    hookBSpy = jest.spyOn(pluginB.hooks, 'eventA');
-    hookCSpy = jest.spyOn(pluginC.hooks.eventA, 'handler');
+    hookASpy = vi.spyOn(pluginA.hooks, 'eventA');
+    hookBSpy = vi.spyOn(pluginB.hooks, 'eventA');
+    hookCSpy = vi.spyOn(pluginC.hooks.eventA, 'handler');
 
     gasket = new Gasket({ plugins: [pluginA, pluginB, pluginC] });
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('invokes hooks with isolate', async () => {
@@ -60,7 +59,7 @@ describe('The execMap method', () => {
   });
 
   it('branch isolate passed through', async () => {
-    const spy = jest.spyOn(gasket.engine, 'execMap');
+    const spy = vi.spyOn(gasket.engine, 'execMap');
     const branch = gasket.traceBranch();
 
     const result = await branch.execMap('eventA');
@@ -93,6 +92,8 @@ describe('The execMap method', () => {
     expect(mockDebug.mock.calls).toEqual([
       ['⋌ root'],
       ['  ◇ execMap(eventA)'],
+      ['⋌ root'],
+      ['  ◇ exec(ready)'],
       ['  ↪ pluginA:eventA'],
       ['  ↪ pluginB:eventA'],
       ['  ↪ pluginC:eventA']

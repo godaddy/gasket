@@ -1,8 +1,7 @@
-import { jest } from '@jest/globals';
 import { lifecycleMethods } from '../lib/engine.js';
 
-const mockDebug = jest.fn();
-jest.unstable_mockModule('debug', () => ({
+const mockDebug = vi.fn();
+vi.mock('debug', () => ({
   default: () => mockDebug
 }));
 
@@ -16,15 +15,15 @@ describe('GasketTrace', () => {
     pluginA = {
       name: 'pluginA',
       actions: {
-        getActionsCount: jest.fn((_gasket) => {
+        getActionsCount: vi.fn((_gasket) => {
           return Object.keys(_gasket.actions).length;
         }),
-        getEventA: jest.fn(async (_gasket, value) => {
+        getEventA: vi.fn(async (_gasket, value) => {
           return _gasket.execWaterfall('eventA', value);
         })
       },
       hooks: {
-        eventA: jest.fn((_gasket, value) => {
+        eventA: vi.fn((_gasket, value) => {
           return value * 7;
         })
       }
@@ -33,24 +32,24 @@ describe('GasketTrace', () => {
     pluginB = {
       name: 'pluginB',
       hooks: {
-        eventA: jest.fn((_gasket, value) => {
+        eventA: vi.fn((_gasket, value) => {
           return value + 4;
         })
       }
     };
 
     gasket = new Gasket({ plugins: [pluginA, pluginB] });
-    jest.spyOn(gasket, 'exec').mockImplementation(async (event, ...args) => {
+    vi.spyOn(gasket, 'exec').mockImplementation(async (event, ...args) => {
       if (event === 'ready') {
         return 'mocked ready';
       }
       return gasket.prototype.exec.call(gasket, event, ...args);
     });
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     GasketTrace._nextBranchId = 0;
   });
 
