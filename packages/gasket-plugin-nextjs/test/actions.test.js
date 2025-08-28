@@ -1,44 +1,68 @@
-jest.mock('../lib/./utils/config');
-jest.mock('../lib/./utils/next-route');
+// Set up module cache stubs so actions.js uses these instances
+const configPath = require.resolve('../lib/utils/config.js');
+const nextRoutePath = require.resolve('../lib/utils/next-route.js');
 
+const mockCreateConfig = vi.fn();
+const mockNextRoute = vi.fn();
+
+require.cache[configPath] = {
+  id: configPath,
+  filename: configPath,
+  loaded: true,
+  exports: { createConfig: mockCreateConfig }
+};
+require.cache[nextRoutePath] = {
+  id: nextRoutePath,
+  filename: nextRoutePath,
+  loaded: true,
+  exports: mockNextRoute
+};
+
+// Import after stubbing cache
 const actions = require('../lib/actions');
-const { createConfig } = require('../lib/utils/config');
-const nextRoute = require('../lib/utils/next-route');
+
+// Get references to the mocked functions (same instances as used by actions)
+const { createConfig } = require(configPath);
+const nextRoute = require(nextRoutePath);
 
 describe('actions', () => {
   let mockGasket, isReadySpy;
 
   beforeEach(() => {
-    isReadySpy = jest.fn();
+    isReadySpy = vi.fn();
+
+    vi.clearAllMocks();
 
     mockGasket = {
       get isReady() {
         isReadySpy();
         return Promise.resolve();
       },
-      config: {}
+      config: {
+        root: '/path/to/app'
+      },
+      execWaterfall: vi.fn((_, config) => config),
+      logger: {
+        warn: vi.fn()
+      }
     };
   });
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-
   it('has expected actions', () => {
-    const results = actions;
-    expect(results).toHaveProperty('getNextConfig');
-    expect(results).toHaveProperty('getNextRoute');
+    expect(actions).toMatchObject({
+      getNextConfig: expect.any(Function),
+      getNextRoute: expect.any(Function)
+    });
   });
 
   describe('getNextConfig', () => {
-
     it('returns a setup function', () => {
-      const results = actions.getNextConfig();
-      expect(typeof results).toEqual('function');
+      const setup = actions.getNextConfig(mockGasket, {});
+      expect(setup).toEqual(expect.any(Function));
     });
 
     it('setup awaits gasket.isReady', async () => {
-      const setup = actions.getNextConfig(mockGasket);
+      const setup = actions.getNextConfig(mockGasket, {});
       await setup('MOCK_PHASE', { defaultConfig: {} });
       expect(isReadySpy).toHaveBeenCalled();
     });
@@ -56,24 +80,19 @@ describe('actions', () => {
     it('setup executes nextConfig function if provided', async () => {
       const defaultConfig = {};
       const mockConfig = { example: 'config' };
+      const nextConfigSpy = vi.fn(() => mockConfig);
 
-      const nextConfigSpy = jest.fn();
-      const nextConfigFn = (...args) => {
-        nextConfigSpy(...args);
-        return mockConfig;
-      };
-
-      const setup = actions.getNextConfig(mockGasket, nextConfigFn);
+      const setup = actions.getNextConfig(mockGasket, nextConfigSpy);
       await setup('MOCK_PHASE', { defaultConfig });
-      expect(nextConfigSpy).toHaveBeenCalledWith('MOCK_PHASE', { defaultConfig });
 
+      expect(nextConfigSpy).toHaveBeenCalledWith('MOCK_PHASE', { defaultConfig });
       expect(createConfig).toHaveBeenCalledWith(mockGasket, mockConfig);
     });
   });
 
   describe('getNextRoute', () => {
-    it('awaits gasket.isReady', () => {
-      actions.getNextRoute(mockGasket, {});
+    it('awaits gasket.isReady', async () => {
+      await actions.getNextRoute(mockGasket, {});
       expect(isReadySpy).toHaveBeenCalled();
     });
 

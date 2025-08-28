@@ -1,4 +1,4 @@
-import { jest } from '@jest/globals';
+
 import create from '../lib/create.js';
 
 describe('create', () => {
@@ -7,7 +7,7 @@ describe('create', () => {
   beforeEach(() => {
     mockContext = {
       files: {
-        add: jest.fn()
+        add: vi.fn()
       }
     };
   });

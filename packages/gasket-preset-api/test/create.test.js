@@ -1,10 +1,10 @@
-import { jest } from '@jest/globals';
+
 import { createRequire } from 'module';
 import preset from '../lib/index.js';
 const require = createRequire(import.meta.url);
 const { devDependencies } = require('../package.json');
-const mockPkgAdd = jest.fn();
-const mockFilesAdd = jest.fn();
+const mockPkgAdd = vi.fn();
+const mockFilesAdd = vi.fn();
 
 describe('create', function () {
   let mockContext, createHook;
@@ -25,7 +25,7 @@ describe('create', function () {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('adds the expected md files', async function () {

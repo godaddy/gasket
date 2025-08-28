@@ -1,6 +1,6 @@
 /** @jest-environment jsdom */
 
-import { jest, expect } from '@jest/globals';
+
 import { createElement } from 'react';
 import { render } from '@testing-library/react';
 
@@ -8,13 +8,13 @@ import { render } from '@testing-library/react';
 // eslint-disable-next-line no-console
 const consoleError = console.error;
 // ignore known act() warnings
-jest.spyOn(console, 'error').mockImplementation((msg) => {
+vi.spyOn(console, 'error').mockImplementation((msg) => {
   if (msg.includes('ReactDOMTestUtils.act')) return;
   consoleError(msg);
 });
 
-const mockResolveGasketData = jest.fn();
-jest.unstable_mockModule('@gasket/data', () => ({ resolveGasketData: mockResolveGasketData }));
+const mockResolveGasketData = vi.fn();
+vi.mock('@gasket/data', () => ({ resolveGasketData: mockResolveGasketData }));
 
 const { withGasketDataProvider } = await import('../lib/with-gasket-data-provider.js');
 
@@ -22,12 +22,12 @@ describe('withGasketDataProvider', function () {
   let mockGasket;
 
   beforeEach(() => {
-    mockGasket = { actions: { getPublicGasketData: jest.fn() } };
+    mockGasket = { actions: { getPublicGasketData: vi.fn() } };
   });
 
   afterEach(() => {
     mockResolveGasketData.mockResolvedValue();
-    jest.resetModules();
+    vi.resetModules();
   });
 
   it('should inject gasketData when client side', async () => {

@@ -1,9 +1,7 @@
-/** @jest-environment jsdom */
 
-import { jest } from '@jest/globals';
 
-const mockGasketData = jest.fn();
-jest.unstable_mockModule('../lib/gasket-data.js', () => ({ gasketData: mockGasketData }));
+const mockGasketData = vi.fn();
+vi.mock('../lib/gasket-data.js', () => ({ gasketData: mockGasketData }));
 
 describe('resolveGasketData', () => {
   let mockGasket;
@@ -11,7 +9,7 @@ describe('resolveGasketData', () => {
 
   beforeEach(() => {
     mockGasketData.mockResolvedValue({ test: 'hello world' });
-    mockGasket = { actions: { getPublicGasketData: jest.fn() } };
+    mockGasket = { actions: { getPublicGasketData: vi.fn() } };
   });
 
   it('should call gasketData in browser', async () => {

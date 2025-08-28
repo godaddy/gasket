@@ -1,6 +1,5 @@
-import { jest } from '@jest/globals';
 
-const mockContstructorStub = jest.fn();
+const mockContstructorStub = vi.fn();
 class MockPackageManager {
   constructor() { mockContstructorStub(...arguments); }
 
@@ -9,7 +8,7 @@ class MockPackageManager {
   }
 }
 
-jest.unstable_mockModule('@gasket/utils', () => ({
+vi.mock('@gasket/utils', () => ({
   PackageManager: MockPackageManager
 }));
 

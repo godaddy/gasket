@@ -1,7 +1,6 @@
-import { jest, describe } from '@jest/globals';
 
-const mockDebug = jest.fn();
-jest.unstable_mockModule('debug', () => ({
+const mockDebug = vi.fn();
+vi.mock('debug', () => ({
   default: () => mockDebug
 }));
 
@@ -86,13 +85,13 @@ describe('The exec method', () => {
   };
 
   beforeEach(() => {
-    hookASpy = jest.spyOn(pluginA.hooks, 'eventA');
+    hookASpy = vi.spyOn(pluginA.hooks, 'eventA');
 
     gasket = new Gasket({ plugins: [pluginA, pluginB] });
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('awaits sync or async hooks and resolves an Array', async () => {
@@ -120,7 +119,7 @@ describe('The exec method', () => {
   });
 
   it('branch isolate passed through', async () => {
-    const spy = jest.spyOn(gasket.engine, 'exec');
+    const spy = vi.spyOn(gasket.engine, 'exec');
     const branch = gasket.traceBranch();
 
     const result = await branch.exec('eventA');
@@ -170,6 +169,8 @@ describe('The exec method', () => {
     expect(mockDebug.mock.calls).toEqual([
       ['⋌ root'],
       ['  ◇ exec(eventA)'],
+      ['⋌ root'],
+      ['  ◇ exec(ready)'],
       ['  ↪ pluginA:eventA'],
       ['  ↪ pluginB:eventA']
     ]);

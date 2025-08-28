@@ -1,4 +1,4 @@
-import { expect } from '@jest/globals';
+
 
 const module  = await import('../lib/index.js');
 

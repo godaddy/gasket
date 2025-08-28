@@ -1,79 +1,78 @@
-/* eslint-disable max-statements, jest/no-conditional-expect */
-import { jest } from '@jest/globals';
+/* eslint-disable max-statements */
 
-const mockDumpErrorContext = jest.fn();
-const consoleErrorStub = jest.spyOn(console, 'error').mockImplementation(() => { });
-const mkDirStub = jest.fn();
-const loadPresetStub = jest.fn();
-const globalPromptsStub = jest.fn();
-const setupPkgStub = jest.fn();
-const writePkgStub = jest.fn();
-const installModulesStub = jest.fn();
-const linkModulesStub = jest.fn();
-const writeGasketConfigStub = jest.fn();
-const presetPromptHooksStub = jest.fn();
-const presetConfigHooksStub = jest.fn();
-const promptHooksStub = jest.fn();
-const createHooksStub = jest.fn();
-const generateFilesStub = jest.fn();
-const postCreateHooksStub = jest.fn();
-const printReportStub = jest.fn();
+const mockDumpErrorContext = vi.fn();
+const consoleErrorStub = vi.spyOn(console, 'error').mockImplementation(() => { });
+const mkDirStub = vi.fn();
+const loadPresetStub = vi.fn();
+const globalPromptsStub = vi.fn();
+const setupPkgStub = vi.fn();
+const writePkgStub = vi.fn();
+const installModulesStub = vi.fn();
+const linkModulesStub = vi.fn();
+const writeGasketConfigStub = vi.fn();
+const presetPromptHooksStub = vi.fn();
+const presetConfigHooksStub = vi.fn();
+const promptHooksStub = vi.fn();
+const createHooksStub = vi.fn();
+const generateFilesStub = vi.fn();
+const postCreateHooksStub = vi.fn();
+const printReportStub = vi.fn();
 
-writePkgStub.update = jest.fn();
-installModulesStub.update = jest.fn();
-linkModulesStub.update = jest.fn();
+writePkgStub.update = vi.fn();
+installModulesStub.update = vi.fn();
+linkModulesStub.update = vi.fn();
 
-jest.mock('ora', () => () => ({ warn: jest.fn() }));
-jest.unstable_mockModule('../../../lib/scaffold/dump-error-context.js', () => ({
+vi.mock('ora', () => () => ({ warn: vi.fn() }));
+vi.mock('../../../lib/scaffold/dump-error-context.js', () => ({
   dumpErrorContext: mockDumpErrorContext
 }));
-jest.unstable_mockModule('../../../lib/scaffold/actions/mkdir.js', () => ({
+vi.mock('../../../lib/scaffold/actions/mkdir.js', () => ({
   default: mkDirStub
 }));
-jest.unstable_mockModule('../../../lib/scaffold/actions/load-preset.js', () => ({
+vi.mock('../../../lib/scaffold/actions/load-preset.js', () => ({
   default: loadPresetStub
 }));
-jest.unstable_mockModule('../../../lib/scaffold/actions/global-prompts.js', () => ({
+vi.mock('../../../lib/scaffold/actions/global-prompts.js', () => ({
   default: globalPromptsStub
 }));
-jest.unstable_mockModule('../../../lib/scaffold/actions/setup-pkg.js', () => ({
+vi.mock('../../../lib/scaffold/actions/setup-pkg.js', () => ({
   default: setupPkgStub
 }));
-jest.unstable_mockModule('../../../lib/scaffold/actions/write-pkg.js', () => ({
+vi.mock('../../../lib/scaffold/actions/write-pkg.js', () => ({
   default: writePkgStub
 }));
-jest.unstable_mockModule('../../../lib/scaffold/actions/install-modules.js', () => ({
+vi.mock('../../../lib/scaffold/actions/install-modules.js', () => ({
   default: installModulesStub
 }));
-jest.unstable_mockModule('../../../lib/scaffold/actions/link-modules.js', () => ({
+vi.mock('../../../lib/scaffold/actions/link-modules.js', () => ({
   default: linkModulesStub
 }));
-jest.unstable_mockModule('../../../lib/scaffold/actions/write-gasket-config.js', () => ({
+vi.mock('../../../lib/scaffold/actions/write-gasket-config.js', () => ({
   default: writeGasketConfigStub
 }));
-jest.unstable_mockModule('../../../lib/scaffold/actions/preset-prompt-hooks.js', () => ({
+vi.mock('../../../lib/scaffold/actions/preset-prompt-hooks.js', () => ({
   default: presetPromptHooksStub
 }));
-jest.unstable_mockModule('../../../lib/scaffold/actions/preset-config-hooks.js', () => ({
+vi.mock('../../../lib/scaffold/actions/preset-config-hooks.js', () => ({
   default: presetConfigHooksStub
 }));
-jest.unstable_mockModule('../../../lib/scaffold/actions/prompt-hooks.js', () => ({
+vi.mock('../../../lib/scaffold/actions/prompt-hooks.js', () => ({
   default: promptHooksStub
 }));
-jest.unstable_mockModule('../../../lib/scaffold/actions/create-hooks.js', () => ({
+vi.mock('../../../lib/scaffold/actions/create-hooks.js', () => ({
   default: createHooksStub
 }));
-jest.unstable_mockModule('../../../lib/scaffold/actions/generate-files.js', () => ({
+vi.mock('../../../lib/scaffold/actions/generate-files.js', () => ({
   default: generateFilesStub
 }));
-jest.unstable_mockModule('../../../lib/scaffold/actions/post-create-hooks.js', () => ({
+vi.mock('../../../lib/scaffold/actions/post-create-hooks.js', () => ({
   default: postCreateHooksStub
 }));
-jest.unstable_mockModule('../../../lib/scaffold/actions/print-report.js', () => ({
+vi.mock('../../../lib/scaffold/actions/print-report.js', () => ({
   default: printReportStub
 }));
-jest.unstable_mockModule('@gasket/core', () => ({
-  makeGasket: jest.fn()
+vi.mock('@gasket/core', () => ({
+  makeGasket: vi.fn()
 }));
 
 
@@ -94,7 +93,7 @@ describe('create', function () {
   })();
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should force GASKE_ENV to create', async () => {
@@ -118,15 +117,20 @@ describe('create', function () {
 
     CreateCommand.options.forEach((option, index) => {
       if (!option.short) {
+        // eslint-disable-next-line jest/no-conditional-expect
         if (!options[index].long) expect(`--${option.name}`).toEqual(options[index].short);
       }
 
       if (option.short) {
+        // eslint-disable-next-line jest/no-conditional-expect
         expect(`--${option.name}`).toEqual(options[index].long);
+        // eslint-disable-next-line jest/no-conditional-expect
         expect(`-${option.short}`).toEqual(options[index].short);
       }
 
+      // eslint-disable-next-line jest/no-conditional-expect
       if (option.default) expect(option.default).toEqual(options[index].defaultValue);
+      // eslint-disable-next-line jest/no-conditional-expect
       if (option.parse) expect(option.parse).toEqual(options[index].parseArg);
       expect(option.description).toEqual(options[index].description);
     });
@@ -166,6 +170,7 @@ describe('create', function () {
     try {
       await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--presets=nextjs']);
     } catch (err) {
+      // eslint-disable-next-line jest/no-conditional-expect
       expect(err.message).toEqual('YOUR DRIVE EXPLODED!');
     }
   });
@@ -175,7 +180,9 @@ describe('create', function () {
     try {
       await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--presets=nextjs']);
     } catch (err) {
+      // eslint-disable-next-line jest/no-conditional-expect
       expect(err.message).toEqual('YOUR DRIVE EXPLODED!');
+      // eslint-disable-next-line jest/no-conditional-expect
       expect(mockDumpErrorContext).toHaveBeenCalled();
     }
   });
@@ -185,7 +192,9 @@ describe('create', function () {
     try {
       await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--presets=nextjs']);
     } catch (err) {
+      // eslint-disable-next-line jest/no-conditional-expect
       expect(err.message).toEqual('YOUR DRIVE EXPLODED!');
+      // eslint-disable-next-line jest/no-conditional-expect
       expect(consoleErrorStub).toHaveBeenCalled();
     }
   });
@@ -195,6 +204,7 @@ describe('create', function () {
     try {
       await cmd.parseAsync(['node', 'gasket', 'create', 'myapp']);
     } catch (err) {
+      // eslint-disable-next-line jest/no-conditional-expect
       expect(err.message).toEqual('No preset found');
     }
   });
@@ -205,8 +215,8 @@ describe('create', function () {
   });
 
   it('prints an error if both --config and --config-file are provided', async () => {
-    const writeSpy = jest.spyOn(process.stderr, 'write').mockImplementation((err) => err);
-    const exitSpy = jest.spyOn(process, 'exit').mockImplementation((err) => err);
+    const writeSpy = vi.spyOn(process.stderr, 'write').mockImplementation((err) => err);
+    const exitSpy = vi.spyOn(process, 'exit').mockImplementation((err) => err);
     await cmd.parseAsync(
       ['node', 'gasket', 'create', 'myapp', '--config={}', '--config-file=../../test/unit/commands/test-ci-config.json']
     );

@@ -13,11 +13,11 @@ describe('prompt hook', () => {
     gasket = {};
     context = {};
     mockAnswers = { useAppRouter: false, addSitemap: true, nextServerType: 'next-cli' };
-    mockPrompt = jest.fn().mockImplementation(() => mockAnswers);
+    mockPrompt = vi.fn().mockImplementation(() => mockAnswers);
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('prompts', async () => {

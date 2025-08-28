@@ -1,11 +1,10 @@
-import { jest } from '@jest/globals';
-const mockStartStub = jest.fn();
-const mockSucceedStub = jest.fn();
-const mockWarnStub = jest.fn();
-const mockFailStub = jest.fn();
-const mockOraStub = jest.fn();
+const mockStartStub = vi.fn();
+const mockSucceedStub = vi.fn();
+const mockWarnStub = vi.fn();
+const mockFailStub = vi.fn();
+const mockOraStub = vi.fn();
 
-jest.mock('ora', () => mockOraStub);
+vi.mock('ora', () => mockOraStub);
 
 const actionWrapper = (await import('../../../lib/scaffold/with-spinner.js')).default;
 
@@ -39,7 +38,7 @@ describe('actionWrapper', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('returns a wrapped async function', () => {

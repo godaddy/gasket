@@ -1,8 +1,8 @@
-import { jest, expect } from '@jest/globals';
+
 import { createElement, Children } from 'react';
 
-jest.unstable_mockModule('../../lib/request/index.js', () => ({
-  request: jest.fn().mockReturnValue({})
+vi.mock('../../lib/request/index.js', () => ({
+  request: vi.fn().mockReturnValue({})
 }));
 
 describe('withGasketData', () => {
@@ -17,7 +17,7 @@ describe('withGasketData', () => {
     mockGasket = {
       isReady: new Promise(resolve => resolve()),
       actions: {
-        getPublicGasketData: jest.fn(() => mockPublicGasketData)
+        getPublicGasketData: vi.fn(() => mockPublicGasketData)
       }
     };
 

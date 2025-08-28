@@ -1,5 +1,4 @@
-/* eslint-disable max-statements, jest/no-conditional-expect */
-import { jest } from '@jest/globals';
+/* eslint-disable max-statements */
 import path from 'path';
 const { CreateContext, makeCreateContext } = await import('../../../lib/scaffold/create-context');
 
@@ -14,10 +13,10 @@ describe('CreateRuntime', () => {
   let runtime;
 
   beforeEach(() => {
-    pkgAddStub = jest.fn();
-    pkgExtendStub = jest.fn();
-    pkgHasStub = jest.fn().mockReturnValue(true);
-    filesAddStub = jest.fn();
+    pkgAddStub = vi.fn();
+    pkgExtendStub = vi.fn();
+    pkgHasStub = vi.fn().mockReturnValue(true);
+    filesAddStub = vi.fn();
     mockPlugin = { name: 'mockPlugin' };
 
     mockContext = {
@@ -40,7 +39,7 @@ describe('CreateRuntime', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('has all properties of the inner context', () => {
@@ -56,7 +55,9 @@ describe('CreateRuntime', () => {
     try {
       runtime.appName = 'proxied';
     } catch {
+      // eslint-disable-next-line jest/no-conditional-expect
       expect(runtime.appName).toEqual('proxied');
+      // eslint-disable-next-line jest/no-conditional-expect
       expect(runtime.appName).not.toEqual(appName);
     }
   });
@@ -69,8 +70,11 @@ describe('CreateRuntime', () => {
       runtime.pkg = '';
       runtime.source = '';
     } catch {
+      // eslint-disable-next-line jest/no-conditional-expect
       expect(runtime.files).toEqual(files);
+      // eslint-disable-next-line jest/no-conditional-expect
       expect(runtime.pkg).toEqual(pkg);
+      // eslint-disable-next-line jest/no-conditional-expect
       expect(runtime.source).toEqual(source);
     }
   });

@@ -1,7 +1,6 @@
-import { jest } from '@jest/globals';
-const mockPromptStub = jest.fn();
+const mockPromptStub = vi.fn();
 
-jest.unstable_mockModule('inquirer', () => ({
+vi.mock('inquirer', () => ({
   default: {
     createPromptModule() { return mockPromptStub; }
   }
@@ -35,7 +34,7 @@ describe('globalPrompts', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('is decorated action', async () => {

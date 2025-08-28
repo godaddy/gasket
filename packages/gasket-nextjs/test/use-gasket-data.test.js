@@ -1,4 +1,4 @@
-import { jest, expect } from '@jest/globals';
+
 import { createElement } from 'react';
 import { render } from '@testing-library/react';
 import { useGasketData } from '../lib/index.js';
@@ -13,7 +13,7 @@ mockConsoleError();
 describe('useGasketData', function () {
 
   it('should return gasketData', async () => {
-    const observeData = jest.fn();
+    const observeData = vi.fn();
     const testData = { greeting: 'hello' };
 
     const MockConsumer = () => {

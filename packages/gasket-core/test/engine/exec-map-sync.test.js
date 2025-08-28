@@ -1,7 +1,6 @@
-import { jest } from '@jest/globals';
 
-const mockDebug = jest.fn();
-jest.unstable_mockModule('debug', () => ({
+const mockDebug = vi.fn();
+vi.mock('debug', () => ({
   default: () => mockDebug
 }));
 
@@ -15,7 +14,7 @@ describe('The execSync method', () => {
     pluginA = {
       name: 'pluginA',
       hooks: {
-        eventA: jest.fn(() => {
+        eventA: vi.fn(() => {
           return 1;
         })
       }
@@ -24,7 +23,7 @@ describe('The execSync method', () => {
     pluginB = {
       name: 'pluginB',
       hooks: {
-        eventA: jest.fn(() => {
+        eventA: vi.fn(() => {
           return 2;
         })
       }
@@ -34,7 +33,7 @@ describe('The execSync method', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('returns an map of results', () => {
@@ -62,7 +61,7 @@ describe('The execSync method', () => {
   });
 
   it('branch isolate passed through', () => {
-    const spy = jest.spyOn(mockGasket.engine, 'execMapSync');
+    const spy = vi.spyOn(mockGasket.engine, 'execMapSync');
     const branch = mockGasket.traceBranch();
     const result = branch.execMapSync('eventA');
 

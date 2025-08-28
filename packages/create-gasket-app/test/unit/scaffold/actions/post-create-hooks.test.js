@@ -1,5 +1,4 @@
-import { jest } from '@jest/globals';
-const mockExecStub = jest.fn();
+const mockExecStub = vi.fn();
 
 const postCreateHooks = (await import('../../../../lib/scaffold/actions/post-create-hooks.js')).default;
 
