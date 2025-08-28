@@ -62,12 +62,12 @@ describe('prepare', () => {
   it('should handle plugins returning arrays of commands', async () => {
     // Mock some plugins returning single commands and others returning arrays
     mockGasket.execSync.mockReturnValue([
-      { id: 'single', description: 'single command', action: jest.fn() },
+      { id: 'single', description: 'single command', action: vi.fn() },
       [
-        { id: 'multi1', description: 'multi command 1', action: jest.fn() },
-        { id: 'multi2', description: 'multi command 2', action: jest.fn() }
+        { id: 'multi1', description: 'multi command 1', action: vi.fn() },
+        { id: 'multi2', description: 'multi command 2', action: vi.fn() }
       ],
-      { id: 'another-single', description: 'another single command', action: jest.fn() }
+      { id: 'another-single', description: 'another single command', action: vi.fn() }
     ]);
 
     process.argv = ['node', '/path/to/gasket.js', 'test'];
@@ -80,9 +80,9 @@ describe('prepare', () => {
 
   it('should handle empty arrays from plugins', async () => {
     mockGasket.execSync.mockReturnValue([
-      { id: 'single', description: 'single command', action: jest.fn() },
+      { id: 'single', description: 'single command', action: vi.fn() },
       [], // Empty array from a plugin
-      { id: 'another', description: 'another command', action: jest.fn() }
+      { id: 'another', description: 'another command', action: vi.fn() }
     ]);
 
     process.argv = ['node', '/path/to/gasket.js', 'test'];
