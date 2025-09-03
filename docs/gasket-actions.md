@@ -27,6 +27,7 @@ The `actions` property expects to receive an object where each key is expected t
 Action names must be unique across the entire Gasket application. If multiple actions share the same name, even if defined in different plugins, an error will occur.
 
 The first argument of an action is always the `gasket` instance.
+This will be injected by Gasket when the action is called. Subsequent arguments can be defined as needed.
 
 Actions can be synchronous or asynchronous and can take a variable number of arguments.
 
@@ -51,7 +52,10 @@ const plugin = {
 export default plugin;
 ```
 
+## Invoking Actions
+
 Once registered, actions can be called within the application code and can be used in other gasket plugins.
+It is unnecessary to pass the `gasket` instance when invoking an action as Gasket will handle this automatically.
 
 Actions are accessible on the `gasket` instance through the `actions` property. This is the same instance that is provided in gasket hooks and gasket lifecycles.
 
