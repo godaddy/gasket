@@ -47,6 +47,8 @@ interface CommandOption {
 
 export interface CreateCommandOptions {
   presets?: string[];
+  template?: string;
+  templatePath?: string;
   npmLink?: string[];
   presetPath?: string[];
   packageManager?: string;
@@ -458,6 +460,12 @@ export interface CreateContext {
 
   /** temporary directory */
   tmpDir: string;
+
+  /** template to use for app creation */
+  template?: string;
+
+  /** path to local template package */
+  templatePath?: string;
 
   /** Default to object w/empty plugins array to be populated by `presetConfig` hook */
   presetConfig: GasketConfigDefinition;

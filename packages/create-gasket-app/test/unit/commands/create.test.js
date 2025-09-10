@@ -4,6 +4,7 @@ const mockDumpErrorContext = vi.fn();
 const consoleErrorStub = vi.spyOn(console, 'error').mockImplementation(() => { });
 const mkDirStub = vi.fn();
 const loadPresetStub = vi.fn();
+const loadTemplateStub = vi.fn();
 const globalPromptsStub = vi.fn();
 const setupPkgStub = vi.fn();
 const writePkgStub = vi.fn();
@@ -31,6 +32,9 @@ vi.mock('../../../lib/scaffold/actions/mkdir.js', () => ({
 }));
 vi.mock('../../../lib/scaffold/actions/load-preset.js', () => ({
   default: loadPresetStub
+}));
+vi.mock('../../../lib/scaffold/actions/load-template.js', () => ({
+  default: loadTemplateStub
 }));
 vi.mock('../../../lib/scaffold/actions/global-prompts.js', () => ({
   default: globalPromptsStub
@@ -224,5 +228,82 @@ describe('create', function () {
       `error: option '--config-file [config-file]' cannot be used with option '--config [config]'\n`
     );
     expect(exitSpy).toHaveBeenCalledWith(1);
+  });
+
+  describe('template functionality', () => {
+    beforeEach(() => {
+      vi.clearAllMocks();
+    });
+
+    it('uses template path when --template is provided', async () => {
+      await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--template', '@gasket/template-nextjs']);
+
+      // Should skip preset processing
+      expect(globalPromptsStub).not.toHaveBeenCalled();
+      expect(loadPresetStub).not.toHaveBeenCalled();
+      expect(setupPkgStub).not.toHaveBeenCalled();
+      expect(writePkgStub).not.toHaveBeenCalled();
+      expect(installModulesStub).not.toHaveBeenCalled();
+      expect(linkModulesStub).not.toHaveBeenCalled();
+
+      // Should only run template-specific actions
+      expect(mkDirStub).toHaveBeenCalled();
+      expect(loadTemplateStub).toHaveBeenCalled();
+      expect(printReportStub).toHaveBeenCalled();
+    });
+
+    it('uses template path when --template-path is provided', async () => {
+      await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--template-path', '/path/to/local/template']);
+
+      // Should skip preset processing
+      expect(globalPromptsStub).not.toHaveBeenCalled();
+      expect(loadPresetStub).not.toHaveBeenCalled();
+      expect(setupPkgStub).not.toHaveBeenCalled();
+
+      // Should only run template-specific actions
+      expect(mkDirStub).toHaveBeenCalled();
+      expect(loadTemplateStub).toHaveBeenCalled();
+      expect(printReportStub).toHaveBeenCalled();
+    });
+
+    it('handles template errors gracefully', async () => {
+      loadTemplateStub.mockRejectedValueOnce(new Error('Template installation failed'));
+
+      await expect(
+        cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--template', '@gasket/template-invalid'])
+      ).rejects.toThrow('Template installation failed');
+
+      expect(mockDumpErrorContext).toHaveBeenCalled();
+      expect(consoleErrorStub).toHaveBeenCalled();
+    });
+
+    it('passes template option to context', async () => {
+      await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--template', '@gasket/template-nextjs']);
+
+      const loadTemplateCall = loadTemplateStub.mock.calls[0];
+      expect(loadTemplateCall[0]).toHaveProperty('context');
+      expect(loadTemplateCall[0].context).toHaveProperty('template', '@gasket/template-nextjs');
+    });
+
+    it('passes template-path option to context', async () => {
+      await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--template-path', '/local/template']);
+
+      const loadTemplateCall = loadTemplateStub.mock.calls[0];
+      expect(loadTemplateCall[0]).toHaveProperty('context');
+      expect(loadTemplateCall[0].context).toHaveProperty('templatePath', '/local/template');
+    });
+
+    it('prioritizes template over presets when both are provided', async () => {
+      await cmd.parseAsync([
+        'node', 'gasket', 'create', 'myapp',
+        '--template', '@gasket/template-nextjs',
+        '--presets', 'nextjs'
+      ]);
+
+      // Should use template path, not preset path
+      expect(loadTemplateStub).toHaveBeenCalled();
+      expect(loadPresetStub).not.toHaveBeenCalled();
+      expect(globalPromptsStub).not.toHaveBeenCalled();
+    });
   });
 });

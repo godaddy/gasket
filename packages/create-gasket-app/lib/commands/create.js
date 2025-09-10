@@ -6,6 +6,7 @@ import { rm } from 'fs/promises';
 import { makeGasket } from '@gasket/core';
 import globalPrompts from '../scaffold/actions/global-prompts.js';
 import loadPreset from '../scaffold/actions/load-preset.js';
+import loadTemplate from '../scaffold/actions/load-template.js';
 import presetPromptHooks from '../scaffold/actions/preset-prompt-hooks.js';
 import presetConfigHooks from '../scaffold/actions/preset-config-hooks.js';
 import promptHooks from '../scaffold/actions/prompt-hooks.js';
@@ -44,6 +45,17 @@ const createCommand = {
       Can be set as short name with version (e.g. --presets nextjs@^1.0.0)
       Or other (multiple) custom presets (e.g. --presets my-gasket-preset@1.0.0.beta-1,nextjs@^1.0.0)`,
       parse: commasToArray
+    },
+    {
+      name: 'template',
+      description: `Selects which template you would like to use during
+      installation. (e.g. --template @gasket/template-nextjs-pages-js)`
+    },
+    {
+      name: 'template-path',
+      description: `(INTERNAL) Path to a local template package. Can be absolute
+      or relative to the current working directory.`,
+      hidden: true
     },
     {
       name: 'package-manager',
@@ -101,6 +113,15 @@ createCommand.action = async function run(appname, options, command) {
   const { rawPresets, localPresets } = context;
 
   try {
+    // If template is provided, use simplified template path
+    if (context.template || context.templatePath) {
+      await mkDir({ context });
+      await loadTemplate({ context });
+      printReport({ context });
+      return;
+    }
+
+    // Original preset-based creation path
     await globalPrompts({ context });
 
     if (rawPresets.length || localPresets.length) {
