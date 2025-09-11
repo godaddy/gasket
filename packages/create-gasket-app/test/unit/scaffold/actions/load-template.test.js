@@ -25,8 +25,8 @@ vi.mock('@gasket/utils', () => ({
     constructor(options) {
       mockPackageManagerConstructor(options);
     }
-    async exec() {
-      return mockPackageManagerExec(...arguments);
+    async exec(...args) {
+      return mockPackageManagerExec(...args);
     }
   }
 }));
