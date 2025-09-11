@@ -320,10 +320,11 @@ describe('loadTemplate', () => {
         await expect(loadTemplate({ context: mockContext })).rejects.toThrow(expectedError);
       });
 
-      it('sets _templateTmpDir on context for cleanup', async () => {
+      it('cleans up temporary directory after successful operation', async () => {
         await loadTemplate({ context: mockContext });
 
-        expect(mockContext._templateTmpDir).toBe('/tmp/gasket-template-test-123');
+        // Verify cleanup was called for the temporary directory
+        expect(mockRm).toHaveBeenCalledWith('/tmp/gasket-template-test-123', { recursive: true });
       });
 
       it('cleans up temporary directory on general error', async () => {

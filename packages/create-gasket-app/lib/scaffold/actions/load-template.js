@@ -4,109 +4,198 @@ import { withSpinner } from '../with-spinner.js';
 import { PackageManager } from '@gasket/utils';
 import { mkdtemp, cp, readdir, rm } from 'fs/promises';
 
-const hasVersionOrTag = /@([\^~]?\d+\.\d+\.\d+(?:-[\d\w.-]+)?|[\^~]?\d+\.\d+\.\d+|[a-zA-Z]+|file:.+)$/;
+const VERSION_TAG_REGEX = /@([\^~]?\d+\.\d+\.\d+(?:-[\d\w.-]+)?|[\^~]?\d+\.\d+\.\d+|[a-zA-Z]+|file:.+)$/;
+const GASKET_TEMPLATE_PATTERNS = ['/gasket-template-', '@gasket/template-'];
+const EXCLUDED_FILES = ['node_modules'];
 
 /**
- * validateTemplateName - Validate the template name
+ * Validates that the template name follows Gasket naming conventions
  * @param {string} template - The template name
- * @returns {void}
+ * @throws {Error} If template name is invalid
  */
 function validateTemplateName(template) {
-  const isValidName = template.includes('/gasket-template-') || template.includes('@gasket/template-');
-  const isMispelled = template.endsWith('-template');
-
-  if (isMispelled) {
+  if (template.endsWith('-template')) {
     throw new Error(`Invalid template name: ${template}. Please check the name and try again.`);
   }
 
-  if (!isValidName) {
+  const isValid = GASKET_TEMPLATE_PATTERNS.some(pattern => template.includes(pattern));
+  if (!isValid) {
     throw new Error(`Invalid template name: ${template}. Templates must follow naming convention.`);
   }
 }
 
+/**
+ * Parses template string into name and version components
+ * @param {string} template - Template string (e.g., "@gasket/template-api@1.0.0")
+ * @returns {{ name: string, version: string }} Parsed template name and version
+ */
+function parseTemplateNameAndVersion(template) {
+  if (!VERSION_TAG_REGEX.test(template)) {
+    return { name: template, version: '@latest' };
+  }
+
+  const parts = template.split('@').filter(Boolean);
+  return {
+    name: `@${parts[0]}`,
+    version: `@${parts[1]}`
+  };
+}
+
+/**
+ * Safely cleans up temporary directory
+ * @param {string} tmpDir - Temporary directory path
+ * @returns {Promise<void>}
+ */
+async function cleanupTempDir(tmpDir) {
+  if (!tmpDir) return;
+
+  try {
+    await rm(tmpDir, { recursive: true });
+  } catch {
+    // Ignore cleanup errors
+  }
+}
+
+/**
+ * Copies template files to destination, excluding certain files
+ * @param {string} templateDir - Source template directory
+ * @param {string} destDir - Destination directory
+ * @param {object} context - Gasket context
+ * @returns {Promise<void>}
+ */
+async function copyTemplateFiles(templateDir, destDir, context) {
+  const entries = await readdir(templateDir, { withFileTypes: true });
+  const filesToCopy = entries.filter(entry => !EXCLUDED_FILES.includes(entry.name));
+
+  for (const entry of filesToCopy) {
+    const sourcePath = path.join(templateDir, entry.name);
+    const destPath = path.join(destDir, entry.name);
+    await cp(sourcePath, destPath, { recursive: true });
+    context.generatedFiles.add(path.relative(context.cwd, destPath));
+  }
+}
+
+/**
+ * Downloads and installs a remote template package
+ * @param {string} template - Template name with optional version
+ * @param {string} appName - App name for temp directory
+ * @returns {Promise<{ templateDir: string, templateName: string, tmpDir: string }>} Template installation details
+ */
+async function installRemoteTemplate(template, appName) {
+  validateTemplateName(template);
+
+  const tmpDir = await mkdtemp(path.join(os.tmpdir(), `gasket-template-${appName}`));
+  const modPath = path.join(tmpDir, 'node_modules');
+  const pkgManager = new PackageManager({
+    packageManager: 'npm',
+    dest: tmpDir
+  });
+
+  const { name, version } = parseTemplateNameAndVersion(template);
+
+  try {
+    await pkgManager.exec('install', [`${name}${version}`]);
+    return {
+      templateDir: path.join(modPath, name, 'template'),
+      templateName: `${name}${version}`,
+      tmpDir
+    };
+  } catch (err) {
+    await cleanupTempDir(tmpDir);
+
+    const errorMessage = err.stderr || err.message;
+    if (err.stderr?.includes('is not in this registry')) {
+      const message = `Template not found in registry: ${name}${version}. ` +
+        'Use npm_config_registry=<registry> to use privately scoped templates.';
+      throw new Error(message);
+    }
+    throw new Error(`Failed to install template ${name}${version}: ${errorMessage}`);
+  }
+}
+
+/**
+ * Checks if an error is related to peer dependencies
+ * @param {Error & { stderr?: string }} error - The error to check
+ * @returns {boolean} True if error is peer dep related
+ */
+function isPeerDependencyError(error) {
+  const errorMessage = (error.stderr || error.message || '').toLowerCase();
+  return errorMessage.includes('peer dep') ||
+         errorMessage.includes('peerinvalid') ||
+         errorMessage.includes('peer dependencies') ||
+         errorMessage.includes('eresolve');
+}
+
+/**
+ * Installs dependencies in the destination directory
+ * @param {string} dest - Destination directory path
+ * @returns {Promise<void>}
+ */
+async function installDependencies(dest) {
+  const destPkgManager = new PackageManager({
+    packageManager: 'npm',
+    dest
+  });
+
+  try {
+    await destPkgManager.exec('ci');
+  } catch (error) {
+    if (isPeerDependencyError(error)) {
+      console.warn('Peer dependency conflict detected, retrying with --legacy-peer-deps...');
+      try {
+        await destPkgManager.exec('ci', ['--legacy-peer-deps']);
+      } catch (retryError) {
+        throw new Error(`Failed to install dependencies even with --legacy-peer-deps: ${retryError.message}`);
+      }
+    } else {
+      throw error;
+    }
+  }
+}
+
+/**
+ * Gets template directory and name based on context
+ * @param {object} context - Gasket creation context
+ * @returns {Promise<{ templateDir: string, templateName: string, tmpDir?: string }>} Template details
+ */
+async function getTemplateDetails(context) {
+  if (context.templatePath) {
+    return {
+      templateDir: path.resolve(context.templatePath, 'template'),
+      templateName: `local template at ${path.resolve(context.templatePath, 'template')}`
+    };
+  }
+
+  const result = await installRemoteTemplate(context.template, context.appName);
+  return {
+    templateDir: result.templateDir,
+    templateName: result.templateName,
+    tmpDir: result.tmpDir
+  };
+}
+
+/**
+ * Loads and installs a template (local or remote) into the destination directory
+ * @param {object} options - Options object
+ * @param {object} options.context - Gasket creation context
+ * @returns {Promise<void>}
+ */
 async function loadTemplate({ context }) {
   if (!context.template && !context.templatePath) return;
 
+  let tmpDir;
+
   try {
-    let templateDir;
-    let templateName;
+    const { templateDir, templateName, tmpDir: tempDirectory } = await getTemplateDetails(context);
+    tmpDir = tempDirectory;
 
-    if (context.templatePath) {
-      // Handle local template path
-      templateDir = path.resolve(context.templatePath, 'template');
-      templateName = `local template at ${templateDir}`;
-    } else {
-      // Handle remote template package
-      const tmpDir = await mkdtemp(path.join(os.tmpdir(), `gasket-template-${context.appName}`));
-      const modPath = path.join(tmpDir, 'node_modules');
-      const pkgManager = new PackageManager({
-        packageManager: 'npm',
-        dest: tmpDir
-      });
-
-      const template = context.template;
-      validateTemplateName(template);
-
-      const parts = hasVersionOrTag.test(template) && template.split('@').filter(Boolean);
-      const name = parts ? `@${parts[0]}` : template;
-      const version = parts ? `@${parts[1]}` : '@latest';
-
-      try {
-        // Install the template package
-        await pkgManager.exec('install', [`${name}${version}`]);
-        templateDir = path.join(modPath, name, 'template');
-        templateName = `${name}${version}`;
-
-        // Clean up will happen after copying
-        context._templateTmpDir = tmpDir;
-      } catch (err) {
-        // Clean up on error
-        await rm(tmpDir, { recursive: true });
-
-        const errorMessage = err.stderr || err.message;
-        if (err.stderr && err.stderr.includes('is not in this registry')) {
-          throw new Error(`Template not found in registry: ${name}${version}. Use npm_config_registry=<registry> to use privately scoped templates.`);
-        }
-        throw new Error(`Failed to install template ${name}${version}: ${errorMessage}`);
-      }
-    }
-
-    // Copy entire template directory to destination (excluding node_modules)
-    const entries = await readdir(templateDir, { withFileTypes: true });
-    const filesToCopy = entries.filter(entry =>
-      entry.name !== 'node_modules'
-    );
-
-    for (const entry of filesToCopy) {
-      const sourcePath = path.join(templateDir, entry.name);
-      const destPath = path.join(context.dest, entry.name);
-      await cp(sourcePath, destPath, { recursive: true });
-      context.generatedFiles.add(path.relative(context.cwd, destPath));
-    }
-
-    // Clean up template temp directory if it was created
-    if (context._templateTmpDir) {
-      await rm(context._templateTmpDir, { recursive: true });
-    }
-
-    // Run npm ci in the destination directory to install dependencies
-    const destPkgManager = new PackageManager({
-      packageManager: 'npm',
-      dest: context.dest
-    });
-    await destPkgManager.exec('ci');
+    await copyTemplateFiles(templateDir, context.dest, context);
+    await cleanupTempDir(tmpDir);
+    await installDependencies(context.dest);
 
     context.messages.push(`Template ${templateName} installed and dependencies resolved`);
-
   } catch (err) {
-    // Clean up on error
-    if (context._templateTmpDir) {
-      try {
-        await rm(context._templateTmpDir, { recursive: true });
-      } catch {
-        // Ignore cleanup errors
-      }
-    }
+    await cleanupTempDir(tmpDir);
     throw err;
   }
 }
