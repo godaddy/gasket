@@ -58,7 +58,6 @@ vi.mock('os', () => ({
   }
 }));
 
-// __dirname not used in this test file
 
 // Set up mock defaults
 mockTmpdir.mockReturnValue('/tmp');
