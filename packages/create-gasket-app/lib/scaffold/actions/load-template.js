@@ -5,24 +5,7 @@ import { PackageManager } from '@gasket/utils';
 import { mkdtemp, cp, readdir, rm } from 'fs/promises';
 
 const VERSION_TAG_REGEX = /@([\^~]?\d+\.\d+\.\d+(?:-[\d\w.-]+)?|[\^~]?\d+\.\d+\.\d+|[a-zA-Z]+|file:.+)$/;
-const GASKET_TEMPLATE_PATTERNS = ['/gasket-template-', '@gasket/template-'];
 const EXCLUDED_FILES = ['node_modules'];
-
-/**
- * Validates that the template name follows Gasket naming conventions
- * @param {string} template - The template name
- * @throws {Error} If template name is invalid
- */
-function validateTemplateName(template) {
-  if (template.endsWith('-template')) {
-    throw new Error(`Invalid template name: ${template}. Please check the name and try again.`);
-  }
-
-  const isValid = GASKET_TEMPLATE_PATTERNS.some(pattern => template.includes(pattern));
-  if (!isValid) {
-    throw new Error(`Invalid template name: ${template}. Templates must follow naming convention.`);
-  }
-}
 
 /**
  * Parses template string into name and version components
@@ -31,13 +14,19 @@ function validateTemplateName(template) {
  */
 function parseTemplateNameAndVersion(template) {
   if (!VERSION_TAG_REGEX.test(template)) {
-    return { name: template, version: '@latest' };
+    return { name: template, version: 'latest' };
   }
 
-  const parts = template.split('@').filter(Boolean);
+  // capture name and version, excluding `@`
+  const reNameVersion = /(^.[^@]+)[@](.+$)/i;
+  const [
+    name,
+    version = 'latest'
+  ] = template.split(reNameVersion).filter(Boolean);
+
   return {
-    name: `@${parts[0]}`,
-    version: `@${parts[1]}`
+    name,
+    version
   };
 }
 
@@ -82,8 +71,6 @@ async function copyTemplateFiles(templateDir, destDir, context) {
  * @returns {Promise<{ templateDir: string, templateName: string, tmpDir: string }>} Template installation details
  */
 async function installRemoteTemplate(template, appName) {
-  validateTemplateName(template);
-
   const tmpDir = await mkdtemp(path.join(os.tmpdir(), `gasket-template-${appName}`));
   const modPath = path.join(tmpDir, 'node_modules');
   const pkgManager = new PackageManager({
@@ -94,10 +81,10 @@ async function installRemoteTemplate(template, appName) {
   const { name, version } = parseTemplateNameAndVersion(template);
 
   try {
-    await pkgManager.exec('install', [`${name}${version}`]);
+    await pkgManager.exec('install', [`${name}@${version}`]);
     return {
       templateDir: path.join(modPath, name, 'template'),
-      templateName: `${name}${version}`,
+      templateName: `${name}@${version}`,
       tmpDir
     };
   } catch (err) {
@@ -105,11 +92,11 @@ async function installRemoteTemplate(template, appName) {
 
     const errorMessage = err.stderr || err.message;
     if (err.stderr?.includes('is not in this registry')) {
-      const message = `Template not found in registry: ${name}${version}. ` +
+      const message = `Template not found in registry: ${name}@${version}. ` +
         'Use npm_config_registry=<registry> to use privately scoped templates.';
       throw new Error(message);
     }
-    throw new Error(`Failed to install template ${name}${version}: ${errorMessage}`);
+    throw new Error(`Failed to install template ${name}@${version}: ${errorMessage}`);
   }
 }
 
@@ -121,9 +108,9 @@ async function installRemoteTemplate(template, appName) {
 function isPeerDependencyError(error) {
   const errorMessage = (error.stderr || error.message || '').toLowerCase();
   return errorMessage.includes('peer dep') ||
-         errorMessage.includes('peerinvalid') ||
-         errorMessage.includes('peer dependencies') ||
-         errorMessage.includes('eresolve');
+    errorMessage.includes('peerinvalid') ||
+    errorMessage.includes('peer dependencies') ||
+    errorMessage.includes('eresolve');
 }
 
 /**
