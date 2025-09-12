@@ -103,6 +103,22 @@ const createCommand = {
 };
 
 /**
+ * validateOption - We require at least one of the options to be provided
+ * @param {import('../internal.js').PartialCreateContext} context
+ * @returns {import('../internal.js').PartialCreateContext}
+ */
+function validateOptions(context) {
+  const hasOption = (context) => Boolean(context.template || context.templatePath || context.rawPresets.length || context.localPresets.length);
+
+  if (!hasOption(context)) {
+    console.warn('At least one of the options is required: --template, --template-path, --presets, --preset-path');
+    process.exit(1);
+  }
+
+  return context;
+}
+
+/**
  * createCommand action
  * @type {import('../index.js').createCommandAction}
  */
@@ -110,11 +126,11 @@ createCommand.action = async function run(appname, options, command) {
   // eslint-disable-next-line no-process-env
   process.env.GASKET_ENV = 'create';
   const context = makeCreateContext([appname], options);
-  const { rawPresets, localPresets } = context;
+  const { rawPresets, localPresets, template, templatePath } = validateOptions(context);
 
   try {
     // If template is provided, use simplified template path
-    if (context.template || context.templatePath) {
+    if (template || templatePath) {
       await mkDir({ context });
       await loadTemplate({ context });
       printReport({ context });
