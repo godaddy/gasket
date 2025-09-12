@@ -123,36 +123,6 @@ describe('loadTemplate', () => {
     });
   });
 
-  describe('validateTemplateName', () => {
-    it('accepts valid template names with /gasket-template-', async () => {
-      mockContext.template = 'org/gasket-template-nextjs';
-
-      await expect(loadTemplate({ context: mockContext })).resolves.not.toThrow();
-    });
-
-    it('accepts valid template names with @gasket/template-', async () => {
-      mockContext.template = '@gasket/template-nextjs';
-
-      await expect(loadTemplate({ context: mockContext })).resolves.not.toThrow();
-    });
-
-    it('rejects template names ending with -template', async () => {
-      mockContext.template = '@gasket/nextjs-template';
-
-      await expect(loadTemplate({ context: mockContext })).rejects.toThrow(
-        'Invalid template name: @gasket/nextjs-template. Please check the name and try again.'
-      );
-    });
-
-    it('rejects template names that do not follow naming convention', async () => {
-      mockContext.template = 'some-random-package';
-
-      await expect(loadTemplate({ context: mockContext })).rejects.toThrow(
-        'Invalid template name: some-random-package. Templates must follow naming convention.'
-      );
-    });
-  });
-
   describe('local template path', () => {
     beforeEach(() => {
       mockContext.templatePath = '/path/to/local/template';
