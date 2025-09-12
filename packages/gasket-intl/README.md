@@ -98,14 +98,41 @@ if (status === LocaleFileStatus.loading) {
 }
 ```
 
-### Server-Side Rendering
+### Using Static Locale File Paths
+
+The `staticLocaleFilePaths` configuration in [@gasket/plugin-intl] allows you to specify which locale files should be
+preloaded for server-side rendering (SSR) and available immediately when the app starts.
+
+#### Configuration
+
+Configure `staticLocaleFilePaths` in your `gasket.js`:
+
+```js
+// gasket.js
+export default makeGasket({
+  intl: {
+    locales: ['en-US', 'fr-FR'],
+    staticLocaleFilePaths: [
+      'locales/common',
+      'locales/navigation', 
+      'locales/errors'
+    ]
+  }
+});
+```
+
+#### Server-Side Rendering
 
 ```js
 import intlManager from '../path/to/intl.js';
 
-// On the server, preload all static locale files
 const localeHandler = intlManager.handleLocale('en-US');
+
+// Load all configured static locale files
 await localeHandler.loadStatics();
+
+// Or load specific static files
+await localeHandler.loadStatics('locales/common', 'locales/navigation');
 
 // Get the static messages register for SSR
 const staticsRegister = localeHandler.getStaticsRegister();
