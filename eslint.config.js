@@ -21,7 +21,10 @@ export default defineConfig([
     '**/generator/**',
     '**/__mocks__/**',
     '**/test/fixtures/**',
-    '**/gasket-redux/lib'
+    '**/gasket-redux/lib',
+    '**/template/dist',
+    '**/template/.next',
+    '**/template/.docs'
   ]),
   //
   // Configurations for Jest and Unicorn
@@ -110,6 +113,13 @@ export default defineConfig([
       'jsdoc/require-jsdoc': 'off',
       'jsdoc/require-returns': 'off',
       'jsdoc/require-param': 'off'
+    }
+  },
+
+  {
+    files: ['**/*.d.ts'],
+    rules: {
+      '@typescript-eslint/triple-slash-reference': 'off'
     }
   }
 ]);

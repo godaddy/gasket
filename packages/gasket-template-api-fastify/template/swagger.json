@@ -1,0 +1,28 @@
+{
+  "info": {
+    "title": "fastify-ts",
+    "version": "0.0.0"
+  },
+  "swagger": "2.0",
+  "paths": {
+    "/default": {
+      "get": {
+        "summary": "Get default route",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns welcome message.",
+            "content": "application/json"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {},
+  "responses": {},
+  "parameters": {},
+  "securityDefinitions": {},
+  "tags": []
+}
