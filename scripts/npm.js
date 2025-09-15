@@ -16,27 +16,27 @@ const OPERATIONS = {
     command: 'npm',
     args: ['ci']
   },
-  build: {
+  'build': {
     name: 'Building',
     emoji: '🔨',
     command: 'npm',
     args: ['run', 'build']
   },
-  test: {
+  'test': {
     name: 'Testing',
     emoji: '🧪',
     command: 'npm',
     args: ['test'],
     env: { ESLINT_USE_FLAT_CONFIG: 'false' }
   },
-  lint: {
+  'lint': {
     name: 'Linting',
     emoji: '🔍',
     command: 'npx',
     args: ['eslint', '--ext', '.js,.jsx,.cjs,.ts,.tsx', '.'],
     env: { ESLINT_USE_FLAT_CONFIG: 'false' }
   },
-  clean: {
+  'clean': {
     name: 'Cleaning',
     emoji: '🧹',
     isCustom: true,
