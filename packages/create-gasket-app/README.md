@@ -43,6 +43,10 @@ Options:
   -p, --presets [presets]              Initial Gasket preset(s) to use.
         Can be set as short name with version (e.g. --presets nextjs@^1.0.0)
         Or other (multiple) custom presets (e.g. --presets my-gasket-preset@1.0.0.beta-1,nextjs@^1.0.0)
+  --template [template]                Selects which template you would like to use during
+        installation. (e.g. --template @gasket/template-nextjs-pages-js)
+  --template-path [template-path]      (INTERNAL) Path to a local template package. Can be absolute
+        or relative to the current working directory.
   --package-manager [package-manager]  Selects which package manager you would like to use during
         installation. (e.g. --package-manager yarn)
   -r, --require [require]              Require module(s) before Gasket is initialized
@@ -50,6 +54,48 @@ Options:
   --config-file [config-file]          Path to a JSON file that provides the values for any interactive prompts
   -h, --help                           display help for command
 ```
+
+#### Templates
+
+Templates provide a complete Gasket application ready to use, unlike presets which build apps through a plugin-based creation process.
+
+##### Using Templates
+
+```bash
+# Use an official template from npm
+npx create-gasket-app@latest my-app --template @gasket/template-nextjs-pages-js
+
+# Use a versioned template
+npx create-gasket-app@latest my-app --template @gasket/template-api@^2.0.0
+
+# Use a local template (development)
+npx create-gasket-app@latest my-app --template-path ./path/to/my-template
+
+# Use a template with tag
+npx create-gasket-app@latest my-app --template @gasket/template-nextjs-pages-js@beta
+```
+
+##### Template Structure
+
+Templates are npm packages that follow this structure:
+
+```
+@gasket/template-example/
+├── package.json
+├── template/
+│   ├── package.json      # App's package.json
+│   ├── gasket.js         # App's gasket config
+│   ├── src/              # App source files
+│   └── ...               # Other app files
+└── README.md
+```
+
+When using templates:
+- The entire `template/` directory is copied to your new app
+- Template dependencies are installed with `npm ci`  
+- No preset processing or plugin creation flows are run
+
+**Note:** Templates currently require npm as they come with `package-lock.json` files.
 
 #### Package Managers
 
