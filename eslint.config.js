@@ -116,6 +116,9 @@ export default defineConfig([
     }
   },
 
+  //
+  // Disable certain rules for TypeScript definition files
+  //
   {
     files: ['**/*.d.ts'],
     rules: {
