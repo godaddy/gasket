@@ -467,6 +467,12 @@ export interface CreateContext {
   /** path to local template package */
   templatePath?: string;
 
+  /** resolved template directory path */
+  templateDir?: string;
+
+  /** resolved template name for display */
+  templateName?: string;
+
   /** Default to object w/empty plugins array to be populated by `presetConfig` hook */
   presetConfig: GasketConfigDefinition;
 

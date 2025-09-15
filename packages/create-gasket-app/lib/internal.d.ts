@@ -125,6 +125,15 @@ export type Descriptior = {
   from: string;
   overrides?: string;
 }
+
+/** Templates */
+export function loadTemplate(params: { context: PartialCreateContext }): Promise<void>;
+export function copyTemplate(params: { context: PartialCreateContext }): Promise<void>;
+export function customizeTemplate(params: { context: PartialCreateContext }): Promise<void>;
+export function installTemplateDeps(params: { context: PartialCreateContext }): Promise<void>;
+
+
+/** Presets */
 export function generateFiles({ context, spinner }: { context: CreateContext, spinner: Ora }): Promise<void>;
 export function performGenerate(context: CreateContext, descriptors: Descriptior[]): boolean[];
 export function getDescriptors(context: CreateContext): Promise<Descriptior[]>;
