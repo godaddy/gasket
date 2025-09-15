@@ -10,6 +10,7 @@ const mkDirStub = vi.fn();
 const loadPresetStub = vi.fn();
 const loadTemplateStub = vi.fn();
 const copyTemplateStub = vi.fn();
+const customizeTemplateStub = vi.fn();
 const installTemplateDepsStub = vi.fn();
 const globalPromptsStub = vi.fn();
 const setupPkgStub = vi.fn();
@@ -44,6 +45,9 @@ vi.mock('../../../lib/scaffold/actions/load-template.js', () => ({
 }));
 vi.mock('../../../lib/scaffold/actions/copy-template.js', () => ({
   default: copyTemplateStub
+}));
+vi.mock('../../../lib/scaffold/actions/customize-template.js', () => ({
+  default: customizeTemplateStub
 }));
 vi.mock('../../../lib/scaffold/actions/install-template-deps.js', () => ({
   default: installTemplateDepsStub
@@ -312,6 +316,7 @@ describe('create', function () {
       expect(mkDirStub).toHaveBeenCalled();
       expect(loadTemplateStub).toHaveBeenCalled();
       expect(copyTemplateStub).toHaveBeenCalled();
+      expect(customizeTemplateStub).toHaveBeenCalled();
       expect(installTemplateDepsStub).toHaveBeenCalled();
       expect(printReportStub).toHaveBeenCalled();
     });
@@ -328,6 +333,7 @@ describe('create', function () {
       expect(mkDirStub).toHaveBeenCalled();
       expect(loadTemplateStub).toHaveBeenCalled();
       expect(copyTemplateStub).toHaveBeenCalled();
+      expect(customizeTemplateStub).toHaveBeenCalled();
       expect(installTemplateDepsStub).toHaveBeenCalled();
       expect(printReportStub).toHaveBeenCalled();
     });
@@ -369,6 +375,7 @@ describe('create', function () {
       // Should use template path, not preset path
       expect(loadTemplateStub).toHaveBeenCalled();
       expect(copyTemplateStub).toHaveBeenCalled();
+      expect(customizeTemplateStub).toHaveBeenCalled();
       expect(installTemplateDepsStub).toHaveBeenCalled();
       expect(loadPresetStub).not.toHaveBeenCalled();
       expect(globalPromptsStub).not.toHaveBeenCalled();

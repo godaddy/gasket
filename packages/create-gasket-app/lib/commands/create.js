@@ -8,6 +8,7 @@ import globalPrompts from '../scaffold/actions/global-prompts.js';
 import loadPreset from '../scaffold/actions/load-preset.js';
 import loadTemplate from '../scaffold/actions/load-template.js';
 import copyTemplate from '../scaffold/actions/copy-template.js';
+import customizeTemplate from '../scaffold/actions/customize-template.js';
 import installTemplateDep from '../scaffold/actions/install-template-deps.js';
 import presetPromptHooks from '../scaffold/actions/preset-prompt-hooks.js';
 import presetConfigHooks from '../scaffold/actions/preset-config-hooks.js';
@@ -129,6 +130,7 @@ async function handleTemplate(context) {
   await mkDir({ context });
   await loadTemplate({ context });
   await copyTemplate({ context });
+  await customizeTemplate({ context });
   await installTemplateDep({ context });
   printReport({ context });
   return;
