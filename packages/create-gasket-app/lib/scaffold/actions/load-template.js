@@ -4,18 +4,12 @@ import { withSpinner } from '../with-spinner.js';
 import { PackageManager } from '@gasket/utils';
 import { mkdtemp, rm } from 'fs/promises';
 
-const VERSION_TAG_REGEX = /@([\^~]?\d+\.\d+\.\d+(?:-[\d\w.-]+)?|[\^~]?\d+\.\d+\.\d+|[a-zA-Z]+|file:.+)$/;
-
 /**
  * Parses template string into name and version components
  * @param {string} template - Template string (e.g., "@gasket/template-api@1.0.0")
  * @returns {{ name: string, version: string }} Parsed template name and version
  */
 function parseTemplateNameAndVersion(template) {
-  if (!VERSION_TAG_REGEX.test(template)) {
-    return { name: template, version: 'latest' };
-  }
-
   // capture name and version, excluding `@`
   const reNameVersion = /(^.[^@]+)[@](.+$)/i;
   const [
@@ -111,8 +105,6 @@ async function loadTemplate({ context }) {
   context.templateDir = templateDir;
   context.templateName = templateName;
   context.tmpDir = tmpDir;
-
-  context.messages.push(`Template ${templateName} loaded`);
 }
 
 export default withSpinner('Loading template', loadTemplate);

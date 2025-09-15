@@ -56,7 +56,6 @@ describe('loadTemplate', () => {
     expect(mockContext.templateDir).toBe('/local/template/template');
     expect(mockContext.templateName).toBe('local template at /local/template/template');
     expect(mockContext.tmpDir).toBeUndefined();
-    expect(mockContext.messages).toContain('Template local template at /local/template/template loaded');
   });
 
   it('downloads and installs remote template', async () => {
@@ -73,7 +72,6 @@ describe('loadTemplate', () => {
     expect(mockContext.templateDir).toBe(`${mockTmpDir}/node_modules/@gasket/template-test/template`);
     expect(mockContext.templateName).toBe('@gasket/template-test@1.0.0');
     expect(mockContext.tmpDir).toBe(mockTmpDir);
-    expect(mockContext.messages).toContain('Template @gasket/template-test@1.0.0 loaded');
   });
 
   it('handles template without version tag', async () => {

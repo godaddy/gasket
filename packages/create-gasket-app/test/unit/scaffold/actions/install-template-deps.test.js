@@ -41,7 +41,6 @@ describe('installTemplateDep', () => {
 
     expect(mockExec).toHaveBeenCalledWith('ci');
     expect(mockRm).toHaveBeenCalledWith('/tmp/gasket-template-test-app-xyz', { recursive: true });
-    expect(mockContext.messages).toContain('Template @gasket/template-test@1.0.0 dependencies installed');
   });
 
   it('handles peer dependency errors with --legacy-peer-deps retry', async () => {
@@ -65,7 +64,7 @@ describe('installTemplateDep', () => {
     expect(mockExec).toHaveBeenCalledWith('ci', ['--legacy-peer-deps']);
     expect(consoleWarnSpy).toHaveBeenCalledWith('Peer dependency conflict detected, retrying with --legacy-peer-deps...');
     expect(mockRm).toHaveBeenCalledWith('/tmp/gasket-template-test-app-xyz', { recursive: true });
-    expect(mockContext.messages).toContain('Template @gasket/template-test@1.0.0 dependencies installed with --legacy-peer-deps');
+    expect(mockContext.messages).toContain('Dependencies were installed with --legacy-peer-deps due to confilct');
 
     consoleWarnSpy.mockRestore();
   });
@@ -144,7 +143,6 @@ describe('installTemplateDep', () => {
     await installTemplateDep({ context: mockContext });
 
     expect(mockExec).toHaveBeenCalledWith('ci');
-    expect(mockContext.messages).toContain('Template @gasket/template-test@1.0.0 dependencies installed');
   });
 
   it('ignores cleanup errors during error handling', async () => {
@@ -178,17 +176,6 @@ describe('installTemplateDep', () => {
 
     expect(mockExec).toHaveBeenCalledWith('ci');
     expect(mockRm).not.toHaveBeenCalled(); // No cleanup needed for local templates
-    expect(mockContext.messages).toContain('Template @gasket/template-test@1.0.0 dependencies installed');
-  });
-
-  it('handles context without templateName', async () => {
-    mockContext.templateName = null;
-    mockExec.mockResolvedValue();
-    mockRm.mockResolvedValue();
-
-    await installTemplateDep({ context: mockContext });
-
-    expect(mockContext.messages).toContain('Template null dependencies installed');
   });
 
   describe('isPeerDependencyError', () => {

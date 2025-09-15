@@ -40,14 +40,13 @@ async function installTemplateDeps({ context }) {
   try {
     await destPkgManager.exec('ci');
     await cleanupTempDir(context.tmpDir);
-    context.messages.push(`Template ${context.templateName} dependencies installed`);
   } catch (error) {
     if (isPeerDependencyError(error)) {
       console.warn('Peer dependency conflict detected, retrying with --legacy-peer-deps...');
       try {
         await destPkgManager.exec('ci', ['--legacy-peer-deps']);
         await cleanupTempDir(context.tmpDir);
-        context.messages.push(`Template ${context.templateName} dependencies installed with --legacy-peer-deps`);
+        context.messages.push('Dependencies were installed with --legacy-peer-deps due to confilct');
       } catch (retryError) {
         await cleanupTempDir(context.tmpDir);
         throw new Error(`Failed to install dependencies even with --legacy-peer-deps: ${retryError.message}`);
