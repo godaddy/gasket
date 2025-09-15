@@ -101,12 +101,7 @@ async function getTemplateDetails(context) {
   };
 }
 
-/**
- * Loads a template (local or remote) and stores template info in context
- * @param {object} options - Options object
- * @param {object} options.context - Gasket creation context
- * @returns {Promise<void>}
- */
+/** @type {import('../../internal.d.ts').loadTemplate} */
 async function loadTemplate({ context }) {
   if (!context.template && !context.templatePath) return;
 

@@ -30,13 +30,8 @@ function isPeerDependencyError(error) {
     errorMessage.includes('eresolve');
 }
 
-/**
- * Installs dependencies in the destination directory and cleans up temporary files
- * @param {object} options - Options object
- * @param {object} options.context - Gasket context
- * @returns {Promise<void>}
- */
-async function installTemplateDep({ context }) {
+/** @type {import('../../internal.d.ts').installTemplateDeps} */
+async function installTemplateDeps({ context }) {
   const destPkgManager = new PackageManager({
     packageManager: 'npm',
     dest: context.dest
@@ -64,4 +59,4 @@ async function installTemplateDep({ context }) {
   }
 }
 
-export default withSpinner('Install template dependencies', installTemplateDep);
+export default withSpinner('Install template dependencies', installTemplateDeps);

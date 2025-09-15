@@ -4,12 +4,7 @@ import { cp, readdir } from 'fs/promises';
 
 const EXCLUDED_FILES = ['node_modules'];
 
-/**
- * Copies template files to destination, excluding certain files
- * @param {object} options - Options object
- * @param {object} options.context - Gasket context
- * @returns {Promise<void>}
- */
+/** @type {import('../../internal.d.ts').copyTemplate} */
 async function copyTemplate({ context }) {
   if (!context.templateDir) return;
 

@@ -2,12 +2,7 @@ import path from 'path';
 import { withSpinner } from '../with-spinner.js';
 import { readFile, writeFile } from 'fs/promises';
 
-/**
- * Customizes template files with app-specific values
- * @param {object} options - Options object
- * @param {object} options.context - Gasket context
- * @returns {Promise<void>}
- */
+/** @type {import('../../internal.d.ts').customizeTemplate} */
 async function customizeTemplate({ context }) {
   if (!context.templateDir || !context.appName) return;
 
