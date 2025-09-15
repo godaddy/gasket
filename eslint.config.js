@@ -124,5 +124,16 @@ export default defineConfig([
     rules: {
       '@typescript-eslint/triple-slash-reference': 'off'
     }
+  },
+
+  //
+  // Disable certain rules for template scripts
+  //
+  {
+    files: ['scripts/npm.js'],
+    rules: {
+      'no-undefined': 'off',
+      'id-length': 'off'
+    }
   }
 ]);
