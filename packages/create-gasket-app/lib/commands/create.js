@@ -7,6 +7,8 @@ import { makeGasket } from '@gasket/core';
 import globalPrompts from '../scaffold/actions/global-prompts.js';
 import loadPreset from '../scaffold/actions/load-preset.js';
 import loadTemplate from '../scaffold/actions/load-template.js';
+import copyTemplate from '../scaffold/actions/copy-template.js';
+import installTemplateDep from '../scaffold/actions/install-template-deps.js';
 import presetPromptHooks from '../scaffold/actions/preset-prompt-hooks.js';
 import presetConfigHooks from '../scaffold/actions/preset-config-hooks.js';
 import promptHooks from '../scaffold/actions/prompt-hooks.js';
@@ -111,11 +113,74 @@ function validateOptions(context) {
   const hasOption = (context) => Boolean(context.template || context.templatePath || context.rawPresets.length || context.localPresets.length);
 
   if (!hasOption(context)) {
-    console.warn('At least one of the options is required: --template, --template-path, --presets, --preset-path');
+    console.warn('Warning: At least one of the options is required: --template, --template-path, --presets, --preset-path');
     process.exit(1);
   }
 
   return context;
+}
+
+/**
+ * handleTemplate - Handles the template creation
+ * @param {import('../internal.js').PartialCreateContext} context
+ * @returns {Promise<void>}
+ */
+async function handleTemplate(context) {
+  await mkDir({ context });
+  await loadTemplate({ context });
+  await copyTemplate({ context });
+  await installTemplateDep({ context });
+  printReport({ context });
+  return;
+}
+
+/**
+ * handlePresets - Handles the preset creation
+ * @param {import('../internal.js').PartialCreateContext} context
+ * @returns {Promise<void>}
+ */
+async function handlePresets(context) {
+  await loadPreset({ context });
+  await globalPrompts({ context });
+
+  const presetGasket = makeGasket({
+    plugins: context.presets
+  });
+
+  await presetPromptHooks({ gasket: presetGasket, context });
+  await presetConfigHooks({ gasket: presetGasket, context });
+
+  const pluginGasket = makeGasket({
+    ...context.presetConfig,
+    plugins: context.presetConfig.plugins.concat(context.presets)
+  });
+
+  await promptHooks({ gasket: pluginGasket, context });
+  await mkDir({ context });
+  await setupPkg({ context });
+  await createHooks({ gasket: pluginGasket, context });
+  await writePkg({ context });
+  await generateFiles({ context });
+  await writeGasketConfig({ context });
+  await installModules({ context });
+  await linkModules({ context });
+  await postCreateHooks({ gasket: pluginGasket, context });
+  if (context.tmpDir) await rm(context.tmpDir, { recursive: true });
+  printReport({ context });
+}
+
+/**
+ * handleCreate - Handles the create creation
+ * @param {import('../internal.js').PartialCreateContext} context
+ * @returns {Promise<void>}
+ */
+async function handleCreate(context) {
+  const { template, templatePath } = context;
+  if (template || templatePath) {
+    await handleTemplate(context);
+  } else {
+    await handlePresets(context);
+  }
 }
 
 /**
@@ -126,48 +191,10 @@ createCommand.action = async function run(appname, options, command) {
   // eslint-disable-next-line no-process-env
   process.env.GASKET_ENV = 'create';
   const context = makeCreateContext([appname], options);
-  const { rawPresets, localPresets, template, templatePath } = validateOptions(context);
+  validateOptions(context);
 
   try {
-    // If template is provided, use simplified template path
-    if (template || templatePath) {
-      await mkDir({ context });
-      await loadTemplate({ context });
-      printReport({ context });
-      return;
-    }
-
-    // Original preset-based creation path
-    await globalPrompts({ context });
-
-    if (rawPresets.length || localPresets.length) {
-      await loadPreset({ context });
-
-      const presetGasket = makeGasket({
-        plugins: context.presets
-      });
-
-      await presetPromptHooks({ gasket: presetGasket, context });
-      await presetConfigHooks({ gasket: presetGasket, context });
-    }
-
-    const pluginGasket = makeGasket({
-      ...context.presetConfig,
-      plugins: context.presetConfig.plugins.concat(context.presets)
-    });
-
-    await promptHooks({ gasket: pluginGasket, context });
-    await mkDir({ context });
-    await setupPkg({ context });
-    await createHooks({ gasket: pluginGasket, context });
-    await writePkg({ context });
-    await generateFiles({ context });
-    await writeGasketConfig({ context });
-    await installModules({ context });
-    await linkModules({ context });
-    await postCreateHooks({ gasket: pluginGasket, context });
-    if (context.tmpDir) await rm(context.tmpDir, { recursive: true });
-    printReport({ context });
+    await handleCreate(context);
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error(chalk.red('Exiting with errors.'));

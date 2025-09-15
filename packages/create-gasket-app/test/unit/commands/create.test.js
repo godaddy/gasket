@@ -9,6 +9,8 @@ const processExitStub = vi.spyOn(process, 'exit').mockImplementation((code) => {
 const mkDirStub = vi.fn();
 const loadPresetStub = vi.fn();
 const loadTemplateStub = vi.fn();
+const copyTemplateStub = vi.fn();
+const installTemplateDepsStub = vi.fn();
 const globalPromptsStub = vi.fn();
 const setupPkgStub = vi.fn();
 const writePkgStub = vi.fn();
@@ -39,6 +41,12 @@ vi.mock('../../../lib/scaffold/actions/load-preset.js', () => ({
 }));
 vi.mock('../../../lib/scaffold/actions/load-template.js', () => ({
   default: loadTemplateStub
+}));
+vi.mock('../../../lib/scaffold/actions/copy-template.js', () => ({
+  default: copyTemplateStub
+}));
+vi.mock('../../../lib/scaffold/actions/install-template-deps.js', () => ({
+  default: installTemplateDepsStub
 }));
 vi.mock('../../../lib/scaffold/actions/global-prompts.js', () => ({
   default: globalPromptsStub
@@ -186,7 +194,7 @@ describe('create', function () {
     } catch {
       // Commander will throw when process.exit is called
     }
-    expect(consoleWarnStub).toHaveBeenCalledWith('At least one of the options is required: --template, --template-path, --presets, --preset-path');
+    expect(consoleWarnStub).toHaveBeenCalledWith('Warning: At least one of the options is required: --template, --template-path, --presets, --preset-path');
     expect(processExitStub).toHaveBeenCalledWith(1);
   });
 
@@ -303,6 +311,8 @@ describe('create', function () {
       // Should only run template-specific actions
       expect(mkDirStub).toHaveBeenCalled();
       expect(loadTemplateStub).toHaveBeenCalled();
+      expect(copyTemplateStub).toHaveBeenCalled();
+      expect(installTemplateDepsStub).toHaveBeenCalled();
       expect(printReportStub).toHaveBeenCalled();
     });
 
@@ -317,6 +327,8 @@ describe('create', function () {
       // Should only run template-specific actions
       expect(mkDirStub).toHaveBeenCalled();
       expect(loadTemplateStub).toHaveBeenCalled();
+      expect(copyTemplateStub).toHaveBeenCalled();
+      expect(installTemplateDepsStub).toHaveBeenCalled();
       expect(printReportStub).toHaveBeenCalled();
     });
 
@@ -356,6 +368,8 @@ describe('create', function () {
 
       // Should use template path, not preset path
       expect(loadTemplateStub).toHaveBeenCalled();
+      expect(copyTemplateStub).toHaveBeenCalled();
+      expect(installTemplateDepsStub).toHaveBeenCalled();
       expect(loadPresetStub).not.toHaveBeenCalled();
       expect(globalPromptsStub).not.toHaveBeenCalled();
     });

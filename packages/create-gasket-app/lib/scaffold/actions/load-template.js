@@ -2,10 +2,9 @@ import path from 'path';
 import os from 'os';
 import { withSpinner } from '../with-spinner.js';
 import { PackageManager } from '@gasket/utils';
-import { mkdtemp, cp, readdir, rm } from 'fs/promises';
+import { mkdtemp, rm } from 'fs/promises';
 
 const VERSION_TAG_REGEX = /@([\^~]?\d+\.\d+\.\d+(?:-[\d\w.-]+)?|[\^~]?\d+\.\d+\.\d+|[a-zA-Z]+|file:.+)$/;
-const EXCLUDED_FILES = ['node_modules'];
 
 /**
  * Parses template string into name and version components
@@ -46,25 +45,6 @@ async function cleanupTempDir(tmpDir) {
 }
 
 /**
- * Copies template files to destination, excluding certain files
- * @param {string} templateDir - Source template directory
- * @param {string} destDir - Destination directory
- * @param {object} context - Gasket context
- * @returns {Promise<void>}
- */
-async function copyTemplateFiles(templateDir, destDir, context) {
-  const entries = await readdir(templateDir, { withFileTypes: true });
-  const filesToCopy = entries.filter(entry => !EXCLUDED_FILES.includes(entry.name));
-
-  for (const entry of filesToCopy) {
-    const sourcePath = path.join(templateDir, entry.name);
-    const destPath = path.join(destDir, entry.name);
-    await cp(sourcePath, destPath, { recursive: true });
-    context.generatedFiles.add(path.relative(context.cwd, destPath));
-  }
-}
-
-/**
  * Downloads and installs a remote template package
  * @param {string} template - Template name with optional version
  * @param {string} appName - App name for temp directory
@@ -101,46 +81,6 @@ async function installRemoteTemplate(template, appName) {
 }
 
 /**
- * Checks if an error is related to peer dependencies
- * @param {Error & { stderr?: string }} error - The error to check
- * @returns {boolean} True if error is peer dep related
- */
-function isPeerDependencyError(error) {
-  const errorMessage = (error.stderr || error.message || '').toLowerCase();
-  return errorMessage.includes('peer dep') ||
-    errorMessage.includes('peerinvalid') ||
-    errorMessage.includes('peer dependencies') ||
-    errorMessage.includes('eresolve');
-}
-
-/**
- * Installs dependencies in the destination directory
- * @param {string} dest - Destination directory path
- * @returns {Promise<void>}
- */
-async function installDependencies(dest) {
-  const destPkgManager = new PackageManager({
-    packageManager: 'npm',
-    dest
-  });
-
-  try {
-    await destPkgManager.exec('ci');
-  } catch (error) {
-    if (isPeerDependencyError(error)) {
-      console.warn('Peer dependency conflict detected, retrying with --legacy-peer-deps...');
-      try {
-        await destPkgManager.exec('ci', ['--legacy-peer-deps']);
-      } catch (retryError) {
-        throw new Error(`Failed to install dependencies even with --legacy-peer-deps: ${retryError.message}`);
-      }
-    } else {
-      throw error;
-    }
-  }
-}
-
-/**
  * Gets template directory and name based on context
  * @param {object} context - Gasket creation context
  * @returns {Promise<{ templateDir: string, templateName: string, tmpDir?: string }>} Template details
@@ -162,7 +102,7 @@ async function getTemplateDetails(context) {
 }
 
 /**
- * Loads and installs a template (local or remote) into the destination directory
+ * Loads a template (local or remote) and stores template info in context
  * @param {object} options - Options object
  * @param {object} options.context - Gasket creation context
  * @returns {Promise<void>}
@@ -170,21 +110,14 @@ async function getTemplateDetails(context) {
 async function loadTemplate({ context }) {
   if (!context.template && !context.templatePath) return;
 
-  let tmpDir;
+  const { templateDir, templateName, tmpDir } = await getTemplateDetails(context);
 
-  try {
-    const { templateDir, templateName, tmpDir: tempDirectory } = await getTemplateDetails(context);
-    tmpDir = tempDirectory;
+  // Store template information in context for other actions to use
+  context.templateDir = templateDir;
+  context.templateName = templateName;
+  context.tmpDir = tmpDir;
 
-    await copyTemplateFiles(templateDir, context.dest, context);
-    await cleanupTempDir(tmpDir);
-    await installDependencies(context.dest);
-
-    context.messages.push(`Template ${templateName} installed and dependencies resolved`);
-  } catch (err) {
-    await cleanupTempDir(tmpDir);
-    throw err;
-  }
+  context.messages.push(`Template ${templateName} loaded`);
 }
 
-export default withSpinner('Load template', loadTemplate);
+export default withSpinner('Loading template', loadTemplate);
