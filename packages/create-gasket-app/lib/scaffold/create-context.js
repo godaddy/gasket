@@ -74,6 +74,8 @@ export function makeCreateContext(argv = [], options = {}) {
   const appName = argv[0] || 'templated-app';
   const {
     presets = [],
+    template,
+    templatePath,
     npmLink = [],
     presetPath = [],
     packageManager,
@@ -107,6 +109,8 @@ export function makeCreateContext(argv = [], options = {}) {
     pkgLinks,
     localPresets,
     rawPresets,
+    template,
+    templatePath,
     messages: [],
     warnings: [],
     errors: [],

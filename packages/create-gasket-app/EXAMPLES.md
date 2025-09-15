@@ -25,3 +25,24 @@ npx create-gasket-app@latest my-app --config-file ./create-config.json
 # Skip prompts (for CI)
 npx create-gasket-app@latest my-app --presets @gasket/preset-nextjs --no-prompts
 ```
+
+## Templates
+
+Templates provide complete Gasket applications ready to use:
+
+```bash
+# Use an npm template package
+npx create-gasket-app@latest my-app --template @gasket/template-nextjs-pages-js
+
+# Use a versioned template
+npx create-gasket-app@latest my-app --template @gasket/template-api@^2.0.0
+
+# Use a tagged template
+npx create-gasket-app@latest my-app --template @gasket/template-nextjs@beta
+
+# Use a local template during development
+npx create-gasket-app@latest my-app --template-path ./my-gasket-template
+
+# Use local template with absolute path
+npx create-gasket-app@latest my-app --template-path /path/to/my-template
+```

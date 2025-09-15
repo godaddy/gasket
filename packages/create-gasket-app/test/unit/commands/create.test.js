@@ -2,8 +2,16 @@
 
 const mockDumpErrorContext = vi.fn();
 const consoleErrorStub = vi.spyOn(console, 'error').mockImplementation(() => { });
+const consoleWarnStub = vi.spyOn(console, 'warn').mockImplementation(() => { });
+const processExitStub = vi.spyOn(process, 'exit').mockImplementation((code) => {
+  throw new Error(`process.exit(${code})`);
+});
 const mkDirStub = vi.fn();
 const loadPresetStub = vi.fn();
+const loadTemplateStub = vi.fn();
+const copyTemplateStub = vi.fn();
+const customizeTemplateStub = vi.fn();
+const installTemplateDepsStub = vi.fn();
 const globalPromptsStub = vi.fn();
 const setupPkgStub = vi.fn();
 const writePkgStub = vi.fn();
@@ -31,6 +39,18 @@ vi.mock('../../../lib/scaffold/actions/mkdir.js', () => ({
 }));
 vi.mock('../../../lib/scaffold/actions/load-preset.js', () => ({
   default: loadPresetStub
+}));
+vi.mock('../../../lib/scaffold/actions/load-template.js', () => ({
+  default: loadTemplateStub
+}));
+vi.mock('../../../lib/scaffold/actions/copy-template.js', () => ({
+  default: copyTemplateStub
+}));
+vi.mock('../../../lib/scaffold/actions/customize-template.js', () => ({
+  default: customizeTemplateStub
+}));
+vi.mock('../../../lib/scaffold/actions/install-template-deps.js', () => ({
+  default: installTemplateDepsStub
 }));
 vi.mock('../../../lib/scaffold/actions/global-prompts.js', () => ({
   default: globalPromptsStub
@@ -77,27 +97,63 @@ vi.mock('@gasket/core', () => ({
 
 
 const CreateCommand = (await import('../../../lib/commands/create.js')).createCommand;
-const { Command } = await import('commander');
-const { processCommand } = await import('../../../lib/utils/index.js');
+const { Command, Option } = await import('commander');
 
 describe('create', function () {
   let cmdOptions;
-  const cmd = (() => {
+  let cmd;
+
+  beforeEach(() => {
     const program = new Command();
     program.name('gasket');
     program.exitOverride();
-    const { command } = processCommand(CreateCommand);
-    program.addCommand(command);
+
+    const createCmd = program
+      .command(CreateCommand.id)
+      .description(CreateCommand.description)
+      .action(CreateCommand.action);
+
+    // Add arguments
+    if (CreateCommand.args) {
+      CreateCommand.args.forEach(arg => {
+        createCmd.argument(
+          arg.required ? `<${arg.name}>` : `[${arg.name}]`,
+          arg.description
+        );
+      });
+    }
+
+    // Add options
+    if (CreateCommand.options) {
+      CreateCommand.options.forEach(optionDef => {
+        const format = optionDef.type !== 'boolean' ? ` [${optionDef.name}]` : '';
+        const flags = optionDef.short
+          ? `-${optionDef.short}, --${optionDef.name}${format}`
+          : `--${optionDef.name}${format}`;
+
+        const option = new Option(flags, optionDef.description);
+
+        if (optionDef.parse) option.argParser(optionDef.parse);
+        if (optionDef.default) option.default(optionDef.default);
+        if (optionDef.conflicts) option.conflicts(optionDef.conflicts);
+        if (optionDef.hidden) option.hideHelp();
+
+        createCmd.addOption(option);
+      });
+    }
+
     program.hook('preAction', (_, actionCommand) => { cmdOptions = actionCommand.opts(); });
-    return program;
-  })();
+    cmd = program;
+  });
 
   afterEach(() => {
     vi.clearAllMocks();
+    // Clean up environment variable that might be set by the command
+    delete process.env.GASKET_ENV;
   });
 
   it('should force GASKE_ENV to create', async () => {
-    await cmd.parseAsync(['node', 'gasket', 'create', 'myapp']);
+    await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--template', '@gasket/template-nextjs']);
     expect(process.env.GASKET_ENV).toEqual('create');
   });
 
@@ -136,6 +192,16 @@ describe('create', function () {
     });
   });
 
+  it('exits and logs warning if no option is provided', async () => {
+    try {
+      await cmd.parseAsync(['node', 'gasket', 'create', 'myapp']);
+    } catch {
+      // Commander will throw when process.exit is called
+    }
+    expect(consoleWarnStub).toHaveBeenCalledWith('Warning: At least one of the options is required: --template, --template-path, --presets, --preset-path');
+    expect(processExitStub).toHaveBeenCalledWith(1);
+  });
+
   it('allows for shorthand options', async () => {
     await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '-p', 'nextjs,react']);
     expect(cmdOptions.presets).toEqual(['nextjs', 'react']);
@@ -147,7 +213,7 @@ describe('create', function () {
   });
 
   it('executes expected actions', async () => {
-    await cmd.parseAsync(['node', 'gasket', 'create', 'myapp']);
+    await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--presets', '@gasket/preset-nextjs']);
     expect(loadPresetStub).toHaveBeenCalled();
     expect(globalPromptsStub).toHaveBeenCalled();
     expect(mkDirStub).toHaveBeenCalled();
@@ -202,7 +268,7 @@ describe('create', function () {
   it('prints exit message when no preset found', async () => {
     loadPresetStub.mockRejectedValueOnce(new Error('No preset found'));
     try {
-      await cmd.parseAsync(['node', 'gasket', 'create', 'myapp']);
+      await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--presets', 'some-preset']);
     } catch (err) {
       // eslint-disable-next-line jest/no-conditional-expect
       expect(err.message).toEqual('No preset found');
@@ -216,13 +282,103 @@ describe('create', function () {
 
   it('prints an error if both --config and --config-file are provided', async () => {
     const writeSpy = vi.spyOn(process.stderr, 'write').mockImplementation((err) => err);
-    const exitSpy = vi.spyOn(process, 'exit').mockImplementation((err) => err);
-    await cmd.parseAsync(
-      ['node', 'gasket', 'create', 'myapp', '--config={}', '--config-file=../../test/unit/commands/test-ci-config.json']
-    );
+
+    let commanderError;
+    try {
+      await cmd.parseAsync(
+        ['node', 'gasket', 'create', 'myapp', '--config={}', '--config-file=../../test/unit/commands/test-ci-config.json']
+      );
+    } catch (err) {
+      commanderError = err;
+    }
+
+    // Commander throws when conflicting options are detected with exitOverride()
+    expect(commanderError.code).toBe('commander.conflictingOption');
+
     expect(writeSpy).toHaveBeenCalledWith(
       `error: option '--config-file [config-file]' cannot be used with option '--config [config]'\n`
     );
-    expect(exitSpy).toHaveBeenCalledWith(1);
+  });
+
+  describe('template functionality', () => {
+    it('uses template path when --template is provided', async () => {
+      await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--template', '@gasket/template-nextjs']);
+
+      // Should skip preset processing
+      expect(globalPromptsStub).not.toHaveBeenCalled();
+      expect(loadPresetStub).not.toHaveBeenCalled();
+      expect(setupPkgStub).not.toHaveBeenCalled();
+      expect(writePkgStub).not.toHaveBeenCalled();
+      expect(installModulesStub).not.toHaveBeenCalled();
+      expect(linkModulesStub).not.toHaveBeenCalled();
+
+      // Should only run template-specific actions
+      expect(mkDirStub).toHaveBeenCalled();
+      expect(loadTemplateStub).toHaveBeenCalled();
+      expect(copyTemplateStub).toHaveBeenCalled();
+      expect(customizeTemplateStub).toHaveBeenCalled();
+      expect(installTemplateDepsStub).toHaveBeenCalled();
+      expect(printReportStub).toHaveBeenCalled();
+    });
+
+    it('uses template path when --template-path is provided', async () => {
+      await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--template-path', '/path/to/local/template']);
+
+      // Should skip preset processing
+      expect(globalPromptsStub).not.toHaveBeenCalled();
+      expect(loadPresetStub).not.toHaveBeenCalled();
+      expect(setupPkgStub).not.toHaveBeenCalled();
+
+      // Should only run template-specific actions
+      expect(mkDirStub).toHaveBeenCalled();
+      expect(loadTemplateStub).toHaveBeenCalled();
+      expect(copyTemplateStub).toHaveBeenCalled();
+      expect(customizeTemplateStub).toHaveBeenCalled();
+      expect(installTemplateDepsStub).toHaveBeenCalled();
+      expect(printReportStub).toHaveBeenCalled();
+    });
+
+    it('handles template errors gracefully', async () => {
+      loadTemplateStub.mockRejectedValueOnce(new Error('Template installation failed'));
+
+      await expect(
+        cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--template', '@gasket/template-invalid'])
+      ).rejects.toThrow('Template installation failed');
+
+      expect(mockDumpErrorContext).toHaveBeenCalled();
+      expect(consoleErrorStub).toHaveBeenCalled();
+    });
+
+    it('passes template option to context', async () => {
+      await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--template', '@gasket/template-nextjs']);
+
+      const loadTemplateCall = loadTemplateStub.mock.calls[0];
+      expect(loadTemplateCall[0]).toHaveProperty('context');
+      expect(loadTemplateCall[0].context).toHaveProperty('template', '@gasket/template-nextjs');
+    });
+
+    it('passes template-path option to context', async () => {
+      await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--template-path', '/local/template']);
+
+      const loadTemplateCall = loadTemplateStub.mock.calls[0];
+      expect(loadTemplateCall[0]).toHaveProperty('context');
+      expect(loadTemplateCall[0].context).toHaveProperty('templatePath', '/local/template');
+    });
+
+    it('prioritizes template over presets when both are provided', async () => {
+      await cmd.parseAsync([
+        'node', 'gasket', 'create', 'myapp',
+        '--template', '@gasket/template-nextjs',
+        '--presets', 'nextjs'
+      ]);
+
+      // Should use template path, not preset path
+      expect(loadTemplateStub).toHaveBeenCalled();
+      expect(copyTemplateStub).toHaveBeenCalled();
+      expect(customizeTemplateStub).toHaveBeenCalled();
+      expect(installTemplateDepsStub).toHaveBeenCalled();
+      expect(loadPresetStub).not.toHaveBeenCalled();
+      expect(globalPromptsStub).not.toHaveBeenCalled();
+    });
   });
 });
