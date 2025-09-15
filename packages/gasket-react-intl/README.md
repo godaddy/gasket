@@ -60,8 +60,9 @@ export default function App({ Component, pageProps }) {
 
 #### Example Next.js App using locale prop
 
-With [@gasket/plugin-intl] and [@gasket/nextjs], the locale can be passed as a prop to the
-App component using `withLocaleInitialProps`.
+With [@gasket/plugin-intl] and [@gasket/nextjs], the locale can be passed as a prop
+to the App component using `withLocaleInitialProps`. This is useful if you want to
+use `getInitialProps` for your app or pages.
 
 ```jsx
 // pages/_app.js
@@ -218,7 +219,7 @@ export default function MyComponent(props) {
 [withMessagesProvider]:#withmessagesprovider
 [withLocaleFileRequired]:#withlocalefilerequired
 [LocaleFileRequired]:#localefilerequired
-[useLocaleFile]:#uselocalerequired
+[useLocaleFile]:#uselocalefile
 [useMessages]:#usemessages
 
 [@gasket/plugin-intl]:/packages/gasket-plugin-intl/README.md

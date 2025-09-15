@@ -49,6 +49,7 @@ Help and explanations docs
 | [Quick Start Guide]           | Get up and running on Gasket                 |
 | [Upgrades Guide]              | Steps necessary to upgrade major versions    |
 | [Gasket Actions Guide]        | How to use access data and invoke lifecycles |
+| [Intl Quick Start Guide]      | Add internationalization to your app         |
 | [Express Setup Guide]         | Adding middleware and routes for Express     |
 | [Next.js Routing Guide]       | Basic and advance routing for Next.js        |
 | [Next.js Deployment Guide]    | Steps to deploy a Next.js Gasket app         |
@@ -293,6 +294,7 @@ Available configuration options in the `gasket.js`
 [Quick Start Guide]:docs/quick-start.md
 [Upgrades Guide]:docs/upgrades.md
 [Gasket Actions Guide]:docs/gasket-actions.md
+[Intl Quick Start Guide]:docs/intl-quick-start.md
 [Express Setup Guide]:/packages/gasket-plugin-express/docs/setup.md
 [Next.js Routing Guide]:/packages/gasket-plugin-nextjs/docs/routing.md
 [Next.js Deployment Guide]:/packages/gasket-plugin-nextjs/docs/deployment.md
