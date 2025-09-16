@@ -104,6 +104,7 @@ export function promptForTestPlugin(
 export function allowExtantOverwriting(context: PartialCreateContext, prompt: CreatePrompt): Promise<void>;
 export function globalPrompts(params: { context: PartialCreateContext }): Promise<void>;
 export function loadPresets(params: { context: PartialCreateContext }): Promise<void>;
+
 export function presetPromptHooks(params: { gasket?: Gasket; context: PartialCreateContext }): Promise<void>;
 export function presetConfigHooks(params: { gasket?: Gasket; context: PartialCreateContext }): Promise<void>;
 export function promptHooks(params: { gasket?: Gasket; context: PartialCreateContext }): Promise<void>;
