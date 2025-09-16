@@ -58,15 +58,6 @@ describe('@gasket/core', () => {
         bar: 123
       }
     });
-
-    await gasket.execApply('example', async function (plugin, handler) {
-      handler('a string', 123, true);
-    });
-
-    // eslint-disable-next-line no-sync
-    gasket.execApplySync('example', function (plugin, handler) {
-      handler('a string', 123, true);
-    });
   });
 
   it('defines the structure of a Gasket plugin', () => {
