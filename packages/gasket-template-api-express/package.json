@@ -1,0 +1,29 @@
+{
+  "name": "@gasket/template-api-express",
+  "version": "1.0.0",
+  "description": "Gasket API template for Express",
+  "type": "module",
+  "files": [
+    "template"
+  ],
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "pnpm run lint --fix",
+    "posttest": "pnpm run lint",
+    "test": "vitest run --globals",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest --watch --globals"
+  },
+  "repository": "godaddy/gasket.git",
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "GoDaddy Operating Company, LLC",
+  "license": "MIT",
+  "bugs": "https://github.com/godaddy/gasket/issues",
+  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-template-api-express",
+  "devDependencies": {
+    "@vitest/coverage-v8": "^3.2.0",
+    "vitest": "^3.2.0"
+  }
+}

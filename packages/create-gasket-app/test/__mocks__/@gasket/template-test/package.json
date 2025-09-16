@@ -1,0 +1,16 @@
+{
+  "name": "@gasket/template-test",
+  "version": "1.0.0",
+  "description": "Test template for Gasket applications",
+  "main": "index.js",
+  "keywords": ["gasket", "template"],
+  "author": "Gasket Team",
+  "license": "MIT",
+  "gasket": {
+    "metadata": {
+      "name": "Test Template",
+      "description": "A test template for Gasket applications"
+    }
+  }
+}
+
