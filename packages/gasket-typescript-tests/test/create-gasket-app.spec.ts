@@ -49,7 +49,7 @@ describe('create-gasket-app', () => {
   });
 
   it('defines the postCreate hook', () => {
-    const hook: Hook<'postCreate'> = async (gasket: Gasket, context: CreateContext, utils: unknown) => {
+    const hook: Hook<'postCreate'> = async (gasket, context, utils) => {
       await utils.runScript('echo "hello, world"');
     };
   });
