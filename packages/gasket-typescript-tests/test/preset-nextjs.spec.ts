@@ -27,8 +27,6 @@ describe('@gasket/preset-nextjs', () => {
       version: '',
       description: '',
       hooks: {
-        // @ts-expect-error - TODO clean up in tune up ticket
-        // https://godaddy-corp.atlassian.net/browse/PFX-628
         preboot() {
           log('Preparing...');
         },
