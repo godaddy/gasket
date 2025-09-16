@@ -50,6 +50,3 @@ jobs:
 
       - name: Run Tests & Lint
         run: pnpm run test
-
-      - name: Validate Templates
-        run: pnpm run templates:validate

@@ -143,12 +143,6 @@ async function runCommand(command, args, cwd, customEnv = {}) {
       env: {
         ...process.env,
         PATH: `${localBin}${path.delimiter}${process.env.PATH}`,
-        // Remove pnpm-specific configs that confuse npm
-        npm_config_package_manager: undefined,
-        npm_config_prefer_workspace_packages: undefined,
-        npm_config_verify_deps_before_run: undefined,
-        npm_config_strict_peer_dependencies: undefined,
-        npm_config_link_workspace_packages: undefined,
         ...customEnv
       }
     });
