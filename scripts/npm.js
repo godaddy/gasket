@@ -41,6 +41,12 @@ const OPERATIONS = {
     emoji: '🧹',
     isCustom: true,
     handler: cleanHandler
+  },
+  'regen': {
+    name: 'Regenerating lockfiles',
+    emoji: '🔒',
+    isCustom: true,
+    handler: regenHandler
   }
 };
 
@@ -80,6 +86,63 @@ async function cleanHandler(templateDir, packageName) {
     console.log('✅ Complete\n');
   } else {
     console.log('✅ No build artifacts to clean\n');
+  }
+}
+
+function rmFile(filePath) {
+  try {
+    fs.unlinkSync(filePath);
+    console.log(`🗑️  Removed ${filePath}`);
+    return true;
+  } catch (error) {
+    if (error.code !== 'ENOENT') {
+      console.log(`⚠️  Could not remove ${filePath}: ${error.message}`);
+    }
+    return false;
+  }
+}
+
+async function regenHandler(templateDir, packageName) {
+  console.log(`🔒 Regenerating lockfiles for ${packageName}/template`);
+
+  // Remove existing lockfiles and node_modules
+  const packageLockPath = path.join(templateDir, 'package-lock.json');
+  const nodeModulesPath = path.join(templateDir, 'node_modules');
+
+  let cleaned = false;
+
+  if (fs.existsSync(packageLockPath)) {
+    if (rmFile(packageLockPath)) {
+      cleaned = true;
+    }
+  }
+
+  if (fs.existsSync(nodeModulesPath)) {
+    if (rmRecursive(nodeModulesPath)) {
+      cleaned = true;
+    }
+  }
+
+  if (cleaned) {
+    console.log('🗑️  Cleaned existing lockfiles and node_modules');
+  }
+
+  // Check if package.json exists before trying to install
+  const packageJsonPath = path.join(templateDir, 'package.json');
+  if (!fs.existsSync(packageJsonPath)) {
+    console.log('⚠️  No package.json found, skipping npm install');
+    console.log('✅ Complete\n');
+    return;
+  }
+
+  // Run npm install to regenerate package-lock.json
+  console.log('📦 Running npm install to regenerate lockfiles...');
+  try {
+    await runCommand('npm', ['install'], templateDir);
+    console.log('✅ Lockfiles regenerated successfully\n');
+  } catch (error) {
+    console.log(`❌ Failed to regenerate lockfiles: ${error.message}\n`);
+    throw error;
   }
 }
 
@@ -174,6 +237,7 @@ function showUsage() {
   console.log('  node scripts/npm.js lint');
   console.log('  node scripts/npm.js test');
   console.log('  node scripts/npm.js clean');
+  console.log('  node scripts/npm.js regen');
 }
 
 async function main() {
