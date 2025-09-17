@@ -33,7 +33,7 @@
     "test:coverage": "pnpm run -r test:coverage",
     "test:package": "pnpm run -r --filter $* test",
     "typecheck:all": "pnpm run -r typecheck",
-    "version": "changeset version && pnpm install --prefer-offline"
+    "version": "changeset version && pnpm install --prefer-offline --no-frozen-lockfile"
   },
   "repository": "godaddy/gasket.git",
   "publishConfig": {
