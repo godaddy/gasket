@@ -123,13 +123,13 @@ describe('customizeTemplate', () => {
   });
 
   describe('README.md customization', () => {
-    it('updates README.md first line with app name', async () => {
+    it('replaces {appName} placeholders with app name', async () => {
       mockReadFile.mockImplementation((filePath) => {
         if (filePath.endsWith('package.json')) {
           return Promise.resolve('{"name": "template-name"}');
         }
         if (filePath.endsWith('README.md')) {
-          return Promise.resolve('# Template Name\n\nTemplate description\nMore content');
+          return Promise.resolve('# {appName}\n\nWelcome to {appName}!\n\nTo run {appName}, use npm start.');
         }
         return Promise.reject(new Error('ENOENT'));
       });
@@ -139,11 +139,30 @@ describe('customizeTemplate', () => {
       expect(mockReadFile).toHaveBeenCalledWith('/path/to/my-test-app/README.md', 'utf8');
       expect(mockWriteFile).toHaveBeenCalledWith(
         '/path/to/my-test-app/README.md',
-        '# my-test-app\n\nTemplate description\nMore content'
+        '# my-test-app\n\nWelcome to my-test-app!\n\nTo run my-test-app, use npm start.'
       );
     });
 
-    it('handles empty README.md by adding app name as first line', async () => {
+    it('handles README.md with no placeholders', async () => {
+      mockReadFile.mockImplementation((filePath) => {
+        if (filePath.endsWith('package.json')) {
+          return Promise.resolve('{"name": "template-name"}');
+        }
+        if (filePath.endsWith('README.md')) {
+          return Promise.resolve('# Template Name\n\nStatic content without placeholders.');
+        }
+        return Promise.reject(new Error('ENOENT'));
+      });
+
+      await customizeTemplate({ context: mockContext });
+
+      expect(mockWriteFile).toHaveBeenCalledWith(
+        '/path/to/my-test-app/README.md',
+        '# Template Name\n\nStatic content without placeholders.'
+      );
+    });
+
+    it('handles empty README.md', async () => {
       mockReadFile.mockImplementation((filePath) => {
         if (filePath.endsWith('package.json')) {
           return Promise.resolve('{"name": "template-name"}');
@@ -158,7 +177,7 @@ describe('customizeTemplate', () => {
 
       expect(mockWriteFile).toHaveBeenCalledWith(
         '/path/to/my-test-app/README.md',
-        '# my-test-app'
+        ''
       );
     });
 
@@ -209,7 +228,68 @@ describe('customizeTemplate', () => {
     });
   });
 
-  it('processes both files in parallel', async () => {
+  describe('template file customization', () => {
+    it('updates template files with {appName} placeholders', async () => {
+      mockReadFile.mockImplementation((filePath) => {
+        if (filePath.endsWith('package.json')) {
+          return Promise.resolve('{"name": "template-name"}');
+        }
+        if (filePath.endsWith('README.md')) {
+          return Promise.resolve('# {appName}');
+        }
+        if (filePath.endsWith('pages/index.tsx')) {
+          return Promise.resolve("<Head title='{appName}' description='Gasket App'/>");
+        }
+        if (filePath.endsWith('app/page.tsx')) {
+          return Promise.resolve("title: '{appName}'");
+        }
+        return Promise.reject(new Error('ENOENT'));
+      });
+
+      await customizeTemplate({ context: mockContext });
+
+      // Check template files were updated
+      expect(mockWriteFile).toHaveBeenCalledWith(
+        '/path/to/my-test-app/pages/index.tsx',
+        "<Head title='my-test-app' description='Gasket App'/>"
+      );
+      expect(mockWriteFile).toHaveBeenCalledWith(
+        '/path/to/my-test-app/app/page.tsx',
+        "title: 'my-test-app'"
+      );
+    });
+
+    it('handles missing template files gracefully', async () => {
+      mockReadFile.mockImplementation((filePath) => {
+        if (filePath.endsWith('package.json')) {
+          return Promise.resolve('{"name": "template-name"}');
+        }
+        if (filePath.endsWith('README.md')) {
+          return Promise.resolve('# {appName}');
+        }
+        if (filePath.endsWith('pages/index.tsx') || filePath.endsWith('app/page.tsx')) {
+          const error = new Error('ENOENT: no such file or directory');
+          error.code = 'ENOENT';
+          return Promise.reject(error);
+        }
+        return Promise.reject(new Error('ENOENT'));
+      });
+
+      await customizeTemplate({ context: mockContext });
+
+      // Should not fail and should not try to write template files that don't exist
+      expect(mockWriteFile).not.toHaveBeenCalledWith(
+        expect.stringContaining('pages/index.tsx'),
+        expect.anything()
+      );
+      expect(mockWriteFile).not.toHaveBeenCalledWith(
+        expect.stringContaining('app/page.tsx'),
+        expect.anything()
+      );
+    });
+  });
+
+  it('processes all files in parallel', async () => {
     let readFileCallCount = 0;
     mockReadFile.mockImplementation((filePath) => {
       readFileCallCount++;
@@ -223,6 +303,11 @@ describe('customizeTemplate', () => {
           setTimeout(() => resolve('# Template Name'), 5);
         });
       }
+      if (filePath.endsWith('pages/index.tsx') || filePath.endsWith('app/page.tsx')) {
+        return new Promise(resolve => {
+          setTimeout(() => resolve('title: "{appName}"'), 3);
+        });
+      }
       return Promise.reject(new Error('ENOENT'));
     });
 
@@ -230,7 +315,7 @@ describe('customizeTemplate', () => {
     await customizeTemplate({ context: mockContext });
     const endTime = Date.now();
 
-    expect(readFileCallCount).toBe(2);
-    expect(endTime - startTime).toBeLessThan(20); // Should be parallel, not sequential
+    expect(readFileCallCount).toBe(4); // package.json, README.md, pages/index.tsx, app/page.tsx
+    expect(endTime - startTime).toBeLessThan(30); // Should be parallel, not sequential
   });
 });

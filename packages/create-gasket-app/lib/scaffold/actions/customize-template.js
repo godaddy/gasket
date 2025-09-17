@@ -8,7 +8,8 @@ async function customizeTemplate({ context }) {
 
   await Promise.all([
     updatePackageJson(context),
-    updateReadme(context)
+    updateReadme(context),
+    updateTemplateFiles(context)
   ]);
 }
 
@@ -36,7 +37,7 @@ async function updatePackageJson(context) {
 }
 
 /**
- * Updates README.md first line with app name
+ * Updates README.md with app name placeholders replaced
  * @param {object} context - Gasket context
  * @returns {Promise<void>}
  */
@@ -45,20 +46,47 @@ async function updateReadme(context) {
 
   try {
     const content = await readFile(readmePath, 'utf8');
-    const lines = content.split('\n');
 
-    if (lines.length > 0) {
-      // Replace first line with app name as h1
-      lines[0] = `# ${context.appName}`;
+    // Replace all {appName} placeholders with actual app name
+    const updatedContent = content.replace(/{appName}/g, context.appName);
 
-      await writeFile(readmePath, lines.join('\n'));
-    }
+    await writeFile(readmePath, updatedContent);
   } catch (error) {
     // Ignore if README.md doesn't exist
     if (error.code !== 'ENOENT') {
       console.warn(`Warning: Could not update README.md: ${error.message}`);
     }
   }
+}
+
+/**
+ * Updates template files with app name placeholders replaced
+ * @param {object} context - Gasket context
+ * @returns {Promise<void>}
+ */
+async function updateTemplateFiles(context) {
+  const templateFilePaths = [
+    path.join(context.dest, 'pages/index.tsx'),
+    path.join(context.dest, 'app/page.tsx')
+  ];
+
+  const updatePromises = templateFilePaths.map(async (filePath) => {
+    try {
+      const content = await readFile(filePath, 'utf8');
+
+      // Replace all {appName} placeholders with actual app name
+      const updatedContent = content.replace(/{appName}/g, context.appName);
+
+      await writeFile(filePath, updatedContent);
+    } catch (error) {
+      // Ignore if file doesn't exist (not all templates have these files)
+      if (error.code !== 'ENOENT') {
+        console.warn(`Warning: Could not update ${filePath}: ${error.message}`);
+      }
+    }
+  });
+
+  await Promise.all(updatePromises);
 }
 
 export default withSpinner('Customize template files', customizeTemplate);
