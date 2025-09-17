@@ -40,7 +40,7 @@ describe('@gasket/template-nextjs-pages', () => {
       const packageJsonPath = join(templateDir, 'package.json');
       const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf8'));
 
-      expect(packageJson.name).toBe('page-router-ts-proxy');
+      expect(packageJson.name).toBe('{appName}');
       expect(packageJson.description).toBe('Gasket App');
       expect(packageJson.version).toBe('0.0.0');
       expect(packageJson.type).toBe('module');
@@ -352,7 +352,7 @@ describe('@gasket/template-nextjs-pages', () => {
       const readmePath = join(templateDir, 'README.md');
       const readmeContent = readFileSync(readmePath, 'utf8');
 
-      expect(readmeContent).toContain('# page-router-ts-proxy');
+      expect(readmeContent).toContain('# {appName}');
       expect(readmeContent).toContain('### Development Proxy');
       expect(readmeContent).toContain('npm install');
       expect(readmeContent).toContain('npm run local');

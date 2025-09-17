@@ -1,6 +1,4 @@
-# page-router-express-ts
-
-Gasket App
+# {appName}
 
 ## Overview
 
@@ -13,7 +11,7 @@ This application is built with [Gasket] and [Next.js] utilizing [EcmaScript Modu
 To start the app locally, run:
 
 ```bash
-cd page-router-express-ts
+cd {appName}
 npm install
 npm run local
 ```

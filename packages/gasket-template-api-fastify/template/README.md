@@ -1,6 +1,4 @@
-# fastify-ts
-
-Gasket App
+# {appName}
 
 ## Overview
 
@@ -13,7 +11,7 @@ This API is built with fastify.js framework and [Gasket](https://gasket.dev/). T
 To start the API locally, run:
 
 ```bash
-cd fastify-ts
+cd {appName}
 npm install
 npm run local
 ```
