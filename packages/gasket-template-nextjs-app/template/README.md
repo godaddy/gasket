@@ -1,4 +1,4 @@
-# {appName}
+# {{{appName}}}
 
 ## Overview
 
@@ -11,7 +11,7 @@ This application is built with [Gasket] and [Next.js] utilizing [EcmaScript Modu
 To start the app locally, run:
 
 ```bash
-cd {appName}
+cd {{{appName}}}
 npm install
 npm run local
 ```

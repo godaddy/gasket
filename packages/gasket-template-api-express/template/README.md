@@ -1,4 +1,4 @@
-# {appName}
+# {{{appName}}}
 
 ## Overview
 
@@ -11,7 +11,7 @@ This API is built with express.js framework and [Gasket](https://gasket.dev/). T
 To start the API locally, run:
 
 ```bash
-cd {appName}
+cd {{{appName}}}
 npm install
 npm run local
 ```

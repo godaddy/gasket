@@ -123,13 +123,13 @@ describe('customizeTemplate', () => {
   });
 
   describe('README.md customization', () => {
-    it('replaces {appName} placeholders with app name', async () => {
+    it('replaces {{{appName}}} placeholders with app name', async () => {
       mockReadFile.mockImplementation((filePath) => {
         if (filePath.endsWith('package.json')) {
           return Promise.resolve('{"name": "template-name"}');
         }
         if (filePath.endsWith('README.md')) {
-          return Promise.resolve('# {appName}\n\nWelcome to {appName}!\n\nTo run {appName}, use npm start.');
+          return Promise.resolve('# {{{appName}}}\n\nWelcome to {{{appName}}}!\n\nTo run {{{appName}}}, use npm start.');
         }
         return Promise.reject(new Error('ENOENT'));
       });
@@ -229,19 +229,19 @@ describe('customizeTemplate', () => {
   });
 
   describe('template file customization', () => {
-    it('updates template files with {appName} placeholders', async () => {
+    it('updates template files with {{{appName}}} placeholders', async () => {
       mockReadFile.mockImplementation((filePath) => {
         if (filePath.endsWith('package.json')) {
           return Promise.resolve('{"name": "template-name"}');
         }
         if (filePath.endsWith('README.md')) {
-          return Promise.resolve('# {appName}');
+          return Promise.resolve('# {{{appName}}}');
         }
         if (filePath.endsWith('pages/index.tsx')) {
-          return Promise.resolve("<Head title='{appName}' description='Gasket App'/>");
+          return Promise.resolve("<Head title='{{{appName}}}' description='Gasket App'/>");
         }
         if (filePath.endsWith('app/page.tsx')) {
-          return Promise.resolve("title: '{appName}'");
+          return Promise.resolve("title: '{{{appName}}}'");
         }
         return Promise.reject(new Error('ENOENT'));
       });
@@ -265,7 +265,7 @@ describe('customizeTemplate', () => {
           return Promise.resolve('{"name": "template-name"}');
         }
         if (filePath.endsWith('README.md')) {
-          return Promise.resolve('# {appName}');
+          return Promise.resolve('# {{{appName}}}');
         }
         if (filePath.endsWith('pages/index.tsx') || filePath.endsWith('app/page.tsx')) {
           const error = new Error('ENOENT: no such file or directory');
@@ -305,7 +305,7 @@ describe('customizeTemplate', () => {
       }
       if (filePath.endsWith('pages/index.tsx') || filePath.endsWith('app/page.tsx')) {
         return new Promise(resolve => {
-          setTimeout(() => resolve('title: "{appName}"'), 3);
+          setTimeout(() => resolve('title: "{{{appName}}}"'), 3);
         });
       }
       return Promise.reject(new Error('ENOENT'));

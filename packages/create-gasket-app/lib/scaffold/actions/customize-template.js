@@ -48,7 +48,7 @@ async function updateReadme(context) {
     const content = await readFile(readmePath, 'utf8');
 
     // Replace all {appName} placeholders with actual app name
-    const updatedContent = content.replace(/{appName}/g, context.appName);
+    const updatedContent = content.replace(/{{{appName}}}/g, context.appName);
 
     await writeFile(readmePath, updatedContent);
   } catch (error) {
@@ -75,7 +75,7 @@ async function updateTemplateFiles(context) {
       const content = await readFile(filePath, 'utf8');
 
       // Replace all {appName} placeholders with actual app name
-      const updatedContent = content.replace(/{appName}/g, context.appName);
+      const updatedContent = content.replace(/{{{appName}}}/g, context.appName);
 
       await writeFile(filePath, updatedContent);
     } catch (error) {

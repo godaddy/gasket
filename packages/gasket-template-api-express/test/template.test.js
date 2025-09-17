@@ -34,7 +34,7 @@ describe('@gasket/template-api-express', () => {
       const packageJsonPath = join(templateDir, 'package.json');
       const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf8'));
 
-      expect(packageJson.name).toBe('{appName}');
+      expect(packageJson.name).toBe('{{{appName}}}');
       expect(packageJson.type).toBe('module');
       expect(packageJson.scripts).toHaveProperty('local');
       expect(packageJson.scripts).toHaveProperty('build');
@@ -224,7 +224,7 @@ describe('@gasket/template-api-express', () => {
       const readmePath = join(templateDir, 'README.md');
       const readmeContent = readFileSync(readmePath, 'utf8');
 
-      expect(readmeContent).toContain('# {appName}');
+      expect(readmeContent).toContain('# {{{appName}}}');
       expect(readmeContent).toContain('## Getting Started');
       expect(readmeContent).toContain('### Development');
       expect(readmeContent).toContain('npm run local');
