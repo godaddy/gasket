@@ -1,5 +1,11 @@
 # `@gasket/plugin-jest`
 
+## 7.5.5
+
+### Patch Changes
+
+- da18ea5: Add code examples
+
 ## 7.5.4
 
 ### Patch Changes

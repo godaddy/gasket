@@ -1,5 +1,11 @@
 # `@gasket/plugin-typescript`
 
+## 7.4.6
+
+### Patch Changes
+
+- da18ea5: Add code examples
+
 ## 7.4.5
 
 ### Patch Changes

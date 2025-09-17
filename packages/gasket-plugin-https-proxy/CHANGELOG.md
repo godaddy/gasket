@@ -1,5 +1,12 @@
 # `@gasket/plugin-https-proxy`
 
+## 7.4.2
+
+### Patch Changes
+
+- da18ea5: Add code examples
+- a89a978: Update types for http-proxy
+
 ## 7.4.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @gasket/plugin-cypress
 
+## 7.5.3
+
+### Patch Changes
+
+- da18ea5: Add code examples
+
 ## 7.5.2
 
 ### Patch Changes

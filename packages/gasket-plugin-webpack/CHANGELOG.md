@@ -1,5 +1,11 @@
 # `@gasket/plugin-webpack`
 
+## 7.3.9
+
+### Patch Changes
+
+- da18ea5: Add code examples
+
 ## 7.3.8
 
 ### Patch Changes

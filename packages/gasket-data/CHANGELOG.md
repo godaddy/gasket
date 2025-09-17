@@ -1,5 +1,15 @@
 # `@gasket/data`
 
+## 7.5.4
+
+### Patch Changes
+
+- d794a98: convert testing framework in esm packages to vitest
+- da18ea5: Add code examples
+- Updated dependencies [d794a98]
+- Updated dependencies [da18ea5]
+  - @gasket/request@7.5.4
+
 ## 7.5.3
 
 ### Patch Changes

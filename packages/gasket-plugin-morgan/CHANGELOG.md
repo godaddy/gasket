@@ -1,5 +1,13 @@
 # `@gasket/plugin-morgan`
 
+## 7.3.7
+
+### Patch Changes
+
+- da18ea5: Add code examples
+- Updated dependencies [da18ea5]
+  - @gasket/plugin-logger@7.3.8
+
 ## 7.3.6
 
 ### Patch Changes

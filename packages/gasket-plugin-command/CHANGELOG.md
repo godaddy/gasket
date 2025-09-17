@@ -1,5 +1,17 @@
 # `@gasket/plugin-command`
 
+## 7.5.3
+
+### Patch Changes
+
+- d794a98: convert testing framework in esm packages to vitest
+- da18ea5: Add code examples
+- c76c388: Add support to return an array of commands from the hook
+- Updated dependencies [d794a98]
+- Updated dependencies [da18ea5]
+  - @gasket/utils@7.6.3
+  - @gasket/core@7.6.3
+
 ## 7.5.2
 
 ### Patch Changes

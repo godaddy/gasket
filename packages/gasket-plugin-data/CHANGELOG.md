@@ -1,5 +1,15 @@
 # `@gasket/plugin-data`
 
+## 7.4.10
+
+### Patch Changes
+
+- da18ea5: Add code examples
+- Updated dependencies [d794a98]
+- Updated dependencies [da18ea5]
+  - @gasket/request@7.5.4
+  - @gasket/utils@7.6.3
+
 ## 7.4.9
 
 ### Patch Changes

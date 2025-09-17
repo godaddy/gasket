@@ -1,5 +1,11 @@
 # `@gasket/plugin-happyfeet`
 
+## 7.3.7
+
+### Patch Changes
+
+- da18ea5: Add code examples
+
 ## 7.3.6
 
 ### Patch Changes

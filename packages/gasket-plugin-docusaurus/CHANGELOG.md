@@ -1,5 +1,13 @@
 # `@gasket/plugin-docusaurus`
 
+## 7.4.6
+
+### Patch Changes
+
+- da18ea5: Add code examples
+- Updated dependencies [da18ea5]
+  - @gasket/plugin-logger@7.3.8
+
 ## 7.4.5
 
 ### Patch Changes

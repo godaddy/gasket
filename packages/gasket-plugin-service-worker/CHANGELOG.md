@@ -1,5 +1,11 @@
 # `@gasket/plugin-service-worker`
 
+## 7.4.7
+
+### Patch Changes
+
+- da18ea5: Add code examples
+
 ## 7.4.6
 
 ### Patch Changes

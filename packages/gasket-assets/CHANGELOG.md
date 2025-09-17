@@ -1,5 +1,11 @@
 # `@gasket/assets`
 
+## 7.4.4
+
+### Patch Changes
+
+- da18ea5: Add code examples
+
 ## 7.4.3
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # `@gasket/plugin-nextjs`
 
+## 7.6.4
+
+### Patch Changes
+
+- d794a98: convert testing framework in esm packages to vitest
+- da18ea5: Add code examples
+- Updated dependencies [da18ea5]
+  - @gasket/plugin-webpack@7.3.9
+
 ## 7.6.3
 
 ### Patch Changes
