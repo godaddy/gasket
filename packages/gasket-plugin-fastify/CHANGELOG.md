@@ -1,5 +1,12 @@
 # `@gasket/plugin-fastify`
 
+## 7.4.6
+
+### Patch Changes
+
+- f5e6942: Include EXAMPLES.md when publishing
+- da18ea5: Add code examples
+
 ## 7.4.5
 
 ### Patch Changes

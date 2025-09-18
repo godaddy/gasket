@@ -1,5 +1,19 @@
 # `@gasket/nextjs`
 
+## 7.6.4
+
+### Patch Changes
+
+- f5e6942: Include EXAMPLES.md when publishing
+- 9d86fd2: Updated documentation
+- d794a98: convert testing framework in esm packages to vitest
+- da18ea5: Add code examples
+- Updated dependencies [f5e6942]
+- Updated dependencies [d794a98]
+- Updated dependencies [da18ea5]
+  - @gasket/request@7.5.4
+  - @gasket/data@7.5.4
+
 ## 7.6.3
 
 ### Patch Changes
