@@ -6,7 +6,8 @@
   "types": "lib/index.d.ts",
   "files": [
     "docs",
-    "lib"
+    "lib",
+    "EXAMPLES.md"
   ],
   "scripts": {
     "lint": "eslint .",

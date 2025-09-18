@@ -7,7 +7,8 @@
   "files": [
     "generator",
     "docs",
-    "lib"
+    "lib",
+    "EXAMPLES.md"
   ],
   "scripts": {
     "lint": "eslint .",
