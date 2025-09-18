@@ -4,6 +4,10 @@
   "description": "Handles common server engine setups for routing and executing lifecycles.",
   "main": "lib",
   "types": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "EXAMPLES.md"
+  ],
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
@@ -43,8 +47,5 @@
     "create-gasket-app": "workspace:^",
     "fastify": "^4.29.1",
     "jest": "^29.7.0"
-  },
-  "files": [
-    "EXAMPLES.md"
-  ]
+  }
 }
