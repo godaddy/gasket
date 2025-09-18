@@ -112,6 +112,7 @@ describe('@gasket/template-api-express', () => {
         '@docusaurus/preset-classic',
         '@gasket/plugin-docs',
         '@gasket/plugin-docusaurus',
+        '@gasket/plugin-metadata',
         '@typescript-eslint/parser',
         '@vitest/coverage-v8',
         'ajv',
