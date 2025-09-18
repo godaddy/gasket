@@ -69,6 +69,12 @@ export default {
             description: 'How to use access data and invoke lifecycles',
             link: '/docs/gasket-actions.md',
             targetRoot: docsConfigSet.docsRoot
+          },
+          {
+            name: 'Intl Quick Start Guide',
+            description: 'Add internationalization to your app',
+            link: '/docs/intl-quick-start.md',
+            targetRoot: docsConfigSet.docsRoot
           }
         ];
       }

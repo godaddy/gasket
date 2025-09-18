@@ -51,6 +51,12 @@ required. However, these options exist to customize an app's setup.
   - `excludes` - (string[]) List of modules to ignore
 - `nextRouting` - (boolean) Enable [Next.js Routing] when used with
   [@gasket/plugin-nextjs]. (default: true)
+- `staticLocaleFilePaths` - (string[]) List of locale file paths that should be
+  preloaded for server-side rendering and available immediately when the app starts.
+  If not set, defaults to `[defaultLocaleFilePath]`
+- `experimentalImportAttributes` - (boolean) 🧪 Enable experimental import attributes
+  support for the `getIntlManager` action. Required when using `getIntlManager` in
+  other plugins. (default: false)
 
 #### Example config
 
@@ -64,7 +70,12 @@ export default makeGasket({
     localesMap: {
       'zh-HK': 'zh-TW',
       'zh-SG': 'zh-CN'
-    }
+    },
+    staticLocaleFilePaths: [
+      'locales/common',
+      'locales/navigation'
+    ],
+    experimentalImportAttributes: true
   }
 });
 ```
@@ -243,10 +254,25 @@ const intlLocale = await actions.gasket.getIntlLocale(req);
 
 ### getIntlManager
 
-This action is used to access the intl manager by other plugins.
+🧪 This action is used to access the intl manager by other plugins.
+
+**Important:** This action requires `experimentalImportAttributes: true` to be set in your intl configuration.
 
 ```js
 const intlManager = actions.gasket.getIntlManager();
+```
+
+#### Error Handling
+
+If `experimentalImportAttributes` is not enabled, this action will throw an error:
+
+```js
+try {
+  const intlManager = actions.gasket.getIntlManager();
+} catch (error) {
+  // Error: To use experimental import attributes you must configure `gasket.config.intl.experimentalImportAttributes`
+  console.error(error.message);
+}
 ```
 
 ## Lifecycles
