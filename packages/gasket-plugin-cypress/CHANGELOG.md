@@ -1,5 +1,12 @@
 # @gasket/plugin-cypress
 
+## 7.5.3
+
+### Patch Changes
+
+- f5e6942: Include EXAMPLES.md when publishing
+- da18ea5: Add code examples
+
 ## 7.5.2
 
 ### Patch Changes

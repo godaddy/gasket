@@ -1,5 +1,28 @@
 # `create-gasket-app`
 
+## 7.4.13
+
+### Patch Changes
+
+- f5e6942: Include EXAMPLES.md when publishing
+- 9da06cf: Add template support
+- d794a98: convert testing framework in esm packages to vitest
+- da18ea5: Add code examples
+- Updated dependencies [f5e6942]
+- Updated dependencies [d794a98]
+- Updated dependencies [da18ea5]
+- Updated dependencies [c76c388]
+  - @gasket/plugin-dynamic-plugins@7.4.2
+  - @gasket/plugin-docusaurus@7.4.6
+  - @gasket/plugin-metadata@7.5.4
+  - @gasket/plugin-command@7.5.3
+  - @gasket/plugin-logger@7.3.8
+  - @gasket/plugin-docs@7.4.8
+  - @gasket/plugin-git@7.4.7
+  - @gasket/request@7.5.4
+  - @gasket/utils@7.6.3
+  - @gasket/core@7.6.3
+
 ## 7.4.12
 
 ### Patch Changes

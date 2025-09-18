@@ -1,5 +1,16 @@
 # `@gasket/plugin-workbox`
 
+## 7.4.0
+
+### Minor Changes
+
+- 016e0da: Deprecate service worker and workbox packages
+
+### Patch Changes
+
+- f5e6942: Include EXAMPLES.md when publishing
+- da18ea5: Add code examples
+
 ## 7.3.6
 
 ### Patch Changes

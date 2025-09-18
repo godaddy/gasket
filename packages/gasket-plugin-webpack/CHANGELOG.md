@@ -1,5 +1,12 @@
 # `@gasket/plugin-webpack`
 
+## 7.3.9
+
+### Patch Changes
+
+- f5e6942: Include EXAMPLES.md when publishing
+- da18ea5: Add code examples
+
 ## 7.3.8
 
 ### Patch Changes
