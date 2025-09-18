@@ -57,6 +57,29 @@ function HomePage({ locale }) {
 export default withLocaleInitialProps(gasket)(HomePage);
 ```
 
+#### App Component with withMessagesProvider
+
+```jsx
+// pages/_app.js
+import { withLocaleInitialProps } from '@gasket/nextjs';
+import { withMessagesProvider } from '@gasket/react-intl';
+import { IntlProvider } from 'react-intl';
+import intlManager from '../path/to/intl.js';
+import gasket from '../gasket.js';
+
+const IntlMessagesProvider = withMessagesProvider(intlManager)(IntlProvider);
+
+function MyApp({ Component, pageProps, locale }) {
+  return (
+    <IntlMessagesProvider locale={locale}>
+      <Component {...pageProps} />
+    </IntlMessagesProvider>
+  );
+}
+
+export default withLocaleInitialProps(gasket)(MyApp);
+```
+
 ## Document Exports (`@gasket/nextjs/document`)
 
 ### `withGasketData(gasket, options?)`

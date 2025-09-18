@@ -2,10 +2,11 @@
 
 Gasket integrations for Next.js apps. Provides several tools:
 
-- request: Access a request-like object in server components
-- withGasketData: Injects Gasket Data added during lifecycle into Document
-- withGasketDataProvider: Provides context access to Gasket Data
-- useGasketData: Allows access to Gasket Data from hook
+- [request]: Access a request-like object in server components
+- [withGasketData]: Injects Gasket Data added during lifecycle into Document
+- [withGasketDataProvider]: Provides context access to Gasket Data
+- [useGasketData]: Allows access to Gasket Data from hook
+- [withLocaleInitialProps]: Injects current locale into component props via getInitialProps
 
 ## Installation
 
@@ -67,7 +68,7 @@ export default async function MyDynamicRoutePage({ params }) {
 }
 ```
 
-## Components
+## Higher-Order Components (HOCs)
 
 ### withGasketData
 
@@ -191,6 +192,86 @@ export const MyComponent = (props) => {
 };
 ```
 
+---
+
+### withLocaleInitialProps
+
+Use this HOC to inject the current locale into your Next.js page or app component props via `getInitialProps`.
+Particular useful when used with `withMessagesProvider` from [@gasket/react-intl] to set the locale on the provider.
+
+**Signature**
+
+- `withLocaleInitialProps(gasket)(Component)`
+
+**Props Added**
+
+- `locale` - (string) The resolved locale for the current request
+
+This HOC works by enhancing the wrapped component's `getInitialProps` method to automatically resolve and inject the
+current locale based on the request context. It works with both page-level and app-level components.
+
+**Note:** This requires [@gasket/plugin-intl] to be configured in your Gasket app for locale resolution to work properly.
+
+#### Example - Page Component
+
+```jsx
+// pages/index.js
+import { withLocaleInitialProps } from '@gasket/nextjs';
+import gasket from '../gasket.js';
+
+function HomePage({ locale }) {
+  return (
+    <div>
+      <h1>Current locale: {locale}</h1>
+      <p>Welcome! This page is rendered in {locale}</p>
+    </div>
+  );
+}
+
+export default withLocaleInitialProps(gasket)(HomePage);
+```
+
+#### Example - App Component
+
+```jsx
+// pages/_app.js
+import { withLocaleInitialProps } from '@gasket/nextjs';
+import gasket from '../gasket.js';
+
+function MyApp({ Component, pageProps, locale }) {
+  return (
+    <div data-locale={locale}>
+      <Component {...pageProps} />
+    </div>
+  );
+}
+
+export default withLocaleInitialProps(gasket)(MyApp);
+```
+
+#### Example - App Component with withMessagesProvider
+
+```jsx
+// pages/_app.js
+import { withLocaleInitialProps } from '@gasket/nextjs';
+import { withMessagesProvider } from '@gasket/react-intl';
+import { IntlProvider } from 'react-intl';
+import intlManager from '../path/to/intl.js';
+import gasket from '../gasket.js';
+
+const IntlMessagesProvider = withMessagesProvider(intlManager)(IntlProvider);
+
+function MyApp({ Component, pageProps, locale }) {
+  return (
+    <IntlMessagesProvider locale={locale}>
+      <Component {...pageProps} />
+    </IntlMessagesProvider>
+  );
+}
+
+export default withLocaleInitialProps(gasket)(MyApp);
+```
+
 ## How it works
 
 During server side rendering, lifecycles' data can be added to the gasketData property. When the `withGasketData` hoc is added to a custom Next.js _document, the gasketData is added to the rendered html inside a script tag.
@@ -208,8 +289,14 @@ The `useGasketData` will provide access to the gasket data within the context of
 <!-- LINKS -->
 
 [@gasket/data]: /packages/gasket-data/README.md
+[@gasket/plugin-intl]: /packages/gasket-plugin-intl/README.md
 [GasketRequest]: /packages/gasket-request/README.md#GasketRequest
 
 [custom Document]: https://nextjs.org/docs/advanced-features/custom-document
 [dynamic functions]: https://nextjs.org/docs/app/building-your-application/rendering/server-components#dynamic-functions
-```
+
+[request]: #request
+[withGasketData]: #withgasketdata
+[withGasketDataProvider]: #withgasketdataprovider
+[useGasketData]: #usegasketdata
+[withLocaleInitialProps]: #withlocaleinitialprops
