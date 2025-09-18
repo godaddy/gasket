@@ -9,7 +9,7 @@ const logoStyle: CSSProperties = { width: '250px', height: '250px' };
 function IndexPage() {
   return (
     <div style={ pageStyle }>
-      <Head title='page-router-express-ts' description='Gasket App'/>
+      <Head title='{{{appName}}}' description='Gasket App'/>
       <GasketEmblem style={ logoStyle }/>
       <h1><FormattedMessage id='gasket_welcome' /></h1>
       <p><FormattedMessage id='gasket_learn' /></p>

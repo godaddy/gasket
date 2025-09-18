@@ -1,5 +1,5 @@
 {
-  "name": "app-router-ts-proxy",
+  "name": "{{{appName}}}",
   "version": "0.0.0",
   "description": "Gasket App",
   "scripts": {

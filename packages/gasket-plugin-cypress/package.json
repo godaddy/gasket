@@ -4,6 +4,11 @@
   "description": "Integrates Cypress based testing into your Gasket application",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "generator",
+    "EXAMPLES.md"
+  ],
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",

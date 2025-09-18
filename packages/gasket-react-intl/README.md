@@ -35,7 +35,8 @@ an intl provider such as [react-intl].
   [@gasket/plugin-intl].
 - `[options]` - (object) Optional configuration
 
-#### Example PageRouter with [react-intl]
+
+#### Example [react-intl] using Next.js i18n routing
 
 ```jsx
 // pages/_app.js
@@ -55,6 +56,31 @@ export default function App({ Component, pageProps }) {
     </IntlMessagesProvider>
   );
 }
+```
+
+#### Example Next.js App using locale prop
+
+With [@gasket/plugin-intl] and [@gasket/nextjs], the locale can be passed as a prop
+to the App component using `withLocaleInitialProps`. This is useful if you want to
+use `getInitialProps` for your app or pages.
+
+```jsx
+// pages/_app.js
+import { IntlProvider } from 'react-intl';
+import { withMessagesProvider } from '@gasket/react-intl';
+import intlManager from '../path/to/intl.js';
+
+const IntlMessagesProvider = withMessagesProvider(intlManager)(IntlProvider);
+
+function App({ Component, pageProps, locale }) {  
+  return (
+    <IntlMessagesProvider locale={ locale }>
+      <Component { ...pageProps } />
+    </IntlMessagesProvider>
+  );
+}
+
+export default withLocaleInitialProps(gasket)(App);
 ```
 
 #### Example with custom provider
@@ -193,10 +219,11 @@ export default function MyComponent(props) {
 [withMessagesProvider]:#withmessagesprovider
 [withLocaleFileRequired]:#withlocalefilerequired
 [LocaleFileRequired]:#localefilerequired
-[useLocaleFile]:#uselocalerequired
+[useLocaleFile]:#uselocalefile
 [useMessages]:#usemessages
 
 [@gasket/plugin-intl]:/packages/gasket-plugin-intl/README.md
+[@gasket/nextjs]:/packages/gasket-nextjs/README.md
 [locale file path]:/packages/gasket-plugin-intl/README.md#locale-file-path
 [dynamic locale file]:/packages/gasket-plugin-intl/README.md#dynamic-locale-files
 
