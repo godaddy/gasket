@@ -6,7 +6,8 @@
   "files": [
     "generator",
     "docs",
-    "lib"
+    "lib",
+    "EXAMPLES.md"
   ],
   "exports": {
     ".": "./lib/index.js",

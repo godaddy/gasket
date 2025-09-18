@@ -6,7 +6,8 @@
   "types": "lib/index.d.ts",
   "files": [
     "lib",
-    "generator"
+    "generator",
+    "EXAMPLES.md"
   ],
   "scripts": {
     "lint": "eslint .",
