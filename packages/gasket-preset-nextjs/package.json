@@ -7,7 +7,8 @@
   "files": [
     "lib",
     "generator",
-    "cjs"
+    "cjs",
+    "EXAMPLES.md"
   ],
   "exports": {
     ".": {
