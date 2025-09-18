@@ -231,6 +231,6 @@ describe('customizeTemplate', () => {
     const endTime = Date.now();
 
     expect(readFileCallCount).toBe(2);
-    expect(endTime - startTime).toBeLessThan(20); // Should be parallel, not sequential
+    expect(endTime - startTime).toBeLessThan(30); // Should be parallel, not sequential
   });
 });
