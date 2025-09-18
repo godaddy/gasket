@@ -36,5 +36,8 @@
     "@godaddy/terminus": "^4.12.1",
     "create-gasket-app": "workspace:^",
     "jest": "^29.7.0"
-  }
+  },
+  "files": [
+    "EXAMPLES.md"
+  ]
 }

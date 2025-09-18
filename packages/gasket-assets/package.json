@@ -5,7 +5,8 @@
   "main": "react/index.js",
   "files": [
     "react",
-    "svgs"
+    "svgs",
+    "EXAMPLES.md"
   ],
   "scripts": {
     "build": "pnpm run clean && pnpm run svg-to-react",
