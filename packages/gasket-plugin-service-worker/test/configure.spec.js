@@ -9,6 +9,9 @@ describe('configure', () => {
     mockGasket = {
       config: {
         root: '/path/to/app'
+      },
+      logger: {
+        warn: jest.fn()
       }
     };
   });
@@ -61,5 +64,12 @@ describe('configure', () => {
       }
     });
     expect(results.serviceWorker).toHaveProperty('staticOutput', path.join(mockGasket.config.root, '/public/sw.js'));
+  });
+
+  it('logs deprecation warning', async () => {
+    results = await configure(mockGasket, { bogus: 'BOGUS' });
+    expect(mockGasket.logger.warn).toHaveBeenCalledWith(
+      expect.stringMatching(/DEPRECATED `@gasket\/plugin-service-worker` will not be support in future major release\./)
+    );
   });
 });

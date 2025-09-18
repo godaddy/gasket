@@ -1,7 +1,7 @@
 {
   "name": "@gasket/plugin-service-worker",
   "version": "7.4.6",
-  "description": "Gasket Service Worker Plugin",
+  "description": "DEPRECATED Gasket Service Worker Plugin",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
@@ -52,5 +52,6 @@
     "express": "^4.21.2",
     "fastify": "^4.29.1",
     "jest": "^29.7.0"
-  }
+  },
+  "deprecated": "Package deprecated and will be removed in future major release."
 }

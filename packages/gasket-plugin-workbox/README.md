@@ -1,5 +1,7 @@
 # @gasket/plugin-workbox
 
+⚠️ _DEPRECATED - This plugin will be removed in a future major version.
+
 Provides precaching and runtimeCaching via [Workbox].
 
 Precaching downloads an app's pages, chunks, and assets and stores this on the
