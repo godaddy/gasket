@@ -3,7 +3,7 @@ import GasketEmblem from '@gasket/assets/react/gasket-emblem.js';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'app-router-ts-proxy',
+  title: '{{{appName}}}',
   description: 'Gasket App'
 };
 
