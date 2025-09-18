@@ -87,4 +87,11 @@ describe('configure', () => {
     expect(results.workbox).toHaveProperty('config', expect.any(Object));
     expect(results.workbox.config).toHaveProperty('globStrict', true);
   });
+
+  it('logs deprecation warning', async () => {
+    results = await configure(mockGasket, mockGasket.config);
+    expect(mockGasket.logger.warn).toHaveBeenCalledWith(
+      expect.stringMatching(/DEPRECATED `@gasket\/plugin-workbox` will not be support in future major release\./)
+    );
+  });
 });

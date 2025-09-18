@@ -31,6 +31,10 @@ module.exports = function configure(gasket, config) {
   const serviceWorker = merge(defaultConfig, getSWConfig({ config }));
   let { staticOutput } = serviceWorker;
 
+  gasket.logger.warn(
+    `DEPRECATED \`@gasket/plugin-service-worker\` will not be support in future major release.`
+  );
+
   // Fixup staticOutput - use default if true
   if (staticOutput === true) {
     staticOutput = 'public/sw.js';

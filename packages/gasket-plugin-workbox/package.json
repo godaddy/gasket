@@ -1,7 +1,7 @@
 {
   "name": "@gasket/plugin-workbox",
   "version": "7.3.6",
-  "description": "Gasket Workbox Plugin",
+  "description": "DEPRECATED Gasket Workbox Plugin",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
@@ -50,5 +50,6 @@
     "@types/workbox-build": "^5.1.0",
     "create-gasket-app": "workspace:^",
     "jest": "^29.7.0"
-  }
+  },
+  "deprecated": "Package deprecated and will be removed in future major release."
 }

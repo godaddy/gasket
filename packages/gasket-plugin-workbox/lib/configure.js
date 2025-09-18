@@ -8,6 +8,10 @@ module.exports = function configure(gasket, config) {
   const workbox = getWorkboxConfig({ config });
   const basePath = getBasePath({ config });
 
+  gasket.logger.warn(
+    `DEPRECATED \`@gasket/plugin-workbox\` will not be support in future major release.`
+  );
+
   workbox.basePath = basePath;
 
   const { version } = require('workbox-build/package.json');
