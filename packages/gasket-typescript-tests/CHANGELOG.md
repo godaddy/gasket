@@ -1,5 +1,11 @@
 # @gasket/typescript-tests
 
+## 7.4.6
+
+### Patch Changes
+
+- a89a978: Update types for http-proxy
+
 ## 7.4.5
 
 ### Patch Changes
