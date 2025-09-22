@@ -1,5 +1,13 @@
 # `@gasket/utils`
 
+## 7.6.3
+
+### Patch Changes
+
+- f5e6942: Include EXAMPLES.md when publishing
+- d794a98: convert testing framework in esm packages to vitest
+- da18ea5: Add code examples
+
 ## 7.6.2
 
 ### Patch Changes
