@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-morgan",
-  "version": "7.3.6",
+  "version": "7.3.7",
   "description": "Adds morgan request logger to your app",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -46,7 +46,7 @@
     "jest": "^29.7.0"
   },
   "peerDependencies": {
-    "@gasket/plugin-logger": "^7.3.7",
+    "@gasket/plugin-logger": "^7.3.8",
     "express": "^4.21.2"
   }
 }
