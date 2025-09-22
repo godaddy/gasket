@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   server: {
     analyzerMode: 'static',
     reportFilename: '../../reports/server-bundles.html'

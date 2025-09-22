@@ -1,11 +1,14 @@
 /// <reference types="create-gasket-app" />
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
 const { name, version } = require('../package.json');
 
 /**
  * Add files & extend package.json for new apps.
  * @type {import('@gasket/core').HookHandler<'create'>}
  */
-module.exports = function create(gasket, { pkg, gasketConfig }) {
+export default function create(gasket, { pkg, gasketConfig }) {
   gasketConfig.addEnvironment('local.analyze', {
     dynamicPlugins: [
       '@gasket/plugin-analyze'
@@ -19,4 +22,4 @@ module.exports = function create(gasket, { pkg, gasketConfig }) {
   pkg.add('scripts', {
     analyze: 'GASKET_ENV=local.analyze next build'
   });
-};
+}

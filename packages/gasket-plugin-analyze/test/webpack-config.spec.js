@@ -1,5 +1,5 @@
-const webpack = require('../lib/webpack-config');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+import webpack from '../lib/webpack-config.js';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 const mockNextData = {
   defaultLoaders: {}
