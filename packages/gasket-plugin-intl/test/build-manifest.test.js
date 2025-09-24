@@ -169,4 +169,14 @@ describe('buildManifest', function () {
     const expected = `import type { LocaleManifest } from '@gasket/intl';`;
     expect(getOutput()).toContain(expected);
   });
+
+  it('allows for subdirectories', async function () {
+    mockGasket.config.intl.localesDir = './src/locales';
+    mockGasket.config.intl.defaultLocaleFilePath = './src/locales';
+    await buildManifest(mockGasket);
+    expect(mockWriteFileStub).toHaveBeenCalled();
+    expect(mockWriteFileStub.mock.calls[0][0]).toContain(path.join('fixtures', 'intl.js'));
+    expect(mockWriteFileStub.mock.calls[0][1]).toContain(path.join('src', 'locales', 'en-US.json'));
+    expect(mockWriteFileStub.mock.calls[0][1]).toContain(path.join('src', 'locales', 'fr-FR.json'));
+  });
 });
