@@ -46,10 +46,13 @@ module.exports = async function buildManifest(gasket, options = {}) {
   // generate a content hash for each file
   const imports = (
     files.map((file) => {
-      const importName = ['.', path.basename(localesDir), file].join('/');
+      const managerDir = path.dirname(path.join(tgtRoot, ...managerFilename.split('/')));
+      const relativePath = path.relative(managerDir, tgtLocalesDir) ?? '.';
+      let importName = path.join(relativePath, file).replace(/\\/g, '/');
+      importName = importName.startsWith('.') ? importName : `./${importName}`;
       const keyName = importName
         .replace(/\.json$/, '')
-        .replace('./', '');
+        .replace(/^[./]+/, '');
       if (gasket.config.intl.experimentalImportAttributes) {
         return { [keyName]: `%() => import('${importName}', { with: { type: 'json' } })%` };
       }
