@@ -46,8 +46,12 @@ module.exports = async function buildManifest(gasket, options = {}) {
   // generate a content hash for each file
   const imports = (
     files.map((file) => {
-      const relativePath = path.relative(tgtRoot, tgtLocalesDir);
-      const importName = ['.', relativePath, file].join('/');
+      const managerDir = path.dirname(path.join(tgtRoot, ...managerFilename.split('/')));
+      const relativePath = path.relative(managerDir, tgtLocalesDir);
+      const importName = path.join('.', relativePath, file).replace(/\\/g, '/');
+      console.log('importName', importName);
+      console.log('managerDir', managerDir);
+      console.log('relativePath', relativePath);
       const keyName = importName
         .replace(/\.json$/, '')
         .replace('./', '');
