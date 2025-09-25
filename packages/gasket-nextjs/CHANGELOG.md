@@ -1,5 +1,11 @@
 # `@gasket/nextjs`
 
+## 7.6.5
+
+### Patch Changes
+
+- fe2ce1b: Add missing withGasketData docs for App Router Layouts
+
 ## 7.6.4
 
 ### Patch Changes
