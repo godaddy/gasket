@@ -1,5 +1,11 @@
 # `@gasket/plugin-intl`
 
+## 7.5.10
+
+### Patch Changes
+
+- 0d1c0a0: Fix broken intl.js locale paths when locales are in a subdir
+
 ## 7.5.9
 
 ### Patch Changes
