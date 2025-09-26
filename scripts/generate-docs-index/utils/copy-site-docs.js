@@ -87,7 +87,7 @@ async function copyMissingExamples(projectRoot, targetRoot) {
  * @param {string} targetRoot The root of the target docs
  */
 async function copyPackageDocs(sourceRoot, targetRoot) {
-  const dirs = ['modules', 'plugins', 'presets'];
+  const dirs = ['modules', 'plugins', 'presets', 'templates'];
   const excludedPath = '@gasket';
 
   for (const dir of dirs) {

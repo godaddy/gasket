@@ -79,6 +79,11 @@ module.exports = {
             position: 'left',
           },
           {
+            to: '/docs/templates',
+            label: 'Templates',
+            position: 'left',
+          },
+          {
             to: '/blog',
             label: 'Blog',
             position: 'right'
