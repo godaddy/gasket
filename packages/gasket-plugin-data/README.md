@@ -107,6 +107,10 @@ PageComponent.getInitialProps = async function({ isServer, req }) {
 }
 ```
 
+When this action is called, it will trigger the `publicGasketData` lifecycle to
+allow plugins to inject request-specific data. The results are cached for the
+lifetime of the request.
+
 ### Browser Access
 
 If you need access to config values in client-side code, this can be done

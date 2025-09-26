@@ -1,5 +1,11 @@
 # `@gasket/plugin-data`
 
+## 7.4.11
+
+### Patch Changes
+
+- 3d3fdb0: Fix getPublicGasketData caching
+
 ## 7.4.10
 
 ### Patch Changes

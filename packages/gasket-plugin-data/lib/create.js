@@ -4,7 +4,7 @@
 const { name, version, devDependencies } = require('../package.json');
 
 /**
- * @type {import('@gasket/core', { with: { "resolution-mode": "import" } }).HookHandler<'create'>}
+ * @type {import('@gasket/core').HookHandler<'create'>}
  */
 async function create(gasket, {
   pkg,

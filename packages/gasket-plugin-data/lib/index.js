@@ -8,7 +8,7 @@ const initReduxState = require('./init-redux-state');
 const metadata = require('./metadata');
 
 /**
- * @type {import('@gasket/core', { with: { "resolution-mode": "import" } }).Plugin}
+ * @type {import('@gasket/core').Plugin}
  */
 module.exports = {
   name,
