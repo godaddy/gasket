@@ -3,7 +3,7 @@
 
 const { name, version, description } = require('../package.json');
 
-/** @type {import('@gasket/core', { with: { "resolution-mode": "import" } }).HookHandler<'metadata'>} */
+/** @type {import('@gasket/core').HookHandler<'metadata'>} */
 async function metadata(gasket, meta) {
   return {
     ...meta,
