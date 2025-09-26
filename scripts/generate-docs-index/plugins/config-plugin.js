@@ -12,7 +12,7 @@ export default {
   hooks: {
     // Don't add templates to metadata - we'll handle them in docsGenerate instead
     // Configure docsSetup for packages
-    docsSetup: (gasket) => {
+    docsSetup: () => {
       const moduleSetups = {};
 
       const localModules = readdirSync(packagesDir, { withFileTypes: true })
