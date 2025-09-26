@@ -26,7 +26,7 @@ async function getGasketData(gasket) {
 }
 
 /** @type {import('@gasket/core', { with: { "resolution-mode": "import" } }).ActionHandler<'getPublicGasketData'>} */
-async function getPublicGasketData(gasket, req) {
+const getPublicGasketData = withGasketRequestCache(async (gasket, req) => {
   const basePublicData = (await gasket.actions.getGasketData()).public ?? {};
 
   const userPublicData = await gasket.execWaterfall(
@@ -42,7 +42,7 @@ async function getPublicGasketData(gasket, req) {
   }
 
   return userPublicData;
-}
+});
 
 // Export the base functions for testing
 module.exports = {

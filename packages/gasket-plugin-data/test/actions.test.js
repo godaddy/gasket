@@ -1,9 +1,5 @@
 const { actions, baseDataMap } = require('../lib/actions');
-
-// Mock the request cache
-jest.mock('@gasket/request', () => ({
-  withGasketRequestCache: fn => fn
-}));
+const { makeGasketRequest } = require('@gasket/request');
 
 describe('actions', () => {
   let gasket;
@@ -120,8 +116,10 @@ describe('actions', () => {
       gasket.execWaterfall.mockResolvedValue({ some: 'adjusted' });
 
       const results = await getPublicGasketData(gasket, req);
+      // expected normalized request
+      const gasketReq = await makeGasketRequest(req);
 
-      expect(gasket.execWaterfall).toHaveBeenCalledWith('publicGasketData', { some: 'data' }, { req });
+      expect(gasket.execWaterfall).toHaveBeenCalledWith('publicGasketData', { some: 'data' }, { req: gasketReq });
       expect(results).toEqual({ some: 'adjusted' });
     });
 
@@ -134,25 +132,27 @@ describe('actions', () => {
     });
 
     it('only executes publicGasketData fixup once per request', async () => {
-      getGasketData.mockResolvedValue({ public: { some: 'data' } });
+      getGasketData
+        .mockResolvedValue({ public: { some: 'data' } })
+        .mockResolvedValueOnce({ public: { some: 'stuff' } });
 
       const results1 = await getPublicGasketData(gasket, req);
       expect(getGasketData).toHaveBeenCalledTimes(1);
       expect(gasket.execWaterfall).toHaveBeenCalledTimes(1);
 
       const results2 = await getPublicGasketData(gasket, req);
-      expect(getGasketData).toHaveBeenCalledTimes(2);
-      expect(gasket.execWaterfall).toHaveBeenCalledTimes(2);
+      expect(getGasketData).toHaveBeenCalledTimes(1);
+      expect(gasket.execWaterfall).toHaveBeenCalledTimes(1);
 
       expect(results1).toEqual(results2);
-      expect(results1).not.toBe(results2);
+      expect(results1).toBe(results2);
 
       const newReq = { headers: { 'x-example': 'new-data' } };
       const results3 = await getPublicGasketData(gasket, newReq);
-      expect(getGasketData).toHaveBeenCalledTimes(3);
-      expect(gasket.execWaterfall).toHaveBeenCalledTimes(3);
+      expect(getGasketData).toHaveBeenCalledTimes(2);
+      expect(gasket.execWaterfall).toHaveBeenCalledTimes(2);
 
-      expect(results2).toEqual(results3);
+      expect(results2).not.toEqual(results3);
       expect(results2).not.toBe(results3);
     });
   });
