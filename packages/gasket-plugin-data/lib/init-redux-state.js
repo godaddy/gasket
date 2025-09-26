@@ -2,7 +2,7 @@
 /// <reference types="@gasket/plugin-redux" />
 
 /**
- * @type {import('@gasket/core', { with: { "resolution-mode": "import" } }).HookHandler<'initReduxState'>}
+ * @type {import('@gasket/core').HookHandler<'initReduxState'>}
  */
 async function initReduxState(gasket, state, { req }) {
   /** @type {import('.').ReduxState} */
