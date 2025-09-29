@@ -1,5 +1,11 @@
 # generate-docs-index
 
+## 7.4.19
+
+### Patch Changes
+
+- 576e3c1: Add templates to docs site
+
 ## 7.4.18
 
 ### Patch Changes
