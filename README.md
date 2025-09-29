@@ -44,21 +44,16 @@ apps and making your frameworks.
 
 Help and explanations docs
 
-| Name                              | Description                                       |
-| --------------------------------- | ------------------------------------------------- |
-| [Quick Start Guide]               | Get up and running on Gasket                      |
-| [Upgrades Guide]                  | Steps necessary to upgrade major versions         |
-| [Gasket Actions Guide]            | How to use access data and invoke lifecycles      |
-| [Intl Quick Start Guide]          | Add internationalization to your app              |
-| [@gasket/template-api-express]    | Gasket API template for Express                   |
-| [@gasket/template-api-fastify]    | Gasket API template for Fastify                   |
-| [@gasket/template-nextjs-app]     | Gasket Next.js App Router template                |
-| [@gasket/template-nextjs-express] | Gasket Next.js Pages Router template with Express |
-| [@gasket/template-nextjs-pages]   | Gasket Next.js Pages Router template              |
-| [Express Setup Guide]             | Adding middleware and routes for Express          |
-| [Next.js Routing Guide]           | Basic and advance routing for Next.js             |
-| [Next.js Deployment Guide]        | Steps to deploy a Next.js Gasket app              |
-| [Webpack Configuration Guide]     | Configuring Webpack in Gasket apps                |
+| Name                          | Description                                  |
+| ----------------------------- | -------------------------------------------- |
+| [Quick Start Guide]           | Get up and running on Gasket                 |
+| [Upgrades Guide]              | Steps necessary to upgrade major versions    |
+| [Gasket Actions Guide]        | How to use access data and invoke lifecycles |
+| [Intl Quick Start Guide]      | Add internationalization to your app         |
+| [Express Setup Guide]         | Adding middleware and routes for Express     |
+| [Next.js Routing Guide]       | Basic and advance routing for Next.js        |
+| [Next.js Deployment Guide]    | Steps to deploy a Next.js Gasket app         |
+| [Webpack Configuration Guide] | Configuring Webpack in Gasket apps           |
 
 ## Commands
 
@@ -169,6 +164,18 @@ Available presets
 | [@gasket/preset-api]    | 7.5.5   | Create Express-based API with Gasket |
 | [@gasket/preset-nextjs] | 7.5.6   | Basic NextJS Framework               |
 
+## Templates
+
+Available templates
+
+| Name                              | Version | Description                                       |
+| --------------------------------- | ------- | ------------------------------------------------- |
+| [@gasket/template-api-express]    |         | Gasket API template for Express                   |
+| [@gasket/template-api-fastify]    |         | Gasket API template for Fastify                   |
+| [@gasket/template-nextjs-app]     |         | Gasket Next.js App Router template                |
+| [@gasket/template-nextjs-express] |         | Gasket Next.js Pages Router template with Express |
+| [@gasket/template-nextjs-pages]   |         | Gasket Next.js Pages Router template              |
+
 ## Plugins
 
 Available plugins
@@ -178,7 +185,7 @@ Available plugins
 | [@gasket/plugin-analyze]         | 7.3.8   | Gasket Analyzer Plugin                                                    |
 | [@gasket/plugin-command]         | 7.5.3   | Plugin to enable other plugins to inject new gasket commands              |
 | [@gasket/plugin-cypress]         | 7.5.3   | Integrates Cypress based testing into your Gasket application             |
-| [@gasket/plugin-data]            | 7.4.10  | Supports application-specific settings and configurations                 |
+| [@gasket/plugin-data]            | 7.4.11  | Supports application-specific settings and configurations                 |
 | [@gasket/plugin-docs]            | 7.4.8   | Centralize doc files from plugins and modules                             |
 | [@gasket/plugin-docs-graphs]     | 7.3.7   | Generate mermaid graphs of an applications gasket lifecycles              |
 | [@gasket/plugin-docusaurus]      | 7.4.6   | Gasket plugin for docusaurus                                              |
@@ -300,11 +307,6 @@ Available configuration options in the `gasket.js`
 [Upgrades Guide]:docs/upgrades.md
 [Gasket Actions Guide]:docs/gasket-actions.md
 [Intl Quick Start Guide]:docs/intl-quick-start.md
-[@gasket/template-api-express]:/packages/gasket-template-api-express/README.md
-[@gasket/template-api-fastify]:/packages/gasket-template-api-fastify/README.md
-[@gasket/template-nextjs-app]:/packages/gasket-template-nextjs-app/README.md
-[@gasket/template-nextjs-express]:/packages/gasket-template-nextjs-express/README.md
-[@gasket/template-nextjs-pages]:/packages/gasket-template-nextjs-pages/README.md
 [Express Setup Guide]:/packages/gasket-plugin-express/docs/setup.md
 [Next.js Routing Guide]:/packages/gasket-plugin-nextjs/docs/routing.md
 [Next.js Deployment Guide]:/packages/gasket-plugin-nextjs/docs/deployment.md
@@ -380,6 +382,11 @@ Available configuration options in the `gasket.js`
 [vitest.config.js]:https://vitest.dev/config/
 [@gasket/preset-api]:/packages/gasket-preset-api/README.md
 [@gasket/preset-nextjs]:/packages/gasket-preset-nextjs/README.md
+[@gasket/template-api-express]:/packages/gasket-template-api-express/README.md
+[@gasket/template-api-fastify]:/packages/gasket-template-api-fastify/README.md
+[@gasket/template-nextjs-app]:/packages/gasket-template-nextjs-app/README.md
+[@gasket/template-nextjs-express]:/packages/gasket-template-nextjs-express/README.md
+[@gasket/template-nextjs-pages]:/packages/gasket-template-nextjs-pages/README.md
 [@gasket/plugin-analyze]:/packages/gasket-plugin-analyze/README.md
 [@gasket/plugin-command]:/packages/gasket-plugin-command/README.md
 [@gasket/plugin-cypress]:/packages/gasket-plugin-cypress/README.md
