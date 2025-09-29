@@ -25,21 +25,22 @@ module.exports = function commands(gasket) {
 
       await collateFiles(docsConfigSet);
 
-      let guides = await gasket.exec('docsGenerate', docsConfigSet);
-      if (guides) {
-        guides = guides.reduce((acc, cur) => {
-          if (Array.isArray(cur)) {
-            acc.push(...cur);
-          } else {
-            cur && acc.push(cur);
-          }
-          return acc;
-        }, []);
-      } else {
-        guides = [];
-      }
+      const generated = await gasket.exec('docsGenerate', docsConfigSet);
+      const docs = Array.isArray(generated) ? generated.flat().filter(Boolean) : [generated];
+      const guides = docs.filter(gen => gen && !gen.name.includes('template'));
+      const templates = docs.filter(gen => gen && gen.name.includes('template'));
 
+      // Ensure guides array exists before unshifting
+      if (!docsConfigSet.guides) {
+        docsConfigSet.guides = [];
+      }
       docsConfigSet.guides.unshift(...guides);
+
+      // Ensure templates array exists before unshifting
+      if (!docsConfigSet.templates) {
+        docsConfigSet.templates = [];
+      }
+      docsConfigSet.templates.unshift(...templates);
 
       await generateIndex(docsConfigSet);
 

@@ -52,6 +52,7 @@ export interface PluginData extends ModuleData {
   lifecycles?: Array<LifecycleData>;
   modules?: Array<DetailData>;
   guides?: Array<DetailData>;
+  templates?: Array<DetailData>;
   hooks?: Record<string, Function>;
 }
 
