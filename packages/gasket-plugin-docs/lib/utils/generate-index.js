@@ -121,6 +121,7 @@ function generateContent(docsConfigSet) {
   });
 
   addSection('Presets', 'All configured presets', docsConfigSet.presets);
+  addSection('Templates', 'All configured templates', docsConfigSet.templates);
   addSection('Plugins', 'All configured plugins', docsConfigSet.plugins);
   addSection(
     'Modules',

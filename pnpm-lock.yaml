@@ -2360,6 +2360,21 @@ importers:
       '@gasket/request':
         specifier: workspace:^
         version: link:../../packages/gasket-request
+      '@gasket/template-api-express':
+        specifier: workspace:^
+        version: link:../../packages/gasket-template-api-express
+      '@gasket/template-api-fastify':
+        specifier: workspace:^
+        version: link:../../packages/gasket-template-api-fastify
+      '@gasket/template-nextjs-app':
+        specifier: workspace:^
+        version: link:../../packages/gasket-template-nextjs-app
+      '@gasket/template-nextjs-express':
+        specifier: workspace:^
+        version: link:../../packages/gasket-template-nextjs-express
+      '@gasket/template-nextjs-pages':
+        specifier: workspace:^
+        version: link:../../packages/gasket-template-nextjs-pages
       '@gasket/utils':
         specifier: workspace:^
         version: link:../../packages/gasket-utils
