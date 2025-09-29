@@ -170,11 +170,11 @@ Available templates
 
 | Name                              | Version | Description                                       |
 | --------------------------------- | ------- | ------------------------------------------------- |
-| [@gasket/template-api-express]    |         | Gasket API template for Express                   |
-| [@gasket/template-api-fastify]    |         | Gasket API template for Fastify                   |
-| [@gasket/template-nextjs-app]     |         | Gasket Next.js App Router template                |
-| [@gasket/template-nextjs-express] |         | Gasket Next.js Pages Router template with Express |
-| [@gasket/template-nextjs-pages]   |         | Gasket Next.js Pages Router template              |
+| [@gasket/template-api-express]    | 7.0.1   | Gasket API template for Express                   |
+| [@gasket/template-api-fastify]    | 7.0.1   | Gasket API template for Fastify                   |
+| [@gasket/template-nextjs-app]     | 7.0.1   | Gasket Next.js App Router template                |
+| [@gasket/template-nextjs-express] | 7.0.1   | Gasket Next.js Pages Router template with Express |
+| [@gasket/template-nextjs-pages]   | 7.0.1   | Gasket Next.js Pages Router template              |
 
 ## Plugins
 

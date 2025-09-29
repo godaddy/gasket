@@ -110,6 +110,7 @@ export default {
 
             docs.push({
               name: pkg.name,
+              version: pkg.version,
               description: pkg.description || `Gasket template: ${pkg.name}`,
               link: `/templates/${pkg.name.split('/').join('/')}/README.md`,
               targetRoot: docsRoot
