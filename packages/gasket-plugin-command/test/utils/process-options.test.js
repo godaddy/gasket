@@ -1,5 +1,6 @@
 /* eslint-disable no-undefined */
-
+import { describe, it, mock } from 'node:test';
+import assert from 'node:assert/strict';
 import { Command } from 'commander';
 import { processOptions } from '../../lib/utils/process-options.js';
 import { processCommand } from '../../lib/utils/process-command.js';
@@ -11,19 +12,24 @@ describe('processOptions', () => {
         { name: 'option1' },
         { description: 'description2' }
       ];
-      expect(() => processOptions(mockOptions)).toThrow(
-        'Invalid option(s) configuration'
+      assert.throws(
+        () => processOptions(mockOptions),
+        { message: /Invalid option\(s\) configuration/ }
       );
     });
 
     it('throws an error if options is not an array', () => {
-      expect(() => processOptions({})).toThrow(
-        'Invalid option(s) configuration'
+      assert.throws(
+        () => processOptions({}),
+        { message: /Invalid option\(s\) configuration/ }
       );
     });
 
     it('throws an error if options is undefined', () => {
-      expect(() => processOptions()).toThrow('Invalid option(s) configuration');
+      assert.throws(
+        () => processOptions(),
+        { message: /Invalid option\(s\) configuration/ }
+      );
     });
   });
 
@@ -43,7 +49,7 @@ describe('processOptions', () => {
       }
     ];
     const result = processOptions(mockOptions);
-    expect(result).toEqual([
+    assert.deepEqual(result, [
       {
         options: ['-o, --option1 <option1>', 'description1'],
         conflicts: [],
@@ -81,7 +87,7 @@ describe('processOptions', () => {
       }
     ];
     const result = processOptions(mockOptions);
-    expect(result).toEqual([
+    assert.deepEqual(result, [
       {
         options: ['-o, --option1', 'description1'],
         conflicts: [],
@@ -119,7 +125,7 @@ describe('processOptions', () => {
       }
     ];
     const result = processOptions(mockOptions);
-    expect(result).toEqual([
+    assert.deepEqual(result, [
       {
         options: ['-o, --option1 <option1>', 'description1'],
         conflicts: [],
@@ -157,13 +163,13 @@ describe('processOptions', () => {
       }
     ];
     const result = processOptions(mockOptions);
-    expect(result).toEqual([
+    assert.deepEqual(result, [
       {
         options: ['-o, --option1 <option1>', 'description1'],
         conflicts: [],
         hidden: false,
         required: true,
-        parse: expect.any(Function),
+        parse: result[0].parse,
         defaultValue: undefined
       },
       {
@@ -171,10 +177,12 @@ describe('processOptions', () => {
         conflicts: [],
         hidden: false,
         required: false,
-        parse: expect.any(Function),
+        parse: result[1].parse,
         defaultValue: undefined
       }
     ]);
+    assert.equal(typeof result[0].parse, 'function');
+    assert.equal(typeof result[1].parse, 'function');
   });
 
   it('processes conflicts', () => {
@@ -195,7 +203,7 @@ describe('processOptions', () => {
       }
     ];
     const result = processOptions(mockOptions);
-    expect(result).toEqual([
+    assert.deepEqual(result, [
       {
         options: ['-o, --option1 <option1>', 'description1'],
         conflicts: ['option2'],
@@ -233,7 +241,7 @@ describe('processOptions', () => {
       }
     ];
     const result = processOptions(mockOptions);
-    expect(result).toEqual([
+    assert.deepEqual(result, [
       {
         options: ['-o, --option1 <option1>', 'description1'],
         conflicts: [],
@@ -255,7 +263,7 @@ describe('processOptions', () => {
 
   it('allows for an empty array', () => {
     const result = processOptions([]);
-    expect(result).toEqual([]);
+    assert.deepEqual(result, []);
   });
 
   it('throws when required option is missing', async () => {
@@ -266,12 +274,9 @@ describe('processOptions', () => {
       return program;
     })();
 
-    const writeSpy = vi
-      .spyOn(process.stderr, 'write')
-      .mockImplementation((err) => err);
-    const exitSpy = vi
-      .spyOn(process, 'exit')
-      .mockImplementation((err) => err);
+    const mockWrite = mock.method(process.stderr, 'write', (err) => err);
+    const mockExit = mock.method(process, 'exit', (err) => err);
+
     const mockCmd = {
       id: 'test',
       description: 'test command',
@@ -289,9 +294,14 @@ describe('processOptions', () => {
       // ignore
     }
 
-    expect(writeSpy).toHaveBeenCalledWith(
-      expect.stringContaining('required option')
-    );
-    expect(exitSpy).toHaveBeenCalledWith(1);
+    assert.ok(mockWrite.mock.calls.some(call =>
+      call.arguments[0].includes('required option')
+    ));
+    assert.ok(mockExit.mock.calls.some(call =>
+      call.arguments[0] === 1
+    ));
+
+    mockWrite.mock.restore();
+    mockExit.mock.restore();
   });
 });

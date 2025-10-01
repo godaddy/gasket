@@ -1,13 +1,15 @@
+import { describe, it } from 'node:test';
+import assert from 'node:assert/strict';
 import { logo } from '../../lib/utils/logo.js';
 
 describe('logo', () => {
 
   it('should be defined', () => {
-    expect(logo).toBeDefined();
+    assert.ok(logo);
   });
 
   it('should be a string', () => {
-    expect(typeof logo).toBe('string');
+    assert.equal(typeof logo, 'string');
   });
 
   it('should match', () => {
@@ -23,6 +25,6 @@ describe('logo', () => {
       ▀███▄▄▄▄▄▄▄█▀▀██
           ▀▀▀▀████▄▄█▀
 `;
-    expect(logo).toEqual(test);
+    assert.equal(logo, test);
   });
 });
