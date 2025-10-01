@@ -1,4 +1,5 @@
-
+import { describe, it, beforeEach, mock } from 'node:test';
+import assert from 'node:assert/strict';
 import commands from '../lib/commands';
 
 describe('commands', () => {
@@ -6,24 +7,25 @@ describe('commands', () => {
 
   beforeEach(() => {
     mockGasket = {
-      exec: vi.fn()
+      exec: mock.fn()
     };
   });
 
   it('should be a function', () => {
-    expect(commands).toEqual(expect.any(Function));
+    assert.equal(typeof commands, 'function');
   });
 
   it('should have id, description, and action properties', () => {
     const { id, description, action } = commands(mockGasket);
-    expect(id).toEqual('build');
-    expect(description).toEqual('Gasket build command');
-    expect(action).toEqual(expect.any(Function));
+    assert.equal(id, 'build');
+    assert.equal(description, 'Gasket build command');
+    assert.equal(typeof action, 'function');
   });
 
   it('action should call gasket.exec build', async () => {
     const { action } = commands(mockGasket);
     await action();
-    expect(mockGasket.exec).toHaveBeenCalledWith('build');
+    assert.equal(mockGasket.exec.mock.calls.length, 1);
+    assert.deepEqual(mockGasket.exec.mock.calls[0].arguments, ['build']);
   });
 });

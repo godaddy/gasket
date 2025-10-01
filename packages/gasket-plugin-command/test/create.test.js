@@ -1,4 +1,5 @@
-
+import { describe, it, beforeEach, mock } from 'node:test';
+import assert from 'node:assert/strict';
 import create from '../lib/create.js';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
@@ -10,27 +11,29 @@ describe('create', () => {
   beforeEach(() => {
     mockContext = {
       pkg: {
-        add: vi.fn()
+        add: mock.fn()
       },
       gasketConfig: {
-        addPlugin: vi.fn()
+        addPlugin: mock.fn()
       }
     };
   });
 
   it('should be a function', () => {
-    expect(create).toEqual(expect.any(Function));
+    assert.equal(typeof create, 'function');
   });
 
   it('should add pluginCommand to gasketConfig', () => {
     create({}, mockContext);
-    expect(mockContext.gasketConfig.addPlugin).toHaveBeenCalledWith('pluginCommand', name);
+    assert.equal(mockContext.gasketConfig.addPlugin.mock.calls.length, 1);
+    assert.deepEqual(mockContext.gasketConfig.addPlugin.mock.calls[0].arguments, ['pluginCommand', name]);
   });
 
   it('should add dependency to pkg', () => {
     create({}, mockContext);
-    expect(mockContext.pkg.add).toHaveBeenCalledWith('dependencies', {
+    assert.equal(mockContext.pkg.add.mock.calls.length, 1);
+    assert.deepEqual(mockContext.pkg.add.mock.calls[0].arguments, ['dependencies', {
       [name]: `^${version}`
-    });
+    }]);
   });
 });

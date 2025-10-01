@@ -1,13 +1,15 @@
+import { describe, it } from 'node:test';
+import assert from 'node:assert/strict';
 import { createOption } from '../../lib/utils/create-option.js';
 
 describe('createOption', () => {
 
   it('should be defined', () => {
-    expect(createOption).toBeDefined();
+    assert.ok(createOption);
   });
 
   it('should be a function', () => {
-    expect(typeof createOption).toBe('function');
+    assert.equal(typeof createOption, 'function');
   });
 
   it('should create a commander option', () => {
@@ -20,13 +22,13 @@ describe('createOption', () => {
       hidden: true
     };
     const option = createOption(definition);
-    expect(option).toBeDefined();
-    expect(option).toHaveProperty('flags', '-f, --foo');
-    expect(option).toHaveProperty('description', 'foo option');
-    expect(option).toHaveProperty('defaultValue', 'bar');
-    expect(option).toHaveProperty('conflictsWith', ['baz']);
-    expect(option).toHaveProperty('argParser');
-    expect(option).toHaveProperty('required', false);
-    expect(option).toHaveProperty('hidden', true);
+    assert.ok(option);
+    assert.equal(option.flags, '-f, --foo');
+    assert.equal(option.description, 'foo option');
+    assert.equal(option.defaultValue, 'bar');
+    assert.deepEqual(option.conflictsWith, ['baz']);
+    assert.ok(option.argParser);
+    assert.equal(option.required, false);
+    assert.equal(option.hidden, true);
   });
 });

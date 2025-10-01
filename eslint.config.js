@@ -55,7 +55,8 @@ export default defineConfig([
       ...jest.configs.recommended.rules,
       'unicorn/filename-case': 'error',
       'no-sync': 'warn',
-      'vitest/expect-expect': 'warn'
+      'vitest/expect-expect': 'warn',
+      'vitest/no-import-node-test': 'off'
     }
   },
   //

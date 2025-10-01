@@ -25,9 +25,9 @@
     "lint:fix": "pnpm run lint --fix",
     "posttest": "pnpm run lint && pnpm run typecheck",
     "prepublishOnly": "pnpm run build",
-    "test": "vitest run --globals",
-    "test:coverage": "vitest run --coverage",
-    "test:watch": "vitest",
+    "test": "node --test test/**/*.test.js",
+    "test:coverage": "node --test --experimental-test-coverage test/**/*.test.js",
+    "test:watch": "node --test --watch test/**/*.test.js",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
@@ -52,8 +52,6 @@
   "devDependencies": {
     "@gasket/cjs": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",
-    "@vitest/coverage-v8": "^3.2.0",
-    "create-gasket-app": "workspace:^",
-    "vitest": "^3.2.0"
+    "create-gasket-app": "workspace:^"
   }
 }

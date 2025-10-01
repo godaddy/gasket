@@ -1,18 +1,18 @@
+import { describe, it, beforeEach, mock } from 'node:test';
+import assert from 'node:assert/strict';
 
+const mockAddCommand = mock.fn();
+const mockParse = mock.fn();
+const mockProcessCommand = mock.fn(() => ({ command: 'test', hidden: false, isDefault: false }));
 
-const mockAddCommand = vi.fn();
-const mockParse = vi.fn();
-const mockProcessCommand = vi.fn();
-
-vi.mock('../lib/cli.js', () => {
-
-  return {
+mock.module('../lib/cli.js', {
+  namedExports: {
     gasketBin: {
       addCommand: mockAddCommand,
       parse: mockParse
     },
-    processCommand: mockProcessCommand.mockReturnValue({ command: 'test', hidden: false, isDefault: false })
-  };
+    processCommand: mockProcessCommand
+  }
 });
 
 const ready = (await import('../lib/ready.js')).default;
@@ -21,9 +21,12 @@ describe('ready', () => {
   let mockGasket;
 
   beforeEach(() => {
-    vi.clearAllMocks();
+    mockAddCommand.mock.resetCalls();
+    mockParse.mock.resetCalls();
+    mockProcessCommand.mock.resetCalls();
+
     mockGasket = {
-      execSync: vi.fn().mockReturnValue([{ id: 'test', description: 'test', action: vi.fn() }]),
+      execSync: mock.fn(() => [{ id: 'test', description: 'test', action: mock.fn() }]),
       config: {
         env: 'development'
       }
@@ -31,17 +34,17 @@ describe('ready', () => {
   });
 
   it('should be a function', () => {
-    expect(ready).toEqual(expect.any(Function));
+    assert.equal(typeof ready, 'function');
   });
 
   it('should parse gasketBin if gasket custom command is set', async () => {
     mockGasket.config.command = 'docs';
     await ready(mockGasket);
-    expect(mockParse).toHaveBeenCalled();
+    assert.equal(mockParse.mock.calls.length, 1);
   });
 
   it('should not parse gasketBin if gasket custom command is not set', async () => {
     await ready(mockGasket);
-    expect(mockParse).not.toHaveBeenCalled();
+    assert.equal(mockParse.mock.calls.length, 0);
   });
 });

@@ -1,3 +1,5 @@
+import { describe, it } from 'node:test';
+import assert from 'node:assert/strict';
 import plugin from '../lib/index.js';
 import { createRequire } from 'module';
 
@@ -6,14 +8,14 @@ const { name, version, description } = require('../package.json');
 
 describe('@gasket/plugin-command', () => {
   it('should export an object', () => {
-    expect(plugin).toEqual(expect.any(Object));
+    assert.equal(typeof plugin, 'object');
   });
 
   it('should have properties', () => {
-    expect(plugin).toHaveProperty('name', name);
-    expect(plugin).toHaveProperty('version', version);
-    expect(plugin).toHaveProperty('description', description);
-    expect(plugin).toHaveProperty('hooks');
+    assert.equal(plugin.name, name);
+    assert.equal(plugin.version, version);
+    assert.equal(plugin.description, description);
+    assert.ok(plugin.hooks);
   });
 
   it('should have expected hooks', () => {
@@ -25,9 +27,10 @@ describe('@gasket/plugin-command', () => {
       'ready',
       'metadata'
     ];
-    expect(Object.keys(plugin.hooks)).toEqual(
-      expect.arrayContaining(expectedHooks)
-    );
+    const hookKeys = Object.keys(plugin.hooks);
+    expectedHooks.forEach(hook => {
+      assert.ok(hookKeys.includes(hook), `Missing hook: ${hook}`);
+    });
   });
 
   it('should return metadata from the metadata hook', () => {
@@ -36,33 +39,27 @@ describe('@gasket/plugin-command', () => {
 
     const result = plugin.hooks.metadata(gasket, meta);
 
-    expect(result).toEqual(
-      expect.objectContaining({
-        existing: 'value',
-        commands: expect.arrayContaining([
-          {
-            name: 'build',
-            description: 'Gasket build command',
-            link: 'README.md#build'
-          }
-        ]),
-        lifecycles: expect.arrayContaining([
-          {
-            name: 'commands',
-            method: 'exec',
-            description: 'Add custom commands to the CLI',
-            link: 'README.md#commands',
-            parent: 'prepare'
-          },
-          {
-            name: 'build',
-            method: 'exec',
-            description: 'Gasket build lifecycle',
-            link: 'README.md#build',
-            parent: 'commands'
-          }
-        ])
-      })
-    );
+    assert.equal(result.existing, 'value');
+    assert.ok(Array.isArray(result.commands));
+    assert.ok(result.commands.some(cmd =>
+      cmd.name === 'build' &&
+      cmd.description === 'Gasket build command' &&
+      cmd.link === 'README.md#build'
+    ));
+    assert.ok(Array.isArray(result.lifecycles));
+    assert.ok(result.lifecycles.some(lc =>
+      lc.name === 'commands' &&
+      lc.method === 'exec' &&
+      lc.description === 'Add custom commands to the CLI' &&
+      lc.link === 'README.md#commands' &&
+      lc.parent === 'prepare'
+    ));
+    assert.ok(result.lifecycles.some(lc =>
+      lc.name === 'build' &&
+      lc.method === 'exec' &&
+      lc.description === 'Gasket build lifecycle' &&
+      lc.link === 'README.md#build' &&
+      lc.parent === 'commands'
+    ));
   });
 });
