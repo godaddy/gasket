@@ -50,7 +50,7 @@ describe('gitInit', () => {
     expect(mockRunShellCommand).toHaveBeenNthCalledWith(
       4,
       'git',
-      ['commit', '-m', ':tada: Created new repository with gasket create'],
+      ['commit', '-m', '🎉 Created new repository with gasket create'],
       { cwd: '/path/to/test-app' }
     );
   });
@@ -127,7 +127,7 @@ describe('gitInit', () => {
     );
     expect(mockRunShellCommand).toHaveBeenCalledWith(
       'git',
-      ['commit', '-m', ':tada: Created new repository with gasket create'],
+      ['commit', '-m', '🎉 Created new repository with gasket create'],
       { cwd: '/different/path/to/my-app' }
     );
   });
