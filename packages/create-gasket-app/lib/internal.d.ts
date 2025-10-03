@@ -131,6 +131,7 @@ export function loadTemplate(params: { context: PartialCreateContext }): Promise
 export function copyTemplate(params: { context: PartialCreateContext }): Promise<void>;
 export function customizeTemplate(params: { context: PartialCreateContext }): Promise<void>;
 export function installTemplateDeps(params: { context: PartialCreateContext }): Promise<void>;
+export function gitInit(params: { context: PartialCreateContext }): Promise<void>;
 
 
 /** Presets */

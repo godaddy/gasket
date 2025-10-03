@@ -25,6 +25,7 @@ const createHooksStub = vi.fn();
 const generateFilesStub = vi.fn();
 const postCreateHooksStub = vi.fn();
 const printReportStub = vi.fn();
+const gitInitStub = vi.fn();
 
 writePkgStub.update = vi.fn();
 installModulesStub.update = vi.fn();
@@ -90,6 +91,9 @@ vi.mock('../../../lib/scaffold/actions/post-create-hooks.js', () => ({
 }));
 vi.mock('../../../lib/scaffold/actions/print-report.js', () => ({
   default: printReportStub
+}));
+vi.mock('../../../lib/scaffold/actions/git-init.js', () => ({
+  default: gitInitStub
 }));
 vi.mock('@gasket/core', () => ({
   makeGasket: vi.fn()
@@ -318,6 +322,7 @@ describe('create', function () {
       expect(copyTemplateStub).toHaveBeenCalled();
       expect(customizeTemplateStub).toHaveBeenCalled();
       expect(installTemplateDepsStub).toHaveBeenCalled();
+      expect(gitInitStub).toHaveBeenCalled();
       expect(printReportStub).toHaveBeenCalled();
     });
 
@@ -335,6 +340,7 @@ describe('create', function () {
       expect(copyTemplateStub).toHaveBeenCalled();
       expect(customizeTemplateStub).toHaveBeenCalled();
       expect(installTemplateDepsStub).toHaveBeenCalled();
+      expect(gitInitStub).toHaveBeenCalled();
       expect(printReportStub).toHaveBeenCalled();
     });
 
@@ -377,6 +383,7 @@ describe('create', function () {
       expect(copyTemplateStub).toHaveBeenCalled();
       expect(customizeTemplateStub).toHaveBeenCalled();
       expect(installTemplateDepsStub).toHaveBeenCalled();
+      expect(gitInitStub).toHaveBeenCalled();
       expect(loadPresetStub).not.toHaveBeenCalled();
       expect(globalPromptsStub).not.toHaveBeenCalled();
     });
