@@ -59,6 +59,9 @@ importers:
       '@vitest/eslint-plugin':
         specifier: ^1.1.44
         version: 1.1.44(@typescript-eslint/utils@8.38.0(eslint@9.31.0(jiti@1.21.7))(typescript@5.8.2))(eslint@9.31.0(jiti@1.21.7))(typescript@5.8.2)(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
+      chalk:
+        specifier: ^4.1.2
+        version: 4.1.2
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
