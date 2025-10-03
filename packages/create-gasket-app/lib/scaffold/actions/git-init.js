@@ -12,4 +12,4 @@ async function gitInit({ context }) {
   await runShellCommand('git', ['commit', '-m', '🎉 Created new repository with gasket create'], { cwd: context.dest });
 }
 
-export default withSpinner('Git init', gitInit);
+export default withSpinner('Initialize git repo', gitInit);
