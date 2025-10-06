@@ -196,6 +196,18 @@ export default {
 }
 ```
 
+## Gasket Data vs Gasket Config
+
+**Gasket Data**
+
+Gasket Data comes in two forms:
+- **Private data** - Server-side only data from the `gasketData` lifecycle, never sent to the client
+- **Public data** - Client-safe data from the `publicGasketData` lifecycle, embedded in HTML and accessible via `@gasket/data`
+
+**Gasket Config**
+
+Configuration defined in a `gasket.js` file. It contains application settings, plugin configurations, and environment-specific options. It is not meant to be used as a location to save runtime data.
+
 ## License
 
 [MIT](./LICENSE.md)
