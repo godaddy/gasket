@@ -23,6 +23,7 @@ import installModules from '../scaffold/actions/install-modules.js';
 import linkModules from '../scaffold/actions/link-modules.js';
 import postCreateHooks from '../scaffold/actions/post-create-hooks.js';
 import printReport from '../scaffold/actions/print-report.js';
+import gitInit from '../scaffold/actions/git-init.js';
 
 /**
  * Parses comma separated option input to array
@@ -132,6 +133,7 @@ async function handleTemplate(context) {
   await copyTemplate({ context });
   await customizeTemplate({ context });
   await installTemplateDep({ context });
+  await gitInit({ context });
   printReport({ context });
   return;
 }
