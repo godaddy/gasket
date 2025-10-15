@@ -1,5 +1,18 @@
 # `create-gasket-app`
 
+## 7.4.14
+
+### Patch Changes
+
+- 83957e2: Add git init to template create process
+  - @gasket/plugin-command@7.5.3
+  - @gasket/plugin-docs@7.4.8
+  - @gasket/plugin-docusaurus@7.4.6
+  - @gasket/plugin-dynamic-plugins@7.4.2
+  - @gasket/plugin-git@7.4.7
+  - @gasket/plugin-logger@7.3.8
+  - @gasket/plugin-metadata@7.5.4
+
 ## 7.4.13
 
 ### Patch Changes
