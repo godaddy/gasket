@@ -1,5 +1,11 @@
 # `@gasket/plugin-swagger`
 
+## 7.3.11
+
+### Patch Changes
+
+- 411f815: Add build script guidance to swagger docs
+
 ## 7.3.10
 
 ### Patch Changes
