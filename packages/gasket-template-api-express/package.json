@@ -1,6 +1,6 @@
 {
   "name": "@gasket/template-api-express",
-  "version": "7.0.1",
+  "version": "7.0.2",
   "description": "Gasket API template for Express",
   "type": "module",
   "files": [
