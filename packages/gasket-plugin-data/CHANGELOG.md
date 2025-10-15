@@ -1,5 +1,11 @@
 # `@gasket/plugin-data`
 
+## 7.4.12
+
+### Patch Changes
+
+- f3a6bf4: Update docs with gasket data vs gasket config
+
 ## 7.4.11
 
 ### Patch Changes

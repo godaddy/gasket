@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 7.0.2
+
+### Patch Changes
+
+- c0b2b83: Ensure expected dotfiles are packed
+
 ## 7.0.1
 
 ### Patch Changes
