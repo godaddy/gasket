@@ -2,6 +2,8 @@
 
 Redux configuration for Gasket apps.
 
+⚠️ _DEPRECATED - This package will be removed in a future major version._
+
 ## Installation
 
 ```
