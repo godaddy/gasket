@@ -290,32 +290,32 @@ describe('customizeTemplate', () => {
   });
 
   it('processes all files in parallel', async () => {
-    let readFileCallCount = 0;
+    let activeReads = 0;
+    let maxConcurrentReads = 0;
+
     mockReadFile.mockImplementation((filePath) => {
-      readFileCallCount++;
-      if (filePath.endsWith('package.json')) {
-        return new Promise(resolve => {
-          setTimeout(() => resolve('{"name": "template-name"}'), 10);
-        });
-      }
-      if (filePath.endsWith('README.md')) {
-        return new Promise(resolve => {
-          setTimeout(() => resolve('# Template Name'), 5);
-        });
-      }
-      if (filePath.endsWith('pages/index.tsx') || filePath.endsWith('app/page.tsx')) {
-        return new Promise(resolve => {
-          setTimeout(() => resolve('title: "{{{appName}}}"'), 3);
-        });
-      }
-      return Promise.reject(new Error('ENOENT'));
+      activeReads++;
+      maxConcurrentReads = Math.max(maxConcurrentReads, activeReads);
+
+      return new Promise(resolve => {
+        setTimeout(() => {
+          activeReads--;
+          if (filePath.endsWith('package.json')) {
+            resolve('{"name": "template-name"}');
+          } else if (filePath.endsWith('README.md')) {
+            resolve('# Template Name');
+          } else if (filePath.endsWith('pages/index.tsx') || filePath.endsWith('app/page.tsx')) {
+            resolve('title: "{{{appName}}}"');
+          } else {
+            resolve('');
+          }
+        }, 10);
+      });
     });
 
-    const startTime = Date.now();
     await customizeTemplate({ context: mockContext });
-    const endTime = Date.now();
 
-    expect(readFileCallCount).toBe(4); // package.json, README.md, pages/index.tsx, app/page.tsx
-    expect(endTime - startTime).toBeLessThan(30); // Should be parallel, not sequential
+    expect(maxConcurrentReads).toBeGreaterThan(1); // Proves parallel execution
+    expect(maxConcurrentReads).toBe(4); // All 4 files processed concurrently
   });
 });
