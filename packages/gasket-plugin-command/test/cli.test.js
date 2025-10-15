@@ -1,3 +1,5 @@
+import { describe, it } from 'node:test';
+import assert from 'node:assert/strict';
 import { createRequire } from 'module';
 import { gasketBin } from '../lib/cli';
 import { processCommand } from '../lib/utils/process-command';
@@ -7,22 +9,22 @@ const { version } = require('../package.json');
 
 describe('cli', () => {
   it('should have a gasketBin property', () => {
-    expect(gasketBin).toEqual(expect.any(Object));
+    assert.equal(typeof gasketBin, 'object');
   });
 
   it('should have a name property', () => {
-    expect(gasketBin.name()).toEqual('gasket');
+    assert.equal(gasketBin.name(), 'gasket');
   });
 
   it('should have a description property', () => {
-    expect(gasketBin.description()).toEqual('CLI for custom Gasket commands');
+    assert.equal(gasketBin.description(), 'CLI for custom Gasket commands');
   });
 
   it('should have a version property', () => {
-    expect(gasketBin.version()).toEqual(version);
+    assert.equal(gasketBin.version(), version);
   });
 
   it('should have a processCommand property', () => {
-    expect(processCommand).toEqual(expect.any(Function));
+    assert.equal(typeof processCommand, 'function');
   });
 });

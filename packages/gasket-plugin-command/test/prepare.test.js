@@ -1,22 +1,23 @@
+import { describe, it, beforeEach, mock } from 'node:test';
+import assert from 'node:assert/strict';
 
+const mockAddCommand = mock.fn();
+const mockParse = mock.fn();
+const mockProcessCommand = mock.fn(() => ({ command: 'test', hidden: false, isDefault: false }));
 
-const mockAddCommand = vi.fn();
-const mockParse = vi.fn();
-const mockProcessCommand = vi.fn();
-
-vi.mock('../lib/cli.js', () => {
-  return {
+mock.module('../lib/cli.js', {
+  namedExports: {
     gasketBin: {
       addCommand: mockAddCommand,
       parse: mockParse
     }
-  };
+  }
 });
 
-vi.mock('../lib/utils/process-command.js', () => {
-  return {
-    processCommand: mockProcessCommand.mockReturnValue({ command: 'test', hidden: false, isDefault: false })
-  };
+mock.module('../lib/utils/process-command.js', {
+  namedExports: {
+    processCommand: mockProcessCommand
+  }
 });
 
 const prepare = ((await import('../lib/prepare.js')).default);
@@ -25,9 +26,12 @@ describe('prepare', () => {
   let mockGasket, mockConfig;
 
   beforeEach(() => {
-    vi.clearAllMocks();
+    mockAddCommand.mock.resetCalls();
+    mockParse.mock.resetCalls();
+    mockProcessCommand.mock.resetCalls();
+
     mockGasket = {
-      execSync: vi.fn().mockReturnValue([{ id: 'test', description: 'test', action: vi.fn() }]),
+      execSync: mock.fn(() => [{ id: 'test', description: 'test', action: mock.fn() }]),
       config: {
         env: 'development'
       }
@@ -38,58 +42,61 @@ describe('prepare', () => {
   });
 
   it('should be function', () => {
-    expect(prepare).toEqual(expect.any(Function));
+    assert.equal(typeof prepare, 'function');
   });
 
   it('should not exec commands if no gasket command detected', async () => {
     delete mockConfig.command;
     await prepare(mockGasket, mockConfig);
-    expect(mockGasket.execSync).not.toHaveBeenCalled();
+    assert.equal(mockGasket.execSync.mock.calls.length, 0);
   });
 
   it('should execute command lifecycle', async () => {
     process.argv = ['node', '/path/to/gasket.js'];
     await prepare(mockGasket, mockConfig);
-    expect(mockGasket.execSync).toHaveBeenCalledWith('commands');
+    assert.equal(mockGasket.execSync.mock.calls.length, 1);
+    assert.deepEqual(mockGasket.execSync.mock.calls[0].arguments, ['commands']);
   });
 
   it('should add commands to gasketBin', async () => {
     process.argv = ['node', '/path/to/gasket.js', 'bogus'];
     await prepare(mockGasket, mockConfig);
-    expect(mockAddCommand).toHaveBeenCalledWith('test', expect.any(Object));
+    assert.equal(mockAddCommand.mock.calls.length, 1);
+    assert.equal(mockAddCommand.mock.calls[0].arguments[0], 'test');
+    assert.equal(typeof mockAddCommand.mock.calls[0].arguments[1], 'object');
   });
 
   it('should handle plugins returning arrays of commands', async () => {
     // Mock some plugins returning single commands and others returning arrays
-    mockGasket.execSync.mockReturnValue([
-      { id: 'single', description: 'single command', action: vi.fn() },
+    mockGasket.execSync = mock.fn(() => [
+      { id: 'single', description: 'single command', action: mock.fn() },
       [
-        { id: 'multi1', description: 'multi command 1', action: vi.fn() },
-        { id: 'multi2', description: 'multi command 2', action: vi.fn() }
+        { id: 'multi1', description: 'multi command 1', action: mock.fn() },
+        { id: 'multi2', description: 'multi command 2', action: mock.fn() }
       ],
-      { id: 'another-single', description: 'another single command', action: vi.fn() }
+      { id: 'another-single', description: 'another single command', action: mock.fn() }
     ]);
 
     process.argv = ['node', '/path/to/gasket.js', 'test'];
     await prepare(mockGasket, mockConfig);
 
     // Should flatten and process all commands
-    expect(mockProcessCommand).toHaveBeenCalledTimes(4);
-    expect(mockAddCommand).toHaveBeenCalledTimes(4);
+    assert.equal(mockProcessCommand.mock.calls.length, 4);
+    assert.equal(mockAddCommand.mock.calls.length, 4);
   });
 
   it('should handle empty arrays from plugins', async () => {
-    mockGasket.execSync.mockReturnValue([
-      { id: 'single', description: 'single command', action: vi.fn() },
+    mockGasket.execSync = mock.fn(() => [
+      { id: 'single', description: 'single command', action: mock.fn() },
       [], // Empty array from a plugin
-      { id: 'another', description: 'another command', action: vi.fn() }
+      { id: 'another', description: 'another command', action: mock.fn() }
     ]);
 
     process.argv = ['node', '/path/to/gasket.js', 'test'];
     await prepare(mockGasket, mockConfig);
 
     // Should process only the non-empty commands
-    expect(mockProcessCommand).toHaveBeenCalledTimes(2);
-    expect(mockAddCommand).toHaveBeenCalledTimes(2);
+    assert.equal(mockProcessCommand.mock.calls.length, 2);
+    assert.equal(mockAddCommand.mock.calls.length, 2);
   });
 });
