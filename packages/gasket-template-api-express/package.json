@@ -4,7 +4,9 @@
   "description": "Gasket API template for Express",
   "type": "module",
   "files": [
-    "template"
+    "template",
+    "template/.gitignore",
+    "template/.npmrc"
   ],
   "scripts": {
     "lint": "eslint .",
