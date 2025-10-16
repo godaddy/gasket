@@ -5,6 +5,12 @@
   "type": "module",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "files": [
+    "cjs",
+    "generator",
+    "lib",
+    "EXAMPLES.md"
+  ],
   "exports": {
     ".": {
       "types": "./lib/index.d.ts",
@@ -13,12 +19,6 @@
     },
     "./package.json": "./package.json"
   },
-  "files": [
-    "cjs",
-    "generator",
-    "lib",
-    "EXAMPLES.md"
-  ],
   "scripts": {
     "build": "gasket-cjs ./lib",
     "build:watch": "pnpm run build --watch",
@@ -58,6 +58,6 @@
     "@gasket/plugin-metadata": "workspace:^",
     "@gasket/plugin-redux": "workspace:^",
     "create-gasket-app": "workspace:^",
-    "vitest": "^2.1.8"
+    "vitest": "^3.2.0"
   }
 }
