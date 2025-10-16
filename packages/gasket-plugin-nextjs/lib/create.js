@@ -1,6 +1,14 @@
 /// <reference types="@gasket/plugin-intl" />
 /// <reference types="create-gasket-app" />
 
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import { createRequire } from 'module';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const require = createRequire(import.meta.url);
+
 /**
  * Type definitions for create-gasket-app APIs.
  * These typedefs allow us to use short, readable type names throughout the file
@@ -269,7 +277,7 @@ function addConfig({ gasketConfig, nextDevProxy, nextServerType }) {
   }
 }
 
-module.exports = {
+export default {
   timing: {
     before: [
       '@gasket/plugin-intl',

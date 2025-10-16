@@ -1,6 +1,15 @@
-const path = require('path');
-const { name, version, devDependencies } = require('../package');
-const create = require('../lib/create');
+import path from 'path';
+import { readFileSync } from 'fs';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import create from '../lib/create.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const { name, version, devDependencies } = JSON.parse(
+  readFileSync(new URL('../package.json', import.meta.url), 'utf-8')
+);
 
 describe('create hook', () => {
   let mockContext;

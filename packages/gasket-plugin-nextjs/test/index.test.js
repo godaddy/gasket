@@ -1,8 +1,15 @@
 /* eslint-disable max-statements */
 
-// Monkey-patch Node's require to stub `next` before any imports
-const Module = require('module');
-const originalRequire = Module.prototype.require;
+import { createRequire } from 'module';
+import { readFileSync } from 'fs';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import fastifyFn from 'fastify';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const require = createRequire(import.meta.url);
+
 const nextHandler = vi.fn();
 const nextServer = {
   prepare: vi.fn().mockResolvedValue(),
@@ -10,10 +17,11 @@ const nextServer = {
   buildId: '1234',
   name: 'testapp'
 };
-Module.prototype.require = function (id) {
-  if (id === 'next') return vi.fn(() => nextServer);
-  return originalRequire.apply(this, arguments);
-};
+
+// Mock 'next' before imports
+vi.mock('next', () => ({
+  default: vi.fn(() => nextServer)
+}));
 
 const expressApp = Object.assign(vi.fn(), {
   set: vi.fn(),
@@ -21,13 +29,19 @@ const expressApp = Object.assign(vi.fn(), {
   all: vi.fn()
 });
 
-const fastify = require('fastify')({
+const fastify = fastifyFn({
   logger: true
 });
-const { name, version, description } = require('../package');
+const { name, version, description } = JSON.parse(
+  readFileSync(new URL('../package.json', import.meta.url), 'utf-8')
+);
 
 describe('Plugin', function () {
-  const plugin = require('../lib/');
+  let plugin;
+
+  beforeAll(async () => {
+    plugin = (await import('../lib/index.js')).default;
+  });
 
   it('is an object', () => {
     expect(plugin).toBeInstanceOf(Object);
@@ -65,7 +79,12 @@ describe('Plugin', function () {
 });
 
 describe('configure hook', () => {
-  const configureHook = require('../lib/').hooks.configure;
+  let configureHook;
+
+  beforeAll(async () => {
+    const plugin = (await import('../lib/index.js')).default;
+    configureHook = plugin.hooks.configure;
+  });
 
   it('adds the sw webpackRegister callback', () => {
     const gasket = mockGasketApi();
@@ -95,8 +114,11 @@ describe('configure hook', () => {
 describe('express hook', () => {
   let plugin, hook;
 
+  beforeAll(async () => {
+    plugin = (await import('../lib/index.js')).default;
+  });
+
   beforeEach(() => {
-    plugin = require('../lib');
     hook = plugin.hooks.express.handler;
   });
 
@@ -199,8 +221,11 @@ describe('fastify hook', () => {
     inject: vi.fn()
   };
 
+  beforeAll(async () => {
+    plugin = (await import('../lib/index.js')).default;
+  });
+
   beforeEach(() => {
-    plugin = require('../lib/');
     hook = plugin.hooks.fastify.handler;
 
     fastifyApp.decorate.mockClear();
@@ -306,9 +331,12 @@ describe('fastify hook', () => {
 describe('workbox hook', () => {
   let gasketAPI, plugin;
 
+  beforeAll(async () => {
+    plugin = (await import('../lib/index.js')).default;
+  });
+
   beforeEach(() => {
     gasketAPI = mockGasketApi();
-    plugin = require('../lib/');
   });
 
   it('returns workbox config partial', async () => {

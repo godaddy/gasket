@@ -1,5 +1,9 @@
 /// <reference types="@gasket/plugin-https" />
 
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
+
 /**
  * Get a default fallback port depending on the environment.
  * @param {string} env - Environment string from gasket config
@@ -131,7 +135,4 @@ function setupNextHandling(nextServer, serverApp, gasket) {
   }
 }
 
-module.exports = {
-  setupNextApp,
-  setupNextHandling
-};
+export { setupNextApp, setupNextHandling };

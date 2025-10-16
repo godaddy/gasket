@@ -68,6 +68,4 @@ async function createConfig(gasket, nextConfig = {}) {
   return await gasket.execWaterfall('nextConfig', config);
 }
 
-module.exports = {
-  createConfig
-};
+export { createConfig };
