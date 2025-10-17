@@ -2,19 +2,32 @@
   "name": "@gasket/plugin-https",
   "version": "7.3.12",
   "description": "Create http/s servers with graceful termination",
+  "type": "module",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./lib/index.js",
+      "require": "./cjs/index.cjs",
+      "types": "./lib/index.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
   "files": [
     "lib",
+    "cjs",
     "EXAMPLES.md"
   ],
   "scripts": {
+    "build": "gasket-cjs ./lib",
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
     "posttest": "pnpm run lint && pnpm run typecheck",
-    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
+    "prebuild": "rm -rf cjs",
+    "prepublishOnly": "pnpm run build",
+    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' vitest run",
     "test:coverage": "pnpm run test --coverage",
-    "test:watch": "pnpm run test --watch",
+    "test:watch": "vitest watch",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
@@ -41,11 +54,13 @@
     "one-time": "^1.0.0"
   },
   "devDependencies": {
+    "@gasket/cjs": "workspace:^",
     "@gasket/core": "workspace:^",
     "@gasket/plugin-logger": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",
     "@types/http-proxy": "^1.17.16",
+    "@vitest/coverage-v8": "^2.1.8",
     "create-gasket-app": "workspace:^",
-    "jest": "^29.7.0"
+    "vitest": "^2.1.8"
   }
 }
