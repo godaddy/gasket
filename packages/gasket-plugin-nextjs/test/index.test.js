@@ -1,15 +1,5 @@
 /* eslint-disable max-statements */
 
-import { createRequire } from 'module';
-import { readFileSync } from 'fs';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-import fastifyFn from 'fastify';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const require = createRequire(import.meta.url);
-
 const nextHandler = vi.fn();
 const nextServer = {
   prepare: vi.fn().mockResolvedValue(),
@@ -18,10 +8,15 @@ const nextServer = {
   name: 'testapp'
 };
 
-// Mock 'next' before imports
+const mockNext = vi.fn(() => nextServer);
+
+// Mock 'next' module - must be at the very top before any imports
 vi.mock('next', () => ({
-  default: vi.fn(() => nextServer)
+  default: mockNext
 }));
+
+import { readFileSync } from 'fs';
+import fastifyFn from 'fastify';
 
 const expressApp = Object.assign(vi.fn(), {
   set: vi.fn(),
@@ -147,8 +142,8 @@ describe('express hook', () => {
 
     const mockReq = { headers: {} };
     const mockRes = { locals: { gasketData: { intl: { locale: 'fr-FR' } } } };
-    const mockNext = vi.fn();
-    fn(mockReq, mockRes, mockNext);
+    const next = vi.fn();
+    fn(mockReq, mockRes, next);
     expect(mockReq.headers).toHaveProperty('cookie', ';NEXT_LOCALE=fr-FR');
   });
 
@@ -159,8 +154,8 @@ describe('express hook', () => {
     const fn = expressApp.use.mock.calls[0][0];
     const mockReq = { headers: { cookie: 'bogus=data' } };
     const mockRes = { locals: { gasketData: { intl: { locale: 'fr-FR' } } } };
-    const mockNext = vi.fn();
-    await fn(mockReq, mockRes, mockNext);
+    const next = vi.fn();
+    await fn(mockReq, mockRes, next);
 
     expect(mockReq.headers).toHaveProperty(
       'cookie',
@@ -176,8 +171,8 @@ describe('express hook', () => {
 
     const mockReq = { headers: {} };
     const mockRes = { locals: { gasketData: {} } };
-    const mockNext = vi.fn();
-    fn(mockReq, mockRes, mockNext);
+    const next = vi.fn();
+    fn(mockReq, mockRes, next);
     expect(mockReq.headers).not.toHaveProperty('cookie');
   });
 
@@ -200,9 +195,9 @@ describe('express hook', () => {
 
     const mockReq = { headers: {} };
     const mockRes = { locals: { gasketData: {} } };
-    const mockNext = vi.fn();
+    const next = vi.fn();
 
-    await routeHandler(mockReq, mockRes, mockNext);
+    await routeHandler(mockReq, mockRes, next);
     expect(gasket.exec).toHaveBeenCalledWith('nextPreHandling', {
       req: mockReq,
       res: mockRes,
@@ -259,8 +254,8 @@ describe('fastify hook', () => {
 
     const mockReq = { headers: {} };
     const mockRes = { locals: { gasketData: { intl: { locale: 'fr-FR' } } } };
-    const mockNext = vi.fn();
-    fn(mockReq, mockRes, mockNext);
+    const next = vi.fn();
+    fn(mockReq, mockRes, next);
     expect(mockReq.headers).toHaveProperty('cookie', ';NEXT_LOCALE=fr-FR');
   });
 
@@ -272,8 +267,8 @@ describe('fastify hook', () => {
 
     const mockReq = { headers: { cookie: 'bogus=data' } };
     const mockRes = { locals: { gasketData: { intl: { locale: 'fr-FR' } } } };
-    const mockNext = vi.fn();
-    fn(mockReq, mockRes, mockNext);
+    const next = vi.fn();
+    fn(mockReq, mockRes, next);
     expect(mockReq.headers).toHaveProperty(
       'cookie',
       'bogus=data;NEXT_LOCALE=fr-FR'
@@ -288,8 +283,8 @@ describe('fastify hook', () => {
 
     const mockReq = { headers: {} };
     const mockRes = { locals: { gasketData: {} } };
-    const mockNext = vi.fn();
-    fn(mockReq, mockRes, mockNext);
+    const next = vi.fn();
+    fn(mockReq, mockRes, next);
     expect(mockReq.headers).not.toHaveProperty('cookie');
   });
 
