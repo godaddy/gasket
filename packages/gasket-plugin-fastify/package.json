@@ -5,6 +5,12 @@
   "type": "module",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
+  "files": [
+    "cjs",
+    "generator",
+    "lib",
+    "EXAMPLES.md"
+  ],
   "exports": {
     ".": {
       "types": "./lib/index.d.ts",
@@ -13,12 +19,6 @@
     },
     "./package.json": "./package.json"
   },
-  "files": [
-    "cjs",
-    "generator",
-    "lib",
-    "EXAMPLES.md"
-  ],
   "scripts": {
     "build": "gasket-cjs ./lib",
     "lint": "eslint .",
@@ -49,8 +49,8 @@
     "fastify": "^4.29.1"
   },
   "devDependencies": {
-    "@gasket/core": "workspace:^",
     "@gasket/cjs": "workspace:^",
+    "@gasket/core": "workspace:^",
     "@gasket/plugin-https": "workspace:^",
     "@gasket/plugin-logger": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",
