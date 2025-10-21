@@ -5,6 +5,13 @@
   "type": "module",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "files": [
+    "generator",
+    "docs",
+    "lib",
+    "cjs",
+    "EXAMPLES.md"
+  ],
   "exports": {
     ".": {
       "types": "./lib/index.d.ts",
@@ -14,13 +21,6 @@
     },
     "./package.json": "./package.json"
   },
-  "files": [
-    "generator",
-    "docs",
-    "lib",
-    "cjs",
-    "EXAMPLES.md"
-  ],
   "scripts": {
     "build": "gasket-cjs ./lib",
     "build:watch": "pnpm run build --watch",
