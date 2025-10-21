@@ -1,6 +1,13 @@
 /// <reference types="@gasket/core" />
 
+import { createRequire } from 'module';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
+const require = createRequire(import.meta.url);
 const { name, version, devDependencies } = require('../package.json');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const createTestFiles = ({ files, generatorDir, testPlugins, globIgnore }) => {
   if (!testPlugins || testPlugins.length === 0) return;
@@ -26,7 +33,7 @@ const createTestFiles = ({ files, generatorDir, testPlugins, globIgnore }) => {
  * Add files & extend package.json for new apps.
  * @type {import('@gasket/core').HookHandler<'create'>}
  */
-module.exports = async function create(gasket, context) {
+export default async function create(gasket, context) {
   const {
     files,
     typescript,
@@ -36,7 +43,7 @@ module.exports = async function create(gasket, context) {
     pkg,
     gasketConfig
   } = context;
-  const generatorDir = `${__dirname}/../generator`;
+  const generatorDir = join(__dirname, '..', 'generator');
 
   gasketConfig.addPlugin('pluginExpress', name);
 
@@ -52,4 +59,4 @@ module.exports = async function create(gasket, context) {
 
     createTestFiles({ files, generatorDir, testPlugins, globIgnore });
   }
-};
+}
