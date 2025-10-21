@@ -1,8 +1,8 @@
 /// <reference types="@gasket/core" />
 
-import { createRequire } from 'module';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
+import { createRequire } from 'node:module';
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
 
 const require = createRequire(import.meta.url);
 const { name, version, devDependencies } = require('../package.json');

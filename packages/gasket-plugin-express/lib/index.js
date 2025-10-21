@@ -1,7 +1,7 @@
 /// <reference types="create-gasket-app" />
 /// <reference types="@gasket/plugin-metadata" />
 
-import { createRequire } from 'module';
+import { createRequire } from 'node:module';
 import create from './create.js';
 import createServers from './create-servers.js';
 import actions from './actions.js';
