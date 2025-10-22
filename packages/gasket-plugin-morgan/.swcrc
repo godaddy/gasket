@@ -1,0 +1,10 @@
+{
+  "jsc": {
+    "target": "es2016"
+  },
+  "module": {
+    "type": "commonjs"
+  },
+  "exclude": [".*\\.ts$"]
+}
+

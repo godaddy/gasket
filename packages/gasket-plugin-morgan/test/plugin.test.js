@@ -1,5 +1,9 @@
-const Plugin = require('../lib/index');
-const { name, version, description } = require('../package');
+import { expect, describe, it, vi } from 'vitest';
+import { createRequire } from 'module';
+import Plugin from '../lib/index.js';
+
+const require = createRequire(import.meta.url);
+const { name, version, description } = require('../package.json');
 
 describe('@gasket/plugin-morgan', () => {
   it('is an object', () => {
@@ -30,7 +34,7 @@ describe('@gasket/plugin-morgan', () => {
     });
 
     it('returns a morgan middleware', () => {
-      const loggerMock = { info: jest.fn() };
+      const loggerMock = { info: vi.fn() };
 
       const gasketMock = {
         config: {
@@ -46,7 +50,7 @@ describe('@gasket/plugin-morgan', () => {
     });
 
     it('logs requests using gasket logger', () => {
-      const loggerMock = { info: jest.fn() };
+      const loggerMock = { info: vi.fn() };
       const reqMock = { method: 'GET', url: '/foobar' };
       const resMock = {};
 
