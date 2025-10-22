@@ -1,58 +1,67 @@
-const builderConstructorStub = jest.fn();
-const addAppStub = jest.fn();
-const addPluginStub = jest.fn();
-const addPluginsStub = jest.fn();
-const addPresetStub = jest.fn();
-const addPresetsStub = jest.fn();
-const addModuleStub = jest.fn();
-const addModulesStub = jest.fn();
-const getConfigSetStub = jest.fn();
+import { vi } from 'vitest';
+
+const builderConstructorStub = vi.fn();
+const addAppStub = vi.fn();
+const addPluginStub = vi.fn();
+const addPluginsStub = vi.fn();
+const addPresetStub = vi.fn();
+const addPresetsStub = vi.fn();
+const addModuleStub = vi.fn();
+const addModulesStub = vi.fn();
+const getConfigSetStub = vi.fn();
 const mockLogger = {
-  info: jest.fn(),
-  error: jest.fn()
+  info: vi.fn(),
+  error: vi.fn()
 };
 
-class MockBuilder {
-  constructor() {
-    builderConstructorStub(...arguments);
-  }
 
-  addApp() {
-    addAppStub(...arguments);
-  }
-  addPlugin() {
-    addPluginStub(...arguments);
-  }
-  addPlugins() {
-    addPluginsStub(...arguments);
-  }
-  addPreset() {
-    addPresetStub(...arguments);
-  }
-  addPresets() {
-    addPresetsStub(...arguments);
-  }
-  addModule() {
-    addModuleStub(...arguments);
-  }
-  addModules() {
-    addModulesStub(...arguments);
-  }
-  getConfigSet() {
-    return getConfigSetStub(...arguments);
-  }
-}
+import buildConfigSet from '../../lib/utils/build-config-set.js';
+const { mockDefaults } = vi.hoisted(() => {
+  const mockDefaults = { link: 'FAKE.md#bogus' };
+  return { mockDefaults };
+});
 
-const mockDefaults = { link: 'FAKE.md#bogus' };
-MockBuilder.docsSetupDefault = mockDefaults;
+vi.mock('../../lib/utils/config-set-builder', () => {
+  const MockBuilder = class {
+    constructor() {
+      builderConstructorStub(...arguments);
+    }
 
-const buildConfigSet = require('../../lib/utils/build-config-set');
-jest.mock('../../lib/utils/config-set-builder', () => MockBuilder);
+    addApp() {
+      addAppStub(...arguments);
+    }
+    addPlugin() {
+      addPluginStub(...arguments);
+    }
+    addPlugins() {
+      addPluginsStub(...arguments);
+    }
+    addPreset() {
+      addPresetStub(...arguments);
+    }
+    addPresets() {
+      addPresetsStub(...arguments);
+    }
+    addModule() {
+      addModuleStub(...arguments);
+    }
+    addModules() {
+      addModulesStub(...arguments);
+    }
+    getConfigSet() {
+      return getConfigSetStub(...arguments);
+    }
+  };
+
+  MockBuilder.docsSetupDefault = mockDefaults;
+
+  return { default: MockBuilder };
+});
 
 const { findPluginData } = buildConfigSet;
 
 const makeGasket = () => ({
-  execApply: jest.fn(),
+  execApply: vi.fn(),
   logger: mockLogger,
   config: {
     root: '/path/to/app',
@@ -61,7 +70,7 @@ const makeGasket = () => ({
     }
   },
   actions: {
-    getMetadata: jest.fn(() => ({
+    getMetadata: vi.fn(() => ({
       app: {
         name: 'my-app'
       },
@@ -116,7 +125,7 @@ describe('utils - buildConfigSet', () => {
   let docsSetupCallback, mockHandler, mockDocsSetup;
 
   beforeEach(async () => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
 
     mockGasket = makeGasket();
     metadata = await mockGasket.actions.getMetadata(mockGasket);
@@ -129,7 +138,7 @@ describe('utils - buildConfigSet', () => {
       link: 'README.md#with-hash'
     };
 
-    mockHandler = jest.fn().mockResolvedValue(mockDocsSetup);
+    mockHandler = vi.fn().mockResolvedValue(mockDocsSetup);
   });
 
   it('instantiates a builder', async () => {

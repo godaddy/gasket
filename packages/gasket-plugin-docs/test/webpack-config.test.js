@@ -1,5 +1,9 @@
-const webpackConfigHook = require('../lib/webpack-config');
-const { name } = require('../package');
+import webpackConfigHook from '../lib/webpack-config.js';
+import { createRequire } from 'node:module';
+
+const require = createRequire(import.meta.url);
+const packageJson = require('../package.json');
+const { name } = packageJson;
 
 describe('webpackConfig', function () {
   let mockGasket, mockWebpackConfig;
