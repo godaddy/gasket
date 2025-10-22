@@ -1,6 +1,6 @@
-const cookieParser = require('cookie-parser');
-const compression = require('compression');
-const diagnostics = require('diagnostics');
+import cookieParser from 'cookie-parser';
+import compression from 'compression';
+import diagnostics from 'diagnostics';
 
 const debug = diagnostics('gasket:middleware');
 
@@ -155,7 +155,7 @@ async function executeMiddlewareLifecycle(gasket, app, middlewarePattern) {
   }
 }
 
-module.exports = {
+export {
   applyCookieParser,
   applyCompression,
   executeMiddlewareLifecycle,
