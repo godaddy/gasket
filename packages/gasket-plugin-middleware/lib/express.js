@@ -15,7 +15,7 @@ import { applyCompression, applyCookieParser, executeMiddlewareLifecycle } from 
  * object
  * @see https://github.com/expressjs/compression/pull/128
  * @see https://github.com/vercel/next.js/issues/11669
- * @type {import('.').http2Patch}
+ * @type {import('./index.d.ts').http2Patch}
  */
 function http2Patch(req, res, next) {
   if (!res._implicitHeader) {
@@ -61,7 +61,7 @@ export default async function express(gasket, app) {
 
   /**
    * Attaches a metadata function to the logger that allows for chaining
-   * @type {import('./internal').attachLogEnhancer}
+   * @type {import('./internal.d.ts').attachLogEnhancer}
    */
   function attachLogEnhancer(req) {
     req.logger.metadata = (metadata) => {
