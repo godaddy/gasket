@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-middleware",
-  "version": "7.4.7",
+  "version": "0.0.0-canary-20251023172400",
   "description": "Handles common server engine setups for routing and executing lifecycles.",
   "type": "module",
   "main": "lib",

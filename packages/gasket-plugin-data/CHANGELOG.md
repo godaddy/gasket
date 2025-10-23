@@ -1,5 +1,11 @@
 # `@gasket/plugin-data`
 
+## 0.0.0-canary-20251023172400
+
+### Minor Changes
+
+- 155082f: Port to ESM and vitest with CJS exports
+
 ## 7.4.12
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # `@gasket/plugin-https`
 
+## 0.0.0-canary-20251023172400
+
+### Minor Changes
+
+- 8f1ebbd: Port to ESM and Vitest with CommonJS backward compatibility
+
 ## 7.3.12
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # `@gasket/plugin-fastify`
 
+## 0.0.0-canary-20251023172400
+
+### Minor Changes
+
+- 0abf2d4: Migrate plugin to ESM with CommonJS compatibility
+
 ## 7.4.6
 
 ### Patch Changes

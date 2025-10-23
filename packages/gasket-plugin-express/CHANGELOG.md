@@ -1,5 +1,11 @@
 # `@gasket/plugin-express`
 
+## 0.0.0-canary-20251023172400
+
+### Patch Changes
+
+- a594cac: ESM port
+
 ## 7.4.4
 
 ### Patch Changes

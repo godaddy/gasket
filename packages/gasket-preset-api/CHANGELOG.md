@@ -1,5 +1,32 @@
 # `@gasket/preset-api`
 
+## 0.0.0-canary-20251023172400
+
+### Patch Changes
+
+- Updated dependencies [a594cac]
+- Updated dependencies [0abf2d4]
+- Updated dependencies [8f1ebbd]
+- Updated dependencies [e7fb8dc]
+- Updated dependencies [e7fb8dc]
+  - @gasket/plugin-express@0.0.0-canary-20251023172400
+  - @gasket/plugin-fastify@0.0.0-canary-20251023172400
+  - @gasket/plugin-https@0.0.0-canary-20251023172400
+  - @gasket/plugin-docusaurus@0.0.0-canary-20251023172400
+  - @gasket/plugin-docs@0.0.0-canary-20251023172400
+  - @gasket/plugin-jest@7.5.5
+  - @gasket/plugin-lint@7.4.4
+  - @gasket/plugin-mocha@7.5.4
+  - @gasket/plugin-swagger@7.3.11
+  - @gasket/plugin-logger@7.3.8
+  - @gasket/plugin-command@7.5.3
+  - @gasket/plugin-cypress@7.5.3
+  - @gasket/plugin-dynamic-plugins@7.4.2
+  - @gasket/plugin-git@7.4.7
+  - @gasket/plugin-typescript@7.4.6
+  - @gasket/plugin-vitest@7.1.2
+  - @gasket/plugin-winston@7.3.8
+
 ## 7.5.6
 
 ### Patch Changes
