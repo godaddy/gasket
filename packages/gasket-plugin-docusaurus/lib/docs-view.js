@@ -1,3 +1,5 @@
+/// <reference types="@gasket/plugin-metadata" />
+
 import { existsSync } from 'node:fs';
 import { writeFile } from 'node:fs/promises';
 import path from 'node:path';
