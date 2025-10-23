@@ -1,5 +1,8 @@
-const plugin = require('../lib/index');
-const { name, version, description } = require('../package');
+import { describe, it, expect } from 'vitest';
+import plugin from '../lib/index.js';
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
+const { name, version, description } = require('../package.json');
 
 describe('Plugin', () => {
   it('should be an object', () => {
