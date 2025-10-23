@@ -2,6 +2,7 @@
   "name": "@gasket/typescript-tests",
   "private": true,
   "version": "7.4.6",
+  "type": "module",
   "description": "Not a published package; hosts unit tests to verify TypeScript support",
   "files": [
     "lib"
@@ -77,13 +78,10 @@
     "@gasket/request": "workspace:^",
     "@gasket/utils": "workspace:^",
     "@types/express": "^4.17.23",
-    "@types/jest": "^29.5.14",
     "@types/node": "^20.17.19",
     "create-gasket-app": "workspace:^",
     "fastify": "^4.29.1",
-    "jest": "^29.7.0",
     "redux": "^5.0.1",
-    "ts-jest": "^29.2.5",
     "vitest": "^3.2.0",
     "winston-transport": "^4.9.0",
     "workbox-build": "^4.3.1"
