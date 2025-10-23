@@ -1,5 +1,6 @@
 /* eslint-disable max-nested-callbacks */
-const path = require('path');
+import { vi } from 'vitest';
+import path from 'path';
 
 const emptyDocsConfigSet = {
   app: {
@@ -91,15 +92,14 @@ const fullDocsConfigSet = {
   docsRoot: '/path/to/app/.docs'
 };
 
-const mockWriteFileStub = jest.fn();
-
-jest.mock('fs', () => ({
-  promises: {
-    writeFile: mockWriteFileStub
-  }
+vi.mock('fs/promises', () => ({
+  writeFile: vi.fn().mockResolvedValue()
 }));
 
-const generateIndex = require('../../lib/utils/generate-index');
+import generateIndex from '../../lib/utils/generate-index.js';
+import { writeFile } from 'fs/promises';
+
+const mockWriteFileStub = vi.mocked(writeFile);
 const { generateContent } = generateIndex;
 
 describe('Utils - generateIndex', () => {
