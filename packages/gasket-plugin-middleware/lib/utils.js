@@ -1,12 +1,12 @@
-const cookieParser = require('cookie-parser');
-const compression = require('compression');
-const diagnostics = require('diagnostics');
+import cookieParser from 'cookie-parser';
+import compression from 'compression';
+import diagnostics from 'diagnostics';
 
 const debug = diagnostics('gasket:middleware');
 
 /**
  * Ensures the app supports Express-style middleware (i.e., has .use and .set)
- * @type {import('./internal').canUseMiddleware}
+ * @type {import('./internal.d.ts').canUseMiddleware}
  */
 function canUseMiddleware(app) {
   return typeof app?.use === 'function' && typeof app?.set === 'function';
@@ -14,7 +14,7 @@ function canUseMiddleware(app) {
 
 /**
  * Applies the cookie parser based on the middleware pattern.
- * @type {import('./internal').applyCookieParser}
+ * @type {import('./internal.d.ts').applyCookieParser}
  */
 function applyCookieParser(app, middlewarePattern) {
   const middleware = cookieParser();
@@ -27,7 +27,7 @@ function applyCookieParser(app, middlewarePattern) {
 
 /**
  * Applies compression to the application if a compression config is present.
- * @type {import('./internal').applyCompression}
+ * @type {import('./internal.d.ts').applyCompression}
  */
 function applyCompression(app, compressionConfig) {
   if (compressionConfig) {
@@ -37,7 +37,7 @@ function applyCompression(app, compressionConfig) {
 
 /**
  * Checks if the middleware is valid and should be added.
- * @type {import('./internal').isValidMiddleware}
+ * @type {import('./internal.d.ts').isValidMiddleware}
  */
 function isValidMiddleware(middleware) {
   return Boolean(middleware && (!Array.isArray(middleware) || middleware.length > 0));
@@ -45,7 +45,7 @@ function isValidMiddleware(middleware) {
 
 /**
  * Determines whether a value is a middleware object with a `handler` property.
- * @type {import('./internal').isMiddlewareObject}
+ * @type {import('./internal.d.ts').isMiddlewareObject}
  */
 function isMiddlewareObject(value) {
   return (
@@ -58,7 +58,7 @@ function isMiddlewareObject(value) {
 
 /**
  * Normalizes a middleware entry into a consistent { handler, paths } shape.
- * @type {import('./internal').normalizeMiddlewareEntry}
+ * @type {import('./internal.d.ts').normalizeMiddlewareEntry}
  */
 function normalizeMiddlewareEntry(entry) {
   if (typeof entry === 'function') {
@@ -74,7 +74,7 @@ function normalizeMiddlewareEntry(entry) {
 
 /**
  * Applies a single middleware entry to the app using the appropriate path logic.
- * @type {import('./internal').applyMiddlewareToApp}
+ * @type {import('./internal.d.ts').applyMiddlewareToApp}
  */
 function applyMiddlewareToApp(app, handler, paths, middlewarePattern) {
   if (paths) {
@@ -88,7 +88,7 @@ function applyMiddlewareToApp(app, handler, paths, middlewarePattern) {
 
 /**
  * Applies configuration settings to the middleware based on the plugin.
- * @type {import('./internal').applyMiddlewareConfig}
+ * @type {import('./internal.d.ts').applyMiddlewareConfig}
  */
 function applyMiddlewareConfig(middleware, plugin, middlewareConfig, middlewarePattern) {
   const pluginName = plugin?.name || '';
@@ -105,7 +105,7 @@ function applyMiddlewareConfig(middleware, plugin, middlewareConfig, middlewareP
 /**
  * Applies a list of middleware layers to an Express app.
  * Handles various formats: function, object with `handler`, or arrays of both.
- * @type {import('./internal').applyMiddlewaresToApp}
+ * @type {import('./internal.d.ts').applyMiddlewaresToApp}
  */
 function applyMiddlewaresToApp(app, middlewares, middlewarePattern) {
   if (!canUseMiddleware(app)) {
@@ -125,7 +125,7 @@ function applyMiddlewaresToApp(app, middlewares, middlewarePattern) {
 
 /**
  * Executes the middleware lifecycle for the application
- * @type {import('./internal').executeMiddlewareLifecycle}
+ * @type {import('./internal.d.ts').executeMiddlewareLifecycle}
  */
 async function executeMiddlewareLifecycle(gasket, app, middlewarePattern) {
   const { config } = gasket;
@@ -155,7 +155,7 @@ async function executeMiddlewareLifecycle(gasket, app, middlewarePattern) {
   }
 }
 
-module.exports = {
+export {
   applyCookieParser,
   applyCompression,
   executeMiddlewareLifecycle,
