@@ -2,19 +2,31 @@
   "name": "@gasket/plugin-analyze",
   "version": "0.0.0-canary-20251023174025",
   "description": "Gasket Analyzer Plugin",
-  "main": "lib/index.js",
+  "type": "module",
   "types": "lib/index.d.ts",
   "files": [
     "lib",
+    "cjs",
     "EXAMPLES.md"
   ],
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js",
+      "require": "./cjs/index.cjs",
+      "default": "./cjs/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
   "scripts": {
+    "build": "gasket-cjs ./lib",
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
     "posttest": "pnpm run lint && pnpm run typecheck",
-    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
-    "test:coverage": "jest --coverage",
-    "test:watch": "jest --watchAll",
+    "prepublishOnly": "pnpm run build",
+    "test": "vitest run --globals",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
@@ -36,11 +48,13 @@
     "webpack-bundle-analyzer": "^4.10.2"
   },
   "devDependencies": {
+    "@gasket/cjs": "workspace:^",
     "@gasket/core": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",
     "@gasket/plugin-webpack": "workspace:^",
     "@types/webpack-bundle-analyzer": "^4.7.0",
+    "@vitest/coverage-v8": "^3.2.0",
     "create-gasket-app": "workspace:^",
-    "jest": "^29.7.0"
+    "vitest": "^3.2.0"
   }
 }

@@ -114,4 +114,4 @@ class GasketEnvGuardPlugin {
   }
 }
 
-module.exports = GasketEnvGuardPlugin;
+export default GasketEnvGuardPlugin;

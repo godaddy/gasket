@@ -1,10 +1,12 @@
 /// <reference types="create-gasket-app" />
 
-const path = require('path');
+import path from 'path';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 const { devDependencies, name, version } = require('../package.json');
 
 /** @type {import('@gasket/core').HookHandler<'create'>} */
-module.exports = async function create(gasket, createContext) {
+export default async function create(gasket, createContext) {
   if (createContext.hasGasketIntl === false) {
     return;
   }
@@ -43,4 +45,4 @@ module.exports = async function create(gasket, createContext) {
       'react-intl': devDependencies['react-intl']
     });
   }
-};
+}

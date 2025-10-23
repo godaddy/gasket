@@ -1,9 +1,10 @@
 /// <reference types="@gasket/plugin-nextjs" />
 
-const path = require('path');
+import path from 'path';
 
-const debug = require('debug')('gasket:plugin:intl:configure');
-const { getIntlConfig } = require('./utils/configure-utils');
+import debug from 'debug';
+const debugLog = debug('gasket:plugin:intl:configure');
+import { getIntlConfig } from './utils/configure-utils.js';
 
 const moduleDefaults = {
   localesDir: 'locales',
@@ -15,7 +16,7 @@ const moduleDefaults = {
  * to access to certain config results where gasket.config is not accessible.
  * @type {import('@gasket/core').HookHandler<'configure'>}
  */
-module.exports = function configure(gasket, config) {
+export default function configure(gasket, config) {
   const { root } = config;
   const intlConfig = { ...getIntlConfig({ config }) };
 
@@ -69,7 +70,7 @@ module.exports = function configure(gasket, config) {
     modules
   };
 
-  debug(`Normalized intl config: ${JSON.stringify(normalizedIntlConfig)}`);
+  debugLog(`Normalized intl config: ${JSON.stringify(normalizedIntlConfig)}`);
 
   /**
    * @typedef {object} IntlConfig
@@ -88,4 +89,4 @@ module.exports = function configure(gasket, config) {
     ...config,
     intl: normalizedIntlConfig
   };
-};
+}
