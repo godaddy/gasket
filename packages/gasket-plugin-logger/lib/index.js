@@ -3,8 +3,10 @@
 /// <reference types="@gasket/plugin-metadata" />
 
 /* eslint-disable no-console */
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 const { name, version, description } = require('../package.json');
-const { createChildLogger, verifyLoggerLevels } = require('./utils');
+import { createChildLogger, verifyLoggerLevels } from './utils.js';
 
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {
@@ -32,13 +34,14 @@ const plugin = {
       }
 
       if (!loggers || loggers.length === 0) {
-        gasket.logger = {
+        const defaultLogger = {
           debug: console.debug,
           error: console.error,
           info: console.info,
           warn: console.warn,
           child: (meta) => createChildLogger(this, meta)
         };
+        gasket.logger = defaultLogger;
       } else if (loggers.length > 1) {
         throw new Error(
           'Multiple plugins are hooking createLogger. Only one logger is supported.'
@@ -75,4 +78,4 @@ const plugin = {
   }
 };
 
-module.exports = plugin;
+export default plugin;
