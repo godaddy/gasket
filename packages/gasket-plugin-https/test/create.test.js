@@ -1,5 +1,14 @@
-const { name, version } = require('../package.json');
-const create = require('../lib/create');
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { readFileSync } from 'fs';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+import create from '../lib/create.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const pkg = JSON.parse(readFileSync(join(__dirname, '../package.json'), 'utf8'));
+const { name, version } = pkg;
 
 describe('create', () => {
   let mockCreateContext;
@@ -7,10 +16,10 @@ describe('create', () => {
   beforeEach(() => {
     mockCreateContext = {
       pkg: {
-        add: jest.fn()
+        add: vi.fn()
       },
       gasketConfig: {
-        addPlugin: jest.fn()
+        addPlugin: vi.fn()
       }
     };
   });
