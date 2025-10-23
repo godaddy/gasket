@@ -1,12 +1,19 @@
 /// <reference types="create-gasket-app" />
 /// <reference types="@gasket/core" />
 
+import { createRequire } from 'node:module';
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
+
+const require = createRequire(import.meta.url);
 const { name, version, devDependencies } = require('../package.json');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 /**
  * @type {import('@gasket/core').HookHandler<'create'>}
  */
-async function create(gasket, {
+export default async function create(gasket, {
   pkg,
   files,
   gasketConfig,
@@ -17,7 +24,7 @@ async function create(gasket, {
     '@gasket/data': devDependencies['@gasket/data']
   });
 
-  const generatorDir = `${__dirname}/../generator`;
+  const generatorDir = join(__dirname, '..', 'generator');
   const glob = typescript ? '*.ts' : '*.js';
   files.add(
     `${generatorDir}/${glob}`
@@ -30,5 +37,3 @@ async function create(gasket, {
     .addImport('gasketData', `./gasket-data.js`)
     .injectValue('data', 'gasketData');
 }
-
-module.exports = create;

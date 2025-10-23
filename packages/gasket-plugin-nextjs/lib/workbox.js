@@ -1,14 +1,14 @@
 /// <reference types="@gasket/plugin-workbox" />
 
-const url = require('url');
-const path = require('path');
+import url from 'url';
+import path from 'path';
 const isDefined = (o) => typeof o !== 'undefined';
 
 /**
  * Workbox config partial to add Next.js static assets to precache
  * @type {import('@gasket/core').HookHandler<'workbox'>}
  */
-module.exports = function workbox(gasket) {
+export default function workbox(gasket) {
   const { nextConfig = {}, basePath: rootBasePath } = gasket.config;
   const assetPrefix = [
     nextConfig.assetPrefix,
@@ -33,4 +33,4 @@ module.exports = function workbox(gasket) {
       '.next/': joined
     }
   };
-};
+}

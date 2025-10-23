@@ -2,8 +2,8 @@
 /// <reference types="@gasket/plugin-https" />
 /// <reference types="@gasket/plugin-logger" />
 
-const cookieParser = require('cookie-parser');
-const { applyCompression, applyCookieParser, executeMiddlewareLifecycle } = require('./utils');
+import cookieParser from 'cookie-parser';
+import { applyCompression, applyCookieParser, executeMiddlewareLifecycle } from './utils.js';
 
 /*
 * This is a patch for the undocumented _implicitHeader used by the compression middleware which is not present the http2 request
@@ -15,7 +15,7 @@ const { applyCompression, applyCookieParser, executeMiddlewareLifecycle } = requ
  * object
  * @see https://github.com/expressjs/compression/pull/128
  * @see https://github.com/vercel/next.js/issues/11669
- * @type {import('.').http2Patch}
+ * @type {import('./index.d.ts').http2Patch}
  */
 function http2Patch(req, res, next) {
   if (!res._implicitHeader) {
@@ -28,7 +28,7 @@ function http2Patch(req, res, next) {
  * Express lifecycle to add an endpoint to serve service worker script
  * @type {import('@gasket/core').HookHandler<'express'>}
  */
-module.exports = async function express(gasket, app) {
+export default async function express(gasket, app) {
   const { config } = gasket;
   const {
     express: {
@@ -61,7 +61,7 @@ module.exports = async function express(gasket, app) {
 
   /**
    * Attaches a metadata function to the logger that allows for chaining
-   * @type {import('./internal').attachLogEnhancer}
+   * @type {import('./internal.d.ts').attachLogEnhancer}
    */
   function attachLogEnhancer(req) {
     req.logger.metadata = (metadata) => {
