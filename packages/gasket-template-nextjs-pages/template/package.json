@@ -47,8 +47,8 @@
   },
   "devDependencies": {
     "@babel/core": ">=7",
-    "@docusaurus/core": "^3.8.1",
-    "@docusaurus/preset-classic": "^3.8.1",
+    "@docusaurus/core": "^3.9.2",
+    "@docusaurus/preset-classic": "^3.9.2",
     "@gasket/plugin-docs": "^7.4.7",
     "@gasket/plugin-docusaurus": "^7.4.5",
     "@gasket/plugin-metadata": "^7.5.3",
