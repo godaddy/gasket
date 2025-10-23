@@ -1,7 +1,7 @@
 {
   "name": "@gasket/redux",
   "version": "7.3.7",
-  "description": "Gasket Redux Configuration",
+  "description": "DEPRECATED Gasket Redux Configuration",
   "main": "lib",
   "types": "src/index.d.ts",
   "files": [
@@ -61,5 +61,6 @@
       "@babel/transform-runtime",
       "@babel/plugin-proposal-object-rest-spread"
     ]
-  }
+  },
+  "deprecated": "Package deprecated and will be removed in future major release."
 }
