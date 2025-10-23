@@ -1,8 +1,10 @@
-const mockBuildManifest = jest.fn().mockResolvedValue();
+import { vi } from 'vitest';
 
-jest.mock('../lib/build-manifest', () => mockBuildManifest);
+vi.mock('../lib/build-manifest.js', () => ({ default: vi.fn().mockResolvedValue() }));
 
-const postCreateHook = require('../lib/post-create');
+const mockBuildManifest = vi.mocked(await import('../lib/build-manifest.js')).default;
+
+import postCreateHook from '../lib/post-create.js';
 
 describe('build', function () {
   let mockGasket;
@@ -25,7 +27,7 @@ describe('build', function () {
   });
 
   afterEach(function () {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('builds manifest file', async function () {

@@ -2,20 +2,31 @@
   "name": "@gasket/plugin-intl",
   "version": "7.5.10",
   "description": "NodeJS script to build localization files.",
-  "main": "lib/index.js",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js",
+      "require": "./cjs/index.js",
+      "default": "./cjs/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
   "types": "lib/index.d.ts",
   "files": [
     "generator",
     "lib",
+    "cjs",
     "EXAMPLES.md"
   ],
   "scripts": {
+    "build": "gasket-cjs lib cjs",
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
     "posttest": "pnpm run lint && pnpm run typecheck",
-    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
-    "test:coverage": "pnpm run test --coverage",
-    "test:watch": "pnpm run test --watch",
+    "test": "vitest run --globals",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
@@ -43,6 +54,7 @@
   },
   "devDependencies": {
     "@gasket/core": "workspace:^",
+    "@gasket/cjs": "workspace:^",
     "@gasket/intl": "workspace:^",
     "@gasket/plugin-command": "workspace:^",
     "@gasket/plugin-data": "workspace:^",
@@ -53,7 +65,7 @@
     "@gasket/plugin-service-worker": "workspace:^",
     "@gasket/react-intl": "workspace:^",
     "create-gasket-app": "workspace:^",
-    "jest": "^29.7.0",
+    "vitest": "^3.2.0",
     "react": "^19.0.0",
     "react-intl": "^7.1.6",
     "webpack": "^5.98.0"
