@@ -4,7 +4,7 @@
  * Adds the Webpack Bundle Analyzer plugin if the analyze flag is set.
  * @type {import('@gasket/core').HookHandler<'webpackConfig'>}
  */
-module.exports = function webpackConfigHook(gasket, webpackConfig, context) {
+export default async function webpackConfigHook(gasket, webpackConfig, context) {
   // eslint-disable-next-line no-process-env
   const { ANALYZE } = process.env;
   const {
@@ -18,9 +18,9 @@ module.exports = function webpackConfigHook(gasket, webpackConfig, context) {
 
   // Only add the analyzer plugin if enabled
   if (enabled) {
-    const merge = require('deepmerge');
-    const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-    const defaultConfig = require('./default-config');
+    const merge = (await import('deepmerge')).default;
+    const { BundleAnalyzerPlugin } = await import('webpack-bundle-analyzer');
+    const defaultConfig = (await import('./default-config.js')).default;
 
     const { isServer } = context;
     const bundleAnalyzerConfig = merge(defaultConfig, userConfig);
@@ -39,4 +39,4 @@ module.exports = function webpackConfigHook(gasket, webpackConfig, context) {
   }
 
   return webpackConfig;
-};
+}
