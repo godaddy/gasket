@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-redux",
-  "version": "7.4.3",
+  "version": "0.0.0-canary-20251023174025",
   "description": "DEPRECATED Gasket Redux Setup",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

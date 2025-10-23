@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-dynamic-plugins",
-  "version": "7.4.2",
+  "version": "0.0.0-canary-20251023174025",
   "description": "Gasket plugin for dynamically adding plugins to Gasket",
   "type": "module",
   "types": "lib/index.d.ts",

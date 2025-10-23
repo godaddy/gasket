@@ -1,5 +1,16 @@
 # `@gasket/plugin-winston`
 
+## 0.0.0-canary-20251023174025
+
+### Minor Changes
+
+- Canary release for ESM port testing
+
+### Patch Changes
+
+- Updated dependencies
+  - @gasket/plugin-logger@0.0.0-canary-20251023174025
+
 ## 7.3.8
 
 ### Patch Changes

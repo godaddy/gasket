@@ -1,5 +1,17 @@
 # `@gasket/assets`
 
+## 0.0.0-canary-20251023174025
+
+### Minor Changes
+
+- Canary release for ESM port testing
+
+## 0.0.0-canary-20251023172400
+
+### Patch Changes
+
+- 5b7eda2: ESM Port
+
 ## 7.4.4
 
 ### Patch Changes

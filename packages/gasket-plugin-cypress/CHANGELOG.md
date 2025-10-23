@@ -1,5 +1,11 @@
 # @gasket/plugin-cypress
 
+## 0.0.0-canary-20251023174025
+
+### Minor Changes
+
+- Canary release for ESM port testing
+
 ## 7.5.3
 
 ### Patch Changes

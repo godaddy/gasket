@@ -1,5 +1,26 @@
 # `@gasket/plugin-nextjs`
 
+## 0.0.0-canary-20251023174025
+
+### Minor Changes
+
+- Canary release for ESM port testing
+
+### Patch Changes
+
+- Updated dependencies
+  - @gasket/plugin-webpack@0.0.0-canary-20251023174025
+
+## 0.0.0-canary-20251023172400
+
+### Minor Changes
+
+- 14ad24d: Port to ESM with CommonJS backward compatibility
+
+### Patch Changes
+
+- @gasket/plugin-webpack@7.3.9
+
 ## 7.6.4
 
 ### Patch Changes

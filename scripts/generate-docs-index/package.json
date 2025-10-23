@@ -1,7 +1,7 @@
 {
   "name": "generate-docs-index",
   "private": true,
-  "version": "7.4.20",
+  "version": "0.0.0-canary-20251023174025",
   "description": "Generate the overview index",
   "type": "module",
   "scripts": {

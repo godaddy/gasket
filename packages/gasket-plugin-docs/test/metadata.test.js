@@ -1,5 +1,5 @@
-const metadata = require('../lib/metadata');
-const { DEFAULT_CONFIG } = require('../lib/utils/constants');
+import metadata from '../lib/metadata.js';
+import { DEFAULT_CONFIG } from '../lib/utils/constants.js';
 
 describe('metadata', () => {
   const mockGasket = {
