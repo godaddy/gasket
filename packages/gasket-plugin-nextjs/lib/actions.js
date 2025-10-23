@@ -1,5 +1,5 @@
-const { createConfig } = require('./utils/config');
-const nextRoute = require('./utils/next-route');
+import { createConfig } from './utils/config.js';
+import nextRoute from './utils/next-route.js';
 
 /** @type {import('@gasket/core').ActionHandler<'getNextConfig'>} */
 function getNextConfig(gasket, nextConfig) {
@@ -21,7 +21,4 @@ async function getNextRoute(gasket, req) {
   return await nextRoute(gasket, req);
 }
 
-module.exports = {
-  getNextConfig,
-  getNextRoute
-};
+export { getNextConfig, getNextRoute };

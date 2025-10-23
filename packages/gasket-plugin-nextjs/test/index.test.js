@@ -1,8 +1,5 @@
 /* eslint-disable max-statements */
 
-// Monkey-patch Node's require to stub `next` before any imports
-const Module = require('module');
-const originalRequire = Module.prototype.require;
 const nextHandler = vi.fn();
 const nextServer = {
   prepare: vi.fn().mockResolvedValue(),
@@ -10,10 +7,16 @@ const nextServer = {
   buildId: '1234',
   name: 'testapp'
 };
-Module.prototype.require = function (id) {
-  if (id === 'next') return vi.fn(() => nextServer);
-  return originalRequire.apply(this, arguments);
-};
+
+const mockNext = vi.fn(() => nextServer);
+
+// Mock 'next' module - must be at the very top before any imports
+vi.mock('next', () => ({
+  default: mockNext
+}));
+
+import { readFileSync } from 'fs';
+import fastifyFn from 'fastify';
 
 const expressApp = Object.assign(vi.fn(), {
   set: vi.fn(),
@@ -21,13 +24,19 @@ const expressApp = Object.assign(vi.fn(), {
   all: vi.fn()
 });
 
-const fastify = require('fastify')({
+const fastify = fastifyFn({
   logger: true
 });
-const { name, version, description } = require('../package');
+const { name, version, description } = JSON.parse(
+  readFileSync(new URL('../package.json', import.meta.url), 'utf-8')
+);
 
 describe('Plugin', function () {
-  const plugin = require('../lib/');
+  let plugin;
+
+  beforeAll(async () => {
+    plugin = (await import('../lib/index.js')).default;
+  });
 
   it('is an object', () => {
     expect(plugin).toBeInstanceOf(Object);
@@ -65,7 +74,12 @@ describe('Plugin', function () {
 });
 
 describe('configure hook', () => {
-  const configureHook = require('../lib/').hooks.configure;
+  let configureHook;
+
+  beforeAll(async () => {
+    const plugin = (await import('../lib/index.js')).default;
+    configureHook = plugin.hooks.configure;
+  });
 
   it('adds the sw webpackRegister callback', () => {
     const gasket = mockGasketApi();
@@ -95,8 +109,11 @@ describe('configure hook', () => {
 describe('express hook', () => {
   let plugin, hook;
 
+  beforeAll(async () => {
+    plugin = (await import('../lib/index.js')).default;
+  });
+
   beforeEach(() => {
-    plugin = require('../lib');
     hook = plugin.hooks.express.handler;
   });
 
@@ -125,8 +142,8 @@ describe('express hook', () => {
 
     const mockReq = { headers: {} };
     const mockRes = { locals: { gasketData: { intl: { locale: 'fr-FR' } } } };
-    const mockNext = vi.fn();
-    fn(mockReq, mockRes, mockNext);
+    const next = vi.fn();
+    fn(mockReq, mockRes, next);
     expect(mockReq.headers).toHaveProperty('cookie', ';NEXT_LOCALE=fr-FR');
   });
 
@@ -137,8 +154,8 @@ describe('express hook', () => {
     const fn = expressApp.use.mock.calls[0][0];
     const mockReq = { headers: { cookie: 'bogus=data' } };
     const mockRes = { locals: { gasketData: { intl: { locale: 'fr-FR' } } } };
-    const mockNext = vi.fn();
-    await fn(mockReq, mockRes, mockNext);
+    const next = vi.fn();
+    await fn(mockReq, mockRes, next);
 
     expect(mockReq.headers).toHaveProperty(
       'cookie',
@@ -154,8 +171,8 @@ describe('express hook', () => {
 
     const mockReq = { headers: {} };
     const mockRes = { locals: { gasketData: {} } };
-    const mockNext = vi.fn();
-    fn(mockReq, mockRes, mockNext);
+    const next = vi.fn();
+    fn(mockReq, mockRes, next);
     expect(mockReq.headers).not.toHaveProperty('cookie');
   });
 
@@ -178,9 +195,9 @@ describe('express hook', () => {
 
     const mockReq = { headers: {} };
     const mockRes = { locals: { gasketData: {} } };
-    const mockNext = vi.fn();
+    const next = vi.fn();
 
-    await routeHandler(mockReq, mockRes, mockNext);
+    await routeHandler(mockReq, mockRes, next);
     expect(gasket.exec).toHaveBeenCalledWith('nextPreHandling', {
       req: mockReq,
       res: mockRes,
@@ -199,8 +216,11 @@ describe('fastify hook', () => {
     inject: vi.fn()
   };
 
+  beforeAll(async () => {
+    plugin = (await import('../lib/index.js')).default;
+  });
+
   beforeEach(() => {
-    plugin = require('../lib/');
     hook = plugin.hooks.fastify.handler;
 
     fastifyApp.decorate.mockClear();
@@ -234,8 +254,8 @@ describe('fastify hook', () => {
 
     const mockReq = { headers: {} };
     const mockRes = { locals: { gasketData: { intl: { locale: 'fr-FR' } } } };
-    const mockNext = vi.fn();
-    fn(mockReq, mockRes, mockNext);
+    const next = vi.fn();
+    fn(mockReq, mockRes, next);
     expect(mockReq.headers).toHaveProperty('cookie', ';NEXT_LOCALE=fr-FR');
   });
 
@@ -247,8 +267,8 @@ describe('fastify hook', () => {
 
     const mockReq = { headers: { cookie: 'bogus=data' } };
     const mockRes = { locals: { gasketData: { intl: { locale: 'fr-FR' } } } };
-    const mockNext = vi.fn();
-    fn(mockReq, mockRes, mockNext);
+    const next = vi.fn();
+    fn(mockReq, mockRes, next);
     expect(mockReq.headers).toHaveProperty(
       'cookie',
       'bogus=data;NEXT_LOCALE=fr-FR'
@@ -263,8 +283,8 @@ describe('fastify hook', () => {
 
     const mockReq = { headers: {} };
     const mockRes = { locals: { gasketData: {} } };
-    const mockNext = vi.fn();
-    fn(mockReq, mockRes, mockNext);
+    const next = vi.fn();
+    fn(mockReq, mockRes, next);
     expect(mockReq.headers).not.toHaveProperty('cookie');
   });
 
@@ -306,9 +326,12 @@ describe('fastify hook', () => {
 describe('workbox hook', () => {
   let gasketAPI, plugin;
 
+  beforeAll(async () => {
+    plugin = (await import('../lib/index.js')).default;
+  });
+
   beforeEach(() => {
     gasketAPI = mockGasketApi();
-    plugin = require('../lib/');
   });
 
   it('returns workbox config partial', async () => {

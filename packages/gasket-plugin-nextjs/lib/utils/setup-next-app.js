@@ -65,11 +65,11 @@ function isFastifyApp(app) {
 
 /**
  * Creates and prepares a Next.js app instance based on gasket config.
- * @type {import('../index').setupNextApp}
+ * @type {import('../index.js').setupNextApp}
  */
 async function setupNextApp(gasket) {
   const { config } = gasket;
-  const mod = require('next');
+  const mod = /** @type {any} */ (await import('next'));
   const createNextApp = typeof mod === 'function' ? mod : mod.default;
 
   /**
@@ -92,7 +92,7 @@ async function setupNextApp(gasket) {
  * Sets up the Next.js request handler as the final middleware handler.
  *
  * Supports both Express and Fastify servers.
- * @type {import('../index').setupNextHandling}
+ * @type {import('../index.js').setupNextHandling}
  */
 function setupNextHandling(nextServer, serverApp, gasket) {
   const nextHandler = nextServer.getRequestHandler();
@@ -131,7 +131,4 @@ function setupNextHandling(nextServer, serverApp, gasket) {
   }
 }
 
-module.exports = {
-  setupNextApp,
-  setupNextHandling
-};
+export { setupNextApp, setupNextHandling };
