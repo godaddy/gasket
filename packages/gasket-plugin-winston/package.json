@@ -5,6 +5,12 @@
   "type": "module",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "cjs",
+    "src",
+    "EXAMPLES.md"
+  ],
   "exports": {
     ".": {
       "types": "./lib/index.d.ts",
@@ -14,12 +20,6 @@
     },
     "./package.json": "./package.json"
   },
-  "files": [
-    "lib",
-    "cjs",
-    "src",
-    "EXAMPLES.md"
-  ],
   "scripts": {
     "build": "gasket-cjs ./lib",
     "lint": "eslint .",
@@ -54,7 +54,7 @@
     "@gasket/core": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",
     "create-gasket-app": "workspace:^",
-    "vitest": "^3.2.0",
-    "triple-beam": "^1.4.1"
+    "triple-beam": "^1.4.1",
+    "vitest": "^3.2.0"
   }
 }
