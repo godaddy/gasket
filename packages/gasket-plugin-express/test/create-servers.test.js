@@ -1,14 +1,15 @@
-const { setTimeout } = require('timers/promises');
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import { setTimeout } from 'timers/promises';
+import { getAppInstance } from '../lib/utils.js';
+import createServers from '../lib/create-servers.js';
 
-const mockApp = { use: jest.fn(), post: jest.fn(), set: jest.fn() };
+vi.mock('../lib/utils.js');
 
-jest.mock('../lib/utils.js');
-const { getAppInstance } = require('../lib/utils.js');
-const createServers = require('../lib/create-servers');
+const mockApp = { use: vi.fn(), post: vi.fn(), set: vi.fn() };
 
 describe('createServers', () => {
   let gasket, lifecycles, mockMwPlugins;
-  const sandbox = jest.fn();
+  const sandbox = vi.fn();
 
   beforeEach(() => {
     getAppInstance.mockReturnValue(mockApp);
@@ -16,20 +17,20 @@ describe('createServers', () => {
     mockMwPlugins = [];
 
     lifecycles = {
-      errorMiddleware: jest.fn().mockResolvedValue([]),
-      express: jest.fn().mockResolvedValue()
+      errorMiddleware: vi.fn().mockResolvedValue([]),
+      express: vi.fn().mockResolvedValue()
     };
 
     gasket = {
       actions: {
-        getExpressApp: jest.fn().mockReturnValue(mockApp)
+        getExpressApp: vi.fn().mockReturnValue(mockApp)
       },
       middleware: {},
       logger: {
-        warn: jest.fn()
+        warn: vi.fn()
       },
       config: {},
-      exec: jest
+      exec: vi
         .fn()
         .mockImplementation((lifecycle, ...args) =>
           lifecycles[lifecycle](args)
@@ -39,13 +40,13 @@ describe('createServers', () => {
           // eslint-disable-next-line  no-loop-func
           fn(mockMwPlugins[i], () => mockMwPlugins[i]);
         }
-        return jest.fn();
+        return vi.fn();
       })
     };
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('returns the handler app', async function () {
@@ -70,7 +71,7 @@ describe('createServers', () => {
   });
 
   it('adds the errorMiddleware', async () => {
-    const errorMiddlewares = [jest.fn()];
+    const errorMiddlewares = [vi.fn()];
     gasket.exec.mockResolvedValue(errorMiddlewares);
 
     await createServers(gasket, {});
@@ -83,14 +84,7 @@ describe('createServers', () => {
   });
 
   it('adds the errorMiddleware after API routes', async () => {
-    Object.assign(gasket.config, {
-      root: __dirname,
-      express: {
-        root: __dirname,
-        routes: []
-      }
-    });
-    const errorMiddlewares = [jest.fn()];
+    const errorMiddlewares = [vi.fn()];
     gasket.exec.mockResolvedValue(errorMiddlewares);
 
     await createServers(gasket, {});
