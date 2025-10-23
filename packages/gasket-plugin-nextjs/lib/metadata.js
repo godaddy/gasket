@@ -1,7 +1,7 @@
 /// <reference types="@gasket/plugin-metadata" />
 
 /** @type {import('@gasket/core').HookHandler<'metadata'>} */
-module.exports = function metadataHook(gasket, meta) {
+export default function metadataHook(gasket, meta) {
   const { config: { plugins } } = gasket;
   const hasExpress = Boolean(
     plugins.find(
@@ -126,4 +126,4 @@ module.exports = function metadataHook(gasket, meta) {
   }
 
   return data;
-};
+}
