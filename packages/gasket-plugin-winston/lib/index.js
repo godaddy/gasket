@@ -2,7 +2,9 @@
 /// <reference types="create-gasket-app" />
 /// <reference types="@gasket/plugin-metadata" />
 
-const { createLogger, format, transports, config: winstonConfig } = require('winston');
+import { createLogger, format, transports, config as winstonConfig } from 'winston';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 const {
   name,
   version,
@@ -78,4 +80,4 @@ const plugin = {
   }
 };
 
-module.exports = plugin;
+export default plugin;
