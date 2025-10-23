@@ -5,21 +5,20 @@
   "type": "module",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "cjs",
+    "EXAMPLES.md"
+  ],
   "exports": {
     ".": {
       "types": "./lib/index.d.ts",
       "import": "./lib/index.js",
       "require": "./cjs/index.js",
       "default": "./cjs/index.cjs"
-
     },
     "./package.json": "./package.json"
   },
-  "files": [
-    "lib",
-    "cjs",
-    "EXAMPLES.md"
-  ],
   "scripts": {
     "build": "gasket-cjs",
     "lint": "eslint .",
