@@ -2,7 +2,7 @@
 /// <reference types="@gasket/plugin-docs" />
 /// <reference types="@gasket/plugin-logger" />
 
-const path = require('path');
+import path from 'node:path';
 const timing = { before: ['@gasket/plugin-docs'] };
 
 /** @type {import('@gasket/core').HookHandler<'configure'>} */
@@ -30,7 +30,7 @@ function handler(gasket, config) {
   };
 }
 
-module.exports = {
+export default {
   handler,
   timing
 };

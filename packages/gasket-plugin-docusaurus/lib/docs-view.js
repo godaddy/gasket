@@ -1,11 +1,10 @@
-const defaultsDeep = require('lodash.defaultsdeep');
-const { existsSync } = require('fs');
-const { writeFile } = require('fs').promises;
-const path = require('path');
-const generateDefaultConfig = require('./generate-default-config');
+import { existsSync } from 'node:fs';
+import { writeFile } from 'node:fs/promises';
+import path from 'node:path';
+import generateDefaultConfig from './generate-default-config.js';
 const pluginConfigFile = 'docusaurus.config.js';
 const defaultConfig = {
-  port: 3000,
+  port: '3000',
   host: 'localhost'
 };
 
@@ -22,10 +21,10 @@ async function createPackageFile(docsRoot) {
 /**
  * Check if devDependencies are installed
  */
-function checkDevDependencies() {
+async function checkDevDependencies() {
   try {
-    require('@docusaurus/preset-classic');
-    require('@docusaurus/core/package.json');
+    await import('@docusaurus/preset-classic');
+    await import('@docusaurus/core/package.json');
   } catch {
     throw new Error(
       'Missing devDependencies. Please run `npm i -D @docusaurus/core @docusaurus/preset-classic`'
@@ -34,20 +33,20 @@ function checkDevDependencies() {
 }
 
 /** @type {import('@gasket/core').HookHandler<'docsView'>} */
-module.exports = async function docsView(gasket) {
-  checkDevDependencies();
-  const { start } = require('@docusaurus/core/lib');
+export default async function docsView(gasket) {
+  await checkDevDependencies();
+  // @ts-expect-error - TODO: add types for @docusaurus/core
+  const { start } = await import('@docusaurus/core');
   const { config } = gasket;
   const { app: { name } } = await gasket.actions.getMetadata();
   const userConfig = gasket.config.docusaurus;
   const configFilePath = path.join(config.root, pluginConfigFile);
 
-  /** @type {import('.').DocusaurusConfig} */
-  const docusaurusConfig = defaultsDeep(
-    { config: configFilePath },
-    userConfig,
-    defaultConfig
-  );
+  /** @type {import('./index.js').DocusaurusConfig} */
+  const docusaurusConfig = {
+    ...defaultConfig,
+    ...userConfig
+  };
   const { rootDir, docsDir } = docusaurusConfig;
 
   if (!existsSync(configFilePath)) {
@@ -60,5 +59,8 @@ module.exports = async function docsView(gasket) {
     await writeFile(configFilePath, defaultDocusaurusConfig, 'utf-8');
   }
 
-  start(path.join(config.root, rootDir), docusaurusConfig);
-};
+  start(path.join(config.root, rootDir), {
+    ...docusaurusConfig,
+    config: configFilePath
+  });
+}

@@ -1,9 +1,11 @@
-const create = require('./create');
-const docsView = require('./docs-view');
-const configure = require('./configure');
-const prompt = require('./prompt');
-const webpackConfig = require('./webpack-config');
+import create from './create.js';
+import docsView from './docs-view.js';
+import configure from './configure.js';
+import prompt from './prompt.js';
+import webpackConfig from './webpack-config.js';
+import { createRequire } from 'module';
 
+const require = createRequire(import.meta.url);
 const { name, version, description } = require('../package.json');
 
 /** @type {import('@gasket/core').Plugin} */
@@ -62,4 +64,4 @@ const plugin = {
   }
 };
 
-module.exports = plugin;
+export default plugin;
