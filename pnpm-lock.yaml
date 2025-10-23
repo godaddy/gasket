@@ -543,6 +543,9 @@ importers:
         specifier: ^3.0.2
         version: 3.0.2
     devDependencies:
+      '@gasket/cjs':
+        specifier: workspace:^
+        version: link:../gasket-cjs
       '@gasket/core':
         specifier: workspace:^
         version: link:../gasket-core
@@ -564,12 +567,15 @@ importers:
       create-gasket-app:
         specifier: workspace:^
         version: link:../create-gasket-app
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.15))(@types/node@20.17.19)(typescript@5.8.2))
+      vitest:
+        specifier: ^3.2.0
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
 
   packages/gasket-plugin-docs-graphs:
     devDependencies:
+      '@gasket/cjs':
+        specifier: workspace:^
+        version: link:../gasket-cjs
       '@gasket/core':
         specifier: workspace:^
         version: link:../gasket-core
@@ -582,18 +588,15 @@ importers:
       create-gasket-app:
         specifier: workspace:^
         version: link:../create-gasket-app
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.15))(@types/node@20.17.19)(typescript@5.8.2))
+      vitest:
+        specifier: ^3.2.0
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
 
   packages/gasket-plugin-docusaurus:
     dependencies:
       '@gasket/plugin-logger':
         specifier: ^7.3.8
         version: link:../gasket-plugin-logger
-      lodash.defaultsdeep:
-        specifier: ^4.6.1
-        version: 4.6.1
     devDependencies:
       '@docusaurus/core':
         specifier: ^3.8.1
@@ -601,6 +604,9 @@ importers:
       '@docusaurus/preset-classic':
         specifier: ^3.8.1
         version: 3.8.1(@algolia/client-search@5.20.3)(@mdx-js/react@3.1.0(@types/react@19.0.12)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(@types/react@19.0.12)(acorn@8.14.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(search-insights@2.17.3)(typescript@5.8.2)
+      '@gasket/cjs':
+        specifier: workspace:^
+        version: link:../gasket-cjs
       '@gasket/core':
         specifier: workspace:^
         version: link:../gasket-core
@@ -613,15 +619,15 @@ importers:
       '@gasket/plugin-webpack':
         specifier: workspace:^
         version: link:../gasket-plugin-webpack
+      '@vitest/coverage-v8':
+        specifier: ^3.2.0
+        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
       ajv:
         specifier: ^8.17.1
         version: 8.17.1
       create-gasket-app:
         specifier: workspace:^
         version: link:../create-gasket-app
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.15))(@types/node@20.17.19)(typescript@5.8.2))
       react:
         specifier: ^19.0.0
         version: 19.0.0
@@ -634,6 +640,9 @@ importers:
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
+      vitest:
+        specifier: ^3.2.0
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
 
   packages/gasket-plugin-dynamic-plugins:
     dependencies:

@@ -1,12 +1,13 @@
-const commands = require('../lib/commands');
-const buildDocsConfigSet = require('../lib/utils/build-config-set');
-const collateFiles = require('../lib/utils/collate-files');
-const generateIndex = require('../lib/utils/generate-index');
+import { vi } from 'vitest';
+import commands from '../lib/commands.js';
+import buildDocsConfigSet from '../lib/utils/build-config-set.js';
+import collateFiles from '../lib/utils/collate-files.js';
+import generateIndex from '../lib/utils/generate-index.js';
 
 const mockGasket = {
-  exec: jest.fn(),
+  exec: vi.fn(),
   actions: {
-    getMetadata: jest.fn(() => ({ app: { name: 'my-app' } }))
+    getMetadata: vi.fn(() => ({ app: { name: 'my-app' } }))
   }
 };
 
@@ -30,9 +31,9 @@ const mockDocsConfigSet = {
   ]
 };
 
-jest.mock('../lib/utils/build-config-set', () => jest.fn(() => Promise.resolve(mockDocsConfigSet)));
-jest.mock('../lib/utils/collate-files');
-jest.mock('../lib/utils/generate-index');
+vi.mock('../lib/utils/build-config-set', () => ({ default: vi.fn(() => Promise.resolve(mockDocsConfigSet)) }));
+vi.mock('../lib/utils/collate-files');
+vi.mock('../lib/utils/generate-index');
 
 describe('commands', () => {
 
@@ -55,7 +56,7 @@ describe('commands', () => {
     const DocsCommand = commands(mockGasket);
 
     beforeEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
       // Reset the mock docs config set to its original state
       mockDocsConfigSet.guides = [
         { name: 'guide-1' },
