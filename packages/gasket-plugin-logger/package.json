@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-logger",
-  "version": "0.0.0-canary-20251023215243",
+  "version": "0.0.0-canary-20251023225836",
   "description": "Gasket plugin for logging",
   "type": "module",
   "main": "lib/index.js",
@@ -46,12 +46,12 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-logger",
   "devDependencies": {
-    "@gasket/cjs": "workspace:^",
-    "@gasket/core": "workspace:^",
-    "@gasket/plugin-https": "workspace:^",
-    "@gasket/plugin-metadata": "workspace:^",
+    "@gasket/cjs": "0.0.0-canary-20251023225836",
+    "@gasket/core": "0.0.0-canary-20251023225836",
+    "@gasket/plugin-https": "0.0.0-canary-20251023225836",
+    "@gasket/plugin-metadata": "0.0.0-canary-20251023225836",
     "@vitest/coverage-v8": "^3.2.0",
-    "create-gasket-app": "workspace:^",
+    "create-gasket-app": "0.0.0-canary-20251023225836",
     "vitest": "^3.2.0"
   }
 }

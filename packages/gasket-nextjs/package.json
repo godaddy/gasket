@@ -1,6 +1,6 @@
 {
   "name": "@gasket/nextjs",
-  "version": "0.0.0-canary-20251023215243",
+  "version": "0.0.0-canary-20251023225836",
   "description": "Gasket integrations for Next.js apps",
   "type": "module",
   "types": "lib/index.d.ts",
@@ -68,15 +68,15 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-nextjs",
   "dependencies": {
-    "@gasket/data": "workspace:^",
-    "@gasket/request": "workspace:^",
+    "@gasket/data": "0.0.0-canary-20251023225836",
+    "@gasket/request": "0.0.0-canary-20251023225836",
     "hoist-non-react-statics": "^3.3.2",
     "htmlescape": "^1.1.1"
   },
   "devDependencies": {
-    "@gasket/cjs": "workspace:^",
-    "@gasket/plugin-data": "workspace:^",
-    "@gasket/plugin-intl": "workspace:^",
+    "@gasket/cjs": "0.0.0-canary-20251023225836",
+    "@gasket/plugin-data": "0.0.0-canary-20251023225836",
+    "@gasket/plugin-intl": "0.0.0-canary-20251023225836",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.3.0",
     "@types/react": "^19.0.12",

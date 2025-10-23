@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-data",
-  "version": "0.0.0-canary-20251023215243",
+  "version": "0.0.0-canary-20251023225836",
   "description": "Supports application-specific settings and configurations",
   "type": "module",
   "main": "lib/index.js",
@@ -46,18 +46,18 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-data",
   "dependencies": {
-    "@gasket/request": "workspace:^",
-    "@gasket/utils": "workspace:^",
+    "@gasket/request": "0.0.0-canary-20251023225836",
+    "@gasket/utils": "0.0.0-canary-20251023225836",
     "lodash.merge": "^4.6.2"
   },
   "devDependencies": {
-    "@gasket/cjs": "workspace:^",
-    "@gasket/core": "workspace:^",
-    "@gasket/data": "workspace:^",
-    "@gasket/plugin-command": "workspace:^",
-    "@gasket/plugin-metadata": "workspace:^",
-    "@gasket/plugin-redux": "workspace:^",
-    "create-gasket-app": "workspace:^",
+    "@gasket/cjs": "0.0.0-canary-20251023225836",
+    "@gasket/core": "0.0.0-canary-20251023225836",
+    "@gasket/data": "0.0.0-canary-20251023225836",
+    "@gasket/plugin-command": "0.0.0-canary-20251023225836",
+    "@gasket/plugin-metadata": "0.0.0-canary-20251023225836",
+    "@gasket/plugin-redux": "0.0.0-canary-20251023225836",
+    "create-gasket-app": "0.0.0-canary-20251023225836",
     "vitest": "^3.2.0"
   }
 }

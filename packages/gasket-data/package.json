@@ -1,6 +1,6 @@
 {
   "name": "@gasket/data",
-  "version": "0.0.0-canary-20251023215243",
+  "version": "0.0.0-canary-20251023225836",
   "description": "Helper package for accessing embedded Gasket Data in the browser",
   "type": "module",
   "types": "lib/index.d.ts",
@@ -43,12 +43,12 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-data",
   "dependencies": {
-    "@gasket/request": "workspace:^"
+    "@gasket/request": "0.0.0-canary-20251023225836"
   },
   "devDependencies": {
-    "@gasket/cjs": "workspace:^",
-    "@gasket/core": "workspace:^",
-    "@gasket/plugin-data": "workspace:^",
+    "@gasket/cjs": "0.0.0-canary-20251023225836",
+    "@gasket/core": "0.0.0-canary-20251023225836",
+    "@gasket/plugin-data": "0.0.0-canary-20251023225836",
     "@vitest/coverage-v8": "^3.2.0",
     "jsdom": "^20.0.3",
     "vitest": "^3.2.0"

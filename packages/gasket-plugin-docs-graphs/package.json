@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-docs-graphs",
-  "version": "0.0.0-canary-20251023215243",
+  "version": "0.0.0-canary-20251023225836",
   "description": "Generate mermaid graphs of an applications gasket lifecycles",
   "type": "module",
   "types": "lib/index.d.ts",
@@ -44,11 +44,11 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-docs-graphs",
   "devDependencies": {
-    "@gasket/cjs": "workspace:^",
-    "@gasket/core": "workspace:^",
-    "@gasket/plugin-docs": "workspace:^",
-    "@gasket/plugin-metadata": "workspace:^",
-    "create-gasket-app": "workspace:^",
+    "@gasket/cjs": "0.0.0-canary-20251023225836",
+    "@gasket/core": "0.0.0-canary-20251023225836",
+    "@gasket/plugin-docs": "0.0.0-canary-20251023225836",
+    "@gasket/plugin-metadata": "0.0.0-canary-20251023225836",
+    "create-gasket-app": "0.0.0-canary-20251023225836",
     "vitest": "^3.2.0"
   }
 }

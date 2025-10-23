@@ -1,6 +1,6 @@
 {
   "name": "@gasket/core",
-  "version": "0.0.0-canary-20251023215243",
+  "version": "0.0.0-canary-20251023225836",
   "description": "Entry point to setting up Gasket instances",
   "type": "module",
   "types": "lib/index.d.ts",
@@ -47,12 +47,12 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-core",
   "dependencies": {
-    "@gasket/utils": "workspace:^",
+    "@gasket/utils": "0.0.0-canary-20251023225836",
     "debug": "^4.4.0"
   },
   "devDependencies": {
-    "@gasket/cjs": "workspace:^",
-    "@gasket/plugin-metadata": "workspace:^",
+    "@gasket/cjs": "0.0.0-canary-20251023225836",
+    "@gasket/plugin-metadata": "0.0.0-canary-20251023225836",
     "@vitest/coverage-v8": "^3.2.0",
     "vitest": "^3.2.0"
   },

@@ -1,6 +1,6 @@
 {
   "name": "create-gasket-app",
-  "version": "0.0.0-canary-20251023215243",
+  "version": "0.0.0-canary-20251023225836",
   "description": "starter pack for creating a gasket app",
   "type": "module",
   "bin": {
@@ -31,16 +31,16 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/create-gasket-app",
   "dependencies": {
-    "@gasket/core": "workspace:^",
-    "@gasket/plugin-command": "workspace:^",
-    "@gasket/plugin-docs": "workspace:^",
-    "@gasket/plugin-docusaurus": "workspace:^",
-    "@gasket/plugin-dynamic-plugins": "workspace:^",
-    "@gasket/plugin-git": "workspace:^",
-    "@gasket/plugin-logger": "workspace:^",
-    "@gasket/plugin-metadata": "workspace:^",
-    "@gasket/request": "workspace:^",
-    "@gasket/utils": "workspace:^",
+    "@gasket/core": "0.0.0-canary-20251023225836",
+    "@gasket/plugin-command": "0.0.0-canary-20251023225836",
+    "@gasket/plugin-docs": "0.0.0-canary-20251023225836",
+    "@gasket/plugin-docusaurus": "0.0.0-canary-20251023225836",
+    "@gasket/plugin-dynamic-plugins": "0.0.0-canary-20251023225836",
+    "@gasket/plugin-git": "0.0.0-canary-20251023225836",
+    "@gasket/plugin-logger": "0.0.0-canary-20251023225836",
+    "@gasket/plugin-metadata": "0.0.0-canary-20251023225836",
+    "@gasket/request": "0.0.0-canary-20251023225836",
+    "@gasket/utils": "0.0.0-canary-20251023225836",
     "chalk": "^4.1.2",
     "commander": "^12.1.0",
     "deepmerge": "^4.3.1",
@@ -54,7 +54,7 @@
     "semver": "^7.7.1"
   },
   "devDependencies": {
-    "@gasket/request": "workspace:^",
+    "@gasket/request": "0.0.0-canary-20251023225836",
     "@typescript-eslint/parser": "^8.38.0",
     "@vitest/coverage-v8": "^3.2.0",
     "dotenv": "^16.4.7",

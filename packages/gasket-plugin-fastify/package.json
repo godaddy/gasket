@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-fastify",
-  "version": "0.0.0-canary-20251023215243",
+  "version": "0.0.0-canary-20251023225836",
   "description": "Adds fastify support to your application",
   "type": "module",
   "main": "./lib/index.js",
@@ -49,13 +49,13 @@
     "fastify": "^4.29.1"
   },
   "devDependencies": {
-    "@gasket/cjs": "workspace:^",
-    "@gasket/core": "workspace:^",
-    "@gasket/plugin-https": "workspace:^",
-    "@gasket/plugin-logger": "workspace:^",
-    "@gasket/plugin-metadata": "workspace:^",
+    "@gasket/cjs": "0.0.0-canary-20251023225836",
+    "@gasket/core": "0.0.0-canary-20251023225836",
+    "@gasket/plugin-https": "0.0.0-canary-20251023225836",
+    "@gasket/plugin-logger": "0.0.0-canary-20251023225836",
+    "@gasket/plugin-metadata": "0.0.0-canary-20251023225836",
     "@types/connect": "^3.4.38",
-    "create-gasket-app": "workspace:^",
+    "create-gasket-app": "0.0.0-canary-20251023225836",
     "fastify": "^4.29.1",
     "vitest": "^3.2.0"
   },

@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-swagger",
-  "version": "0.0.0-canary-20251023215243",
+  "version": "0.0.0-canary-20251023225836",
   "description": "Generate and serve swagger docs",
   "type": "module",
   "types": "lib/index.d.ts",
@@ -55,14 +55,14 @@
     "swagger-ui-express": "^4.6.3"
   },
   "devDependencies": {
-    "@gasket/cjs": "workspace:^",
-    "@gasket/core": "workspace:^",
-    "@gasket/plugin-command": "workspace:^",
-    "@gasket/plugin-express": "workspace:^",
-    "@gasket/plugin-fastify": "workspace:^",
-    "@gasket/plugin-logger": "workspace:^",
-    "@gasket/plugin-metadata": "workspace:^",
-    "create-gasket-app": "workspace:^",
+    "@gasket/cjs": "0.0.0-canary-20251023225836",
+    "@gasket/core": "0.0.0-canary-20251023225836",
+    "@gasket/plugin-command": "0.0.0-canary-20251023225836",
+    "@gasket/plugin-express": "0.0.0-canary-20251023225836",
+    "@gasket/plugin-fastify": "0.0.0-canary-20251023225836",
+    "@gasket/plugin-logger": "0.0.0-canary-20251023225836",
+    "@gasket/plugin-metadata": "0.0.0-canary-20251023225836",
+    "create-gasket-app": "0.0.0-canary-20251023225836",
     "fastify": "^4.29.1",
     "openapi-types": "^12.1.3",
     "vitest": "^3.2.0"

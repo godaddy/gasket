@@ -1,6 +1,6 @@
 {
   "name": "@gasket/request",
-  "version": "0.0.0-canary-20251023215243",
+  "version": "0.0.0-canary-20251023225836",
   "description": "Utilities for working with request objects in Gasket",
   "type": "module",
   "types": "lib/index.d.ts",
@@ -51,8 +51,8 @@
     "debug": "^4.4.0"
   },
   "devDependencies": {
-    "@gasket/cjs": "workspace:^",
-    "@gasket/core": "workspace:^",
+    "@gasket/cjs": "0.0.0-canary-20251023225836",
+    "@gasket/core": "0.0.0-canary-20251023225836",
     "@vitest/coverage-v8": "^3.2.0",
     "vitest": "^3.2.0"
   }

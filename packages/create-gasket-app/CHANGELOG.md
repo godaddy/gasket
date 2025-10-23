@@ -1,5 +1,22 @@
 # `create-gasket-app`
 
+## 0.0.0-canary-20251023225836
+
+### Patch Changes
+
+- 2ef1513: Canary release for all packages
+- Updated dependencies [2ef1513]
+  - @gasket/core@0.0.0-canary-20251023225836
+  - @gasket/plugin-command@0.0.0-canary-20251023225836
+  - @gasket/plugin-docs@0.0.0-canary-20251023225836
+  - @gasket/plugin-docusaurus@0.0.0-canary-20251023225836
+  - @gasket/plugin-dynamic-plugins@0.0.0-canary-20251023225836
+  - @gasket/plugin-git@0.0.0-canary-20251023225836
+  - @gasket/plugin-logger@0.0.0-canary-20251023225836
+  - @gasket/plugin-metadata@0.0.0-canary-20251023225836
+  - @gasket/request@0.0.0-canary-20251023225836
+  - @gasket/utils@0.0.0-canary-20251023225836
+
 ## 0.0.0-canary-20251023215243
 
 ### Patch Changes

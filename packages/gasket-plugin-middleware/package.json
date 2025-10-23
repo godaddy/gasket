@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-middleware",
-  "version": "0.0.0-canary-20251023215243",
+  "version": "0.0.0-canary-20251023225836",
   "description": "Handles common server engine setups for routing and executing lifecycles.",
   "type": "module",
   "main": "lib",
@@ -44,19 +44,19 @@
     "diagnostics": "^2.0.2"
   },
   "devDependencies": {
-    "@gasket/cjs": "workspace:^",
-    "@gasket/core": "workspace:^",
-    "@gasket/plugin-express": "workspace:^",
-    "@gasket/plugin-fastify": "workspace:^",
-    "@gasket/plugin-https": "workspace:^",
-    "@gasket/plugin-logger": "workspace:^",
-    "@gasket/plugin-metadata": "workspace:^",
+    "@gasket/cjs": "0.0.0-canary-20251023225836",
+    "@gasket/core": "0.0.0-canary-20251023225836",
+    "@gasket/plugin-express": "0.0.0-canary-20251023225836",
+    "@gasket/plugin-fastify": "0.0.0-canary-20251023225836",
+    "@gasket/plugin-https": "0.0.0-canary-20251023225836",
+    "@gasket/plugin-logger": "0.0.0-canary-20251023225836",
+    "@gasket/plugin-metadata": "0.0.0-canary-20251023225836",
     "@types/compression": "^1.7.5",
     "@types/cookie-parser": "^1.4.8",
     "@types/express": "^4.17.23",
     "@types/node": "^20.17.19",
     "@vitest/coverage-v8": "^3.2.0",
-    "create-gasket-app": "workspace:^",
+    "create-gasket-app": "0.0.0-canary-20251023225836",
     "fastify": "^4.29.1",
     "vitest": "^3.2.0"
   }

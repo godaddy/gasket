@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-analyze",
-  "version": "0.0.0-canary-20251023215243",
+  "version": "0.0.0-canary-20251023225836",
   "description": "Gasket Analyzer Plugin",
   "type": "module",
   "types": "lib/index.d.ts",
@@ -48,13 +48,13 @@
     "webpack-bundle-analyzer": "^4.10.2"
   },
   "devDependencies": {
-    "@gasket/cjs": "workspace:^",
-    "@gasket/core": "workspace:^",
-    "@gasket/plugin-metadata": "workspace:^",
-    "@gasket/plugin-webpack": "workspace:^",
+    "@gasket/cjs": "0.0.0-canary-20251023225836",
+    "@gasket/core": "0.0.0-canary-20251023225836",
+    "@gasket/plugin-metadata": "0.0.0-canary-20251023225836",
+    "@gasket/plugin-webpack": "0.0.0-canary-20251023225836",
     "@types/webpack-bundle-analyzer": "^4.7.0",
     "@vitest/coverage-v8": "^3.2.0",
-    "create-gasket-app": "workspace:^",
+    "create-gasket-app": "0.0.0-canary-20251023225836",
     "vitest": "^3.2.0"
   }
 }

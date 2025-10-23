@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-vitest",
-  "version": "0.0.0-canary-20251023215243",
+  "version": "0.0.0-canary-20251023225836",
   "description": "Integrates Vitest based testing in to your Gasket application",
   "type": "module",
   "types": "lib/index.d.ts",
@@ -46,14 +46,14 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-vitest",
   "devDependencies": {
-    "@gasket/cjs": "workspace:^",
-    "@gasket/core": "workspace:^",
-    "@gasket/plugin-metadata": "workspace:^",
+    "@gasket/cjs": "0.0.0-canary-20251023225836",
+    "@gasket/core": "0.0.0-canary-20251023225836",
+    "@gasket/plugin-metadata": "0.0.0-canary-20251023225836",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.3.0",
     "@vitejs/plugin-react": "^4.4.1",
     "@vitest/coverage-v8": "^3.2.0",
-    "create-gasket-app": "workspace:^",
+    "create-gasket-app": "0.0.0-canary-20251023225836",
     "jsdom": "^20.0.3",
     "vitest": "^3.2.0"
   }

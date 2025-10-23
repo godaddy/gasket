@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-lint",
-  "version": "0.0.0-canary-20251023215243",
+  "version": "0.0.0-canary-20251023225836",
   "description": "Adds GoDaddy standard linting to your application",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -36,11 +36,11 @@
     "semver": "^7.7.1"
   },
   "devDependencies": {
-    "@gasket/core": "workspace:^",
-    "@gasket/plugin-express": "workspace:^",
-    "@gasket/plugin-metadata": "workspace:^",
+    "@gasket/core": "0.0.0-canary-20251023225836",
+    "@gasket/plugin-express": "0.0.0-canary-20251023225836",
+    "@gasket/plugin-metadata": "0.0.0-canary-20251023225836",
     "@typescript-eslint/parser": "^8.38.0",
-    "create-gasket-app": "workspace:^",
+    "create-gasket-app": "0.0.0-canary-20251023225836",
     "jest": "^29.7.0",
     "typescript": "^5.8.2"
   }

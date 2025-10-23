@@ -1,6 +1,6 @@
 {
   "name": "@gasket/cjs",
-  "version": "0.0.0-canary-20251023215243",
+  "version": "0.0.0-canary-20251023225836",
   "description": "Utility for transpiling ESM to CJS with .cjs extensions",
   "type": "module",
   "bin": {

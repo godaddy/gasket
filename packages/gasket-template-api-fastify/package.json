@@ -1,6 +1,6 @@
 {
   "name": "@gasket/template-api-fastify",
-  "version": "0.0.0-canary-20251023215243",
+  "version": "0.0.0-canary-20251023225836",
   "description": "Gasket API template for Fastify",
   "type": "module",
   "files": [

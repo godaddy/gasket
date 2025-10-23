@@ -1,5 +1,13 @@
 # `@gasket/plugin-git`
 
+## 0.0.0-canary-20251023225836
+
+### Patch Changes
+
+- 2ef1513: Canary release for all packages
+- Updated dependencies [2ef1513]
+  - @gasket/utils@0.0.0-canary-20251023225836
+
 ## 0.0.0-canary-20251023215243
 
 ### Patch Changes

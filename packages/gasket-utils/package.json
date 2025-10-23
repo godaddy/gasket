@@ -1,6 +1,6 @@
 {
   "name": "@gasket/utils",
-  "version": "0.0.0-canary-20251023215243",
+  "version": "0.0.0-canary-20251023225836",
   "description": "Reusable utilities for Gasket internals",
   "type": "module",
   "files": [
@@ -58,8 +58,8 @@
     "semver": "^7.7.1"
   },
   "devDependencies": {
-    "@gasket/cjs": "workspace:^",
-    "@gasket/core": "workspace:^",
+    "@gasket/cjs": "0.0.0-canary-20251023225836",
+    "@gasket/core": "0.0.0-canary-20251023225836",
     "@types/concat-stream": "^2.0.3",
     "@types/cross-spawn": "^6.0.6",
     "@vitest/coverage-v8": "^3.2.0",

@@ -1,5 +1,17 @@
 # `@gasket/plugin-webpack`
 
+## 0.0.0-canary-20251023225836
+
+### Patch Changes
+
+- 2ef1513: Canary release for all packages
+
+## 0.0.0-canary-20251023225720
+
+### Patch Changes
+
+- ESM port
+
 ## 0.0.0-canary-20251023215243
 
 ### Patch Changes

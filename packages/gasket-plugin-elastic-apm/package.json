@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-elastic-apm",
-  "version": "0.0.0-canary-20251023215243",
+  "version": "0.0.0-canary-20251023225836",
   "description": "Adds Elastic APM instrumentation to your application",
   "type": "module",
   "types": "lib/index.d.ts",
@@ -46,13 +46,13 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-elastic-apm",
   "dependencies": {
-    "@gasket/request": "workspace:^"
+    "@gasket/request": "0.0.0-canary-20251023225836"
   },
   "devDependencies": {
-    "@gasket/cjs": "workspace:^",
-    "@gasket/core": "workspace:^",
-    "@gasket/plugin-metadata": "workspace:^",
-    "create-gasket-app": "workspace:^",
+    "@gasket/cjs": "0.0.0-canary-20251023225836",
+    "@gasket/core": "0.0.0-canary-20251023225836",
+    "@gasket/plugin-metadata": "0.0.0-canary-20251023225836",
+    "create-gasket-app": "0.0.0-canary-20251023225836",
     "dotenv": "^16.4.7",
     "elastic-apm-node": "^4.11.0",
     "vitest": "^3.2.0"
