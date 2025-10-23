@@ -1,5 +1,11 @@
 # `@gasket/fetch`
 
+## 7.3.9
+
+### Patch Changes
+
+- dd11e2c: Mark as deprecated
+
 ## 7.3.8
 
 ### Patch Changes

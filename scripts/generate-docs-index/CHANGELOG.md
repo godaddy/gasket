@@ -1,5 +1,17 @@
 # generate-docs-index
 
+## 7.4.21
+
+### Patch Changes
+
+- Updated dependencies [dd11e2c]
+- Updated dependencies [dd11e2c]
+  - @gasket/react-intl@7.6.5
+  - @gasket/fetch@7.3.9
+  - @gasket/redux@7.3.8
+  - @gasket/plugin-intl@7.5.10
+  - @gasket/plugin-redux@7.4.3
+
 ## 7.4.20
 
 ### Patch Changes

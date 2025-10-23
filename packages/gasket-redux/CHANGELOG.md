@@ -1,5 +1,11 @@
 # `@gasket/redux`
 
+## 7.3.8
+
+### Patch Changes
+
+- dd11e2c: Mark as deprecated
+
 ## 7.3.7
 
 ### Patch Changes

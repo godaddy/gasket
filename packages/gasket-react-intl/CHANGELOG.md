@@ -1,5 +1,12 @@
 # `@gasket/react-intl`
 
+## 7.6.5
+
+### Patch Changes
+
+- dd11e2c: Remove unused @gasket/fetch dependency
+  - @gasket/plugin-intl@7.5.10
+
 ## 7.6.4
 
 ### Patch Changes
