@@ -1,5 +1,17 @@
 # `@gasket/nextjs`
 
+## 0.0.0-canary-20251023174025
+
+### Minor Changes
+
+- Canary release for ESM port testing
+
+### Patch Changes
+
+- Updated dependencies
+  - @gasket/data@0.0.0-canary-20251023174025
+  - @gasket/request@0.0.0-canary-20251023174025
+
 ## 7.6.5
 
 ### Patch Changes

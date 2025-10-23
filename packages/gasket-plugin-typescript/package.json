@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-typescript",
-  "version": "7.4.6",
+  "version": "0.0.0-canary-20251023174025",
   "description": "Gasket plugin for TypeScript support",
   "types": "lib/index.d.ts",
   "files": [

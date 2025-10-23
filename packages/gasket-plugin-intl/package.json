@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-intl",
-  "version": "7.5.10",
+  "version": "0.0.0-canary-20251023174025",
   "description": "NodeJS script to build localization files.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
