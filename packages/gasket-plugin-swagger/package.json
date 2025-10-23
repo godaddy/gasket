@@ -55,6 +55,7 @@
     "swagger-ui-express": "^4.6.3"
   },
   "devDependencies": {
+    "@gasket/cjs": "workspace:^",
     "@gasket/core": "workspace:^",
     "@gasket/plugin-command": "workspace:^",
     "@gasket/plugin-express": "workspace:^",
@@ -63,7 +64,6 @@
     "@gasket/plugin-metadata": "workspace:^",
     "create-gasket-app": "workspace:^",
     "fastify": "^4.29.1",
-    "@gasket/cjs": "workspace:^",
     "openapi-types": "^12.1.3",
     "vitest": "^3.2.0"
   }
