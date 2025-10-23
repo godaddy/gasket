@@ -1,5 +1,5 @@
-const init = require('../lib/init');
-const intlPolyfill = require('intl');
+import init from '../lib/init.js';
+import intlPolyfill from 'intl';
 const intlDefault = global.Intl;
 
 describe('init', function () {

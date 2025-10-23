@@ -1,43 +1,58 @@
-const buildSwaggerDefinition = require('../lib/build-swagger-definition');
-const swaggerJSDoc = require('swagger-jsdoc');
-const { writeFile } = require('fs').promises;
+import { vi } from 'vitest';
+import buildSwaggerDefinition from '../lib/build-swagger-definition.js';
+import swaggerJSDoc from 'swagger-jsdoc';
+import { writeFile } from 'fs/promises';
 
-jest.mock('fs', () => ({
+vi.mock('fs', () => ({
   constants: {
-    F_OK: jest.fn()
+    F_OK: vi.fn()
   },
   promises: {
-    writeFile: jest.fn()
+    writeFile: vi.fn().mockResolvedValue()
   }
 }));
 
-jest.mock('swagger-jsdoc', () => {
-  return jest.fn(() => ({}));
+vi.mock('fs/promises', () => ({
+  writeFile: vi.fn().mockResolvedValue()
+}));
+
+vi.mock('swagger-jsdoc', () => {
+  return { default: vi.fn(() => ({})) };
 });
 
-const mockSafeDump = jest.fn();
-jest.mock('js-yaml', () => {
-  return { safeDump: mockSafeDump };
+const mockSafeDump = vi.fn();
+vi.mock('js-yaml', () => {
+  return { default: { safeDump: mockSafeDump } };
 });
 
-jest.mock('util', () => {
-  const mod = jest.requireActual('util');
+vi.mock('util', () => {
+  const mod = vi.importActual('util');
   return {
     ...mod,
     promisify: (f) => f
   };
 });
-jest.mock('/path/to/app/swagger.json', () => ({ data: true }), {
+vi.mock('/path/to/app/swagger.json', () => ({ data: true }), {
   virtual: true
 });
 
-jest.mock('/path/to/app/package.json', () => ({
+vi.mock('/path/to/app/package.json', () => ({
   version: '1.0.0'
 }), { virtual: true });
 
-jest.mock('path/to/root/from/options/package.json', () => ({
+vi.mock('path/to/root/from/options/package.json', () => ({
   version: '1.0.0'
 }), { virtual: true });
+
+// Mock the createRequire function to handle package.json requires
+vi.mock('module', () => ({
+  createRequire: vi.fn(() => (path) => {
+    if (path.includes('package.json')) {
+      return { version: '1.0.0' };
+    }
+    throw new Error(`Cannot find module '${path}'`);
+  })
+}));
 
 describe('build-swagger-definition', function () {
   let mockGasket;
@@ -45,8 +60,8 @@ describe('build-swagger-definition', function () {
   beforeEach(function () {
     mockGasket = {
       logger: {
-        info: jest.fn(),
-        warn: jest.fn()
+        info: vi.fn(),
+        warn: vi.fn()
       },
       config: {
         root: '/path/to/app',
@@ -67,8 +82,8 @@ describe('build-swagger-definition', function () {
   });
 
   afterEach(function () {
-    jest.clearAllMocks();
-    jest.resetModules();
+    vi.clearAllMocks();
+    vi.resetModules();
   });
 
   it('sets up swagger spec', async function () {
