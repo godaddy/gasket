@@ -45,7 +45,6 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-react-intl",
   "dependencies": {
     "@gasket/data": "workspace:^",
-    "@gasket/fetch": "workspace:^",
     "@gasket/intl": "workspace:^",
     "hoist-non-react-statics": "^3.3.2",
     "htmlescape": "^1.1.1",

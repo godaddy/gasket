@@ -1894,9 +1894,6 @@ importers:
       '@gasket/data':
         specifier: workspace:^
         version: link:../gasket-data
-      '@gasket/fetch':
-        specifier: workspace:^
-        version: link:../gasket-fetch
       '@gasket/intl':
         specifier: workspace:^
         version: link:../gasket-intl
