@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-service-worker",
-  "version": "0.0.0-canary-20251023214602",
+  "version": "0.0.0-canary-20251023215243",
   "description": "DEPRECATED Gasket Service Worker Plugin",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

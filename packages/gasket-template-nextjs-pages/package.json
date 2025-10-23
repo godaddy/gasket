@@ -1,6 +1,6 @@
 {
   "name": "@gasket/template-nextjs-pages",
-  "version": "0.0.0-canary-20251023214602",
+  "version": "0.0.0-canary-20251023215243",
   "description": "Gasket Next.js Pages Router template",
   "type": "module",
   "files": [

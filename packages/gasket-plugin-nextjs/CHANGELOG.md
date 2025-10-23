@@ -1,5 +1,13 @@
 # `@gasket/plugin-nextjs`
 
+## 0.0.0-canary-20251023215243
+
+### Patch Changes
+
+- esm port
+- Updated dependencies
+  - @gasket/plugin-webpack@0.0.0-canary-20251023215243
+
 ## 0.0.0-canary-20251023214602
 
 ### Minor Changes

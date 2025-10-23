@@ -1,5 +1,14 @@
 # `@gasket/plugin-metadata`
 
+## 0.0.0-canary-20251023215243
+
+### Patch Changes
+
+- esm port
+- Updated dependencies
+  - @gasket/plugin-logger@0.0.0-canary-20251023215243
+  - @gasket/core@0.0.0-canary-20251023215243
+
 ## 0.0.0-canary-20251023214602
 
 ### Minor Changes

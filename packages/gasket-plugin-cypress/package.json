@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-cypress",
-  "version": "0.0.0-canary-20251023214602",
+  "version": "0.0.0-canary-20251023215243",
   "description": "Integrates Cypress based testing into your Gasket application",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

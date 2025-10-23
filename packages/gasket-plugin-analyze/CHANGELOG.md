@@ -1,5 +1,11 @@
 # `@gasket/plugin-analyze`
 
+## 0.0.0-canary-20251023215243
+
+### Patch Changes
+
+- esm port
+
 ## 0.0.0-canary-20251023214602
 
 ### Minor Changes

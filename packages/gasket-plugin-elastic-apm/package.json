@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-elastic-apm",
-  "version": "0.0.0-canary-20251023214602",
+  "version": "0.0.0-canary-20251023215243",
   "description": "Adds Elastic APM instrumentation to your application",
   "type": "module",
   "types": "lib/index.d.ts",

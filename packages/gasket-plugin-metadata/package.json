@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-metadata",
-  "version": "0.0.0-canary-20251023214602",
+  "version": "0.0.0-canary-20251023215243",
   "description": "Adds metadata to gasket lifecycles",
   "type": "module",
   "types": "lib/index.d.ts",

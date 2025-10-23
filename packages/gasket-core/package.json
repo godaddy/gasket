@@ -1,6 +1,6 @@
 {
   "name": "@gasket/core",
-  "version": "0.0.0-canary-20251023214602",
+  "version": "0.0.0-canary-20251023215243",
   "description": "Entry point to setting up Gasket instances",
   "type": "module",
   "types": "lib/index.d.ts",

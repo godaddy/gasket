@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-docusaurus",
-  "version": "0.0.0-canary-20251023214602",
+  "version": "0.0.0-canary-20251023215243",
   "description": "Gasket plugin for docusaurus",
   "type": "module",
   "types": "lib/index.d.ts",
@@ -64,6 +64,6 @@
     "vitest": "^3.2.0"
   },
   "peerDependencies": {
-    "@gasket/plugin-logger": "0.0.0-canary-20251023214602"
+    "@gasket/plugin-logger": "0.0.0-canary-20251023215243"
   }
 }

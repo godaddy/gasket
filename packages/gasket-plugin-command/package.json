@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-command",
-  "version": "0.0.0-canary-20251023214602",
+  "version": "0.0.0-canary-20251023215243",
   "description": "Plugin to enable other plugins to inject new gasket commands",
   "type": "module",
   "types": "lib/index.d.ts",
