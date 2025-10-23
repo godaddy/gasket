@@ -1,15 +1,15 @@
-const { withGasketRequestCache } = require('@gasket/request');
+import { withGasketRequestCache } from '@gasket/request';
 
 /** @type {import('@gasket/core').ActionHandler<'getApmTransaction'>} */
-const getApmTransaction = withGasketRequestCache(
+export const getApmTransaction = withGasketRequestCache(
   async function getApmTransaction(gasket, req) {
-    const apm = require('elastic-apm-node');
+    const apm = await import('elastic-apm-node');
 
-    if (!apm?.isStarted()) {
+    if (!apm?.default?.isStarted()) {
       return;
     }
 
-    const transaction = apm.currentTransaction;
+    const transaction = apm.default.currentTransaction;
     if (!transaction) {
       return;
     }
@@ -19,7 +19,3 @@ const getApmTransaction = withGasketRequestCache(
     return transaction;
   }
 );
-
-module.exports = {
-  getApmTransaction
-};
