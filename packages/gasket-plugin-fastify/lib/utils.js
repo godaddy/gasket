@@ -1,5 +1,7 @@
 // @ts-nocheck
 
+import fastify from 'fastify';
+
 const fallbackMap = {
   fatal: 'error',
   trace: 'debug'
@@ -28,9 +30,8 @@ let instance = null;
  * @param {import('@gasket/core').Gasket} gasket - Gasket instance
  * @returns {import('fastify').FastifyInstance} - Fastify instance
  */
-function getAppInstance(gasket) {
+export function getAppInstance(gasket) {
   if (!instance) {
-    const fastify = require('fastify');
     const { fastify: fastifyConfig = {}, http2, https } = gasket.config;
     const { trustProxy = false, disableRequestLogging = true } = fastifyConfig;
     const fastifyLogger = alignLogger(gasket.logger);
@@ -41,10 +42,8 @@ function getAppInstance(gasket) {
   return instance;
 }
 
-module.exports = {
-  alignLogger,
-  getAppInstance,
-  testClearAppInstance: () => {
-    instance = null;
-  }
-};
+export { alignLogger };
+
+export function testClearAppInstance() {
+  instance = null;
+}

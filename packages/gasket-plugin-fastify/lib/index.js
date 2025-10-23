@@ -1,10 +1,13 @@
 /// <reference types="@gasket/core" />
 /// <reference types="@gasket/plugin-metadata" />
 
+import { createRequire } from 'node:module';
+import create from './create.js';
+import createServers from './create-servers.js';
+import actions from './actions.js';
+
+const require = createRequire(import.meta.url);
 const { name, version, description } = require('../package.json');
-const create = require('./create');
-const createServers = require('./create-servers');
-const actions = require('./actions');
 
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {
@@ -71,4 +74,4 @@ const plugin = {
   }
 };
 
-module.exports = plugin;
+export default plugin;
