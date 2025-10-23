@@ -1,5 +1,9 @@
-const { name, version } = require('../package');
-const createHook = require('../lib/create');
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import { createRequire } from 'node:module';
+import createHook from '../lib/create.js';
+
+const require = createRequire(import.meta.url);
+const { name, version } = require('../package.json');
 
 describe('create', () => {
   let mockContext;
@@ -13,10 +17,10 @@ describe('create', () => {
 
   beforeEach(() => {
     mockContext = {
-      pkg: { add: jest.fn() },
-      files: { add: jest.fn() },
+      pkg: { add: vi.fn() },
+      files: { add: vi.fn() },
       gasketConfig: {
-        addPlugin: jest.fn()
+        addPlugin: vi.fn()
       },
       apiApp: true
     };
