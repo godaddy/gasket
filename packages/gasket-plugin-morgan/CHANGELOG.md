@@ -1,5 +1,17 @@
 # `@gasket/plugin-morgan`
 
+## 0.0.0-canary-20251023172400
+
+### Minor Changes
+
+- b1e63b2: Migrate to ESM and Vitest
+
+  Port to ESM and vitest with CJS exports
+
+### Patch Changes
+
+- @gasket/plugin-logger@7.3.8
+
 ## 7.3.7
 
 ### Patch Changes

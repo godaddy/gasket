@@ -1,5 +1,12 @@
 # `@gasket/plugin-docs`
 
+## 0.0.0-canary-20251023172400
+
+### Patch Changes
+
+- e7fb8dc: ESM Port
+  - @gasket/plugin-command@7.5.3
+
 ## 7.4.8
 
 ### Patch Changes

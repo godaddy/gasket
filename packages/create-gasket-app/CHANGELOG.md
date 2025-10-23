@@ -1,5 +1,19 @@
 # `create-gasket-app`
 
+## 0.0.0-canary-20251023172400
+
+### Patch Changes
+
+- Updated dependencies [e7fb8dc]
+- Updated dependencies [e7fb8dc]
+  - @gasket/plugin-docusaurus@0.0.0-canary-20251023172400
+  - @gasket/plugin-docs@0.0.0-canary-20251023172400
+  - @gasket/plugin-logger@7.3.8
+  - @gasket/plugin-command@7.5.3
+  - @gasket/plugin-dynamic-plugins@7.4.2
+  - @gasket/plugin-git@7.4.7
+  - @gasket/plugin-metadata@7.5.4
+
 ## 7.4.14
 
 ### Patch Changes

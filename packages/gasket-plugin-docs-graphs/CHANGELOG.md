@@ -1,5 +1,11 @@
 # `@gasket/plugin-docs-graph`
 
+## 0.0.0-canary-20251023172400
+
+### Patch Changes
+
+- e7fb8dc: ESM port
+
 ## 7.3.7
 
 ### Patch Changes

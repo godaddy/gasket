@@ -1,5 +1,24 @@
 # `@gasket/plugin-docusaurus`
 
+## 0.0.0-canary-20251023172400
+
+### Major Changes
+
+- e7fb8dc: Migrate gasket-plugin-docusaurus to ESM
+
+  - Add `"type": "module"` to package.json
+  - Convert all CommonJS `require()` to ESM `import`
+  - Convert all `module.exports` to `export default`
+  - Update `__dirname` and `__filename` usage for ESM
+  - Replace Jest with Vitest for testing
+  - Add gasket-cjs build configuration for CommonJS compatibility
+  - Update package.json exports for dual module support
+  - Add TypeScript declarations for docusaurus modules
+
+### Patch Changes
+
+- @gasket/plugin-logger@7.3.8
+
 ## 7.4.6
 
 ### Patch Changes

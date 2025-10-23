@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-data",
-  "version": "7.4.12",
+  "version": "0.0.0-canary-20251023172400",
   "description": "Supports application-specific settings and configurations",
   "type": "module",
   "main": "lib/index.js",

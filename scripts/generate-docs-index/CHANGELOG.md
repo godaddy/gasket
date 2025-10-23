@@ -1,5 +1,60 @@
 # generate-docs-index
 
+## 0.0.0-canary-20251023172400
+
+### Patch Changes
+
+- Updated dependencies [a594cac]
+- Updated dependencies [0abf2d4]
+- Updated dependencies [8f1ebbd]
+- Updated dependencies [5b7eda2]
+- Updated dependencies [b1e63b2]
+- Updated dependencies [e7fb8dc]
+- Updated dependencies [155082f]
+- Updated dependencies [14ad24d]
+- Updated dependencies [e7fb8dc]
+- Updated dependencies [e56adef]
+- Updated dependencies [e7fb8dc]
+  - @gasket/plugin-express@0.0.0-canary-20251023172400
+  - @gasket/plugin-fastify@0.0.0-canary-20251023172400
+  - @gasket/plugin-https@0.0.0-canary-20251023172400
+  - @gasket/assets@0.0.0-canary-20251023172400
+  - @gasket/plugin-morgan@0.0.0-canary-20251023172400
+  - @gasket/plugin-docusaurus@0.0.0-canary-20251023172400
+  - @gasket/plugin-data@0.0.0-canary-20251023172400
+  - @gasket/plugin-nextjs@0.0.0-canary-20251023172400
+  - @gasket/plugin-docs-graphs@0.0.0-canary-20251023172400
+  - @gasket/plugin-middleware@0.0.0-canary-20251023172400
+  - @gasket/plugin-docs@0.0.0-canary-20251023172400
+  - @gasket/plugin-jest@7.5.5
+  - @gasket/plugin-lint@7.4.4
+  - @gasket/plugin-manifest@7.3.9
+  - @gasket/plugin-mocha@7.5.4
+  - @gasket/plugin-redux@7.4.3
+  - @gasket/plugin-service-worker@7.5.0
+  - @gasket/plugin-swagger@7.3.11
+  - @gasket/plugin-workbox@7.4.0
+  - @gasket/preset-api@0.0.0-canary-20251023172400
+  - @gasket/preset-nextjs@0.0.0-canary-20251023172400
+  - @gasket/plugin-happyfeet@7.3.7
+  - @gasket/plugin-https-proxy@7.4.2
+  - @gasket/plugin-logger@7.3.8
+  - create-gasket-app@0.0.0-canary-20251023172400
+  - @gasket/data@7.5.4
+  - @gasket/nextjs@7.6.5
+  - @gasket/plugin-intl@7.5.10
+  - @gasket/plugin-analyze@7.3.8
+  - @gasket/plugin-command@7.5.3
+  - @gasket/plugin-cypress@7.5.3
+  - @gasket/plugin-dynamic-plugins@7.4.2
+  - @gasket/plugin-elastic-apm@7.4.9
+  - @gasket/plugin-git@7.4.7
+  - @gasket/plugin-metadata@7.5.4
+  - @gasket/plugin-typescript@7.4.6
+  - @gasket/plugin-vitest@7.1.2
+  - @gasket/plugin-webpack@7.3.9
+  - @gasket/plugin-winston@7.3.8
+
 ## 7.4.20
 
 ### Patch Changes
