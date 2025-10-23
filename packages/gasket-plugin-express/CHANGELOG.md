@@ -1,5 +1,15 @@
 # `@gasket/plugin-express`
 
+## 0.0.0-canary-20251023214602
+
+### Minor Changes
+
+- 2ef1513: Canary release for ESM port testing
+
+### Patch Changes
+
+- 4e96177: ESM port
+
 ## 0.0.0-canary-20251023174025
 
 ### Minor Changes

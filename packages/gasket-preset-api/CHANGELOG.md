@@ -1,5 +1,34 @@
 # `@gasket/preset-api`
 
+## 0.0.0-canary-20251023214602
+
+### Minor Changes
+
+- 2ef1513: Canary release for ESM port testing
+
+### Patch Changes
+
+- 4e96177: ESM port
+- Updated dependencies [2ef1513]
+- Updated dependencies [4e96177]
+  - @gasket/plugin-command@0.0.0-canary-20251023214602
+  - @gasket/plugin-cypress@0.0.0-canary-20251023214602
+  - @gasket/plugin-docs@0.0.0-canary-20251023214602
+  - @gasket/plugin-docusaurus@0.0.0-canary-20251023214602
+  - @gasket/plugin-dynamic-plugins@0.0.0-canary-20251023214602
+  - @gasket/plugin-express@0.0.0-canary-20251023214602
+  - @gasket/plugin-fastify@0.0.0-canary-20251023214602
+  - @gasket/plugin-git@0.0.0-canary-20251023214602
+  - @gasket/plugin-https@0.0.0-canary-20251023214602
+  - @gasket/plugin-jest@0.0.0-canary-20251023214602
+  - @gasket/plugin-lint@0.0.0-canary-20251023214602
+  - @gasket/plugin-logger@0.0.0-canary-20251023214602
+  - @gasket/plugin-mocha@0.0.0-canary-20251023214602
+  - @gasket/plugin-swagger@0.0.0-canary-20251023214602
+  - @gasket/plugin-typescript@0.0.0-canary-20251023214602
+  - @gasket/plugin-vitest@0.0.0-canary-20251023214602
+  - @gasket/plugin-winston@0.0.0-canary-20251023214602
+
 ## 0.0.0-canary-20251023174025
 
 ### Minor Changes

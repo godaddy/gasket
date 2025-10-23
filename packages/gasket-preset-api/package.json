@@ -1,6 +1,6 @@
 {
   "name": "@gasket/preset-api",
-  "version": "0.0.0-canary-20251023174025",
+  "version": "0.0.0-canary-20251023214602",
   "description": "Create Express-based API with Gasket",
   "type": "module",
   "types": "lib/index.d.ts",

@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-git",
-  "version": "0.0.0-canary-20251023174025",
+  "version": "0.0.0-canary-20251023214602",
   "description": "Adds git support to your application",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

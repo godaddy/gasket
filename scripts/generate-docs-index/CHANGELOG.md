@@ -1,5 +1,65 @@
 # generate-docs-index
 
+## 0.0.0-canary-20251023214602
+
+### Patch Changes
+
+- Updated dependencies [2ef1513]
+- Updated dependencies [a5f7269]
+- Updated dependencies [4e96177]
+  - @gasket/assets@0.0.0-canary-20251023214602
+  - @gasket/cjs@0.0.0-canary-20251023214602
+  - @gasket/core@0.0.0-canary-20251023214602
+  - @gasket/data@0.0.0-canary-20251023214602
+  - @gasket/fetch@0.0.0-canary-20251023214602
+  - @gasket/intl@0.0.0-canary-20251023214602
+  - @gasket/nextjs@0.0.0-canary-20251023214602
+  - @gasket/plugin-analyze@0.0.0-canary-20251023214602
+  - @gasket/plugin-command@0.0.0-canary-20251023214602
+  - @gasket/plugin-cypress@0.0.0-canary-20251023214602
+  - @gasket/plugin-data@0.0.0-canary-20251023214602
+  - @gasket/plugin-docs@0.0.0-canary-20251023214602
+  - @gasket/plugin-docs-graphs@0.0.0-canary-20251023214602
+  - @gasket/plugin-docusaurus@0.0.0-canary-20251023214602
+  - @gasket/plugin-dynamic-plugins@0.0.0-canary-20251023214602
+  - @gasket/plugin-elastic-apm@0.0.0-canary-20251023214602
+  - @gasket/plugin-express@0.0.0-canary-20251023214602
+  - @gasket/plugin-fastify@0.0.0-canary-20251023214602
+  - @gasket/plugin-git@0.0.0-canary-20251023214602
+  - @gasket/plugin-happyfeet@0.0.0-canary-20251023214602
+  - @gasket/plugin-https@0.0.0-canary-20251023214602
+  - @gasket/plugin-https-proxy@0.0.0-canary-20251023214602
+  - @gasket/plugin-intl@0.0.0-canary-20251023214602
+  - @gasket/plugin-jest@0.0.0-canary-20251023214602
+  - @gasket/plugin-lint@0.0.0-canary-20251023214602
+  - @gasket/plugin-logger@0.0.0-canary-20251023214602
+  - @gasket/plugin-manifest@0.0.0-canary-20251023214602
+  - @gasket/plugin-metadata@0.0.0-canary-20251023214602
+  - @gasket/plugin-middleware@0.0.0-canary-20251023214602
+  - @gasket/plugin-mocha@0.0.0-canary-20251023214602
+  - @gasket/plugin-morgan@0.0.0-canary-20251023214602
+  - @gasket/plugin-nextjs@0.0.0-canary-20251023214602
+  - @gasket/plugin-redux@0.0.0-canary-20251023214602
+  - @gasket/plugin-service-worker@0.0.0-canary-20251023214602
+  - @gasket/plugin-swagger@0.0.0-canary-20251023214602
+  - @gasket/plugin-typescript@0.0.0-canary-20251023214602
+  - @gasket/plugin-vitest@0.0.0-canary-20251023214602
+  - @gasket/plugin-webpack@0.0.0-canary-20251023214602
+  - @gasket/plugin-winston@0.0.0-canary-20251023214602
+  - @gasket/plugin-workbox@0.0.0-canary-20251023214602
+  - @gasket/preset-api@0.0.0-canary-20251023214602
+  - @gasket/preset-nextjs@0.0.0-canary-20251023214602
+  - @gasket/react-intl@0.0.0-canary-20251023214602
+  - @gasket/redux@0.0.0-canary-20251023214602
+  - @gasket/request@0.0.0-canary-20251023214602
+  - @gasket/template-api-express@0.0.0-canary-20251023214602
+  - @gasket/template-api-fastify@0.0.0-canary-20251023214602
+  - @gasket/template-nextjs-app@0.0.0-canary-20251023214602
+  - @gasket/template-nextjs-express@0.0.0-canary-20251023214602
+  - @gasket/template-nextjs-pages@0.0.0-canary-20251023214602
+  - @gasket/utils@0.0.0-canary-20251023214602
+  - create-gasket-app@0.0.0-canary-20251023214602
+
 ## 0.0.0-canary-20251023174025
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@gasket/utils",
-  "version": "0.0.0-canary-20251023174025",
+  "version": "0.0.0-canary-20251023214602",
   "description": "Reusable utilities for Gasket internals",
   "type": "module",
   "files": [

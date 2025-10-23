@@ -601,7 +601,7 @@ importers:
   packages/gasket-plugin-docusaurus:
     dependencies:
       '@gasket/plugin-logger':
-        specifier: ^7.3.8
+        specifier: 0.0.0-canary-20251023214602
         version: link:../gasket-plugin-logger
     devDependencies:
       '@docusaurus/core':
@@ -1287,7 +1287,7 @@ importers:
   packages/gasket-plugin-morgan:
     dependencies:
       '@gasket/plugin-logger':
-        specifier: ^7.3.8
+        specifier: 0.0.0-canary-20251023214602
         version: link:../gasket-plugin-logger
       express:
         specifier: ^4.21.2
@@ -1901,7 +1901,7 @@ importers:
         specifier: workspace:^
         version: link:../gasket-intl
       '@gasket/plugin-intl':
-        specifier: ^7.5.9
+        specifier: 0.0.0-canary-20251023214602
         version: link:../gasket-plugin-intl
       hoist-non-react-statics:
         specifier: ^3.3.2

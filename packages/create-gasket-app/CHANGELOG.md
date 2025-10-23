@@ -1,5 +1,26 @@
 # `create-gasket-app`
 
+## 0.0.0-canary-20251023214602
+
+### Minor Changes
+
+- 2ef1513: Canary release for ESM port testing
+
+### Patch Changes
+
+- Updated dependencies [2ef1513]
+- Updated dependencies [4e96177]
+  - @gasket/core@0.0.0-canary-20251023214602
+  - @gasket/plugin-command@0.0.0-canary-20251023214602
+  - @gasket/plugin-docs@0.0.0-canary-20251023214602
+  - @gasket/plugin-docusaurus@0.0.0-canary-20251023214602
+  - @gasket/plugin-dynamic-plugins@0.0.0-canary-20251023214602
+  - @gasket/plugin-git@0.0.0-canary-20251023214602
+  - @gasket/plugin-logger@0.0.0-canary-20251023214602
+  - @gasket/plugin-metadata@0.0.0-canary-20251023214602
+  - @gasket/request@0.0.0-canary-20251023214602
+  - @gasket/utils@0.0.0-canary-20251023214602
+
 ## 0.0.0-canary-20251023174025
 
 ### Minor Changes
