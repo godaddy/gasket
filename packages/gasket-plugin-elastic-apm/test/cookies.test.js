@@ -1,4 +1,5 @@
-const { filterSensitiveCookies, sensitiveCookies } = require('../lib/cookies');
+import { describe, it, expect } from 'vitest';
+import { filterSensitiveCookies, sensitiveCookies } from '../lib/cookies.js';
 
 describe('filterSensitiveCookies', () => {
   it('is a thunk', () => {

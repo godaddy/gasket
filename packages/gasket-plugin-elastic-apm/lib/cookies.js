@@ -4,7 +4,7 @@
  * @param {import('@gasket/core').GasketConfig} config the Gasket config
  * @returns {string[]} an array of cookie names
  */
-const sensitiveCookies = (config) => {
+export const sensitiveCookies = (config) => {
   if (
     typeof config.elasticAPM === 'undefined' ||
     typeof config.elasticAPM.sensitiveCookies === 'undefined'
@@ -17,9 +17,9 @@ const sensitiveCookies = (config) => {
 
 /**
  * Redacts the contents of user-specified sensitive cookies
- * @type {import('.').filterSensitiveCookies}
+ * @type {import('./index.js').filterSensitiveCookies}
  */
-const filterSensitiveCookies = function (config) {
+export const filterSensitiveCookies = function (config) {
   return function (payload) {
     const cookiesToRedact = sensitiveCookies(config);
 
@@ -53,9 +53,4 @@ const filterSensitiveCookies = function (config) {
 
     return payload;
   };
-};
-
-module.exports = {
-  filterSensitiveCookies,
-  sensitiveCookies
 };

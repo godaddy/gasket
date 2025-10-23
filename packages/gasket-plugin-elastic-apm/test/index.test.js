@@ -1,18 +1,24 @@
 /* eslint-disable no-process-env */
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import plugin from '../lib/index.js';
+import { readFileSync } from 'fs';
+
+const packageJsonPath = new URL('../package.json', import.meta.url).pathname;
+const pkg = JSON.parse(readFileSync(packageJsonPath, 'utf8'));
+const { name, version, description } = pkg;
+
 const apmGeneric = {
-  start: jest.fn(),
-  addFilter: jest.fn()
+  start: vi.fn(),
+  addFilter: vi.fn()
 };
 
 const mockAPM = {
-  start: jest.fn().mockReturnValue(apmGeneric),
-  addFilter: jest.fn().mockReturnValue(apmGeneric),
-  isStarted: jest.fn()
+  start: vi.fn().mockReturnValue(apmGeneric),
+  addFilter: vi.fn().mockReturnValue(apmGeneric),
+  isStarted: vi.fn()
 };
 
-jest.mock('elastic-apm-node', () => mockAPM);
-const plugin = require('../lib/index');
-const { name, version, description } = require('../package');
+vi.mock('elastic-apm-node', () => ({ default: mockAPM }));
 
 describe('Plugin', () => {
 
@@ -23,7 +29,7 @@ describe('Plugin', () => {
   });
 
   afterEach(function () {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
 
     delete process.env.ELASTIC_APM_SERVER_URL;
     delete process.env.ELASTIC_APM_SECRET_TOKEN;
