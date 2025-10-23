@@ -3,6 +3,9 @@
 Gasket will utilize the Fetch API as our standard request library. This package
 serves as a proxy for fetch implementations with server-side support.
 
+⚠️ _DEPRECATED - This package will be removed in a future major version.
+Instead, use the Fetch API directly found in modern browser and Node.js versions._
+
 ## Installation
 
 ```
