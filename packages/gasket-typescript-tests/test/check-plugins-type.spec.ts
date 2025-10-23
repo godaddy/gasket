@@ -19,6 +19,9 @@ import pluginMorgan from '@gasket/plugin-morgan';
 import pluginNextjs from '@gasket/plugin-nextjs';
 import pluginWebpack from '@gasket/plugin-webpack';
 import pluginWinston from '@gasket/plugin-winston';
+import pluginHappyFeet from '@gasket/plugin-happyfeet';
+import pluginIntl from '@gasket/plugin-intl';
+import pluginSwagger from '@gasket/plugin-swagger';
 
 // Import CommonJS plugins that haven't been migrated to ESM yet
 import { createRequire } from 'module';
@@ -26,14 +29,11 @@ const require = createRequire(import.meta.url);
 const pluginCypress = require('@gasket/plugin-cypress');
 const pluginElasticApm = require('@gasket/plugin-elastic-apm');
 const pluginGit = require('@gasket/plugin-git');
-const pluginHappyFeet = require('@gasket/plugin-happyfeet');
-const pluginIntl = require('@gasket/plugin-intl');
 const pluginJest = require('@gasket/plugin-jest');
 const pluginLint = require('@gasket/plugin-lint');
 const pluginMocha = require('@gasket/plugin-mocha');
 const pluginRedux = require('@gasket/plugin-redux');
 const pluginServiceWorker = require('@gasket/plugin-service-worker');
-const pluginSwagger = require('@gasket/plugin-swagger');
 const pluginTypeScript = require('@gasket/plugin-typescript');
 const pluginWorkbox = require('@gasket/plugin-workbox');
 
