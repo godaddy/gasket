@@ -1,11 +1,12 @@
 /* eslint-disable max-len, max-statements */
-const path = require('path');
-const glob = require('glob');
-const DocsConfigSetBuilder = require('../../lib/utils/config-set-builder');
+import { vi } from 'vitest';
+import path from 'path';
+import glob from 'glob';
+import DocsConfigSetBuilder from '../../lib/utils/config-set-builder.js';
 
-const fixtures = path.resolve(__dirname, '..', 'fixtures');
-jest.mock('util', () => ({ promisify: f => f }));
-jest.mock('glob', (f) => jest.fn(f).mockResolvedValue(['./files/file-a.md', './files/file-b.md']));
+const fixtures = path.resolve(import.meta.dirname, '..', 'fixtures');
+vi.mock('util', () => ({ promisify: f => f }));
+vi.mock('glob', () => ({ default: vi.fn().mockResolvedValue(['./files/file-a.md', './files/file-b.md']) }));
 
 describe('utils - DocsConfigSetBuilder', () => {
   let instance, buildDocsConfigSpy, mockGasket;
@@ -19,7 +20,7 @@ describe('utils - DocsConfigSetBuilder', () => {
     };
 
     instance = new DocsConfigSetBuilder(mockGasket);
-    buildDocsConfigSpy = jest.spyOn(instance, '_buildDocsConfig');
+    buildDocsConfigSpy = vi.spyOn(instance, '_buildDocsConfig');
   });
 
 
@@ -147,7 +148,7 @@ describe('utils - DocsConfigSetBuilder', () => {
 
     it('add docsSetup for modules', async () => {
       const mockDocSetup = { link: 'BOGUS.md', modules: { fake: { link: 'BOGUS.md' } } };
-      const spy = jest.spyOn(instance, '_addModuleDocsSetup');
+      const spy = vi.spyOn(instance, '_addModuleDocsSetup');
       await instance.addPlugin({ name: 'example-plugin', metadata: { path: '/some/path' } }, mockDocSetup);
       expect(spy).toHaveBeenCalledWith(
         expect.objectContaining({ fake: { link: 'BOGUS.md' } })

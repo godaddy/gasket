@@ -1,4 +1,4 @@
-const configure = require('../lib/configure');
+import configure from '../lib/configure.js';
 
 describe('configure', () => {
   const mockGasket = {
