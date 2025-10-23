@@ -1,5 +1,17 @@
 # `@gasket/plugin-metadata`
 
+## 0.0.0-canary-20251023174025
+
+### Minor Changes
+
+- Canary release for ESM port testing
+
+### Patch Changes
+
+- Updated dependencies
+  - @gasket/core@0.0.0-canary-20251023174025
+  - @gasket/plugin-logger@0.0.0-canary-20251023174025
+
 ## 7.5.4
 
 ### Patch Changes

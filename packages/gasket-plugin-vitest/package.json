@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-vitest",
-  "version": "7.1.2",
+  "version": "0.0.0-canary-20251023174025",
   "description": "Integrates Vitest based testing in to your Gasket application",
   "type": "module",
   "types": "lib/index.d.ts",

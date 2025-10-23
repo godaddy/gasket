@@ -1,5 +1,11 @@
 # `@gasket/redux`
 
+## 0.0.0-canary-20251023174025
+
+### Minor Changes
+
+- Canary release for ESM port testing
+
 ## 7.3.7
 
 ### Patch Changes

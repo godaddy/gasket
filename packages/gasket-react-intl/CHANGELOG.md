@@ -1,5 +1,19 @@
 # `@gasket/react-intl`
 
+## 0.0.0-canary-20251023174025
+
+### Minor Changes
+
+- Canary release for ESM port testing
+
+### Patch Changes
+
+- Updated dependencies
+  - @gasket/data@0.0.0-canary-20251023174025
+  - @gasket/fetch@0.0.0-canary-20251023174025
+  - @gasket/intl@0.0.0-canary-20251023174025
+  - @gasket/plugin-intl@0.0.0-canary-20251023174025
+
 ## 7.6.4
 
 ### Patch Changes
