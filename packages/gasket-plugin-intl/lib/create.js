@@ -1,6 +1,5 @@
 /// <reference types="create-gasket-app" />
 
-import path from 'path';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 const { devDependencies, name, version } = require('../package.json');
@@ -17,7 +16,8 @@ export default async function create(gasket, createContext) {
   if (createContext.typescript) gasket.config.intl.managerFilename = 'intl.ts';
 
   const { files, pkg, gasketConfig } = createContext;
-  const rootDir = path.join(__dirname, '..');
+  // const rootDir = path.join(__dirname, '..');
+  const rootDir = new URL('..', import.meta.url).pathname;
   const isReactProject = pkg.has('dependencies', 'react');
   files.add(`${rootDir}/generator/*`, `${rootDir}/generator/**/*`);
 
