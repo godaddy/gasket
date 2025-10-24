@@ -2,22 +2,35 @@
   "name": "@gasket/plugin-nextjs",
   "version": "7.6.4",
   "description": "Adds Next support to your application",
+  "type": "module",
   "types": "lib/index.d.ts",
   "files": [
     "generator",
     "docs",
     "lib",
+    "cjs",
     "EXAMPLES.md"
   ],
   "exports": {
-    ".": "./lib/index.js",
-    "./prompts": "./lib/prompt.js",
+    ".": {
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js",
+      "require": "./cjs/index.cjs",
+      "default": "./cjs/index.cjs"
+    },
+    "./prompts": {
+      "import": "./lib/prompt.js",
+      "require": "./cjs/prompt.cjs"
+    },
     "./package.json": "./package.json"
   },
   "scripts": {
+    "build": "gasket-cjs ./lib",
+    "build:watch": "pnpm run build --watch",
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
     "posttest": "pnpm run lint && pnpm run typecheck",
+    "prepublishOnly": "pnpm run build",
     "test": "vitest run --globals",
     "test:coverage": "vitest run --globals --coverage",
     "test:watch": "vitest --globals",
@@ -45,6 +58,7 @@
   "devDependencies": {
     "@babel/preset-react": "^7.26.3",
     "@gasket/assets": "workspace:^",
+    "@gasket/cjs": "workspace:^",
     "@gasket/core": "workspace:^",
     "@gasket/intl": "workspace:^",
     "@gasket/nextjs": "workspace:^",

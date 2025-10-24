@@ -1,5 +1,5 @@
 /** @type {import('@gasket/core').HookHandler<'prompt'>} */
-module.exports = async function promptHook(gasket, context, { prompt }) {
+export default async function promptHook(gasket, context, { prompt }) {
   if ('useDocs' in context) return context;
 
   const { useDocs } = await prompt([
@@ -11,4 +11,4 @@ module.exports = async function promptHook(gasket, context, { prompt }) {
   ]);
 
   return Object.assign({}, context, { useDocs });
-};
+}

@@ -1,9 +1,11 @@
-const { createTerminus, HealthCheckError } = require('@godaddy/terminus');
-const debug = require('diagnostics')('gasket:https');
-const create = require('create-servers');
-const one = require('one-time/async');
-const errs = require('errs');
-const { getPortFallback, portInUseError, startProxy, getRawServerConfig } = require('./utils');
+import { createTerminus, HealthCheckError } from '@godaddy/terminus';
+import debug from 'diagnostics';
+import create from 'create-servers';
+import one from 'one-time/async.js';
+import errs from 'errs';
+import { getPortFallback, portInUseError, startProxy, getRawServerConfig } from './utils.js';
+
+const debugLogger = debug('gasket:https');
 
 /**
  * Gasket action: startServer
@@ -100,7 +102,7 @@ async function startServer(gasket) {
         });
       }
 
-      debug(errorMessage, errors);
+      debugLogger(errorMessage, errors);
       logger.error(errorMessage.message);
       return;
     }
@@ -137,6 +139,4 @@ async function startServer(gasket) {
   });
 }
 
-module.exports = {
-  startServer
-};
+export { startServer };

@@ -1,4 +1,6 @@
-const path = require('path');
+import path from 'path';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 
 /**
  * This is a webpack plugin for gathering bundle size data
@@ -11,7 +13,7 @@ class WebpackMetricsPlugin {
 
   /**
    * Helper function to call the metrics lifecycle
-   * @type {import('./internal').handleMetrics}
+   * @type {import('./internal.d.ts').handleMetrics}
    */
   async handleMetrics(metrics) {
     this.gasket.logger.debug('webpack metrics: ' + JSON.stringify(metrics, null, 2));
@@ -33,7 +35,7 @@ class WebpackMetricsPlugin {
    *     pages: { totalSize: 782744, js: 782744 },
    *     'bundle.svgs': { totalSize: 10188, svgs: 10188 } },
    *   time: 1559323660583 }
-   * @type {import('./internal').apply}
+   * @type {import('./internal.d.ts').apply}
    */
   apply(compiler) {
     const { target, context } = compiler.options;
@@ -72,7 +74,7 @@ class WebpackMetricsPlugin {
         map[dirname][extension] += fileSize;
       }
 
-      /** @type {import('.').WebpackMetrics} */
+      /** @type {import('./index.js').WebpackMetrics} */
       const metrics = {
         name,
         event: 'webpack',
@@ -86,4 +88,4 @@ class WebpackMetricsPlugin {
   }
 }
 
-module.exports = WebpackMetricsPlugin;
+export default WebpackMetricsPlugin;

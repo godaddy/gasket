@@ -1,34 +1,36 @@
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+
 const app = {
-  use: jest.fn(),
-  post: jest.fn(),
-  set: jest.fn()
+  use: vi.fn(),
+  post: vi.fn(),
+  set: vi.fn()
 };
-const cookieParserMiddleware = jest.fn();
-const mockCookieParser = jest.fn().mockReturnValue(cookieParserMiddleware);
+const cookieParserMiddleware = vi.fn();
+const mockCookieParser = vi.fn().mockReturnValue(cookieParserMiddleware);
 
-jest.mock('cookie-parser', () => mockCookieParser);
+vi.mock('cookie-parser', () => ({ default: mockCookieParser }));
 
-const express = require('../lib/express');
+const express = (await import('../lib/express.js')).default;
 
 describe('Express', () => {
   let gasket, lifecycles, mockMwPlugins;
-  const sandbox = jest.fn();
+  const sandbox = vi.fn();
 
   beforeEach(() => {
     mockMwPlugins = [];
 
     lifecycles = {
-      errorMiddleware: jest.fn().mockResolvedValue([]),
-      express: jest.fn().mockResolvedValue()
+      errorMiddleware: vi.fn().mockResolvedValue([]),
+      express: vi.fn().mockResolvedValue()
     };
 
     gasket = {
       middleware: {},
       logger: {
-        warn: jest.fn()
+        warn: vi.fn()
       },
       config: {},
-      exec: jest
+      exec: vi
         .fn()
         .mockImplementation((lifecycle, ...args) =>
           lifecycles[lifecycle](args)
@@ -38,11 +40,11 @@ describe('Express', () => {
           // eslint-disable-next-line  no-loop-func
           fn(mockMwPlugins[i], () => mockMwPlugins[i]);
         }
-        return jest.fn();
+        return vi.fn();
       })
     };
 
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('does not enable trust proxy by default', async () => {
@@ -75,7 +77,7 @@ describe('Express', () => {
     // attaches _implicitHeader to the response object
     const req = {};
     const res = {};
-    const next = jest.fn();
+    const next = vi.fn();
     patchMiddleware(req, res, next);
 
     expect(res).toHaveProperty('_implicitHeader');
@@ -83,13 +85,13 @@ describe('Express', () => {
   });
 
   it('attaches a logger to the request', async () => {
-    const augmentedLogger = { info: jest.fn() };
-    gasket.logger = { child: jest.fn().mockReturnValue(augmentedLogger) };
+    const augmentedLogger = { info: vi.fn() };
+    gasket.logger = { child: vi.fn().mockReturnValue(augmentedLogger) };
     await express(gasket, app);
 
     const req = {};
     const res = {};
-    const next = jest.fn();
+    const next = vi.fn();
 
     app.use.mock.calls.forEach(([middleware]) => middleware(req, res, next));
     expect(req).toHaveProperty('logger', gasket.logger);

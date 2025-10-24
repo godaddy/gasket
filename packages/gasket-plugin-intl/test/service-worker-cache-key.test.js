@@ -1,4 +1,4 @@
-const serviceWorkerCacheKey = require('../lib/service-worker-cache-key');
+import serviceWorkerCacheKey from '../lib/service-worker-cache-key.js';
 
 describe('serviceWorkerCacheKey', function () {
   let result;

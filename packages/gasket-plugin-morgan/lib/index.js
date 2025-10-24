@@ -1,7 +1,10 @@
 /// <reference types="@gasket/plugin-metadata" />
 
+import { createRequire } from 'module';
+import middleware from './middleware.js';
+
+const require = createRequire(import.meta.url);
 const { name, version, description } = require('../package.json');
-const middleware = require('./middleware');
 
 // set log configuration in gasket.js, under `morgan` key
 // configuration options: http://expressjs.com/en/resources/middleware/morgan.html
@@ -41,4 +44,4 @@ const plugin = {
   }
 };
 
-module.exports = plugin;
+export default plugin;

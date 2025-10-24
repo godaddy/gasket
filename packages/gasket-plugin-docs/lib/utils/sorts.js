@@ -1,4 +1,4 @@
-/** @typedef {import('../internal').ModuleDocsConfig} ModuleDocsConfig */
+/** @typedef {import('../internal.d.ts').ModuleDocsConfig} ModuleDocsConfig */
 
 /**
  * Sort an array of names alphabetically.
@@ -117,8 +117,8 @@ function getStructureWeight(name) {
 
 /**
  * Sort an array of structures by name
- * @type {function(import('../internal').DetailDocsConfig[]):
- * import('../internal').DetailDocsConfig[]}
+ * @type {function(import('../internal.d.ts').DetailDocsConfig[]):
+ * import('../internal.d.ts').DetailDocsConfig[]}
  */
 const sortStructures = sortByKey(
   'name',
@@ -127,22 +127,22 @@ const sortStructures = sortByKey(
 
 /**
  * Sort an array of commands by name
- * @type {function(import('../internal').DetailDocsConfig[]):
- * import('../internal').DetailDocsConfig[]}
+ * @type {function(import('../internal.d.ts').DetailDocsConfig[]):
+ * import('../internal.d.ts').DetailDocsConfig[]}
  */
 const sortCommands = sortByKey('name', alphaCompare);
 
 /**
  * Sort an array of actions by name
- * @type {function(import('../internal').DetailDocsConfig[]):
- * import('../internal').DetailDocsConfig[]}
+ * @type {function(import('../internal.d.ts').DetailDocsConfig[]):
+ * import('../internal.d.ts').DetailDocsConfig[]}
  */
 const sortActions = sortByKey('name', alphaCompare);
 
 /**
  * Sort an array of lifeycles by name
- * @type {function(import('../internal').DetailDocsConfig[]):
- * import('../internal').DetailDocsConfig[]}
+ * @type {function(import('../internal.d.ts').DetailDocsConfig[]):
+ * import('../internal.d.ts').DetailDocsConfig[]}
  */
 // TODO (kinetifex): eventually sort by parent and order when doing graphing
 // work
@@ -150,12 +150,12 @@ const sortLifecycles = sortByKey('name', alphaCompare);
 
 /**
  * Sort an array of configurations by name
- * @type {function(import('../internal').DetailDocsConfig[]):
- * import('../internal').DetailDocsConfig[]}
+ * @type {function(import('../internal.d.ts').DetailDocsConfig[]):
+ * import('../internal.d.ts').DetailDocsConfig[]}
  */
 const sortConfigurations = sortByKey('name', alphaCompare);
 
-module.exports = {
+export {
   sortModules,
   sortGuides,
   sortStructures,

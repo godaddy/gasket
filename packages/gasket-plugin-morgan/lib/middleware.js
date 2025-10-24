@@ -2,11 +2,11 @@
 /// <reference types="@gasket/plugin-logger" />
 /// <reference types="@gasket/plugin-middleware" />
 
-const morgan = require('morgan');
-const split = require('split');
+import morgan from 'morgan';
+import split from 'split';
 
 /** @type {import('@gasket/core').HookHandler<'middleware'>} */
-module.exports = function middleware(gasket) {
+export default function middleware(gasket) {
   const { logger, config } = gasket;
   const { morgan: { format = 'tiny', options = {} } = {} } = config;
 
@@ -15,4 +15,4 @@ module.exports = function middleware(gasket) {
   const morganMiddleware = morgan(format, { ...options, stream });
 
   return [morganMiddleware];
-};
+}

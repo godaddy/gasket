@@ -1,5 +1,9 @@
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { createRequire } from 'module';
+import createHook from '../lib/create.js';
+
+const require = createRequire(import.meta.url);
 const { name, version, devDependencies } = require('../package.json');
-const createHook = require('../lib/create.js');
 
 describe('create', () => {
   let mockContext;
@@ -13,10 +17,10 @@ describe('create', () => {
 
   beforeEach(() => {
     mockContext = {
-      pkg: { add: jest.fn() },
-      files: { add: jest.fn() },
+      pkg: { add: vi.fn() },
+      files: { add: vi.fn() },
       gasketConfig: {
-        addPlugin: jest.fn()
+        addPlugin: vi.fn()
       },
       apiApp: true
     };
@@ -61,11 +65,11 @@ describe('create', () => {
   it('respects the typescript flag', async () => {
     mockContext.typescript = false;
     await expectCreatedWith(({ files }) => {
-      expect(files.add).toHaveBeenCalledWith(expect.stringContaining('../generator/app/**/'));
+      expect(files.add).toHaveBeenCalledWith(expect.stringContaining('/generator/app/**/'));
     })();
     mockContext.typescript = true;
     await expectCreatedWith(({ files }) => {
-      expect(files.add).toHaveBeenCalledWith(expect.stringContaining('../generator/app/**/!(*.ts)'));
+      expect(files.add).toHaveBeenCalledWith(expect.stringContaining('/generator/app/**/!(*.ts)'));
     })();
   });
 

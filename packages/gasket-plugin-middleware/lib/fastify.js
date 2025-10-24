@@ -1,12 +1,12 @@
 /// <reference types="@gasket/plugin-fastify" />
 
-const { applyCompression, applyCookieParser, executeMiddlewareLifecycle } = require('./utils');
+import { applyCompression, applyCookieParser, executeMiddlewareLifecycle } from './utils.js';
 
 /**
  * Fastify lifecycle to add middleware
  * @type {import('@gasket/core').HookHandler<'fastify'>}
  */
-module.exports = async function fastify(gasket, app) {
+export default async function fastify(gasket, app) {
   const { config } = gasket;
   const {
     fastify: {
@@ -17,7 +17,8 @@ module.exports = async function fastify(gasket, app) {
   } = config;
 
   // Enable middleware for fastify@3
-  await app.register(require('@fastify/express'));
+  const { default: fastifyExpress } = await import('@fastify/express');
+  await app.register(fastifyExpress);
 
   // Access the underlying Express app
   const expressApp = app.express;

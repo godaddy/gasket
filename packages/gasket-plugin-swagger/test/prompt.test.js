@@ -1,6 +1,5 @@
-const {
-  promptSwagger
-} = require('../lib/prompt');
+import { vi } from 'vitest';
+import { promptSwagger } from '../lib/prompt.js';
 
 describe('promptSwagger', () => {
   let context, mockPrompt, mockAnswers;
@@ -8,11 +7,11 @@ describe('promptSwagger', () => {
   beforeEach(() => {
     context = {};
     mockAnswers = { useSwagger: false };
-    mockPrompt = jest.fn().mockImplementation(() => mockAnswers);
+    mockPrompt = vi.fn().mockImplementation(() => mockAnswers);
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
 

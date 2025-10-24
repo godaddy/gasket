@@ -1,14 +1,13 @@
-const configure = require('../lib/configure');
-
-
-const { baseDataMap } = require('../lib/actions');
-
-jest.spyOn(baseDataMap, 'set');
-
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import configure from '../lib/configure.js';
+import { baseDataMap } from '../lib/actions.js';
 
 describe('configure hook', () => {
   let gasket, config;
+
   beforeEach(() => {
+    vi.spyOn(baseDataMap, 'set');
+
     gasket = {
       symbol: Symbol('gasket'),
       config: {
@@ -25,7 +24,7 @@ describe('configure hook', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('removes data definition for config object', () => {

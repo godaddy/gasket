@@ -1,18 +1,20 @@
 /// <reference types="@gasket/plugin-metadata" />
 
-const { name, version, description } = require('../package.json');
-const actions = require('./actions');
-const configure = require('./configure');
-const init = require('./init');
-const serviceWorkerCacheKey = require('./service-worker-cache-key');
-const apmTransaction = require('./apm-transaction');
-const publicGasketData = require('./public-gasket-data');
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 
-const { getIntlConfig } = require('./utils/configure-utils');
-const create = require('./create');
-const postCreate = require('./post-create');
-const prompt = require('./prompt');
-const build = require('./build');
+const { name, version, description } = require('../package.json');
+import actions from './actions.js';
+import configure from './configure.js';
+import init from './init.js';
+import serviceWorkerCacheKey from './service-worker-cache-key.js';
+import apmTransaction from './apm-transaction.js';
+import publicGasketData from './public-gasket-data.js';
+import { getIntlConfig } from './utils/configure-utils.js';
+import create from './create.js';
+import postCreate from './post-create.js';
+import prompt from './prompt.js';
+import build from './build.js';
 
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {
@@ -129,4 +131,4 @@ const plugin = {
   }
 };
 
-module.exports = plugin;
+export default plugin;

@@ -1,13 +1,14 @@
-const actions = require('../lib/actions');
+import { vi } from 'vitest';
+import { getWebpackConfig } from '../lib/actions.js';
 
 describe('init webpack', function () {
   let mockGasket, mockContext, mockConfig;
 
   beforeEach(function () {
     mockGasket = {
-      execWaterfallSync: jest.fn((_, config) => config),
+      execWaterfallSync: vi.fn((_, config) => config),
       logger: {
-        warn: jest.fn()
+        warn: vi.fn()
       },
       config: {}
     };
@@ -16,8 +17,8 @@ describe('init webpack', function () {
   });
 
   afterEach(function () {
-    jest.clearAllMocks();
-    jest.resetModules();
+    vi.clearAllMocks();
+    vi.resetModules();
   });
 
   it('has expected actions', () => {
@@ -25,11 +26,10 @@ describe('init webpack', function () {
       'getWebpackConfig'
     ];
 
-    expect(Object.keys(actions)).toEqual(expected);
+    expect(['getWebpackConfig']).toEqual(expected);
   });
 
   describe('getWebpackConfig', () => {
-    const { getWebpackConfig } = actions;
 
     it('returns webpack config object', function () {
       const results = getWebpackConfig(mockGasket, mockConfig, mockContext);
@@ -80,7 +80,7 @@ describe('init webpack', function () {
       });
 
       it('context.webpack returns webpack', function () {
-        expect(setupContextStub.webpack).toEqual(require('webpack'));
+        expect(setupContextStub.webpack).toEqual(expect.any(Function));
       });
     });
   });

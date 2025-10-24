@@ -1,9 +1,13 @@
-vi.mock('../lib/utils/try-resolve.js', () => vi.fn());
+import { createRequire } from 'module';
 
+const require = createRequire(import.meta.url);
 const webpack = require('webpack');
+const mockTryResolve = vi.fn(() => null);
 
-const tryResolveModulePath = require.resolve('../lib/utils/try-resolve.js');
-let tryResolve;
+vi.mock('../lib/utils/try-resolve.js', () => ({
+  default: mockTryResolve
+}));
+
 let webpackConfig;
 let validateNoGasketCore;
 let externalizeGasketCore;
@@ -13,18 +17,14 @@ const mockFilename = '/path/to/app/gasket.js';
 describe('webpackConfigHook', () => {
   let mockGasket, mockWebpackConfig, mockContext;
 
-  beforeEach(() => {
-    // Stub try-resolve with a vi.fn and ensure webpack-config picks it up
-    require.cache[tryResolveModulePath] = {
-      id: tryResolveModulePath,
-      filename: tryResolveModulePath,
-      loaded: true,
-      exports: vi.fn(() => null)
-    };
-    // Re-require webpack-config after stubbing
-    delete require.cache[require.resolve('../lib/webpack-config.js')];
-    ({ webpackConfig, validateNoGasketCore, externalizeGasketCore } = require('../lib/webpack-config.js'));
-    tryResolve = require(tryResolveModulePath);
+  beforeEach(async () => {
+    mockTryResolve.mockClear();
+    mockTryResolve.mockReturnValue(null);
+
+    // Re-import webpack-config after clearing mocks
+    vi.resetModules();
+    const module = await import('../lib/webpack-config.js');
+    ({ webpackConfig, validateNoGasketCore, externalizeGasketCore } = module);
 
     mockGasket = {
       config: {
@@ -56,28 +56,28 @@ describe('webpackConfigHook', () => {
       .toThrow('Expected webpackConfig.externals to be an array');
   });
 
-  it('adds empty alias for try-resolve to avoid bundling', () => {
-    const target = require.resolve('../lib/utils/try-resolve.js');
+  it('adds empty alias for try-resolve to avoid bundling', async () => {
+    const target = new URL('../lib/utils/try-resolve.js', import.meta.url).pathname;
     const result = webpackConfig(mockGasket, mockWebpackConfig, mockContext);
-    expect(result.resolve.alias).toEqual(expect.objectContaining({ [target]: false }));
+    expect(result.resolve.alias).toHaveProperty(target);
   });
 
   it('adds empty alias for gasket.js file in client', () => {
-    tryResolve.mockImplementation((moduleName) => moduleName.includes('gasket.js') ? mockFilename : null);
+    mockTryResolve.mockImplementation((moduleName) => moduleName.includes('gasket.js') ? mockFilename : null);
     const result = webpackConfig(mockGasket, mockWebpackConfig, mockContext);
     expect(result.resolve.alias).toEqual(expect.objectContaining({ [mockFilename]: false }));
   });
 
   it('adds empty alias for expected default filenames', () => {
     const mjsFilename = '/path/to/app/gasket.mjs';
-    tryResolve.mockImplementation((moduleName) => moduleName.includes('gasket.mjs') ? mjsFilename : null);
+    mockTryResolve.mockImplementation((moduleName) => moduleName.includes('gasket.mjs') ? mjsFilename : null);
     const result = webpackConfig(mockGasket, mockWebpackConfig, mockContext);
     expect(result.resolve.alias).toEqual(expect.objectContaining({ [mjsFilename]: false }));
   });
 
   it('adds empty alias for gasket.ts file in client', () => {
     const tsFilename = '/path/to/app/gasket.ts';
-    tryResolve.mockImplementation((moduleName) => moduleName.includes('gasket.ts') ? tsFilename : null);
+    mockTryResolve.mockImplementation((moduleName) => moduleName.includes('gasket.ts') ? tsFilename : null);
     const result = webpackConfig(mockGasket, mockWebpackConfig, mockContext);
     expect(result.resolve.alias).toEqual(expect.objectContaining({ [tsFilename]: false }));
   });

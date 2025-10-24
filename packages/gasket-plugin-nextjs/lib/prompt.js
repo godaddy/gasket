@@ -66,9 +66,4 @@ async function promptAll(gasket, context, { prompt }) {
   return context;
 }
 
-module.exports = {
-  prompt: promptAll,
-  promptNextServerType,
-  promptNextDevProxy,
-  promptSitemap
-};
+export { promptAll as prompt, promptNextServerType, promptNextDevProxy, promptSitemap };

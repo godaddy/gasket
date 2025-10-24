@@ -8,7 +8,7 @@
  * lifecycle.
  * @type {import('@gasket/core').HookHandler<'prompt'>}
  */
-module.exports = async function promptHook(gasket, context, { prompt }) {
+export default async function promptHook(gasket, context, { prompt }) {
   if (!('hasGasketIntl' in context) && !context.useAppRouter) {
     const { useGasketIntl } = await prompt([
       {
@@ -23,4 +23,4 @@ module.exports = async function promptHook(gasket, context, { prompt }) {
   }
 
   return context;
-};
+}

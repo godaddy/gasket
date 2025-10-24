@@ -1,16 +1,16 @@
-const apmTransaction = require('../lib/apm-transaction');
+import apmTransaction from '../lib/apm-transaction.js';
 
 describe('The apmTransaction hook', () => {
 
   it('adds a locale label', async () => {
     const gasket = {
       actions: {
-        getIntlLocale: jest.fn().mockResolvedValue('es-MX')
+        getIntlLocale: vi.fn().mockResolvedValue('es-MX')
       }
     };
 
     const req = {};
-    const transaction = { setLabel: jest.fn() };
+    const transaction = { setLabel: vi.fn() };
 
     await apmTransaction(gasket, transaction, { req });
 

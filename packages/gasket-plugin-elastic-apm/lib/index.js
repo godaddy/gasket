@@ -1,14 +1,14 @@
 /// <reference types="create-gasket-app" />
 /// <reference types="@gasket/plugin-metadata" />
 
-const actions = require('./actions');
-const create = require('./create');
-const configure = require('./configure');
-const {
-  name,
-  version,
-  description
-} = require('../package.json');
+import * as actions from './actions.js';
+import create from './create.js';
+import configure from './configure.js';
+import { readFileSync } from 'fs';
+
+const packageJsonPath = new URL('../package.json', import.meta.url).pathname;
+const pkg = JSON.parse(readFileSync(packageJsonPath, 'utf8'));
+const { name, version, description } = pkg;
 
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {
@@ -58,4 +58,4 @@ const plugin = {
   }
 };
 
-module.exports = plugin;
+export default plugin;

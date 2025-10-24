@@ -1,6 +1,6 @@
 /// <reference types="@gasket/plugin-fastify" />
 
-const { setupNextApp, setupNextHandling } = require('./utils/setup-next-app');
+import { setupNextApp, setupNextHandling } from './utils/setup-next-app.js';
 
 /**
  * Adds the buildId to Fastify via `decorate`
@@ -39,7 +39,7 @@ async function fastifyHandler(gasket, fastifyApp) {
   setupNextHandling(app, fastifyApp, gasket);
 }
 
-module.exports = {
+export default {
   timing: { last: true },
   handler: fastifyHandler
 };

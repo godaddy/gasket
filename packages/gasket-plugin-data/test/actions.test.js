@@ -1,5 +1,6 @@
-const { actions, baseDataMap } = require('../lib/actions');
-const { makeGasketRequest } = require('@gasket/request');
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import { actions, baseDataMap } from '../lib/actions.js';
+import { makeGasketRequest } from '@gasket/request';
 
 describe('actions', () => {
   let gasket;
@@ -7,13 +8,13 @@ describe('actions', () => {
   beforeEach(() => {
     gasket = {
       symbol: Symbol('gasket'),
-      execWaterfall: jest.fn().mockImplementation((event, config) => config),
+      execWaterfall: vi.fn().mockImplementation((event, config) => config),
       actions
     };
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('returns expected actions', () => {
@@ -83,7 +84,7 @@ describe('actions', () => {
     let getGasketData, getPublicGasketData, req;
 
     beforeEach(() => {
-      getGasketData = jest.spyOn(gasket.actions, 'getGasketData').mockResolvedValue({ some: 'data' });
+      getGasketData = vi.spyOn(gasket.actions, 'getGasketData').mockResolvedValue({ some: 'data' });
       getPublicGasketData = gasket.actions.getPublicGasketData;
       req = { mock: 'request', headers: { 'x-example': 'example-data' } };
     });

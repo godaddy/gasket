@@ -1,5 +1,6 @@
-const metadata = require('../lib/metadata');
-const actions = require('../lib/actions');
+import { describe, it, expect } from 'vitest';
+import metadata from '../lib/metadata.js';
+import * as actions from '../lib/actions.js';
 
 describe('metadata', () => {
 

@@ -1,21 +1,28 @@
-const actions = require('../lib/actions');
-const mockIsStarted = jest.fn();
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+import * as actions from '../lib/actions.js';
 
-jest.mock('elastic-apm-node', () => ({
+const mockIsStarted = vi.fn();
+const mockCurrentTransaction = {
+  name: 'GET /cohorts/:cohortId'
+};
+
+const mockApm = {
   isStarted: mockIsStarted,
-  currentTransaction: {
-    name: 'GET /cohorts/:cohortId'
-  }
+  currentTransaction: mockCurrentTransaction
+};
+
+vi.mock('elastic-apm-node', () => ({
+  default: mockApm
 }));
 
 describe('actions', () => {
-  let mockGasket, mockReq, apm;
+  let mockGasket, mockReq;
 
   beforeEach(() => {
-    apm = require('elastic-apm-node');
     mockIsStarted.mockReturnValue(true);
+    mockApm.currentTransaction = mockCurrentTransaction;
     mockGasket = {
-      exec: jest.fn()
+      exec: vi.fn()
     };
     mockReq = {
       headers: {}
@@ -40,7 +47,7 @@ describe('actions', () => {
     await actions.getApmTransaction(mockGasket, mockReq);
     expect(mockGasket.exec).toHaveBeenCalledWith(
       'apmTransaction',
-      apm.currentTransaction,
+      mockApm.currentTransaction,
       { req: expect.objectContaining(mockReq) }
     );
   });
@@ -58,7 +65,7 @@ describe('actions', () => {
 
   it('returns undefined if no transaction', async () => {
     // eslint-disable-next-line no-undefined
-    apm.currentTransaction = undefined;
+    mockApm.currentTransaction = undefined;
     const result = await actions.getApmTransaction(mockGasket, mockReq);
     expect(result).toBeUndefined();
   });

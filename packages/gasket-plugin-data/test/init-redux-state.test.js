@@ -1,11 +1,12 @@
-const initReduxState = require('../lib/init-redux-state');
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+import initReduxState from '../lib/init-redux-state.js';
 
 describe('initReduxState hook', () => {
   let gasket, getPublicGasketData;
   let req;
 
   beforeEach(() => {
-    getPublicGasketData = jest.fn(() => ({ some: 'data' }));
+    getPublicGasketData = vi.fn(() => ({ some: 'data' }));
 
     gasket = {
       actions: {

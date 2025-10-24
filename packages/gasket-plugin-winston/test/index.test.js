@@ -1,12 +1,15 @@
-const { makeGasket } = require('@gasket/core');
-const PluginLogger = require('@gasket/plugin-logger');
-const plugin = require('../lib/index');
-const { LEVEL, MESSAGE } = require('triple-beam');
-const { name, version, description } = require('../package');
+import { makeGasket } from '@gasket/core';
+import PluginLogger from '@gasket/plugin-logger';
+import plugin from '../lib/index.js';
+import { LEVEL, MESSAGE } from 'triple-beam';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const { name, version, description } = require('../package.json');
+import { vi } from 'vitest';
 
 // Mock console methods
-jest.spyOn(console, 'error').mockImplementation(() => { });
-jest.spyOn(console, 'log').mockImplementation(() => { });
+vi.spyOn(console, 'error').mockImplementation(() => { });
+vi.spyOn(console, 'log').mockImplementation(() => { });
 
 describe('@gasket/plugin-winston', function () {
   let gasket;
@@ -17,7 +20,7 @@ describe('@gasket/plugin-winston', function () {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('is an object', () => {
@@ -36,10 +39,10 @@ describe('@gasket/plugin-winston', function () {
     beforeEach(() => {
       mockContext = {
         pkg: {
-          add: jest.fn()
+          add: vi.fn()
         },
         gasketConfig: {
-          addPlugin: jest.fn()
+          addPlugin: vi.fn()
         }
       };
     });
@@ -57,7 +60,7 @@ describe('@gasket/plugin-winston', function () {
 
       expect(mockContext.pkg.add).toHaveBeenCalledWith('dependencies',
         expect.objectContaining({
-          winston: require('../package').dependencies.winston
+          winston: require('../package.json').dependencies.winston
         }));
     });
 
@@ -78,7 +81,7 @@ describe('@gasket/plugin-winston', function () {
     });
 
     it('uses the console as the default transport', function () {
-      const consoleSpy = jest
+      const consoleSpy = vi
         // eslint-disable-next-line no-console
         .spyOn(console._stdout, 'write')
         .mockImplementation();
@@ -95,7 +98,7 @@ describe('@gasket/plugin-winston', function () {
 
     it('defaults to json format when env is not local', function () {
       gasket.config.env = 'prod';
-      const consoleSpy = jest
+      const consoleSpy = vi
         // eslint-disable-next-line no-console
         .spyOn(console._stdout, 'write')
         .mockImplementation();
@@ -135,7 +138,7 @@ describe('@gasket/plugin-winston', function () {
 
     it('allows custom formats', function () {
       const customFormat = {
-        transform: jest.fn((info) => info)
+        transform: vi.fn((info) => info)
       };
       gasket.config.winston = {
         format: customFormat
@@ -160,14 +163,14 @@ describe('@gasket/plugin-winston', function () {
 
       beforeEach(() => {
         transport1 = {
-          log: jest.fn(),
-          on: jest.fn()
+          log: vi.fn(),
+          on: vi.fn()
         };
 
         transport2 = {
-          write: jest.fn(),
-          log: jest.fn(),
-          on: jest.fn()
+          write: vi.fn(),
+          log: vi.fn(),
+          on: vi.fn()
         };
       });
 

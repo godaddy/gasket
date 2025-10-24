@@ -1,6 +1,14 @@
 /// <reference types="@gasket/core" />
 /// <reference types="create-gasket-app" />
 
+import { createRequire } from 'module';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const require = createRequire(import.meta.url);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 const { name, version, devDependencies } = require('../package.json');
 
 const createTestFiles = ({ files, generatorDir, testPlugins, globIgnore }) => {
@@ -27,7 +35,7 @@ const createTestFiles = ({ files, generatorDir, testPlugins, globIgnore }) => {
  * Add files & extend package.json for new apps.
  * @type {import('@gasket/core').HookHandler<'create'>}
  */
-module.exports = async function create(gasket, context) {
+export default async function create(gasket, context) {
   const {
     files,
     typescript,
@@ -53,4 +61,4 @@ module.exports = async function create(gasket, context) {
 
     createTestFiles({ files, generatorDir, testPlugins, globIgnore });
   }
-};
+}

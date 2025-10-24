@@ -1,4 +1,4 @@
-const apmTransaction = require('../lib/apm-transaction');
+import apmTransaction from '../lib/apm-transaction.js';
 
 describe('The apmTransaction hook', () => {
   let transaction, mockGasket;

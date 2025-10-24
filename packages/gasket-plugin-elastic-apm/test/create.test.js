@@ -1,5 +1,10 @@
-const create = require('../lib/create');
-const { name, version, devDependencies } = require('../package.json');
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import create from '../lib/create.js';
+import { readFileSync } from 'fs';
+
+const packageJsonPath = new URL('../package.json', import.meta.url).pathname;
+const pkg = JSON.parse(readFileSync(packageJsonPath, 'utf8'));
+const { name, version, devDependencies } = pkg;
 
 describe('create lifecycle', function () {
   let mockContext;
@@ -7,20 +12,20 @@ describe('create lifecycle', function () {
   beforeEach(() => {
     mockContext = {
       pkg: {
-        add: jest.fn(),
-        extend: jest.fn().mockImplementation((fn) => fn({ scripts: { start: 'node server.js' } }))
+        add: vi.fn(),
+        extend: vi.fn().mockImplementation((fn) => fn({ scripts: { start: 'node server.js' } }))
       },
       files: {
-        add: jest.fn()
+        add: vi.fn()
       },
       gasketConfig: {
-        addPlugin: jest.fn()
+        addPlugin: vi.fn()
       }
     };
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('is a function', () => {

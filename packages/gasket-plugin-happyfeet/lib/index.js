@@ -1,7 +1,9 @@
 /// <reference types="@gasket/plugin-https" />
 
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 const { name, version, description } = require('../package.json');
-const { actions } = require('./actions');
+import { actions } from './actions.js';
 
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {
@@ -32,4 +34,4 @@ const plugin = {
   }
 };
 
-module.exports = plugin;
+export default plugin;

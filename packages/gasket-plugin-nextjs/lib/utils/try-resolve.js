@@ -1,3 +1,7 @@
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
+
 /**
  * Try to resolve a module, returning null if not found
  * @param {string} moduleName - The name of the module to resolve
@@ -13,4 +17,4 @@ function tryResolve(moduleName, paths) {
   }
 }
 
-module.exports = tryResolve;
+export default tryResolve;

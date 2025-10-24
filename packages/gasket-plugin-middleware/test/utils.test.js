@@ -1,22 +1,24 @@
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+
 const app = {
-  ready: jest.fn(),
+  ready: vi.fn(),
   server: {
-    emit: jest.fn()
+    emit: vi.fn()
   },
-  register: jest.fn(),
-  use: jest.fn(),
-  set: jest.fn()
+  register: vi.fn(),
+  use: vi.fn(),
+  set: vi.fn()
 };
 
-const cookieParserMiddleware = jest.fn();
-const compressionMiddleware = jest.fn();
-const mockCookieParser = jest.fn().mockReturnValue(cookieParserMiddleware);
-const mockCompression = jest.fn().mockReturnValue(compressionMiddleware);
+const cookieParserMiddleware = vi.fn();
+const compressionMiddleware = vi.fn();
+const mockCookieParser = vi.fn().mockReturnValue(cookieParserMiddleware);
+const mockCompression = vi.fn().mockReturnValue(compressionMiddleware);
 
-jest.mock('cookie-parser', () => mockCookieParser);
-jest.mock('compression', () => mockCompression);
+vi.mock('cookie-parser', () => ({ default: mockCookieParser }));
+vi.mock('compression', () => ({ default: mockCompression }));
 
-const { applyCookieParser, applyCompression, executeMiddlewareLifecycle } = require('../lib/utils');
+const { applyCookieParser, applyCompression, executeMiddlewareLifecycle } = await import('../lib/utils.js');
 
 
 describe('utils', function () {
@@ -25,7 +27,7 @@ describe('utils', function () {
     let middlewarePattern;
 
     beforeEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
 
     it('adds the cookie-parser middleware before plugin middleware', () => {
@@ -54,7 +56,7 @@ describe('utils', function () {
     let compressionConfig;
 
     beforeEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
 
     it('adds the compression middleware when enabled', () => {
@@ -82,20 +84,20 @@ describe('utils', function () {
 
   describe('executeMiddlewareLifecycle', function () {
     let gasket, mockMwPlugins, middlewarePattern, lifecycles;
-    const sandbox = jest.fn();
+    const sandbox = vi.fn();
 
     beforeEach(() => {
       mockMwPlugins = [];
       lifecycles = {
-        middleware: jest.fn().mockResolvedValue([])
+        middleware: vi.fn().mockResolvedValue([])
       };
 
       gasket = {
         config: {},
         logger: {
-          warn: jest.fn()
+          warn: vi.fn()
         },
-        exec: jest.fn().mockImplementation((lifecycle, ...args) =>
+        exec: vi.fn().mockImplementation((lifecycle, ...args) =>
           lifecycles[lifecycle](...args)
         ),
         execApply: sandbox.mockImplementation(async function (lifecycle, fn) {
@@ -105,7 +107,7 @@ describe('utils', function () {
         })
       };
 
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
 
     it('executes the `middleware` lifecycle', async function () {
@@ -126,7 +128,7 @@ describe('utils', function () {
     });
 
     it('applies middleware with inclusion regex', async function () {
-      const middlewareFn = jest.fn();
+      const middlewareFn = vi.fn();
       middlewarePattern = /^\/gaskety\/routes\//;
       mockMwPlugins = [
         { name: 'middleware-1', handler: () => ({ handler: middlewareFn }) }
@@ -138,7 +140,7 @@ describe('utils', function () {
     });
 
     it('applies middleware config paths if configured', async function () {
-      const middlewareFn = jest.fn();
+      const middlewareFn = vi.fn();
       const mockMiddleware = { handler: middlewareFn, paths: [] };
 
       gasket.config.middleware = [
@@ -157,8 +159,8 @@ describe('utils', function () {
     });
 
     it('handles both function-style and object-style middleware entries', async function () {
-      const functionStyleMiddleware = jest.fn();
-      const objectStyleMiddleware = { handler: jest.fn(), paths: ['/obj'] };
+      const functionStyleMiddleware = vi.fn();
+      const objectStyleMiddleware = { handler: vi.fn(), paths: ['/obj'] };
 
       mockMwPlugins = [
         { name: 'plugin-fn', handler: () => functionStyleMiddleware },
@@ -179,8 +181,8 @@ describe('utils', function () {
     });
 
     it('applies arrays of middleware functions from a plugin', async function () {
-      const mwFn1 = jest.fn();
-      const mwFn2 = jest.fn();
+      const mwFn1 = vi.fn();
+      const mwFn2 = vi.fn();
 
       mockMwPlugins = [
         {
@@ -213,7 +215,7 @@ describe('utils', function () {
     });
 
     it('appends middlewarePattern to middleware.paths if config entry exists', async function () {
-      const middlewareFn = jest.fn();
+      const middlewareFn = vi.fn();
       const mockMiddleware = { handler: middlewareFn, paths: [] };
 
       middlewarePattern = /^\/api\//;
@@ -239,7 +241,7 @@ describe('utils', function () {
 
   /**
    * Find the first call in a spy that matches a predicate
-   * @param {jest.SpyInstance} aSpy
+   * @param {vi.SpyInstance} aSpy
    * @param {(args: any) => boolean} aPredicate
    * @returns {any}
    */

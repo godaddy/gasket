@@ -1,5 +1,9 @@
+import { describe, it, expect } from 'vitest';
+import { createRequire } from 'module';
+import plugin from '../lib/index.js';
+
+const require = createRequire(import.meta.url);
 const { name, version, description } = require('../package.json');
-const plugin = require('../lib/index.js');
 
 describe('Plugin', () => {
   it('is an object', () => {

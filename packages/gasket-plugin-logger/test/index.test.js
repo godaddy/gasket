@@ -1,23 +1,26 @@
 /* eslint-disable no-console */
-const plugin = require('../lib'); // Update the path accordingly
-const { name, version, description } = require('../package');
+import { vi, describe, it, expect, beforeEach } from 'vitest';
+import plugin from '../lib/index.js';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const { name, version, description } = require('../package.json');
 
 // Mock console methods
-jest.spyOn(console, 'error').mockImplementation(() => {});
-jest.spyOn(console, 'warn').mockImplementation(() => {});
-jest.spyOn(console, 'info').mockImplementation(() => {});
-jest.spyOn(console, 'debug').mockImplementation(() => {});
-jest.spyOn(console, 'trace').mockImplementation(() => {});
+vi.spyOn(console, 'error').mockImplementation(() => {});
+vi.spyOn(console, 'warn').mockImplementation(() => {});
+vi.spyOn(console, 'info').mockImplementation(() => {});
+vi.spyOn(console, 'debug').mockImplementation(() => {});
+vi.spyOn(console, 'trace').mockImplementation(() => {});
 
 // Mock logger object
 const mockLogger = {
-  debug: jest.fn(),
-  error: jest.fn(),
-  info: jest.fn(),
-  warn: jest.fn(),
-  fatal: jest.fn(),
-  trace: jest.fn(),
-  child: jest.fn()
+  debug: vi.fn(),
+  error: vi.fn(),
+  info: vi.fn(),
+  warn: vi.fn(),
+  fatal: vi.fn(),
+  trace: vi.fn(),
+  child: vi.fn()
 };
 
 describe('@gasket/plugin-logger', () => {
@@ -34,7 +37,7 @@ describe('@gasket/plugin-logger', () => {
 
     beforeEach(() => {
       gasket = {
-        execSync: jest.fn(),
+        execSync: vi.fn(),
         logger: null
       };
     });
@@ -78,8 +81,8 @@ describe('@gasket/plugin-logger', () => {
       });
 
       it('should throw an error if multiple loggers are hooked', () => {
-        const fakeLogger1 = { error: jest.fn() };
-        const fakeLogger2 = { error: jest.fn() };
+        const fakeLogger1 = { error: vi.fn() };
+        const fakeLogger2 = { error: vi.fn() };
         gasket.execSync.mockReturnValue([fakeLogger1, fakeLogger2]);
 
         // eslint-disable-next-line max-nested-callbacks
@@ -99,7 +102,7 @@ describe('@gasket/plugin-logger', () => {
 
     describe('onSignal', () => {
       it('should close logger if available', async () => {
-        const fakeLogger = { close: jest.fn() };
+        const fakeLogger = { close: vi.fn() };
         gasket.logger = fakeLogger;
 
         await plugin.hooks.onSignal(gasket);

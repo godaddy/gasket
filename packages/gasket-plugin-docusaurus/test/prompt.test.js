@@ -1,11 +1,12 @@
-const promptHook = require('../lib/prompt');
+import promptHook from '../lib/prompt.js';
+import { vi } from 'vitest';
 
 describe('promptHook', () => {
   let mockContext, prompt;
 
   beforeEach(() => {
     mockContext = {};
-    prompt = jest.fn();
+    prompt = vi.fn();
   });
 
   it('does not prompt useDocs is false', async () => {

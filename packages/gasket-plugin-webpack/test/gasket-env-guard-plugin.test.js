@@ -1,4 +1,5 @@
-const GasketEnvGuardPlugin = require('../lib/gasket-env-guard-plugin');
+import { vi } from 'vitest';
+import GasketEnvGuardPlugin from '../lib/gasket-env-guard-plugin.js';
 
 describe('GasketEnvGuardPlugin', () => {
   let mockCompiler, mockCompilation;
@@ -9,10 +10,10 @@ describe('GasketEnvGuardPlugin', () => {
       warnings: [],
       hooks: {
         buildModule: {
-          tap: jest.fn()
+          tap: vi.fn()
         },
         succeedModule: {
-          tap: jest.fn()
+          tap: vi.fn()
         }
       }
     };
@@ -20,14 +21,14 @@ describe('GasketEnvGuardPlugin', () => {
     mockCompiler = {
       hooks: {
         compilation: {
-          tap: jest.fn((name, handler) => handler(mockCompilation))
+          tap: vi.fn((name, handler) => handler(mockCompilation))
         }
       }
     };
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe('instantiation', () => {

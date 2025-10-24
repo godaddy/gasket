@@ -1,5 +1,11 @@
-const { hooks: { create } } = require('../lib/index');
-const { name, version, devDependencies } = require('../package.json');
+import { vi } from 'vitest';
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
+const packageJson = require('../package.json');
+const { name, version, devDependencies } = packageJson;
+
+import plugin from '../lib/index.js';
+const { create } = plugin.hooks;
 
 describe('the create hook', () => {
   let mockContext;
@@ -8,18 +14,18 @@ describe('the create hook', () => {
     mockContext = {
       useDocs: true,
       pkg: {
-        add: jest.fn()
+        add: vi.fn()
       },
       readme: {
-        subHeading: jest.fn().mockReturnThis(),
-        content: jest.fn().mockReturnThis(),
-        codeBlock: jest.fn().mockReturnThis()
+        subHeading: vi.fn().mockReturnThis(),
+        content: vi.fn().mockReturnThis(),
+        codeBlock: vi.fn().mockReturnThis()
       },
       gasketConfig: {
-        addCommand: jest.fn()
+        addCommand: vi.fn()
       },
       gitignore: {
-        add: jest.fn()
+        add: vi.fn()
       }
     };
   });

@@ -4,8 +4,8 @@
 /**
  * @type {import('@gasket/core').HookHandler<'initReduxState'>}
  */
-async function initReduxState(gasket, state, { req }) {
-  /** @type {import('.').ReduxState} */
+export default async function initReduxState(gasket, state, { req }) {
+  /** @type {import('./index.js').ReduxState} */
   const typedState = state || {};
   const publicGasketData = await gasket.actions.getPublicGasketData(req);
   return {
@@ -16,5 +16,3 @@ async function initReduxState(gasket, state, { req }) {
     }
   };
 }
-
-module.exports = initReduxState;

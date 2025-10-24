@@ -1,7 +1,16 @@
-const path = require('path');
-const { name, version, description } = require('../package');
-const { readFile: read } = require('fs').promises;
-const plugin = require('../lib');
+import { describe, it, expect, beforeEach } from 'vitest';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import { readFile as read } from 'fs/promises';
+import { createRequire } from 'node:module';
+import plugin from '../lib/index.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const require = createRequire(import.meta.url);
+const { name, version, description } = require('../package.json');
+
 const hook = plugin.hooks.docsGenerate;
 
 describe('docs graph plugin', function () {

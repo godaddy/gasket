@@ -1,14 +1,15 @@
 /// <reference types="@gasket/plugin-logger" />
 
-const path = require('path');
-const fs = require('fs').promises;
-const { promisify } = require('util');
-const { getIntlConfig } = require('./utils/configure-utils');
+import path from 'path';
+import fs from 'node:fs/promises';
+import { promisify } from 'util';
+import { getIntlConfig } from './utils/configure-utils.js';
+import glob from 'glob';
+import debug from 'debug';
 
 // TODO: Need to review for native promise usage
-const glob = promisify(require('glob'));
-
-const debug = require('debug')('gasket:plugin:intl:buildManifest');
+const globAsync = promisify(glob);
+const debugLog = debug('gasket:plugin:intl:buildManifest');
 
 /**
  * Constructs a manifest of locale file paths and settings which can be loaded
@@ -18,7 +19,7 @@ const debug = require('debug')('gasket:plugin:intl:buildManifest');
  * @param options
  * @async
  */
-module.exports = async function buildManifest(gasket, options = {}) {
+export default async function buildManifest(gasket, options = {}) {
   const { logger } = gasket;
   const tgtRoot = options.root || gasket.config.root;
   const { localesDir, managerFilename } = getIntlConfig(gasket);
@@ -34,8 +35,8 @@ module.exports = async function buildManifest(gasket, options = {}) {
   } = getIntlConfig(gasket);
 
   // find all the .json files except the manifest
-  debug(`Building manifest ${tgtFile} from JSON files in ${localesDir}`);
-  const files = (await glob('**/*.json', { cwd: tgtLocalesDir })).filter(
+  debugLog(`Building manifest ${tgtFile} from JSON files in ${localesDir}`);
+  const files = (await globAsync('**/*.json', { cwd: tgtLocalesDir })).filter(
     (f) => f !== managerFilename
   );
 
@@ -103,4 +104,4 @@ module.exports = async function buildManifest(gasket, options = {}) {
     logger.error(`build:locales: Unable to write intl manager (${tgtRelative}).`);
     throw err;
   }
-};
+}

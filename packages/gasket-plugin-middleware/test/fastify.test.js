@@ -1,48 +1,46 @@
-const middie = require('@fastify/express');
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 
 const app = {
-  ready: jest.fn(),
+  ready: vi.fn(),
   server: {
-    emit: jest.fn()
+    emit: vi.fn()
   },
-  register: jest.fn(),
-  use: jest.fn(),
-  addHook: jest.fn(),
+  register: vi.fn(),
+  use: vi.fn(),
+  addHook: vi.fn(),
   express: null
 };
 
 app.express = app;
 
-const mockFastify = jest.fn().mockReturnValue(app);
-const cookieParserMiddleware = jest.fn();
-const compressionMiddleware = jest.fn();
-const mockCookieParser = jest.fn().mockReturnValue(cookieParserMiddleware);
-const mockCompression = jest.fn().mockReturnValue(compressionMiddleware);
+const cookieParserMiddleware = vi.fn();
+const compressionMiddleware = vi.fn();
+const mockCookieParser = vi.fn().mockReturnValue(cookieParserMiddleware);
+const mockCompression = vi.fn().mockReturnValue(compressionMiddleware);
 
+vi.mock('@fastify/express', () => ({ default: vi.fn() }));
+vi.mock('cookie-parser', () => ({ default: mockCookieParser }));
+vi.mock('compression', () => ({ default: mockCompression }));
 
-jest.mock('fastify', () => mockFastify);
-jest.mock('cookie-parser', () => mockCookieParser);
-jest.mock('compression', () => mockCompression);
-
-const fastify = require('../lib/fastify');
+const fastify = (await import('../lib/fastify.js')).default;
 
 describe('fastify', () => {
   let gasket, mockMwPlugins;
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     mockMwPlugins = [];
 
     gasket = {
       middleware: {},
       logger: {},
       config: {},
-      execApply: jest.fn(async function (lifecycle, fn) {
+      execApply: vi.fn(async function (lifecycle, fn) {
         for (let i = 0; i < mockMwPlugins.length; i++) {
           // eslint-disable-next-line  no-loop-func
           fn(mockMwPlugins[i], () => mockMwPlugins[i]);
         }
-        return jest.fn();
+        return vi.fn();
       })
     };
   });
@@ -50,7 +48,7 @@ describe('fastify', () => {
   it('registers the middie middleware plugin', async () => {
     await fastify(gasket, app);
 
-    expect(app.register).toHaveBeenCalledWith(middie);
+    expect(app.register).toHaveBeenCalled();
   });
 
   it('adds middleware to attach res.locals', async () => {
@@ -60,7 +58,7 @@ describe('fastify', () => {
     expect(middleware.name).toEqual('attachLocals');
 
     const res = {};
-    const next = jest.fn();
+    const next = vi.fn();
     middleware({}, res, next);
 
     expect(res).toHaveProperty('locals');

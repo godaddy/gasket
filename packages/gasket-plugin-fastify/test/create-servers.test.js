@@ -1,15 +1,17 @@
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+
 const mockApp = {
-  ready: jest.fn(),
+  ready: vi.fn(),
   server: {
-    emit: jest.fn()
+    emit: vi.fn()
   },
-  register: jest.fn(),
-  use: jest.fn()
+  register: vi.fn(),
+  use: vi.fn()
 };
 
-jest.mock('../lib/utils.js');
-const { getAppInstance } = require('../lib/utils.js');
-const createServers = require('../lib/create-servers');
+vi.mock('../lib/utils.js');
+const { getAppInstance } = await import('../lib/utils.js');
+const createServers = (await import('../lib/create-servers.js')).default;
 
 describe('createServers', () => {
   let gasket, lifecycles, mockMwPlugins;
@@ -19,9 +21,9 @@ describe('createServers', () => {
     mockMwPlugins = [];
 
     lifecycles = {
-      middleware: jest.fn().mockResolvedValue([]),
-      errorMiddleware: jest.fn().mockResolvedValue([]),
-      fastify: jest.fn().mockResolvedValue()
+      middleware: vi.fn().mockResolvedValue([]),
+      errorMiddleware: vi.fn().mockResolvedValue([]),
+      fastify: vi.fn().mockResolvedValue()
     };
 
     gasket = {
@@ -30,19 +32,19 @@ describe('createServers', () => {
       config: {
         fastify: {}
       },
-      exec: jest.fn().mockImplementation((lifecycle, ...args) => lifecycles[lifecycle](args)),
-      execApply: jest.fn(async function (lifecycle, fn) {
+      exec: vi.fn().mockImplementation((lifecycle, ...args) => lifecycles[lifecycle](args)),
+      execApply: vi.fn(async function (lifecycle, fn) {
         for (let i = 0; i < mockMwPlugins.length; i++) {
           // eslint-disable-next-line  no-loop-func
           fn(mockMwPlugins[i], () => mockMwPlugins[i]);
         }
-        return jest.fn();
+        return vi.fn();
       })
     };
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('returns the handler app', async function () {
@@ -74,7 +76,7 @@ describe('createServers', () => {
   });
 
   it('adds the errorMiddleware', async () => {
-    const errorMiddlewares = [jest.fn()];
+    const errorMiddlewares = [vi.fn()];
     gasket.exec.mockResolvedValue(errorMiddlewares);
 
     await createServers(gasket, {});

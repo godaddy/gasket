@@ -1,9 +1,9 @@
 /// <reference types="@gasket/core" />
-const { withGasketRequestCache } = require('@gasket/request');
+import { withGasketRequestCache } from '@gasket/request';
 
 const deepClone = json => JSON.parse(JSON.stringify(json));
 
-const baseDataMap = new WeakMap();
+export const baseDataMap = new WeakMap();
 const adjustedDataMap = new WeakMap();
 
 /** @type {import('@gasket/core').ActionHandler<'getGasketData'>} */
@@ -46,10 +46,7 @@ const getPublicGasketData = withGasketRequestCache(async (gasket, req) => {
 });
 
 // Export the base functions for testing
-module.exports = {
-  baseDataMap,
-  actions: {
-    getGasketData,
-    getPublicGasketData
-  }
+export const actions = {
+  getGasketData,
+  getPublicGasketData
 };

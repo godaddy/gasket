@@ -1,8 +1,7 @@
 /// <reference types="@gasket/plugin-logger" />
 
-const path = require('path');
-
-const fs = require('fs').promises;
+import path from 'path';
+import { promises as fs } from 'fs';
 
 // Because getNextRoute may be called multiple times during a request, cache
 const nextRouteForRequest = new WeakMap();
@@ -62,7 +61,7 @@ function *iterateRoutes(routes) {
  * Gets the NextJS route matching the request
  * @type {import('@gasket/plugin-nextjs').getNextRoute}
  */
-module.exports = async function getNextRoute(gasket, req) {
+export default async function getNextRoute(gasket, req) {
   if (nextRouteForRequest.has(req)) {
     return nextRouteForRequest.get(req);
   }
@@ -81,4 +80,4 @@ module.exports = async function getNextRoute(gasket, req) {
 
   nextRouteForRequest.set(req, result);
   return result;
-};
+}

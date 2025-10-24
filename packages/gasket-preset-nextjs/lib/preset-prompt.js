@@ -1,4 +1,7 @@
-import nextJsPrompts from '@gasket/plugin-nextjs/prompts';
+import {
+  promptNextServerType,
+  promptNextDevProxy
+} from '@gasket/plugin-nextjs/prompts';
 import typescriptPrompts from '@gasket/plugin-typescript/prompts';
 
 /**
@@ -10,8 +13,8 @@ import typescriptPrompts from '@gasket/plugin-typescript/prompts';
  */
 export default async function presetPrompt(gasket, context, { prompt }) {
   await typescriptPrompts.promptTypescript(context, prompt);
-  await nextJsPrompts.promptNextServerType(context, prompt);
-  await nextJsPrompts.promptNextDevProxy(context, prompt);
+  await promptNextServerType(context, prompt);
+  await promptNextDevProxy(context, prompt);
 
   return context;
 }

@@ -1,10 +1,13 @@
-const path = require('path');
-const swaggerJSDoc = require('swagger-jsdoc');
-const isYaml = /\.ya?ml$/;
-const { writeFile } = require('fs').promises;
+import path from 'node:path';
+import swaggerJSDoc from 'swagger-jsdoc';
+import { writeFile } from 'node:fs/promises';
+import { createRequire } from 'node:module';
 
-/** @type {import('.').buildSwaggerDefinition} */
-module.exports = async function buildSwaggerDefinition(gasket, options) {
+const require = createRequire(import.meta.url);
+const isYaml = /\.ya?ml$/;
+
+/** @type {import('./index.d.ts').buildSwaggerDefinition} */
+export default async function buildSwaggerDefinition(gasket, options) {
   const root = options?.root || gasket.config.root;
   const swagger = options?.swagger || gasket.config.swagger;
   const { jsdoc, definitionFile = 'swagger.json' } = swagger;
@@ -22,7 +25,8 @@ module.exports = async function buildSwaggerDefinition(gasket, options) {
     } else {
       let content;
       if (isYaml.test(definitionFile)) {
-        content = require('js-yaml').safeDump(swaggerSpec);
+        const yaml = await import('js-yaml');
+        content = yaml.default.safeDump(swaggerSpec);
       } else {
         content = JSON.stringify(swaggerSpec, null, 2);
       }
@@ -31,4 +35,4 @@ module.exports = async function buildSwaggerDefinition(gasket, options) {
       gasket.logger.info(`Wrote: ${definitionFile}`);
     }
   }
-};
+}

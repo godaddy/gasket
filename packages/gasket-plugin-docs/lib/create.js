@@ -1,12 +1,14 @@
 /// <reference types="create-gasket-app"/>
 /// <reference types="@gasket/plugin-git" />
 
-const { name, version, devDependencies } = require('../package.json');
-
-const { DEFAULT_CONFIG } = require('./utils/constants');
+import { DEFAULT_CONFIG } from './utils/constants.js';
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
+const packageJson = require('../package.json');
+const { name, version, devDependencies } = packageJson;
 
 /** @type {import('@gasket/core').HookHandler<'create'>} */
-module.exports = function create(gasket, {
+export default function create(gasket, {
   pkg,
   gasketConfig,
   gitignore,
@@ -38,4 +40,4 @@ module.exports = function create(gasket, {
   readme.subHeading('Documentation')
     .content('Generated docs will be placed in the `.docs` directory. To generate markdown documentation for the API, run:')
     .codeBlock('{{{packageManager}}} run docs', 'bash');
-};
+}

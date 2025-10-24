@@ -1,6 +1,6 @@
 /// <reference types="@gasket/plugin-logger" />
 
-const DocsConfigSetBuilder = require('./config-set-builder');
+import DocsConfigSetBuilder from './config-set-builder.js';
 const defaults = DocsConfigSetBuilder.docsSetupDefault;
 
 /** @typedef {import('@gasket/plugin-metadata').PluginData} PluginData */
@@ -9,7 +9,7 @@ const defaults = DocsConfigSetBuilder.docsSetupDefault;
  * Searches for the pluginData from metadata for a given plugin.
  * If the plugin does not have a name, a unique match by hooks is attempted,
  * otherwise a console warning is issued.
- * @type {import('../internal').findPluginData}
+ * @type {import('../internal.d.ts').findPluginData}
  */
 function findPluginData(plugin, pluginsDatas, logger) {
   const { name } = plugin;
@@ -64,7 +64,7 @@ function findPluginData(plugin, pluginsDatas, logger) {
  * - metadata for plugins without docsSetup hook
  * - metadata for modules not processed with plugins
  * - metadata for presets
- * @type {import('../internal').buildDocsConfigSet}
+ * @type {import('../internal.d.ts').buildDocsConfigSet}
  */
 async function buildDocsConfigSet(gasket) {
   const { logger } = gasket;
@@ -100,4 +100,4 @@ async function buildDocsConfigSet(gasket) {
 
 buildDocsConfigSet.findPluginData = findPluginData;
 
-module.exports = buildDocsConfigSet;
+export default buildDocsConfigSet;

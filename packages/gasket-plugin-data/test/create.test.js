@@ -1,4 +1,7 @@
-const plugin = require('../lib/index');
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+import plugin from '../lib/index.js';
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
 const { name, version, devDependencies } = require('../package.json');
 
 describe('create', function () {
@@ -8,9 +11,9 @@ describe('create', function () {
   let filesAddStub;
 
   beforeEach(function () {
-    pkgHasStub = jest.fn().mockReturnValue(true);
-    pkgAddStub = jest.fn();
-    filesAddStub = jest.fn();
+    pkgHasStub = vi.fn().mockReturnValue(true);
+    pkgAddStub = vi.fn();
+    filesAddStub = vi.fn();
 
     mockContext = {
       pkg: {
@@ -21,10 +24,10 @@ describe('create', function () {
         add: filesAddStub
       },
       gasketConfig: {
-        add: jest.fn(),
-        addPlugin: jest.fn(),
-        addImport: jest.fn().mockReturnThis(),
-        injectValue: jest.fn()
+        add: vi.fn(),
+        addPlugin: vi.fn(),
+        addImport: vi.fn().mockReturnThis(),
+        injectValue: vi.fn()
       }
     };
   });
@@ -50,7 +53,7 @@ describe('create', function () {
   it('adds generator files', async function () {
     await plugin.hooks.create({}, mockContext);
     expect(filesAddStub).toHaveBeenCalledWith(
-      expect.stringContaining('../generator/*.js')
+      expect.stringContaining('generator/*.js')
     );
   });
 
@@ -58,7 +61,7 @@ describe('create', function () {
     mockContext.typescript = true;
     await plugin.hooks.create({}, mockContext);
     expect(filesAddStub).toHaveBeenCalledWith(
-      expect.stringContaining('../generator/*.ts')
+      expect.stringContaining('generator/*.ts')
     );
   });
 

@@ -1,4 +1,4 @@
-const { getAppInstance } = require('./utils.js');
+import { getAppInstance } from './utils.js';
 
 const actions = {
   /**
@@ -14,4 +14,4 @@ const actions = {
   }
 };
 
-module.exports = actions;
+export default actions;

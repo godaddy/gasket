@@ -1,4 +1,4 @@
-const { setupNextApp, setupNextHandling } = require('./utils/setup-next-app');
+import { setupNextApp, setupNextHandling } from './utils/setup-next-app.js';
 
 /**
  * Sets the build ID in the Express app
@@ -44,7 +44,7 @@ async function expressHandler(gasket, expressApp) {
   setupNextHandling(app, expressApp, gasket);
 }
 
-module.exports = {
+export default {
   timing: { last: true },
   handler: expressHandler
 };

@@ -1,18 +1,21 @@
-const { name, version, description } = require('../package');
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const { name, version, description } = require('../package.json');
 
-const plugin = require('../lib');
+import plugin from '../lib/index.js';
 
 describe('Plugin', () => {
   let mockGasket, mockError;
   beforeEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
 
     mockGasket = {
-      config: { get: jest.fn() },
-      actions: { getHappyFeet: jest.fn() }
+      config: { get: vi.fn() },
+      actions: { getHappyFeet: vi.fn() }
     };
 
-    mockError = jest.fn();
+    mockError = vi.fn();
   });
 
   it('has expected properties', () => {

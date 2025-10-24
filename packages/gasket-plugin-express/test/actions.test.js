@@ -1,9 +1,12 @@
-jest.mock('../lib/utils.js');
-const { getAppInstance } = require('../lib/utils.js');
-const actions = require('../lib/actions');
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import { getAppInstance } from '../lib/utils.js';
+import actions from '../lib/actions.js';
+
 const { getExpressApp } = actions;
 
-const mockApp = { use: jest.fn(), post: jest.fn(), set: jest.fn() };
+vi.mock('../lib/utils.js');
+
+const mockApp = { use: vi.fn(), post: vi.fn(), set: vi.fn() };
 
 describe('getExpressApp', () => {
   let gasket;
@@ -12,14 +15,14 @@ describe('getExpressApp', () => {
     getAppInstance.mockReturnValue(mockApp);
     gasket = {
       logger: {
-        warn: jest.fn()
+        warn: vi.fn()
       },
       config: {}
     };
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('returns the express instance', function () {

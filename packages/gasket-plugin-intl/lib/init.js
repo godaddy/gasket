@@ -1,6 +1,7 @@
 /// <reference types="@gasket/core" />
 
-const debug = require('debug')('gasket:plugin:intl:init');
+import debug from 'debug';
+const debugLog = debug('gasket:plugin:intl:init');
 
 /**
  * For SSR with Node < 14, we must polyfill Intl to make sure all locale data is
@@ -11,11 +12,13 @@ const debug = require('debug')('gasket:plugin:intl:init');
  * @see https://formatjs.io/docs/guides/runtime-requirements/#nodejs
  * @type {import('@gasket/core').HookHandler<'init'>}
  */
-module.exports = function init() {
-  const semver = require('semver');
+import semver from 'semver';
+import intl from 'intl';
+
+export default function init() {
   const current = semver.coerce(process.version).version;
   if (!semver.satisfies(current, '>=14')) {
-    global.Intl = require('intl');
-    debug('Using Intl polyfill');
+    global.Intl = intl;
+    debugLog('Using Intl polyfill');
   }
 };

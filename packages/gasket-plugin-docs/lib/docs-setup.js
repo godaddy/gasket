@@ -1,14 +1,14 @@
-const {
+import {
   txGasketPackageLinks,
   txGasketUrlLinks,
   txAbsoluteLinks
-} = require('./utils/transforms');
+} from './utils/transforms.js';
 
 /**
  * Specify what files to copy and transform
  * @type {import('@gasket/core').HookHandler<'docsSetup'>}
  */
-module.exports = function docsSetup() {
+export default function docsSetup() {
   return {
     link: 'README.md',
     files: [
@@ -22,4 +22,4 @@ module.exports = function docsSetup() {
       txAbsoluteLinks
     ]
   };
-};
+}

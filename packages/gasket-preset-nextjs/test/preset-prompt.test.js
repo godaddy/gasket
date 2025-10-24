@@ -3,8 +3,10 @@ const mockNextServerTypePrompt = vi.fn();
 const mockNextDevProxyPrompt = vi.fn();
 const mockTypescriptPrompt = vi.fn();
 
-vi.mock('@gasket/plugin-nextjs/prompts', () => ({
-  default: {
+vi.mock('@gasket/plugin-nextjs/prompts', async (importOriginal) => {
+  const actual = await importOriginal();
+  return {
+    ...actual,
     promptNextServerType: async (context, prompt) => {
       mockNextServerTypePrompt(context, prompt);
       if (prompt) await prompt();
@@ -13,8 +15,8 @@ vi.mock('@gasket/plugin-nextjs/prompts', () => ({
       mockNextDevProxyPrompt(context, prompt);
       if (prompt) await prompt();
     }
-  }
-}));
+  };
+});
 
 vi.mock('@gasket/plugin-typescript/prompts', () => ({
   default: {

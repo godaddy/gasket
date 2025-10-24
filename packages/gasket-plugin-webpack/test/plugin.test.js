@@ -1,10 +1,13 @@
-const plugin = require('../lib/index');
+import { vi } from 'vitest';
+import plugin from '../lib/index.js';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 const {
   name,
   version,
   description,
   devDependencies
-} = require('../package');
+} = require('../package.json');
 
 describe('Plugin', () => {
 
@@ -40,10 +43,10 @@ describe('create hook', () => {
 
     mockContext = {
       pkg: {
-        add: jest.fn(),
-        has: jest.fn()
+        add: vi.fn(),
+        has: vi.fn()
       },
-      gasketConfig: { addPlugin: jest.fn() }
+      gasketConfig: { addPlugin: vi.fn() }
     };
   });
 

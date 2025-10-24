@@ -1,13 +1,13 @@
 /// <reference types="@gasket/core" />
 /// <reference types="@gasket/plugin-command" />
 
-const { applyConfigOverrides } = require('@gasket/utils');
-const { baseDataMap } = require('./actions');
+import { applyConfigOverrides } from '@gasket/utils';
+import { baseDataMap } from './actions.js';
 
 /**
  * @type {import('@gasket/core').HookHandler<'configure'>}
  */
-function configure(gasket, baseConfig) {
+export default function configure(gasket, baseConfig) {
   const { config: { env, command } } = gasket;
   if ('data' in baseConfig) {
     const data = applyConfigOverrides(
@@ -26,5 +26,3 @@ function configure(gasket, baseConfig) {
 
   return baseConfig;
 }
-
-module.exports = configure;

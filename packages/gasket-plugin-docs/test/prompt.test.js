@@ -1,11 +1,12 @@
-const prompt = require('../lib/prompt');
+import { vi } from 'vitest';
+import prompt from '../lib/prompt.js';
 
 describe('prompt', () => {
   let mockContext, mockPrompt;
 
   beforeEach(() => {
     mockContext = {};
-    mockPrompt = jest.fn();
+    mockPrompt = vi.fn();
   });
 
   it('prompts for docs plugins', async () => {

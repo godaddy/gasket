@@ -1,4 +1,5 @@
-const configure = require('../lib/configure');
+import { describe, it, expect, beforeEach } from 'vitest';
+import configure from '../lib/configure.js';
 
 describe('configure', () => {
   let mockCreateContext;

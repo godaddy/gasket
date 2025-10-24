@@ -1,42 +1,46 @@
-const path = require('path');
-const mockReadFileStub = jest.fn().mockResolvedValue('mock-content');
-const mockWriteFileStub = jest.fn();
-const mockCopyFileStub = jest.fn();
-const mockMkdirpStub = jest.fn();
-const mockRimrafStub = jest.fn();
-const mockStatStub = jest.fn();
+import { vi } from 'vitest';
+import path from 'path';
 
-const collateFiles = require('../../lib/utils/collate-files');
-
-jest.mock('fs', () => ({
-  promises: {
-    readFile: mockReadFileStub,
-    writeFile: mockWriteFileStub,
-    copyFile: mockCopyFileStub,
-    stat: mockStatStub
-  }
+vi.mock('fs/promises', () => ({
+  readFile: vi.fn().mockResolvedValue('mock-content'),
+  writeFile: vi.fn(),
+  copyFile: vi.fn(),
+  stat: vi.fn().mockResolvedValue({ isFile: () => true })
 }));
-jest.mock('mkdirp', () => mockMkdirpStub);
-jest.mock('rimraf', () => mockRimrafStub);
-jest.mock('util', () => ({ promisify: f => f }));
+vi.mock('mkdirp', () => ({ default: vi.fn() }));
+vi.mock('rimraf', () => ({ default: vi.fn() }));
+vi.mock('util', () => ({ promisify: f => f }));
 
-const processModuleSpy = jest.spyOn(collateFiles, 'processModule');
+import collateFiles from '../../lib/utils/collate-files.js';
+import { readFile, writeFile, copyFile, stat } from 'fs/promises';
+import mkdirp from 'mkdirp';
+import rimraf from 'rimraf';
+
+const processModuleSpy = vi.spyOn(collateFiles, 'processModule');
 const { processModule } = collateFiles;
+
+// Get references to the mocked functions
+const mockReadFileStub = vi.mocked(readFile);
+const mockWriteFileStub = vi.mocked(writeFile);
+const mockCopyFileStub = vi.mocked(copyFile);
+const mockStatStub = vi.mocked(stat);
+const mockMkdirpStub = vi.mocked(mkdirp);
+const mockRimrafStub = vi.mocked(rimraf);
 
 const mockLocalTransform = {
   test: /README\.md$/,
-  handler: jest.fn(f => f + '-local')
+  handler: vi.fn(f => f + '-local')
 };
 
 const mockGlobalTransform = {
   global: true,
   test: /\.md$/,
-  handler: jest.fn(f => f + '-global')
+  handler: vi.fn(f => f + '-global')
 };
 
 const mockNoMatchTransform = {
   test: /NOTHING$/,
-  handler: jest.fn(f => f + '-NOTHING')
+  handler: vi.fn(f => f + '-NOTHING')
 };
 
 const mockDocsConfigSet = {

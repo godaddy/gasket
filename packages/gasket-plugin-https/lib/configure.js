@@ -1,5 +1,5 @@
 /** @type {import('@gasket/core').HookHandler<'configure'>} */
-module.exports = function configure(gasket, config) {
+export default function configure(gasket, config) {
   const { root } = config;
 
   const setRoot = (serverConfig) => {
@@ -19,4 +19,4 @@ module.exports = function configure(gasket, config) {
   setRoot(config.http2);
 
   return config;
-};
+}

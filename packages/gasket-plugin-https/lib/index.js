@@ -3,11 +3,20 @@
 /// <reference types="@gasket/plugin-logger" />
 /// <reference types="create-gasket-app" />
 
-const { name, version, description } = require('../package.json');
-const actions = require('./actions');
-const createHook = require('./create');
-const configure = require('./configure');
-const metadata = require('./metadata');
+import { readFileSync } from 'fs';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const pkg = JSON.parse(readFileSync(join(__dirname, '../package.json'), 'utf8'));
+const { name, version, description } = pkg;
+
+import * as actions from './actions.js';
+import createHook from './create.js';
+import configure from './configure.js';
+import metadata from './metadata.js';
 
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {
@@ -22,4 +31,4 @@ const plugin = {
   }
 };
 
-module.exports = plugin;
+export default plugin;

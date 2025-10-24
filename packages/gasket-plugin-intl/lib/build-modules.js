@@ -1,9 +1,10 @@
-const fs = require('fs-extra');
-const path = require('path');
-const { getPackageDirs, saveJsonFile } = require('./utils/fs-utils');
-const { getIntlConfig } = require('./utils/configure-utils');
+import fs from 'fs-extra';
+import path from 'path';
+import { getPackageDirs, saveJsonFile } from './utils/fs-utils.js';
+import { getIntlConfig } from './utils/configure-utils.js';
+import debug from 'debug';
 
-const debug = require('debug')('gasket:plugin:intl:buildModules');
+const debugLog = debug('gasket:plugin:intl:buildModules');
 
 const rePkgParts = /^(?<name>(?:@[\w-]+\/)?[\w-]+)(?<dir>\/[\w-]+)?$/;
 
@@ -47,7 +48,7 @@ class BuildModules {
    * @returns {Promise} promise
    */
   async copyFolder(srcDir, tgtDir) {
-    debug(`Copying folder from ${srcDir} to ${tgtDir}`);
+    debugLog(`Copying folder from ${srcDir} to ${tgtDir}`);
 
     const fileNames = await fs.readdir(srcDir);
 
@@ -68,7 +69,7 @@ class BuildModules {
    * @returns {Promise} - resolves once the file is saved
    */
   async copyFile(src, tgt) {
-    debug(`Copying file from ${src} to ${tgt}`);
+    debugLog(`Copying file from ${src} to ${tgt}`);
 
     await fs.mkdirp(path.dirname(tgt));
     const buffer = await fs.readFile(src);
@@ -84,7 +85,7 @@ class BuildModules {
    * @returns {Promise} promise
    */
   processFiles(srcDir, tgtDir, fileNames) {
-    debug(`Processing files in ${srcDir} to target ${tgtDir}`);
+    debugLog(`Processing files in ${srcDir} to target ${tgtDir}`);
 
     const promises = fileNames.map(async (fileName) => {
       const srcFile = path.join(srcDir, fileName);
@@ -134,7 +135,7 @@ class BuildModules {
 
   /**
    * Processes directories
-   * @param {import('./internal').SrcPkgDir[]} srcPkgDirs - list of dirs to process
+   * @param {import('./internal.d.ts').SrcPkgDir[]} srcPkgDirs - list of dirs to process
    */
   async processDirs(srcPkgDirs) {
     for (const [pkgName, srcDir] of srcPkgDirs) {
@@ -154,10 +155,10 @@ class BuildModules {
 
   /**
    * Find modules that have /locales folder to process
-   * @returns {Promise<import('./internal').SrcPkgDir[]>} source package directories
+   * @returns {Promise<import('./internal.d.ts').SrcPkgDir[]>} source package directories
    */
   async discoverDirs() {
-    /** @type {import('./internal').SrcPkgDir[]} */
+    /** @type {import('./internal.d.ts').SrcPkgDir[]} */
     const results = [];
     for await (const [pkgName, dir] of getPackageDirs(this._nodeModulesDir)) {
       if (!this._excludes.includes(path.basename(dir))) {
@@ -180,7 +181,7 @@ class BuildModules {
 
   /**
    * Find modules with locale directories to process
-   * @returns {Promise<import('./internal').SrcPkgDir[]>} source package directories
+   * @returns {Promise<import('./internal.d.ts').SrcPkgDir[]>} source package directories
    */
   async gatherModuleDirs() {
     if (this._lookupModuleDirs) {
@@ -217,7 +218,7 @@ class BuildModules {
       });
 
       const results = (await Promise.all(promises)).filter(Boolean);
-      return /** @type {import('./internal').SrcPkgDir[]} */ (results);
+      return /** @type {import('./internal.d.ts').SrcPkgDir[]} */ (results);
     }
 
     return this.discoverDirs();
@@ -238,9 +239,9 @@ class BuildModules {
  * Discovers locale files under node modules with and copies them to output dir.
  * @param {import("@gasket/core").Gasket} gasket - Gasket API
  */
-module.exports = async function buildModules(gasket) {
+export default async function buildModules(gasket) {
   const builder = new BuildModules(gasket);
   await builder.run();
-};
+}
 
-module.exports.BuildModules = BuildModules;
+export { BuildModules };

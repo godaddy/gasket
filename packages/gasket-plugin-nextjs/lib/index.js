@@ -1,16 +1,19 @@
 /// <reference types="@gasket/plugin-express" />
 
+import { createRequire } from 'module';
+import apmTransaction from './apm-transaction.js';
+import metadata from './metadata.js';
+import configure from './configure.js';
+import * as actions from './actions.js';
+import { prompt } from './prompt.js';
+import create from './create.js';
+import { webpackConfig } from './webpack-config.js';
+import express from './express.js';
+import fastify from './fastify.js';
+import workbox from './workbox.js';
+
+const require = createRequire(import.meta.url);
 const { name, version, description } = require('../package.json');
-const apmTransaction = require('./apm-transaction');
-const metadata = require('./metadata');
-const configure = require('./configure');
-const actions = require('./actions');
-const { prompt } = require('./prompt');
-const create = require('./create');
-const { webpackConfig } = require('./webpack-config');
-const express = require('./express');
-const fastify = require('./fastify');
-const workbox = require('./workbox');
 
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {
@@ -32,4 +35,4 @@ const plugin = {
   }
 };
 
-module.exports = plugin;
+export default plugin;

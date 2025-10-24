@@ -1,10 +1,11 @@
 /// <reference types="create-gasket-app" />
 
-const path = require('path');
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 const { devDependencies, name, version } = require('../package.json');
 
 /** @type {import('@gasket/core').HookHandler<'create'>} */
-module.exports = async function create(gasket, createContext) {
+export default async function create(gasket, createContext) {
   if (createContext.hasGasketIntl === false) {
     return;
   }
@@ -15,7 +16,7 @@ module.exports = async function create(gasket, createContext) {
   if (createContext.typescript) gasket.config.intl.managerFilename = 'intl.ts';
 
   const { files, pkg, gasketConfig } = createContext;
-  const rootDir = path.join(__dirname, '..');
+  const rootDir = new URL('..', import.meta.url).pathname;
   const isReactProject = pkg.has('dependencies', 'react');
   files.add(`${rootDir}/generator/*`, `${rootDir}/generator/**/*`);
 
@@ -43,4 +44,4 @@ module.exports = async function create(gasket, createContext) {
       'react-intl': devDependencies['react-intl']
     });
   }
-};
+}

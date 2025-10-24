@@ -1,5 +1,3 @@
-module.exports = {
-  DEFAULT_CONFIG: {
-    outputDir: '.docs'
-  }
+export const DEFAULT_CONFIG = {
+  outputDir: '.docs'
 };

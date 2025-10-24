@@ -1,12 +1,18 @@
-const path = require('path');
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 describe('next-route', () => {
   let gasket, req, getNextRoute;
 
-  beforeEach(() => {
-    // Clear module cache and get fresh import
-    delete require.cache[require.resolve('../lib/utils/next-route')];
-    getNextRoute = require('../lib/utils/next-route');
+  beforeEach(async () => {
+    // Reset modules and get fresh import
+    vi.resetModules();
+    const module = await import('../lib/utils/next-route.js');
+    getNextRoute = module.default;
 
     gasket = {
       config: {
@@ -20,9 +26,6 @@ describe('next-route', () => {
     req = { path: '/', url: '/' };
   });
 
-  afterEach(() => {
-    vi.resetModules();
-  });
 
   it('returns null if a valid routes manifest could not be found', async () => {
     gasket.config.root = __dirname;

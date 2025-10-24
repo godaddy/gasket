@@ -1,4 +1,4 @@
-const promptHook = require('../lib/prompt');
+import promptHook from '../lib/prompt.js';
 
 describe('promptHook', () => {
   let mockGasket, mockCreateContext, prompt, mockAnswers;
@@ -7,7 +7,7 @@ describe('promptHook', () => {
     mockGasket = {};
     mockCreateContext = {};
     mockAnswers = { useGasketIntl: true  };
-    prompt = jest.fn().mockImplementation(() => mockAnswers);
+    prompt = vi.fn().mockImplementation(() => mockAnswers);
   });
 
   it('sets hasGasketIntl to true', async () => {

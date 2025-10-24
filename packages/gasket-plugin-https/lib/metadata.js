@@ -1,5 +1,5 @@
 /** @type {import('@gasket/core').HookHandler<'metadata'>} */
-module.exports = function metadata(gasket, meta) {
+export default function metadata(gasket, meta) {
   return {
     ...meta,
     actions: [
@@ -86,4 +86,4 @@ module.exports = function metadata(gasket, meta) {
       }
     ]
   };
-};
+}

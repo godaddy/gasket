@@ -12,4 +12,4 @@ function configure(gasket, baseConfig) {
   return { ...baseConfig, serviceWorker, nextConfig };
 }
 
-module.exports = configure;
+export default configure;

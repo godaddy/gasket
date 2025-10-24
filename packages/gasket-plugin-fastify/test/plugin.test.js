@@ -1,4 +1,8 @@
-const plugin = require('../lib/index');
+import { describe, it, expect } from 'vitest';
+import { createRequire } from 'node:module';
+import plugin from '../lib/index.js';
+
+const require = createRequire(import.meta.url);
 const { name, version, description } = require('../package.json');
 
 describe('Plugin', function () {
@@ -27,5 +31,4 @@ describe('Plugin', function () {
     expect(hooks).toHaveLength(expected.length);
   });
 });
-
 

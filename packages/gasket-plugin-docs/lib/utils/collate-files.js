@@ -1,10 +1,11 @@
-const { readFile, writeFile, copyFile, stat } = require('fs').promises;
-const path = require('path');
-const { promisify } = require('util');
-const mkdirp = require('mkdirp');
+import { readFile, writeFile, copyFile, stat } from 'fs/promises';
+import path from 'path';
+import { promisify } from 'util';
+import mkdirp from 'mkdirp';
 // TODO: rimraf currently does not have native promise support
 // https://github.com/isaacs/rimraf/pull/229
-const rimraf = promisify(require('rimraf'));
+import rimraf from 'rimraf';
+const rimrafAsync = promisify(rimraf);
 
 /**
  * Checks if a path is a file.
@@ -24,8 +25,8 @@ async function isFile(filePath) {
 /**
  * Copies configured files for a module to the target output dir and applies any
  * transforms.
- * @param {import('../internal').ModuleDocsConfig} moduleDocsConfig -
- * @param {import('../internal').DocsConfigSet} docsConfigSet - Configurations for
+ * @param {import('../internal.d.ts').ModuleDocsConfig} moduleDocsConfig -
+ * @param {import('../internal.d.ts').DocsConfigSet} docsConfigSet - Configurations for
  * collating docs
  * @returns {Promise<void>} promise
  * @private
@@ -74,14 +75,14 @@ async function processModule(moduleDocsConfig, docsConfigSet) {
 
 /**
  * Collect and combine doc files in proper order.
- * @param {import('../internal').DocsConfigSet} docsConfigSet - Configurations for
+ * @param {import('../internal.d.ts').DocsConfigSet} docsConfigSet - Configurations for
  * collating docs
  * @returns {Promise<void>} promise
  */
 async function collateFiles(docsConfigSet) {
   const { docsRoot } = docsConfigSet;
   await mkdirp(docsRoot);
-  await rimraf(path.join(docsRoot, '*'));
+  await rimrafAsync(path.join(docsRoot, '*'));
 
   // Flatten the moduleDocsConfigs then generate
   const flattened = ['plugins', 'presets', 'modules'].reduce(
@@ -98,4 +99,4 @@ async function collateFiles(docsConfigSet) {
 
 collateFiles.processModule = processModule;
 
-module.exports = collateFiles;
+export default collateFiles;

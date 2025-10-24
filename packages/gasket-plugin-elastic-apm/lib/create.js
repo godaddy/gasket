@@ -1,8 +1,12 @@
-const { name, version, devDependencies } = require('../package.json');
+import { readFileSync } from 'fs';
+
+const packageJsonPath = new URL('../package.json', import.meta.url).pathname;
+const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf8'));
+const { name, version, devDependencies } = packageJson;
 
 /** @type {import('@gasket/core').HookHandler<'create'>} */
-module.exports = function create(gasket, { pkg, files, gasketConfig }) {
-  const generatorDir = `${__dirname}/../generator`;
+export default function create(gasket, { pkg, files, gasketConfig }) {
+  const generatorDir = new URL('../generator', import.meta.url).pathname;
 
   gasketConfig.addPlugin('pluginElasticApm', name);
 
@@ -21,4 +25,4 @@ module.exports = function create(gasket, { pkg, files, gasketConfig }) {
   });
 
   files.add(`${generatorDir}/*`);
-};
+}

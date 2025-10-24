@@ -1,5 +1,5 @@
-const configure = require('../lib/configure');
-const { getIntlConfig } = require('../lib/utils/configure-utils');
+import configure from '../lib/configure.js';
+import { getIntlConfig } from '../lib/utils/configure-utils.js';
 
 describe('configure', function () {
   let mockGasket;
@@ -9,8 +9,8 @@ describe('configure', function () {
   beforeEach(function () {
     mockGasket = {
       logger: {
-        warn: jest.fn(),
-        debug: jest.fn()
+        warn: vi.fn(),
+        debug: vi.fn()
       },
       config: {
         root,
@@ -22,7 +22,7 @@ describe('configure', function () {
   });
 
   afterEach(function () {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('returns object', function () {
