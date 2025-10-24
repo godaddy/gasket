@@ -1,8 +1,7 @@
 import { createTerminus, HealthCheckError } from '@godaddy/terminus';
 import debug from 'diagnostics';
 import create from 'create-servers';
-// @ts-expect-error - one-time/async does not have type definitions
-import one from 'one-time/async';
+import one from 'one-time/async.js';
 import errs from 'errs';
 import { getPortFallback, portInUseError, startProxy, getRawServerConfig } from './utils.js';
 
