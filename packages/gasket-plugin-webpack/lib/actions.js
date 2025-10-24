@@ -1,7 +1,9 @@
 /// <reference types="@gasket/plugin-logger" />
 
-import * as webpack from 'webpack';
-console.log('webpack', webpack);
+import webpack from 'webpack/lib/index.js';
+// import { createRequire } from 'module';
+// const require = createRequire(import.meta.url);
+// const webpack = require('webpack');
 import WebpackMetricsPlugin from './webpack-metrics-plugin.js';
 import GasketEnvGuardPlugin from './gasket-env-guard-plugin.js';
 
