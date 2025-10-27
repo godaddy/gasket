@@ -16,6 +16,6 @@ async function promptSwagger(context, prompt) {
   return context;
 }
 
-export {
+export default {
   promptSwagger
 };

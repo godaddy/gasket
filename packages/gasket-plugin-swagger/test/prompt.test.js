@@ -1,5 +1,5 @@
 import { vi } from 'vitest';
-import { promptSwagger } from '../lib/prompt.js';
+import prompt from '../lib/prompt.js';
 
 describe('promptSwagger', () => {
   let context, mockPrompt, mockAnswers;
@@ -16,12 +16,12 @@ describe('promptSwagger', () => {
 
 
   it('sets useSwagger to false', async () => {
-    const result = await promptSwagger(context, mockPrompt);
+    const result = await prompt.promptSwagger(context, mockPrompt);
     expect(result.useSwagger).toEqual(false);
   });
 
   it('promptSwagger', async () => {
-    await promptSwagger(context, mockPrompt);
+    await prompt.promptSwagger(context, mockPrompt);
     expect(mockPrompt).toHaveBeenCalledWith([
       {
         name: 'useSwagger',
