@@ -19,8 +19,11 @@ vi.mock('node:fs/promises', () => ({
 vi.mock('../lib/generate-default-config.js', () => ({
   default: vi.fn().mockResolvedValue('const config = { name: "App name", path: "docs" };')
 }));
-vi.mock('@docusaurus/core', () => ({
-  start: mockStartStub
+vi.mock('@docusaurus/core/lib', () => ({
+  start: mockStartStub.mockImplementation(() => {
+    // Prevent actual Docusaurus startup process
+    return Promise.resolve();
+  })
 }));
 
 vi.mock('@docusaurus/preset-classic', () => ({
@@ -28,6 +31,22 @@ vi.mock('@docusaurus/preset-classic', () => ({
 }));
 vi.mock('@docusaurus/core/package.json', () => ({
   default: mockCorePackage
+}));
+
+// Mock the require function to prevent actual module loading
+vi.mock('node:module', () => ({
+  createRequire: vi.fn(() => vi.fn((module) => {
+    if (module === '@docusaurus/preset-classic') {
+      return mockPresetClassic;
+    }
+    if (module === '@docusaurus/core/package.json') {
+      return mockCorePackage;
+    }
+    if (module === '@docusaurus/core/lib') {
+      return { start: mockStartStub };
+    }
+    throw new Error(`Module ${module} not found`);
+  }))
 }));
 
 const pluginConfigFile = 'docusaurus.config.js';
