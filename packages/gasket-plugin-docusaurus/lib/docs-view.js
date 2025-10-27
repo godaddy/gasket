@@ -2,8 +2,10 @@
 
 import { existsSync } from 'node:fs';
 import { writeFile } from 'node:fs/promises';
+import { createRequire } from 'node:module';
 import path from 'node:path';
 import generateDefaultConfig from './generate-default-config.js';
+const require = createRequire(import.meta.url);
 const pluginConfigFile = 'docusaurus.config.js';
 const defaultConfig = {
   port: '3000',
@@ -25,8 +27,8 @@ async function createPackageFile(docsRoot) {
  */
 async function checkDevDependencies() {
   try {
-    await import('@docusaurus/preset-classic');
-    await import('@docusaurus/core/package.json');
+    require('@docusaurus/preset-classic');
+    require('@docusaurus/core/package.json');
   } catch {
     throw new Error(
       'Missing devDependencies. Please run `npm i -D @docusaurus/core @docusaurus/preset-classic`'
@@ -37,8 +39,7 @@ async function checkDevDependencies() {
 /** @type {import('@gasket/core').HookHandler<'docsView'>} */
 export default async function docsView(gasket) {
   await checkDevDependencies();
-  // @ts-expect-error - TODO: add types for @docusaurus/core
-  const { start } = await import('@docusaurus/core');
+  const { start } = require('@docusaurus/core/lib');
   const { config } = gasket;
   const { app: { name } } = await gasket.actions.getMetadata();
   const userConfig = gasket.config.docusaurus;
