@@ -1,10 +1,12 @@
 {
   "name": "@gasket/template-nextjs-app",
-  "version": "1.0.0",
+  "version": "7.0.2",
   "description": "Gasket Next.js App Router template",
   "type": "module",
   "files": [
-    "template"
+    "template",
+    "template/.gitignore",
+    "template/.npmrc"
   ],
   "scripts": {
     "lint": "eslint .",

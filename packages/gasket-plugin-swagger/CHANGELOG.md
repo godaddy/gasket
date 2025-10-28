@@ -1,5 +1,18 @@
 # `@gasket/plugin-swagger`
 
+## 7.3.11
+
+### Patch Changes
+
+- 411f815: Add build script guidance to swagger docs
+
+## 7.3.10
+
+### Patch Changes
+
+- f5e6942: Include EXAMPLES.md when publishing
+- da18ea5: Add code examples
+
 ## 7.3.9
 
 ### Patch Changes

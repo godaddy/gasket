@@ -1,7 +1,7 @@
 {
   "name": "generate-docs-index",
   "private": true,
-  "version": "7.4.15",
+  "version": "7.4.20",
   "description": "Generate the overview index",
   "type": "module",
   "scripts": {
@@ -54,6 +54,11 @@
     "@gasket/react-intl": "workspace:^",
     "@gasket/redux": "workspace:^",
     "@gasket/request": "workspace:^",
+    "@gasket/template-api-express": "workspace:^",
+    "@gasket/template-api-fastify": "workspace:^",
+    "@gasket/template-nextjs-app": "workspace:^",
+    "@gasket/template-nextjs-express": "workspace:^",
+    "@gasket/template-nextjs-pages": "workspace:^",
     "@gasket/utils": "workspace:^",
     "create-gasket-app": "workspace:^"
   }

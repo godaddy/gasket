@@ -2,11 +2,17 @@
 
 Gasket integrations for Next.js apps. Provides several tools:
 
+**AppRouter**
+
 - [request]: Access a request-like object in server components
-- [withGasketData]: Injects Gasket Data added during lifecycle into Document
-- [withGasketDataProvider]: Provides context access to Gasket Data
-- [useGasketData]: Allows access to Gasket Data from hook
-- [withLocaleInitialProps]: Injects current locale into component props via getInitialProps
+- [withGasketData][withGasketData2]: HOC to inject Gasket Data into Root Layout
+
+**PageRouter**
+
+- [withGasketData]: HOC to inject Gasket Data into Document
+- [withGasketDataProvider]: HOC to provide React Context access to Gasket Data
+- [useGasketData]: Hook that enables access to Gasket Data
+- [withLocaleInitialProps]: HOC to add current locale with `getInitialProps`
 
 ## Installation
 
@@ -14,7 +20,9 @@ Gasket integrations for Next.js apps. Provides several tools:
 npm i @gasket/nextjs
 ```
 
-## Functions
+## App Router
+
+Functions to help integrate Gasket with Next.js App Router.
 
 ### request
 
@@ -68,7 +76,41 @@ export default async function MyDynamicRoutePage({ params }) {
 }
 ```
 
-## Higher-Order Components (HOCs)
+### Layout withGasketData
+
+Injects Gasket Data into Root Layout for use with the [@gasket/data] package.
+
+**Signature**
+- `withGasketData(gasket, options?)(Layout)`
+
+**Props** 
+- `gasket` - (object) The Gasket instance
+- `[options]` - (object) Optional configuration
+  - `index` - (number) Force the script to be inject at a certain child index of the body
+
+#### Example
+
+This is the simplest and most common setup:
+
+```jsx
+// app/layout.js
+import { withGasketData } from '@gasket/nextjs/layout';
+import gasket from '../gasket.js'; 
+async function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body>
+        {children}
+      </body>
+    </html>
+  );
+}
+export default withGasketData(gasket)(RootLayout);
+```
+
+## Page Router
+
+Functions to help integrate Gasket with Next.js Page Router.
 
 ### withGasketData
 
@@ -296,6 +338,7 @@ The `useGasketData` will provide access to the gasket data within the context of
 [dynamic functions]: https://nextjs.org/docs/app/building-your-application/rendering/server-components#dynamic-functions
 
 [request]: #request
+[withGasketData2]: #layout-withgasketdata
 [withGasketData]: #withgasketdata
 [withGasketDataProvider]: #withgasketdataprovider
 [useGasketData]: #usegasketdata

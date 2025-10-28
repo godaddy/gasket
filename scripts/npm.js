@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+/* eslint-disable no-console, no-continue, no-sync */
+
 import fs from 'fs';
 import path from 'path';
 import { spawn } from 'child_process';
@@ -14,7 +16,7 @@ const OPERATIONS = {
     name: 'Installing dependencies',
     emoji: '📦',
     command: 'npm',
-    args: ['ci']
+    args: ['ci', '--prefer-offline']
   },
   'build': {
     name: 'Building',
@@ -50,6 +52,10 @@ const OPERATIONS = {
   }
 };
 
+/**
+ *
+ * @param dirPath
+ */
 function rmRecursive(dirPath) {
   try {
     fs.rmSync(dirPath, { recursive: true, force: true });
@@ -61,6 +67,11 @@ function rmRecursive(dirPath) {
   }
 }
 
+/**
+ *
+ * @param templateDir
+ * @param packageName
+ */
 async function cleanHandler(templateDir, packageName) {
   console.log(`🧹 Cleaning ${packageName}/template`);
 
@@ -89,6 +100,10 @@ async function cleanHandler(templateDir, packageName) {
   }
 }
 
+/**
+ *
+ * @param filePath
+ */
 function rmFile(filePath) {
   try {
     fs.unlinkSync(filePath);
@@ -102,6 +117,11 @@ function rmFile(filePath) {
   }
 }
 
+/**
+ *
+ * @param templateDir
+ * @param packageName
+ */
 async function regenHandler(templateDir, packageName) {
   console.log(`🔒 Regenerating lockfiles for ${packageName}/template`);
 
@@ -146,6 +166,10 @@ async function regenHandler(templateDir, packageName) {
   }
 }
 
+/**
+ *
+ * @param templateDir
+ */
 function shouldSkipNpmCi(templateDir) {
   const nodeModulesPath = path.join(templateDir, 'node_modules');
   const packageJsonPath = path.join(templateDir, 'package.json');
@@ -192,6 +216,13 @@ function shouldSkipNpmCi(templateDir) {
   return true; // node_modules is up to date
 }
 
+/**
+ *
+ * @param command
+ * @param args
+ * @param cwd
+ * @param customEnv
+ */
 async function runCommand(command, args, cwd, customEnv = {}) {
   return new Promise((resolve, reject) => {
     console.log(`Running: ${command} ${args.join(' ')} in ${cwd}`);
@@ -222,6 +253,9 @@ async function runCommand(command, args, cwd, customEnv = {}) {
   });
 }
 
+/**
+ *
+ */
 function showUsage() {
   console.log('Usage: node scripts/npm.js <operation>');
   console.log('');
@@ -240,6 +274,9 @@ function showUsage() {
   console.log('  node scripts/npm.js regen');
 }
 
+/**
+ *
+ */
 async function main() {
   const operation = process.argv[2];
 

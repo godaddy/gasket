@@ -1,5 +1,7 @@
 # @gasket/plugin-service-worker
 
+⚠️ _DEPRECATED - This plugin will be removed in a future major version.
+
 [Service workers] (SW) are scripts that run separate from the main web page and
 enable progressive web app features such as precaching, push notifications, and
 background syncing.

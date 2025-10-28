@@ -1,5 +1,57 @@
 # `@gasket/preset-api`
 
+## 7.5.6
+
+### Patch Changes
+
+- Updated dependencies [411f815]
+  - @gasket/plugin-swagger@7.3.11
+  - @gasket/plugin-command@7.5.3
+  - @gasket/plugin-cypress@7.5.3
+  - @gasket/plugin-docs@7.4.8
+  - @gasket/plugin-docusaurus@7.4.6
+  - @gasket/plugin-dynamic-plugins@7.4.2
+  - @gasket/plugin-express@7.4.4
+  - @gasket/plugin-fastify@7.4.6
+  - @gasket/plugin-git@7.4.7
+  - @gasket/plugin-https@7.3.12
+  - @gasket/plugin-jest@7.5.5
+  - @gasket/plugin-lint@7.4.4
+  - @gasket/plugin-logger@7.3.8
+  - @gasket/plugin-mocha@7.5.4
+  - @gasket/plugin-typescript@7.4.6
+  - @gasket/plugin-vitest@7.1.2
+  - @gasket/plugin-winston@7.3.8
+
+## 7.5.5
+
+### Patch Changes
+
+- f5e6942: Include EXAMPLES.md when publishing
+- d794a98: convert testing framework in esm packages to vitest
+- da18ea5: Add code examples
+- Updated dependencies [f5e6942]
+- Updated dependencies [d794a98]
+- Updated dependencies [da18ea5]
+- Updated dependencies [c76c388]
+  - @gasket/plugin-dynamic-plugins@7.4.2
+  - @gasket/plugin-docusaurus@7.4.6
+  - @gasket/plugin-typescript@7.4.6
+  - @gasket/plugin-command@7.5.3
+  - @gasket/plugin-cypress@7.5.3
+  - @gasket/plugin-express@7.4.4
+  - @gasket/plugin-fastify@7.4.6
+  - @gasket/plugin-swagger@7.3.10
+  - @gasket/plugin-winston@7.3.8
+  - @gasket/plugin-logger@7.3.8
+  - @gasket/plugin-vitest@7.1.2
+  - @gasket/plugin-https@7.3.12
+  - @gasket/plugin-docs@7.4.8
+  - @gasket/plugin-jest@7.5.5
+  - @gasket/plugin-lint@7.4.4
+  - @gasket/plugin-git@7.4.7
+  - @gasket/plugin-mocha@7.5.4
+
 ## 7.5.4
 
 ### Patch Changes

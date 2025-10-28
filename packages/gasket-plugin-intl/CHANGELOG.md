@@ -1,5 +1,23 @@
 # `@gasket/plugin-intl`
 
+## 7.5.10
+
+### Patch Changes
+
+- 0d1c0a0: Fix broken intl.js locale paths when locales are in a subdir
+
+## 7.5.9
+
+### Patch Changes
+
+- f5e6942: Include EXAMPLES.md when publishing
+- 9d86fd2: Updated documentation
+- da18ea5: Add code examples
+- Updated dependencies [f5e6942]
+- Updated dependencies [d794a98]
+- Updated dependencies [da18ea5]
+  - @gasket/request@7.5.4
+
 ## 7.5.8
 
 ### Patch Changes

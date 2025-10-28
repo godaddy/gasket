@@ -107,6 +107,10 @@ PageComponent.getInitialProps = async function({ isServer, req }) {
 }
 ```
 
+When this action is called, it will trigger the `publicGasketData` lifecycle to
+allow plugins to inject request-specific data. The results are cached for the
+lifetime of the request.
+
 ### Browser Access
 
 If you need access to config values in client-side code, this can be done
@@ -191,6 +195,18 @@ export default {
   }
 }
 ```
+
+## Gasket Data vs Gasket Config
+
+**Gasket Data**
+
+Gasket Data comes in two forms:
+- **Private data** - Server-side only data from the `gasketData` lifecycle, never sent to the client
+- **Public data** - Client-safe data from the `publicGasketData` lifecycle, embedded in HTML and accessible via `@gasket/data`
+
+**Gasket Config**
+
+Configuration defined in a `gasket.js` file. It contains application settings, plugin configurations, and environment-specific options. It is not meant to be used as a location to save runtime data.
 
 ## License
 

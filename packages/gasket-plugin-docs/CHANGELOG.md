@@ -1,5 +1,17 @@
 # `@gasket/plugin-docs`
 
+## 7.4.8
+
+### Patch Changes
+
+- f5e6942: Include EXAMPLES.md when publishing
+- da18ea5: Add code examples
+- Updated dependencies [f5e6942]
+- Updated dependencies [d794a98]
+- Updated dependencies [da18ea5]
+- Updated dependencies [c76c388]
+  - @gasket/plugin-command@7.5.3
+
 ## 7.4.7
 
 ### Patch Changes
