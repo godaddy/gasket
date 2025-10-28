@@ -2,7 +2,6 @@
 
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
-const webpack = require('webpack');
 import WebpackMetricsPlugin from './webpack-metrics-plugin.js';
 import GasketEnvGuardPlugin from './gasket-env-guard-plugin.js';
 
@@ -14,6 +13,7 @@ function setupContext(context) {
   return {
     ...context,
     get webpack() {
+      const webpack = require('webpack');
       return webpack;
     }
   };
