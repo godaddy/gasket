@@ -1,7 +1,7 @@
 {
   "name": "@gasket/fetch",
   "version": "7.3.8",
-  "description": "Gasket Fetch API",
+  "description": "DEPRECATED Gasket Fetch API",
   "main": "lib/node.js",
   "browser": "lib/browser.js",
   "types": "lib/index.d.ts",
@@ -52,5 +52,6 @@
     "plugins": [
       "@babel/plugin-transform-runtime"
     ]
-  }
+  },
+  "deprecated": "No longer supported. Instead, directly use the Fetch API."
 }
