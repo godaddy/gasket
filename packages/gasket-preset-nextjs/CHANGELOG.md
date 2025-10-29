@@ -1,5 +1,34 @@
 # `@gasket/preset-nextjs`
 
+## 7.6.0
+
+### Minor Changes
+
+- 9b1bb5b: ESM port
+
+### Patch Changes
+
+- Updated dependencies [9b1bb5b]
+  - @gasket/plugin-docusaurus@8.0.0
+  - @gasket/plugin-express@7.5.0
+  - @gasket/plugin-webpack@7.4.0
+  - @gasket/plugin-winston@7.4.0
+  - @gasket/plugin-logger@7.4.0
+  - @gasket/plugin-nextjs@8.0.0
+  - @gasket/plugin-https@7.4.0
+  - @gasket/plugin-docs@7.5.0
+  - @gasket/plugin-intl@7.6.0
+  - @gasket/plugin-jest@7.5.5
+  - @gasket/plugin-lint@7.4.4
+  - @gasket/plugin-mocha@7.5.4
+  - @gasket/plugin-https-proxy@7.4.2
+  - @gasket/plugin-command@7.5.3
+  - @gasket/plugin-cypress@7.5.3
+  - @gasket/plugin-dynamic-plugins@7.4.2
+  - @gasket/plugin-git@7.4.7
+  - @gasket/plugin-typescript@7.4.6
+  - @gasket/plugin-vitest@7.1.2
+
 ## 7.5.6
 
 ### Patch Changes

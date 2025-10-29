@@ -1,5 +1,11 @@
 # `@gasket/plugin-data`
 
+## 7.5.0
+
+### Minor Changes
+
+- 9b1bb5b: ESM port
+
 ## 7.4.12
 
 ### Patch Changes

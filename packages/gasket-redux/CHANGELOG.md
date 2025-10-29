@@ -1,5 +1,15 @@
 # `@gasket/redux`
 
+## 7.4.0
+
+### Minor Changes
+
+- 9b1bb5b: ESM port
+
+### Patch Changes
+
+- dd11e2c: Mark as deprecated
+
 ## 7.3.7
 
 ### Patch Changes

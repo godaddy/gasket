@@ -1,5 +1,16 @@
 # `@gasket/plugin-morgan`
 
+## 8.0.0
+
+### Minor Changes
+
+- 9b1bb5b: ESM port
+
+### Patch Changes
+
+- Updated dependencies [9b1bb5b]
+  - @gasket/plugin-logger@7.4.0
+
 ## 7.3.7
 
 ### Patch Changes

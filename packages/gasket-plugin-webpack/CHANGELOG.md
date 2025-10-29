@@ -1,5 +1,11 @@
 # `@gasket/plugin-webpack`
 
+## 7.4.0
+
+### Minor Changes
+
+- 9b1bb5b: ESM port
+
 ## 7.3.9
 
 ### Patch Changes
