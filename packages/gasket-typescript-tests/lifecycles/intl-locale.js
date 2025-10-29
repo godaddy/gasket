@@ -8,4 +8,4 @@ const handler = (gasket, currentLocale) => {
   return currentLocale === 'fr-CA' ? 'fr-FR' : currentLocale;
 };
 
-module.exports = handler;
+export default handler;

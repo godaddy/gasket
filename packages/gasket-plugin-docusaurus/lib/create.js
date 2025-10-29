@@ -1,10 +1,12 @@
 /// <reference types="create-gasket-app" />
 /// <reference types="@gasket/plugin-docs" />
 
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
 const { name, version, devDependencies } = require('../package.json');
 
 /** @type {import('@gasket/core').HookHandler<'create'>} */
-module.exports = function create(gasket, { pkg, gasketConfig, readme, useDocusaurus }) {
+export default function create(gasket, { pkg, gasketConfig, readme, useDocusaurus }) {
   if (!useDocusaurus) return;
 
   gasketConfig.addCommand('docs', {
@@ -34,4 +36,4 @@ module.exports = function create(gasket, { pkg, gasketConfig, readme, useDocusau
     .subHeading('Docusaurus')
     .link('Docusaurus', 'https://docusaurus.io/')
     .content('When using [Docusaurus], generated docs will be available at `http://localhost:3000` when running the [Docusaurus] server. By default the Docusaurus server is started with the `docs` script. Add the `--no-view` option to only generate the markdown files.');
-};
+}

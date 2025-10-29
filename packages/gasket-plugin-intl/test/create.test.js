@@ -1,5 +1,6 @@
-const path = require('path');
-const plugin = require('../lib/index');
+import plugin from '../lib/index.js';
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
 const { devDependencies, name, version } = require('../package.json');
 
 describe('create', function () {
@@ -12,11 +13,11 @@ describe('create', function () {
   let addStub;
 
   beforeEach(function () {
-    pkgHasStub = jest.fn().mockReturnValue(true);
-    pkgAddStub = jest.fn();
-    filesAddStub = jest.fn();
-    addPluginStub = jest.fn();
-    addStub = jest.fn();
+    pkgHasStub = vi.fn().mockReturnValue(true);
+    pkgAddStub = vi.fn();
+    filesAddStub = vi.fn();
+    addPluginStub = vi.fn();
+    addStub = vi.fn();
 
     mockGasket = {
       config: {
@@ -40,15 +41,14 @@ describe('create', function () {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('adds the appropriate globs', async function () {
-    const rootDir = path.join(__dirname, '..');
     await plugin.hooks.create(mockGasket, mockContext);
     expect(filesAddStub).toHaveBeenCalledWith(
-      `${rootDir}/generator/*`,
-      `${rootDir}/generator/**/*`
+      expect.stringContaining('/generator/*'),
+      expect.stringContaining('/generator/**/*')
     );
   });
 

@@ -1,10 +1,12 @@
-const mockBuildManifest = jest.fn().mockResolvedValue();
-const mockBuildModules = jest.fn().mockResolvedValue();
+import { vi } from 'vitest';
 
-jest.mock('../lib/build-manifest', () => mockBuildManifest);
-jest.mock('../lib/build-modules', () => mockBuildModules);
+vi.mock('../lib/build-manifest.js', () => ({ default: vi.fn().mockResolvedValue() }));
+vi.mock('../lib/build-modules.js', () => ({ default: vi.fn().mockResolvedValue() }));
 
-const plugin = require('../lib/index');
+const mockBuildManifest = vi.mocked(await import('../lib/build-manifest.js')).default;
+const mockBuildModules = vi.mocked(await import('../lib/build-modules.js')).default;
+
+import plugin from '../lib/index.js';
 
 describe('build', function () {
   let mockGasket, buildHook;

@@ -1,5 +1,5 @@
-const fs = require('fs-extra');
-const path = require('path');
+import fs from 'fs-extra';
+import path from 'path';
 
 /**
  * Check if path has package.json file and return the name.
@@ -17,7 +17,7 @@ async function packageName(targetDir) {
 
 /**
  * Find all directories under target dir, recursively
- * @type {import('../internal').getPackageDirs}
+ * @type {import('../internal.d.ts').getPackageDirs}
  */
 async function *getPackageDirs(parentDir, dirList = []) {
   const files = await fs.readdir(parentDir);
@@ -44,7 +44,7 @@ async function saveJsonFile(filePath, json) {
   return await fs.writeFile(filePath, JSON.stringify(json, null, 2), 'utf-8');
 }
 
-module.exports = {
+export {
   getPackageDirs,
   packageName,
   saveJsonFile

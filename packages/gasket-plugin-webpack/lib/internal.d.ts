@@ -15,8 +15,8 @@ export function apply(compiler: Compiler): void;
 
 /** Sets up a context object with special getters */
 export function setupContext(
-  context: any
-): any;
+  context: object
+): object & { webpack: any };
 
 /** Sets up the initial webpack configuration */
 export function initWebpack(

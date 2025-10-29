@@ -1,4 +1,4 @@
-const metadata = require('../lib/metadata');
+import metadata from '../lib/metadata.js';
 
 describe('metadata', function () {
   let mockGasket;

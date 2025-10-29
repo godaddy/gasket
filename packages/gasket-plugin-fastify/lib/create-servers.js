@@ -1,14 +1,15 @@
 /// <reference types="@gasket/plugin-https" />
 /// <reference types="@gasket/plugin-logger" />
 
-const { getAppInstance } = require('./utils.js');
+import { getAppInstance } from './utils.js';
+
 /**
  * Create the Fastify instance and setup the lifecycle hooks.
  * Fastify is compatible with express middleware out of the box, so we can
  * use the same middleware lifecycles.
  * @type {import('@gasket/core').HookHandler<'createServers'>}
  */
-module.exports = async function createServers(gasket, serverOpts) {
+export default async function createServers(gasket, serverOpts) {
   /** Cast to Fastify + Express hybrid because Gasket adds `.use()` via @fastify/express plugin */
   const app = /** @type {import('fastify').FastifyInstance & { use: Function }} */ (getAppInstance(gasket));
 
@@ -29,4 +30,4 @@ module.exports = async function createServers(gasket, serverOpts) {
       app.server.emit('request', ...args);
     }
   };
-};
+}

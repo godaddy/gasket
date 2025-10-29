@@ -1,14 +1,14 @@
 /* eslint-disable max-statements */
 
-const { writeFile } = require('fs').promises;
-const path = require('path');
-const mdTable = require('markdown-table');
+import { writeFile } from 'fs/promises';
+import path from 'path';
+import mdTable from 'markdown-table';
 
 const isUrl = /^(https?:)?\/\//;
 
 /**
  * Generates the index README.md
- * @param {import('../internal').DocsConfigSet} docsConfigSet - Docs generation
+ * @param {import('../internal.d.ts').DocsConfigSet} docsConfigSet - Docs generation
  * configs
  * @returns {string} filename
  */
@@ -149,7 +149,7 @@ function generateContent(docsConfigSet) {
 
 /**
  * Generates the index README.md
- * @param {import('../internal').DocsConfigSet} docsConfigSet - Docs generation
+ * @param {import('../internal.d.ts').DocsConfigSet} docsConfigSet - Docs generation
  * configs
  * @returns {Promise<string>} filename
  */
@@ -164,4 +164,4 @@ async function generateIndex(docsConfigSet) {
 
 generateIndex.generateContent = generateContent;
 
-module.exports = generateIndex;
+export default generateIndex;

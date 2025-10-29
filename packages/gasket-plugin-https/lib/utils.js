@@ -1,4 +1,4 @@
-const proxy = require('http-proxy');
+import proxy from 'http-proxy';
 
 /**
  * Provide port defaults
@@ -26,7 +26,7 @@ function portInUseError(errors) {
 
 /**
  * Create a https proxy server for local development
- * @type {import('.').startProxy}
+ * @type {import('./index.d.ts').startProxy}
  */
 function startProxy(opts, logger) {
   const { protocol = 'http', hostname = 'localhost', port = 8080, ...proxyOpts } = opts;
@@ -57,7 +57,7 @@ function getRawServerConfig(gasket) {
   return rawConfig;
 }
 
-module.exports = {
+export {
   getPortFallback,
   portInUseError,
   startProxy,

@@ -2,20 +2,32 @@
   "name": "@gasket/plugin-winston",
   "version": "7.3.8",
   "description": "Gasket logger based on Winston",
+  "type": "module",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
     "lib",
+    "cjs",
     "src",
     "EXAMPLES.md"
   ],
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js",
+      "require": "./cjs/index.cjs",
+      "default": "./cjs/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
   "scripts": {
+    "build": "gasket-cjs ./lib",
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
     "posttest": "pnpm run lint && pnpm run typecheck",
-    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
-    "test:coverage": "pnpm run test --coverage",
-    "test:watch": "pnpm run test --watch",
+    "test": "vitest run --globals",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
@@ -38,10 +50,11 @@
     "winston": "^3.17.0"
   },
   "devDependencies": {
+    "@gasket/cjs": "workspace:^",
     "@gasket/core": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",
     "create-gasket-app": "workspace:^",
-    "jest": "^29.7.0",
-    "triple-beam": "^1.4.1"
+    "triple-beam": "^1.4.1",
+    "vitest": "^3.2.0"
   }
 }

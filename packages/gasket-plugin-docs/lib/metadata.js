@@ -1,10 +1,12 @@
+import { DEFAULT_CONFIG } from './utils/constants.js';
+
 /**
  * Attach additional metadata to pluginData
  * @type {import('@gasket/core').HookHandler<'metadata'>}
  */
-module.exports = function metadata(gasket, meta) {
+export default function metadata(gasket, meta) {
   const { outputDir } =
-    gasket.config.docs || require('./utils/constants').DEFAULT_CONFIG;
+    gasket.config.docs || DEFAULT_CONFIG;
   return {
     ...meta,
     commands: [
@@ -62,4 +64,4 @@ module.exports = function metadata(gasket, meta) {
       }
     ]
   };
-};
+}
