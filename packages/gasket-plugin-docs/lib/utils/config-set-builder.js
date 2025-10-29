@@ -1,7 +1,7 @@
-const path = require('path');
-const defaultsDeep = require('lodash.defaultsdeep');
-const { promisify } = require('util');
-const {
+import path from 'node:path';
+import defaultsDeep from 'lodash.defaultsdeep';
+import { promisify } from 'util';
+import {
   sortModules,
   sortStructures,
   sortCommands,
@@ -9,10 +9,11 @@ const {
   sortLifecycles,
   sortGuides,
   sortConfigurations
-} = require('./sorts');
+} from './sorts.js';
 
 // TODO: Need to review for native promise usage
-const glob = promisify(require('glob'));
+import glob from 'glob';
+const globAsync = promisify(glob);
 
 const isAppPlugin = /^\/.+\/plugins\//;
 const isUrl = /^(https?:)?\/\//;
@@ -93,7 +94,7 @@ class DocsConfigSetBuilder {
 
   /**
    * Look up all doc files for a module
-   * @type {import('../internal')._findAllFiles}
+   * @type {import('../internal.d.ts')._findAllFiles}
    */
   async _findAllFiles(moduleData, docsSetup, link, sourceRoot) {
     if (!sourceRoot) return [];
@@ -127,7 +128,7 @@ class DocsConfigSetBuilder {
     files = Array.isArray(files) ? files : [files];
     (
       await Promise.all(
-        files.map(async (g) => await glob(g, { cwd: sourceRoot }))
+        files.map(async (g) => await globAsync(g, { cwd: sourceRoot }))
       )
     )
       .reduce((acc, cur) => acc.concat(cur), [])
@@ -140,7 +141,7 @@ class DocsConfigSetBuilder {
    * Divides global and local transforms from a docsSetup. Global transforms are
    * added to the top-level set. Local transforms will be added to the module's
    * docConfig.
-   * @type {import('../internal')._segregateTransforms}
+   * @type {import('../internal.d.ts')._segregateTransforms}
    */
   _segregateTransforms(transforms) {
     return transforms.reduce((acc, tx) => {
@@ -155,7 +156,7 @@ class DocsConfigSetBuilder {
 
   /**
    * Constructs the DocsConfig for a module based on its info and docsSetup
-   * @type {import('../internal')._buildDocsConfig}
+   * @type {import('../internal.d.ts')._buildDocsConfig}
    */
   async _buildDocsConfig(moduleData, docsSetup = {}, overrides = {}) {
     const {
@@ -198,7 +199,7 @@ class DocsConfigSetBuilder {
   /**
    * Flattens all detail types from plugins' metadata. Add a from property with
    * name of parent plugin.
-   * @type {import('../internal')._flattenDetails}
+   * @type {import('../internal.d.ts')._flattenDetails}
    */
   _flattenDetails(type) {
     const arr = [];
@@ -225,7 +226,7 @@ class DocsConfigSetBuilder {
    * Adds additional docsSetup for modules, merging duplicates with a first in
    * wins approach. When a module is then add to be configured, a docSetup will
    * be looked up from what's been added by plugins here.
-   * @type {import('../internal')._addModuleDocsSetup}
+   * @type {import('../internal.d.ts')._addModuleDocsSetup}
    */
   _addModuleDocsSetup(moduleDocsSetup) {
     defaultsDeep(this._moduleDocsSetups, moduleDocsSetup);
@@ -233,7 +234,7 @@ class DocsConfigSetBuilder {
 
   /**
    * Add DocsConfig to the set for the App
-   * @type {import('../internal').addApp}
+   * @type {import('../internal.d.ts').addApp}
    */
   async addApp(moduleData, docsSetup) {
     // If docsSetup is passed, stick with it. Or, see if gasket.docsSetup in
@@ -252,7 +253,7 @@ class DocsConfigSetBuilder {
 
   /**
    * Add DocsConfig to the set for a plugin
-   * @type {import('../internal').addPlugin}
+   * @type {import('../internal.d.ts').addPlugin}
    */
   async addPlugin(pluginData, docsSetup) {
     if (this._plugins.find((p) => p.metadata === pluginData.metadata)) return;
@@ -287,7 +288,7 @@ class DocsConfigSetBuilder {
 
   /**
    * Add DocsConfig to the set for multiple plugins if not already added
-   * @type {import('../internal').addPlugins}
+   * @type {import('../internal.d.ts').addPlugins}
    */
   async addPlugins(pluginDatas) {
     await Promise.all(pluginDatas.map((p) => this.addPlugin(p)));
@@ -295,7 +296,7 @@ class DocsConfigSetBuilder {
 
   /**
    * Add DocsConfig to the set for a preset
-   * @type {import('../internal').addPreset}
+   * @type {import('../internal.d.ts').addPreset}
    */
   async addPreset(presetData, docsSetup) {
     if (this._presets.find((p) => p.metadata === presetData.metadata)) return;
@@ -320,7 +321,7 @@ class DocsConfigSetBuilder {
 
   /**
    * Add DocsConfig to the set for multiple presets if not already added
-   * @type {import('../internal').addPresets}
+   * @type {import('../internal.d.ts').addPresets}
    */
   async addPresets(presetDatas) {
     await Promise.all(presetDatas.map((p) => this.addPreset(p)));
@@ -328,7 +329,7 @@ class DocsConfigSetBuilder {
 
   /**
    * Add DocsConfig to the set for a module
-   * @type {import('../internal').addModule}
+   * @type {import('../internal.d.ts').addModule}
    */
   async addModule(moduleData, docsSetup) {
     if (this._modules.find((p) => p.metadata === moduleData.metadata)) return;
@@ -353,7 +354,7 @@ class DocsConfigSetBuilder {
 
   /**
    * Add DocsConfig to the set for multiple modules if not already added
-   * @type {import('../internal').addModules}
+   * @type {import('../internal.d.ts').addModules}
    */
   async addModules(moduleDatas) {
     await Promise.all(moduleDatas.map((p) => this.addModule(p)));
@@ -361,7 +362,7 @@ class DocsConfigSetBuilder {
 
   /**
    * Picks out properties to return as the config set
-   * @type {import('../internal').getConfigSet}
+   * @type {import('../internal.d.ts').getConfigSet}
    */
   getConfigSet() {
     const detailDocsConfigs = detailDocsTypes.reduce(
@@ -391,4 +392,4 @@ class DocsConfigSetBuilder {
 
 DocsConfigSetBuilder.docsSetupDefault = docsSetupDefault;
 
-module.exports = DocsConfigSetBuilder;
+export default DocsConfigSetBuilder;
