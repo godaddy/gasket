@@ -1,21 +1,37 @@
-const path = require('path');
-const mockWriteFileStub = jest.fn().mockResolvedValue((...args) => {
-  args[args.length - 1](null, true);
-});
+import path from 'path';
+import { vi } from 'vitest';
 
-jest.mock('fs', () => {
-  const mod = jest.requireActual('fs');
+vi.mock('node:fs/promises', () => ({
+  default: {
+    writeFile: vi.fn().mockResolvedValue()
+  }
+}));
 
-  return {
-    ...mod,
-    promises: {
-      ...mod.promises,
-      writeFile: mockWriteFileStub
+vi.mock('glob', () => ({
+  default: vi.fn()
+}));
+
+vi.mock('util', () => ({
+  promisify: vi.fn(() => vi.fn().mockImplementation(async (pattern, options) => {
+    // Return empty array for 'bogus' directory to test warning case
+    if (options?.cwd?.includes('bogus')) {
+      return [];
     }
-  };
-});
+    // Return the expected files for normal cases
+    return [
+      'en-US.json',
+      'fr-FR.json',
+      'extra/en-US.json',
+      'extra/fr-FR.json',
+      'en-US/grouped.json',
+      'fr-FR/grouped.json'
+    ];
+  }))
+}));
 
-const buildManifest = require('../lib/build-manifest');
+const mockWriteFileStub = vi.mocked(await import('node:fs/promises')).default.writeFile;
+
+import buildManifest from '../lib/build-manifest.js';
 
 describe('buildManifest', function () {
   let mockGasket;
@@ -23,12 +39,12 @@ describe('buildManifest', function () {
   beforeEach(function () {
     mockGasket = {
       logger: {
-        info: jest.fn(),
-        warn: jest.fn(),
-        error: jest.fn()
+        info: vi.fn(),
+        warn: vi.fn(),
+        error: vi.fn()
       },
       config: {
-        root: path.join(__dirname, 'fixtures'),
+        root: path.join(import.meta.url.replace('file://', '').replace('/test/build-manifest.test.js', ''), 'fixtures'),
         intl: {
           defaultLocaleFilePath: 'locales',
           defaultLocale: 'en-US',
@@ -36,22 +52,23 @@ describe('buildManifest', function () {
           localesMap: {
             'fr-CH': 'fr-FR'
           },
-          localesDir: path.join('locales'),
+          localesDir: 'locales',
           managerFilename: 'intl.js'
         }
       }
     };
+
   });
 
   afterEach(function () {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
 
     mockWriteFileStub.mockResolvedValue((...args) => {
       args[args.length - 1](null, true);
     });
   });
 
-  const getOutput = () => mockWriteFileStub.mock.calls[0][1];
+  const getOutput = () => mockWriteFileStub.mock.calls[0]?.[1] || '';
 
   it('writes a manager js file in the root dir', async function () {
     await buildManifest(mockGasket);

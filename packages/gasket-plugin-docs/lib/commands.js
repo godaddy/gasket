@@ -1,15 +1,15 @@
 /// <reference types="@gasket/core" />
 /// <reference types="@gasket/plugin-command" />
 
-const buildDocsConfigSet = require('./utils/build-config-set');
-const collateFiles = require('./utils/collate-files');
-const generateIndex = require('./utils/generate-index');
+import buildDocsConfigSet from './utils/build-config-set.js';
+import collateFiles from './utils/collate-files.js';
+import generateIndex from './utils/generate-index.js';
 
 /**
  * Get the docs command
  * @type {import('@gasket/core').HookHandler<'commands'>}
  */
-module.exports = function commands(gasket) {
+export default function commands(gasket) {
   return {
     id: 'docs',
     description: 'Generate docs for the app',
@@ -49,4 +49,4 @@ module.exports = function commands(gasket) {
       }
     }
   };
-};
+}

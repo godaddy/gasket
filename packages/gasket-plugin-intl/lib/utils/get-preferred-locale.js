@@ -1,6 +1,7 @@
-const debug = require('debug')('gasket:plugin:intl:utils');
-const { getIntlConfig } = require('./configure-utils');
-const Negotiator = require('negotiator');
+import debug from 'debug';
+const debugLog = debug('gasket:plugin:intl:utils');
+import { getIntlConfig } from './configure-utils.js';
+import Negotiator from 'negotiator';
 
 /**
  * Capitalize the first letter of a string.
@@ -17,7 +18,7 @@ function capitalize(str) {
  * - az-AZ
  * - az-Arab
  * - az-AZ-Latn
- * @type {import('../internal').formatLocale}
+ * @type {import('../internal.d.ts').formatLocale}
  */
 function formatLocale(language) {
   const [lang, ...rest] = language ? language.split('-') : [];
@@ -29,7 +30,7 @@ function formatLocale(language) {
 
 /**
  * Get the preferred locale from the request headers.
- * @type {import('../internal').getLocaleFromHeaders}
+ * @type {import('../internal.d.ts').getLocaleFromHeaders}
  */
 function getLocaleFromHeaders(gasket, req, locales, defaultLocale) {
   let preferredLocale = defaultLocale;
@@ -37,18 +38,18 @@ function getLocaleFromHeaders(gasket, req, locales, defaultLocale) {
   const acceptLanguage = req.headers['accept-language'];
   const negotiator = new Negotiator(req);
   if (acceptLanguage) {
-    debug(`Received accept-language of ${acceptLanguage}`);
+    debugLog(`Received accept-language of ${acceptLanguage}`);
     try {
       // Get highest or highest from locales if configured
       preferredLocale = formatLocale(negotiator.language(locales));
-      debug(`Using ${preferredLocale} as starting locale`);
+      debugLog(`Using ${preferredLocale} as starting locale`);
     } catch (error) {
       gasket.logger.debug(
         `Unable to parse accept-language header: ${error.message}`
       );
     }
   } else {
-    debug(
+    debugLog(
       `No accept-language header; starting with default ${preferredLocale}`
     );
   }
@@ -58,9 +59,9 @@ function getLocaleFromHeaders(gasket, req, locales, defaultLocale) {
 
 /**
  * Get the preferred locale from the request headers.
- * @type {import('../internal').getPreferredLocale}
+ * @type {import('../internal.d.ts').getPreferredLocale}
  */
-module.exports = function getPreferredLocale(gasket, req) {
+export default function getPreferredLocale(gasket, req) {
   const {
     defaultLocale,
     locales
@@ -74,4 +75,4 @@ module.exports = function getPreferredLocale(gasket, req) {
   );
 
   return preferredLocale;
-};
+}

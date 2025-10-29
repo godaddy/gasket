@@ -1,11 +1,13 @@
 /// <reference types="@gasket/plugin-docs" />
 
 /* eslint no-sync: 0 */
-const path = require('path');
-const fs = require('fs');
+import path from 'path';
+import fs from 'node:fs';
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
+
 const write = fs.promises.writeFile;
 const { name, version, description } = require('../package.json');
-
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {
   name,
@@ -22,7 +24,7 @@ const plugin = {
       let graph = 'graph LR;\n';
 
       docsConfigSet.lifecycles.forEach((lifecycle) => {
-        const name = lifecycle.deprecated
+        const nodeName = lifecycle.deprecated
           ? `${lifecycle.name}["${lifecycle.name} (deprecated)"]`
           : lifecycle.name;
 
@@ -42,8 +44,8 @@ const plugin = {
         }
         const arrow = lifecycle.method ? `-- ${lifecycle.method} -->` : '-->';
 
-        if (name !== from) {
-          graph += `${styling(from)} ${arrow} ${name};\n`;
+        if (nodeName !== from) {
+          graph += `${styling(from)} ${arrow} ${nodeName};\n`;
         }
       });
 
@@ -71,4 +73,4 @@ const plugin = {
   }
 };
 
-module.exports = plugin;
+export default plugin;

@@ -1,4 +1,4 @@
-const publicGasketData = require('../lib/public-gasket-data');
+import publicGasketData from '../lib/public-gasket-data.js';
 
 describe('publicGasketData', () => {
   let mockGasket, mockData, mockReq;
@@ -6,7 +6,7 @@ describe('publicGasketData', () => {
   beforeEach(() => {
     mockGasket = {
       actions: {
-        getIntlLocale: jest.fn().mockResolvedValue('fr-FR')
+        getIntlLocale: vi.fn().mockResolvedValue('fr-FR')
       }
     };
 

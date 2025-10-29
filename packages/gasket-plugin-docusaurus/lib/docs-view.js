@@ -1,11 +1,14 @@
-const defaultsDeep = require('lodash.defaultsdeep');
-const { existsSync } = require('fs');
-const { writeFile } = require('fs').promises;
-const path = require('path');
-const generateDefaultConfig = require('./generate-default-config');
+/// <reference types="@gasket/plugin-metadata" />
+
+import { existsSync } from 'node:fs';
+import { writeFile } from 'node:fs/promises';
+import { createRequire } from 'node:module';
+import path from 'node:path';
+import generateDefaultConfig from './generate-default-config.js';
+const require = createRequire(import.meta.url);
 const pluginConfigFile = 'docusaurus.config.js';
 const defaultConfig = {
-  port: 3000,
+  port: '3000',
   host: 'localhost'
 };
 
@@ -22,7 +25,7 @@ async function createPackageFile(docsRoot) {
 /**
  * Check if devDependencies are installed
  */
-function checkDevDependencies() {
+async function checkDevDependencies() {
   try {
     require('@docusaurus/preset-classic');
     require('@docusaurus/core/package.json');
@@ -34,20 +37,19 @@ function checkDevDependencies() {
 }
 
 /** @type {import('@gasket/core').HookHandler<'docsView'>} */
-module.exports = async function docsView(gasket) {
-  checkDevDependencies();
+export default async function docsView(gasket) {
+  await checkDevDependencies();
   const { start } = require('@docusaurus/core/lib');
   const { config } = gasket;
   const { app: { name } } = await gasket.actions.getMetadata();
   const userConfig = gasket.config.docusaurus;
   const configFilePath = path.join(config.root, pluginConfigFile);
 
-  /** @type {import('.').DocusaurusConfig} */
-  const docusaurusConfig = defaultsDeep(
-    { config: configFilePath },
-    userConfig,
-    defaultConfig
-  );
+  /** @type {import('./index.js').DocusaurusConfig} */
+  const docusaurusConfig = {
+    ...defaultConfig,
+    ...userConfig
+  };
   const { rootDir, docsDir } = docusaurusConfig;
 
   if (!existsSync(configFilePath)) {
@@ -60,5 +62,8 @@ module.exports = async function docsView(gasket) {
     await writeFile(configFilePath, defaultDocusaurusConfig, 'utf-8');
   }
 
-  start(path.join(config.root, rootDir), docusaurusConfig);
-};
+  start(path.join(config.root, rootDir), {
+    ...docusaurusConfig,
+    config: configFilePath
+  });
+}

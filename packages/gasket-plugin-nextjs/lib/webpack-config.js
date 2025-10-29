@@ -1,6 +1,9 @@
 /// <reference types="@gasket/plugin-webpack" />
 
-const tryResolve = require('./utils/try-resolve.js');
+import { createRequire } from 'module';
+import tryResolve from './utils/try-resolve.js';
+
+const require = createRequire(import.meta.url);
 const isGasketCore = /@gasket[/\\]core$/;
 
 /**
@@ -101,8 +104,4 @@ function webpackConfigHook(gasket, webpackConfig, { webpack, isServer }) {
   return webpackConfig;
 }
 
-module.exports = {
-  validateNoGasketCore,
-  externalizeGasketCore,
-  webpackConfig: webpackConfigHook
-};
+export { validateNoGasketCore, externalizeGasketCore, webpackConfigHook as webpackConfig };

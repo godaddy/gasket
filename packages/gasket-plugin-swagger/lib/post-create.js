@@ -1,8 +1,8 @@
-const buildSwaggerDefinition = require('./build-swagger-definition.js');
-const path = require('path');
+import buildSwaggerDefinition from './build-swagger-definition.js';
+import path from 'path';
 
 /** @type {import('@gasket/core').HookHandler<'postCreate'>} */
-module.exports = async function postCreateHook(gasket, createContext) {
+export default async function postCreateHook(gasket, createContext) {
   const root = createContext.dest;
   const { jsdoc } = createContext.gasketConfig.fields.swagger;
   const apis = jsdoc.apis.map(glob =>  path.join(root, glob));
@@ -13,4 +13,4 @@ module.exports = async function postCreateHook(gasket, createContext) {
     }
   };
   await buildSwaggerDefinition(gasket, { root, swagger });
-};
+}

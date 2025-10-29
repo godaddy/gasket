@@ -1,10 +1,11 @@
 /* eslint-disable max-nested-callbacks, max-len */
-const {
+import { vi } from 'vitest';
+import {
   makeLinkTransform,
   txGasketPackageLinks,
   txGasketUrlLinks,
   txAbsoluteLinks
-} = require('../../lib/utils/transforms');
+} from '../../lib/utils/transforms.js';
 
 
 const mockInlineStyle = `
@@ -34,25 +35,25 @@ describe('Utils Transforms', () => {
     });
 
     it('callback is not called if no links', () => {
-      const mockCallback = jest.fn();
+      const mockCallback = vi.fn();
       makeLinkTransform(mockCallback)('not much here');
       expect(mockCallback).not.toHaveBeenCalled();
     });
 
     it('callback is executed for all matching links', () => {
-      const mockCallback = jest.fn();
+      const mockCallback = vi.fn();
       makeLinkTransform(mockCallback)(mockInlineStyle);
       expect(mockCallback).toHaveBeenCalledTimes(7);
     });
 
     it('callback is passed link', () => {
-      const mockCallback = jest.fn();
+      const mockCallback = vi.fn();
       makeLinkTransform(mockCallback)(mockInlineStyle);
       expect(mockCallback).toHaveBeenCalledWith('path/to/doc.md');
     });
 
     it('matches inline links', () => {
-      const mockCallback = jest.fn();
+      const mockCallback = vi.fn();
       makeLinkTransform(mockCallback)(mockInlineStyle);
       expect(mockCallback).toHaveBeenCalledWith('path/to/doc.md');
       expect(mockCallback).toHaveBeenCalledWith('../path/to/doc.md#with-hash');
@@ -64,7 +65,7 @@ describe('Utils Transforms', () => {
     });
 
     it('matches reference links', () => {
-      const mockCallback = jest.fn();
+      const mockCallback = vi.fn();
       makeLinkTransform(mockCallback)(mockReferenceStyle);
       expect(mockCallback).toHaveBeenCalledWith('path/to/doc.md');
       expect(mockCallback).toHaveBeenCalledWith('../path/to/doc.md#with-hash');

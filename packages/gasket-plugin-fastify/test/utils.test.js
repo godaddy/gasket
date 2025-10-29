@@ -1,37 +1,36 @@
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+
 class MockApp {
   constructor() {
-    this.ready = jest.fn();
+    this.ready = vi.fn();
     this.server = {
-      emit: jest.fn()
+      emit: vi.fn()
     };
-    this.register = jest.fn();
-    this.use = jest.fn();
+    this.register = vi.fn();
+    this.use = vi.fn();
   }
 }
 
-const mockFastify = jest.fn().mockReturnValue(new MockApp());
-const cookieParserMiddleware = jest.fn();
-const compressionMiddleware = jest.fn();
-const mockCookieParser = jest.fn().mockReturnValue(cookieParserMiddleware);
-const mockCompression = jest.fn().mockReturnValue(compressionMiddleware);
+const mockFastify = vi.fn().mockReturnValue(new MockApp());
+const cookieParserMiddleware = vi.fn();
+const compressionMiddleware = vi.fn();
+const mockCookieParser = vi.fn().mockReturnValue(cookieParserMiddleware);
+const mockCompression = vi.fn().mockReturnValue(compressionMiddleware);
 
-
-jest.mock('fastify', () => mockFastify);
-jest.mock('cookie-parser', () => mockCookieParser);
-jest.mock('compression', () => mockCompression);
-
+vi.mock('fastify', () => ({ default: mockFastify }));
+vi.mock('cookie-parser', () => ({ default: mockCookieParser }));
+vi.mock('compression', () => ({ default: mockCompression }));
 
 const {
   getAppInstance,
   testClearAppInstance
-} = require('../lib/utils');
+} = await import('../lib/utils.js');
 
 describe('getAppInstance', () => {
   let gasket;
 
   beforeEach(() => {
-    jest.clearAllMocks();
-    jest.resetModules();
+    vi.clearAllMocks();
     gasket = {
       middleware: {},
       logger: {},
@@ -40,7 +39,7 @@ describe('getAppInstance', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     testClearAppInstance();
   });
 

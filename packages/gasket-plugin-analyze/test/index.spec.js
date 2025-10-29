@@ -1,5 +1,7 @@
-const plugin = require('../lib/index');
-const { name, version, description } = require('../package');
+import plugin from '../lib/index.js';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const { name, version, description } = require('../package.json');
 
 describe('Plugin', () => {
 

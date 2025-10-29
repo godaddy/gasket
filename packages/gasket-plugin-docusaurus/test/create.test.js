@@ -1,4 +1,8 @@
-const create = require('../lib/create');
+import create from '../lib/create.js';
+import { createRequire } from 'module';
+import { vi } from 'vitest';
+
+const require = createRequire(import.meta.url);
 const { name, version, devDependencies } = require('../package.json');
 
 describe('createHook', () => {
@@ -8,16 +12,16 @@ describe('createHook', () => {
     mockContext = {
       useDocusaurus: true,
       pkg: {
-        add: jest.fn(),
-        has: jest.fn().mockReturnValue(true)
+        add: vi.fn(),
+        has: vi.fn().mockReturnValue(true)
       },
       readme: {
-        subHeading: jest.fn().mockReturnThis(),
-        content: jest.fn().mockReturnThis(),
-        link: jest.fn().mockReturnThis()
+        subHeading: vi.fn().mockReturnThis(),
+        content: vi.fn().mockReturnThis(),
+        link: vi.fn().mockReturnThis()
       },
       gasketConfig: {
-        addCommand: jest.fn()
+        addCommand: vi.fn()
       }
     };
   });

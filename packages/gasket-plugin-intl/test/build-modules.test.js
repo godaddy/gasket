@@ -1,8 +1,9 @@
-const fs = require('fs-extra');
-const { getPackageDirs, saveJsonFile } = require('../lib/utils/fs-utils');
-const { BuildModules } = require('../lib/build-modules');
+import fs from 'fs-extra';
+import { getPackageDirs, saveJsonFile } from '../lib/utils/fs-utils.js';
+import { BuildModules } from '../lib/build-modules.js';
+import { vi } from 'vitest';
 
-jest.mock('../lib/utils/fs-utils');
+vi.mock('../lib/utils/fs-utils.js');
 
 describe('buildModules', function () {
   const testSrcFilePath = '/path/to/src/myh-fake/locale/en-US.json';
@@ -11,8 +12,8 @@ describe('buildModules', function () {
 
   beforeEach(function () {
     logger = {
-      info: jest.fn(),
-      warn: jest.fn()
+      info: vi.fn(),
+      warn: vi.fn()
     };
     mockGasket = {
       logger,
@@ -30,7 +31,7 @@ describe('buildModules', function () {
   });
 
   afterEach(function () {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe('BuildModules', function () {
@@ -42,7 +43,7 @@ describe('buildModules', function () {
 
     afterEach(function () {
       builder = null;
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
 
     it('sets up dir constants', function () {
@@ -53,10 +54,10 @@ describe('buildModules', function () {
 
     describe('#copyFolder', function () {
       it('calls saveJsonFile for correct data', async function () {
-        jest.spyOn(fs, 'mkdirp').mockResolvedValue();
-        jest.spyOn(fs, 'readdir').mockResolvedValue(['test/folder/name.json']);
+        vi.spyOn(fs, 'mkdirp').mockResolvedValue();
+        vi.spyOn(fs, 'readdir').mockResolvedValue(['test/folder/name.json']);
         saveJsonFile.mockResolvedValue();
-        jest.spyOn(fs, 'readFile').mockResolvedValue('{ "key-1": "value-1" }');
+        vi.spyOn(fs, 'readFile').mockResolvedValue('{ "key-1": "value-1" }');
         await builder.copyFolder(testSrcFilePath, testTgtFilePath);
         expect(fs.mkdirp).toHaveBeenCalledTimes(1);
         expect(fs.readdir).toHaveBeenCalledTimes(1);
@@ -71,12 +72,12 @@ describe('buildModules', function () {
         fakeSrcDir = '/path/to/src/';
         fakeTgtDir = '/path/to/tgt/';
 
-        jest.spyOn(builder, 'copyFile');
-        jest.spyOn(builder, 'copyFolder');
+        vi.spyOn(builder, 'copyFile');
+        vi.spyOn(builder, 'copyFolder');
       });
 
       afterEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
       });
 
       it('calls copyFile for a json file', function () {
@@ -93,8 +94,8 @@ describe('buildModules', function () {
         const fakeFileName = 'some-dir';
         const fakeFiles = [fakeFileName];
 
-        jest.spyOn(fs, 'lstat').mockResolvedValue({ isDirectory: () => true });
-        jest.spyOn(fs, 'readdir').mockResolvedValue(['test/folder']);
+        vi.spyOn(fs, 'lstat').mockResolvedValue({ isDirectory: () => true });
+        vi.spyOn(fs, 'readdir').mockResolvedValue(['test/folder']);
 
         await builder.processFiles(fakeSrcDir, fakeTgtDir, fakeFiles);
         expect(builder.copyFile).not.toHaveBeenCalled();
@@ -117,13 +118,13 @@ describe('buildModules', function () {
 
     describe('#getPackageName', function () {
       it('parses and returns the app name', async function () {
-        jest.spyOn(fs, 'readJson').mockResolvedValue({ name: 'test-app' });
+        vi.spyOn(fs, 'readJson').mockResolvedValue({ name: 'test-app' });
         expect(
           await builder.getPackageName('/src/path/to/test-app/locales')
         ).toEqual('test-app');
       });
       it('parses and returns the scoped module name', async function () {
-        jest
+        vi
           .spyOn(fs, 'readJson')
           .mockResolvedValue({ name: '@module/test-app' });
         expect(
@@ -131,13 +132,13 @@ describe('buildModules', function () {
         ).toEqual('@module/test-app');
       });
       it('falls back to name from dir if no name in package.json', async function () {
-        jest.spyOn(fs, 'readJson').mockResolvedValue({ missing: 'name' });
+        vi.spyOn(fs, 'readJson').mockResolvedValue({ missing: 'name' });
         expect(
           await builder.getPackageName('/src/path/to/@another/module/locales')
         ).toEqual('@another/module');
       });
       it('falls back to name from dir if error reading package.json', async function () {
-        jest.spyOn(fs, 'readJson').mockRejectedValue('bad');
+        vi.spyOn(fs, 'readJson').mockRejectedValue('bad');
         expect(
           await builder.getPackageName('/src/path/to/@another/module/locales')
         ).toEqual('@another/module');
@@ -148,12 +149,12 @@ describe('buildModules', function () {
       let buildDirs;
       beforeEach(function () {
         buildDirs = ['/src/test1/locales', '/src/test2/locales'];
-        jest.spyOn(fs, 'remove').mockResolvedValue();
-        jest.spyOn(fs, 'mkdirp').mockResolvedValue();
-        jest.spyOn(fs, 'readdir').mockResolvedValue(['test/folder/name.json']);
-        jest.spyOn(fs, 'readJson').mockResolvedValue({ name: 'bogus-package' });
+        vi.spyOn(fs, 'remove').mockResolvedValue();
+        vi.spyOn(fs, 'mkdirp').mockResolvedValue();
+        vi.spyOn(fs, 'readdir').mockResolvedValue(['test/folder/name.json']);
+        vi.spyOn(fs, 'readJson').mockResolvedValue({ name: 'bogus-package' });
         saveJsonFile.mockResolvedValue();
-        jest.spyOn(builder, 'processFiles');
+        vi.spyOn(builder, 'processFiles');
       });
 
       it('calls processFiles for each directory', async function () {
@@ -178,13 +179,13 @@ describe('buildModules', function () {
       });
 
       it('returns a list of all locale paths', async function () {
-        jest.spyOn(fs, 'lstat').mockResolvedValue({ isDirectory: () => true });
+        vi.spyOn(fs, 'lstat').mockResolvedValue({ isDirectory: () => true });
         const results = await builder.discoverDirs();
         expect(results).toHaveLength(3);
       });
 
       it('returns a list of all locale paths that are folder', async function () {
-        jest
+        vi
           .spyOn(fs, 'lstat')
           .mockResolvedValueOnce({ isDirectory: () => true })
           .mockResolvedValueOnce({ isDirectory: () => false });
@@ -197,7 +198,7 @@ describe('buildModules', function () {
         const expected = ['mod1', '/should/not/blacklist/bogus'];
         const notExpected = ['mod2', '/should/blacklist/yargs'];
         discoveredDirs.push(expected, notExpected);
-        jest.spyOn(fs, 'lstat').mockResolvedValue({ isDirectory: () => true });
+        vi.spyOn(fs, 'lstat').mockResolvedValue({ isDirectory: () => true });
         const results = await builder.discoverDirs();
         expect(results).toHaveLength(discoveredDirs.length - 1);
         expect(results).toEqual(
@@ -210,7 +211,7 @@ describe('buildModules', function () {
 
     describe('#gatherModules', function () {
       it('returns a list of all packages with verified dirs', async function () {
-        jest
+        vi
           .spyOn(fs, 'lstat')
           .mockResolvedValueOnce({ isDirectory: () => true });
 
@@ -237,7 +238,7 @@ describe('buildModules', function () {
       });
 
       it('logs warning when locales dir not found', async function () {
-        jest
+        vi
           .spyOn(fs, 'lstat')
           .mockResolvedValueOnce({ isDirectory: () => false });
 
@@ -253,7 +254,7 @@ describe('buildModules', function () {
       });
 
       it('logs warning when module names are malformed', async function () {
-        jest
+        vi
           .spyOn(fs, 'lstat')
           .mockResolvedValueOnce({ isDirectory: () => true });
 
@@ -277,7 +278,7 @@ describe('buildModules', function () {
       });
 
       it('supports expected module formats', async function () {
-        jest
+        vi
           .spyOn(fs, 'lstat')
           .mockResolvedValueOnce({ isDirectory: () => true });
 
@@ -309,10 +310,10 @@ describe('buildModules', function () {
 
     describe('#run', function () {
       it('only processes discovered locale dirs', async function () {
-        jest.spyOn(fs, 'remove').mockResolvedValue();
-        jest.spyOn(fs, 'mkdirp').mockResolvedValue();
-        jest.spyOn(builder, 'discoverDirs').mockResolvedValue();
-        jest.spyOn(builder, 'processDirs').mockResolvedValue();
+        vi.spyOn(fs, 'remove').mockResolvedValue();
+        vi.spyOn(fs, 'mkdirp').mockResolvedValue();
+        vi.spyOn(builder, 'discoverDirs').mockResolvedValue();
+        vi.spyOn(builder, 'processDirs').mockResolvedValue();
         await builder.run();
         expect(fs.remove).toHaveBeenCalledTimes(1);
         expect(fs.mkdirp).toHaveBeenCalledTimes(1);
