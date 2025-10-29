@@ -1,6 +1,6 @@
-const path = require('path');
-const { withGasketRequestCache } = require('@gasket/request');
-const getPreferredLocale = require('./utils/get-preferred-locale');
+import path from 'node:path';
+import { withGasketRequestCache } from '@gasket/request';
+import getPreferredLocale from './utils/get-preferred-locale.js';
 
 /** @type {import('@gasket/core').ActionHandler<'getIntlLocale'>} */
 const getIntlLocale = withGasketRequestCache(
@@ -26,7 +26,7 @@ async function getIntlManager(gasket) {
   return (await import(path.join(gasket.config.root, gasket.config.intl.managerFilename))).default;
 }
 
-module.exports = {
+export default {
   getIntlLocale,
   getIntlManager
 };

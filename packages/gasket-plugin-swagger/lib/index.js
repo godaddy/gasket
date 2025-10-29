@@ -8,13 +8,15 @@
 /// <reference types="@gasket/plugin-command" />
 
 
-const path = require('path');
-const fs = require('fs');
-const { readFile, access } = require('fs').promises;
-const isYaml = /\.ya?ml$/;
-const buildSwaggerDefinition = require('./build-swagger-definition');
-const postCreate = require('./post-create');
+import path from 'node:path';
+import { readFile, access } from 'node:fs/promises';
+import buildSwaggerDefinition from './build-swagger-definition.js';
+import postCreate from './post-create.js';
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
 const { name, version, description } = require('../package.json');
+const isYaml = /\.ya?ml$/;
 
 let __swaggerSpec;
 
@@ -30,10 +32,11 @@ async function loadSwaggerSpec(root, definitionFile, logger) {
     const target = path.join(root, definitionFile);
 
     try {
-      await access(target, fs.constants.F_OK);
+      await access(target);
       if (isYaml.test(definitionFile)) {
         const content = await readFile(target, 'utf8');
-        __swaggerSpec = require('js-yaml').safeLoad(content);
+        const yaml = await import('js-yaml');
+        __swaggerSpec = yaml.default.safeLoad(content);
       } else {
         __swaggerSpec = require(target);
       }
@@ -68,7 +71,7 @@ const plugin = {
         before: ['@gasket/plugin-nextjs']
       },
       handler: async function express(gasket, app) {
-        const swaggerUi = require('swagger-ui-express');
+        const swaggerUi = await import('swagger-ui-express');
         const { swagger, root } = gasket.config;
         const { ui = {}, apiDocsRoute, definitionFile } = swagger;
 
@@ -80,8 +83,8 @@ const plugin = {
 
         app.use(
           apiDocsRoute,
-          swaggerUi.serve,
-          swaggerUi.setup(swaggerSpec, ui)
+          swaggerUi.default.serve,
+          swaggerUi.default.setup(swaggerSpec, ui)
         );
       }
     },
@@ -99,11 +102,14 @@ const plugin = {
           gasket.logger
         );
 
-        await app.register(require('@fastify/swagger'), {
+        const fastifySwagger = await import('@fastify/swagger');
+        const fastifySwaggerUi = await import('@fastify/swagger-ui');
+
+        await app.register(fastifySwagger.default, {
           swagger: swaggerSpec
         });
 
-        await app.register(require('@fastify/swagger-ui'), {
+        await app.register(fastifySwaggerUi.default, {
           routePrefix: apiDocsRoute,
           ...uiOptions
         });
@@ -189,4 +195,4 @@ const plugin = {
   }
 };
 
-module.exports = plugin;
+export default plugin;

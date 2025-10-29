@@ -1,10 +1,12 @@
 /// <reference types="@gasket/core" />
 /// <reference types="@gasket/plugin-metadata" />
 
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
 const { name, version, description } = require('../package.json');
 
 /** @type {import('@gasket/core').HookHandler<'metadata'>} */
-async function metadata(gasket, meta) {
+export default async function metadata(gasket, meta) {
   return {
     ...meta,
     name,
@@ -45,5 +47,3 @@ async function metadata(gasket, meta) {
     ]
   };
 }
-
-module.exports = metadata;

@@ -1,7 +1,7 @@
 /// <reference types="@gasket/plugin-elastic-apm" />
 
 /** @type {import('@gasket/core').HookHandler<'apmTransaction'>} */
-module.exports = async function apmTransaction(gasket, transaction, { req }) {
+export default async function apmTransaction(gasket, transaction, { req }) {
   const route = await gasket.actions.getNextRoute(req);
 
   if (!route) {
@@ -30,4 +30,4 @@ module.exports = async function apmTransaction(gasket, transaction, { req }) {
       })
     )
   );
-};
+}

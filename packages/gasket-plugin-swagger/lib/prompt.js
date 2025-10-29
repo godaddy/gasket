@@ -1,4 +1,4 @@
-/** @type {import('.').promptSwagger} */
+/** @type {import('./index.d.ts').promptSwagger} */
 async function promptSwagger(context, prompt) {
   if (!('useSwagger' in context)) {
     const { useSwagger } = await prompt([
@@ -16,6 +16,6 @@ async function promptSwagger(context, prompt) {
   return context;
 }
 
-module.exports = {
+export default {
   promptSwagger
 };

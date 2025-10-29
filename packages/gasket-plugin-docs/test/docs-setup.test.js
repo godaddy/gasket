@@ -1,4 +1,9 @@
-const docsSetup = require('../lib/docs-setup');
+import docsSetup from '../lib/docs-setup.js';
+import {
+  txGasketPackageLinks,
+  txGasketUrlLinks,
+  txAbsoluteLinks
+} from '../lib/utils/transforms.js';
 
 describe('docsSetup', () => {
 
@@ -27,12 +32,6 @@ describe('docsSetup', () => {
   });
 
   it('includes expected transforms', () => {
-    const {
-      txGasketPackageLinks,
-      txGasketUrlLinks,
-      txAbsoluteLinks
-    } = require('../lib/utils/transforms');
-
     const results = docsSetup();
     expect(results).toHaveProperty('transforms');
     expect(results.transforms).toEqual([

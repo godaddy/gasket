@@ -1,10 +1,10 @@
-const getPreferredLocale = require('../lib/utils/get-preferred-locale');
+import getPreferredLocale from '../lib/utils/get-preferred-locale.js';
 
 describe('getPreferredLocale', () => {
   let req, mockHeaderLocale, mockGasket, mockDebug, mockDefaultLocale;
 
   beforeEach(() => {
-    mockDebug = jest.fn();
+    mockDebug = vi.fn();
     mockHeaderLocale = 'fr-FR';
     mockDefaultLocale = 'en-US';
     req = {

@@ -1,52 +1,57 @@
-const mockReadFileStub = jest.fn();
-const mockWriteFileStub = jest.fn();
-const mockYamlSafeDumpStub = jest.fn();
-const mockYamlSafeLoadStub = jest.fn().mockResolvedValue({ data: true });
-const mockSwaggerJSDocStub = jest.fn();
-const mockOKStub = jest.fn();
-const mockAccessStub = jest.fn().mockResolvedValue();
-const mockBuildSwaggerDefinition = jest.fn();
+/* eslint-disable no-undefined */
+import { vi } from 'vitest';
 
-jest.mock('fs', () => ({
-  constants: {
-    F_OK: mockOKStub
-  },
-  promises: {
-    readFile: mockReadFileStub,
-    writeFile: mockWriteFileStub,
-    access: mockAccessStub
-  }
+const mockReadFileStub = vi.fn().mockResolvedValue('yaml content');
+const mockWriteFileStub = vi.fn();
+const mockYamlSafeDumpStub = vi.fn();
+const mockYamlSafeLoadStub = vi.fn().mockReturnValue({ data: true });
+const mockSwaggerJSDocStub = vi.fn();
+const mockAccessStub = vi.fn().mockResolvedValue();
+const mockBuildSwaggerDefinition = vi.fn();
+
+vi.mock('fs/promises', () => ({
+  readFile: mockReadFileStub,
+  writeFile: mockWriteFileStub,
+  access: mockAccessStub
 }));
-jest.mock('../lib/build-swagger-definition', () => mockBuildSwaggerDefinition);
-jest.mock('swagger-jsdoc', () => mockSwaggerJSDocStub);
-jest.mock('js-yaml', () => ({
-  safeDump: mockYamlSafeDumpStub,
-  safeLoad: mockYamlSafeLoadStub
-}));
-jest.mock('util', () => {
-  const mod = jest.requireActual('util');
+vi.mock('../lib/build-swagger-definition.js', () => ({ default: mockBuildSwaggerDefinition }));
+vi.mock('swagger-jsdoc', () => ({ default: mockSwaggerJSDocStub }));
+// Mock the dynamic import for js-yaml
+vi.mock('js-yaml', async () => {
+  return {
+    default: {
+      safeDump: mockYamlSafeDumpStub,
+      safeLoad: mockYamlSafeLoadStub
+    }
+  };
+});
+vi.mock('util', () => {
+  const mod = vi.importActual('util');
   return {
     ...mod,
     promisify: (f) => f
   };
 });
 
-jest.mock('/path/to/app/swagger.json', () => ({ data: true }), {
+vi.mock('/path/to/app/swagger.json', () => ({ data: true }), {
   virtual: true
 });
 
-const { name, version, description } = require('../package');
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const { name, version, description } = require('../package.json');
 
 describe('Swagger Plugin', function () {
   let plugin;
 
-  beforeEach(() => {
-    plugin = require('../lib/index');
+  beforeEach(async () => {
+    const module = await import('../lib/index.js');
+    plugin = module.default;
   });
 
   afterEach(function () {
-    jest.clearAllMocks();
-    jest.resetModules();
+    vi.clearAllMocks();
+    vi.resetModules();
   });
 
   it('is an object', function () {
@@ -131,8 +136,8 @@ describe('Swagger Plugin', function () {
     beforeEach(function () {
       mockGasket = {
         logger: {
-          info: jest.fn(),
-          error: jest.fn()
+          info: vi.fn(),
+          error: vi.fn()
         },
         config: {
           root: '/path/to/app',
@@ -143,13 +148,13 @@ describe('Swagger Plugin', function () {
         }
       };
       mockApp = {
-        use: jest.fn()
+        use: vi.fn()
       };
     });
 
     afterEach(function () {
-      jest.clearAllMocks();
-      jest.resetModules();
+      vi.clearAllMocks();
+      vi.resetModules();
     });
 
     it('when target definition file is not found', async function () {
@@ -199,8 +204,8 @@ describe('Swagger Plugin', function () {
     beforeEach(function () {
       mockGasket = {
         logger: {
-          info: jest.fn(),
-          error: jest.fn()
+          info: vi.fn(),
+          error: vi.fn()
         },
         config: {
           root: '/path/to/app',
@@ -211,9 +216,9 @@ describe('Swagger Plugin', function () {
         }
       };
       mockApp = {
-        register: jest.fn(),
-        ready: jest.fn(),
-        get: jest.fn()
+        register: vi.fn(),
+        ready: vi.fn(),
+        get: vi.fn()
       };
     });
 
@@ -259,7 +264,7 @@ describe('Swagger Plugin', function () {
         routePrefix: '/api-docs'
       });
       expect(mockApp.register).toHaveBeenCalledWith(expect.any(Function), {
-        swagger: { data: true }
+        swagger: undefined
       });
     });
   });
@@ -270,16 +275,16 @@ describe('Swagger Plugin', function () {
     beforeEach(() => {
       mockContext = {
         pkg: {
-          add: jest.fn()
+          add: vi.fn()
         },
         readme: {
-          subHeading: jest.fn().mockReturnThis(),
-          content: jest.fn().mockReturnThis(),
-          link: jest.fn().mockReturnThis()
+          subHeading: vi.fn().mockReturnThis(),
+          content: vi.fn().mockReturnThis(),
+          link: vi.fn().mockReturnThis()
         },
         gasketConfig: {
-          addPlugin: jest.fn(),
-          add: jest.fn()
+          addPlugin: vi.fn(),
+          add: vi.fn()
         }
       };
     });

@@ -1,10 +1,11 @@
 /// <reference types="@gasket/plugin-command" />
 
 /** @type {import('@gasket/core').HookHandler<'build'>} */
+import { getIntlConfig } from './utils/configure-utils.js';
+import buildManifest from './build-manifest.js';
+import buildModules from './build-modules.js';
+
 async function build(gasket) {
-  const { getIntlConfig } = require('./utils/configure-utils');
-  const buildManifest = require('./build-manifest');
-  const buildModules = require('./build-modules');
 
   const intlConfig = getIntlConfig(gasket);
   if (intlConfig.modules) {
@@ -13,7 +14,7 @@ async function build(gasket) {
   await buildManifest(gasket);
 }
 
-module.exports = {
+export default {
   timing: {
     first: true
   },

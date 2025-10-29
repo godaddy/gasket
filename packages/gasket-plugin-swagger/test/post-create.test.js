@@ -1,7 +1,8 @@
-const buildSwaggerDefinition = require('../lib/build-swagger-definition.js');
-const postCreateHook = require('../lib/post-create.js');
+import { vi } from 'vitest';
+import buildSwaggerDefinition from '../lib/build-swagger-definition.js';
+import postCreateHook from '../lib/post-create.js';
 
-jest.mock('../lib/build-swagger-definition.js', ()  => jest.fn());
+vi.mock('../lib/build-swagger-definition.js', ()  => ({ default: vi.fn() }));
 
 describe('postCreateHook', function () {
   let mockGasket, mockCreateContext;

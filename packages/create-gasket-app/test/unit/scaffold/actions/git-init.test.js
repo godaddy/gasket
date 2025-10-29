@@ -11,7 +11,8 @@ describe('gitInit', () => {
 
   beforeEach(() => {
     mockContext = {
-      dest: '/path/to/test-app'
+      dest: '/path/to/test-app',
+      warnings: []
     };
   });
 
@@ -57,41 +58,48 @@ describe('gitInit', () => {
 
   it('handles git init failure', async () => {
     const error = new Error('Git not installed');
+    error.stderr = 'Git not installed';
     mockRunShellCommand.mockRejectedValueOnce(error);
 
-    await expect(gitInit({ context: mockContext }))
-      .rejects.toThrow('Git not installed');
+    await gitInit({ context: mockContext });
+    expect(mockContext.warnings).toHaveLength(1);
+    expect(mockContext.warnings[0]).toContain('Failed to initialize git repository');
 
     expect(mockRunShellCommand).toHaveBeenCalledTimes(1);
   });
 
   it('handles git checkout failure', async () => {
     const error = new Error('Failed to create branch');
+    error.stderr = 'fatal: a branch named \'main\' already exists';
     mockRunShellCommand
       .mockResolvedValueOnce() // git init succeeds
       .mockRejectedValueOnce(error); // checkout fails
 
-    await expect(gitInit({ context: mockContext }))
-      .rejects.toThrow('Failed to create branch');
+    await gitInit({ context: mockContext });
+    expect(mockContext.warnings).toHaveLength(1);
+    expect(mockContext.warnings[0]).toContain('A branch named \'main\' already exists');
 
     expect(mockRunShellCommand).toHaveBeenCalledTimes(2);
   });
 
   it('handles git add failure', async () => {
     const error = new Error('Failed to add files');
+    error.stderr = 'Failed to add files';
     mockRunShellCommand
       .mockResolvedValueOnce() // git init succeeds
       .mockResolvedValueOnce() // checkout succeeds
       .mockRejectedValueOnce(error); // add fails
 
-    await expect(gitInit({ context: mockContext }))
-      .rejects.toThrow('Failed to add files');
+    await gitInit({ context: mockContext });
+    expect(mockContext.warnings).toHaveLength(1);
+    expect(mockContext.warnings[0]).toContain('Failed to initialize git repository');
 
     expect(mockRunShellCommand).toHaveBeenCalledTimes(3);
   });
 
   it('handles git commit failure', async () => {
     const error = new Error('Failed to commit');
+    error.stderr = 'Failed to commit';
     mockRunShellCommand
       .mockResolvedValueOnce() // git init succeeds
       .mockResolvedValueOnce() // checkout succeeds
@@ -99,7 +107,9 @@ describe('gitInit', () => {
       .mockRejectedValueOnce(error); // commit fails
 
     await expect(gitInit({ context: mockContext }))
-      .rejects.toThrow('Failed to commit');
+      .resolves.not.toThrow();
+    expect(mockContext.warnings).toHaveLength(1);
+    expect(mockContext.warnings[0]).toContain('Failed to initialize git repository');
 
     expect(mockRunShellCommand).toHaveBeenCalledTimes(4);
   });

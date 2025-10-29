@@ -6,36 +6,38 @@ const nextHandler = {
   name: 'testapp'
 };
 
-// Monkey-patch Node's require to stub `next`
-const Module = require('module');
-const originalRequire = Module.prototype.require;
 const mockNext = vi.fn().mockReturnValue(nextHandler);
-Module.prototype.require = function (id) {
-  if (id === 'next') return mockNext;
-  return originalRequire.apply(this, arguments);
-};
 
-const { setupNextHandling } = require('../lib/utils/setup-next-app');
-const getModule = () => require('../lib/utils/setup-next-app');
+// Mock 'next' module - must be at the very top before any imports
+vi.mock('next', () => ({
+  default: mockNext
+}));
+
+const { setupNextHandling } = await import('../lib/utils/setup-next-app.js');
+let setupNextApp;
 
 describe('setupNextApp', () => {
-  let gasket, module;
+  let gasket;
 
-  beforeEach(() => {
-    module = getModule();
+  beforeEach(async () => {
     vi.clearAllMocks();
     // eslint-disable-next-line no-process-env
     delete process.env.GASKET_DEV;
+
+    // Re-import the module to get fresh mocks
+    vi.resetModules();
+    const module = await import('../lib/utils/setup-next-app.js');
+    setupNextApp = module.setupNextApp;
   });
 
   it('exports setupNextApp instance', function () {
-    expect(module).toHaveProperty('setupNextApp');
-    expect(typeof module.setupNextApp).toBe('function');
+    expect(setupNextApp).toBeDefined();
+    expect(typeof setupNextApp).toBe('function');
   });
 
   it('executes the `next` lifecycle', async function () {
     gasket = mockGasketApi();
-    await module.setupNextApp(gasket);
+    await setupNextApp(gasket);
     expect(gasket.exec).toHaveBeenCalledWith('next', nextHandler);
   });
 
@@ -45,7 +47,7 @@ describe('setupNextApp', () => {
       gasket = mockGasketApi();
       // eslint-disable-next-line no-process-env
       process.env.GASKET_DEV = '1';
-      await module.setupNextApp(gasket);
+      await setupNextApp(gasket);
       expect(mockNext).toHaveBeenCalledWith({
         dev: true,
         hostname: 'localhost',
@@ -55,7 +57,7 @@ describe('setupNextApp', () => {
 
     it('creates default mode nextjs app when gasket command is not local', async function () {
       gasket = mockGasketApi();
-      await module.setupNextApp(gasket);
+      await setupNextApp(gasket);
       expect(mockNext).toHaveBeenCalledWith({
         dev: false,
         hostname: 'localhost',
@@ -67,7 +69,7 @@ describe('setupNextApp', () => {
       gasket = mockGasketApi();
       // eslint-disable-next-line no-undefined
       gasket.config.http = undefined;
-      await module.setupNextApp(gasket);
+      await setupNextApp(gasket);
       expect(mockNext).toHaveBeenCalledWith({
         dev: false,
         hostname: 'localhost',
@@ -80,7 +82,7 @@ describe('setupNextApp', () => {
       // eslint-disable-next-line no-undefined
       gasket.config.http = undefined;
       gasket.config.env = 'local';
-      await module.setupNextApp(gasket);
+      await setupNextApp(gasket);
       expect(mockNext).toHaveBeenCalledWith({
         dev: false,
         hostname: 'localhost',

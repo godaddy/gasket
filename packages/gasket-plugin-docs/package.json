@@ -2,19 +2,31 @@
   "name": "@gasket/plugin-docs",
   "version": "7.4.8",
   "description": "Centralize doc files from plugins and modules",
+  "type": "module",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
     "lib",
+    "cjs",
     "EXAMPLES.md"
   ],
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js",
+      "require": "./cjs/index.js"
+    },
+    "./package.json": "./package.json"
+  },
   "scripts": {
+    "build": "gasket-cjs",
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
-    "posttest": "pnpm run lint",
-    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
-    "test:coverage": "jest --coverage",
-    "test:watch": "jest --watch",
+    "posttest": "pnpm run lint && pnpm run typecheck",
+    "prepublishOnly": "pnpm run build",
+    "test": "vitest run --globals",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
@@ -40,6 +52,7 @@
     "rimraf": "^3.0.2"
   },
   "devDependencies": {
+    "@gasket/cjs": "workspace:^",
     "@gasket/core": "workspace:^",
     "@gasket/plugin-git": "workspace:^",
     "@gasket/plugin-logger": "workspace:^",
@@ -47,9 +60,6 @@
     "@gasket/plugin-webpack": "workspace:^",
     "@godaddy/dmd": "^1.0.4",
     "create-gasket-app": "workspace:^",
-    "jest": "^29.7.0"
-  },
-  "jest": {
-    "testEnvironment": "node"
+    "vitest": "^3.2.0"
   }
 }

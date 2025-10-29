@@ -1,22 +1,26 @@
 /// <reference types="@gasket/plugin-logger" />
 
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+import WebpackMetricsPlugin from './webpack-metrics-plugin.js';
+import GasketEnvGuardPlugin from './gasket-env-guard-plugin.js';
+
 /**
  * Sets up a context object with special getters
- * @type {import('./internal').setupContext}
+ * @type {import('./internal.d.ts').setupContext}
  */
 function setupContext(context) {
   return {
     ...context,
     get webpack() {
-      return require('webpack');
+      const webpack = require('webpack');
+      return webpack;
     }
   };
 }
 
 /** @type {import('@gasket/core').ActionHandler<'getWebpackConfig'>} */
-function getWebpackConfig(gasket, initConfig, context) {
-  const WebpackMetricsPlugin = require('./webpack-metrics-plugin');
-  const GasketEnvGuardPlugin = require('./gasket-env-guard-plugin');
+export function getWebpackConfig(gasket, initConfig, context) {
 
   /** @type {import('webpack').Configuration} */
   const baseConfig = {
@@ -39,6 +43,6 @@ function getWebpackConfig(gasket, initConfig, context) {
   return gasket.execWaterfallSync('webpackConfig', baseConfig, setupContext(context));
 }
 
-module.exports = {
+export default {
   getWebpackConfig
 };

@@ -1,6 +1,14 @@
-const { name, version, description } = require('../package.json');
-const express = require('./express');
-const fastify = require('./fastify');
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
+import express from './express.js';
+import fastify from './fastify.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const packageJson = JSON.parse(readFileSync(join(__dirname, '../package.json'), 'utf8'));
+
+const { name, version, description } = packageJson;
 
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {
@@ -13,4 +21,4 @@ const plugin = {
   }
 };
 
-module.exports = plugin;
+export default plugin;

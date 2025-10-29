@@ -1,7 +1,7 @@
 /**
  * Determines if the Elastic APM agent has sufficient config to be active
- * @param {import('./index').ExtendedAgentConfigOptions} config Apm agent config
- * @param {NodeJS.ProcessEnv} env Environment variables
+ * @param {import('./index.js').ExtendedAgentConfigOptions} config Apm agent config
+ * @param {Record<string, string | undefined>} env Environment variables
  * @returns {boolean} A combined config object
  */
 const isActive = (config, env) => {
@@ -24,11 +24,11 @@ const isActive = (config, env) => {
 };
 
 /** @type {import('@gasket/core').HookHandler<'configure'>} */
-module.exports = function configure(gasket, config) {
+export default function configure(gasket, config) {
   config.elasticAPM = config.elasticAPM || {};
 
   // eslint-disable-next-line no-process-env
   config.elasticAPM.active = isActive(config.elasticAPM, process.env);
 
   return { ...config };
-};
+}
