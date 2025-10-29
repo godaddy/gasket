@@ -1,5 +1,11 @@
 # `@gasket/plugin-intl`
 
+## 7.6.0
+
+### Minor Changes
+
+- 9b1bb5b: ESM port
+
 ## 7.5.10
 
 ### Patch Changes

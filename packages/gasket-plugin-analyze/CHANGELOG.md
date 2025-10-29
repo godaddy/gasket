@@ -1,5 +1,11 @@
 # `@gasket/plugin-analyze`
 
+## 7.4.0
+
+### Minor Changes
+
+- 9b1bb5b: ESM port
+
 ## 7.3.8
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-docs",
-  "version": "7.4.8",
+  "version": "7.5.0",
   "description": "Centralize doc files from plugins and modules",
   "type": "module",
   "main": "lib/index.js",

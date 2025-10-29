@@ -1,5 +1,16 @@
 # `@gasket/plugin-nextjs`
 
+## 8.0.0
+
+### Minor Changes
+
+- 9b1bb5b: ESM port
+
+### Patch Changes
+
+- Updated dependencies [9b1bb5b]
+  - @gasket/plugin-webpack@7.4.0
+
 ## 7.6.4
 
 ### Patch Changes

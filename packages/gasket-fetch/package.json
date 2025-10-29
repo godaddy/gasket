@@ -1,6 +1,6 @@
 {
   "name": "@gasket/fetch",
-  "version": "7.3.8",
+  "version": "7.4.0",
   "description": "DEPRECATED Gasket Fetch API",
   "main": "lib/node.js",
   "browser": "lib/browser.js",

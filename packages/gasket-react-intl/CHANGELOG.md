@@ -1,5 +1,18 @@
 # `@gasket/react-intl`
 
+## 8.0.0
+
+### Minor Changes
+
+- 9b1bb5b: ESM port
+
+### Patch Changes
+
+- dd11e2c: Remove unused @gasket/fetch dependency
+- Updated dependencies [9b1bb5b]
+  - @gasket/plugin-intl@7.6.0
+  - @gasket/data@7.5.4
+
 ## 7.6.4
 
 ### Patch Changes
