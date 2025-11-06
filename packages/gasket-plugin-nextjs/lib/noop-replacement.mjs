@@ -1,3 +1,4 @@
+/* eslint-disable no-undefined */
 /* DO NOT EDIT OR DELETE THIS FILE */
 // Empty module for replacing create.js and webpack-config.js files
 // These files are build-time only and use Node APIs that don't work in Edge runtime
