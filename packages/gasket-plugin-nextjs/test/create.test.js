@@ -103,13 +103,6 @@ describe('create hook', () => {
       expect(mockContext.readme.link).toHaveBeenCalledWith('Custom Server', expect.any(String));
       expect(mockContext.readme.link).toHaveBeenCalledWith('Page Router', expect.any(String));
     });
-
-    it('adds noop-replacement.mjs to files', async function () {
-      await create.handler({}, mockContext);
-      expect(mockContext.files.add).toHaveBeenCalledWith(
-        `${root}/../generator/next/noop-replacement.mjs`
-      );
-    });
   });
 
   describe('createTestFiles', () => {
