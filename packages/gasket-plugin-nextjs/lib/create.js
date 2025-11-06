@@ -115,8 +115,6 @@ function createNextFiles({ files, generatorDir, nextDevProxy, typescript, nextSe
   }
 
   files.add(glob);
-  // Add noop-replacement.mjs to files to prevent Node API errors in Edge runtime or RSC
-  files.add(`${generatorDir}/next/noop-replacement.mjs`);
 }
 
 /**
