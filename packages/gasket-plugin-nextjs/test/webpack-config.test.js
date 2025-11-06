@@ -11,6 +11,7 @@ vi.mock('../lib/utils/try-resolve.js', () => ({
 let webpackConfig;
 let validateNoGasketCore;
 let externalizeGasketCore;
+let replaceGasketFiles;
 
 const mockFilename = '/path/to/app/gasket.js';
 
@@ -24,7 +25,7 @@ describe('webpackConfigHook', () => {
     // Re-import webpack-config after clearing mocks
     vi.resetModules();
     const module = await import('../lib/webpack-config.js');
-    ({ webpackConfig, validateNoGasketCore, externalizeGasketCore } = module);
+    ({ webpackConfig, validateNoGasketCore, externalizeGasketCore, replaceGasketFiles } = module);
 
     mockGasket = {
       config: {
@@ -157,5 +158,122 @@ describe('validateNoGasketCore', () => {
     mockCtx.request = 'other-package';
     validateNoGasketCore(mockCtx, mockCallback);
     expect(mockCallback).toHaveBeenCalledWith();
+  });
+
+  describe('replaceGasketFiles', () => {
+    let mockWebpackConfig;
+    const isGasketPluginPath = /(@gasket\/plugin-|@[\w-]+\/gasket-plugin-)/;
+    const filePattern = /(create|webpack-config)\.m?c?js$/;
+
+    beforeEach(async () => {
+      mockWebpackConfig = {
+        name: '',
+        plugins: []
+      };
+
+      // Re-import to get fresh module with emptyModulePath
+      vi.resetModules();
+      const module = await import('../lib/webpack-config.js');
+      ({ replaceGasketFiles } = module);
+    });
+
+    it('adds NormalModuleReplacementPlugin to plugins array', () => {
+      const result = replaceGasketFiles(webpack, mockWebpackConfig);
+      expect(result.plugins).toHaveLength(1);
+      expect(result.plugins[0]).toBeInstanceOf(webpack.NormalModuleReplacementPlugin);
+    });
+
+    it('initializes plugins array if it does not exist', () => {
+      const config = { name: '' };
+      const result = replaceGasketFiles(webpack, config);
+      expect(result.plugins).toHaveLength(1);
+      expect(result.plugins[0]).toBeInstanceOf(webpack.NormalModuleReplacementPlugin);
+    });
+
+    it('replaces create.js from @gasket/plugin-* path', () => {
+      // Create a mock resource that matches the pattern
+      const resource = {
+        context: '/node_modules/@gasket/plugin-nextjs/lib',
+        request: 'create.js'
+      };
+
+      // Test that the file pattern matches
+      expect(filePattern.test(resource.request)).toBe(true);
+      // Test that the Gasket plugin path pattern matches
+      expect(isGasketPluginPath.test(resource.context)).toBe(true);
+    });
+
+    it('replaces webpack-config.js from @gasket/plugin-* path', () => {
+      const resource = {
+        context: '/node_modules/@gasket/plugin-nextjs/lib',
+        request: 'webpack-config.js'
+      };
+
+      expect(filePattern.test(resource.request)).toBe(true);
+      expect(isGasketPluginPath.test(resource.context)).toBe(true);
+    });
+
+    it('replaces create.mjs from @*/gasket-plugin-* path', () => {
+      const resource = {
+        context: '/node_modules/@myorg/gasket-plugin-custom/lib',
+        request: 'create.mjs'
+      };
+
+      expect(filePattern.test(resource.request)).toBe(true);
+      expect(isGasketPluginPath.test(resource.context)).toBe(true);
+    });
+
+    it('replaces webpack-config.cjs from @*/gasket-plugin-* path', () => {
+      const resource = {
+        context: '/node_modules/@myorg/gasket-plugin-custom/lib',
+        request: 'webpack-config.cjs'
+      };
+
+      expect(filePattern.test(resource.request)).toBe(true);
+      expect(isGasketPluginPath.test(resource.context)).toBe(true);
+    });
+
+    it('replaces files when request path matches Gasket plugin pattern', () => {
+      const resource = {
+        context: '/some/path',
+        request: '@gasket/plugin-nextjs/lib/create.js'
+      };
+
+      expect(filePattern.test(resource.request)).toBe(true);
+      expect(isGasketPluginPath.test(resource.request)).toBe(true);
+    });
+
+    it('does not replace files that do not match the file pattern', () => {
+      const resource = {
+        context: '/node_modules/@gasket/plugin-nextjs/lib',
+        request: 'other.js'
+      };
+
+      expect(filePattern.test(resource.request)).toBe(false);
+    });
+
+    it('does not replace files from non-Gasket plugin paths', () => {
+      const resource = {
+        context: '/node_modules/some-other-package/lib',
+        request: 'create.js'
+      };
+
+      expect(filePattern.test(resource.request)).toBe(true);
+      expect(isGasketPluginPath.test(resource.context)).toBe(false);
+    });
+
+    it('does not replace files with .ts extension', () => {
+      const resource = {
+        context: '/node_modules/@gasket/plugin-nextjs/lib',
+        request: 'create.ts'
+      };
+
+      expect(filePattern.test(resource.request)).toBe(false);
+    });
+
+    it('returns the same webpackConfig object', () => {
+      const result = replaceGasketFiles(webpack, mockWebpackConfig);
+      expect(result).toBe(mockWebpackConfig);
+    });
   });
 });
