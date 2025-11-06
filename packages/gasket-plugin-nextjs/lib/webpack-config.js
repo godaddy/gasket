@@ -1,7 +1,6 @@
 /// <reference types="@gasket/plugin-webpack" />
 
 import { createRequire } from 'module';
-import { writeFileSync, mkdirSync } from 'fs';
 import { dirname, join } from 'path';
 import tryResolve from './utils/try-resolve.js';
 import { fileURLToPath } from 'url';
@@ -90,39 +89,12 @@ function setupClientExternals(webpackConfig, exclude) {
 }
 
 /**
- * Generate an empty module to replace create.js and webpack-config.js files
- * @returns {void}
- */
-function generateEmptyModule() {
-  // Create the empty module file if it doesn't exist
-  const emptyModuleContent = `
-function noopHook(...args) {
-  return args.length > 1 ? args[1] : undefined;
-}
-export default noopHook;
-export { noopHook as webpackConfig };
-`;
-
-  try {
-    writeFileSync(emptyModulePath, emptyModuleContent, 'utf8');
-  } catch (err) {
-    // If directory doesn't exist, create it
-    if (err.code === 'ENOENT') {
-      mkdirSync(dirname(emptyModulePath), { recursive: true });
-      writeFileSync(emptyModulePath, emptyModuleContent, 'utf8');
-    }
-  }
-}
-
-/**
  * Replace create.js and webpack-config.js files with empty.mjs
  * @param {import('webpack').WebpackPluginInstance} webpack - The webpack plugin instance
  * @param {import('webpack').Configuration} webpackConfig - The webpack configuration
  * @returns {import('webpack').Configuration} The modified webpack configuration
  */
 function replaceGasketFiles(webpack, webpackConfig) {
-  generateEmptyModule();
-
   // Replace create.js and webpack-config.js files with empty.mjs
   // These files are build-time only and use Node APIs that don't work in Edge runtime or RSC
   // Replace them with an empty module so imports still work but don't bundle Node APIs
@@ -170,7 +142,7 @@ function webpackConfigHook(gasket, webpackConfig, { webpack, isServer }) {
     })
   );
 
-  return replaceGasketFiles(webpack, webpackConfig);;
+  return replaceGasketFiles(webpack, webpackConfig);
 }
 
-export { validateNoGasketCore, externalizeGasketCore, webpackConfigHook as webpackConfig };
+export { validateNoGasketCore, externalizeGasketCore, replaceGasketFiles, webpackConfigHook as webpackConfig };
