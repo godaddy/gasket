@@ -1,10 +1,19 @@
 /// <reference types="@gasket/plugin-webpack" />
 
 import { createRequire } from 'module';
+import { dirname, join } from 'path';
 import tryResolve from './utils/try-resolve.js';
-
+import { fileURLToPath } from 'url';
 const require = createRequire(import.meta.url);
+
+// Matches: @gasket/plugin-* or @*/gasket-plugin-*
+const isGasketPluginPath = /(@gasket\/plugin-|@[\w-]+\/gasket-plugin-)/;
 const isGasketCore = /@gasket[/\\]core$/;
+
+// Generate empty module programmatically to avoid committing a file
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const emptyModulePath = join(__dirname, 'noop-replacement.mjs');
 
 /**
  * Function to validate that '@gasket/core' is not used in browser code.
@@ -80,6 +89,38 @@ function setupClientExternals(webpackConfig, exclude) {
 }
 
 /**
+ * Replace create.js and webpack-config.js files with empty.mjs
+ * @param {import('webpack').WebpackPluginInstance} webpack - The webpack plugin instance
+ * @param {import('webpack').Configuration} webpackConfig - The webpack configuration
+ * @returns {import('webpack').Configuration} The modified webpack configuration
+ */
+function replaceGasketFiles(webpack, webpackConfig) {
+  // Replace create.js and webpack-config.js files with empty.mjs
+  // These files are build-time only and use Node APIs that don't work in Edge runtime or RSC
+  // Replace them with an empty module so imports still work but don't bundle Node APIs
+  // Apply to all builds (server, edge, RSC) to prevent Node API errors
+  // Only replace files in Gasket plugin paths (@gasket/plugin-* or @*/gasket-plugin-*)
+  webpackConfig.plugins ??= [];
+  webpackConfig.plugins.push(
+    new webpack.NormalModuleReplacementPlugin(
+      /(create|webpack-config)\.m?c?js$/,
+      (resource) => {
+        // Only replace if the resource is from a Gasket plugin
+        // Check both context (module path) and request (import path)
+        const context = resource.context || '';
+        const request = resource.request || '';
+
+        if (isGasketPluginPath.test(context) || isGasketPluginPath.test(request)) {
+          resource.request = emptyModulePath;
+        }
+      }
+    )
+  );
+
+  return webpackConfig;
+}
+
+/**
  * Webpack configuration hook for Next.js integration
  * @type {import('@gasket/core').HookHandler<'webpackConfig'>}
  * @returns {import('webpack').Configuration} Modified webpack configuration
@@ -101,7 +142,7 @@ function webpackConfigHook(gasket, webpackConfig, { webpack, isServer }) {
     })
   );
 
-  return webpackConfig;
+  return replaceGasketFiles(webpack, webpackConfig);
 }
 
-export { validateNoGasketCore, externalizeGasketCore, webpackConfigHook as webpackConfig };
+export { validateNoGasketCore, externalizeGasketCore, replaceGasketFiles, webpackConfigHook as webpackConfig };
