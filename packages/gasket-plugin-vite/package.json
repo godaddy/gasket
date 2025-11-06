@@ -1,0 +1,35 @@
+{
+  "name": "@gasket/plugin-vite",
+  "version": "1.0.0",
+  "description": "Gasket plugin for Vite integration",
+  "type": "module",
+  "main": "./lib/index.js",
+  "exports": {
+    ".": "./lib/index.js"
+  },
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "test": "echo \"No tests yet\"",
+    "postinstall": "echo 'Plugin dependencies installed!'"
+  },
+  "keywords": [
+    "gasket",
+    "plugin",
+    "vite",
+    "react"
+  ],
+  "dependencies": {
+    "vite": "^5.2.0"
+  },
+  "peerDependencies": {
+    "@gasket/core": "^7.0.0",
+    "express": "^4.18.0"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
+

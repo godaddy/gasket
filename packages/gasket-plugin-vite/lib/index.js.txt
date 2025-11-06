@@ -1,0 +1,148 @@
+import { createServer as createViteServer } from 'vite';
+import express from 'express';
+import path from 'path';
+import fs from 'fs';
+
+/**
+ * Gasket Vite Plugin
+ * 
+ * Minimal integration of Vite with Gasket's Express server
+ * 
+ * Purpose: Integrate Vite frontend with Gasket server features (API routes, auth, etc.)
+ * If you don't need Gasket server features, just use Vite directly (vite dev/build/preview)!
+ * 
+ * Modes:
+ * - Development: Vite dev server in middleware mode
+ * - Production: Serves built files (auto-detects SPA vs SSR)
+ */
+export default {
+  name: '@gasket/plugin-vite',
+  
+  hooks: {
+    async express(gasket, app) {
+      const isDev = process.env.NODE_ENV === 'development';
+      const root = process.cwd();
+      const distPath = path.join(root, 'dist');
+      
+      if (isDev) {
+        // Development: Vite dev server with SSR support
+        const vite = await createViteServer({
+          server: { middlewareMode: true },
+          appType: 'custom',
+          root,
+          configFile: path.join(root, 'vite.config.js')
+        });
+        
+        // Use Vite's connect middleware
+        app.use(vite.middlewares);
+        
+        // Check if SSR entry exists
+        const ssrEntryDev = path.join(root, 'src/entry-server.jsx');
+        const hasSsr = fs.existsSync(ssrEntryDev) || fs.existsSync(ssrEntryDev.replace('.jsx', '.js'));
+        
+        if (hasSsr) {
+          gasket.logger.info('[@gasket/plugin-vite] Dev mode with SSR support');
+          
+          // SSR handler for development
+          app.use('*', async (req, res, next) => {
+            const url = req.originalUrl;
+            
+            try {
+              // Read and transform index.html template
+              let template = await fs.promises.readFile(path.join(root, 'index.html'), 'utf-8');
+              template = await vite.transformIndexHtml(url, template);
+              
+              // Load SSR entry module with HMR support
+              const ssrModule = await vite.ssrLoadModule('/src/entry-server.jsx');
+              const { render, enableSSR } = ssrModule;
+              
+              // Check if SSR is enabled for this route
+              if (enableSSR && !enableSSR(url, { req, res })) {
+                // SPA mode - send transformed template without SSR
+                return res.status(200).set({ 'Content-Type': 'text/html' }).send(template);
+              }
+              
+              // SSR mode - render on server
+              const appHtml = await render(url, { req, res });
+              
+              // Replace placeholder with rendered HTML
+              const html = template.replace('<!--app-html-->', appHtml);
+              
+              res.status(200).set({ 'Content-Type': 'text/html' }).send(html);
+            } catch (e) {
+              // Fix stack trace with Vite
+              vite.ssrFixStacktrace(e);
+              gasket.logger.error('[@gasket/plugin-vite] SSR error:', e);
+              next(e);
+            }
+          });
+        } else {
+          gasket.logger.info('[@gasket/plugin-vite] Dev mode (SPA only)');
+          
+          // SPA fallback handler for development
+          app.use('*', async (req, res) => {
+            try {
+              // Read and transform index.html for SPA
+              let template = await fs.promises.readFile(path.join(root, 'index.html'), 'utf-8');
+              template = await vite.transformIndexHtml(req.originalUrl, template);
+              res.status(200).set({ 'Content-Type': 'text/html' }).send(template);
+            } catch (e) {
+              vite.ssrFixStacktrace(e);
+              gasket.logger.error('[@gasket/plugin-vite] Error serving HTML:', e);
+              res.status(500).end(e.message);
+            }
+          });
+        }
+        
+        gasket.vite = vite;
+      } else {
+        // Production: Check what was built and serve it
+        if (!fs.existsSync(distPath)) {
+          gasket.logger.warn('[@gasket/plugin-vite] dist/ not found. Run `vite build` first.');
+          return;
+        }
+        
+        // Serve static assets
+        app.use(express.static(distPath));
+        
+        // Check if SSR entry exists
+        const ssrEntry = path.join(distPath, 'entry-server.js');
+        
+        if (fs.existsSync(ssrEntry)) {
+          // SSR available - but allow per-route decisions
+          gasket.logger.info('[@gasket/plugin-vite] Mode: Hybrid (SSR available)');
+          
+          // Import SSR module
+          const ssrModule = await import(ssrEntry);
+          const { render, enableSSR } = ssrModule;
+          
+          app.use('*', async (req, res, next) => {
+            try {
+              // Check if SSR is enabled for this specific route
+              if (enableSSR && !enableSSR(req.originalUrl, { req, res })) {
+                // SSR disabled for this route - use SPA
+                gasket.logger.debug(`[@gasket/plugin-vite] SPA mode for: ${req.originalUrl}`);
+                return res.sendFile(path.join(distPath, 'index.html'));
+              }
+              
+              // SSR enabled for this route - render on server
+              gasket.logger.debug(`[@gasket/plugin-vite] SSR mode for: ${req.originalUrl}`);
+              const html = await render(req.originalUrl, { req, res });
+              res.status(200).set({ 'Content-Type': 'text/html' }).send(html);
+            } catch (error) {
+              gasket.logger.error('[@gasket/plugin-vite] SSR error:', error);
+              next(error);
+            }
+          });
+        } else {
+          // No SSR entry - pure SPA mode
+          gasket.logger.info('[@gasket/plugin-vite] Mode: SPA (client-only)');
+          app.use('*', (req, res) => {
+            res.sendFile(path.join(distPath, 'index.html'));
+          });
+        }
+      }
+    }
+  }
+};
+

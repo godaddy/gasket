@@ -1,0 +1,32 @@
+{
+  "name": "@gasket/template-vite",
+  "version": "7.0.0",
+  "description": "Gasket Vite template with React and Express",
+  "type": "module",
+  "files": [
+    "template",
+    "template/.gitignore",
+    "template/.npmrc"
+  ],
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "pnpm run lint --fix",
+    "posttest": "pnpm run lint",
+    "test": "vitest run --globals",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest --watch --globals"
+  },
+  "repository": "godaddy/gasket.git",
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "GoDaddy Operating Company, LLC",
+  "license": "MIT",
+  "bugs": "https://github.com/godaddy/gasket/issues",
+  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-template-vite",
+  "devDependencies": {
+    "@vitest/coverage-v8": "^3.2.0",
+    "vitest": "^3.2.0"
+  }
+}
+

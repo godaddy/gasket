@@ -1,0 +1,54 @@
+{
+  "name": "{{{appName}}}",
+  "version": "0.0.0",
+  "description": "Gasket App with Vite",
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "local": "NODE_ENV=development tsx server.ts",
+    "local:watch": "NODE_ENV=development tsx watch --ignore 'src/**' --ignore 'dist/**' server.ts",
+    "preview": "npm run build && NODE_ENV=production tsx server.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
+    "lint:fix": "npm run lint -- --fix"
+  },
+  "dependencies": {
+    "@gasket/assets": "^7.4.3",
+    "@gasket/core": "^7.5.2",
+    "@gasket/plugin-express": "^7.4.3",
+    "@gasket/plugin-https": "^7.3.11",
+    "@gasket/plugin-logger": "^7.3.7",
+    "@gasket/plugin-vite": "^7.0.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "express": "^4.18.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2",
+    "vite": "^5.0.0"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^16.3.0",
+    "@typescript-eslint/parser": "^8.38.0",
+    "@vitejs/plugin-react": "^4.4.1",
+    "@vitest/coverage-v8": "^3.2.0",
+    "eslint": "^8.57.1",
+    "eslint-config-godaddy-react": "^9.1.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "jsdom": "^20.0.3",
+    "vitest": "^3.2.0"
+  },
+  "eslintIgnore": [
+    "dist",
+    "coverage/"
+  ],
+  "eslintConfig": {
+    "extends": [
+      "godaddy-react"
+    ],
+    "parser": "@typescript-eslint/parser"
+  }
+}
+
