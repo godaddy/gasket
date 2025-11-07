@@ -129,12 +129,19 @@ export default {
               // 5. SSR mode - render on server using framework's SSR API
               // The render() function is implemented by YOU based on your framework
               gasket.logger.debug(`[@gasket/plugin-vite] SSR mode: ${url}`);
-              const appHtml = await render(url, { req, res });
+              const context = { req, res };
+              const appHtml = await render(url, context);
               
               // 6. Inject the app-rendered HTML into the template
-              const html = template.replace('<!--app-html-->', appHtml);
+              let html = template.replace('<!--app-html-->', appHtml);
               
-              // 7. Send the rendered HTML
+              // 7. Inject server data if provided (for hydration)
+              if (context.serverData) {
+                const dataScript = `<script>window.__SERVER_DATA__=${JSON.stringify(context.serverData)}</script>`;
+                html = html.replace('</head>', `${dataScript}</head>`);
+              }
+              
+              // 8. Send the rendered HTML
               res.status(200).set({ 'Content-Type': 'text/html' }).send(html);
             } catch (e) {
               // Fix stack trace to map back to source code
@@ -228,10 +235,17 @@ export default {
               // Preact: renderToString()
               // Solid: renderToString()
               // Lit: render() with collectResult()
-              const appHtml = await render(url, { req, res });
+              const context = { req, res };
+              const appHtml = await render(url, context);
               
               // Inject the rendered HTML into the template
-              const html = template.replace('<!--app-html-->', appHtml);
+              let html = template.replace('<!--app-html-->', appHtml);
+              
+              // Inject server data if provided (for hydration)
+              if (context.serverData) {
+                const dataScript = `<script>window.__SERVER_DATA__=${JSON.stringify(context.serverData)}</script>`;
+                html = html.replace('</head>', `${dataScript}</head>`);
+              }
               
               res.status(200).set({ 'Content-Type': 'text/html' }).send(html);
             } catch (error) {
