@@ -33,11 +33,11 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-git",
   "dependencies": {
-    "@gasket/utils": "workspace:^"
+    "@gasket/utils": "canary"
   },
   "devDependencies": {
-    "@gasket/core": "workspace:^",
-    "@gasket/plugin-metadata": "workspace:^",
+    "@gasket/core": "canary",
+    "@gasket/plugin-metadata": "canary",
     "create-gasket-app": "workspace:^",
     "jest": "^29.7.0"
   }

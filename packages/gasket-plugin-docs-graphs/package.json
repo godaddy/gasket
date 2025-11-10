@@ -44,10 +44,10 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-docs-graphs",
   "devDependencies": {
-    "@gasket/cjs": "workspace:^",
-    "@gasket/core": "workspace:^",
-    "@gasket/plugin-docs": "workspace:^",
-    "@gasket/plugin-metadata": "workspace:^",
+    "@gasket/cjs": "canary",
+    "@gasket/core": "canary",
+    "@gasket/plugin-docs": "canary",
+    "@gasket/plugin-metadata": "canary",
     "create-gasket-app": "workspace:^",
     "vitest": "^3.2.0"
   }

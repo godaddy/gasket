@@ -36,9 +36,9 @@
     "semver": "^7.7.1"
   },
   "devDependencies": {
-    "@gasket/core": "workspace:^",
-    "@gasket/plugin-express": "workspace:^",
-    "@gasket/plugin-metadata": "workspace:^",
+    "@gasket/core": "canary",
+    "@gasket/plugin-express": "canary",
+    "@gasket/plugin-metadata": "canary",
     "@typescript-eslint/parser": "^8.38.0",
     "create-gasket-app": "workspace:^",
     "jest": "^29.7.0",

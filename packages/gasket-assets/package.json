@@ -47,7 +47,7 @@
   "devDependencies": {
     "@babel/core": "^7.26.9",
     "@babel/preset-react": "^7.26.3",
-    "@gasket/cjs": "workspace:^",
+    "@gasket/cjs": "canary",
     "@svgr/core": "^6.5.1",
     "mkdirp": "^1.0.4",
     "react": "^19.0.0",

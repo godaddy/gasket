@@ -45,13 +45,13 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-command",
   "dependencies": {
-    "@gasket/core": "workspace:^",
-    "@gasket/utils": "workspace:^",
+    "@gasket/core": "canary",
+    "@gasket/utils": "canary",
     "commander": "^12.1.0"
   },
   "devDependencies": {
-    "@gasket/cjs": "workspace:^",
-    "@gasket/plugin-metadata": "workspace:^",
+    "@gasket/cjs": "canary",
+    "@gasket/plugin-metadata": "canary",
     "@vitest/coverage-v8": "^3.2.0",
     "create-gasket-app": "workspace:^",
     "vitest": "^3.2.0"

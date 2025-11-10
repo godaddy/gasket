@@ -46,9 +46,9 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-vitest",
   "devDependencies": {
-    "@gasket/cjs": "workspace:^",
-    "@gasket/core": "workspace:^",
-    "@gasket/plugin-metadata": "workspace:^",
+    "@gasket/cjs": "canary",
+    "@gasket/core": "canary",
+    "@gasket/plugin-metadata": "canary",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.3.0",
     "@vitejs/plugin-react": "^4.4.1",

@@ -33,9 +33,9 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-jest",
   "devDependencies": {
-    "@gasket/core": "workspace:^",
-    "@gasket/plugin-express": "workspace:^",
-    "@gasket/plugin-metadata": "workspace:^",
+    "@gasket/core": "canary",
+    "@gasket/plugin-express": "canary",
+    "@gasket/plugin-metadata": "canary",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^16.3.0",

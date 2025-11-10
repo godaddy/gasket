@@ -46,17 +46,17 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-data",
   "dependencies": {
-    "@gasket/request": "workspace:^",
-    "@gasket/utils": "workspace:^",
+    "@gasket/request": "canary",
+    "@gasket/utils": "canary",
     "lodash.merge": "^4.6.2"
   },
   "devDependencies": {
-    "@gasket/cjs": "workspace:^",
-    "@gasket/core": "workspace:^",
-    "@gasket/data": "workspace:^",
-    "@gasket/plugin-command": "workspace:^",
-    "@gasket/plugin-metadata": "workspace:^",
-    "@gasket/plugin-redux": "workspace:^",
+    "@gasket/cjs": "canary",
+    "@gasket/core": "canary",
+    "@gasket/data": "canary",
+    "@gasket/plugin-command": "canary",
+    "@gasket/plugin-metadata": "canary",
+    "@gasket/plugin-redux": "canary",
     "create-gasket-app": "workspace:^",
     "vitest": "^3.2.0"
   }

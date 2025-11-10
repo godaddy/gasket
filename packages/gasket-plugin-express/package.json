@@ -55,18 +55,15 @@
     "http2-express": "^1.0.1"
   },
   "devDependencies": {
-    "@gasket/cjs": "workspace:^",
-    "@gasket/core": "workspace:^",
-    "@gasket/plugin-https": "workspace:^",
-    "@gasket/plugin-logger": "workspace:^",
-    "@gasket/plugin-metadata": "workspace:^",
+    "@gasket/cjs": "canary",
+    "@gasket/core": "canary",
+    "@gasket/plugin-https": "canary",
+    "@gasket/plugin-logger": "canary",
+    "@gasket/plugin-metadata": "canary",
     "@types/express": "^4.17.23",
     "@types/node": "^20.17.19",
     "create-gasket-app": "workspace:^",
     "express": "^4.21.2",
     "vitest": "^3.2.0"
-  },
-  "peerDependencies": {
-    "express": "^4.21.2"
   }
 }

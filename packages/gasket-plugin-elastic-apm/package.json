@@ -46,12 +46,12 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-elastic-apm",
   "dependencies": {
-    "@gasket/request": "workspace:^"
+    "@gasket/request": "canary"
   },
   "devDependencies": {
-    "@gasket/cjs": "workspace:^",
-    "@gasket/core": "workspace:^",
-    "@gasket/plugin-metadata": "workspace:^",
+    "@gasket/cjs": "canary",
+    "@gasket/core": "canary",
+    "@gasket/plugin-metadata": "canary",
     "create-gasket-app": "workspace:^",
     "dotenv": "^16.4.7",
     "elastic-apm-node": "^4.11.0",

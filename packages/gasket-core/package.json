@@ -47,12 +47,12 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-core",
   "dependencies": {
-    "@gasket/utils": "workspace:^",
+    "@gasket/utils": "canary",
     "debug": "^4.4.0"
   },
   "devDependencies": {
-    "@gasket/cjs": "workspace:^",
-    "@gasket/plugin-metadata": "workspace:^",
+    "@gasket/cjs": "canary",
+    "@gasket/plugin-metadata": "canary",
     "@vitest/coverage-v8": "^3.2.0",
     "vitest": "^3.2.0"
   },

@@ -49,18 +49,14 @@
     "split": "^1.0.1"
   },
   "devDependencies": {
-    "@gasket/cjs": "workspace:^",
-    "@gasket/core": "workspace:^",
-    "@gasket/plugin-express": "workspace:^",
-    "@gasket/plugin-metadata": "workspace:^",
-    "@gasket/plugin-middleware": "workspace:^",
+    "@gasket/cjs": "canary",
+    "@gasket/core": "canary",
+    "@gasket/plugin-express": "canary",
+    "@gasket/plugin-metadata": "canary",
+    "@gasket/plugin-middleware": "canary",
     "@types/morgan": "^1.9.9",
     "@vitest/coverage-v8": "^3.2.0",
     "create-gasket-app": "workspace:^",
     "vitest": "^3.2.0"
-  },
-  "peerDependencies": {
-    "@gasket/plugin-logger": "^7.3.8",
-    "express": "^4.21.2"
   }
 }
