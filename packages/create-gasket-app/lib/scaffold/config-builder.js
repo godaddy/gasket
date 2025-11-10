@@ -42,8 +42,10 @@ function isValidVersion(v) {
   // Remark: this explicitly forbids using npm dist-tags
   // as valid versions. To support this every call must hit an npm
   // registry to see what dist-tags are available. This is not feasible.
+  // However, we allow 'latest' and 'canary' as common dist-tags.
   //
   return v === 'latest'
+    || v === 'canary'
     || v.match(versionTypes.uri) != null
     || v.match(versionTypes.github) != null
     || !!semver.validRange(v);
@@ -497,6 +499,10 @@ export class ConfigBuilder {
   tryGetNewerRange(r1, r2) {
     if (r1 === 'latest' || r2 === 'latest') {
       return r1 === 'latest' ? r1 : r2;
+    }
+
+    if (r1 === 'canary' || r2 === 'canary') {
+      return r1 === 'canary' ? r1 : r2;
     }
 
     const v1 = this.rangeToVersion(r1);
