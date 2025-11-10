@@ -1,0 +1,56 @@
+---
+"@gasket/assets": patch
+"@gasket/cjs": patch
+"@gasket/core": patch
+"@gasket/data": patch
+"@gasket/fetch": patch
+"@gasket/intl": patch
+"@gasket/nextjs": patch
+"@gasket/plugin-analyze": patch
+"@gasket/plugin-command": patch
+"@gasket/plugin-cypress": patch
+"@gasket/plugin-data": patch
+"@gasket/plugin-docs": patch
+"@gasket/plugin-docs-graphs": patch
+"@gasket/plugin-docusaurus": patch
+"@gasket/plugin-dynamic-plugins": patch
+"@gasket/plugin-elastic-apm": patch
+"@gasket/plugin-express": patch
+"@gasket/plugin-fastify": patch
+"@gasket/plugin-git": patch
+"@gasket/plugin-happyfeet": patch
+"@gasket/plugin-https": patch
+"@gasket/plugin-https-proxy": patch
+"@gasket/plugin-intl": patch
+"@gasket/plugin-jest": patch
+"@gasket/plugin-lint": patch
+"@gasket/plugin-logger": patch
+"@gasket/plugin-manifest": patch
+"@gasket/plugin-metadata": patch
+"@gasket/plugin-middleware": patch
+"@gasket/plugin-mocha": patch
+"@gasket/plugin-morgan": patch
+"@gasket/plugin-nextjs": patch
+"@gasket/plugin-redux": patch
+"@gasket/plugin-service-worker": patch
+"@gasket/plugin-swagger": patch
+"@gasket/plugin-typescript": patch
+"@gasket/plugin-vitest": patch
+"@gasket/plugin-webpack": patch
+"@gasket/plugin-winston": patch
+"@gasket/plugin-workbox": patch
+"@gasket/preset-api": patch
+"@gasket/preset-nextjs": patch
+"@gasket/react-intl": patch
+"@gasket/redux": patch
+"@gasket/request": patch
+"@gasket/template-api-express": patch
+"@gasket/template-api-fastify": patch
+"@gasket/template-nextjs-app": patch
+"@gasket/template-nextjs-express": patch
+"@gasket/template-nextjs-pages": patch
+"@gasket/utils": patch
+"create-gasket-app": patch
+---
+
+Canary publish for all packages
