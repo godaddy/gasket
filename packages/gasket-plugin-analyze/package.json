@@ -48,13 +48,13 @@
     "webpack-bundle-analyzer": "^4.10.2"
   },
   "devDependencies": {
-    "@gasket/cjs": "workspace:^",
-    "@gasket/core": "workspace:^",
-    "@gasket/plugin-metadata": "workspace:^",
-    "@gasket/plugin-webpack": "workspace:^",
+    "@gasket/cjs": "canary",
+    "@gasket/core": "canary",
+    "@gasket/plugin-metadata": "canary",
+    "@gasket/plugin-webpack": "canary",
     "@types/webpack-bundle-analyzer": "^4.7.0",
     "@vitest/coverage-v8": "^3.2.0",
-    "create-gasket-app": "workspace:^",
+    "create-gasket-app": "^7.4.14",
     "vitest": "^3.2.0"
   }
 }

@@ -43,14 +43,11 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.20.7",
     "@babel/plugin-transform-runtime": "^7.26.9",
     "@babel/preset-env": "^7.26.9",
-    "@gasket/plugin-logger": "workspace:^",
+    "@gasket/plugin-logger": "canary",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^29.7.0",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
-    "redux": "^5.0.1"
-  },
-  "peerDependencies": {
     "redux": "^5.0.1"
   },
   "babel": {

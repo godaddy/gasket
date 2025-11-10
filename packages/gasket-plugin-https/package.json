@@ -54,13 +54,13 @@
     "one-time": "^1.0.0"
   },
   "devDependencies": {
-    "@gasket/cjs": "workspace:^",
-    "@gasket/core": "workspace:^",
-    "@gasket/plugin-logger": "workspace:^",
-    "@gasket/plugin-metadata": "workspace:^",
+    "@gasket/cjs": "canary",
+    "@gasket/core": "canary",
+    "@gasket/plugin-logger": "canary",
+    "@gasket/plugin-metadata": "canary",
     "@types/http-proxy": "^1.17.16",
     "@vitest/coverage-v8": "^3.2.0",
-    "create-gasket-app": "workspace:^",
+    "create-gasket-app": "^7.4.14",
     "vitest": "^3.2.0"
   }
 }

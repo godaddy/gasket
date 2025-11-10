@@ -49,21 +49,18 @@
   "devDependencies": {
     "@docusaurus/core": "^3.8.1",
     "@docusaurus/preset-classic": "^3.8.1",
-    "@gasket/cjs": "workspace:^",
-    "@gasket/core": "workspace:^",
-    "@gasket/plugin-docs": "workspace:^",
-    "@gasket/plugin-metadata": "workspace:^",
-    "@gasket/plugin-webpack": "workspace:^",
+    "@gasket/cjs": "canary",
+    "@gasket/core": "canary",
+    "@gasket/plugin-docs": "canary",
+    "@gasket/plugin-metadata": "canary",
+    "@gasket/plugin-webpack": "canary",
     "@vitest/coverage-v8": "^3.2.0",
     "ajv": "^8.17.1",
-    "create-gasket-app": "workspace:^",
+    "create-gasket-app": "^7.4.14",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "search-insights": "^2.17.3",
     "typescript": "^5.8.2",
     "vitest": "^3.2.0"
-  },
-  "peerDependencies": {
-    "@gasket/plugin-logger": "^7.3.8"
   }
 }

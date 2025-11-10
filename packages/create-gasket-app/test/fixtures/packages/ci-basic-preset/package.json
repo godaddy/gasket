@@ -3,6 +3,6 @@
   "version": "1.2.3",
   "main": "index.js",
   "dependencies": {
-    "@gasket/plugin-ci-basic": "file:../ci-basic-plugin"
+    "@gasket/plugin-ci-basic": "canary"
   }
 }

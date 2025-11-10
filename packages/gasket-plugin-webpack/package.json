@@ -46,11 +46,11 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-webpack",
   "devDependencies": {
-    "@gasket/cjs": "workspace:^",
-    "@gasket/core": "workspace:^",
-    "@gasket/plugin-logger": "workspace:^",
-    "@gasket/plugin-metadata": "workspace:^",
-    "create-gasket-app": "workspace:^",
+    "@gasket/cjs": "canary",
+    "@gasket/core": "canary",
+    "@gasket/plugin-logger": "canary",
+    "@gasket/plugin-metadata": "canary",
+    "create-gasket-app": "^7.4.14",
     "vitest": "^3.2.0",
     "webpack": "^5.98.0"
   }

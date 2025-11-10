@@ -45,14 +45,14 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-metadata",
   "dependencies": {
-    "@gasket/core": "workspace:^",
-    "@gasket/plugin-logger": "workspace:^"
+    "@gasket/core": "canary",
+    "@gasket/plugin-logger": "canary"
   },
   "devDependencies": {
-    "@gasket/cjs": "workspace:^",
-    "@gasket/plugin-webpack": "workspace:^",
+    "@gasket/cjs": "canary",
+    "@gasket/plugin-webpack": "canary",
     "@godaddy/dmd": "^1.0.4",
-    "create-gasket-app": "workspace:^",
+    "create-gasket-app": "^7.4.14",
     "vitest": "^3.2.0"
   }
 }

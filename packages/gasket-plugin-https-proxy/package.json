@@ -49,12 +49,12 @@
     "http-proxy": "^1.18.1"
   },
   "devDependencies": {
-    "@gasket/cjs": "workspace:^",
-    "@gasket/core": "workspace:^",
-    "@gasket/plugin-https": "workspace:^",
-    "@gasket/plugin-logger": "workspace:^",
-    "@gasket/plugin-metadata": "workspace:^",
-    "create-gasket-app": "workspace:^",
+    "@gasket/cjs": "canary",
+    "@gasket/core": "canary",
+    "@gasket/plugin-https": "canary",
+    "@gasket/plugin-logger": "canary",
+    "@gasket/plugin-metadata": "canary",
+    "create-gasket-app": "^7.4.14",
     "vitest": "^3.2.0"
   }
 }

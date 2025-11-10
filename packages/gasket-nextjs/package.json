@@ -68,15 +68,15 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-nextjs",
   "dependencies": {
-    "@gasket/data": "workspace:^",
-    "@gasket/request": "workspace:^",
+    "@gasket/data": "canary",
+    "@gasket/request": "canary",
     "hoist-non-react-statics": "^3.3.2",
     "htmlescape": "^1.1.1"
   },
   "devDependencies": {
-    "@gasket/cjs": "workspace:^",
-    "@gasket/plugin-data": "workspace:^",
-    "@gasket/plugin-intl": "workspace:^",
+    "@gasket/cjs": "canary",
+    "@gasket/plugin-data": "canary",
+    "@gasket/plugin-intl": "canary",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.3.0",
     "@types/react": "^19.0.12",
@@ -86,9 +86,5 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "vitest": "^3.2.0"
-  },
-  "peerDependencies": {
-    "next": ">=14 <16",
-    "react": ">=18 <20"
   }
 }

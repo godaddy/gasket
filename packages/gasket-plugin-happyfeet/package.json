@@ -43,12 +43,12 @@
     "happy-feet": "^2.2.0"
   },
   "devDependencies": {
-    "@gasket/cjs": "workspace:^",
-    "@gasket/core": "workspace:^",
-    "@gasket/plugin-https": "workspace:^",
-    "@gasket/plugin-metadata": "workspace:^",
+    "@gasket/cjs": "canary",
+    "@gasket/core": "canary",
+    "@gasket/plugin-https": "canary",
+    "@gasket/plugin-metadata": "canary",
     "@godaddy/terminus": "^4.12.1",
-    "create-gasket-app": "workspace:^",
+    "create-gasket-app": "^7.4.14",
     "vitest": "^3.2.0"
   }
 }

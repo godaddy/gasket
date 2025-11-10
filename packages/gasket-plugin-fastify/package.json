@@ -49,17 +49,14 @@
     "fastify": "^4.29.1"
   },
   "devDependencies": {
-    "@gasket/cjs": "workspace:^",
-    "@gasket/core": "workspace:^",
-    "@gasket/plugin-https": "workspace:^",
-    "@gasket/plugin-logger": "workspace:^",
-    "@gasket/plugin-metadata": "workspace:^",
+    "@gasket/cjs": "canary",
+    "@gasket/core": "canary",
+    "@gasket/plugin-https": "canary",
+    "@gasket/plugin-logger": "canary",
+    "@gasket/plugin-metadata": "canary",
     "@types/connect": "^3.4.38",
-    "create-gasket-app": "workspace:^",
+    "create-gasket-app": "^7.4.14",
     "fastify": "^4.29.1",
     "vitest": "^3.2.0"
-  },
-  "peerDependencies": {
-    "fastify": "^4.29.1"
   }
 }
