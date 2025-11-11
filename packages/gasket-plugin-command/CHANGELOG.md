@@ -1,5 +1,16 @@
 # `@gasket/plugin-command`
 
+## 7.6.0
+
+### Minor Changes
+
+- 7d1d8bf: Remove createRequire & new URL of package.json files
+
+### Patch Changes
+
+- @gasket/core@7.6.3
+- @gasket/utils@7.6.3
+
 ## 7.5.3
 
 ### Patch Changes

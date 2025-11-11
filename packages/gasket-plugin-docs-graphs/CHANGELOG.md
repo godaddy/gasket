@@ -1,5 +1,12 @@
 # `@gasket/plugin-docs-graph`
 
+## 7.4.0
+
+### Minor Changes
+
+- 7d1d8bf: Remove createRequire & new URL of package.json files
+- 9b1bb5b: ESM port
+
 ## 7.3.7
 
 ### Patch Changes

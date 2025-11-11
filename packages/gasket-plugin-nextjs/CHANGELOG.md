@@ -1,5 +1,19 @@
 # `@gasket/plugin-nextjs`
 
+## 8.0.0
+
+### Minor Changes
+
+- 7d1d8bf: Remove createRequire & new URL of package.json files
+- 9b1bb5b: ESM port
+
+### Patch Changes
+
+- e899e2e: Add webpack functionality to remove Node apis from webpack bundles
+- Updated dependencies [7d1d8bf]
+- Updated dependencies [9b1bb5b]
+  - @gasket/plugin-webpack@7.4.0
+
 ## 7.6.4
 
 ### Patch Changes

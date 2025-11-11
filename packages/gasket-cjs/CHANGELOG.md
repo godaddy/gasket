@@ -1,5 +1,11 @@
 # `@gasket/cjs`
 
+## 7.1.0
+
+### Minor Changes
+
+- 7d1d8bf: Remove createRequire & new URL of package.json files
+
 ## 7.0.2
 
 ### Patch Changes
