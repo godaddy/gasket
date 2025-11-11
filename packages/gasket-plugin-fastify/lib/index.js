@@ -1,13 +1,11 @@
 /// <reference types="@gasket/core" />
 /// <reference types="@gasket/plugin-metadata" />
 
-import { createRequire } from 'node:module';
 import create from './create.js';
 import createServers from './create-servers.js';
 import actions from './actions.js';
-
-const require = createRequire(import.meta.url);
-const { name, version, description } = require('../package.json');
+import packageJson from '../package.json' with { type: 'json' };
+const { name, version, description } = packageJson;
 
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {

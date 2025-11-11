@@ -2,11 +2,8 @@
 
 import create from './create.js';
 import prepare from './prepare.js';
-import { createRequire } from 'module';
-
-const require = createRequire(import.meta.url);
-const pkgJson = require('../package.json');
-const { name, version } = pkgJson;
+import packageJson from '../package.json' with { type: 'json' };
+const { name, version } = packageJson;
 
 /** @type {import('@gasket/core').Plugin} */
 export default {

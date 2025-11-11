@@ -1,9 +1,8 @@
 /// <reference types="create-gasket-app" />
 /// <reference types="@gasket/plugin-docs" />
 
-import { createRequire } from 'node:module';
-const require = createRequire(import.meta.url);
-const { name, version, devDependencies } = require('../package.json');
+import packageJson from '../package.json' with { type: 'json' };
+const { name, version, devDependencies } = packageJson;
 
 /** @type {import('@gasket/core').HookHandler<'create'>} */
 export default function create(gasket, { pkg, gasketConfig, readme, useDocusaurus }) {

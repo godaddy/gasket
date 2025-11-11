@@ -1,6 +1,5 @@
 /// <reference types="@gasket/plugin-express" />
 
-import { createRequire } from 'module';
 import apmTransaction from './apm-transaction.js';
 import metadata from './metadata.js';
 import configure from './configure.js';
@@ -11,9 +10,8 @@ import { webpackConfig } from './webpack-config.js';
 import express from './express.js';
 import fastify from './fastify.js';
 import workbox from './workbox.js';
-
-const require = createRequire(import.meta.url);
-const { name, version, description } = require('../package.json');
+import packageJson from '../package.json' with { type: 'json' };
+const { name, version, description } = packageJson;
 
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {

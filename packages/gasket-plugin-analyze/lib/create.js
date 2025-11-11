@@ -1,7 +1,6 @@
 /// <reference types="create-gasket-app" />
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
-const { name, version } = require('../package.json');
+import packageJson from '../package.json' with { type: 'json' };
+const { name, version } = packageJson;
 
 /**
  * Add files & extend package.json for new apps.

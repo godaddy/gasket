@@ -3,11 +3,10 @@
 /* eslint no-sync: 0 */
 import path from 'path';
 import fs from 'node:fs';
-import { createRequire } from 'node:module';
-const require = createRequire(import.meta.url);
-
+import packageJson from '../package.json' with { type: 'json' };
 const write = fs.promises.writeFile;
-const { name, version, description } = require('../package.json');
+const { name, version, description } = packageJson;
+
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {
   name,
