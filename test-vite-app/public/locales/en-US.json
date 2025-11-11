@@ -1,0 +1,13 @@
+{
+  "welcome": "Welcome to Gasket + Vite!",
+  "greeting": "Hello, World!",
+  "description": "This app demonstrates Server-Side Rendering (SSR) with Vite and internationalization",
+  "language": "Language",
+  "current_language": "Current Language: English (US)",
+  "switch_language": "Switch to another language to see translations in action!",
+  "feature_ssr": "Server-Side Rendering",
+  "feature_i18n": "Internationalization",
+  "feature_auth": "Authentication",
+  "learn_more": "Learn more about Gasket"
+}
+

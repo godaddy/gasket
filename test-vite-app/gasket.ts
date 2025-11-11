@@ -3,6 +3,7 @@ import { makeGasket } from '@gasket/core';
 import pluginExpress from '@gasket/plugin-express';
 import pluginHttps from '@gasket/plugin-https';
 import pluginHttpsProxy from '@gasket/plugin-https-proxy';
+import pluginIntl from '@gasket/plugin-intl';
 import pluginLogger from '@gasket/plugin-logger';
 import pluginVite from '@gasket/plugin-vite';
 import pluginAuth from '@godaddy/gasket-plugin-auth';
@@ -44,6 +45,7 @@ export default makeGasket({
     pluginHttpsProxy,     // HTTPS proxy for local dev with *.dev-godaddy.com hostname
     pluginExpress,
     pluginLogger,
+    pluginIntl,           // Internationalization support
     pluginVisitor,        // Provides visitor info (plid, market, etc.)
     pluginAuth,           // Adds authentication support (SSO integration)
     pluginUxp,            // Adds UX Platform support (Presentation Central & UXCore2)
@@ -84,6 +86,14 @@ export default makeGasket({
       privateLabelId: 1,             // GoDaddy brand (overridden by visitor plugin on localhost)
       deferjs: true                  // v3 supports defer scripts
     }
+  },
+  
+  // Internationalization configuration
+  intl: {
+    defaultLocale: 'en-US',
+    locales: ['en-US', 'es-MX', 'fr-FR'],
+    localesDir: 'public/locales',
+    managerFilename: 'intl.ts'
   }
   
   // NOTE: On localhost, visitor plugin defaults to PLID 3153 (no brand).

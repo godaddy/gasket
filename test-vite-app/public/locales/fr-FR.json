@@ -1,0 +1,13 @@
+{
+  "welcome": "Bienvenue à Gasket + Vite!",
+  "greeting": "Bonjour, le Monde!",
+  "description": "Cette application démontre le Server-Side Rendering (SSR) avec Vite et l'internationalisation",
+  "language": "Langue",
+  "current_language": "Langue Actuelle: Français (France)",
+  "switch_language": "Changez vers une autre langue pour voir les traductions en action!",
+  "feature_ssr": "Rendu Côté Serveur",
+  "feature_i18n": "Internationalisation",
+  "feature_auth": "Authentification",
+  "learn_more": "En savoir plus sur Gasket"
+}
+

@@ -1,6 +1,7 @@
 import { CSSProperties, useEffect, useState } from 'react';
 import { useAuthState } from '@godaddy/gasket-auth';
 import GasketEmblem from '@gasket/assets/react/gasket-emblem.js';
+import IntlShowcase from './components/IntlShowcase';
 
 // Only import web component on client side (not during SSR)
 if (typeof window !== 'undefined') {
@@ -21,6 +22,7 @@ interface AppProps {
 function App({ serverData }: AppProps) {
   const [visitorInfo, setVisitorInfo] = useState<any>(null);
   const [authData, setAuthData] = useState<any>(null);
+  const [isClient, setIsClient] = useState(false);
   
   // Use the useAuthState hook to get authentication status and details
   // This is the recommended approach for Vite apps (non-Next.js)
@@ -46,6 +48,9 @@ function App({ serverData }: AppProps) {
   }, []); // Only run on mount to avoid infinite loop
 
   useEffect(() => {
+    // Mark that we're on the client side
+    setIsClient(true);
+    
     // Fetch visitor information from API
     fetch('/api/visitor')
       .then(res => res.json())
@@ -148,6 +153,8 @@ function App({ serverData }: AppProps) {
           ✨ These are <strong>vanilla Web Components</strong> (no framework needed)
         </p>
       </div>
+
+      {isClient && <IntlShowcase />}
       
         {authData && !authData.valid && (
           <div style={{ 

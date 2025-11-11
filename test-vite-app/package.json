@@ -18,11 +18,14 @@
   "dependencies": {
     "@gasket/assets": "^7.4.3",
     "@gasket/core": "^7.5.2",
+    "@gasket/intl": "^7.5.3",
     "@gasket/plugin-express": "^7.4.3",
     "@gasket/plugin-https": "^7.3.11",
     "@gasket/plugin-https-proxy": "^7.0.7",
+    "@gasket/plugin-intl": "^7.5.10",
     "@gasket/plugin-logger": "^7.3.7",
     "@gasket/plugin-vite": "file:../packages/gasket-plugin-vite",
+    "@gasket/react-intl": "^7.6.4",
     "@godaddy/gasket-auth": "^3.3.18",
     "@godaddy/gasket-plugin-auth": "^3.5.3",
     "@godaddy/gasket-plugin-dev-certs": "^3.4.0",
@@ -34,6 +37,7 @@
     "express": "^4.18.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-intl": "^6.8.9",
     "tsx": "^4.19.3",
     "typescript": "^5.8.2",
     "vite": "^5.0.0"
@@ -61,4 +65,3 @@
     "parser": "@typescript-eslint/parser"
   }
 }
-
