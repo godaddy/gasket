@@ -2,8 +2,12 @@ import type { GasketConfigDefinition } from '@gasket/core';
 import { makeGasket } from '@gasket/core';
 import pluginExpress from '@gasket/plugin-express';
 import pluginHttps from '@gasket/plugin-https';
+import pluginHttpsProxy from '@gasket/plugin-https-proxy';
 import pluginLogger from '@gasket/plugin-logger';
 import pluginVite from '@gasket/plugin-vite';
+import pluginAuth from '@godaddy/gasket-plugin-auth';
+import pluginDevCerts from '@godaddy/gasket-plugin-dev-certs';
+import pluginSelfCerts from '@godaddy/gasket-plugin-self-certs';
 import pluginUxp from '@godaddy/gasket-plugin-uxp';
 import pluginVisitor from '@godaddy/gasket-plugin-visitor';
 import uxpViteIntegration from './uxp-vite-integration.js';
@@ -35,9 +39,13 @@ const visitorApiPlugin = {
 export default makeGasket({
   plugins: [
     pluginHttps,
+    pluginDevCerts,       // Downloads and manages SSL certificates for local dev
+    pluginSelfCerts,      // Provides self-signed certs for local HTTPS
+    pluginHttpsProxy,     // HTTPS proxy for local dev with *.dev-godaddy.com hostname
     pluginExpress,
     pluginLogger,
     pluginVisitor,        // Provides visitor info (plid, market, etc.)
+    pluginAuth,           // Adds authentication support (SSO integration)
     pluginUxp,            // Adds UX Platform support (Presentation Central & UXCore2)
     uxpViteIntegration,   // Integrates UXP headers with Vite SSR rendering
     visitorApiPlugin,     // Custom plugin for visitor API endpoint (debugging)
@@ -45,6 +53,26 @@ export default makeGasket({
   ],
   
   http: 3000,
+  
+  // HTTPS Proxy configuration for local development with dev-godaddy.com domain
+  // This allows testing SSO authentication which requires a *.dev-godaddy.com hostname
+  httpsProxy: {
+    protocol: 'https',
+    hostname: 'local.gasket.dev-godaddy.com',
+    port: 8443,
+    xfwd: true,
+    ws: true,
+    target: {
+      host: 'localhost',
+      port: 3000
+    }
+  },
+  
+  // Auth configuration for employee authentication
+  auth: {
+    appName: 'test-vite-app',
+    realm: 'jomax'  // Employee authentication via Active Directory
+  },
   
   // UXP configuration
   // Supports both v2 and v3 API - automatically normalizes v3 to v2 format
