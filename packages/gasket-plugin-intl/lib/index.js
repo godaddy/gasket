@@ -1,9 +1,6 @@
 /// <reference types="@gasket/plugin-metadata" />
 
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
-
-const { name, version, description } = require('../package.json');
+import packageJson from '../package.json' with { type: 'json' };
 import actions from './actions.js';
 import configure from './configure.js';
 import init from './init.js';
@@ -15,6 +12,7 @@ import create from './create.js';
 import postCreate from './post-create.js';
 import prompt from './prompt.js';
 import build from './build.js';
+const { name, version, description } = packageJson;
 
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {

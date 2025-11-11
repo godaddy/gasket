@@ -3,11 +3,10 @@
 
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import { createRequire } from 'module';
-
+import packageJson from '../package.json' with { type: 'json' };
+const { name, version, devDependencies } = packageJson;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const require = createRequire(import.meta.url);
 
 /**
  * Type definitions for create-gasket-app APIs.
@@ -18,8 +17,6 @@ const require = createRequire(import.meta.url);
  * @typedef {import('create-gasket-app', { with: { "resolution-mode": "require" } }).Readme} Readme
  * @typedef {import('create-gasket-app', { with: { "resolution-mode": "require" } }).ConfigBuilder} ConfigBuilder
  */
-
-const { name, version, devDependencies } = require('../package.json');
 
 /**
  * createAppFiles

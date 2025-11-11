@@ -1,8 +1,7 @@
 /// <reference types="@gasket/plugin-https" />
 
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
-const { name, version, description } = require('../package.json');
+import packageJson from '../package.json' with { type: 'json' };
+const { name, version, description } = packageJson;
 import { actions } from './actions.js';
 
 /** @type {import('@gasket/core').Plugin} */

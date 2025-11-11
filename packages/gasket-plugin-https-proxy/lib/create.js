@@ -1,7 +1,5 @@
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
-const pkgJson = require('../package.json');
-const { name, version } = pkgJson;
+import packageJson from '../package.json' with { type: 'json' };
+const { name, version } = packageJson;
 
 /** @type {import('@gasket/core').HookHandler<'create'>} */
 export default function create(gasket, { pkg, gasketConfig }) {

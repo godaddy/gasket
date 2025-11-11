@@ -2,9 +2,8 @@
 
 import create from './create.js';
 import webpackConfig from './webpack-config.js';
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
-const { name, version, description } = require('../package.json');
+import packageJson from '../package.json' with { type: 'json' };
+const { name, version, description } = packageJson;
 /**
  * Gasket Analyzer Plugin
  * @type {import('@gasket/core').Plugin}

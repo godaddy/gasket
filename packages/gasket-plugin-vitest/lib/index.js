@@ -3,16 +3,14 @@
 /// <reference types="@gasket/plugin-metadata" />
 
 import path from 'path';
-import { createRequire } from 'module';
 import { fileURLToPath } from 'url';
-const require = createRequire(import.meta.url);
-const pkgJson = require('../package.json');
+import packageJson from '../package.json' with { type: 'json' };
 const {
   name,
   version,
   description,
   devDependencies
-} = pkgJson;
+} = packageJson;
 
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {

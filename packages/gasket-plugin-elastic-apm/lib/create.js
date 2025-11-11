@@ -1,7 +1,4 @@
-import { readFileSync } from 'fs';
-
-const packageJsonPath = new URL('../package.json', import.meta.url).pathname;
-const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf8'));
+import packageJson from '../package.json' with { type: 'json' };
 const { name, version, devDependencies } = packageJson;
 
 /** @type {import('@gasket/core').HookHandler<'create'>} */

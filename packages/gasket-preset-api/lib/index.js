@@ -1,9 +1,8 @@
-import { createRequire } from 'module';
 import presetPrompt from './preset-prompt.js';
 import presetConfig from './preset-config.js';
 import create from './create.js';
-const require = createRequire(import.meta.url);
-const { name, version, description } = require('../package.json');
+import packageJson from '../package.json' with { type: 'json' };
+const { name, version, description } = packageJson;
 
 /** @type {import('@gasket/core').Preset} */
 export default {

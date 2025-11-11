@@ -2,14 +2,11 @@
 
 import { Command } from 'commander';
 import { resolve } from 'path';
-import { existsSync, readFileSync } from 'fs';
+import { existsSync } from 'fs';
 import { transpile } from '../lib/index.js';
+import packageJson from '../package.json' with { type: 'json' };
 
 const program = new Command();
-
-// Read version from package.json
-const packageJsonPath = new URL('../package.json', import.meta.url);
-const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf-8'));
 
 program
   .name('gasket-cjs')

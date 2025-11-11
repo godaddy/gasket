@@ -599,10 +599,6 @@ importers:
         version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
 
   packages/gasket-plugin-docusaurus:
-    dependencies:
-      '@gasket/plugin-logger':
-        specifier: ^7.3.8
-        version: link:../gasket-plugin-logger
     devDependencies:
       '@docusaurus/core':
         specifier: ^3.8.1
@@ -619,6 +615,9 @@ importers:
       '@gasket/plugin-docs':
         specifier: workspace:^
         version: link:../gasket-plugin-docs
+      '@gasket/plugin-logger':
+        specifier: workspace:^
+        version: link:../gasket-plugin-logger
       '@gasket/plugin-metadata':
         specifier: workspace:^
         version: link:../gasket-plugin-metadata

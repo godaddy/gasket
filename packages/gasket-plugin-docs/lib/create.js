@@ -2,9 +2,7 @@
 /// <reference types="@gasket/plugin-git" />
 
 import { DEFAULT_CONFIG } from './utils/constants.js';
-import { createRequire } from 'node:module';
-const require = createRequire(import.meta.url);
-const packageJson = require('../package.json');
+import packageJson from '../package.json' with { type: 'json' };
 const { name, version, devDependencies } = packageJson;
 
 /** @type {import('@gasket/core').HookHandler<'create'>} */
