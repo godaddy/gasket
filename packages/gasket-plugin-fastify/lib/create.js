@@ -1,15 +1,12 @@
 /// <reference types="@gasket/core" />
 /// <reference types="create-gasket-app" />
 
-import { createRequire } from 'module';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-
-const require = createRequire(import.meta.url);
+import packageJson from '../package.json' with { type: 'json' };
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-
-const { name, version, devDependencies } = require('../package.json');
+const { name, version, devDependencies } = packageJson;
 
 const createTestFiles = ({ files, generatorDir, testPlugins, globIgnore }) => {
   if (!testPlugins || testPlugins.length === 0) return;

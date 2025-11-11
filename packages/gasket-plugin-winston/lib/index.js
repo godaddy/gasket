@@ -3,14 +3,13 @@
 /// <reference types="@gasket/plugin-metadata" />
 
 import { createLogger, format, transports, config as winstonConfig } from 'winston';
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
+import packageJson from '../package.json' with { type: 'json' };
 const {
   name,
   version,
   description,
   dependencies
-} = require('../package.json');
+} = packageJson;
 
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {

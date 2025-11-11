@@ -3,9 +3,8 @@
 /// <reference types="@gasket/plugin-metadata" />
 
 /* eslint-disable no-console */
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
-const { name, version, description } = require('../package.json');
+import packageJson from '../package.json' with { type: 'json' };
+const { name, version, description } = packageJson;
 import { createChildLogger, verifyLoggerLevels } from './utils.js';
 
 /** @type {import('@gasket/core').Plugin} */

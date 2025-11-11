@@ -3,10 +3,8 @@ import docsView from './docs-view.js';
 import configure from './configure.js';
 import prompt from './prompt.js';
 import webpackConfig from './webpack-config.js';
-import { createRequire } from 'module';
-
-const require = createRequire(import.meta.url);
-const { name, version, description } = require('../package.json');
+import packageJson from '../package.json' with { type: 'json' };
+const { name, version, description } = packageJson;
 
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {
