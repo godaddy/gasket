@@ -5,10 +5,8 @@ import metadata from './metadata.js';
 import docsSetup from './docs-setup.js';
 import webpackConfig from './webpack-config.js';
 import prompt from './prompt.js';
-import { createRequire } from 'node:module';
 
-const require = createRequire(import.meta.url);
-const packageJson = require('../package.json');
+import packageJson from '../package.json' with { type: 'json' };
 const { name, version, description } = packageJson;
 
 /** @type {import('@gasket/core').Plugin} */

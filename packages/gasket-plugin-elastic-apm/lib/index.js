@@ -4,11 +4,8 @@
 import * as actions from './actions.js';
 import create from './create.js';
 import configure from './configure.js';
-import { readFileSync } from 'fs';
-
-const packageJsonPath = new URL('../package.json', import.meta.url).pathname;
-const pkg = JSON.parse(readFileSync(packageJsonPath, 'utf8'));
-const { name, version, description } = pkg;
+import packageJson from '../package.json' with { type: 'json' };
+const { name, version, description } = packageJson;
 
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {

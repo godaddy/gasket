@@ -52,6 +52,7 @@
     "@gasket/cjs": "workspace:^",
     "@gasket/core": "workspace:^",
     "@gasket/plugin-docs": "workspace:^",
+    "@gasket/plugin-logger": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",
     "@gasket/plugin-webpack": "workspace:^",
     "@vitest/coverage-v8": "^3.2.0",
