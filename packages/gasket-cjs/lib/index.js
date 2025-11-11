@@ -40,6 +40,20 @@ const DEFAULT_SWC_CONFIG = {
 };
 
 /**
+ * Preprocess source code to convert unsupported syntax
+ * @param {string} sourceCode - Source code to preprocess
+ * @returns {string} Preprocessed source code
+ */
+function preprocessSource(sourceCode) {
+  // Convert `import ... with { type: 'json' }` to regular import
+  // SWC doesn't support import attributes, but CJS require() can handle JSON
+  return sourceCode.replace(
+    /import\s+(\w+)\s+from\s+(['"])([^'"]+\.json)\2\s+with\s+\{\s*type:\s*['"]json['"]\s*\};?/g,
+    'import $1 from $2$3$2;'
+  );
+}
+
+/**
  * Transpile a single file from ESM to CJS
  * @param {string} filePath - Path to the source file
  * @param {string} outputPath - Path to the output file
@@ -48,7 +62,8 @@ const DEFAULT_SWC_CONFIG = {
  */
 export async function transpileFile(filePath, outputPath, swcConfig = DEFAULT_SWC_CONFIG) {
   try {
-    const sourceCode = readFileSync(filePath, 'utf-8');
+    let sourceCode = readFileSync(filePath, 'utf-8');
+    sourceCode = preprocessSource(sourceCode);
     const result = await transform(sourceCode, swcConfig);
 
     // Ensure output directory exists
