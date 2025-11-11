@@ -4,9 +4,11 @@ import pluginExpress from '@gasket/plugin-express';
 import pluginHttps from '@gasket/plugin-https';
 import pluginLogger from '@gasket/plugin-logger';
 import pluginVite from '@gasket/plugin-vite';
+import pluginUxp from '@godaddy/gasket-plugin-uxp';
 import pluginVisitor from '@godaddy/gasket-plugin-visitor';
+import uxpViteIntegration from './uxp-vite-integration.js';
 
-// Custom plugin to expose visitor info via API
+// Custom plugin to expose visitor info via API (useful for debugging)
 const visitorApiPlugin = {
   name: 'visitor-api-plugin',
   hooks: {
@@ -35,10 +37,37 @@ export default makeGasket({
     pluginHttps,
     pluginExpress,
     pluginLogger,
-    pluginVisitor,      // Provides visitor info (plid, market, etc.)
-    visitorApiPlugin,   // Custom plugin for API endpoint
+    pluginVisitor,        // Provides visitor info (plid, market, etc.)
+    pluginUxp,            // Adds UX Platform support (Presentation Central & UXCore2)
+    uxpViteIntegration,   // Integrates UXP headers with Vite SSR rendering
+    visitorApiPlugin,     // Custom plugin for visitor API endpoint (debugging)
     pluginVite
   ],
   
-  http: 3000
+  http: 3000,
+  
+  // UXP configuration
+  // Supports both v2 and v3 API - automatically normalizes v3 to v2 format
+  presentationCentral: {
+    version: '3.0',  // v3 is recommended (default)
+    params: {
+      app: 'test-vite-app',
+      manifest: 'internal-header',  // v3 uses 'manifest'
+      privateLabelId: 1,             // GoDaddy brand (overridden by visitor plugin on localhost)
+      deferjs: true                  // v3 supports defer scripts
+    }
+  }
+  
+  // NOTE: On localhost, visitor plugin defaults to PLID 3153 (no brand).
+  // To see GoDaddy branding (PLID 1), access with query param:
+  //   http://localhost:3000?plid=1
+  
+  // To use v2 API instead, uncomment:
+  // presentationCentral: {
+  //   version: '2.0',
+  //   params: {
+  //     app: 'test-vite-app',
+  //     header: 'internal-header'  // v2 uses 'header' instead of 'manifest'
+  //   }
+  // }
 } as GasketConfigDefinition);

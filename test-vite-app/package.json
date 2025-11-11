@@ -20,6 +20,7 @@
     "@gasket/plugin-https": "^7.3.11",
     "@gasket/plugin-logger": "^7.3.7",
     "@gasket/plugin-vite": "file:../packages/gasket-plugin-vite",
+    "@godaddy/gasket-plugin-uxp": "^3.6.0",
     "@godaddy/gasket-plugin-visitor": "^3.3.14",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",

@@ -27,7 +27,8 @@ export async function render(url: string, context: any) {
   // Store serverData in context so the plugin can inject it separately
   context.serverData = serverData;
   
-  // Render React app to HTML string (ONLY the app HTML, no script tags)
+  // Render React app to HTML string (ONLY the app HTML, no headers/footers)
+  // Headers/footers are injected by the middleware at the body level
   const html = ReactDOMServer.renderToString(<App serverData={serverData} />);
   
   return html;

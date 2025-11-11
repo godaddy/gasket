@@ -4,8 +4,9 @@
     "skipLibCheck": true,
     "module": "ESNext",
     "moduleResolution": "bundler",
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true
   },
-  "include": ["vite.config.ts", "gasket.ts", "server.ts"]
+  "include": ["vite.config.ts", "gasket.ts", "server.ts", "uxp-vite-integration.ts", "normalize-manifest.ts"]
 }
 
