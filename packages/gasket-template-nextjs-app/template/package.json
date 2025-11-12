@@ -4,9 +4,9 @@
   "description": "Gasket App",
   "scripts": {
     "docs": "tsx gasket.ts docs",
-    "build": "npm run build:tsc && next build",
+    "build": "npm run build:tsc && next build --webpack",
     "start": "npm run start:https & next start",
-    "local": "concurrently \"npm run build:tsc:watch\" \"npm run local:https\" \"next dev\"",
+    "local": "concurrently \"npm run build:tsc:watch\" \"npm run local:https\" \"next dev --webpack\"",
     "preview": "npm run build && npm run start",
     "prebuild": "tsx gasket.ts build",
     "start:https": "node dist/server.js",
