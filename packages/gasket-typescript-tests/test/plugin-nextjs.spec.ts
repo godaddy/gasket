@@ -23,7 +23,7 @@ describe('@gasket/plugin-nextjs', () => {
   it('adds a nextConfig lifecycle', () => {
     const handler: Hook<'nextConfig'> = (gasket: Gasket, config: NextConfig): NextConfig => {
       return {
-        ...config      
+        ...config
       };
     };
   });
