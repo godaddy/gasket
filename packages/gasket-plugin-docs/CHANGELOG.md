@@ -1,5 +1,17 @@
 # `@gasket/plugin-docs`
 
+## 7.5.0
+
+### Minor Changes
+
+- 7d1d8bf: Remove createRequire & new URL of package.json files
+- 9b1bb5b: ESM port
+
+### Patch Changes
+
+- Updated dependencies [7d1d8bf]
+  - @gasket/plugin-command@7.6.0
+
 ## 7.4.8
 
 ### Patch Changes
