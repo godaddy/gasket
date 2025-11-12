@@ -1,5 +1,18 @@
 # `@gasket/plugin-docusaurus`
 
+## 7.5.0
+
+### Minor Changes
+
+- 7d1d8bf: Remove createRequire & new URL of package.json files
+- 9b1bb5b: ESM port
+
+### Patch Changes
+
+- Updated dependencies [7d1d8bf]
+- Updated dependencies [9b1bb5b]
+  - @gasket/plugin-logger@7.4.0
+
 ## 7.4.6
 
 ### Patch Changes
