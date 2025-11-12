@@ -14,13 +14,13 @@
 - Updated dependencies [e899e2e]
   - @gasket/plugin-dynamic-plugins@7.5.0
   - @gasket/plugin-https-proxy@7.5.0
-  - @gasket/plugin-docusaurus@8.0.0
+  - @gasket/plugin-docusaurus@7.5.0
   - @gasket/plugin-command@7.6.0
   - @gasket/plugin-express@7.5.0
   - @gasket/plugin-webpack@7.4.0
   - @gasket/plugin-winston@7.4.0
   - @gasket/plugin-logger@7.4.0
-  - @gasket/plugin-nextjs@8.0.0
+  - @gasket/plugin-nextjs@7.7.0
   - @gasket/plugin-vitest@7.2.0
   - @gasket/plugin-docs@7.5.0
   - @gasket/plugin-intl@7.6.0

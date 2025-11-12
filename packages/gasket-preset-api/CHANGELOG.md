@@ -12,7 +12,7 @@
 - Updated dependencies [7d1d8bf]
 - Updated dependencies [9b1bb5b]
   - @gasket/plugin-dynamic-plugins@7.5.0
-  - @gasket/plugin-docusaurus@8.0.0
+  - @gasket/plugin-docusaurus@7.5.0
   - @gasket/plugin-command@7.6.0
   - @gasket/plugin-express@7.5.0
   - @gasket/plugin-fastify@7.5.0

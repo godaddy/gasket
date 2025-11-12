@@ -13,7 +13,7 @@
   - @gasket/plugin-docs-graphs@7.4.0
   - @gasket/plugin-elastic-apm@7.5.0
   - @gasket/plugin-https-proxy@7.5.0
-  - @gasket/plugin-docusaurus@8.0.0
+  - @gasket/plugin-docusaurus@7.5.0
   - @gasket/plugin-happyfeet@7.4.0
   - @gasket/plugin-analyze@7.4.0
   - @gasket/plugin-command@7.6.0
@@ -22,7 +22,7 @@
   - @gasket/plugin-webpack@7.4.0
   - @gasket/plugin-winston@7.4.0
   - @gasket/plugin-logger@7.4.0
-  - @gasket/plugin-nextjs@8.0.0
+  - @gasket/plugin-nextjs@7.7.0
   - @gasket/plugin-vitest@7.2.0
   - @gasket/preset-nextjs@7.6.0
   - @gasket/plugin-data@7.5.0
@@ -30,12 +30,12 @@
   - @gasket/plugin-intl@7.6.0
   - @gasket/preset-api@7.6.0
   - @gasket/cjs@7.1.0
-  - @gasket/react-intl@8.0.0
+  - @gasket/react-intl@7.7.0
   - @gasket/fetch@7.4.0
   - @gasket/redux@7.4.0
   - @gasket/plugin-middleware@7.5.0
   - @gasket/plugin-swagger@7.4.0
-  - @gasket/plugin-morgan@8.0.0
+  - @gasket/plugin-morgan@7.4.0
   - @gasket/plugin-https@7.4.0
   - @gasket/assets@7.5.0
   - create-gasket-app@7.4.15
@@ -850,7 +850,7 @@
   - create-gasket-app@7.4.0
   - @gasket/plugin-git@7.4.0
   - @gasket/preset-api@7.4.0
-  - @gasket/react-intl@8.0.0
+  - @gasket/react-intl@7.7.0
   - @gasket/request@7.4.0
   - @gasket/nextjs@7.5.0
   - @gasket/utils@7.4.0

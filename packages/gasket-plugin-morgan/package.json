@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-morgan",
-  "version": "8.0.0",
+  "version": "7.4.0",
   "description": "Adds morgan request logger to your app",
   "type": "module",
   "files": [
