@@ -22,7 +22,7 @@
     "@gasket/assets": "^7.4.3",
     "@gasket/core": "^7.5.2",
     "@gasket/intl": "^7.5.2",
-    "@gasket/nextjs": "^7.6.3",
+    "@gasket/nextjs": "^7.6.5",
     "@gasket/plugin-command": "^7.5.2",
     "@gasket/plugin-dynamic-plugins": "^7.4.1",
     "@gasket/plugin-express": "^7.4.3",
