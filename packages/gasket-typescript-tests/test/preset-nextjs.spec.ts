@@ -12,11 +12,6 @@ describe('@gasket/preset-nextjs', () => {
       http: 8080,
       express: {
         compression: true
-      },
-      nextConfig: {
-        future: {
-          webpack5: true
-        }
       }
     };
   });
@@ -35,10 +30,7 @@ describe('@gasket/preset-nextjs', () => {
         },
         nextConfig(gasket, config) {
           return {
-            ...config,
-            future: {
-              webpack5: true
-            }
+            ...config
           };
         }
       }
