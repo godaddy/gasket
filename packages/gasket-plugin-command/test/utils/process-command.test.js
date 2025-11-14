@@ -1,28 +1,35 @@
-
+import { describe, it, mock } from 'node:test';
+import assert from 'node:assert/strict';
 import { Command } from 'commander';
 import { processCommand } from '../../lib/utils/process-command.js';
 
 describe('process-command', () => {
   describe('isValidCommand', () => {
     it('throws error for undefined command', () => {
-      expect(() => processCommand({})).toThrow('Invalid command configuration');
+      assert.throws(
+        () => processCommand({}),
+        { message: /Invalid command configuration/ }
+      );
     });
 
     it('throws error on missing id', () => {
-      expect(() =>
-        processCommand({ description: 'test', action: () => {} })
-      ).toThrow('Invalid command configuration');
+      assert.throws(
+        () => processCommand({ description: 'test', action: () => {} }),
+        { message: /Invalid command configuration/ }
+      );
     });
 
     it('throws error on missing description', () => {
-      expect(() => processCommand({ id: 'test', action: () => {} })).toThrow(
-        'Invalid command configuration'
+      assert.throws(
+        () => processCommand({ id: 'test', action: () => {} }),
+        { message: /Invalid command configuration/ }
       );
     });
 
     it('throws error on missing action', () => {
-      expect(() => processCommand({ id: 'test', description: 'test' })).toThrow(
-        'Invalid command configuration'
+      assert.throws(
+        () => processCommand({ id: 'test', description: 'test' }),
+        { message: /Invalid command configuration/ }
       );
     });
   });
@@ -36,11 +43,11 @@ describe('process-command', () => {
       options: [{ name: 'option', description: 'option description' }]
     };
     const { command } = processCommand(cmd);
-    expect(command).toBeDefined();
-    expect(command._name).toEqual('test1');
-    expect(command._description).toEqual('test command');
-    expect(command._args).toHaveLength(1);
-    expect(command.options).toHaveLength(1);
+    assert.ok(command);
+    assert.equal(command._name, 'test1');
+    assert.equal(command._description, 'test command');
+    assert.equal(command._args.length, 1);
+    assert.equal(command.options.length, 1);
   });
 
   it('processes command without args', () => {
@@ -51,11 +58,11 @@ describe('process-command', () => {
       action: () => {}
     };
     const { command } = processCommand(cmd);
-    expect(command).toBeDefined();
-    expect(command._name).toEqual('test2');
-    expect(command._description).toEqual('test command');
-    expect(command._args).toHaveLength(0);
-    expect(command.options).toHaveLength(1);
+    assert.ok(command);
+    assert.equal(command._name, 'test2');
+    assert.equal(command._description, 'test command');
+    assert.equal(command._args.length, 0);
+    assert.equal(command.options.length, 1);
   });
 
   it('processes command without options', () => {
@@ -66,11 +73,11 @@ describe('process-command', () => {
       action: () => {}
     };
     const { command } = processCommand(cmd);
-    expect(command).toBeDefined();
-    expect(command._name).toEqual('test3');
-    expect(command._description).toEqual('test command');
-    expect(command._args).toHaveLength(1);
-    expect(command.options).toHaveLength(0);
+    assert.ok(command);
+    assert.equal(command._name, 'test3');
+    assert.equal(command._description, 'test command');
+    assert.equal(command._args.length, 1);
+    assert.equal(command.options.length, 0);
   });
 
   it('processes command without args or options', () => {
@@ -80,11 +87,11 @@ describe('process-command', () => {
       action: () => {}
     };
     const { command } = processCommand(cmd);
-    expect(command).toBeDefined();
-    expect(command._name).toEqual('test4');
-    expect(command._description).toEqual('test command');
-    expect(command._args).toHaveLength(0);
-    expect(command.options).toHaveLength(0);
+    assert.ok(command);
+    assert.equal(command._name, 'test4');
+    assert.equal(command._description, 'test command');
+    assert.equal(command._args.length, 0);
+    assert.equal(command.options.length, 0);
   });
 
   it('processes hidden command', async () => {
@@ -128,10 +135,10 @@ describe('process-command', () => {
       // ignore
     }
 
-    expect(hiddenProcessed.hidden).toEqual(true);
-    expect(visibleProcessed.hidden).toEqual(false);
-    expect(output).not.toContain('hidden-cmd');
-    expect(output).toContain('visible-cmd');
+    assert.equal(hiddenProcessed.hidden, true);
+    assert.equal(visibleProcessed.hidden, false);
+    assert.ok(!output.includes('hidden-cmd'));
+    assert.ok(output.includes('visible-cmd'));
   });
 
   it('processes default command', async () => {
@@ -142,11 +149,12 @@ describe('process-command', () => {
       return program;
     })();
 
-    const spy = vi.spyOn(console, 'log').mockImplementation(() => {});
+    const mockLog = mock.method(console, 'log', () => {});
     const defaultCmd = {
       id: 'default-cmd',
       description: 'test command',
       action: () => {
+        // eslint-disable-next-line no-console
         console.log('default-cmd output greatness');
       },
       default: true
@@ -176,8 +184,11 @@ describe('process-command', () => {
       // ignore
     }
 
-    expect(defaultProcessed.isDefault).toEqual(true);
-    expect(nonDefaultProcessed.isDefault).toEqual(false);
-    expect(spy).toHaveBeenCalledWith('default-cmd output greatness');
+    assert.equal(defaultProcessed.isDefault, true);
+    assert.equal(nonDefaultProcessed.isDefault, false);
+    assert.equal(mockLog.mock.calls.length, 1);
+    assert.deepEqual(mockLog.mock.calls[0].arguments, ['default-cmd output greatness']);
+
+    mockLog.mock.restore();
   });
 });
