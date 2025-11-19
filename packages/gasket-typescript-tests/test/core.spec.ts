@@ -160,4 +160,13 @@ describe('@gasket/core', () => {
       }
     };
   });
+
+  it('allows the env to be configured', () => {
+    const config: GasketConfigDefinition = {
+      env: 'test',
+      plugins: [PluginExample]
+    };
+
+    makeGasket(config);
+  });
 });

@@ -31,12 +31,91 @@ application code.
 With the Gasket instance, you can fire **actions** that will trigger **lifecycles** hooked
 by plugins which encapsulate functionality allowing reuse across many applications.
 
+## Configuration
+
+To configure your Gasket instance, you can pass a configuration object to the `makeGasket` function.
+This configuration is where you will register plugins, adjust their settings, and add any custom configuration
+that your application may need.
+
+Configuration is cover in more detail in the [Configuration Guide](/docs/configuration.md),
+but here are some basic details and examples.
+
+```js
+import { makeGasket } from '@gasket/core';
+
+export default makeGasket({
+  plugins: [
+    LoggerPlugin,
+    MyPlugin
+  ],
+  exampleConfig: {
+    someSetting: true
+  }
+});
+```
+
 ### Registered plugins
 
-A plugin is a module that exports a `name` and `hooks` object
-(See [Plugins Guide]).
+A plugin is a module that exports a `name` and `hooks` object (See [Plugins Guide]).
 In your `gasket.js` file, you can import plugins and add them to the `plugins`
 array of the Gasket configuration.
+
+### Environment Configurations
+
+Gasket supports environment-specific configuration under the `environments` property.
+
+For example, you can add a `environment.prod` configuration that will only be used when the app is started for prod.
+```js
+import { makeGasket } from '@gasket/core';
+
+export default makeGasket({
+  plugins: [
+    LoggerPlugin,
+    MyPlugin
+  ],
+  environments: {
+    prod: {
+      someService: {
+        enableDebugLogging: false,
+        url: 'https://your-prod-service-endpoint.com'
+      }
+    },
+    dev: {
+      someService: {
+        enableDebugLogging: true,
+        url: 'https://your-dev-service-endpoint.com'
+      }
+    }
+  }
+});
+```
+
+#### Environment Variable
+
+To determine the current environment, Gasket will look for the `GASKET_ENV` environment variable.
+If `GASKET_ENV` is not set, the environment will default to `local`.
+
+```bash
+GASKET_ENV=prod npm run start
+```
+
+#### Environment Setting
+
+Alternatively the environment can be set programmatically by adding an `env` property to your configuration object.
+This allows custom logic or using different environment variables to determine the current environment.
+
+```js
+import { makeGasket } from '@gasket/core';
+
+export default makeGasket({
+  env: process.env.MY_CUSTOM_ENV,
+  plugins: [
+    LoggerPlugin,
+    MyPlugin
+  ],
+    // etc...
+});
+```
 
 ## Lifecycles
 
