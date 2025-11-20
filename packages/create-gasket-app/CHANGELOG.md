@@ -1,5 +1,21 @@
 # `create-gasket-app`
 
+## 7.4.16
+
+### Patch Changes
+
+- Updated dependencies [97b32ad]
+  - @gasket/core@7.7.0
+  - @gasket/plugin-command@7.6.1
+  - @gasket/plugin-docs@7.5.1
+  - @gasket/plugin-docusaurus@7.5.0
+  - @gasket/plugin-dynamic-plugins@7.5.0
+  - @gasket/plugin-git@7.4.7
+  - @gasket/plugin-logger@7.4.0
+  - @gasket/plugin-metadata@7.5.6
+  - @gasket/request@7.5.4
+  - @gasket/utils@7.6.3
+
 ## 7.4.15
 
 ### Patch Changes
