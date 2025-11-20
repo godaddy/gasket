@@ -1,4 +1,4 @@
-
+/* eslint-disable no-process-env */
 const { GasketTrace } = await import('../lib/trace.js');
 const { Gasket, makeGasket } = await import('../lib/gasket.js');
 
@@ -114,11 +114,40 @@ describe('makeGasket', () => {
     expect(warnSpy).toHaveBeenCalledWith('No GASKET_ENV env variable set; defaulting to "local".');
   });
 
-  it('sets env GASKET_ENV', () => {
+  it('sets env from GASKET_ENV env var', () => {
     process.env.GASKET_ENV = 'production';
     const gasket = makeGasket({ plugins: [mockPlugin] });
     expect(gasket.config.env).toEqual('production');
     expect(warnSpy).not.toHaveBeenCalled();
+  });
+
+  it('sets env from config', () => {
+    const gasket = makeGasket({
+      env: 'staging',
+      plugins: [mockPlugin]
+    });
+    expect(gasket.config.env).toEqual('staging');
+    expect(warnSpy).not.toHaveBeenCalled();
+  });
+
+  it('skips env from config when nullish', () => {
+    const gasket = makeGasket({
+      env: '',
+      plugins: [mockPlugin]
+    });
+    expect(gasket.config.env).toEqual('local');
+  });
+
+  it('prefers env var over config setting', () => {
+    process.env.GASKET_ENV = 'production';
+    const gasket = makeGasket({
+      env: 'staging',
+      plugins: [mockPlugin]
+    });
+    expect(gasket.config.env).toEqual('production');
+    expect(warnSpy).toHaveBeenCalledWith(
+      'Both config env (staging) and GASKET_ENV (production) are set; using GASKET_ENV.'
+    );
   });
 
   it('prunes nullish and/or empty plugins', () => {
@@ -152,8 +181,29 @@ describe('makeGasket', () => {
 
   describe('config lifecycle', () => {
 
-    it('applies env overrides', () => {
+    it('applies env overrides from env var', () => {
       process.env.GASKET_ENV = 'production';
+
+      expect(inputConfig).toHaveProperty('environments', expect.any(Object));
+      expect(inputConfig).toHaveProperty('mode', 'test');
+
+      const gasket = makeGasket(inputConfig);
+
+      expect(gasket.config).not.toHaveProperty('environments');
+      expect(gasket.config).toHaveProperty('mode', 'prod');
+
+      // verify that env overrides are applied before lifecycle
+      expect(mockPlugin.hooks.configure).toHaveBeenCalledWith(
+        expect.any(GasketTrace),
+        expect.objectContaining({
+          mode: 'prod',
+          mockStage: 'input'
+        })
+      );
+    });
+
+    it('applies env overrides from env config', () => {
+      inputConfig.env = 'production';
 
       expect(inputConfig).toHaveProperty('environments', expect.any(Object));
       expect(inputConfig).toHaveProperty('mode', 'test');

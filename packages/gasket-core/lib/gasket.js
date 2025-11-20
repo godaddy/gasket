@@ -7,12 +7,23 @@ import { applyConfigOverrides } from '@gasket/utils/config';
 /**
  * Get the environment to use for the gasket instance.
  * Defaults to `local`.
+ * @param {string} configEnv - Environment from config definition
  * @returns {string} env
  */
-function getEnvironment() {
+function getEnvironment(configEnv) {
   const { GASKET_ENV } = process.env;
+
+  // log a warning if both config and env variable are set, but use the env variable
+  if (configEnv && GASKET_ENV) {
+    console.warn(`Both config env (${configEnv}) and GASKET_ENV (${GASKET_ENV}) are set; using GASKET_ENV.`);
+  }
+
   if (GASKET_ENV) {
     return GASKET_ENV;
+  }
+
+  if (configEnv) {
+    return configEnv;
   }
 
   console.warn(`No GASKET_ENV env variable set; defaulting to "local".`);
@@ -48,7 +59,7 @@ export class Gasket {
    * @param {import('@gasket/core').GasketConfigDefinition} configDef - Gasket configuration
    */
   constructor(configDef) {
-    const env = getEnvironment();
+    const env = getEnvironment(configDef.env);
     const config = applyConfigOverrides(configDef, { env });
     config.env = env;
     config.root ??= process.cwd();
