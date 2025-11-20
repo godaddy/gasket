@@ -1,5 +1,15 @@
 # `@gasket/core`
 
+## 7.7.0
+
+### Minor Changes
+
+- 97b32ad: Ability to set Gasket env programmatically
+
+### Patch Changes
+
+- @gasket/utils@7.6.3
+
 ## 7.6.3
 
 ### Patch Changes
