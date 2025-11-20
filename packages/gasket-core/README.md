@@ -37,7 +37,7 @@ To configure your Gasket instance, you can pass a configuration object to the `m
 This configuration is where you will register plugins, adjust their settings, and add any custom configuration
 that your application may need.
 
-Configuration is cover in more detail in the [Configuration Guide](/docs/configuration.md),
+Configuration is covered in more detail in the [Configuration Guide](/docs/configuration.md),
 but here are some basic details and examples.
 
 ```js
