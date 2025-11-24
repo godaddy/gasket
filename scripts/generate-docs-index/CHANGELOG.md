@@ -1,5 +1,12 @@
 # generate-docs-index
 
+## 7.4.23
+
+### Patch Changes
+
+- Updated dependencies [18f51cc]
+  - @gasket/plugin-analyze@7.4.1
+
 ## 7.4.22
 
 ### Patch Changes
