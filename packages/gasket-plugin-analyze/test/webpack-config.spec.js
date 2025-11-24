@@ -1,3 +1,6 @@
+/* eslint-disable no-process-env */
+/* eslint-disable max-statements */
+
 import webpack from '../lib/webpack-config.js';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
@@ -21,104 +24,109 @@ describe('webpackConfig', () => {
     delete process.env.ANALYZE;
   });
 
-  it('returns updated webpack config object', async () => {
-    results = await webpack(mockGasket,
-      { ...mockWebpackConfig, bogus: 'BOGUS' }, mockNextData);
+  it('returns updated webpack config object', () => {
+    results = webpack(
+      mockGasket,
+      { ...mockWebpackConfig, bogus: 'BOGUS' },
+      mockNextData);
     expect(results).toHaveProperty('bogus', 'BOGUS');
     expect(results).toHaveProperty('plugins', expect.any(Array));
   });
 
-  it('adds BundleAnalyzerPlugin to plugins when Gasket sub env is analyze', async () => {
+  it('adds BundleAnalyzerPlugin to plugins when Gasket sub env is analyze', () => {
     mockGasket.config.env = 'test.analyze';
-    results = await webpack(mockGasket, mockWebpackConfig, mockNextData);
+    results = webpack(mockGasket, mockWebpackConfig, mockNextData);
     const expectedPlugin = results.plugins[results.plugins.length - 1];
     expect(expectedPlugin).toBeInstanceOf(BundleAnalyzerPlugin);
   });
 
-  it('adds BundleAnalyzerPlugin to plugins when process.env.ANALYZE=1', async () => {
+  it('adds BundleAnalyzerPlugin to plugins when process.env.ANALYZE=1', () => {
     process.env.ANALYZE = '1';
-    results = await webpack(mockGasket, mockWebpackConfig, mockNextData);
+    results = webpack(mockGasket, mockWebpackConfig, mockNextData);
     const expectedPlugin = results.plugins[results.plugins.length - 1];
     expect(expectedPlugin).toBeInstanceOf(BundleAnalyzerPlugin);
   });
 
-  it('adds BundleAnalyzerPlugin to plugins when process.env.ANALYZE=true', async () => {
+  it('adds BundleAnalyzerPlugin to plugins when process.env.ANALYZE=true', () => {
     process.env.ANALYZE = 'true';
-    results = await webpack(mockGasket, mockWebpackConfig, mockNextData);
+    results = webpack(mockGasket, mockWebpackConfig, mockNextData);
     const expectedPlugin = results.plugins[results.plugins.length - 1];
     expect(expectedPlugin).toBeInstanceOf(BundleAnalyzerPlugin);
   });
 
-  it('does not add BundleAnalyzerPlugin if no Gasket sub env analyze', async () => {
+  it('does not add BundleAnalyzerPlugin if no Gasket sub env analyze', () => {
     mockGasket.config.env = 'test.only';
-    results = await webpack(mockGasket, mockWebpackConfig, mockNextData);
+    results = webpack(mockGasket, mockWebpackConfig, mockNextData);
     expect(results).toBe(mockWebpackConfig);
   });
 
-  it('does not add BundleAnalyzerPlugin if no ANALYZE', async () => {
+  it('does not add BundleAnalyzerPlugin if no ANALYZE', () => {
     delete process.env.ANALYZE;
-    results = await webpack(mockGasket, mockWebpackConfig, mockNextData);
+    results = webpack(mockGasket, mockWebpackConfig, mockNextData);
     expect(results).toBe(mockWebpackConfig);
   });
 
-  it('does not add BundleAnalyzerPlugin if ANALYZE=false', async () => {
+  it('does not add BundleAnalyzerPlugin if ANALYZE=false', () => {
     process.env.ANALYZE = 'false';
-    results = await webpack(mockGasket, mockWebpackConfig, mockNextData);
+    results = webpack(mockGasket, mockWebpackConfig, mockNextData);
     expect(results).toBe(mockWebpackConfig);
   });
 
-  it('does not add BundleAnalyzerPlugin if ANALYZE=0', async () => {
+  it('does not add BundleAnalyzerPlugin if ANALYZE=0', () => {
     process.env.ANALYZE = '0';
-    results = await webpack(mockGasket, mockWebpackConfig, mockNextData);
+    results = webpack(mockGasket, mockWebpackConfig, mockNextData);
     expect(results).toBe(mockWebpackConfig);
   });
 
-  it('uses bundleAnalyzerConfig options from gasket.config', async () => {
+  it('uses bundleAnalyzerConfig options from gasket.config', () => {
     mockGasket.config.env = 'test.analyze';
     mockGasket.config.bundleAnalyzerConfig = {
       browser: {
         reportFilename: 'bogus.html'
       }
     };
-    results = await webpack(mockGasket, mockWebpackConfig, mockNextData);
+    results = webpack(mockGasket, mockWebpackConfig, mockNextData);
     const expectedPlugin = results.plugins[results.plugins.length - 1];
     expect(expectedPlugin.opts).toHaveProperty('reportFilename', 'bogus.html');
   });
 
-  it('defaults analyzerMode=static', async () => {
+  it('defaults analyzerMode=static', () => {
     mockGasket.config.env = 'test.analyze';
-    results = await webpack(mockGasket, mockWebpackConfig, mockNextData);
+    results = webpack(mockGasket, mockWebpackConfig, mockNextData);
     const expectedPlugin = results.plugins[results.plugins.length - 1];
     expect(expectedPlugin.opts).toHaveProperty('analyzerMode', 'static');
   });
 
-  it('defaults output to reports dir', async () => {
+  it('defaults output to reports dir', () => {
     mockGasket.config.env = 'test.analyze';
-    results = await webpack(mockGasket, mockWebpackConfig, mockNextData);
+    results = webpack(mockGasket, mockWebpackConfig, mockNextData);
     const expectedPlugin = results.plugins[results.plugins.length - 1];
-    expect(expectedPlugin.opts).toHaveProperty('reportFilename', expect.stringContaining('/reports'));
+    expect(expectedPlugin.opts)
+      .toHaveProperty('reportFilename', expect.stringContaining('/reports'));
   });
 
-  it('allows browser config overrides', async () => {
+  it('allows browser config overrides', () => {
     mockGasket.config.env = 'test.analyze';
     mockGasket.config.bundleAnalyzerConfig = {
       browser: {
         analyzerMode: 'server'
       }
     };
-    results = await webpack(mockGasket, mockWebpackConfig, mockNextData);
+    results = webpack(mockGasket, mockWebpackConfig, mockNextData);
     const expectedPlugin = results.plugins[results.plugins.length - 1];
     expect(expectedPlugin.opts).toHaveProperty('analyzerMode', 'server');
   });
 
-  it('allows server config overrides', async () => {
+  it('allows server config overrides', () => {
     mockGasket.config.env = 'test.analyze';
     mockGasket.config.bundleAnalyzerConfig = {
       server: {
         analyzerMode: 'server'
       }
     };
-    results = await webpack(mockGasket, mockWebpackConfig,
+    results = webpack(
+      mockGasket,
+      mockWebpackConfig,
       { ...mockNextData, isServer: true });
     const expectedPlugin = results.plugins[results.plugins.length - 1];
     expect(expectedPlugin.opts).toHaveProperty('analyzerMode', 'server');
