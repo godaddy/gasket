@@ -1,5 +1,11 @@
 # `@gasket/plugin-analyze`
 
+## 7.4.1
+
+### Patch Changes
+
+- 18f51cc: Fix return type of webpackConfig hook
+
 ## 7.4.0
 
 ### Minor Changes
