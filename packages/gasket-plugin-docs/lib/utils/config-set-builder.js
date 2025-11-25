@@ -306,7 +306,7 @@ class DocsConfigSetBuilder {
     // fall back to defaults.
     docsSetup =
       docsSetup ||
-      // @ts-expect-error: TODO: https://godaddy-corp.atlassian.net/browse/PFX-650
+      // @ts-expect-error: TODO: PFX-650
       (presetData.module && presetData.module.docsSetup) ||
       getDocsSetupFromPkg(presetData) ||
       docsSetupDefault;
