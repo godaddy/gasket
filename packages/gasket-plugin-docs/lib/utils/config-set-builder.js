@@ -306,7 +306,7 @@ class DocsConfigSetBuilder {
     // fall back to defaults.
     docsSetup =
       docsSetup ||
-      // @ts-expect-error: TODO: PFX-650
+      // @ts-expect-error
       (presetData.module && presetData.module.docsSetup) ||
       getDocsSetupFromPkg(presetData) ||
       docsSetupDefault;
