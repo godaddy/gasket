@@ -6,7 +6,7 @@ const reqCache = new WeakMap();
 export async function request(query) {
   console.warn('DEPRECATED: use async `request` from @gasket/nextjs/request');
 
-  const headerStore = headers();
+  const headerStore = await headers();
 
   if (!reqCache.has(headerStore)) {
     const cookieStore = await cookies();

@@ -30,6 +30,22 @@ The `GASKET_DEV` environment variable is used to signal the programmatic executi
 GASKET_DEV=1 npm run local
 ```
 
+## Next.js 16 Compatibility
+
+Next.js 16 uses [Turbopack as the default bundler][Turbopack by default] instead of Webpack. Since this plugin integrates with Gasket's Webpack plugin and adds webpack configuration to Next.js, the build will fail if you try to run `next build` without the `--webpack` flag.
+
+Use the `--webpack` flag to opt out of Turbopack and continue using Webpack with your existing Gasket Webpack configurations:
+
+```json
+{
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build --webpack",
+    "start": "next start"
+  }
+}
+```
+
 ## Configuration
 
 It is also possible for apps to config Next.js using the `gasket.js`
@@ -291,3 +307,4 @@ export default {
 [named capturing groups]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences
 [sitemap]: https://www.sitemaps.org/
 [next-sitemap docs]: https://github.com/iamvishnusankar/next-sitemap
+[Turbopack by default]: https://nextjs.org/docs/app/guides/upgrading/version-16#turbopack-by-default
