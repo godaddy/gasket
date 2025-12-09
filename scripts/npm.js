@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-/* eslint-disable no-console, no-continue, no-sync */
+/* eslint-disable no-continue */
 
 import fs from 'fs';
 import path from 'path';

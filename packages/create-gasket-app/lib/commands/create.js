@@ -200,7 +200,6 @@ createCommand.action = async function run(appname, options, command) {
   try {
     await handleCreate(context);
   } catch (err) {
-    // eslint-disable-next-line no-console
     console.error(chalk.red('Exiting with errors.'));
     dumpErrorContext(context, err);
     throw err;

@@ -4,7 +4,7 @@
  * @example node scripts/templates-validate-dotfiles.js
  */
 
-/* eslint-disable no-console, no-continue */
+/* eslint-disable no-continue */
 
 import { execSync } from 'child_process';
 import { readdirSync, statSync, readFileSync, existsSync } from 'fs';
