@@ -135,5 +135,29 @@ export default defineConfig([
       'no-undefined': 'off',
       'id-length': 'off'
     }
+  },
+
+  //
+  // Allow sync methods and console in build/utility scripts
+  //
+  {
+    files: ['scripts/**/*.js'],
+    rules: {
+      'no-sync': 'off',
+      'no-console': 'off',
+      'no-process-exit': 'off',
+      'no-process-env': 'off'
+    }
+  },
+
+  //
+  // Allow console and process.exit in CLI tools
+  //
+  {
+    files: ['packages/gasket-cjs/**/*.js', 'packages/create-gasket-app/**/*.js'],
+    rules: {
+      'no-console': 'off',
+      'no-process-exit': 'off'
+    }
   }
 ]);

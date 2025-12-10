@@ -47,7 +47,6 @@ async function main() {
   await wait(100);
   // Copy docs for docs site and format for use
   await copySiteDocs(projectRoot);
-  // eslint-disable-next-line no-console
   console.log('DONE');
 }
 
