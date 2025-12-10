@@ -1,5 +1,12 @@
 # `@gasket/preset-api`
 
+## 7.6.2
+
+### Patch Changes
+
+- Updated dependencies [38c31a9]
+  - @gasket/plugin-jest@7.5.6
+
 ## 7.6.1
 
 ### Patch Changes

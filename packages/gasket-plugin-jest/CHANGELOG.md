@@ -1,5 +1,11 @@
 # `@gasket/plugin-jest`
 
+## 7.5.6
+
+### Patch Changes
+
+- 38c31a9: Dependency updates
+
 ## 7.5.5
 
 ### Patch Changes

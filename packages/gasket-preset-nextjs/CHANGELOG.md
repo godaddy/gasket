@@ -1,5 +1,14 @@
 # `@gasket/preset-nextjs`
 
+## 7.6.2
+
+### Patch Changes
+
+- Updated dependencies [38c31a9]
+  - @gasket/plugin-nextjs@7.7.1
+  - @gasket/plugin-jest@7.5.6
+  - @gasket/plugin-intl@7.6.0
+
 ## 7.6.1
 
 ### Patch Changes

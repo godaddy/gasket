@@ -1,5 +1,11 @@
 # `@gasket/nextjs`
 
+## 7.6.6
+
+### Patch Changes
+
+- 38c31a9: Dependency updates
+
 ## 7.6.5
 
 ### Patch Changes
