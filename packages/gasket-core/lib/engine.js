@@ -51,7 +51,7 @@ export class GasketEngine {
   /**
    * Maps plugin names to their definitions.
    * @private
-   * @param {import('@gasket/core').Plugin[]} plugins
+   * @param {import('@gasket/core').Plugin[]} plugins - Array of plugins to register
    */
   _registerPlugins(plugins) {
     /**
@@ -245,7 +245,10 @@ export class GasketEngine {
     });
   }
 
-  /** @type {import('@gasket/core').GasketEngine_ExecMap<Id>} */
+  /**
+   * @template Id
+   * @type {import('@gasket/core').GasketEngine_ExecMap<Id>}
+   */
   execMap(gasket, event, ...args) {
     return this._execWithCachedPlan({
       event,
@@ -477,8 +480,8 @@ export class GasketEngine {
    *   type: string,
    *   prepare: (hookConfig: import('@gasket/core').HookConfig) => Plan,
    *   exec: (plan: Plan) => Result
-   * }} options
-   * @returns {Result}
+   * }} options - Configuration options for execution
+   * @returns {Result} Execution result
    */
   _execWithCachedPlan({ event, type, prepare, exec }) {
     const hookConfig = this._getHookConfig(event);
@@ -489,8 +492,8 @@ export class GasketEngine {
 
   /**
    * @private
-   * @param {string} event
-   * @returns {import('@gasket/core').HookConfig}
+   * @param {string} event - Event name to get hook configuration for
+   * @returns {import('@gasket/core').HookConfig} Hook configuration
    */
   _getHookConfig(event) {
     if (!(event in this._hooks)) {
@@ -504,8 +507,8 @@ export class GasketEngine {
   /**
    * Executes hooks for plugins in order
    * @private
-   * @param {import('@gasket/core').HookConfig} hookConfig
-   * @param {Function} fn
+   * @param {import('@gasket/core').HookConfig} hookConfig - Hook configuration
+   * @param {Function} fn - Function to execute for each plugin
    */
   _executeInOrder(hookConfig, fn) {
     this._normalizeOrdering(hookConfig);
@@ -538,7 +541,7 @@ export class GasketEngine {
   /**
    * Normalizes ordering
    * @private
-   * @param {import('@gasket/core').HookConfig} hookConfig
+   * @param {import('@gasket/core').HookConfig} hookConfig - Hook configuration to normalize
    */
   _normalizeOrdering(hookConfig) {
     const { subscribers } = hookConfig;
