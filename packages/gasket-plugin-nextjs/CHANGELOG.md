@@ -1,5 +1,11 @@
 # `@gasket/plugin-nextjs`
 
+## 7.7.1
+
+### Patch Changes
+
+- 38c31a9: Dependency updates
+
 ## 7.7.0
 
 ### Minor Changes

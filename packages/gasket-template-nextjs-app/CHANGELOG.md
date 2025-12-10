@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 7.0.3
+
+### Patch Changes
+
+- 38c31a9: Dependency updates
+
 ## 7.0.2
 
 ### Patch Changes
