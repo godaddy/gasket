@@ -79,7 +79,7 @@
     "eslint-plugin-react": "^7.37.4",
     "eslint-plugin-unicorn": "^59.0.1",
     "glob": "^8.1.0",
-    "js-yaml": "^4.1.0",
+    "js-yaml": "^4.1.1",
     "jsdom": "^20.0.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
