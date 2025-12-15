@@ -13,9 +13,7 @@ import pluginLint from '@gasket/plugin-lint';
 
 /**
  * presetConfig hook
- * @param {Gasket} gasket - Gasket API
- * @param {Create} context - Create context
- * @returns {Promise<CreateContext.presetConfig>} config
+ * @type {import('@gasket/core').PresetHook<'presetConfig'>}
  */
 export default async function presetConfig(gasket, context) {
   const plugins = new Set([

@@ -50,7 +50,7 @@ async function loadRoutes(gasket) {
 /**
  * Iterates over the static and dynamic routes
  * @param {any} routes - NextJS routes
- * @yields {IterableIterator<*>}
+ * @yields {*} Route objects from the NextJS routes manifest
  */
 function *iterateRoutes(routes) {
   yield* routes.staticRoutes;

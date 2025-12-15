@@ -181,10 +181,10 @@ describe('Utils - generateIndex', () => {
 
       /**
        * Check a section of the generated content
-       * @param name
-       * @param title
-       * @param includeVersion
-       * @param additionalHeaders
+       * @param {string} name - Section name
+       * @param {string} title - Section title
+       * @param {boolean} includeVersion - Whether to include version in the section
+       * @param {Array} additionalHeaders - Additional headers to check
        * @returns {void}
        */
       function checkSection(name, title, includeVersion, additionalHeaders = []) {

@@ -16,7 +16,7 @@ const debugLog = debug('gasket:plugin:intl:buildManifest');
  * or bundled by the client. Locale paths have content hashes associated with
  * them which can be used for cache busting.
  * @param {import('@gasket/core').Gasket} gasket - Gasket API
- * @param options
+ * @param {object} options - Build options
  * @async
  */
 export default async function buildManifest(gasket, options = {}) {

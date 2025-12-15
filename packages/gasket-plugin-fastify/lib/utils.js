@@ -44,6 +44,10 @@ export function getAppInstance(gasket) {
 
 export { alignLogger };
 
+/**
+ * Clear the Fastify app instance (for testing only)
+ * @returns {void}
+ */
 export function testClearAppInstance() {
   instance = null;
 }

@@ -5,7 +5,7 @@ const { name, version, description, devDependencies } = require('../package');
 describe('Plugin', function () {
   /**
    * Create a new project
-   * @param rest
+   * @param {object} rest - Additional project options
    * @returns {Promise<object>} project
    */
   async function create(rest = {}) {

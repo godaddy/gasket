@@ -8,19 +8,19 @@ export default {
   hooks: {
     fastify(gasket, app) {
       /**
-      * @swagger
-      *
-      * /default:
-      *   get:
-      *     summary: "Get default route"
-      *     produces:
-      *       - "application/json"
-      *     responses:
-      *       "200":
-      *         description: "Returns welcome message."
-      *         content:
-      *           application/json
-      */
+       * @swagger
+       *
+       * /default:
+       *   get:
+       *     summary: "Get default route"
+       *     produces:
+       *       - "application/json"
+       *     responses:
+       *       "200":
+       *         description: "Returns welcome message."
+       *         content:
+       *           application/json
+       */
       app.get('/default', defaultHandler);
     }
   }

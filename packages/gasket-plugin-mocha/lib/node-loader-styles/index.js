@@ -5,10 +5,11 @@ const { pathToFileURL } = require('url');
 const styleFileRegex = /\.(css|scss|sass|less|styl)$/;
 
 /**
- *
- * @param specifier
- * @param context
- * @param defaultResolve
+ * Custom resolver that intercepts CSS and style file imports
+ * @param {string} specifier - The module specifier being resolved
+ * @param {object} context - The resolution context from Node.js
+ * @param {Function} defaultResolve - Node.js default resolution function
+ * @returns {object} Resolution result with url and shortCircuit flag
  */
 function resolve(specifier, context, defaultResolve) {
   // Use the regex to check if the file is a CSS or related file
@@ -23,10 +24,11 @@ function resolve(specifier, context, defaultResolve) {
 }
 
 /**
- *
- * @param url
- * @param context
- * @param defaultLoad
+ * Custom loader that returns empty module for CSS files
+ * @param {string} url - The module URL being loaded
+ * @param {object} context - The load context from Node.js
+ * @param {Function} defaultLoad - Node.js default load function
+ * @returns {object} Load result with format, source, and shortCircuit flag
  */
 function load(url, context, defaultLoad) {
   // Handle loading for the 'empty-module.js' placeholder

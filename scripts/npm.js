@@ -53,8 +53,9 @@ const OPERATIONS = {
 };
 
 /**
- *
- * @param dirPath
+ * Recursively removes a directory and its contents
+ * @param {string} dirPath - Path to the directory to remove
+ * @returns {boolean} True if removal was successful
  */
 function rmRecursive(dirPath) {
   try {
@@ -68,9 +69,9 @@ function rmRecursive(dirPath) {
 }
 
 /**
- *
- * @param templateDir
- * @param packageName
+ * Cleans build artifacts from a template directory
+ * @param {string} templateDir - Path to the template directory
+ * @param {string} packageName - Name of the package being cleaned
  */
 async function cleanHandler(templateDir, packageName) {
   console.log(`🧹 Cleaning ${packageName}/template`);
@@ -101,8 +102,9 @@ async function cleanHandler(templateDir, packageName) {
 }
 
 /**
- *
- * @param filePath
+ * Removes a single file
+ * @param {string} filePath - Path to the file to remove
+ * @returns {boolean} True if removal was successful
  */
 function rmFile(filePath) {
   try {
@@ -118,9 +120,9 @@ function rmFile(filePath) {
 }
 
 /**
- *
- * @param templateDir
- * @param packageName
+ * Regenerates lockfiles for a template directory
+ * @param {string} templateDir - Path to the template directory
+ * @param {string} packageName - Name of the package
  */
 async function regenHandler(templateDir, packageName) {
   console.log(`🔒 Regenerating lockfiles for ${packageName}/template`);
@@ -167,8 +169,9 @@ async function regenHandler(templateDir, packageName) {
 }
 
 /**
- *
- * @param templateDir
+ * Determines if npm ci should be skipped for a template directory
+ * @param {string} templateDir - Path to the template directory
+ * @returns {boolean} True if npm ci should be skipped
  */
 function shouldSkipNpmCi(templateDir) {
   const nodeModulesPath = path.join(templateDir, 'node_modules');
@@ -217,11 +220,12 @@ function shouldSkipNpmCi(templateDir) {
 }
 
 /**
- *
- * @param command
- * @param args
- * @param cwd
- * @param customEnv
+ * Runs a command in a specified directory with custom environment variables
+ * @param {string} command - The command to run
+ * @param {string[]} args - Command arguments
+ * @param {string} cwd - Working directory for the command
+ * @param {object} customEnv - Custom environment variables
+ * @returns {Promise<void>} Resolves when command completes successfully
  */
 async function runCommand(command, args, cwd, customEnv = {}) {
   return new Promise((resolve, reject) => {

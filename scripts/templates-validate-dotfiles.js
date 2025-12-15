@@ -139,7 +139,7 @@ function getPackedFiles(packageDir) {
 /**
  * Verify a single template package
  * @param {string} packageName - Name of the package
- * @returns {Object} Verification result
+ * @returns {object} Verification result
  */
 function verifyTemplatePackage(packageName) {
   const packageDir = join(PACKAGES_DIR, packageName);

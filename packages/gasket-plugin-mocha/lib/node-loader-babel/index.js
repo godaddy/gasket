@@ -5,8 +5,9 @@ const urlModule = require('url');
 const { loadOptionsAsync, transformAsync } = babel;
 
 /**
- *
- * @param filename
+ * Checks if the given filename is a Babel configuration file
+ * @param {string} filename - The file path to check
+ * @returns {boolean} True if the file is a Babel config file
  */
 function isBabelConfigFile(filename) {
   const basename = path.basename(filename);
@@ -79,8 +80,9 @@ async function load(url, context, defaultLoad) {
 }
 
 /**
- *
- * @param url
+ * Determines if a module URL should be processed by the Babel loader
+ * @param {string} url - The module URL to check
+ * @returns {boolean} True if the module should be loaded with Babel
  */
 function isLoader(url) {
   return !/node_modules/.test(url) && !/node:/.test(url);

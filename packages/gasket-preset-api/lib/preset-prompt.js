@@ -3,10 +3,7 @@ import swaggerPrompts from '@gasket/plugin-swagger/prompts';
 
 /**
  * presetPrompt hook
- * @param {Gasket} gasket - Gasket API
- * @param {Create} context - Create context
- * @param {object} utils - Prompt utils
- * @param {Function} utils.prompt - Inquirer prompt
+ * @type {import('@gasket/core').PresetHook<'presetPrompt'>}
  */
 export default async function presetPrompt(gasket, context, { prompt }) {
   context.apiApp = true;
