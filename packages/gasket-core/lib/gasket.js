@@ -1,4 +1,4 @@
-/* eslint-disable no-console, no-process-env */
+/* eslint-disable no-console, no-process-env, no-sync */
 
 import { GasketEngine, lifecycleMethods } from './engine.js';
 import { makeTraceBranch } from './trace.js';
