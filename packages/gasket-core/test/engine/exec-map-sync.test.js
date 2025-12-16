@@ -1,3 +1,4 @@
+/* eslint-disable no-sync */
 
 const mockDebug = vi.fn();
 vi.mock('debug', () => ({

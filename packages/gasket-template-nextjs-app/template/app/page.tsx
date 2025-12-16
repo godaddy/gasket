@@ -10,6 +10,10 @@ export const metadata: Metadata = {
 const pageStyle: CSSProperties = { textAlign: 'center' };
 const logoStyle: CSSProperties = { width: '250px', height: '250px' };
 
+/**
+ * Index page component
+ * @returns {React.ReactElement} Index page
+ */
 function IndexPage() {
   return (
     <div style={ pageStyle }>

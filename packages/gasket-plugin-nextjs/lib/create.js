@@ -11,11 +11,11 @@ const __dirname = dirname(__filename);
 /**
  * Type definitions for create-gasket-app APIs.
  * These typedefs allow us to use short, readable type names throughout the file
- * instead of repeating the long import statements with resolution-mode syntax.
- * @typedef {import('create-gasket-app', { with: { "resolution-mode": "require" } }).Files} Files
- * @typedef {import('create-gasket-app', { with: { "resolution-mode": "require" } }).PackageJsonBuilder} PackageJsonBuilder
- * @typedef {import('create-gasket-app', { with: { "resolution-mode": "require" } }).Readme} Readme
- * @typedef {import('create-gasket-app', { with: { "resolution-mode": "require" } }).ConfigBuilder} ConfigBuilder
+ * instead of repeating the long import statements.
+ * @typedef {import('create-gasket-app').Files} Files
+ * @typedef {import('create-gasket-app').PackageJsonBuilder} PackageJsonBuilder
+ * @typedef {import('create-gasket-app').Readme} Readme
+ * @typedef {import('create-gasket-app').ConfigBuilder} ConfigBuilder
  */
 
 /**
@@ -283,7 +283,7 @@ export default {
   },
   /**
    * Add files & extend package.json for new apps.
-   * @type {import('@gasket/core', { with: { "resolution-mode": "require" } }).HookHandler<'create'>}
+   * @type {import('@gasket/core').HookHandler<'create'>}
    */
   handler: async function create(gasket, context) {
     const {

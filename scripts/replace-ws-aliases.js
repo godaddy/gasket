@@ -50,7 +50,7 @@ if (fs.existsSync(workspaceYamlPath)) {
 
 /**
  * Update a given package.json file
- * @param packageJsonPath
+ * @param {string} packageJsonPath - Path to the package.json file
  */
 function updatePackageJson(packageJsonPath) {
   if (!fs.existsSync(packageJsonPath)) return;
@@ -59,8 +59,8 @@ function updatePackageJson(packageJsonPath) {
   let updated = false;
 
   /**
-   *
-   * @param depType
+   * Replaces workspace dependency versions with actual versions
+   * @param {string} depType - Type of dependency (dependencies, devDependencies, etc.)
    */
   function replaceDependencyVersions(depType) {
     if (packageJson[depType]) {

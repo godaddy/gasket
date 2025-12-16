@@ -8,7 +8,7 @@ describe('Plugin', () => {
     filesAddStub = jest.fn();
     /**
      * Create a new project
-     * @param context
+     * @param {object} context - Test context with files, pkg, and packageManager
      * @returns {Promise<object>} project
      */
     create = async function (context = {}) {
@@ -33,7 +33,7 @@ describe('Plugin', () => {
 
     /**
      * Create a new React project
-     * @param context
+     * @param {object} context - Test context with files, pkg, and gasketConfig
      * @returns {Promise<object>} project
      */
     createReact = async function (context = {}) {

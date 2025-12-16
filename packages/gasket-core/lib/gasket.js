@@ -1,4 +1,4 @@
-/* eslint-disable no-console, no-process-env */
+/* eslint-disable no-console, no-process-env, no-sync */
 
 import { GasketEngine, lifecycleMethods } from './engine.js';
 import { makeTraceBranch } from './trace.js';
@@ -32,8 +32,8 @@ function getEnvironment(configEnv) {
 
 /**
  * Normalize ESM and CommonJS plugins to raw Plugin[]
- * @param {(import('@gasket/core').Plugin | { default: import('@gasket/core').Plugin })[]} plugins
- * @returns {import('@gasket/core').Plugin[]}
+ * @param {(import('@gasket/core').Plugin | { default: import('@gasket/core').Plugin })[]} plugins - Array of plugins to normalize
+ * @returns {import('@gasket/core').Plugin[]} Normalized plugin array
  */
 function normalizePlugins(plugins) {
   return plugins

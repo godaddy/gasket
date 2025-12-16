@@ -84,7 +84,7 @@ export function isMiddlewareObject(value: any): value is { handler: Handler; pat
  * Normalizes a middleware entry into a consistent `{ handler, paths }` format.
  * Accepts either a function, an object with a `handler`, or an invalid entry.
  * @param {any} entry - The middleware entry to normalize
- * @returns {{ handler: Handler | undefined, paths?: string | RegExp | Array<string | RegExp> }}
+ * @returns {{ handler: Handler | undefined, paths?: string | RegExp | Array<string | RegExp> }} Normalized middleware entry
  */
 export function normalizeMiddlewareEntry(
   entry: unknown

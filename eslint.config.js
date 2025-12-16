@@ -27,6 +27,16 @@ export default defineConfig([
     '**/template/.docs'
   ]),
   //
+  // Allow custom JSDoc tags
+  //
+  {
+    rules: {
+      'jsdoc/check-tag-names': ['warn', {
+        definedTags: ['jest-environment', 'swagger']
+      }]
+    }
+  },
+  //
   // Configurations for Jest and Unicorn
   //
   {
