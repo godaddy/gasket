@@ -229,7 +229,7 @@ describe('makeGasketRequest', () => {
   });
 
   it('handles IncomingMessage with headersDistinct shape (IncomingHttpHeaders)', async () => {
-    /** @type {IncomingHttpHeaders} */
+    /** @type {import('http').IncomingHttpHeaders} */
     const headers = { header1: 'value1', header2: ['value2'], header3: ['value3-1', 'value3-2'] };
     const requestLike = { headers };
 

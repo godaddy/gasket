@@ -57,8 +57,8 @@ function isValidVersion(v) {
 export class ConfigBuilder {
   /**
    * ConfigBuilder
-   * @param fields
-   * @param options
+   * @param {object} fields - Initial fields
+   * @param {object} options - Configuration options
    */
   constructor(fields = {}, options = {}) {
     this.fields = Object.assign({}, fields);
@@ -134,9 +134,9 @@ export class ConfigBuilder {
 
   /**
    * Adds all `[key, value]` pairs in the `fields` provided.
-   * @param {object|function(current):object} fields - Object to merge.
+   * @param {object|function(object):object} fields - Object to merge.
    *    Can be a function that accepts the current fields and object to merge.
-   * @param {object} source Plugin to blame if conflicts arise from this operation.
+   * @param {object} source - Plugin to blame if conflicts arise from this operation.
    *
    * Adapted from @vue/cli under MIT License:
    * https://github.com/vuejs/vue-cli/blob/f09722c/packages/%40vue/cli/lib/GeneratorAPI.js#L117-L150
@@ -413,7 +413,7 @@ export class ConfigBuilder {
    *   - If ¬∃ prev                 ––> set and blame [dep, ver]
    *   - If ver > prev              ––> set and blame [dep, ver]
    *   - If ¬(ver ∩ prev)           ––> Conflict. Print.
-   * @param {object} options
+   * @param {object} options - Merge options
    * @param  {string} options.key      {devD,peerD,optionalD,d}ependencies
    * @param  {object} options.value    Updates for { name: version } pairs
    * @param  {object} options.existing Existing { name: version } pairs
@@ -543,7 +543,7 @@ export class ConfigBuilder {
    * keys are ordered lexographically.
    * @param  {object}   obj       Object to transform to ordered keys
    * @param  {string[]} [orderBy] Explicit key order to use.
-   * @returns {object} Shallow clone of `obj` with ordered keys
+   * @returns {object | undefined} Shallow clone of `obj` with ordered keys
    *
    * Adapted from @vue/cli under MIT License:
    * https://github.com/vuejs/vue-cli/blob/f09722c/packages/%40vue/cli/lib/util/sortObject.js
@@ -560,13 +560,11 @@ export class ConfigBuilder {
       }, {});
     }
 
-    /*
-     * Sorts based on the `order` defined above.
-     */
     /**
-     *
-     * @param a
-     * @param b
+     * Sorts based on the `order` defined above.
+     * @param {string} a - First key to compare
+     * @param {string} b - Second key to compare
+     * @returns {number} Comparison result
      */
     function sortByOrder(a, b) {
       const indexA = typeof order[a] === 'undefined'

@@ -62,12 +62,12 @@ export interface Signal {
  * Options can be passed to the underlying spawn. An additional `signal` option
  * can be passed to use AbortController, allowing processes to be killed when no
  * longer needed.
- * @param cmd
- * @param argv
- * @param options
- * @param options.signal
- * @param options.cwd
- * @param debug
+ * @param {string} cmd - Command to execute
+ * @param {string[]} argv - Array of command arguments
+ * @param {object} options - Spawn options
+ * @param {AbortSignal} options.signal - Abort signal for process cancellation
+ * @param {string} options.cwd - Current working directory
+ * @param {boolean} debug - Enable debug output
  * @example
  * const { runShellCommand } = require('@gasket/utils');
  *
@@ -128,8 +128,8 @@ export interface ConfigContext {
  * Executes the appropriate npm binary with the verbatim `argv` and
  * `spawnWith` options provided. Passes appropriate debug flag for
  * npm based on process.env.
- * @param argv
- * @param spawnWith
+ * @param {string[]} argv - Precise CLI arguments to pass to `npm`
+ * @param {SpawnOptions} spawnWith - Options for child_process.spawn
  */
 export function PackageManager_spawnNpm(
   /** Precise CLI arguments to pass to `npm`. */
@@ -142,8 +142,8 @@ export function PackageManager_spawnNpm(
  * Executes the appropriate yarn binary with the verbatim `argv` and
  * `spawnWith` options provided. Passes appropriate debug flag for
  * npm based on process.env.
- * @param argv
- * @param spawnWith
+ * @param {string[]} argv - Precise CLI arguments to pass to `yarn`
+ * @param {SpawnOptions} spawnWith - Options for child_process.spawn
  */
 export function PackageManager_spawnYarn(
   /** Precise CLI arguments to pass to `npm`. */

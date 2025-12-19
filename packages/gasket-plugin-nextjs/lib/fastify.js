@@ -4,7 +4,7 @@ import { setupNextApp, setupNextHandling } from './utils/setup-next-app.js';
 
 /**
  * Adds the buildId to Fastify via `decorate`
- * @param {import('fastify', { with: { "resolution-mode": "require" } }).FastifyInstance} fastifyApp
+ * @param {import('fastify').FastifyInstance} fastifyApp
  *   Fastify application instance
  * @param {any} app - Next.js application instance (Next.js doesn't expose public types for server instances)
  */
@@ -15,7 +15,7 @@ function registerBuildId(fastifyApp, app) {
 
 /**
  * Adds the `onResponse` hook to set NEXT_LOCALE
- * @param {import('fastify', { with: { "resolution-mode": "require" } }).FastifyInstance} fastifyApp
+ * @param {import('fastify').FastifyInstance} fastifyApp
  *   Fastify application instance
  */
 function addNextLocaleHook(fastifyApp) {
@@ -28,7 +28,7 @@ function addNextLocaleHook(fastifyApp) {
   });
 }
 
-/** @type {import('@gasket/core', { with: { "resolution-mode": "require" } }).HookHandler<'fastify'>} */
+/** @type {import('@gasket/core').HookHandler<'fastify'>} */
 async function fastifyHandler(gasket, fastifyApp) {
   const app = await setupNextApp(gasket);
   registerBuildId(fastifyApp, app);

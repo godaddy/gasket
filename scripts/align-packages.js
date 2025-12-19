@@ -76,7 +76,7 @@ function checkHomepage(pkgJson) {
 
 /**
  * Check if typecheck scripts are present and adds them if not
- * @param pkgJson
+ * @param {object} pkgJson - package.json contents
  */
 function checkTypecheckScripts(pkgJson) {
   const { scripts } = pkgJson;
@@ -88,7 +88,7 @@ function checkTypecheckScripts(pkgJson) {
 
 /**
  * Check if eslintConfig is present and adds jsdoc recommended typescript flavor
- * @param pkgJson
+ * @param {object} pkgJson - package.json contents
  */
 function checkEslintConfig(pkgJson) {
   const { eslintConfig } = pkgJson;
@@ -130,7 +130,7 @@ function checkEslintConfig(pkgJson) {
 
 /**
  * Check if typescript is in devDependencies and adds it if not
- * @param pkgJson
+ * @param {object} pkgJson - package.json contents
  */
 function checkDevDeps(pkgJson) {
   const { devDependencies } = pkgJson;
@@ -141,7 +141,7 @@ function checkDevDeps(pkgJson) {
 
 /**
  * Setup typescript scripts and dependencies
- * @param pkgJson
+ * @param {object} pkgJson - package.json contents
  */
 function setupTypes(pkgJson) {
   const { name } = pkgJson;
@@ -162,8 +162,8 @@ function setupTypes(pkgJson) {
 }
 
 /**
- *
- * @param pkgJson
+ * Ensures default dependencies are present in package.json
+ * @param {object} pkgJson - package.json contents
  */
 function checkDefaultDeps(pkgJson) {
   if (!pkgJson.devDependencies) {

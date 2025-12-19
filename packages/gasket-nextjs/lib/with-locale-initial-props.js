@@ -4,8 +4,8 @@ import { resolveGasketData } from '@gasket/data';
 
 /**
  * Returns the request object from Next.js context (App or Page).
- * @param {import('next').NextPageContext | import('next/app').AppContext} ctx
- * @returns {import('http').IncomingMessage | undefined}
+ * @param {import('next').NextPageContext | import('next/app').AppContext} ctx - Next.js context
+ * @returns {import('http').IncomingMessage | undefined} HTTP request object
  */
 export const getRequestFromContext = (ctx) =>
   // Functional guard for AppContext vs PageContext

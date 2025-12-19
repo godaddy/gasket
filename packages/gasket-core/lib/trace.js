@@ -16,8 +16,8 @@ const icon = (type) => reSync.test(type) ? '◆' : '◇';
 /** @type {import('@gasket/core').Tracer} */
 class Tracer {
   /**
-   * @param {import('@gasket/core').Tracer | undefined} parent
-   * @param {number} branchId
+   * @param {import('@gasket/core').Tracer | undefined} parent - Parent tracer instance
+   * @param {number} branchId - Unique branch identifier
    */
   constructor(parent, branchId) {
     // make a stack copy for each isolate to avoid contamination
@@ -75,8 +75,8 @@ export class GasketTrace {
   static _nextBranchId = 0;
 
   /**
-   * @param {import('@gasket/core').GasketTrace | import('@gasket/core').Gasket} parent
-   * @param {number | null} newBranchId
+   * @param {import('@gasket/core').GasketTrace | import('@gasket/core').Gasket} parent - Parent trace or Gasket instance
+   * @param {number | null} newBranchId - Optional branch ID for new trace branch
    */
   constructor(parent, newBranchId = null) {
     this.branchId = newBranchId ?? parent.branchId;

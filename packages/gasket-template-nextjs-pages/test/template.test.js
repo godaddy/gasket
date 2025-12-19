@@ -280,7 +280,7 @@ describe('@gasket/template-nextjs-pages', () => {
       expect(appPageContent).toContain("import { withMessagesProvider } from '@gasket/react-intl'");
       expect(appPageContent).toContain("import intlManager from '../intl'");
       expect(appPageContent).toContain('withMessagesProvider(intlManager)(IntlProvider)');
-      expect(appPageContent).toContain('function App({ Component, pageProps })');
+      expect(appPageContent).toContain('function App({ Component, pageProps }:');
     });
 
     it('should have valid _document.ts', () => {

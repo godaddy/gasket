@@ -108,8 +108,8 @@ const createCommand = {
 
 /**
  * validateOption - We require at least one of the options to be provided
- * @param {import('../internal.js').PartialCreateContext} context
- * @returns {import('../internal.js').PartialCreateContext}
+ * @param {import('../internal.js').PartialCreateContext} context - Create context
+ * @returns {import('../internal.js').PartialCreateContext} Validated context
  */
 function validateOptions(context) {
   const hasOption = (context) => Boolean(context.template || context.templatePath || context.rawPresets.length || context.localPresets.length);
@@ -124,8 +124,8 @@ function validateOptions(context) {
 
 /**
  * handleTemplate - Handles the template creation
- * @param {import('../internal.js').PartialCreateContext} context
- * @returns {Promise<void>}
+ * @param {import('../internal.js').PartialCreateContext} context - Create context
+ * @returns {Promise<void>} Promise that resolves when template is created
  */
 async function handleTemplate(context) {
   await mkDir({ context });
@@ -140,8 +140,8 @@ async function handleTemplate(context) {
 
 /**
  * handlePresets - Handles the preset creation
- * @param {import('../internal.js').PartialCreateContext} context
- * @returns {Promise<void>}
+ * @param {import('../internal.js').PartialCreateContext} context - Create context
+ * @returns {Promise<void>} Promise that resolves when presets are applied
  */
 async function handlePresets(context) {
   await loadPreset({ context });
@@ -175,8 +175,8 @@ async function handlePresets(context) {
 
 /**
  * handleCreate - Handles the create creation
- * @param {import('../internal.js').PartialCreateContext} context
- * @returns {Promise<void>}
+ * @param {import('../internal.js').PartialCreateContext} context - Create context
+ * @returns {Promise<void>} Promise that resolves when app is created
  */
 async function handleCreate(context) {
   const { template, templatePath } = context;

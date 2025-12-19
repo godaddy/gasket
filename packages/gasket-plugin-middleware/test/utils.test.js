@@ -241,9 +241,9 @@ describe('utils', function () {
 
   /**
    * Find the first call in a spy that matches a predicate
-   * @param {vi.SpyInstance} aSpy
-   * @param {(args: any) => boolean} aPredicate
-   * @returns {any}
+   * @param {vi.SpyInstance} aSpy - Vitest spy instance
+   * @param {(args: any) => boolean} aPredicate - Predicate function to match calls
+   * @returns {any} First matching call or null
    */
   function findCall(aSpy, aPredicate) {
     const callIdx = aSpy.mock.calls.findIndex(args => aPredicate(...args));
