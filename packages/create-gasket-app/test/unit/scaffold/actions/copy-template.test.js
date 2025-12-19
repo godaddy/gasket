@@ -1,12 +1,32 @@
 const mockReaddir = vi.fn();
 const mockCp = vi.fn();
+const mockWriteFile = vi.fn();
+const mockAccess = vi.fn();
 
 vi.mock('fs/promises', () => ({
   readdir: mockReaddir,
-  cp: mockCp
+  cp: mockCp,
+  writeFile: mockWriteFile,
+  access: mockAccess
 }));
 
 const copyTemplate = (await import('../../../../lib/scaffold/actions/copy-template.js')).default;
+
+/**
+ * Creates a mock implementation for cp that succeeds for template files
+ * but fails with ENOENT for .npmignore, allowing fallback to basic .gitignore creation
+ * @returns {Function} Mock implementation function
+ */
+function mockCpWithNpmignoreError() {
+  return (src) => {
+    if (src.includes('.npmignore')) {
+      const err = new Error('ENOENT');
+      err.code = 'ENOENT';
+      return Promise.reject(err);
+    }
+    return Promise.resolve();
+  };
+}
 
 describe('copyTemplate', () => {
   let mockContext;
@@ -18,6 +38,9 @@ describe('copyTemplate', () => {
       cwd: '/path/to',
       generatedFiles: new Set()
     };
+    // By default, simulate .gitignore doesn't exist
+    mockAccess.mockRejectedValue(new Error('ENOENT'));
+    mockWriteFile.mockResolvedValue();
   });
 
   afterEach(() => {
@@ -46,14 +69,13 @@ describe('copyTemplate', () => {
     ];
 
     mockReaddir.mockResolvedValue(mockEntries);
-    mockCp.mockResolvedValue();
+    mockCp.mockImplementation(mockCpWithNpmignoreError());
 
     await copyTemplate({ context: mockContext });
 
     expect(mockReaddir).toHaveBeenCalledWith(mockContext.templateDir, { withFileTypes: true });
 
     // Should copy all files except node_modules
-    expect(mockCp).toHaveBeenCalledTimes(3);
     expect(mockCp).toHaveBeenCalledWith(
       '/tmp/node_modules/@gasket/template-test/template/package.json',
       '/path/to/test-app/package.json',
@@ -85,22 +107,30 @@ describe('copyTemplate', () => {
     ];
 
     mockReaddir.mockResolvedValue(mockEntries);
-    mockCp.mockResolvedValue();
+    mockCp.mockImplementation(mockCpWithNpmignoreError());
 
     await copyTemplate({ context: mockContext });
 
     expect(mockContext.generatedFiles.has('test-app/package.json')).toBe(true);
     expect(mockContext.generatedFiles.has('test-app/src')).toBe(true);
-    expect(mockContext.generatedFiles.size).toBe(2);
+    expect(mockContext.generatedFiles.has('test-app/.gitignore')).toBe(true);
+    expect(mockContext.generatedFiles.size).toBe(3);
   });
 
   it('handles empty template directory', async () => {
     mockReaddir.mockResolvedValue([]);
+    mockCp.mockImplementation(mockCpWithNpmignoreError());
 
     await copyTemplate({ context: mockContext });
 
-    expect(mockCp).not.toHaveBeenCalled();
-    expect(mockContext.generatedFiles.size).toBe(0);
+    // Should still create .gitignore
+    expect(mockWriteFile).toHaveBeenCalledWith(
+      '/path/to/test-app/.gitignore',
+      expect.stringContaining('node_modules'),
+      'utf8'
+    );
+    expect(mockContext.generatedFiles.has('test-app/.gitignore')).toBe(true);
+    expect(mockContext.generatedFiles.size).toBe(1);
   });
 
   it('handles copy errors', async () => {
@@ -133,7 +163,7 @@ describe('copyTemplate', () => {
     ];
 
     mockReaddir.mockResolvedValue(mockEntries);
-    mockCp.mockResolvedValue();
+    mockCp.mockImplementation(mockCpWithNpmignoreError());
 
     await copyTemplate({ context: mockContext });
 
@@ -152,5 +182,101 @@ describe('copyTemplate', () => {
       '/apps/my-app/public',
       { recursive: true }
     );
+  });
+
+  describe('ensureGitignore', () => {
+    it('copies .npmignore to .gitignore if .npmignore exists', async () => {
+      const mockEntries = [
+        { name: 'package.json', isFile: () => true, isDirectory: () => false },
+        { name: '.npmignore', isFile: () => true, isDirectory: () => false }
+      ];
+
+      mockReaddir.mockResolvedValue(mockEntries);
+      mockCp.mockResolvedValue();
+      mockAccess.mockRejectedValue(new Error('ENOENT')); // .gitignore doesn't exist
+
+      await copyTemplate({ context: mockContext });
+
+      expect(mockAccess).toHaveBeenCalledWith('/path/to/test-app/.gitignore');
+      // Should try to copy .npmignore to .gitignore
+      expect(mockCp).toHaveBeenCalledWith(
+        '/path/to/test-app/.npmignore',
+        '/path/to/test-app/.gitignore'
+      );
+      expect(mockWriteFile).not.toHaveBeenCalled();
+      expect(mockContext.generatedFiles.has('test-app/.gitignore')).toBe(true);
+    });
+
+    it('creates basic .gitignore if .npmignore does not exist', async () => {
+      const mockEntries = [
+        { name: 'package.json', isFile: () => true, isDirectory: () => false }
+      ];
+
+      mockReaddir.mockResolvedValue(mockEntries);
+      mockCp.mockImplementation(mockCpWithNpmignoreError());
+      mockAccess.mockRejectedValue(new Error('ENOENT'));
+
+      await copyTemplate({ context: mockContext });
+
+      expect(mockAccess).toHaveBeenCalledWith('/path/to/test-app/.gitignore');
+      expect(mockWriteFile).toHaveBeenCalledWith(
+        '/path/to/test-app/.gitignore',
+        expect.stringContaining('node_modules'),
+        'utf8'
+      );
+      expect(mockContext.generatedFiles.has('test-app/.gitignore')).toBe(true);
+    });
+
+    it('does not create .gitignore if it already exists', async () => {
+      const mockEntries = [
+        { name: 'package.json', isFile: () => true, isDirectory: () => false }
+      ];
+
+      mockReaddir.mockResolvedValue(mockEntries);
+      mockCp.mockResolvedValue();
+      mockAccess.mockResolvedValue(); // Simulate .gitignore exists
+
+      await copyTemplate({ context: mockContext });
+
+      expect(mockAccess).toHaveBeenCalledWith('/path/to/test-app/.gitignore');
+      expect(mockWriteFile).not.toHaveBeenCalled();
+      expect(mockContext.generatedFiles.has('test-app/.gitignore')).toBe(false);
+    });
+
+    it('adds .gitignore to generatedFiles when created', async () => {
+      const mockEntries = [
+        { name: 'src', isFile: () => false, isDirectory: () => true }
+      ];
+
+      mockReaddir.mockResolvedValue(mockEntries);
+      mockCp.mockImplementation(mockCpWithNpmignoreError());
+      mockAccess.mockRejectedValue(new Error('ENOENT'));
+
+      await copyTemplate({ context: mockContext });
+
+      expect(mockContext.generatedFiles.has('test-app/src')).toBe(true);
+      expect(mockContext.generatedFiles.has('test-app/.gitignore')).toBe(true);
+      expect(mockContext.generatedFiles.size).toBe(2);
+    });
+
+    it('throws error if copying .npmignore fails with non-ENOENT error', async () => {
+      const mockEntries = [
+        { name: 'package.json', isFile: () => true, isDirectory: () => false }
+      ];
+
+      mockReaddir.mockResolvedValue(mockEntries);
+      mockCp.mockImplementation((src) => {
+        if (src.includes('.npmignore')) {
+          const err = new Error('Permission denied');
+          err.code = 'EACCES';
+          return Promise.reject(err);
+        }
+        return Promise.resolve();
+      });
+      mockAccess.mockRejectedValue(new Error('ENOENT'));
+
+      await expect(copyTemplate({ context: mockContext }))
+        .rejects.toThrow('Permission denied');
+    });
   });
 });
