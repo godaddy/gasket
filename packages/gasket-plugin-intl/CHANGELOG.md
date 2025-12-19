@@ -1,5 +1,13 @@
 # `@gasket/plugin-intl`
 
+## 7.6.1
+
+### Patch Changes
+
+- db09b09: Improve JSDocs
+- Updated dependencies [db09b09]
+  - @gasket/request@7.5.5
+
 ## 7.6.0
 
 ### Minor Changes

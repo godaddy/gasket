@@ -1,5 +1,14 @@
 # `@gasket/react-intl`
 
+## 7.7.1
+
+### Patch Changes
+
+- db09b09: Improve JSDocs
+- Updated dependencies [db09b09]
+  - @gasket/plugin-intl@7.6.1
+  - @gasket/data@7.5.5
+
 ## 7.7.0
 
 ### Minor Changes

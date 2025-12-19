@@ -1,5 +1,12 @@
 # `@gasket/plugin-docs`
 
+## 7.5.2
+
+### Patch Changes
+
+- db09b09: Improve JSDocs
+  - @gasket/plugin-command@7.6.2
+
 ## 7.5.1
 
 ### Patch Changes

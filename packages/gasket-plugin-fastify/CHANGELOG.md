@@ -1,5 +1,11 @@
 # `@gasket/plugin-fastify`
 
+## 7.5.1
+
+### Patch Changes
+
+- db09b09: Improve JSDocs
+
 ## 7.5.0
 
 ### Minor Changes
