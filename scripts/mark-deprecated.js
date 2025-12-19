@@ -1,4 +1,4 @@
-import glob from 'glob';
+import { globSync } from 'glob';
 import { createRequire } from 'module';
 import * as path from 'path';
 import { execSync } from 'child_process';
@@ -11,7 +11,7 @@ const __dirname = path.dirname(new URL(import.meta.url).pathname);
  * The `deprecated` value should be the message displayed
  */
 function main() {
-  const packagePaths = glob.sync('packages/*/package.json');
+  const packagePaths = globSync('packages/*/package.json');
   const deprecated = packagePaths.map(p => require(path.join(__dirname, '..', p))).filter(pkg => pkg.deprecated);
 
   deprecated.forEach(pkg => {

@@ -130,6 +130,7 @@ export type HookSubscriber = {
  */
 export type HookConfig = {
   subscribers: Record<string, HookSubscriber>;
+  _orderingNormalized?: boolean;
 };
 
 /**

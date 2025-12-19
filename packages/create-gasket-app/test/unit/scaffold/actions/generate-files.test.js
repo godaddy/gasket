@@ -31,7 +31,7 @@ vi.mock('handlebars', () => {
 vi.mock('glob', async () => {
   const mod = await vi.importActual('glob');
   return {
-    default: vi.fn(mod.default)
+    glob: vi.fn(mod.glob)
   };
 });
 
@@ -98,12 +98,11 @@ describe('generateFiles', () => {
     mockReadFileStub.mockRejectedValue(new Error('Bogus error occurred'));
     await generateFiles({ context: mockContext });
     expect(mockContext.errors).toHaveLength(2);
-    expect(mockContext.errors[0]).toContain('Error reading template');
-    expect(mockContext.errors[0]).toContain('file-a.md');
-    expect(mockContext.errors[0]).toContain('Bogus error occurred');
-    expect(mockContext.errors[1]).toContain('Error reading template');
-    expect(mockContext.errors[1]).toContain('file-b.md');
-    expect(mockContext.errors[1]).toContain('Bogus error occurred');
+    const errorStr = mockContext.errors.join(' ');
+    expect(errorStr).toContain('Error reading template');
+    expect(errorStr).toContain('file-a.md');
+    expect(errorStr).toContain('file-b.md');
+    expect(errorStr).toContain('Bogus error occurred');
   });
 
   it('handles template dir read errors as warnings', async () => {
@@ -218,21 +217,24 @@ describe('generateFiles', () => {
     it('returns flat array of descriptor objects', async function () {
       const results = await _getDescriptors(mockContext);
       expect(results).toHaveLength(2);
-      expect(results[0]).toEqual(
-        expect.objectContaining({
-          target: 'file-a.md',
-          from: '@gasket/plugin-example'
-        }));
-      expect(results[1]).toEqual(
-        expect.objectContaining({
-          target: 'file-b.md',
-          from: '@gasket/plugin-example'
-        }));
+      expect(results).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            target: 'file-a.md',
+            from: '@gasket/plugin-example'
+          }),
+          expect.objectContaining({
+            target: 'file-b.md',
+            from: '@gasket/plugin-example'
+          })
+        ])
+      );
     });
 
     it('descriptor has target destination', async function () {
       const results = await _getDescriptors(mockContext);
-      expect(results[0]).toEqual(
+      const fileADescriptor = results.find(r => r.target === 'file-a.md');
+      expect(fileADescriptor).toEqual(
         expect.objectContaining({
           targetFile: expect.stringContaining('/path/to/my-app/file-a.md')
         }));
@@ -240,7 +242,8 @@ describe('generateFiles', () => {
 
     it('descriptor has source file path', async function () {
       const results = await _getDescriptors(mockContext);
-      expect(results[0]).toEqual(
+      const fileADescriptor = results.find(r => r.target === 'file-a.md');
+      expect(fileADescriptor).toEqual(
         expect.objectContaining({
           srcFile: expect.stringContaining('/create-gasket-app/test/fixtures/generator/file-a.md')
         }));
@@ -331,7 +334,8 @@ describe('generateFiles', () => {
       }];
       const results = await _getDescriptors(mockContext);
       expect(results).toHaveLength(2);
-      expect(results[0]).toEqual(
+      const overrideDescriptor = results.find(r => r.from === '@gasket/plugin-override-example');
+      expect(overrideDescriptor).toEqual(
         expect.objectContaining({
           pattern: expect.stringContaining('/create-gasket-app/test/fixtures/generator/override/*'),
           base: expect.stringMatching(/.+fixtures\/generator\/override$/),
