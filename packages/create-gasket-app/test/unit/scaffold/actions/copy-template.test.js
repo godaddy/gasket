@@ -1,9 +1,13 @@
 const mockReaddir = vi.fn();
 const mockCp = vi.fn();
+const mockWriteFile = vi.fn();
+const mockAccess = vi.fn();
 
 vi.mock('fs/promises', () => ({
   readdir: mockReaddir,
-  cp: mockCp
+  cp: mockCp,
+  writeFile: mockWriteFile,
+  access: mockAccess
 }));
 
 const copyTemplate = (await import('../../../../lib/scaffold/actions/copy-template.js')).default;
@@ -18,6 +22,9 @@ describe('copyTemplate', () => {
       cwd: '/path/to',
       generatedFiles: new Set()
     };
+    // By default, simulate .gitignore doesn't exist
+    mockAccess.mockRejectedValue(new Error('ENOENT'));
+    mockWriteFile.mockResolvedValue();
   });
 
   afterEach(() => {
@@ -91,7 +98,8 @@ describe('copyTemplate', () => {
 
     expect(mockContext.generatedFiles.has('test-app/package.json')).toBe(true);
     expect(mockContext.generatedFiles.has('test-app/src')).toBe(true);
-    expect(mockContext.generatedFiles.size).toBe(2);
+    expect(mockContext.generatedFiles.has('test-app/.gitignore')).toBe(true);
+    expect(mockContext.generatedFiles.size).toBe(3);
   });
 
   it('handles empty template directory', async () => {
@@ -100,7 +108,14 @@ describe('copyTemplate', () => {
     await copyTemplate({ context: mockContext });
 
     expect(mockCp).not.toHaveBeenCalled();
-    expect(mockContext.generatedFiles.size).toBe(0);
+    // Should still create .gitignore
+    expect(mockWriteFile).toHaveBeenCalledWith(
+      '/path/to/test-app/.gitignore',
+      expect.stringContaining('node_modules'),
+      'utf8'
+    );
+    expect(mockContext.generatedFiles.has('test-app/.gitignore')).toBe(true);
+    expect(mockContext.generatedFiles.size).toBe(1);
   });
 
   it('handles copy errors', async () => {
@@ -152,5 +167,59 @@ describe('copyTemplate', () => {
       '/apps/my-app/public',
       { recursive: true }
     );
+  });
+
+  describe('ensureGitignore', () => {
+    it('creates .gitignore if it does not exist', async () => {
+      const mockEntries = [
+        { name: 'package.json', isFile: () => true, isDirectory: () => false }
+      ];
+
+      mockReaddir.mockResolvedValue(mockEntries);
+      mockCp.mockResolvedValue();
+      mockAccess.mockRejectedValue(new Error('ENOENT'));
+
+      await copyTemplate({ context: mockContext });
+
+      expect(mockAccess).toHaveBeenCalledWith('/path/to/test-app/.gitignore');
+      expect(mockWriteFile).toHaveBeenCalledWith(
+        '/path/to/test-app/.gitignore',
+        expect.stringContaining('node_modules'),
+        'utf8'
+      );
+      expect(mockContext.generatedFiles.has('test-app/.gitignore')).toBe(true);
+    });
+
+    it('does not create .gitignore if it already exists', async () => {
+      const mockEntries = [
+        { name: 'package.json', isFile: () => true, isDirectory: () => false }
+      ];
+
+      mockReaddir.mockResolvedValue(mockEntries);
+      mockCp.mockResolvedValue();
+      mockAccess.mockResolvedValue(); // Simulate .gitignore exists
+
+      await copyTemplate({ context: mockContext });
+
+      expect(mockAccess).toHaveBeenCalledWith('/path/to/test-app/.gitignore');
+      expect(mockWriteFile).not.toHaveBeenCalled();
+      expect(mockContext.generatedFiles.has('test-app/.gitignore')).toBe(false);
+    });
+
+    it('adds .gitignore to generatedFiles when created', async () => {
+      const mockEntries = [
+        { name: 'src', isFile: () => false, isDirectory: () => true }
+      ];
+
+      mockReaddir.mockResolvedValue(mockEntries);
+      mockCp.mockResolvedValue();
+      mockAccess.mockRejectedValue(new Error('ENOENT'));
+
+      await copyTemplate({ context: mockContext });
+
+      expect(mockContext.generatedFiles.has('test-app/src')).toBe(true);
+      expect(mockContext.generatedFiles.has('test-app/.gitignore')).toBe(true);
+      expect(mockContext.generatedFiles.size).toBe(2);
+    });
   });
 });
