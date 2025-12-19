@@ -23,6 +23,15 @@ export async function ensureGitignore(context) {
     return;
   }
 
+  const npmignorePath = path.join(context.dest, '.npmignore');
+  try {
+    await cp(npmignorePath, destPath);
+    context.generatedFiles.add(path.relative(context.cwd, destPath));
+    return;
+  } catch (err) {
+    if (err.code !== 'ENOENT') throw err;
+  }
+
   // No template gitignore found, create a basic one
   const basicGitignore = [
     '# Dependencies',
