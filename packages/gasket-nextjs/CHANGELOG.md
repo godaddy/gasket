@@ -1,5 +1,14 @@
 # `@gasket/nextjs`
 
+## 7.6.7
+
+### Patch Changes
+
+- db09b09: Improve JSDocs
+- Updated dependencies [db09b09]
+  - @gasket/request@7.5.5
+  - @gasket/data@7.5.5
+
 ## 7.6.6
 
 ### Patch Changes

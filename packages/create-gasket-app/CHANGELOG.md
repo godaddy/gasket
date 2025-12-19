@@ -1,5 +1,23 @@
 # `create-gasket-app`
 
+## 7.4.17
+
+### Patch Changes
+
+- db09b09: Improve JSDocs
+- 2be799c: Fix to ensure .gitignore is created if not installed with template
+- Updated dependencies [db09b09]
+  - @gasket/plugin-docs@7.5.2
+  - @gasket/request@7.5.5
+  - @gasket/utils@7.6.4
+  - @gasket/core@7.7.1
+  - @gasket/plugin-docusaurus@7.5.0
+  - @gasket/plugin-command@7.6.2
+  - @gasket/plugin-dynamic-plugins@7.5.0
+  - @gasket/plugin-git@7.4.8
+  - @gasket/plugin-logger@7.4.0
+  - @gasket/plugin-metadata@7.5.7
+
 ## 7.4.16
 
 ### Patch Changes

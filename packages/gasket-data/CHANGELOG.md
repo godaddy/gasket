@@ -1,5 +1,12 @@
 # `@gasket/data`
 
+## 7.5.5
+
+### Patch Changes
+
+- Updated dependencies [db09b09]
+  - @gasket/request@7.5.5
+
 ## 7.5.4
 
 ### Patch Changes

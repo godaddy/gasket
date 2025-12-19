@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 7.0.3
+
+### Patch Changes
+
+- db09b09: Improve JSDocs
+
 ## 7.0.2
 
 ### Patch Changes

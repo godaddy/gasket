@@ -1,5 +1,11 @@
 # `@gasket/plugin-jest`
 
+## 7.5.7
+
+### Patch Changes
+
+- db09b09: Improve JSDocs
+
 ## 7.5.6
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # `@gasket/request`
 
+## 7.5.5
+
+### Patch Changes
+
+- db09b09: Improve JSDocs
+
 ## 7.5.4
 
 ### Patch Changes

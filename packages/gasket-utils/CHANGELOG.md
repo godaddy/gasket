@@ -1,5 +1,11 @@
 # `@gasket/utils`
 
+## 7.6.4
+
+### Patch Changes
+
+- db09b09: Improve JSDocs
+
 ## 7.6.3
 
 ### Patch Changes
