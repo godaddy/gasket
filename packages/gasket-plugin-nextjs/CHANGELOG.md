@@ -1,5 +1,12 @@
 # `@gasket/plugin-nextjs`
 
+## 7.7.2
+
+### Patch Changes
+
+- db09b09: Improve JSDocs
+  - @gasket/plugin-webpack@7.4.0
+
 ## 7.7.1
 
 ### Patch Changes

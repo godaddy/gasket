@@ -1,5 +1,13 @@
 # `@gasket/core`
 
+## 7.7.1
+
+### Patch Changes
+
+- db09b09: Improve JSDocs
+- Updated dependencies [db09b09]
+  - @gasket/utils@7.6.4
+
 ## 7.7.0
 
 ### Minor Changes
