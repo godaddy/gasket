@@ -1,15 +1,13 @@
 import { default as diagnostics } from 'diagnostics';
 const debug = diagnostics('gasket:cli:generate-files');
 import fs from 'fs/promises';
-import { promisify } from 'util';
 import Handlebars from 'handlebars';
 import path from 'path';
 import mkdirp from 'mkdirp';
 import chalk from 'chalk';
 const { dim } = chalk;
 import { withSpinner } from '../with-spinner.js';
-import * as syncGlob from 'glob';
-const glob = promisify(syncGlob.default);
+import { glob } from 'glob';
 
 const flatten = (acc, values) => (acc || []).concat(values);
 const reSep = /[/\\]+/;

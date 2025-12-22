@@ -1,9 +1,7 @@
 import { transform } from '@swc/core';
-import globPkg from 'glob';
+import { globSync } from 'glob';
 import { readFileSync, writeFileSync, mkdirSync, existsSync, rmSync } from 'fs';
 import { dirname, join, relative } from 'path';
-
-const { glob } = globPkg;
 
 /**
  * Default SWC configuration for ESM to CJS transpilation
@@ -117,7 +115,7 @@ export async function transpileDirectory(sourceDir, outputDir = 'cjs', options =
 
   // Find all JavaScript files
   const pattern = `${sourceDir}/**/*.{${extensions.map(ext => ext.slice(1)).join(',')}}`;
-  const files = glob.sync(pattern, { ignore: ['**/node_modules/**', '**/test/**', '**/tests/**'] });
+  const files = globSync(pattern, { ignore: ['**/node_modules/**', '**/test/**', '**/tests/**'] });
 
   const results = [];
 
@@ -155,7 +153,7 @@ const reFileExt = /\.(m?js)$/;
  */
 export async function fixImportExtensions(outputDir) {
   const pattern = `${outputDir}/**/*.cjs`;
-  const files = glob.sync(pattern);
+  const files = globSync(pattern);
 
 
   for (const file of files) {

@@ -8,11 +8,7 @@ vi.mock('node:fs/promises', () => ({
 }));
 
 vi.mock('glob', () => ({
-  default: vi.fn()
-}));
-
-vi.mock('util', () => ({
-  promisify: vi.fn(() => vi.fn().mockImplementation(async (pattern, options) => {
+  glob: vi.fn().mockImplementation(async (pattern, options) => {
     // Return empty array for 'bogus' directory to test warning case
     if (options?.cwd?.includes('bogus')) {
       return [];
@@ -26,7 +22,7 @@ vi.mock('util', () => ({
       'en-US/grouped.json',
       'fr-FR/grouped.json'
     ];
-  }))
+  })
 }));
 
 const mockWriteFileStub = vi.mocked(await import('node:fs/promises')).default.writeFile;

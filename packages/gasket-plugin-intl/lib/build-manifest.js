@@ -2,13 +2,10 @@
 
 import path from 'path';
 import fs from 'node:fs/promises';
-import { promisify } from 'util';
 import { getIntlConfig } from './utils/configure-utils.js';
-import glob from 'glob';
+import { glob } from 'glob';
 import debug from 'debug';
 
-// TODO: Need to review for native promise usage
-const globAsync = promisify(glob);
 const debugLog = debug('gasket:plugin:intl:buildManifest');
 
 /**
@@ -36,7 +33,7 @@ export default async function buildManifest(gasket, options = {}) {
 
   // find all the .json files except the manifest
   debugLog(`Building manifest ${tgtFile} from JSON files in ${localesDir}`);
-  const files = (await globAsync('**/*.json', { cwd: tgtLocalesDir })).filter(
+  const files = (await glob('**/*.json', { cwd: tgtLocalesDir })).filter(
     (f) => f !== managerFilename
   );
 

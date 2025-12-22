@@ -8,13 +8,12 @@ vi.mock('fs/promises', () => ({
   stat: vi.fn().mockResolvedValue({ isFile: () => true })
 }));
 vi.mock('mkdirp', () => ({ default: vi.fn() }));
-vi.mock('rimraf', () => ({ default: vi.fn() }));
-vi.mock('util', () => ({ promisify: f => f }));
+vi.mock('rimraf', () => ({ rimraf: vi.fn() }));
 
 import collateFiles from '../../lib/utils/collate-files.js';
 import { readFile, writeFile, copyFile, stat } from 'fs/promises';
 import mkdirp from 'mkdirp';
-import rimraf from 'rimraf';
+import { rimraf } from 'rimraf';
 
 const processModuleSpy = vi.spyOn(collateFiles, 'processModule');
 const { processModule } = collateFiles;
