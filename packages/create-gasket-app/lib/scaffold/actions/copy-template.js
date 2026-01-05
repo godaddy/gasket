@@ -12,7 +12,6 @@ const TEMPLATE_SUFFIX = '.template';
  * @returns {Promise<string[]>} - List of renamed files (destination paths)
  */
 async function processTemplateFiles(dir) {
-  console.log('processTemplateFiles', dir);
   const renamedFiles = [];
   const entries = await readdir(dir, { withFileTypes: true });
 
@@ -49,6 +48,7 @@ async function copyTemplate({ context }) {
 
   // Process .template files recursively
   const renamedFiles = await processTemplateFiles(context.dest);
+  console.log('renamedFiles', renamedFiles);
   for (const filePath of renamedFiles) {
     // Remove the old .template entry and add the renamed one
     const templatePath = filePath + TEMPLATE_SUFFIX;
