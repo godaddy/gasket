@@ -18,8 +18,12 @@ const __dirname = dirname(__filename);
 const ROOT = join(__dirname, '..');
 const PACKAGES_DIR = join(ROOT, 'packages');
 
-// Expected dot files that should exist in template directories
-const EXPECTED_DOT_FILES = ['.npmrc', '.gitignore'];
+// Expected dot files that should exist in template directories (with .template suffix)
+const EXPECTED_DOT_FILES = ['.npmrc.template', '.gitignore.template'];
+
+// Dot files that are allowed to exist in templates without being packed
+// (e.g., .gitignore for the template's own development needs)
+const ALLOWED_UNPACKED_DOT_FILES = ['.gitignore'];
 
 /**
  * Parse .gitignore file and return patterns
@@ -189,7 +193,14 @@ function verifyTemplatePackage(packageName) {
   const packedFiles = getPackedFiles(packageDir);
 
   // Check which dot files are missing from the pack list
-  const missingFiles = dotFiles.filter(dotFile => !packedFiles.includes(dotFile));
+  // Exclude files that are intentionally not packed (like .gitignore for template dev)
+  const missingFiles = dotFiles.filter(dotFile => {
+    const fileName = dotFile.split('/').pop();
+    if (ALLOWED_UNPACKED_DOT_FILES.includes(fileName)) {
+      return false;
+    }
+    return !packedFiles.includes(dotFile);
+  });
 
   if (missingFiles.length > 0) {
     console.log(chalk.red(`  ERROR: ${missingFiles.length} dot file(s) will NOT be packed:`));
