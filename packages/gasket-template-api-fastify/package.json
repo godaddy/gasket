@@ -4,9 +4,7 @@
   "description": "Gasket API template for Fastify",
   "type": "module",
   "files": [
-    "template",
-    "template/.gitignore",
-    "template/.npmrc"
+    "template"
   ],
   "scripts": {
     "lint": "eslint .",

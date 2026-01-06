@@ -1,52 +1,35 @@
 import path from 'path';
 import { withSpinner } from '../with-spinner.js';
-import { cp, readdir, writeFile, access } from 'fs/promises';
+import { cp, readdir, rename } from 'fs/promises';
 
 const EXCLUDED_FILES = ['node_modules'];
+const TEMPLATE_SUFFIX = '.template';
 
 /**
- * Ensures a .gitignore exists in the generated app.
- * npm intentionally strips .gitignore files from published packages.
- * We will need to update our templates to use a different name
- * such as gitignore or .gitignore.template to survive installing.
- * @param {import("../../internal.d.ts").PartialCreateContext} context - Create context
- * @returns {Promise<void>}
+ * Recursively processes .template files in a directory,
+ * renaming them to remove the .template suffix.
+ * @param {string} dir - Directory to process
+ * @returns {Promise<string[]>} - List of renamed files (destination paths)
  */
-export async function ensureGitignore(context) {
-  const destPath = path.join(context.dest, '.gitignore');
+async function processTemplateFiles(dir) {
+  const renamedFiles = [];
+  const entries = await readdir(dir, { withFileTypes: true });
 
-  const exists = await access(destPath)
-    .then(() => true)
-    .catch(() => false);
+  for (const entry of entries) {
+    const fullPath = path.join(dir, entry.name);
 
-  if (exists) {
-    return;
+    if (entry.isDirectory()) {
+      const nested = await processTemplateFiles(fullPath);
+      renamedFiles.push(...nested);
+    } else if (entry.name.endsWith(TEMPLATE_SUFFIX)) {
+      const newName = entry.name.slice(0, -TEMPLATE_SUFFIX.length);
+      const newPath = path.join(dir, newName);
+      await rename(fullPath, newPath);
+      renamedFiles.push(newPath);
+    }
   }
 
-  const npmignorePath = path.join(context.dest, '.npmignore');
-  try {
-    await cp(npmignorePath, destPath);
-    context.generatedFiles.add(path.relative(context.cwd, destPath));
-    return;
-  } catch (err) {
-    if (err.code !== 'ENOENT') throw err;
-  }
-
-  // No template gitignore found, create a basic one
-  const basicGitignore = [
-    '# Dependencies',
-    'node_modules',
-    '',
-    '# Logs',
-    '*.log',
-    '',
-    '# Env files',
-    '.env',
-    '.env.local'
-  ].join('\n');
-
-  await writeFile(destPath, basicGitignore, 'utf8');
-  context.generatedFiles.add(path.relative(context.cwd, destPath));
+  return renamedFiles;
 }
 
 /** @type {import('../../internal.d.ts').copyTemplate} */
@@ -63,8 +46,15 @@ async function copyTemplate({ context }) {
     context.generatedFiles.add(path.relative(context.cwd, destPath));
   }
 
-  // Ensure .gitignore is properly created
-  await ensureGitignore(context);
+  // Process .template files recursively
+  const renamedFiles = await processTemplateFiles(context.dest);
+
+  for (const filePath of renamedFiles) {
+    // Remove the old .template entry and add the renamed one
+    const templatePath = filePath + TEMPLATE_SUFFIX;
+    context.generatedFiles.delete(path.relative(context.cwd, templatePath));
+    context.generatedFiles.add(path.relative(context.cwd, filePath));
+  }
 }
 
 export default withSpinner('Copy template files', copyTemplate);
