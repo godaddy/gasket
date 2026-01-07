@@ -51,3 +51,5 @@ jobs:
           cat publish_output.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
+    # TBD: Notify Slack?
