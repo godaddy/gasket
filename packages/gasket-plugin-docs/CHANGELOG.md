@@ -1,5 +1,12 @@
 # `@gasket/plugin-docs`
 
+## 7.5.3
+
+### Patch Changes
+
+- 31bf06b: Upgrade glob (v8→v13) and rimraf (v3→v6) dependencies.
+  - @gasket/plugin-command@7.6.3
+
 ## 7.5.2
 
 ### Patch Changes

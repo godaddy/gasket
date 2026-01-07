@@ -1,5 +1,12 @@
 # `@gasket/core`
 
+## 7.7.2
+
+### Patch Changes
+
+- 31bf06b: Upgrade glob (v8→v13) and rimraf (v3→v6) dependencies.
+  - @gasket/utils@7.6.4
+
 ## 7.7.1
 
 ### Patch Changes

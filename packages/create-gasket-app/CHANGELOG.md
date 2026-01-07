@@ -1,5 +1,23 @@
 # `create-gasket-app`
 
+## 7.4.18
+
+### Patch Changes
+
+- 16bffc7: Adjust dotfiles with .template suffix, cli handle .template suffix pruning for unpacked files
+- 31bf06b: Upgrade glob (v8→v13) and rimraf (v3→v6) dependencies.
+- Updated dependencies [31bf06b]
+  - @gasket/plugin-docs@7.5.3
+  - @gasket/core@7.7.2
+  - @gasket/plugin-command@7.6.3
+  - @gasket/plugin-docusaurus@7.5.0
+  - @gasket/plugin-dynamic-plugins@7.5.0
+  - @gasket/plugin-git@7.4.8
+  - @gasket/plugin-logger@7.4.0
+  - @gasket/plugin-metadata@7.5.8
+  - @gasket/request@7.5.5
+  - @gasket/utils@7.6.4
+
 ## 7.4.17
 
 ### Patch Changes

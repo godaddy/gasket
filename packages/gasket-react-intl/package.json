@@ -64,6 +64,6 @@
     "vitest": "^3.2.0"
   },
   "peerDependencies": {
-    "@gasket/plugin-intl": "^7.6.1"
+    "@gasket/plugin-intl": "^7.6.2"
   }
 }

@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 7.0.4
+
+### Patch Changes
+
+- 16bffc7: Adjust dotfiles with .template suffix, cli handle .template suffix pruning for unpacked files
+
 ## 7.0.3
 
 ### Patch Changes
