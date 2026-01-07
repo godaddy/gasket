@@ -1,11 +1,7 @@
 import { readFile, writeFile, copyFile, stat } from 'fs/promises';
 import path from 'path';
-import { promisify } from 'util';
 import mkdirp from 'mkdirp';
-// TODO: rimraf currently does not have native promise support
-// https://github.com/isaacs/rimraf/pull/229
-import rimraf from 'rimraf';
-const rimrafAsync = promisify(rimraf);
+import { rimraf } from 'rimraf';
 
 /**
  * Checks if a path is a file.
@@ -82,7 +78,7 @@ async function processModule(moduleDocsConfig, docsConfigSet) {
 async function collateFiles(docsConfigSet) {
   const { docsRoot } = docsConfigSet;
   await mkdirp(docsRoot);
-  await rimrafAsync(path.join(docsRoot, '*'));
+  await rimraf(path.join(docsRoot, '*'));
 
   // Flatten the moduleDocsConfigs then generate
   const flattened = ['plugins', 'presets', 'modules'].reduce(

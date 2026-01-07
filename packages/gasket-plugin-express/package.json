@@ -51,7 +51,7 @@
     "compression": "^1.8.0",
     "cookie-parser": "^1.4.7",
     "diagnostics": "^2.0.2",
-    "glob": "^8.1.0",
+    "glob": "^13.0.0",
     "http2-express": "^1.0.1"
   },
   "devDependencies": {

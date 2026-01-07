@@ -1,12 +1,11 @@
 /* eslint-disable max-len, max-statements */
 import { vi } from 'vitest';
 import path from 'path';
-import glob from 'glob';
 import DocsConfigSetBuilder from '../../lib/utils/config-set-builder.js';
+import { glob } from 'glob';
 
 const fixtures = path.resolve(import.meta.dirname, '..', 'fixtures');
-vi.mock('util', () => ({ promisify: f => f }));
-vi.mock('glob', () => ({ default: vi.fn().mockResolvedValue(['./files/file-a.md', './files/file-b.md']) }));
+vi.mock('glob', () => ({ glob: vi.fn().mockResolvedValue(['./files/file-a.md', './files/file-b.md']) }));
 
 describe('utils - DocsConfigSetBuilder', () => {
   let instance, buildDocsConfigSpy, mockGasket;
