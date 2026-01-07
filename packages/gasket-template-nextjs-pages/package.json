@@ -4,9 +4,7 @@
   "description": "Gasket Next.js Pages Router template",
   "type": "module",
   "files": [
-    "template",
-    "template/.gitignore",
-    "template/.npmrc"
+    "template"
   ],
   "scripts": {
     "lint": "eslint .",
