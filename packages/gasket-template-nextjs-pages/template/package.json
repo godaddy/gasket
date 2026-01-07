@@ -37,7 +37,7 @@
     "@gasket/request": "^7.4.3",
     "@gasket/utils": "^7.4.2",
     "@types/react": "^19.0.12",
-    "next": "^15.5.7",
+    "next": "^15.5.9",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-intl": "^7.1.6",
