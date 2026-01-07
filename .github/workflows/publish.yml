@@ -2,9 +2,8 @@ name: Publish
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
+  repository_dispatch:
+    types: [run-publish]
 
 permissions:
   id-token: write # Required for OIDC
@@ -36,13 +35,19 @@ jobs:
             ${{ runner.os }}-pnpm-24-
 
       - name: Install Dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --prefer-offline
     
       - name: Build
         run: pnpm run build
 
-      - name: Run Tests
-        run: pnpm run test
-
-      - name: Publish
-        run: pnpm publish
+      - name: Publish to NPM
+        id: publish
+        run: |
+          pnpm run release > publish_output.txt 2>&1
+          git push --follow-tags
+          echo "PUBLISH_OUTPUT<<EOF" >> $GITHUB_ENV
+          cat publish_output.txt >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+          cat publish_output.txt
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
