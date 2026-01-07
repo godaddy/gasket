@@ -1,6 +1,6 @@
 {
   "name": "@gasket/template-nextjs-app",
-  "version": "7.0.4",
+  "version": "7.0.5",
   "description": "Gasket Next.js App Router template",
   "type": "module",
   "files": [
