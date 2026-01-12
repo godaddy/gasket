@@ -1,5 +1,12 @@
 # `@gasket/plugin-intl`
 
+## 7.6.2
+
+### Patch Changes
+
+- 31bf06b: Upgrade glob (v8→v13) and rimraf (v3→v6) dependencies.
+  - @gasket/request@7.5.5
+
 ## 7.6.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # `@gasket/cjs`
 
+## 7.1.1
+
+### Patch Changes
+
+- 31bf06b: Upgrade glob (v8→v13) and rimraf (v3→v6) dependencies.
+
 ## 7.1.0
 
 ### Minor Changes

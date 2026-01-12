@@ -1,12 +1,10 @@
 {
   "name": "@gasket/template-api-express",
-  "version": "7.0.3",
+  "version": "7.0.4",
   "description": "Gasket API template for Express",
   "type": "module",
   "files": [
-    "template",
-    "template/.gitignore",
-    "template/.npmrc"
+    "template"
   ],
   "scripts": {
     "lint": "eslint .",

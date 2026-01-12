@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-intl",
-  "version": "7.6.1",
+  "version": "7.6.2",
   "description": "NodeJS script to build localization files.",
   "type": "module",
   "types": "lib/index.d.ts",
@@ -47,7 +47,7 @@
     "@gasket/request": "workspace:^",
     "debug": "^4.4.0",
     "fs-extra": "^10.1.0",
-    "glob": "^8.1.0",
+    "glob": "^13.0.0",
     "intl": "^1.2.5",
     "negotiator": "^1.0.0",
     "semver": "^7.7.1"

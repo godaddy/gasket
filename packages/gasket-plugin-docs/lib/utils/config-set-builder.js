@@ -1,6 +1,5 @@
 import path from 'node:path';
 import defaultsDeep from 'lodash.defaultsdeep';
-import { promisify } from 'util';
 import {
   sortModules,
   sortStructures,
@@ -11,9 +10,7 @@ import {
   sortConfigurations
 } from './sorts.js';
 
-// TODO: Need to review for native promise usage
-import glob from 'glob';
-const globAsync = promisify(glob);
+import { glob } from 'glob';
 
 const isAppPlugin = /^\/.+\/plugins\//;
 const isUrl = /^(https?:)?\/\//;
@@ -128,7 +125,7 @@ class DocsConfigSetBuilder {
     files = Array.isArray(files) ? files : [files];
     (
       await Promise.all(
-        files.map(async (g) => await globAsync(g, { cwd: sourceRoot }))
+        files.map(async (g) => await glob(g, { cwd: sourceRoot }))
       )
     )
       .reduce((acc, cur) => acc.concat(cur), [])
