@@ -43,7 +43,7 @@ jobs:
       - name: Publish to NPM
         id: publish
         run: |
-          pnpm run release > publish_output.txt 2>&1
+          pnpm run release --dry-run > publish_output.txt 2>&1
           git push --follow-tags
           echo "PUBLISH_OUTPUT<<EOF" >> $GITHUB_ENV
           cat publish_output.txt >> $GITHUB_ENV
