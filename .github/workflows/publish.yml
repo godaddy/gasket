@@ -1,6 +1,7 @@
-name: Placeholder Publish File
+name: Publish
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
