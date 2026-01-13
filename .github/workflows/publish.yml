@@ -1,0 +1,16 @@
+name: Placeholder Publish File
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish-file:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log a message
+        run: echo "Placeholder publish file"
