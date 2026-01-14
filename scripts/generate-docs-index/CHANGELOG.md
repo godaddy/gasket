@@ -1,5 +1,13 @@
 # generate-docs-index
 
+## 7.4.27
+
+### Patch Changes
+
+- Updated dependencies [e61e88b]
+  - @gasket/plugin-redux@7.4.4
+  - @gasket/plugin-data@7.5.1
+
 ## 7.4.26
 
 ### Patch Changes

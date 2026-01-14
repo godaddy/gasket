@@ -1,5 +1,11 @@
 # `@gasket/plugin-redux`
 
+## 7.4.4
+
+### Patch Changes
+
+- e61e88b: TEST FOR NEW PUBLISH WORKFLOW
+
 ## 7.4.3
 
 ### Patch Changes
