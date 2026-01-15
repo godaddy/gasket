@@ -34,13 +34,17 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --prefer-offline
 
-      - name: Create Release Pull Request or Publish to npm
+      - name: Create Release Pull Request
         id: changesets
         uses: changesets/action@v1
         with:
           version: pnpm run version
-          # This expects you to have a script called release which does a build for your packages and calls changeset publish
-          publish: pnpm run release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Trigger Publish Workflow
+        if: steps.changesets.outputs.hasChangesets == 'false'
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          event-type: run-publish
