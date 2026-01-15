@@ -2,7 +2,6 @@
 
 Gasket plugin to setup Redux store availability to Express middleware.
 
-
 ⚠️ _DEPRECATED - This plugin will be removed in a future major version.
 Compatibility is limited to Next.js apps using [pages router] with [custom server]
 and [@gasket/plugin-middleware]._
