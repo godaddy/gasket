@@ -1,4 +1,4 @@
-/* eslint-disable max-len, max-statements */
+/* eslint-disable max-statements */
 import { vi } from 'vitest';
 import path from 'path';
 import DocsConfigSetBuilder from '../../lib/utils/config-set-builder.js';
@@ -319,7 +319,6 @@ describe('utils - DocsConfigSetBuilder', () => {
       const expected = [
         'app',
         'plugins',
-        'presets',
         'modules',
         'root',
         'docsRoot',

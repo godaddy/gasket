@@ -98,11 +98,6 @@ const makeGasket = () => ({
           }
         }
       ],
-      presets: [
-        {
-          name: 'example-preset'
-        }
-      ],
       modules: [
         {
           name: 'example-module'

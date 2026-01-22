@@ -118,7 +118,7 @@ describe('Utils Transforms', () => {
         [
           '/path/to/node_modules/@gasket/plugin-some/README.md',
           '/path/to/node_modules/@gasket/something/README.md',
-          '/path/to/node_modules/@gasket/some-preset/README.md'
+          '/path/to/node_modules/@gasket/plugin-other/README.md'
         ].forEach(source => {
           expect(test.test(source)).toEqual(true, `Path ${source}`);
         });
@@ -128,7 +128,7 @@ describe('Utils Transforms', () => {
         [
           '/path/to/packages/gasket-plugin-some/README.md',
           '/path/to/packages/gasket-something/README.md',
-          '/path/to/packages/gasket-preset-some/README.md'
+          '/path/to/packages/gasket-plugin-other/README.md'
         ].forEach(source => {
           expect(test.test(source)).toEqual(true, `Path ${source}`);
         });
@@ -138,10 +138,10 @@ describe('Utils Transforms', () => {
         [
           '/path/to/node_modules/@gasket/plugin-some/bogus.svg',
           '/path/to/node_modules/@gasket/something/bogus.png',
-          '/path/to/node_modules/@gasket/some-preset/bogus.txt',
+          '/path/to/node_modules/@gasket/plugin-other/bogus.txt',
           '/path/to/packages/gasket-plugin-some/bogus.svg',
           '/path/to/packages/gasket-something/bogus.png',
-          '/path/to/packages/gasket-preset-some/bogus.txt'
+          '/path/to/packages/gasket-plugin-other/bogus.txt'
         ].forEach(source => {
           expect(test.test(source)).toEqual(false, `Path ${source}`);
         });
@@ -151,10 +151,10 @@ describe('Utils Transforms', () => {
         [
           '/path/to/node_modules/@some/cool-gasket-plugin/README.md',
           '/path/to/node_modules/@gasketz/something/README.md',
-          '/path/to/node_modules/@some/cool-gasket-preset/README.md',
+          '/path/to/node_modules/@some/cool-gasket-module/README.md',
           '/path/to/my/cool-gasket-plugin/README.md',
           '/path/to/my/gasket/gasket-something/README.md',
-          '/path/to/my/cool-gasket-preset/README.md'
+          '/path/to/my/cool-gasket-module/README.md'
         ].forEach(source => {
           expect(test.test(source)).toEqual(false, `Path ${source}`);
         });
@@ -225,7 +225,6 @@ describe('Utils Transforms', () => {
 
           docsConfigSet = {
             plugins: [{ name: '@gasket/plugin-fake', targetRoot: '/path/to/some-app/.docs/plugins/@gasket/plugin-fake' }],
-            presets: [{ name: '@gasket/fake-preset', targetRoot: '/path/to/some-app/.docs/presets/@gasket/fake-preset' }],
             modules: [{ name: '@gasket/fake', targetRoot: '/path/to/some-app/.docs/modules/@gasket/fake' }],
             docs: '/path/to/some-app',
             docsRoot: '/path/to/some-app/.docs'
