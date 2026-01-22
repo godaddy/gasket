@@ -21,7 +21,7 @@ Module with meta data
 
 | Name | Type | Description |
 | --- | --- | --- |
-| name | `string` | Name of preset |
+| name | `string` | Name of module |
 | module | `string` | Actual module content |
 | \[package\] | `string` | Package.json contents |
 | \[version\] | `string` | Resolved version |

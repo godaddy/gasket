@@ -75,7 +75,6 @@ class DocsConfigSetBuilder {
    */
   constructor(gasket) {
     this._plugins = [];
-    this._presets = [];
     this._modules = [];
     this._transforms = [];
 
@@ -202,7 +201,6 @@ class DocsConfigSetBuilder {
     const arr = [];
 
     this._modules
-      .concat(this._presets)
       .concat(this._plugins)
       .forEach((moduleDoc) => {
         const { sourceRoot, targetRoot, name: from } = moduleDoc;
@@ -344,7 +342,6 @@ class DocsConfigSetBuilder {
     return {
       app: this._app,
       plugins: sortModules(this._plugins),
-      presets: sortModules(this._presets),
       modules: sortModules(this._modules),
       root: this._root,
       docsRoot: this._docsRoot,
