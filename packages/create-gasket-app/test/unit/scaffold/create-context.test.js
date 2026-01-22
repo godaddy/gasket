@@ -192,7 +192,10 @@ describe('makeCreateContext', () => {
   });
 
   it('sets pkgLinks from flags', () => {
-    results = makeCreateContext(argv, { npmLink: ['@gasket/jest', 'gasket-plugin-some-user'], template: '@gasket/template-nextjs-pages' });
+    results = makeCreateContext(argv, {
+      npmLink: ['@gasket/jest', 'gasket-plugin-some-user'],
+      template: '@gasket/template-nextjs-pages'
+    });
     expect(results.pkgLinks).toEqual(['@gasket/jest', 'gasket-plugin-some-user']);
   });
 

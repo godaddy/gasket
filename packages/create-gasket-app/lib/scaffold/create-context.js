@@ -1,4 +1,3 @@
-/* eslint-disable max-statements */
 import fs from 'fs';
 import path from 'path';
 import { readConfig } from '../scaffold/utils.js';

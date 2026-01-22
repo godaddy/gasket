@@ -1,4 +1,3 @@
-/* eslint-disable max-statements, no-unused-vars */
 import chalk from 'chalk';
 import { makeCreateContext } from '../scaffold/create-context.js';
 import { dumpErrorContext } from '../scaffold/dump-error-context.js';
@@ -111,6 +110,7 @@ async function handleTemplate(context) {
  * createCommand action
  * @type {import('../index.js').createCommandAction}
  */
+// eslint-disable-next-line no-unused-vars
 createCommand.action = async function run(appname, options, command) {
   // eslint-disable-next-line no-process-env
   process.env.GASKET_ENV = 'create';

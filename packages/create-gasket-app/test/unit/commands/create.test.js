@@ -1,5 +1,3 @@
-/* eslint-disable max-statements */
-
 const mockDumpErrorContext = vi.fn();
 const consoleErrorStub = vi.spyOn(console, 'error').mockImplementation(() => { });
 const consoleWarnStub = vi.spyOn(console, 'warn').mockImplementation(() => { });
@@ -45,7 +43,6 @@ const CreateCommand = (await import('../../../lib/commands/create.js')).createCo
 const { Command, Option } = await import('commander');
 
 describe('create', function () {
-  let cmdOptions;
   let cmd;
 
   beforeEach(() => {
@@ -87,7 +84,6 @@ describe('create', function () {
       });
     }
 
-    program.hook('preAction', (_, actionCommand) => { cmdOptions = actionCommand.opts(); });
     cmd = program;
   });
 

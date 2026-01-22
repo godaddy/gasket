@@ -14,6 +14,8 @@ import type { Command, Option } from 'commander';
 
 export type PartialCreateContext = Partial<CreateContext>;
 
+export function commasToArray(value: string): string[];
+
 /** scaffold */
 
 export function readConfig(
