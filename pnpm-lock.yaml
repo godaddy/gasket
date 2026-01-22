@@ -1742,152 +1742,6 @@ importers:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.15))(@types/node@20.17.19)(typescript@5.8.2))
 
-  packages/gasket-preset-api:
-    dependencies:
-      '@gasket/plugin-command':
-        specifier: workspace:^
-        version: link:../gasket-plugin-command
-      '@gasket/plugin-cypress':
-        specifier: workspace:^
-        version: link:../gasket-plugin-cypress
-      '@gasket/plugin-docs':
-        specifier: workspace:^
-        version: link:../gasket-plugin-docs
-      '@gasket/plugin-docusaurus':
-        specifier: workspace:^
-        version: link:../gasket-plugin-docusaurus
-      '@gasket/plugin-dynamic-plugins':
-        specifier: workspace:^
-        version: link:../gasket-plugin-dynamic-plugins
-      '@gasket/plugin-express':
-        specifier: workspace:^
-        version: link:../gasket-plugin-express
-      '@gasket/plugin-fastify':
-        specifier: workspace:^
-        version: link:../gasket-plugin-fastify
-      '@gasket/plugin-git':
-        specifier: workspace:^
-        version: link:../gasket-plugin-git
-      '@gasket/plugin-https':
-        specifier: workspace:^
-        version: link:../gasket-plugin-https
-      '@gasket/plugin-jest':
-        specifier: workspace:^
-        version: link:../gasket-plugin-jest
-      '@gasket/plugin-lint':
-        specifier: workspace:^
-        version: link:../gasket-plugin-lint
-      '@gasket/plugin-logger':
-        specifier: workspace:^
-        version: link:../gasket-plugin-logger
-      '@gasket/plugin-mocha':
-        specifier: workspace:^
-        version: link:../gasket-plugin-mocha
-      '@gasket/plugin-swagger':
-        specifier: workspace:^
-        version: link:../gasket-plugin-swagger
-      '@gasket/plugin-typescript':
-        specifier: workspace:^
-        version: link:../gasket-plugin-typescript
-      '@gasket/plugin-vitest':
-        specifier: workspace:^
-        version: link:../gasket-plugin-vitest
-      '@gasket/plugin-winston':
-        specifier: workspace:^
-        version: link:../gasket-plugin-winston
-    devDependencies:
-      '@gasket/cjs':
-        specifier: workspace:^
-        version: link:../gasket-cjs
-      '@gasket/plugin-metadata':
-        specifier: workspace:^
-        version: link:../gasket-plugin-metadata
-      '@vitest/coverage-v8':
-        specifier: ^3.2.0
-        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
-      create-gasket-app:
-        specifier: workspace:^
-        version: link:../create-gasket-app
-      nodemon:
-        specifier: ^3.1.9
-        version: 3.1.9
-      vitest:
-        specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
-
-  packages/gasket-preset-nextjs:
-    dependencies:
-      '@gasket/plugin-command':
-        specifier: workspace:^
-        version: link:../gasket-plugin-command
-      '@gasket/plugin-cypress':
-        specifier: workspace:^
-        version: link:../gasket-plugin-cypress
-      '@gasket/plugin-docs':
-        specifier: workspace:^
-        version: link:../gasket-plugin-docs
-      '@gasket/plugin-docusaurus':
-        specifier: workspace:^
-        version: link:../gasket-plugin-docusaurus
-      '@gasket/plugin-dynamic-plugins':
-        specifier: workspace:^
-        version: link:../gasket-plugin-dynamic-plugins
-      '@gasket/plugin-express':
-        specifier: workspace:^
-        version: link:../gasket-plugin-express
-      '@gasket/plugin-git':
-        specifier: workspace:^
-        version: link:../gasket-plugin-git
-      '@gasket/plugin-https':
-        specifier: workspace:^
-        version: link:../gasket-plugin-https
-      '@gasket/plugin-https-proxy':
-        specifier: workspace:^
-        version: link:../gasket-plugin-https-proxy
-      '@gasket/plugin-intl':
-        specifier: workspace:^
-        version: link:../gasket-plugin-intl
-      '@gasket/plugin-jest':
-        specifier: workspace:^
-        version: link:../gasket-plugin-jest
-      '@gasket/plugin-lint':
-        specifier: workspace:^
-        version: link:../gasket-plugin-lint
-      '@gasket/plugin-logger':
-        specifier: workspace:^
-        version: link:../gasket-plugin-logger
-      '@gasket/plugin-mocha':
-        specifier: workspace:^
-        version: link:../gasket-plugin-mocha
-      '@gasket/plugin-nextjs':
-        specifier: workspace:^
-        version: link:../gasket-plugin-nextjs
-      '@gasket/plugin-typescript':
-        specifier: workspace:^
-        version: link:../gasket-plugin-typescript
-      '@gasket/plugin-vitest':
-        specifier: workspace:^
-        version: link:../gasket-plugin-vitest
-      '@gasket/plugin-webpack':
-        specifier: workspace:^
-        version: link:../gasket-plugin-webpack
-      '@gasket/plugin-winston':
-        specifier: workspace:^
-        version: link:../gasket-plugin-winston
-      '@gasket/utils':
-        specifier: workspace:^
-        version: link:../gasket-utils
-    devDependencies:
-      '@gasket/cjs':
-        specifier: workspace:^
-        version: link:../gasket-cjs
-      '@vitest/coverage-v8':
-        specifier: ^3.2.0
-        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
-      vitest:
-        specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
-
   packages/gasket-react-intl:
     dependencies:
       '@gasket/data':
@@ -2175,12 +2029,6 @@ importers:
       '@gasket/plugin-workbox':
         specifier: workspace:^
         version: link:../gasket-plugin-workbox
-      '@gasket/preset-api':
-        specifier: workspace:^
-        version: link:../gasket-preset-api
-      '@gasket/preset-nextjs':
-        specifier: workspace:^
-        version: link:../gasket-preset-nextjs
       '@gasket/react-intl':
         specifier: workspace:^
         version: link:../gasket-react-intl
@@ -2386,12 +2234,6 @@ importers:
       '@gasket/plugin-workbox':
         specifier: workspace:^
         version: link:../../packages/gasket-plugin-workbox
-      '@gasket/preset-api':
-        specifier: workspace:^
-        version: link:../../packages/gasket-preset-api
-      '@gasket/preset-nextjs':
-        specifier: workspace:^
-        version: link:../../packages/gasket-preset-nextjs
       '@gasket/react-intl':
         specifier: workspace:^
         version: link:../../packages/gasket-react-intl
