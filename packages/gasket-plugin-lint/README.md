@@ -79,45 +79,6 @@ When choosing `airbnb` as the codeStyle, the eslint config will set up based on
 if `react` package is added for the app or not. If `react` is not present, the
 base airbnb config will be used.
 
-## Presets
-
-Presets can also pre-determine the code style to use. This is useful for teams
-to avoid prompts and enforce a particular code style setup. This can be done in
-the module for the preset, in the `presetPrompt` hook.
-
-### Options
-
-- `codeStyle` - (string) One of the choices of [code styles]:
-  - `godaddy`
-  - `standard`
-  - `airbnb`
-- `addStylelint` - (boolean) Enable to add stylelint for the `codeStyle` if set.
-- `eslintConfig` - (string) Name of a [ESLint shared config] to add. Only when
-  no `codeStyle`.
-- `stylelintConfig` - (string) Name of a [stylelint shared config] to add. Only
-  when no `codeStyle`.
-
-For example, say we have some team that wants to always use [Airbnb] style and
-with stylelint for their apps:
-
-```js
-// preset-prompt.js
-
-export default async function presetPrompt(gasket, context, { prompt }) {
-  context.codeStyle = 'airbnb';
-  context.addStylelint = true;
-};
-```
-
-Or, say we have another team with an internal [ESLint] config
-
-```js
-// preset-prompt.js
-export default async function presetPrompt(gasket, context, { prompt }) {
-  context.eslintConfig = '@another/eslint-config';
-};
-```
-
 ## Contribute
 
 If there is an important and widely used code style that you feel would be a

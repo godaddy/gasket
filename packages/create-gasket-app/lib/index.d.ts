@@ -46,11 +46,9 @@ interface CommandOption {
 }
 
 export interface CreateCommandOptions {
-  presets?: string[];
   template?: string;
   templatePath?: string;
   npmLink?: string[];
-  presetPath?: string[];
   packageManager?: string;
   prompts?: boolean;
   config?: string;
@@ -80,8 +78,6 @@ export interface ModuleInfo {
   package?: PackageJson;
   version?: string;
 }
-
-export interface PresetInfo extends ModuleInfo { }
 
 export interface PluginInfo extends ModuleInfo { }
 
@@ -425,15 +421,6 @@ export interface CreateContext {
   /** Whether or not target directory already exists */
   extant: boolean;
 
-  /** paths to the local presets packages */
-  localPresets: Array<string>;
-
-  /**
-   * Raw preset desc from args. Can include version constraint. Added by
-   * load-preset if using localPresets.
-   */
-  rawPresets: Array<string>;
-
   /** Local packages that should be linked */
   pkgLinks: Array<string>;
 
@@ -455,9 +442,6 @@ export interface CreateContext {
   /** (INTERNAL) false to skip the prompts */
   prompts: boolean;
 
-  /** Default empty array, populated by load-preset with actual imports */
-  presets: Array<Plugin>;
-
   /** temporary directory */
   tmpDir: string;
 
@@ -472,9 +456,6 @@ export interface CreateContext {
 
   /** resolved template name for display */
   templateName?: string;
-
-  /** Default to object w/empty plugins array to be populated by `presetConfig` hook */
-  presetConfig: GasketConfigDefinition;
 
   // Added by `global-prompts`
 
@@ -538,13 +519,6 @@ export interface ActionWrapperParams {
 declare module '@gasket/core' {
 
   export interface HookExecTypes {
-    presetPrompt(
-      context: CreateContext,
-      utils: {
-        prompt: CreatePrompt;
-      }
-    ): Promise<void>;
-    presetConfig(context: CreateContext): Promise<CreateContext['presetConfig']>;
     prompt(
       context: CreateContext,
       utils: {

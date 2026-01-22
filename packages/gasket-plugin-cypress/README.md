@@ -4,9 +4,6 @@ Creates a Cypress-based testing environment for your Gasket application.
 
 ## Installation
 
-This plugin is only used by presets for `create-gasket-app` and is not
-installed manually for applications. It is automatically included when using
-specific presets.
 
 ## Usage
 

@@ -19,7 +19,6 @@ describe('createHooks', () => {
     mockContext = {
       appName: 'my-app',
       dest: '/some/path/my-app',
-      presets: ['bogus-preset'],
       plugins: ['bogus-A-plugin', 'bogus-B-plugin'],
       pkg: {},
       runWith: vi.fn().mockImplementation(plugin => ({ ...plugin, proxied: true }))

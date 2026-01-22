@@ -171,40 +171,13 @@ describe('create', function () {
   it('dumps log on errors', async () => {
     mkDirStub.mockRejectedValueOnce(new Error('YOUR DRIVE EXPLODED!'));
     try {
-      await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--presets=nextjs']);
+      await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--template', '@gasket/template-nextjs-pages']);
     } catch (err) {
       // eslint-disable-next-line jest/no-conditional-expect
       expect(err.message).toEqual('YOUR DRIVE EXPLODED!');
       // eslint-disable-next-line jest/no-conditional-expect
       expect(mockDumpErrorContext).toHaveBeenCalled();
     }
-  });
-
-  it('prints exit message', async () => {
-    mkDirStub.mockRejectedValueOnce(new Error('YOUR DRIVE EXPLODED!'));
-    try {
-      await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--presets=nextjs']);
-    } catch (err) {
-      // eslint-disable-next-line jest/no-conditional-expect
-      expect(err.message).toEqual('YOUR DRIVE EXPLODED!');
-      // eslint-disable-next-line jest/no-conditional-expect
-      expect(consoleErrorStub).toHaveBeenCalled();
-    }
-  });
-
-  it('prints exit message when no preset found', async () => {
-    loadPresetStub.mockRejectedValueOnce(new Error('No preset found'));
-    try {
-      await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--presets', 'some-preset']);
-    } catch (err) {
-      // eslint-disable-next-line jest/no-conditional-expect
-      expect(err.message).toEqual('No preset found');
-    }
-  });
-
-  it('expands comma separated flag inputs to array', async () => {
-    await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--presets', 'nextjs,react,redux']);
-    expect(cmdOptions.presets).toEqual(['nextjs', 'react', 'redux']);
   });
 
   it('prints an error if both --config and --config-file are provided', async () => {

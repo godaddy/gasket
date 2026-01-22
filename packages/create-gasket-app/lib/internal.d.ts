@@ -14,8 +14,6 @@ import type { Command, Option } from 'commander';
 
 export type PartialCreateContext = Partial<CreateContext>;
 
-export function commasToArray(value: string): string[];
-
 /** scaffold */
 
 export function readConfig(
@@ -103,10 +101,7 @@ export function promptForTestPlugin(
 ): Promise<string | null>;
 export function allowExtantOverwriting(context: PartialCreateContext, prompt: CreatePrompt): Promise<void>;
 export function globalPrompts(params: { context: PartialCreateContext }): Promise<void>;
-export function loadPresets(params: { context: PartialCreateContext }): Promise<void>;
 
-export function presetPromptHooks(params: { gasket?: Gasket; context: PartialCreateContext }): Promise<void>;
-export function presetConfigHooks(params: { gasket?: Gasket; context: PartialCreateContext }): Promise<void>;
 export function promptHooks(params: { gasket?: Gasket; context: PartialCreateContext }): Promise<void>;
 export function execPluginPrompts(gasket: Gasket, context: PartialCreateContext): Promise<void>;
 
@@ -133,8 +128,7 @@ export function customizeTemplate(params: { context: PartialCreateContext }): Pr
 export function installTemplateDeps(params: { context: PartialCreateContext }): Promise<void>;
 export function gitInit(params: { context: PartialCreateContext }): Promise<void>;
 
-
-/** Presets */
+/** File Generation */
 export function generateFiles({ context, spinner }: { context: CreateContext, spinner: Ora }): Promise<void>;
 export function performGenerate(context: CreateContext, descriptors: Descriptior[]): boolean[];
 export function getDescriptors(context: CreateContext): Promise<Descriptior[]>;
