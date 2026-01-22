@@ -1,8 +1,7 @@
 import path from 'path';
 import { tryImport } from './utils.js';
 
-const isGasketModule = /(@gasket\/|gasket-)(?!plugin)(?!preset).+/;
-const isGasketPreset = /(gasket-preset)|(@gasket\/preset-)/;
+const isGasketModule = /(@gasket\/|gasket-)(?!plugin).+/;
 const isGasketPlugin = /(gasket-plugin)|(@gasket\/plugin-)/;
 let _metadata;
 
@@ -49,14 +48,12 @@ async function getMetadata(gasket) {
   if (!_metadata) {
     const app = await getAppInfo(gasket);
     const plugins = [];
-    const presets = [];
     const modulesMap = {};
 
     // eslint-disable-next-line max-statements
     await gasket.execApply('metadata', async (plugin, handler) => {
-      const isPreset = isGasketPreset.test(plugin.name);
       const isPlugin = isGasketPlugin.test(plugin.name);
-      const isGasketPackage = isPlugin || isPreset;
+      const isGasketPackage = isPlugin;
       const pluginData = {
         ...plugin,
         metadata: (await handler({ name: plugin.name }))
@@ -81,11 +78,7 @@ async function getMetadata(gasket) {
 
         const { dependencies, devDependencies } = await tryImport(path.join(pluginData.metadata.path, 'package.json'));
 
-        if (isPreset) {
-          presets.push(pluginData);
-        } else {
-          plugins.push(pluginData);
-        }
+        plugins.push(pluginData);
 
         for (const name of Object.keys({ ...dependencies, ...devDependencies })) {
           const isModule = isGasketModule.test(name);
@@ -123,7 +116,7 @@ async function getMetadata(gasket) {
       return modInfo;
     }));
 
-    _metadata = { app, plugins, modules, presets };
+    _metadata = { app, plugins, modules, presets: [] };
   }
 
   return _metadata;

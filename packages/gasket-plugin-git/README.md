@@ -12,28 +12,7 @@ create process.
 
 The `prompt` will ask users during the create command if they wish to initialize
 a GitHub repository. This prompt will set the `gitInit` property of the create
-context. It is possible to default this in a preset, by setting this in the
-preset's package.json, under a `gasket.create` property.
-
-In the following example, when a new app is created with this preset, a git repo
-will always be initialized, and the user will not be prompted.
-
-```json
-{
-  "name": "gasket-preset-example",
-  "version": "1.2.3",
-  "main": "index.js",
-  "dependencies": {
-    "@gasket/resolve": "^2.0.0",
-    "gasket-plugin-example": "^1.0.0"
-  },
-  "gasket": {
-    "create" : {
-      "gitInit": true
-    }
-  }
-}
-```
+context.
 
 ### create
 
@@ -45,7 +24,7 @@ lifecycle hook of your plugin, you can access `gitignore` helper to add rules.
 Rules can be added to different categories which will group them under comments.
 
 The `gitignore` helper will only be placed on the CreateContext when this plugin
-is configured and `gitInit` is true, either by preset config or prompt.
+is configured and `gitInit` is true from the prompt.
 
 #### Example adding gitignore
 

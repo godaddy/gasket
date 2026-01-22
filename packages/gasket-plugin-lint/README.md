@@ -4,7 +4,7 @@ Enables code style linting to be configured for Gasket apps.
 
 ## Installation
 
-This plugin is only used by presets for `create-gasket-app` and is not installed for apps.
+This plugin is only used by templates for `create-gasket-app` and is not installed for apps.
 
 ## Usage
 
