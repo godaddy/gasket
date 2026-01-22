@@ -116,7 +116,7 @@ async function getMetadata(gasket) {
       return modInfo;
     }));
 
-    _metadata = { app, plugins, modules, presets: [] };
+    _metadata = { app, plugins, modules };
   }
 
   return _metadata;
