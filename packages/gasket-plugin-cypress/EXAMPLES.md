@@ -7,10 +7,10 @@
 ### When Creating a New App
 
 ```bash
-# Example: Creating an app with a preset that includes the Cypress plugin
-npx create-gasket-app@latest my-app --presets @gasket/preset-nextjs
+# Example: Creating an app with a template that includes the Cypress plugin
+npx create-gasket-app@latest my-app --template @gasket/template-nextjs-pages
 
-# The plugin runs automatically during creation if included in the preset
+# The plugin runs automatically during creation if included in the template
 # It configures Cypress but doesn't add itself to the final app
 ```
 
