@@ -63,7 +63,6 @@ function findPluginData(plugin, pluginsDatas, logger) {
  * - metadata or docsSetup lifecycle file for app
  * - metadata for plugins without docsSetup hook
  * - metadata for modules not processed with plugins
- * - metadata for presets
  * @type {import('../internal.d.ts').buildDocsConfigSet}
  */
 async function buildDocsConfigSet(gasket) {
@@ -93,7 +92,6 @@ async function buildDocsConfigSet(gasket) {
   await builder.addApp(appData);
   await builder.addPlugins(metadata.plugins);
   await builder.addModules(metadata.modules);
-  await builder.addPresets(metadata.presets);
 
   return builder.getConfigSet();
 }

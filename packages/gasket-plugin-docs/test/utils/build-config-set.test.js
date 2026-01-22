@@ -4,8 +4,6 @@ const builderConstructorStub = vi.fn();
 const addAppStub = vi.fn();
 const addPluginStub = vi.fn();
 const addPluginsStub = vi.fn();
-const addPresetStub = vi.fn();
-const addPresetsStub = vi.fn();
 const addModuleStub = vi.fn();
 const addModulesStub = vi.fn();
 const getConfigSetStub = vi.fn();
@@ -35,12 +33,6 @@ vi.mock('../../lib/utils/config-set-builder', () => {
     }
     addPlugins() {
       addPluginsStub(...arguments);
-    }
-    addPreset() {
-      addPresetStub(...arguments);
-    }
-    addPresets() {
-      addPresetsStub(...arguments);
     }
     addModule() {
       addModuleStub(...arguments);
@@ -152,10 +144,6 @@ describe('utils - buildConfigSet', () => {
 
   it('adds plugins from metadata', async () => {
     expect(JSON.stringify(addPluginsStub.mock.calls[0][0])).toEqual(JSON.stringify(metadata.plugins));
-  });
-
-  it('adds presets from metadata', async () => {
-    expect(addPresetsStub).toHaveBeenCalledWith(metadata.presets);
   });
 
   it('adds modules from metadata', async () => {

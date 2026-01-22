@@ -292,40 +292,6 @@ class DocsConfigSetBuilder {
   }
 
   /**
-   * Add DocsConfig to the set for a preset
-   * @type {import('../internal.d.ts').addPreset}
-   */
-  async addPreset(presetData, docsSetup) {
-    if (this._presets.find((p) => p.metadata === presetData.metadata)) return;
-
-    // If docsSetup is passed, stick with it. Otherwise, look up a docsSetup
-    // defined by preset. Or, see if gasket.docsSetup in package.json. Finally,
-    // fall back to defaults.
-    docsSetup =
-      docsSetup ||
-      // @ts-expect-error
-      (presetData.module && presetData.module.docsSetup) ||
-      getDocsSetupFromPkg(presetData) ||
-      docsSetupDefault;
-
-    const { name } = presetData;
-    const targetRoot = path.join(this._docsRoot, 'presets', ...name.split('/'));
-    const docConfig = await this._buildDocsConfig(presetData, docsSetup, {
-      targetRoot
-    });
-
-    this._presets.push(docConfig);
-  }
-
-  /**
-   * Add DocsConfig to the set for multiple presets if not already added
-   * @type {import('../internal.d.ts').addPresets}
-   */
-  async addPresets(presetDatas) {
-    await Promise.all(presetDatas.map((p) => this.addPreset(p)));
-  }
-
-  /**
    * Add DocsConfig to the set for a module
    * @type {import('../internal.d.ts').addModule}
    */
