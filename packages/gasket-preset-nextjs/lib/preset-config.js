@@ -3,7 +3,6 @@ import pluginCommand from '@gasket/plugin-command';
 import pluginDocs from '@gasket/plugin-docs';
 import pluginDocusaurus from '@gasket/plugin-docusaurus';
 import pluginDynamicPlugins from '@gasket/plugin-dynamic-plugins';
-import pluginGit from '@gasket/plugin-git';
 import pluginLogger from '@gasket/plugin-logger';
 
 // Preset-specific Plugins
@@ -13,7 +12,6 @@ import pluginNext from '@gasket/plugin-nextjs';
 import pluginIntl from '@gasket/plugin-intl';
 import pluginWebpack from '@gasket/plugin-webpack';
 import pluginWinston from '@gasket/plugin-winston';
-import pluginLint from '@gasket/plugin-lint';
 
 /**
  * presetConfig hook
@@ -27,13 +25,11 @@ export default async function presetConfig(gasket, context) {
     pluginDocs,
     pluginDocusaurus,
     pluginDynamicPlugins,
-    pluginGit,
     pluginLogger,
     pluginNext,
     pluginIntl,
     pluginWebpack,
-    pluginWinston,
-    pluginLint
+    pluginWinston
   ]);
 
   if (context.nextServerType === 'customServer') {

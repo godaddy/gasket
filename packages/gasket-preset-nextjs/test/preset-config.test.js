@@ -29,20 +29,9 @@ describe('presetConfig', () => {
     const expected = [
       expect.objectContaining({ name: '@gasket/plugin-webpack' }),
       expect.objectContaining({ name: '@gasket/plugin-nextjs' }),
-      expect.objectContaining({ name: '@gasket/plugin-winston' }),
-      expect.objectContaining({ name: '@gasket/plugin-lint' })
+      expect.objectContaining({ name: '@gasket/plugin-winston' })
     ];
     expect(config.plugins).toEqual(expect.arrayContaining(expected));
-  });
-
-  it('adds test plugin when provided', async () => {
-    mockContext.testPlugins = ['@gasket/plugin-jest'];
-    const config = await presetConfig({}, mockContext);
-    expect(config.plugins).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({ name: '@gasket/plugin-jest' })
-      ])
-    );
   });
 
   it('adds typescript plugin when provided', async () => {

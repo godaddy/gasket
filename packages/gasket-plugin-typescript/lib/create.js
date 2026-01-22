@@ -54,10 +54,6 @@ module.exports = async function create(gasket, context) {
       local: 'tsx watch server.ts'
     });
 
-    if (testPlugins?.length && testPlugins.includes('@gasket/plugin-jest')) {
-      context.addJestTSType = true;
-    }
-
     files.add(`${generatorDir}/api/*`, `${generatorDir}/shared/*`);
     gitignore?.add('dist', 'TypeScript build output');
     pkg.add('eslintIgnore', ['dist']);

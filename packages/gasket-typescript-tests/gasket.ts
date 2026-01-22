@@ -8,16 +8,12 @@ import pluginDocusaurus from '@gasket/plugin-docusaurus';
 import pluginElasticApm from '@gasket/plugin-elastic-apm';
 import pluginExpress from '@gasket/plugin-express';
 import pluginFastify from '@gasket/plugin-fastify';
-import pluginGit from '@gasket/plugin-git';
 import pluginHappyFeet from '@gasket/plugin-happyfeet';
 import pluginHttps from '@gasket/plugin-https';
 import pluginIntl from '@gasket/plugin-intl';
-import pluginJest from '@gasket/plugin-jest';
-import pluginLint from '@gasket/plugin-lint';
 import pluginLogger from '@gasket/plugin-logger';
 import pluginManifest from '@gasket/plugin-manifest';
 import pluginMetadata from '@gasket/plugin-metadata';
-import pluginMocha from '@gasket/plugin-mocha';
 import pluginMorgan from '@gasket/plugin-morgan';
 import pluginNextjs from '@gasket/plugin-nextjs';
 import pluginRedux from '@gasket/plugin-redux';
@@ -40,16 +36,12 @@ const config: GasketConfigDefinition = {
     pluginElasticApm,
     pluginExpress,
     pluginFastify,
-    pluginGit,
     pluginHappyFeet,
     pluginHttps,
     pluginIntl,
-    pluginJest,
-    pluginLint,
     pluginLogger,
     pluginManifest,
     pluginMetadata,
-    pluginMocha,
     pluginMorgan,
     pluginNextjs,
     pluginRedux,

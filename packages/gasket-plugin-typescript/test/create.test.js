@@ -91,13 +91,6 @@ describe('create hook', () => {
       });
     });
 
-    it('adds addJestTSType for api apps with jest', () => {
-      mockContext.apiApp = true;
-      mockContext.testPlugins = ['@gasket/plugin-jest'];
-      create({}, mockContext);
-      expect(mockContext.addJestTSType).toBe(true);
-    });
-
     it('adds files for API apps', () => {
       mockContext.apiApp = true;
       create({}, mockContext);

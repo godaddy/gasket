@@ -61,13 +61,11 @@ import pluginCommand from '@gasket/plugin-command';
 import pluginDocs from '@gasket/plugin-docs';
 import pluginDocusaurus from '@gasket/plugin-docusaurus';
 import pluginDynamicPlugins from '@gasket/plugin-dynamic-plugins';
-import pluginGit from '@gasket/plugin-git';
 import pluginLogger from '@gasket/plugin-logger';
 import pluginNextjs from '@gasket/plugin-nextjs';
 import pluginIntl from '@gasket/plugin-intl';
 import pluginWebpack from '@gasket/plugin-webpack';
 import pluginWinston from '@gasket/plugin-winston';
-import pluginLint from '@gasket/plugin-lint';
 
 export default makeGasket({
   plugins: [
@@ -75,13 +73,11 @@ export default makeGasket({
     pluginDocs,
     pluginDocusaurus,
     pluginDynamicPlugins,
-    pluginGit,
     pluginLogger,
     pluginNextjs,
     pluginIntl,
     pluginWebpack,
-    pluginWinston,
-    pluginLint
+    pluginWinston
   ]
 });
 
@@ -114,13 +110,11 @@ import pluginCommand from '@gasket/plugin-command';
 import pluginDocs from '@gasket/plugin-docs';
 import pluginDocusaurus from '@gasket/plugin-docusaurus';
 import pluginDynamicPlugins from '@gasket/plugin-dynamic-plugins';
-import pluginGit from '@gasket/plugin-git';
 import pluginLogger from '@gasket/plugin-logger';
 import pluginNextjs from '@gasket/plugin-nextjs';
 import pluginIntl from '@gasket/plugin-intl';
 import pluginWebpack from '@gasket/plugin-webpack';
 import pluginWinston from '@gasket/plugin-winston';
-import pluginLint from '@gasket/plugin-lint';
 import pluginHttps from '@gasket/plugin-https';
 import pluginExpress from '@gasket/plugin-express';
 
@@ -130,13 +124,11 @@ export default makeGasket({
     pluginDocs,
     pluginDocusaurus,
     pluginDynamicPlugins,
-    pluginGit,
     pluginLogger,
     pluginNextjs,
     pluginIntl,
     pluginWebpack,
     pluginWinston,
-    pluginLint,
     pluginHttps,
     pluginExpress
   ]
@@ -174,13 +166,11 @@ import pluginCommand from '@gasket/plugin-command';
 import pluginDocs from '@gasket/plugin-docs';
 import pluginDocusaurus from '@gasket/plugin-docusaurus';
 import pluginDynamicPlugins from '@gasket/plugin-dynamic-plugins';
-import pluginGit from '@gasket/plugin-git';
 import pluginLogger from '@gasket/plugin-logger';
 import pluginNextjs from '@gasket/plugin-nextjs';
 import pluginIntl from '@gasket/plugin-intl';
 import pluginWebpack from '@gasket/plugin-webpack';
 import pluginWinston from '@gasket/plugin-winston';
-import pluginLint from '@gasket/plugin-lint';
 
 export default makeGasket({
   plugins: [
@@ -188,13 +178,11 @@ export default makeGasket({
     pluginDocs,
     pluginDocusaurus,
     pluginDynamicPlugins,
-    pluginGit,
     pluginLogger,
     pluginNextjs,
     pluginIntl,
     pluginWebpack,
-    pluginWinston,
-    pluginLint
+    pluginWinston
   ]
 });
 
@@ -235,13 +223,11 @@ import pluginCommand from '@gasket/plugin-command';
 import pluginDocs from '@gasket/plugin-docs';
 import pluginDocusaurus from '@gasket/plugin-docusaurus';
 import pluginDynamicPlugins from '@gasket/plugin-dynamic-plugins';
-import pluginGit from '@gasket/plugin-git';
 import pluginLogger from '@gasket/plugin-logger';
 import pluginNextjs from '@gasket/plugin-nextjs';
 import pluginIntl from '@gasket/plugin-intl';
 import pluginWebpack from '@gasket/plugin-webpack';
 import pluginWinston from '@gasket/plugin-winston';
-import pluginLint from '@gasket/plugin-lint';
 import pluginHttpsProxy from '@gasket/plugin-https-proxy';
 
 export default makeGasket({
@@ -250,13 +236,11 @@ export default makeGasket({
     pluginDocs,
     pluginDocusaurus,
     pluginDynamicPlugins,
-    pluginGit,
     pluginLogger,
     pluginNextjs,
     pluginIntl,
     pluginWebpack,
     pluginWinston,
-    pluginLint,
     pluginHttpsProxy
   ],
   httpsProxy: {
@@ -313,50 +297,30 @@ export default function LocaleLayout({ children, params }) {
 }
 ```
 
-### With Test Framework
+### Production Configuration
 
 ```js
-// gasket.js - includes test plugins
+// gasket.js - production setup with minimal plugins
 import { makeGasket } from '@gasket/core';
 import pluginCommand from '@gasket/plugin-command';
-import pluginDocs from '@gasket/plugin-docs';
-import pluginDocusaurus from '@gasket/plugin-docusaurus';
-import pluginDynamicPlugins from '@gasket/plugin-dynamic-plugins';
-import pluginGit from '@gasket/plugin-git';
 import pluginLogger from '@gasket/plugin-logger';
 import pluginNextjs from '@gasket/plugin-nextjs';
 import pluginIntl from '@gasket/plugin-intl';
 import pluginWebpack from '@gasket/plugin-webpack';
 import pluginWinston from '@gasket/plugin-winston';
-import pluginLint from '@gasket/plugin-lint';
-import pluginJest from '@gasket/plugin-jest';
 
 export default makeGasket({
   plugins: [
     pluginCommand,
-    pluginDocs,
-    pluginDocusaurus,
-    pluginDynamicPlugins,
-    pluginGit,
     pluginLogger,
     pluginNextjs,
     pluginIntl,
     pluginWebpack,
-    pluginWinston,
-    pluginLint,
-    pluginJest
-  ]
-});
-
-// __tests__/home.test.js
-import { render, screen } from '@testing-library/react';
-import HomePage from '../app/page.js';
-
-describe('HomePage', () => {
-  it('renders welcome message', () => {
-    render(<HomePage />);
-    expect(screen.getByText('Welcome to your Gasket Next.js App')).toBeInTheDocument();
-  });
+    pluginWinston
+  ],
+  winston: {
+    level: process.env.NODE_ENV === 'production' ? 'error' : 'debug'
+  }
 });
 ```
 

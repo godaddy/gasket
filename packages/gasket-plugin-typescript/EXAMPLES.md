@@ -135,18 +135,6 @@ import gasket from './gasket.js'; // Note .js extension
 gasket.actions.startServer();
 ```
 
-## Jest Integration
-
-When using with `@gasket/plugin-jest`, adds Jest types:
-
-```json
-{
-  "compilerOptions": {
-    "types": ["jest", "node"]
-  }
-}
-```
-
 ## README Links
 
 The plugin automatically adds relevant documentation links to the generated README:

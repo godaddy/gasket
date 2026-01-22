@@ -1,5 +1,4 @@
 /// <reference types="create-gasket-app"/>
-/// <reference types="@gasket/plugin-git" />
 
 import { DEFAULT_CONFIG } from './utils/constants.js';
 import packageJson from '../package.json' with { type: 'json' };

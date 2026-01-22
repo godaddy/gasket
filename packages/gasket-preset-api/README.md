@@ -19,7 +19,6 @@ To see complete the list of plugins configured in your app, and what commands, l
 - [@gasket/plugin-docusaurus](/packages/gasket-plugin-docusaurus/README.md)
 - [@gasket/plugin-express](/packages/gasket-plugin-express/README.md)
 - [@gasket/plugin-https](/packages/gasket-plugin-https/README.md)
-- [@gasket/plugin-lint](/packages/gasket-plugin-lint/README.md)
 
 ## License
 

@@ -75,8 +75,8 @@ const createCommand = {
     {
       name: 'npm-link',
       description: `(INTERNAL) Local packages to be linked. Can be set as
-      multiple flags (e.g. --npm-link @gasket/plugin-jest --npm-link some-test-preset)
-      comma-separated values: --npm-link=@gasket/plugin-jest,some-test-preset`,
+      multiple flags (e.g. --npm-link @gasket/plugin-swagger --npm-link some-test-preset)
+      comma-separated values: --npm-link=@gasket/plugin-swagger,some-test-preset`,
       parse: commasToArray,
       hidden: true
     },

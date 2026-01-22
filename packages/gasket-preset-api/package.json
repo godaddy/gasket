@@ -45,15 +45,10 @@
     "@gasket/plugin-dynamic-plugins": "workspace:^",
     "@gasket/plugin-express": "workspace:^",
     "@gasket/plugin-fastify": "workspace:^",
-    "@gasket/plugin-git": "workspace:^",
     "@gasket/plugin-https": "workspace:^",
-    "@gasket/plugin-jest": "workspace:^",
-    "@gasket/plugin-lint": "workspace:^",
     "@gasket/plugin-logger": "workspace:^",
-    "@gasket/plugin-mocha": "workspace:^",
     "@gasket/plugin-swagger": "workspace:^",
     "@gasket/plugin-typescript": "workspace:^",
-    "@gasket/plugin-vitest": "workspace:^",
     "@gasket/plugin-winston": "workspace:^"
   },
   "devDependencies": {
