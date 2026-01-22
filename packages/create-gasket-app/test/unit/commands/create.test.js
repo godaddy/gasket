@@ -7,29 +7,12 @@ const processExitStub = vi.spyOn(process, 'exit').mockImplementation((code) => {
   throw new Error(`process.exit(${code})`);
 });
 const mkDirStub = vi.fn();
-const loadPresetStub = vi.fn();
 const loadTemplateStub = vi.fn();
 const copyTemplateStub = vi.fn();
 const customizeTemplateStub = vi.fn();
 const installTemplateDepsStub = vi.fn();
-const globalPromptsStub = vi.fn();
-const setupPkgStub = vi.fn();
-const writePkgStub = vi.fn();
-const installModulesStub = vi.fn();
-const linkModulesStub = vi.fn();
-const writeGasketConfigStub = vi.fn();
-const presetPromptHooksStub = vi.fn();
-const presetConfigHooksStub = vi.fn();
-const promptHooksStub = vi.fn();
-const createHooksStub = vi.fn();
-const generateFilesStub = vi.fn();
-const postCreateHooksStub = vi.fn();
 const printReportStub = vi.fn();
 const gitInitStub = vi.fn();
-
-writePkgStub.update = vi.fn();
-installModulesStub.update = vi.fn();
-linkModulesStub.update = vi.fn();
 
 vi.mock('ora', () => () => ({ warn: vi.fn() }));
 vi.mock('../../../lib/scaffold/dump-error-context.js', () => ({
@@ -37,9 +20,6 @@ vi.mock('../../../lib/scaffold/dump-error-context.js', () => ({
 }));
 vi.mock('../../../lib/scaffold/actions/mkdir.js', () => ({
   default: mkDirStub
-}));
-vi.mock('../../../lib/scaffold/actions/load-preset.js', () => ({
-  default: loadPresetStub
 }));
 vi.mock('../../../lib/scaffold/actions/load-template.js', () => ({
   default: loadTemplateStub
@@ -53,50 +33,11 @@ vi.mock('../../../lib/scaffold/actions/customize-template.js', () => ({
 vi.mock('../../../lib/scaffold/actions/install-template-deps.js', () => ({
   default: installTemplateDepsStub
 }));
-vi.mock('../../../lib/scaffold/actions/global-prompts.js', () => ({
-  default: globalPromptsStub
-}));
-vi.mock('../../../lib/scaffold/actions/setup-pkg.js', () => ({
-  default: setupPkgStub
-}));
-vi.mock('../../../lib/scaffold/actions/write-pkg.js', () => ({
-  default: writePkgStub
-}));
-vi.mock('../../../lib/scaffold/actions/install-modules.js', () => ({
-  default: installModulesStub
-}));
-vi.mock('../../../lib/scaffold/actions/link-modules.js', () => ({
-  default: linkModulesStub
-}));
-vi.mock('../../../lib/scaffold/actions/write-gasket-config.js', () => ({
-  default: writeGasketConfigStub
-}));
-vi.mock('../../../lib/scaffold/actions/preset-prompt-hooks.js', () => ({
-  default: presetPromptHooksStub
-}));
-vi.mock('../../../lib/scaffold/actions/preset-config-hooks.js', () => ({
-  default: presetConfigHooksStub
-}));
-vi.mock('../../../lib/scaffold/actions/prompt-hooks.js', () => ({
-  default: promptHooksStub
-}));
-vi.mock('../../../lib/scaffold/actions/create-hooks.js', () => ({
-  default: createHooksStub
-}));
-vi.mock('../../../lib/scaffold/actions/generate-files.js', () => ({
-  default: generateFilesStub
-}));
-vi.mock('../../../lib/scaffold/actions/post-create-hooks.js', () => ({
-  default: postCreateHooksStub
-}));
 vi.mock('../../../lib/scaffold/actions/print-report.js', () => ({
   default: printReportStub
 }));
 vi.mock('../../../lib/scaffold/actions/git-init.js', () => ({
   default: gitInitStub
-}));
-vi.mock('@gasket/core', () => ({
-  makeGasket: vi.fn()
 }));
 
 
@@ -202,43 +143,25 @@ describe('create', function () {
     } catch {
       // Commander will throw when process.exit is called
     }
-    expect(consoleWarnStub).toHaveBeenCalledWith('Warning: At least one of the options is required: --template, --template-path, --presets, --preset-path');
+    expect(consoleWarnStub).toHaveBeenCalledWith('Warning: At least one of the options is required: --template, --template-path');
     expect(processExitStub).toHaveBeenCalledWith(1);
   });
 
-  it('allows for shorthand options', async () => {
-    await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '-p', 'nextjs,react']);
-    expect(cmdOptions.presets).toEqual(['nextjs', 'react']);
-  });
-
-  it('allows for longhand options', async () => {
-    await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--presets', 'nextjs,react']);
-    expect(cmdOptions.presets).toEqual(['nextjs', 'react']);
-  });
-
   it('executes expected actions', async () => {
-    await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--presets', '@gasket/preset-nextjs']);
-    expect(loadPresetStub).toHaveBeenCalled();
-    expect(globalPromptsStub).toHaveBeenCalled();
+    await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--template', '@gasket/template-nextjs-pages']);
     expect(mkDirStub).toHaveBeenCalled();
-    expect(setupPkgStub).toHaveBeenCalled();
-    expect(writePkgStub).toHaveBeenCalled();
-    expect(installModulesStub).toHaveBeenCalled();
-    expect(linkModulesStub).toHaveBeenCalled();
-    expect(presetPromptHooksStub).toHaveBeenCalled();
-    expect(presetConfigHooksStub).toHaveBeenCalled();
-    expect(promptHooksStub).toHaveBeenCalled();
-    expect(createHooksStub).toHaveBeenCalled();
-    expect(generateFilesStub).toHaveBeenCalled();
-    expect(writeGasketConfigStub).toHaveBeenCalled();
-    expect(postCreateHooksStub).toHaveBeenCalled();
+    expect(loadTemplateStub).toHaveBeenCalled();
+    expect(copyTemplateStub).toHaveBeenCalled();
+    expect(customizeTemplateStub).toHaveBeenCalled();
+    expect(installTemplateDepsStub).toHaveBeenCalled();
+    expect(gitInitStub).toHaveBeenCalled();
     expect(printReportStub).toHaveBeenCalled();
   });
 
   it('exits on action errors', async () => {
     mkDirStub.mockRejectedValueOnce(new Error('YOUR DRIVE EXPLODED!'));
     try {
-      await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--presets=nextjs']);
+      await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--template', '@gasket/template-nextjs-pages']);
     } catch (err) {
       // eslint-disable-next-line jest/no-conditional-expect
       expect(err.message).toEqual('YOUR DRIVE EXPLODED!');
@@ -308,15 +231,7 @@ describe('create', function () {
     it('uses template path when --template is provided', async () => {
       await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--template', '@gasket/template-nextjs']);
 
-      // Should skip preset processing
-      expect(globalPromptsStub).not.toHaveBeenCalled();
-      expect(loadPresetStub).not.toHaveBeenCalled();
-      expect(setupPkgStub).not.toHaveBeenCalled();
-      expect(writePkgStub).not.toHaveBeenCalled();
-      expect(installModulesStub).not.toHaveBeenCalled();
-      expect(linkModulesStub).not.toHaveBeenCalled();
-
-      // Should only run template-specific actions
+      // Should run template-specific actions
       expect(mkDirStub).toHaveBeenCalled();
       expect(loadTemplateStub).toHaveBeenCalled();
       expect(copyTemplateStub).toHaveBeenCalled();
@@ -329,12 +244,7 @@ describe('create', function () {
     it('uses template path when --template-path is provided', async () => {
       await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--template-path', '/path/to/local/template']);
 
-      // Should skip preset processing
-      expect(globalPromptsStub).not.toHaveBeenCalled();
-      expect(loadPresetStub).not.toHaveBeenCalled();
-      expect(setupPkgStub).not.toHaveBeenCalled();
-
-      // Should only run template-specific actions
+      // Should run template-specific actions
       expect(mkDirStub).toHaveBeenCalled();
       expect(loadTemplateStub).toHaveBeenCalled();
       expect(copyTemplateStub).toHaveBeenCalled();
@@ -369,23 +279,6 @@ describe('create', function () {
       const loadTemplateCall = loadTemplateStub.mock.calls[0];
       expect(loadTemplateCall[0]).toHaveProperty('context');
       expect(loadTemplateCall[0].context).toHaveProperty('templatePath', '/local/template');
-    });
-
-    it('prioritizes template over presets when both are provided', async () => {
-      await cmd.parseAsync([
-        'node', 'gasket', 'create', 'myapp',
-        '--template', '@gasket/template-nextjs',
-        '--presets', 'nextjs'
-      ]);
-
-      // Should use template path, not preset path
-      expect(loadTemplateStub).toHaveBeenCalled();
-      expect(copyTemplateStub).toHaveBeenCalled();
-      expect(customizeTemplateStub).toHaveBeenCalled();
-      expect(installTemplateDepsStub).toHaveBeenCalled();
-      expect(gitInitStub).toHaveBeenCalled();
-      expect(loadPresetStub).not.toHaveBeenCalled();
-      expect(globalPromptsStub).not.toHaveBeenCalled();
     });
   });
 });
