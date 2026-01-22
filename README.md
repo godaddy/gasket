@@ -24,7 +24,7 @@ _If you are looking for Version 6 docs, see the [LTS branch]._
 ---
 
 Gasket helps developers make frameworks to power their apps. There are several
-presets and plugins available with which to make frameworks and construct apps.
+plugins and templates available with which to make frameworks and construct apps.
 The various commands, lifecycles, and structures are all enabled by different
 plugins you can choose to use.
 
@@ -154,15 +154,6 @@ Available structure
 | [jest.config.js]   | Jest configuration                           |
 | [redux/store.js]   | Setup to make Redux store                    |
 | [vitest.config.js] | Vitest configuration file                    |
-
-## Presets
-
-Available presets
-
-| Name                    | Version | Description                          |
-| ----------------------- | ------- | ------------------------------------ |
-| [@gasket/preset-api]    | 7.5.5   | Create Express-based API with Gasket |
-| [@gasket/preset-nextjs] | 7.5.6   | Basic NextJS Framework               |
 
 ## Templates
 
@@ -380,8 +371,6 @@ Available configuration options in the `gasket.js`
 [jest.config.js]:https://jestjs.io/docs/configuration
 [redux/store.js]:/packages/gasket-plugin-redux/README.md
 [vitest.config.js]:https://vitest.dev/config/
-[@gasket/preset-api]:/packages/gasket-preset-api/README.md
-[@gasket/preset-nextjs]:/packages/gasket-preset-nextjs/README.md
 [@gasket/template-api-express]:/packages/gasket-template-api-express/README.md
 [@gasket/template-api-fastify]:/packages/gasket-template-api-fastify/README.md
 [@gasket/template-nextjs-app]:/packages/gasket-template-nextjs-app/README.md

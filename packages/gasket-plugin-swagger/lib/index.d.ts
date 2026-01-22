@@ -53,7 +53,7 @@ declare module 'create-gasket-app' {
   }
 }
 
-/* Externalize Swagger prompts for preset */
+/* Externalize Swagger prompts for templates */
 export function promptSwagger(
   context: CreateContext,
   prompt: CreatePrompt
