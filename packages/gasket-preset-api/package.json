@@ -40,7 +40,6 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-preset-api",
   "dependencies": {
     "@gasket/plugin-command": "workspace:^",
-    "@gasket/plugin-cypress": "workspace:^",
     "@gasket/plugin-docs": "workspace:^",
     "@gasket/plugin-docusaurus": "workspace:^",
     "@gasket/plugin-dynamic-plugins": "workspace:^",

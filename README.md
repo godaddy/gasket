@@ -184,7 +184,6 @@ Available plugins
 | -------------------------------- | ------- | ------------------------------------------------------------------------- |
 | [@gasket/plugin-analyze]         | 7.3.8   | Gasket Analyzer Plugin                                                    |
 | [@gasket/plugin-command]         | 7.5.3   | Plugin to enable other plugins to inject new gasket commands              |
-| [@gasket/plugin-cypress]         | 7.5.3   | Integrates Cypress based testing into your Gasket application             |
 | [@gasket/plugin-data]            | 7.4.11  | Supports application-specific settings and configurations                 |
 | [@gasket/plugin-docs]            | 7.4.8   | Centralize doc files from plugins and modules                             |
 | [@gasket/plugin-docs-graphs]     | 7.3.7   | Generate mermaid graphs of an applications gasket lifecycles              |
@@ -389,7 +388,6 @@ Available configuration options in the `gasket.js`
 [@gasket/template-nextjs-pages]:/packages/gasket-template-nextjs-pages/README.md
 [@gasket/plugin-analyze]:/packages/gasket-plugin-analyze/README.md
 [@gasket/plugin-command]:/packages/gasket-plugin-command/README.md
-[@gasket/plugin-cypress]:/packages/gasket-plugin-cypress/README.md
 [@gasket/plugin-data]:/packages/gasket-plugin-data/README.md
 [@gasket/plugin-docs]:/packages/gasket-plugin-docs/README.md
 [@gasket/plugin-docs-graphs]:/packages/gasket-plugin-docs-graphs/README.md

@@ -2,7 +2,6 @@
 import type { GasketConfigDefinition } from '@gasket/core';
 
 import pluginAnalyze from '@gasket/plugin-analyze';
-import pluginCypress from '@gasket/plugin-cypress';
 import pluginDocs from '@gasket/plugin-docs';
 import pluginDocsGraphs from '@gasket/plugin-docs-graphs';
 import pluginDocusaurus from '@gasket/plugin-docusaurus';
@@ -34,7 +33,6 @@ import pluginWorkbox from '@gasket/plugin-workbox';
 const config: GasketConfigDefinition = {
   plugins: [
     pluginAnalyze,
-    pluginCypress,
     pluginData,
     pluginDocs,
     pluginDocsGraphs,

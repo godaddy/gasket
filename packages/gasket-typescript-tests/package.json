@@ -40,7 +40,6 @@
     "@gasket/nextjs": "workspace:^",
     "@gasket/plugin-analyze": "workspace:^",
     "@gasket/plugin-command": "workspace:^",
-    "@gasket/plugin-cypress": "workspace:^",
     "@gasket/plugin-data": "workspace:^",
     "@gasket/plugin-docs": "workspace:^",
     "@gasket/plugin-docs-graphs": "workspace:^",
