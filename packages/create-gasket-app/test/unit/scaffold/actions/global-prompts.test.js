@@ -44,7 +44,7 @@ describe('globalPrompts', () => {
     mockPromptStub.mockReturnValue({});
     await globalPrompts({ context: mockContext });
 
-    expect(mockPromptStub).toHaveBeenCalledTimes(3);
+    expect(mockPromptStub).toHaveBeenCalledTimes(2);
   });
 
   describe('packageManager', () => {
