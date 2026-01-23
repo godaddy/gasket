@@ -8,14 +8,12 @@ const { name, version, devDependencies } = packageJson;
 export default function create(gasket, {
   pkg,
   gasketConfig,
-  gitignore,
   typescript,
   useDocs,
   readme
 }) {
   if (!useDocs) return;
 
-  gitignore?.add(DEFAULT_CONFIG.outputDir, 'documentation');
   gasketConfig.addCommand('docs', {
     dynamicPlugins: [
       `${name}`,
