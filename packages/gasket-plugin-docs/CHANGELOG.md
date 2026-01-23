@@ -1,5 +1,16 @@
 # `@gasket/plugin-docs`
 
+## 8.0.0-next.0
+
+### Major Changes
+
+- b235fc1: bump all package majors to 8
+
+### Patch Changes
+
+- Updated dependencies [b235fc1]
+  - @gasket/plugin-command@8.0.0-next.0
+
 ## 7.5.3
 
 ### Patch Changes

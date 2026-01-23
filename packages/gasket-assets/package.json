@@ -1,6 +1,6 @@
 {
   "name": "@gasket/assets",
-  "version": "7.5.0",
+  "version": "8.0.0-next.0",
   "description": "Gasket assets",
   "type": "module",
   "files": [
