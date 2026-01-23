@@ -1,5 +1,67 @@
 # generate-docs-index
 
+## 8.0.0-next.0
+
+### Major Changes
+
+- b235fc1: bump all package majors to 8
+
+### Patch Changes
+
+- Updated dependencies [b235fc1]
+  - create-gasket-app@8.0.0-next.0
+  - @gasket/assets@8.0.0-next.0
+  - @gasket/cjs@8.0.0-next.0
+  - @gasket/core@8.0.0-next.0
+  - @gasket/data@8.0.0-next.0
+  - @gasket/fetch@8.0.0-next.0
+  - @gasket/intl@8.0.0-next.0
+  - @gasket/nextjs@8.0.0-next.0
+  - @gasket/plugin-analyze@8.0.0-next.0
+  - @gasket/plugin-command@8.0.0-next.0
+  - @gasket/plugin-cypress@8.0.0-next.0
+  - @gasket/plugin-data@8.0.0-next.0
+  - @gasket/plugin-docs@8.0.0-next.0
+  - @gasket/plugin-docs-graphs@8.0.0-next.0
+  - @gasket/plugin-docusaurus@8.0.0-next.0
+  - @gasket/plugin-dynamic-plugins@8.0.0-next.0
+  - @gasket/plugin-elastic-apm@8.0.0-next.0
+  - @gasket/plugin-express@8.0.0-next.0
+  - @gasket/plugin-fastify@8.0.0-next.0
+  - @gasket/plugin-git@8.0.0-next.0
+  - @gasket/plugin-happyfeet@8.0.0-next.0
+  - @gasket/plugin-https@8.0.0-next.0
+  - @gasket/plugin-https-proxy@8.0.0-next.0
+  - @gasket/plugin-intl@8.0.0-next.0
+  - @gasket/plugin-jest@8.0.0-next.0
+  - @gasket/plugin-lint@8.0.0-next.0
+  - @gasket/plugin-logger@8.0.0-next.0
+  - @gasket/plugin-manifest@8.0.0-next.0
+  - @gasket/plugin-metadata@8.0.0-next.0
+  - @gasket/plugin-middleware@8.0.0-next.0
+  - @gasket/plugin-mocha@8.0.0-next.0
+  - @gasket/plugin-morgan@8.0.0-next.0
+  - @gasket/plugin-nextjs@8.0.0-next.0
+  - @gasket/plugin-redux@8.0.0-next.0
+  - @gasket/plugin-service-worker@8.0.0-next.0
+  - @gasket/plugin-swagger@8.0.0-next.0
+  - @gasket/plugin-typescript@8.0.0-next.0
+  - @gasket/plugin-vitest@8.0.0-next.0
+  - @gasket/plugin-webpack@8.0.0-next.0
+  - @gasket/plugin-winston@8.0.0-next.0
+  - @gasket/plugin-workbox@8.0.0-next.0
+  - @gasket/preset-api@8.0.0-next.0
+  - @gasket/preset-nextjs@8.0.0-next.0
+  - @gasket/react-intl@8.0.0-next.0
+  - @gasket/redux@8.0.0-next.0
+  - @gasket/request@8.0.0-next.0
+  - @gasket/template-api-express@8.0.0-next.0
+  - @gasket/template-api-fastify@8.0.0-next.0
+  - @gasket/template-nextjs-app@8.0.0-next.0
+  - @gasket/template-nextjs-express@8.0.0-next.0
+  - @gasket/template-nextjs-pages@8.0.0-next.0
+  - @gasket/utils@8.0.0-next.0
+
 ## 7.4.26
 
 ### Patch Changes

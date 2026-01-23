@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 8.0.0-next.0
+
+### Major Changes
+
+- b235fc1: bump all package majors to 8
+
 ## 7.0.4
 
 ### Patch Changes

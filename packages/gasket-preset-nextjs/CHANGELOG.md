@@ -1,5 +1,35 @@
 # `@gasket/preset-nextjs`
 
+## 8.0.0-next.0
+
+### Major Changes
+
+- b235fc1: bump all package majors to 8
+
+### Patch Changes
+
+- Updated dependencies [b235fc1]
+  - @gasket/plugin-command@8.0.0-next.0
+  - @gasket/plugin-cypress@8.0.0-next.0
+  - @gasket/plugin-docs@8.0.0-next.0
+  - @gasket/plugin-docusaurus@8.0.0-next.0
+  - @gasket/plugin-dynamic-plugins@8.0.0-next.0
+  - @gasket/plugin-express@8.0.0-next.0
+  - @gasket/plugin-git@8.0.0-next.0
+  - @gasket/plugin-https@8.0.0-next.0
+  - @gasket/plugin-https-proxy@8.0.0-next.0
+  - @gasket/plugin-intl@8.0.0-next.0
+  - @gasket/plugin-jest@8.0.0-next.0
+  - @gasket/plugin-lint@8.0.0-next.0
+  - @gasket/plugin-logger@8.0.0-next.0
+  - @gasket/plugin-mocha@8.0.0-next.0
+  - @gasket/plugin-nextjs@8.0.0-next.0
+  - @gasket/plugin-typescript@8.0.0-next.0
+  - @gasket/plugin-vitest@8.0.0-next.0
+  - @gasket/plugin-webpack@8.0.0-next.0
+  - @gasket/plugin-winston@8.0.0-next.0
+  - @gasket/utils@8.0.0-next.0
+
 ## 7.6.4
 
 ### Patch Changes
