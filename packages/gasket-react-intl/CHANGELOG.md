@@ -1,5 +1,18 @@
 # `@gasket/react-intl`
 
+## 8.0.0-next.0
+
+### Major Changes
+
+- b235fc1: bump all package majors to 8
+
+### Patch Changes
+
+- Updated dependencies [b235fc1]
+  - @gasket/data@8.0.0-next.0
+  - @gasket/intl@8.0.0-next.0
+  - @gasket/plugin-intl@8.0.0-next.0
+
 ## 7.7.1
 
 ### Patch Changes

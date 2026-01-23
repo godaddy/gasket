@@ -1,5 +1,25 @@
 # `create-gasket-app`
 
+## 8.0.0-next.0
+
+### Major Changes
+
+- b235fc1: bump all package majors to 8
+
+### Patch Changes
+
+- Updated dependencies [b235fc1]
+  - @gasket/core@8.0.0-next.0
+  - @gasket/plugin-command@8.0.0-next.0
+  - @gasket/plugin-docs@8.0.0-next.0
+  - @gasket/plugin-docusaurus@8.0.0-next.0
+  - @gasket/plugin-dynamic-plugins@8.0.0-next.0
+  - @gasket/plugin-git@8.0.0-next.0
+  - @gasket/plugin-logger@8.0.0-next.0
+  - @gasket/plugin-metadata@8.0.0-next.0
+  - @gasket/request@8.0.0-next.0
+  - @gasket/utils@8.0.0-next.0
+
 ## 7.4.18
 
 ### Patch Changes
