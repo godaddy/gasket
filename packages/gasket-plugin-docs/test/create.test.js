@@ -23,9 +23,6 @@ describe('the create hook', () => {
       },
       gasketConfig: {
         addCommand: vi.fn()
-      },
-      gitignore: {
-        add: vi.fn()
       }
     };
   });
@@ -34,7 +31,6 @@ describe('the create hook', () => {
     create({}, { ...mockContext, useDocs: false });
     expect(mockContext.pkg.add).not.toHaveBeenCalled();
     expect(mockContext.gasketConfig.addCommand).not.toHaveBeenCalled();
-    expect(mockContext.gitignore.add).not.toHaveBeenCalled();
   });
 
   it('adds devDependencies', () => {
@@ -53,16 +49,6 @@ describe('the create hook', () => {
         '@gasket/plugin-metadata'
       ]
     });
-  });
-
-  it('should add a gitignore entry for the .docs directory', () => {
-    create({}, mockContext);
-
-    expect(mockContext.gitignore.add).toHaveBeenCalledWith('.docs', 'documentation');
-  });
-
-  it('should handle when no `gitignore` is present in the create context', () => {
-    expect(() => create({}, mockContext)).not.toThrow(Error);
   });
 
   it('should add a docs script', () => {

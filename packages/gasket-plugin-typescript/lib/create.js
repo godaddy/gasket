@@ -9,9 +9,7 @@ module.exports = async function create(gasket, context) {
     nextDevProxy,
     nextServerType,
     apiApp,
-    gitignore,
     readme,
-    testPlugins,
     packageManager
   } = context;
   const depType = apiApp ? 'devDependencies' : 'dependencies';
@@ -55,7 +53,6 @@ module.exports = async function create(gasket, context) {
     });
 
     files.add(`${generatorDir}/api/*`, `${generatorDir}/shared/*`);
-    gitignore?.add('dist', 'TypeScript build output');
     pkg.add('eslintIgnore', ['dist']);
     await readme.markdownFile(path.join(generatorDir, 'markdown/README.md'));
   }
@@ -63,7 +60,6 @@ module.exports = async function create(gasket, context) {
   // Files for Next.js customServer
   if (nextServerType === 'customServer') {
     files.add(`${generatorDir}/next/*`, `${generatorDir}/shared/*`);
-    gitignore?.add('dist', 'TypeScript build output');
     pkg.add('eslintIgnore', ['dist']);
   }
 
