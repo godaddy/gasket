@@ -57,5 +57,7 @@
     "@gasket/utils": "7.6.4",
     "generate-docs-index": "7.4.26"
   },
-  "changesets": []
+  "changesets": [
+    "polite-hornets-jam"
+  ]
 }

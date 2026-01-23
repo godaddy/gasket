@@ -1,7 +1,7 @@
 {
   "name": "@gasket/typescript-tests",
   "private": true,
-  "version": "7.5.0",
+  "version": "8.0.0-next.0",
   "description": "Not a published package; hosts unit tests to verify TypeScript support",
   "type": "module",
   "files": [
