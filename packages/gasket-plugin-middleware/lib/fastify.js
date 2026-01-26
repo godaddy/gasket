@@ -17,8 +17,20 @@ export default async function fastify(gasket, app) {
   } = config;
 
   // Enable middleware for fastify@3
-  const { default: fastifyExpress } = await import('@fastify/express');
-  await app.register(fastifyExpress);
+  // @fastify/express must be installed by the app when using middleware with Fastify
+  let fastifyExpress;
+  try {
+    fastifyExpress = (await import('@fastify/express')).default;
+    await app.register(fastifyExpress);
+  } catch (err) {
+    if (err.code === 'ERR_MODULE_NOT_FOUND' || err.code === 'MODULE_NOT_FOUND') {
+      throw new Error(
+        '@fastify/express is required when using @gasket/plugin-middleware with Fastify. ' +
+        'Please install it: npm install @fastify/express'
+      );
+    }
+    throw err;
+  }
 
   // Access the underlying Express app
   const expressApp = app.express;

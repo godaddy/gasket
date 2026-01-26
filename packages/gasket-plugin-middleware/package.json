@@ -34,12 +34,13 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-middleware",
   "dependencies": {
-    "@fastify/express": "^3.0.0 || ^4.0.0",
     "compression": "^1.8.0",
     "cookie-parser": "^1.4.7",
     "diagnostics": "^2.0.2"
   },
   "devDependencies": {
+    "@fastify/express": "^3.0.0",
+    "@gasket/cjs": "workspace:^",
     "@gasket/core": "workspace:^",
     "@gasket/plugin-express": "workspace:^",
     "@gasket/plugin-fastify": "workspace:^",
