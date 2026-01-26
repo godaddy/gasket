@@ -17,7 +17,7 @@ describe('Plugin', () => {
   });
 
   it('has expected hooks', () => {
-    const expected = ['create', 'createServers', 'metadata'];
+    const expected = ['createServers', 'metadata'];
     expect(Object.keys(plugin.hooks)).toEqual(expected);
   });
 });

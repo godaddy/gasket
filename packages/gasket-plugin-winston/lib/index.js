@@ -17,13 +17,6 @@ const plugin = {
   version,
   description,
   hooks: {
-    create(gasket, { pkg, gasketConfig }) {
-      gasketConfig.addPlugin('pluginWinston', '@gasket/plugin-winston');
-      pkg.add('dependencies', {
-        [name]: `^${version}`,
-        winston: dependencies.winston
-      });
-    },
     createLogger(gasket) {
       const { config } = gasket;
       const transportOrTransports = config.winston?.transports;

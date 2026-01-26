@@ -6,8 +6,7 @@ import packageJson from '../package.json' with { type: 'json' };
 const {
   name,
   version,
-  description,
-  devDependencies
+  description
 } = packageJson;
 
 /** @type {import('@gasket/core').Plugin} */
@@ -17,15 +16,6 @@ const plugin = {
   description,
   actions,
   hooks: {
-    create(gasket, { pkg, gasketConfig }) {
-      gasketConfig.addPlugin('pluginWebpack', name);
-      pkg.add('dependencies', {
-        [name]: `^${version}`
-      });
-      pkg.add('devDependencies', {
-        webpack: devDependencies.webpack
-      });
-    },
     metadata(gasket, meta) {
       return {
         ...meta,

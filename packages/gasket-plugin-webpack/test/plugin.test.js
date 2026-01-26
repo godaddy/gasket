@@ -1,12 +1,10 @@
-import { vi } from 'vitest';
 import plugin from '../lib/index.js';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 const {
   name,
   version,
-  description,
-  devDependencies
+  description
 } = require('../package.json');
 
 describe('Plugin', () => {
@@ -25,7 +23,6 @@ describe('Plugin', () => {
 
   it('has expected hooks', () => {
     const expected = [
-      'create',
       'metadata'
     ];
 
@@ -34,41 +31,5 @@ describe('Plugin', () => {
     const hooks = Object.keys(plugin.hooks);
     expect(hooks).toEqual(expected);
     expect(hooks).toHaveLength(expected.length);
-  });
-});
-
-describe('create hook', () => {
-  let mockContext;
-  beforeEach(() => {
-
-    mockContext = {
-      pkg: {
-        add: vi.fn(),
-        has: vi.fn()
-      },
-      gasketConfig: { addPlugin: vi.fn() }
-    };
-  });
-
-  it('adds itself to the dependencies', async function () {
-    await plugin.hooks.create({}, mockContext);
-
-    expect(mockContext.pkg.add).toHaveBeenCalledWith('dependencies', {
-      [name]: `^${version}`
-    });
-  });
-
-  it('adds appropriate devDependencies', async function () {
-    await plugin.hooks.create({}, mockContext);
-
-    expect(mockContext.pkg.add).toHaveBeenCalledWith('devDependencies', {
-      webpack: devDependencies.webpack
-    });
-  });
-
-  it('adds plugin import to the gasket file', async function () {
-    await plugin.hooks.create({}, mockContext);
-
-    expect(mockContext.gasketConfig.addPlugin).toHaveBeenCalledWith('pluginWebpack', name);
   });
 });

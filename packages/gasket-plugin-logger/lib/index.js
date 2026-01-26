@@ -16,12 +16,6 @@ const plugin = {
     getLogger: (gasket) => gasket.logger
   },
   hooks: {
-    create(gasket, { pkg, gasketConfig }) {
-      gasketConfig.addPlugin('pluginLogger', '@gasket/plugin-logger');
-      pkg.add('dependencies', {
-        [name]: `^${version}`
-      });
-    },
     init(gasket) {
       const loggers = gasket.execSync('createLogger');
 
