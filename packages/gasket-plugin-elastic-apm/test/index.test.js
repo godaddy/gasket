@@ -47,7 +47,6 @@ describe('Plugin', () => {
   it('has expected hooks', () => {
     const expected = [
       'configure',
-      'create',
       'metadata'
     ];
 

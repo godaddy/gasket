@@ -23,17 +23,8 @@ describe('gasket-plugin-typescript', () => {
       expect(plugin.hooks).toBeInstanceOf(Object);
     });
 
-    it('should have expected hooks', () => {
-      const expected = [
-        'create'
-      ];
-      expect(Object.keys(plugin.hooks)).toEqual(expect.arrayContaining(expected));
-    });
-
-    it('should have hooks that are functions', () => {
-      Object.keys(plugin.hooks).forEach(hook => {
-        expect(plugin.hooks[hook]).toBeInstanceOf(Function);
-      });
+    it('should have no hooks', () => {
+      expect(Object.keys(plugin.hooks)).toHaveLength(0);
     });
   });
 });

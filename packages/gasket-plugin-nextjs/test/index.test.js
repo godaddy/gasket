@@ -56,11 +56,9 @@ describe('Plugin', function () {
     const expected = [
       'apmTransaction',
       'configure',
-      'create',
       'express',
       'fastify',
       'metadata',
-      'prompt',
       'webpackConfig',
       'workbox'
     ];

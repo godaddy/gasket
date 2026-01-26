@@ -18,7 +18,6 @@ describe('@gasket/plugin-command', () => {
 
   it('should have expected hooks', () => {
     const expectedHooks = [
-      'create',
       'configure',
       'prepare',
       'commands',
