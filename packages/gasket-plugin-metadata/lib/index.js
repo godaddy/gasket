@@ -1,6 +1,5 @@
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
-import create from './create.js';
 import actions from './actions.js';
 import webpackConfig from './webpack-config.js';
 const { name, version, description } = require('../package.json');
@@ -12,7 +11,6 @@ export default ({
   description,
   actions,
   hooks: {
-    create,
     webpackConfig,
     metadata(gasket, meta) {
       const mod = require('@gasket/core/package.json');

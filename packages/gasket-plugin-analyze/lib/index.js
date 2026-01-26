@@ -1,6 +1,5 @@
 /// <reference types="@gasket/plugin-metadata" />
 
-import create from './create.js';
 import webpackConfig from './webpack-config.js';
 import packageJson from '../package.json' with { type: 'json' };
 const { name, version, description } = packageJson;
@@ -14,7 +13,6 @@ const plugin = {
   description,
   hooks: {
     webpackConfig,
-    create,
     metadata(gasket, meta) {
       return {
         ...meta,

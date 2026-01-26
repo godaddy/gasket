@@ -1,7 +1,5 @@
-/// <reference types="create-gasket-app" />
 /// <reference types="@gasket/plugin-metadata" />
 
-import create from './create.js';
 import createServers from './create-servers.js';
 import actions from './actions.js';
 import packageJson from '../package.json' with { type: 'json' };
@@ -14,7 +12,6 @@ export default {
   description,
   actions,
   hooks: {
-    create,
     createServers,
     metadata(gasket, meta) {
       return {

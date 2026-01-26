@@ -5,7 +5,6 @@
   "type": "module",
   "types": "lib/index.d.ts",
   "files": [
-    "generator",
     "docs",
     "lib",
     "cjs",
@@ -17,10 +16,6 @@
       "import": "./lib/index.js",
       "require": "./cjs/index.cjs",
       "default": "./cjs/index.cjs"
-    },
-    "./prompts": {
-      "import": "./lib/prompt.js",
-      "require": "./cjs/prompt.cjs"
     },
     "./package.json": "./package.json"
   },

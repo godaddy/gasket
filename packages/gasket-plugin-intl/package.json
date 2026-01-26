@@ -5,7 +5,6 @@
   "type": "module",
   "types": "lib/index.d.ts",
   "files": [
-    "generator",
     "lib",
     "cjs",
     "EXAMPLES.md"

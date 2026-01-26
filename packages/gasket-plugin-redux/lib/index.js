@@ -1,12 +1,9 @@
-/// <reference types="create-gasket-app" />
 /// <reference types="@gasket/plugin-metadata" />
 
 const path = require('path');
 const { name, version, description } = require('../package.json');
 const configure = require('./configure');
-const prompt = require('./prompt');
 const middleware = require('./middleware');
-const create = require('./create');
 const webpackConfig = require('./webpack-config');
 
 /**
@@ -22,8 +19,6 @@ const plugin = {
   dependencies: ['@gasket/plugin-middleware'],
   hooks: {
     configure,
-    prompt,
-    create,
     webpackConfig,
     middleware,
     metadata(gasket, meta) {

@@ -7,7 +7,6 @@
   "types": "./lib/index.d.ts",
   "files": [
     "cjs",
-    "generator",
     "lib",
     "EXAMPLES.md"
   ],
