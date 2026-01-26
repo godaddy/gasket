@@ -69,15 +69,6 @@ const mockDocsConfigSet = {
       mockNoMatchTransform
     ]
   }],
-  presets: [{
-    name: 'example-preset',
-    link: 'README.md',
-    sourceRoot: '/path/to/node_modules/example-plugin',
-    targetRoot: '/path/to/app/.docs/test-app/presets/example-preset',
-    files: [
-      'README.md'
-    ]
-  }],
   modules: [{
     name: 'example-module',
     link: 'README.md',
@@ -129,7 +120,6 @@ describe('Utils - collateFiles', () => {
   it('processes all moduleDocConfigs', async () => {
     await collateFiles(mockDocsConfigSet);
     expect(processModuleSpy).toHaveBeenCalledWith(mockDocsConfigSet.plugins[0], mockDocsConfigSet);
-    expect(processModuleSpy).toHaveBeenCalledWith(mockDocsConfigSet.presets[0], mockDocsConfigSet);
     expect(processModuleSpy).toHaveBeenCalledWith(mockDocsConfigSet.modules[0], mockDocsConfigSet);
   });
 

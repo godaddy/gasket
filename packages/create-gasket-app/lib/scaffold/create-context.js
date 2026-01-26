@@ -1,4 +1,3 @@
-/* eslint-disable max-statements */
 import fs from 'fs';
 import path from 'path';
 import { readConfig } from '../scaffold/utils.js';
@@ -73,21 +72,17 @@ export class CreateContext {
 export function makeCreateContext(argv = [], options = {}) {
   const appName = argv[0] || 'templated-app';
   const {
-    presets = [],
     template,
     templatePath,
     npmLink = [],
-    presetPath = [],
     packageManager,
     prompts,
     config,
     configFile
   } = options;
 
-  // Flatten the array of array created by the plugins flag – it
+  // Flatten the array of array created by the plugins flag – it
   // supports both multiple instances as well as comma-separated lists.
-  const rawPresets = presets.reduce(flatten, []);
-  const localPresets = presetPath.reduce(flatten, []);
   const pkgLinks = npmLink.reduce(flatten, []);
   const cwd = process.cwd();
   const dest = path.join(cwd, appName);
@@ -107,8 +102,6 @@ export function makeCreateContext(argv = [], options = {}) {
     relDest,
     extant,
     pkgLinks,
-    localPresets,
-    rawPresets,
     template,
     templatePath,
     messages: [],
@@ -117,10 +110,6 @@ export function makeCreateContext(argv = [], options = {}) {
     nextSteps: [],
     generatedFiles: new Set(),
     prompts,
-    presets: [],
-    presetConfig: {
-      plugins: []
-    },
     readme: []
   });
 

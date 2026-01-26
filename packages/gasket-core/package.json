@@ -39,8 +39,7 @@
   "keywords": [
     "gasket",
     "plugin",
-    "plugin-engine",
-    "preset"
+    "plugin-engine"
   ],
   "author": "GoDaddy Operating Company, LLC",
   "license": "MIT",

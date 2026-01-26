@@ -74,11 +74,6 @@ module.exports = {
             position: 'left',
           },
           {
-            to: '/docs/presets',
-            label: 'Presets',
-            position: 'left',
-          },
-          {
             to: '/docs/templates',
             label: 'Templates',
             position: 'left',

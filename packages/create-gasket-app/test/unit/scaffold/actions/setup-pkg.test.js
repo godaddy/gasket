@@ -23,11 +23,7 @@ describe('setupPkg', () => {
     mockContext = {
       appName: 'my-app',
       appDescription: 'my cool app',
-      presetInfos: [{
-        name: '@gasket/preset-bogus',
-        version: '3.2.1',
-        rawName: '@gasket/preset-bogus'
-      }],
+      template: '@gasket/template-test',
       cliVersionRequired: '^1.2.3'
     };
   });

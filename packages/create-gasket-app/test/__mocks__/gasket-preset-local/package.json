@@ -1,8 +1,0 @@
-{
-  "name": "gasket-preset-local",
-  "version": "1.2.3",
-  "main": "index.js",
-  "dependencies": {
-    "bogus-plugin": "^4.5.6"
-  }
-}

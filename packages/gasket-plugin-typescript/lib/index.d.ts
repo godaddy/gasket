@@ -5,7 +5,7 @@ import type { CreateContext, CreatePrompt } from 'create-gasket-app' with { 'res
 declare const plugin: Plugin;
 export default plugin;
 
-/* Externalize TS prompts for preset */
+/* Externalize TS prompts for templates */
 export function promptTypescript(
   context: CreateContext,
   prompt: CreatePrompt

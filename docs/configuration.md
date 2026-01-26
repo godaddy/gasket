@@ -3,7 +3,7 @@
 All configuration of the Gasket plugins is centralized in a `gasket.js`
 file in the root of your application.
 
-## Presets and Plugins
+## Plugins
 
 To configure plugins in an app, update the `plugins` array in
 `gasket.js` with imported gasket plugin packages.

@@ -7,8 +7,8 @@ This is a **create-time only plugin** that runs during `create-gasket-app` to co
 ### During App Creation
 
 ```bash
-# The plugin runs automatically during app creation via presets
-npx create-gasket-app@latest my-app --presets @gasket/preset-nextjs
+# The plugin runs automatically during app creation via templates
+npx create-gasket-app@latest my-app --template @gasket/template-nextjs-pages
 
 # The plugin prompts for linting preferences and configures package.json
 # but does NOT add itself to the final gasket.js file
@@ -115,7 +115,7 @@ You can skip prompts by providing configuration:
 ```bash
 # Using --config flag to pre-configure linting choices
 npx create-gasket-app@latest my-app \
-  --presets @gasket/preset-nextjs \
+  --template @gasket/template-nextjs-pages \
   --config '{"codeStyle": "airbnb", "addStylelint": true}'
 ```
 
@@ -272,7 +272,7 @@ For TypeScript projects:
 }
 ```
 
-## Code Style Presets
+## Code Style Options
 
 ### GoDaddy Style Features
 - Automatic React detection (uses `godaddy-react` config)

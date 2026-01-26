@@ -2,8 +2,7 @@ import type { Plugin, Gasket } from '@gasket/core';
 import type { Logger } from '@gasket/plugin-logger';
 import type {
   ModuleData,
-  PluginData,
-  PresetData
+  PluginData
 } from '@gasket/plugin-metadata';
 
 /**
@@ -129,8 +128,6 @@ export interface DocsConfigSet extends PluginData {
   docsRoot: string;
   /** List of plugins */
   plugins: ModuleDocsConfig[];
-  /** List of presets */
-  presets: ModuleDocsConfig[];
   /** Root directory */
   root: string;
   /** List of transformations */
@@ -159,7 +156,6 @@ export function findPluginData(
  * - metadata or docsSetup lifecycle file for app
  * - metadata for plugins without docsSetup hook
  * - metadata for modules not processed with plugins
- * - metadata for presets
  */
 export function buildDocsConfigSet(
   gasket: Gasket
@@ -244,24 +240,6 @@ export function addPlugin(
 export function addPlugins(
   /** Metadata for multiple plugins. */
   pluginsDatas: PluginData[]
-): Promise<void>;
-
-/**
- * Function to add documentation configuration for a preset.
- */
-export function addPreset(
-  /** Metadata for the preset. */
-  presetData: PresetData,
-  /** Initial documentation setup. */
-  docsSetup?: DocsSetup
-): Promise<void>;
-
-/**
- * Function to add documentation configuration for multiple presets.
- */
-export function addPresets(
-  /** Metadata for multiple presets. */
-  presetsDatas: PresetData[]
 ): Promise<void>;
 
 /**

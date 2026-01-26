@@ -173,11 +173,6 @@ export type Plugin = {
 };
 
 /**
- * Preset is a plugin without any actions defined.
- */
-export type Preset = Omit<Plugin, 'actions'>;
-
-/**
  * Function signature to iterate over plugin names.
  */
 export type PluginIterator = (plugin: string) => void;

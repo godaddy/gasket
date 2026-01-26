@@ -51,8 +51,8 @@ const txGasketUrlLinks = {
     { filename, docsConfig, docsConfigSet }
   ) {
     const { targetRoot } = docsConfig;
-    const { modules, presets, plugins } = docsConfigSet;
-    const allModuleDocConfigs = modules.concat(plugins).concat(presets);
+    const { modules, plugins } = docsConfigSet;
+    const allModuleDocConfigs = modules.concat(plugins);
 
     const tx = makeLinkTransform((link) => {
       return link.replace(matchUrlLink, (match, pkgMatch, fileMatch) => {
