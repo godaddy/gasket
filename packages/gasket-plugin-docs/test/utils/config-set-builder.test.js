@@ -1,4 +1,4 @@
-/* eslint-disable max-len, max-statements */
+/* eslint-disable max-statements */
 import { vi } from 'vitest';
 import path from 'path';
 import DocsConfigSetBuilder from '../../lib/utils/config-set-builder.js';
@@ -218,108 +218,6 @@ describe('utils - DocsConfigSetBuilder', () => {
     });
   });
 
-  describe('.addPreset', () => {
-    let preset;
-
-    beforeEach(() => {
-      preset = {
-        name: 'example-preset',
-        metadata: {
-          name: 'example-preset',
-          path: '/some/path'
-        }
-      };
-    });
-
-    it('adds docConfig', async () => {
-      expect(instance._presets).toHaveLength(0);
-      await instance.addPreset(preset);
-      expect(instance._presets).toHaveLength(1);
-    });
-
-    it('does not re-add docConfig', async () => {
-      const mockInfo = preset;
-      await instance.addPreset(mockInfo);
-      await instance.addPreset(mockInfo);
-      expect(buildDocsConfigSpy).toHaveBeenCalledTimes(1);
-      expect(buildDocsConfigSpy).toHaveBeenCalledWith(mockInfo, expect.any(Object), expect.any(Object));
-    });
-
-    it('uses default docsSetup if not set', async () => {
-      await instance.addPreset(preset);
-      expect(buildDocsConfigSpy).toHaveBeenCalledWith(
-        expect.any(Object),
-        DocsConfigSetBuilder.docsSetupDefault,
-        expect.any(Object)
-      );
-    });
-
-    it('accepts custom docsSetup', async () => {
-      const mockDocSetup = { link: 'BOGUS.md' };
-      await instance.addPreset(preset, mockDocSetup);
-      expect(buildDocsConfigSpy).toHaveBeenCalledWith(
-        expect.any(Object),
-        mockDocSetup,
-        expect.any(Object)
-      );
-    });
-
-    it('finds docsSetup from package.json', async () => {
-      const docsSetup = { custom: true };
-      await instance.addPreset({ name: 'example-preset', metadata: { path: '/some/path' }, package: { gasket: { docsSetup } } });
-      expect(buildDocsConfigSpy).toHaveBeenCalledWith(
-        expect.any(Object),
-        docsSetup,
-        expect.any(Object)
-      );
-    });
-
-    it('uses preset-defined docsSetup', async () => {
-      const presetDocSetup = { link: 'BOGUS.md' };
-      await instance.addPreset({ name: 'example-preset', metadata: { path: '/some/path' }, module: { docsSetup: presetDocSetup } });
-      expect(buildDocsConfigSpy).toHaveBeenCalledWith(
-        expect.any(Object),
-        presetDocSetup,
-        expect.any(Object)
-      );
-    });
-
-    it('prefers custom docsSetup over preset-defined', async () => {
-      const mockDocSetup = { link: 'BOGUS.md' };
-      const presetDocSetup = { link: 'OTHER.md' };
-      await instance.addPreset({ name: 'example-preset', metadata: { path: '/some/path' }, module: { docsSetup: presetDocSetup } }, mockDocSetup);
-      expect(buildDocsConfigSpy).not.toHaveBeenCalledWith(expect.any(Object), presetDocSetup);
-      expect(buildDocsConfigSpy).toHaveBeenCalledWith(
-        expect.any(Object),
-        mockDocSetup,
-        expect.any(Object)
-      );
-    });
-
-    it('adds targetRoot to overrides', async () => {
-      await instance.addPreset({ name: '@some/example-preset', metadata: { path: '/some/path' } });
-      expect(buildDocsConfigSpy).toHaveBeenCalledWith(
-        expect.any(Object),
-        expect.any(Object),
-        expect.objectContaining({
-          targetRoot: path.join(instance._docsRoot, 'presets', '@some', 'example-preset')
-        })
-      );
-    });
-  });
-
-  describe('.addPresets', () => {
-
-    it('adds multiple presets', async () => {
-      await instance.addPresets([
-        { name: 'example-preset', metadata: { path: '/some/path' } },
-        { name: '@two/example-preset', metadata: { path: '/some/path' } },
-        { name: '@three/example-preset', metadata: { path: '/some/path' } }
-      ]);
-      expect(instance._presets).toHaveLength(3);
-    });
-  });
-
   describe('.addModule', () => {
 
     it('adds docConfig', async () => {
@@ -421,7 +319,6 @@ describe('utils - DocsConfigSetBuilder', () => {
       const expected = [
         'app',
         'plugins',
-        'presets',
         'modules',
         'root',
         'docsRoot',

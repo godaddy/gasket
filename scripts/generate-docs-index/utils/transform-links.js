@@ -6,8 +6,7 @@
 export default function transformLinks(content) {
   content = content
     .replace(/\/packages\/gasket-plugin/g, '/docs/plugins/plugin')
-    .replace(/\/packages\/gasket-preset/g, '/docs/presets/preset')
-    .replace(/\/packages\/gasket-(?!plugin)(?!preset)/g, '/docs/modules/')
+    .replace(/\/packages\/gasket-(?!plugin)/g, '/docs/modules/')
     .replace('/docs/generated-docs/', '/docs/')
     .replace('./LICENSE.md', '/docs/LICENSE.md')
     .replace('/packages/create-gasket-app/README.md', '/docs/create-gasket-app')

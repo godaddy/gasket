@@ -148,8 +148,6 @@ function setupTypes(pkgJson) {
 
   const packagesToSkip = [
     '@gasket/assets',
-    '@gasket/preset-api',
-    '@gasket/preset-nextjs',
     '@gasket/typescript-tests',
     '@gasket/repository'
   ];

@@ -19,7 +19,7 @@ declare module '@gasket/core' {
 }
 
 export interface BaseConfig {
-  /** Preset name */
+  /** Config name */
   name: string;
   path: string;
 }

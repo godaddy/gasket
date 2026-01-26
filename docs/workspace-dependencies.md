@@ -4,12 +4,11 @@ When developing and testing Gasket packages locally, you'll need to handle works
 
 ## Why It's Necessary
 
-When creating a preset that uses workspace packages (marked with `workspace:*`), these dependencies won't work outside your local workspace. This becomes problematic when:
+When creating packages that use workspace packages (marked with `workspace:*`), these dependencies won't work outside your local workspace. This becomes problematic when:
 
-- Testing the preset locally with `--preset-path`
-- Troubleshooting preset issues
-- Sharing the preset with others
-- Using the preset in CI/CD environments
+- Troubleshooting package issues
+- Sharing packages with others
+- Using packages in CI/CD environments
 
 ## How It Works
 
@@ -47,22 +46,18 @@ pnpm run replace-ws-aliases
    - Replace them with actual version numbers from your workspace
    - Update the files in place
 
-3. After running the script, your preset will be ready for local testing with:
-
-```bash
-pnpm create gasket my-app --preset-path ./path/to/preset
-```
+3. After running the script, your packages will be ready for local testing.
 
 ## When to Use
 
-- Before testing a preset locally
-- When troubleshooting preset issues
-- Before sharing a preset with others
-- When preparing a preset for CI/CD
+- Before testing packages locally
+- When troubleshooting package issues
+- Before sharing packages with others
+- When preparing packages for CI/CD
 
 ## Important Notes
 
-- Always run this script before testing a preset locally
+- Always run this script before testing packages locally
 - The script handles all dependency types (dependencies, devDependencies, peerDependencies, optionalDependencies)
-- After testing, you may want to revert the changes if you're still developing the preset
+- After testing, you may want to revert the changes if you're still developing the package
 - The script preserves the `^` version prefix to allow for minor version updates

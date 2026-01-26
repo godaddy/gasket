@@ -12,10 +12,8 @@ const txFixLinks = {
   handler: function fixLinks(content) {
     content = content
       .replace(/(\.\.\/)+plugins/g, '/docs/plugins')
-      .replace(/(\.\.\/)+presets/g, '/docs/presets')
       .replace(/(\.\.\/)+modules/g, '/docs/modules')
       .replace(/(\.\.\/)+plugin-/g, '/docs/plugins/plugin-')
-      .replace(/(\.\.\/)+preset-/g, '/docs/presets/preset-')
       .replace(/packages\/gasket-plugin/g, '/docs/plugins/plugin')
       .replace(/\/@gasket\//g, '/')
       .replace(/#([a-z]+[A-Z].*)/g, (_, match) => '#' + match.toLowerCase());

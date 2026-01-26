@@ -10,13 +10,6 @@ optional.
 
 For documentation on plugins, refer to the [plugin guide].
 
-## What is a Preset?
-
-A preset is simply a package with Gasket plugins dependencies. This allows
-common plugins to be grouped together, and loaded by way of a preset.
-
-For documentation on presets, refer to the [preset guide].
-
 ## Gasket Object
 
 The `Gasket` object is created by the `makeGasket` function and is passed to hook functions with the following members:
@@ -123,5 +116,4 @@ The Gasket Engine uses the [`debug`](https://www.npmjs.com/package/debug) packag
 
 <!-- LINKS -->
 
-[preset guide]: /docs/authoring-presets.md
 [plugin guide]: /docs/authoring-plugins.md

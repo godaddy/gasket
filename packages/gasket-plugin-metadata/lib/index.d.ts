@@ -56,12 +56,6 @@ export interface PluginData extends ModuleData {
   hooks?: Record<string, Function>;
 }
 
-/** Preset module with meta data */
-export interface PresetData extends ModuleData {
-  presets?: Array<PresetData>;
-  plugins: Array<PluginData>;
-}
-
 /** App module with meta data */
 interface AppData extends ModuleData {
   /** Description of modules supporting this plugin */
@@ -71,7 +65,6 @@ interface AppData extends ModuleData {
 /** Collection data for modules configured for app */
 export interface Metadata {
   app: AppData;
-  presets: Array<PresetData>;
   plugins: Array<PluginData>;
   modules: Array<ModuleData>;
 }

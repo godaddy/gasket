@@ -6,38 +6,38 @@ describe('utils - sorts', () => {
     it('gasket scope > user scope > no scope > app plugins', () => {
       const begin = [
         'plugins/gasket-plugin-a',
-        '@gasket/preset-a',
+        '@gasket/plugin-c',
         '@user/gasket-plugin-b',
-        'gasket-preset-a',
+        'gasket-plugin-c',
         '@gasket/aaa',
         '@gasket/plugin-a',
         '@user/aaa',
-        '@user/gasket-preset-a',
+        '@user/gasket-plugin-c',
         'gasket-plugin-a',
         '@user/gasket-plugin-a',
         '@gasket/plugin-b',
         'aaa',
         'plugins/gasket-plugin-b',
         'gasket-plugin-b',
-        'plugins/gasket-preset-a'
+        'plugins/gasket-plugin-c'
       ];
 
       const expected = [
-        '@gasket/preset-a',
         '@gasket/plugin-a',
         '@gasket/plugin-b',
+        '@gasket/plugin-c',
         '@gasket/aaa',
-        '@user/gasket-preset-a',
         '@user/gasket-plugin-a',
         '@user/gasket-plugin-b',
+        '@user/gasket-plugin-c',
         '@user/aaa',
-        'gasket-preset-a',
         'gasket-plugin-a',
         'gasket-plugin-b',
+        'gasket-plugin-c',
         'aaa',
-        'plugins/gasket-preset-a',
         'plugins/gasket-plugin-a',
-        'plugins/gasket-plugin-b'
+        'plugins/gasket-plugin-b',
+        'plugins/gasket-plugin-c'
       ];
 
       const results = sortModules(begin.map(name => ({ name }))).map(p => p.name);
@@ -49,38 +49,38 @@ describe('utils - sorts', () => {
     it('gasket/cli > gasket scope > user scope > no scope > app plugins', () => {
       const begin = [
         'plugins/gasket-plugin-a',
-        '@gasket/preset-a',
+        '@gasket/plugin-c',
         '@user/gasket-plugin-b',
-        'gasket-preset-a',
+        'gasket-plugin-c',
         '@gasket/aaa',
         '@gasket/plugin-a',
         '@user/aaa',
-        '@user/gasket-preset-a',
+        '@user/gasket-plugin-c',
         'gasket-plugin-a',
         '@user/gasket-plugin-a',
         '@gasket/plugin-b',
         'aaa',
         'plugins/gasket-plugin-b',
         'gasket-plugin-b',
-        'plugins/gasket-preset-a'
+        'plugins/gasket-plugin-c'
       ];
 
       const expected = [
-        '@gasket/preset-a',
         '@gasket/plugin-a',
         '@gasket/plugin-b',
+        '@gasket/plugin-c',
         '@gasket/aaa',
-        '@user/gasket-preset-a',
         '@user/gasket-plugin-a',
         '@user/gasket-plugin-b',
+        '@user/gasket-plugin-c',
         '@user/aaa',
-        'gasket-preset-a',
         'gasket-plugin-a',
         'gasket-plugin-b',
+        'gasket-plugin-c',
         'aaa',
-        'plugins/gasket-preset-a',
         'plugins/gasket-plugin-a',
-        'plugins/gasket-plugin-b'
+        'plugins/gasket-plugin-b',
+        'plugins/gasket-plugin-c'
       ];
 
       const results = sortGuides(begin.map(from => ({ from }))).map(p => p.from);

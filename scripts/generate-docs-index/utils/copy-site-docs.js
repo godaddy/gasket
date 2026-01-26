@@ -57,8 +57,6 @@ async function copyMissingExamples(projectRoot, targetRoot) {
 
         if (dirent.name.startsWith('gasket-plugin-')) {
           targetDir = path.join(targetRoot, 'plugins', packageName);
-        } else if (dirent.name.startsWith('gasket-preset-')) {
-          targetDir = path.join(targetRoot, 'presets', packageName);
         } else {
           targetDir = path.join(targetRoot, 'modules', packageName);
         }
@@ -87,7 +85,7 @@ async function copyMissingExamples(projectRoot, targetRoot) {
  * @param {string} targetRoot The root of the target docs
  */
 async function copyPackageDocs(sourceRoot, targetRoot) {
-  const dirs = ['modules', 'plugins', 'presets', 'templates'];
+  const dirs = ['modules', 'plugins', 'templates'];
   const excludedPath = '@gasket';
 
   for (const dir of dirs) {

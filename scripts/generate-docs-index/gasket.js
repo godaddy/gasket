@@ -21,19 +21,11 @@ const pluginDirs = await Promise.all(packageDirs
     return mod.default || mod;
   }));
 
-const presetDirs = await Promise.all(packageDirs
-  .filter(dirent => dirent.isDirectory() && dirent.name.startsWith('gasket-preset-'))
-  .map(async dirent => {
-    const { name } = require(path.join(packagesDir, dirent.name, 'package.json'));
-    const mod = await import(name);
-    return mod.default || mod;
-  }));
-
 export default makeGasket({
   appRoot: projectRoot,
   docs: {
     graphs: false
   },
-  plugins: presetDirs.concat([configPlugin, siteDocsPlugin], pluginDirs)
+  plugins: [configPlugin, siteDocsPlugin].concat(pluginDirs)
 });
 

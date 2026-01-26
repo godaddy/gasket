@@ -43,8 +43,6 @@
     "@gasket/plugin-webpack": "workspace:^",
     "@gasket/plugin-winston": "workspace:^",
     "@gasket/plugin-workbox": "workspace:^",
-    "@gasket/preset-api": "workspace:^",
-    "@gasket/preset-nextjs": "workspace:^",
     "@gasket/react-intl": "workspace:^",
     "@gasket/redux": "workspace:^",
     "@gasket/request": "workspace:^",

@@ -22,7 +22,7 @@ describe('CreateRuntime', () => {
     mockContext = {
       appName: 'my-app',
       dest: '/some/path/my-app',
-      preset: 'gasket-preset-bogus',
+      template: '@gasket/template-test',
       plugins: ['@gasket/plugin-bogus-A', '@gasket/plugin-bogus-B'],
       pkg: {
         add: pkgAddStub,
@@ -146,7 +146,7 @@ describe('makeCreateContext', () => {
 
   beforeEach(() => {
     argv = ['my-app'];
-    flags = { presets: ['@gasket/nextjs'] };
+    flags = { template: '@gasket/template-nextjs-pages' };
   });
 
   it('returns a create context object', () => {
@@ -164,34 +164,14 @@ describe('makeCreateContext', () => {
     expect(results.appName).toEqual('templated-app');
   });
 
-  it('sets rawPresets from flags', () => {
-    results = makeCreateContext(argv, { presets: ['@gasket/preset-bogus@^1.2.3'] });
-    expect(results.rawPresets).toEqual(['@gasket/preset-bogus@^1.2.3']);
+  it('sets template from flags', () => {
+    results = makeCreateContext(argv, { template: '@gasket/template-nextjs-pages' });
+    expect(results.template).toEqual('@gasket/template-nextjs-pages');
   });
 
-  it('sets rawPresets from flags with multiple entries', () => {
-    results = makeCreateContext(argv, { presets: ['@gasket/preset-bogus@^1.2.3', '@gasket/preset-test@^3.1.2'] });
-    expect(results.rawPresets).toEqual(['@gasket/preset-bogus@^1.2.3', '@gasket/preset-test@^3.1.2']);
-  });
-
-  it('sets rawPresets to empty array if not defined', () => {
-    results = makeCreateContext(argv, { presetPath: ['../bogus/path'] });
-    expect(results.rawPresets).toEqual([]);
-  });
-
-  it('sets localPresets from flags', () => {
-    results = makeCreateContext(argv, { presetPath: ['../bogus/path'] });
-    expect(results.localPresets).toEqual(['../bogus/path']);
-  });
-
-  it('sets localPresets from flags with multiple entries', () => {
-    results = makeCreateContext(argv, { presetPath: ['../bogus/path', '../test/path'] });
-    expect(results.localPresets).toEqual(['../bogus/path', '../test/path']);
-  });
-
-  it('sets localPresets to empty array if not defined', () => {
-    results = makeCreateContext(argv, { presets: ['@gasket/preset-bogus@^1.2.3'] });
-    expect(results.localPresets).toEqual([]);
+  it('sets templatePath from flags', () => {
+    results = makeCreateContext(argv, { templatePath: '../bogus/path' });
+    expect(results.templatePath).toEqual('../bogus/path');
   });
 
   it('sets cwd from process', () => {
@@ -212,7 +192,10 @@ describe('makeCreateContext', () => {
   });
 
   it('sets pkgLinks from flags', () => {
-    results = makeCreateContext(argv, { npmLink: ['@gasket/jest', 'gasket-plugin-some-user'], presets: ['godady'] });
+    results = makeCreateContext(argv, {
+      npmLink: ['@gasket/jest', 'gasket-plugin-some-user'],
+      template: '@gasket/template-nextjs-pages'
+    });
     expect(results.pkgLinks).toEqual(['@gasket/jest', 'gasket-plugin-some-user']);
   });
 
@@ -239,7 +222,7 @@ describe('makeCreateContext', () => {
     expect(results.generatedFiles).toBeInstanceOf(Set);
   });
 
-  it('doesnt throw if preset found', () => {
+  it('doesnt throw if template found', () => {
     let error;
     try {
       results = makeCreateContext(argv, flags);
@@ -250,10 +233,10 @@ describe('makeCreateContext', () => {
     expect(error).toBeFalsy();
   });
 
-  it('doesnt throw if preset path found', () => {
+  it('doesnt throw if template path found', () => {
     let error;
     try {
-      results = makeCreateContext(argv, { presetPath: ['somePath'] });
+      results = makeCreateContext(argv, { templatePath: 'somePath' });
     } catch (err) {
       error = err;
     }

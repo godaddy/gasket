@@ -10,7 +10,6 @@ const emptyDocsConfigSet = {
     targetRoot: '/path/to/app/.docs/test-app'
   },
   plugins: [],
-  presets: [],
   modules: [],
   structures: [],
   commands: [],
@@ -32,11 +31,6 @@ const fullDocsConfigSet = {
     name: 'example-plugin',
     link: 'README.md',
     targetRoot: '/path/to/app/.docs/test-app/plugins/example-plugin'
-  }],
-  presets: [{
-    name: 'example-preset',
-    link: 'README.md',
-    targetRoot: '/path/to/app/.docs/test-app/presets/example-preset'
   }],
   modules: [{
     name: 'example-module',
@@ -135,7 +129,7 @@ describe('Utils - generateIndex', () => {
         //
         // count the number of ref-style links
         //
-        expect(content.match(/\[.+]:/g) || []).toHaveLength(11);
+        expect(content.match(/\[.+]:/g) || []).toHaveLength(10);
       });
 
       it('makes unique references', async () => {
@@ -244,10 +238,6 @@ describe('Utils - generateIndex', () => {
 
       describe('plugins', () => {
         checkSection('plugins', 'Plugins', true);
-      });
-
-      describe('presets', () => {
-        checkSection('presets', 'Presets', true);
       });
 
       describe('modules', () => {

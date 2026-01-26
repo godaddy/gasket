@@ -21,7 +21,7 @@ describe('promptHooks', () => {
     mockContext = {
       appName: 'my-app',
       dest: '/some/path/my-app',
-      presets: ['gasket-preset-bogus'],
+      template: '@gasket/template-test',
       plugins: ['gasket-plugin-bogus-A', 'gasket-plugin-bogus-B'],
       pkg: ConfigBuilder.createPackageJson({
         name: 'my-app',

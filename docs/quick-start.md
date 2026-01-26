@@ -10,10 +10,10 @@ npx create-gasket-app@latest --help
 yarn create gasket-app --help
 ```
 
-In this example we will create a Next.js app by specifying the app name along with the preset `@gasket/preset-nextjs`:
+In this example we will create a Next.js app by specifying the app name along with a template:
 
 ```bash
-npx create-gasket-app@latest <app-name> --presets @gasket/preset-nextjs
+npx create-gasket-app@latest <app-name> --template @gasket/template-nextjs-pages
 ```
 
 This will create a new directory with the name of your app.

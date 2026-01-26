@@ -1,6 +1,0 @@
-{
-  "name": "@gasket/test-preset",
-  "version": "1.0.0",
-  "description": "Test preset for Gasket",
-  "main": "index.js"
-}

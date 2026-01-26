@@ -1,6 +1,6 @@
 # @gasket/plugin-typescript Examples
 
-> **⚠️ Important:** This plugin is **create-time only** and is NOT installed in the final application. It's used by presets during `create-gasket-app` to set up TypeScript configuration and files, then is discarded.
+> **⚠️ Important:** This plugin is **create-time only** and is NOT installed in the final application. It's used by templates during `create-gasket-app` to set up TypeScript configuration and files, then is discarded.
 
 ## Create Hook Usage
 

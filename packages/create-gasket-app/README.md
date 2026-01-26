@@ -40,9 +40,6 @@ Arguments:
   appname                              Name of the Gasket application to create
 
 Options:
-  -p, --presets [presets]              Initial Gasket preset(s) to use.
-        Can be set as short name with version (e.g. --presets nextjs@^1.0.0)
-        Or other (multiple) custom presets (e.g. --presets my-gasket-preset@1.0.0.beta-1,nextjs@^1.0.0)
   --template [template]                Selects which template you would like to use during
         installation. (e.g. --template @gasket/template-nextjs-pages-js)
   --template-path [template-path]      (INTERNAL) Path to a local template package. Can be absolute
@@ -57,7 +54,7 @@ Options:
 
 #### Templates
 
-Templates provide a complete Gasket application ready to use, unlike presets which build apps through a plugin-based creation process.
+Templates provide a complete Gasket application ready to use.
 
 ##### Using Templates
 
@@ -92,8 +89,7 @@ Templates are npm packages that follow this structure:
 
 When using templates:
 - The entire `template/` directory is copied to your new app
-- Template dependencies are installed with `npm ci`  
-- No preset processing or plugin creation flows are run
+- Template dependencies are installed with `npm ci`
 
 **Note:** Templates currently require npm as they come with `package-lock.json` files.
 
