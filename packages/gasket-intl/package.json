@@ -1,6 +1,6 @@
 {
   "name": "@gasket/intl",
-  "version": "7.5.3",
+  "version": "8.0.0-next.0",
   "description": "Internationalization managers for translation files and locale handling.",
   "type": "module",
   "types": "lib/index.d.ts",

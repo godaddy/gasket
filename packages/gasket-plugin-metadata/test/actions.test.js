@@ -92,7 +92,6 @@ describe('actions', () => {
     expect(result).toHaveProperty('app');
     expect(result).toHaveProperty('plugins');
     expect(result).toHaveProperty('modules');
-    expect(result).toHaveProperty('presets');
   });
 
   it('adds moduleInfo for app', async () => {
@@ -124,21 +123,15 @@ describe('actions', () => {
     );
   });
 
-  it('adds presetInfo from loaded config', async () => {
-    const result = await actions.getMetadata(gasket);
-    expect(result).toHaveProperty('presets');
-  });
-
   it('adds pluginInfo from loaded config', async () => {
     const result = await actions.getMetadata(gasket);
     expect(result).toHaveProperty('plugins');
   });
 
-  it('ignores plugins and presets from app dependencies', async () => {
+  it('ignores plugins from app dependencies', async () => {
     const result = await actions.getMetadata(gasket);
     const names = result.modules.map(m => m.name);
     expect(names).not.toContain('@gasket/plugin-mock');
-    expect(names).not.toContain('@gasket/mock-preset');
   });
 
   it('executes the metadata lifecycle', async function () {

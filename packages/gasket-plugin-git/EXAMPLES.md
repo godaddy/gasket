@@ -14,10 +14,10 @@
 
 ```bash
 # During app creation, the plugin will prompt:
-npx create-gasket-app@latest my-app --presets @gasket/preset-api
+npx create-gasket-app@latest my-app --template @gasket/template-api-express
 
 # To skip the prompt and initialize git automatically
-npx create-gasket-app@latest my-app --presets @gasket/preset-api --config '{"gitInit": true}'
+npx create-gasket-app@latest my-app --template @gasket/template-api-express --config '{"gitInit": true}'
 ```
 
 ## Gitignore Class Usage for Create Plugins

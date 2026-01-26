@@ -1,6 +1,6 @@
 {
   "name": "@gasket/core",
-  "version": "7.7.2",
+  "version": "8.0.0-next.0",
   "description": "Entry point to setting up Gasket instances",
   "type": "module",
   "types": "lib/index.d.ts",
@@ -39,8 +39,7 @@
   "keywords": [
     "gasket",
     "plugin",
-    "plugin-engine",
-    "preset"
+    "plugin-engine"
   ],
   "author": "GoDaddy Operating Company, LLC",
   "license": "MIT",

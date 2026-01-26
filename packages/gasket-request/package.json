@@ -1,6 +1,6 @@
 {
   "name": "@gasket/request",
-  "version": "7.5.5",
+  "version": "8.0.0-next.0",
   "description": "Utilities for working with request objects in Gasket",
   "type": "module",
   "types": "lib/index.d.ts",
@@ -39,8 +39,7 @@
   "keywords": [
     "gasket",
     "plugin",
-    "plugin-engine",
-    "preset"
+    "plugin-engine"
   ],
   "author": "GoDaddy Operating Company, LLC",
   "license": "MIT",

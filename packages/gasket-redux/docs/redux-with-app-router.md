@@ -12,10 +12,10 @@ package available.
 
 Follow the steps below to add Redux to an existing Gasket application that is using the NextJS App Router architecture. 
 
-This guide assumes that a Gasket application has already been created using the `@gasket/preset-nextjs` preset. For details on how to do so please see the [quick start guide].  
+This guide assumes that a Gasket application has already been created using a Next.js template. For details on how to do so please see the [quick start guide].  
 
 ```bash
-create-gasket-app --presets @gasket/preset-nextjs
+create-gasket-app --template @gasket/template-nextjs-app
 ```
 
 When prompted, make sure to select yes to using the App Router architecture.

@@ -1,6 +1,6 @@
 # @gasket/plugin-vitest Examples
 
-⚠️ **CREATE-ONLY PLUGIN**: This plugin is exclusively used during project creation by `create-gasket-app` and presets. It is **NOT installed** in the final application and only runs during the app generation process to set up Vitest testing infrastructure.
+⚠️ **CREATE-ONLY PLUGIN**: This plugin is exclusively used during project creation by `create-gasket-app` and templates. It is **NOT installed** in the final application and only runs during the app generation process to set up Vitest testing infrastructure.
 
 ## Create Hook Examples
 

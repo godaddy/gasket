@@ -11,7 +11,6 @@ describe('postCreateHooks', () => {
     };
     mockContext = {
       dest: '/some/path/my-app',
-      presets: ['charcuterie-preset'],
       plugins: ['the-wurst-plugin', 'loaf-me-alone']
     };
 

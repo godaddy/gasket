@@ -1,6 +1,0 @@
-{
-  "name": "@gasket/preset-all-i-ever-wanted",
-  "version": "1.0.0",
-  "description": "A bogus preset for testing",
-  "main": "index.js"
-}

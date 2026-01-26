@@ -4,7 +4,7 @@ The Gasket team is dedicated to improving productivity for TypeScript users. Her
 
 ## Ensuring Visibility of Plugin Extensions
 
-Because Gasket is a plugin framework, plugins themselves are responsible for augmenting the core Gasket interfaces. This means that the type declarations for the plugins must be "discovered" in your TypeScript codebase. You can ensure this by referencing or importing your presets or plugins. The sample code snippets below show these imports, but if you can centralize the imports in one area of your codebase, you can avoid duplication and ensure that TypeScript is aware of all the plugins.
+Because Gasket is a plugin framework, plugins themselves are responsible for augmenting the core Gasket interfaces. This means that the type declarations for the plugins must be "discovered" in your TypeScript codebase. You can ensure this by referencing or importing your plugins. The sample code snippets below show these imports, but if you can centralize the imports in one area of your codebase, you can avoid duplication and ensure that TypeScript is aware of all the plugins.
 
 ## Validating Gasket Configuration
 

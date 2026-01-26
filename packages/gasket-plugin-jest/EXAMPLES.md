@@ -4,10 +4,10 @@ This is a create-only plugin that runs during app generation via `create-gasket-
 
 ## Usage
 
-This plugin is automatically included when using create-gasket-app with presets that include it:
+This plugin is automatically included when using create-gasket-app with templates:
 
 ```bash
-npx create-gasket-app@latest my-app --presets @gasket/preset-nextjs
+npx create-gasket-app@latest my-app --template @gasket/template-nextjs-pages
 ```
 
 ## What the Plugin Provides

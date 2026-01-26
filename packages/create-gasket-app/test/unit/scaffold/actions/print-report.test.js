@@ -10,9 +10,7 @@ describe('printReport', () => {
     mockContext = {
       appName: 'my-app',
       dest: '/some/path/my-app',
-      fullPresets: [],
       plugins: [],
-      presetPlugins: [],
       generatedFiles: new Set(),
       messages: [],
       warnings: [],

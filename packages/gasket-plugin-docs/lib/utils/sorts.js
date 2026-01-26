@@ -45,7 +45,7 @@ function sortByKey(key, compare) {
 /**
  * Determine the weight of a package name by scope, followed by type.
  * - gasket scope > user scope > no scope > app plugins
- * - presets > plugins > packages
+ * - plugins > packages
  * @param {string} name - Package name
  * @returns {number} weight
  */
@@ -66,10 +66,9 @@ function getModuleWeight(name) {
   //
   // weight from type
   //
-  const isPreset = /preset/;
   const isPlugin = /plugin/;
 
-  weight += (isPreset.test(name) && 20) || (isPlugin.test(name) && 10) || 0;
+  weight += (isPlugin.test(name) && 10) || 0;
 
   return weight;
 }

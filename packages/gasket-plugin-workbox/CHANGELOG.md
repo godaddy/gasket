@@ -1,5 +1,11 @@
 # `@gasket/plugin-workbox`
 
+## 8.0.0-next.0
+
+### Major Changes
+
+- b235fc1: bump all package majors to 8
+
 ## 7.4.0
 
 ### Minor Changes

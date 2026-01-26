@@ -81,7 +81,7 @@ async function collateFiles(docsConfigSet) {
   await rimraf(path.join(docsRoot, '*'));
 
   // Flatten the moduleDocsConfigs then generate
-  const flattened = ['plugins', 'presets', 'modules'].reduce(
+  const flattened = ['plugins', 'modules'].reduce(
     (acc, type) => acc.concat(docsConfigSet[type]),
     [docsConfigSet.app]
   );

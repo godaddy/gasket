@@ -1,6 +1,6 @@
 # @gasket/plugin-metadata
 
-Metadata is the information about the registered plugins and presets, available to
+Metadata is the information about the registered plugins, available to
 plugin lifecycle hooks. This data can be used in various ways for plugins, most
 notably the [@gasket/plugin-docs] which uses it to collate docs for an app.
 

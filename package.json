@@ -24,7 +24,7 @@
     "preinstall": "npx only-allow pnpm",
     "publish:canary": "pnpm changeset version --snapshot canary && pnpm changeset publish --tag canary",
     "publish:next": "pnpm changeset version --pre next && pnpm changeset publish --tag next --force-publish --exact",
-    "release": "changeset publish",
+    "release": "changeset publish --tag next",
     "replace-ws-aliases": "node scripts/replace-ws-aliases.js",
     "syncpack": "syncpack",
     "syncpack:fix": "syncpack fix-mismatches && syncpack format",
@@ -93,7 +93,7 @@
     "pnpm": ">=8",
     "npm": "please-use-pnpm",
     "yarn": "please-use-pnpm",
-    "node": ">=20"
+    "node": ">=24"
   },
   "packageManager": "pnpm@10.4.1",
   "pnpm": {

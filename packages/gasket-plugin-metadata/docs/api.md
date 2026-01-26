@@ -6,7 +6,6 @@ Name | Description
 [ModuleData] | Module with meta data
 [AppData] | App module with meta data
 [PluginData] | Plugin module with meta data
-[PresetData] | Preset module with meta data
 [DetailData] | Metadata for details of a plugin
 [LifecycleData] | Metadata with specifics details for plugin lifecycles
 [ConfigurationsData] | Metadata for plugin configuration properties
@@ -22,7 +21,7 @@ Module with meta data
 
 | Name | Type | Description |
 | --- | --- | --- |
-| name | `string` | Name of preset |
+| name | `string` | Name of module |
 | module | `string` | Actual module content |
 | \[package\] | `string` | Package.json contents |
 | \[version\] | `string` | Resolved version |
@@ -57,19 +56,6 @@ Plugin module with meta data
 | \[structures\] | `Array.<DetailData>` | App files and directories used by plugin |
 | \[lifecycles\] | `Array.<DetailData>` | Description of lifecycles invoked by plugin |
 | \[modules\] | `Array.<DetailData>` | Description of modules supporting this plugin |
-
-
-## PresetData
-
-Preset module with meta data
-
-**Kind**: global typedef  
-**Properties**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| \[presets\] | `Array.<PresetData>` | Presets that this preset extends |
-| plugins | `Array.<PluginData>` | Plugins this preset uses |
 
 
 ## DetailData
@@ -122,7 +108,6 @@ Collection data for modules configured for app
 | Name | Type | Description |
 | --- | --- | --- |
 | app | [`AppData`] | App and main package data |
-| presets | `Array.<PresetData>` | Preset data with dependency hierarchy |
 | plugins | `Array.<PluginData>` | Flat list of registered plugin data |
 | modules | `Array.<ModuleData>` | Supporting module data |
 
@@ -131,7 +116,6 @@ Collection data for modules configured for app
 [ModuleData]:#moduledata
 [AppData]:#appdata
 [PluginData]:#plugindata
-[PresetData]:#presetdata
 [DetailData]:#detaildata
 [LifecycleData]:#lifecycledata
 [ConfigurationsData]:#configurationsdata

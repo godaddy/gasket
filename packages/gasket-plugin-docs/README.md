@@ -1,7 +1,7 @@
 # @gasket/plugin-docs
 
 The plugin enables the **docs** command, which centralizes doc files for the
-app's plugins, presets, and supporting modules.
+app's plugins and supporting modules.
 
 ## Installation
 
@@ -36,7 +36,7 @@ To be set in under `docs` in the `gasket.js`.
 
 The **docs** command, inspired by [cargo doc][rustdoc] from the Rust language,
 allows app developers to generate documentation for their Gasket projects. Only
-those presets and plugins that are configured for a project, will be used to
+those plugins that are configured for a project, will be used to
 determine what documentation is available.
 
 When running this command, markdown and other files will be gathered from installed
@@ -193,25 +193,6 @@ export default {
         targetRoot: docsConfigSet.docsRoot
       };
     }
-  }
-}
-```
-
-## Usage
-
-### Presets
-
-Presets can also set up custom docs. This is done by defining a `docsSetup`
-property object on the module, which will be used to establish the `docsConfig`
-for the preset.
-
-```js
-// gasket-preset-example.js
-export default {
-  name: 'gasket-preset-example',
-  docsSetup: {
-    link: 'OTHER.md#go-here',
-    files: ['more-docs/**/*.*'],
   }
 }
 ```

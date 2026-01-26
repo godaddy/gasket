@@ -7,23 +7,17 @@ This document provides working examples for interfaces and utilities from the `c
 The main interface for `create-gasket-app` is the command line:
 
 ```bash
-# Basic app creation
-npx create-gasket-app@latest my-app
-
-# With presets
-npx create-gasket-app@latest my-app --presets @gasket/preset-nextjs
+# Basic app creation with template
+npx create-gasket-app@latest my-app --template @gasket/template-nextjs-pages
 
 # With package manager selection
-npx create-gasket-app@latest my-app --package-manager pnpm
+npx create-gasket-app@latest my-app --template @gasket/template-nextjs-pages --package-manager pnpm
 
 # With configuration
-npx create-gasket-app@latest my-app --config '{"typescript": true}'
+npx create-gasket-app@latest my-app --template @gasket/template-nextjs-pages --config '{"typescript": true}'
 
 # With config file
-npx create-gasket-app@latest my-app --config-file ./create-config.json
-
-# Skip prompts (for CI)
-npx create-gasket-app@latest my-app --presets @gasket/preset-nextjs --no-prompts
+npx create-gasket-app@latest my-app --template @gasket/template-nextjs-pages --config-file ./create-config.json
 ```
 
 ## Templates

@@ -2,7 +2,7 @@ import inquirer from 'inquirer';
 import { withGasketSpinner } from '../with-spinner.js';
 
 /**
- * Initializes engine with provide preset and plugins
+ * Initializes engine with provided plugins
  * to execute their prompt lifecycle hooks.
  * @type {import('../../internal.js').execPluginPrompts}
  */
@@ -25,8 +25,8 @@ async function execPluginPrompts(gasket, context) {
  */
 async function promptHooks({ gasket, context }) {
   //
-  // Because `execPluginPrompts` is recursively, we need to start it
-  // with the processPlugins and presets from our initial context
+  // Because `execPluginPrompts` is recursive, we need to start it
+  // with the processPlugins from our initial context
   //
   await execPluginPrompts(gasket, context);
 }
