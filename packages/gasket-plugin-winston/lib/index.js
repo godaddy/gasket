@@ -7,8 +7,7 @@ import packageJson from '../package.json' with { type: 'json' };
 const {
   name,
   version,
-  description,
-  dependencies
+  description
 } = packageJson;
 
 /** @type {import('@gasket/core').Plugin} */
