@@ -45,7 +45,6 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-fastify",
   "dependencies": {
-    "@fastify/express": "^3.0.0",
     "fastify": "^4.29.1"
   },
   "devDependencies": {
