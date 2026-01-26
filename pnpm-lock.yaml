@@ -207,9 +207,6 @@ importers:
       '@babel/preset-react':
         specifier: ^7.26.3
         version: 7.26.3(@babel/core@7.26.9)
-      '@gasket/cjs':
-        specifier: workspace:^
-        version: link:../gasket-cjs
       '@svgr/core':
         specifier: ^6.5.1
         version: 6.5.1
@@ -226,25 +223,6 @@ importers:
         specifier: ^6.1.2
         version: 6.1.2
 
-  packages/gasket-cjs:
-    dependencies:
-      '@swc/core':
-        specifier: ^1.10.18
-        version: 1.10.18(@swc/helpers@0.5.15)
-      commander:
-        specifier: ^12.1.0
-        version: 12.1.0
-      glob:
-        specifier: ^13.0.0
-        version: 13.0.0
-    devDependencies:
-      '@vitest/coverage-v8':
-        specifier: ^3.2.0
-        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
-      vitest:
-        specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
-
   packages/gasket-core:
     dependencies:
       '@gasket/utils':
@@ -254,9 +232,6 @@ importers:
         specifier: ^4.4.0
         version: 4.4.0(supports-color@5.5.0)
     devDependencies:
-      '@gasket/cjs':
-        specifier: workspace:^
-        version: link:../gasket-cjs
       '@gasket/plugin-metadata':
         specifier: workspace:^
         version: link:../gasket-plugin-metadata
@@ -273,9 +248,6 @@ importers:
         specifier: workspace:^
         version: link:../gasket-request
     devDependencies:
-      '@gasket/cjs':
-        specifier: workspace:^
-        version: link:../gasket-cjs
       '@gasket/core':
         specifier: workspace:^
         version: link:../gasket-core
@@ -331,9 +303,6 @@ importers:
 
   packages/gasket-intl:
     devDependencies:
-      '@gasket/cjs':
-        specifier: workspace:^
-        version: link:../gasket-cjs
       '@vitest/coverage-v8':
         specifier: ^3.2.0
         version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
@@ -356,9 +325,6 @@ importers:
         specifier: ^1.1.1
         version: 1.1.1
     devDependencies:
-      '@gasket/cjs':
-        specifier: workspace:^
-        version: link:../gasket-cjs
       '@gasket/plugin-data':
         specifier: workspace:^
         version: link:../gasket-plugin-data
@@ -402,9 +368,6 @@ importers:
         specifier: ^4.10.2
         version: 4.10.2
     devDependencies:
-      '@gasket/cjs':
-        specifier: workspace:^
-        version: link:../gasket-cjs
       '@gasket/core':
         specifier: workspace:^
         version: link:../gasket-core
@@ -439,9 +402,6 @@ importers:
         specifier: ^12.1.0
         version: 12.1.0
     devDependencies:
-      '@gasket/cjs':
-        specifier: workspace:^
-        version: link:../gasket-cjs
       '@gasket/plugin-metadata':
         specifier: workspace:^
         version: link:../gasket-plugin-metadata
@@ -503,9 +463,6 @@ importers:
         specifier: ^4.6.2
         version: 4.6.2
     devDependencies:
-      '@gasket/cjs':
-        specifier: workspace:^
-        version: link:../gasket-cjs
       '@gasket/core':
         specifier: workspace:^
         version: link:../gasket-core
@@ -549,9 +506,6 @@ importers:
         specifier: ^6.1.2
         version: 6.1.2
     devDependencies:
-      '@gasket/cjs':
-        specifier: workspace:^
-        version: link:../gasket-cjs
       '@gasket/core':
         specifier: workspace:^
         version: link:../gasket-core
@@ -579,9 +533,6 @@ importers:
 
   packages/gasket-plugin-docs-graphs:
     devDependencies:
-      '@gasket/cjs':
-        specifier: workspace:^
-        version: link:../gasket-cjs
       '@gasket/core':
         specifier: workspace:^
         version: link:../gasket-core
@@ -606,9 +557,6 @@ importers:
       '@docusaurus/preset-classic':
         specifier: ^3.8.1
         version: 3.8.1(@algolia/client-search@5.20.3)(@mdx-js/react@3.1.0(@types/react@19.2.7)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(@types/react@19.2.7)(acorn@8.14.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(search-insights@2.17.3)(typescript@5.8.2)
-      '@gasket/cjs':
-        specifier: workspace:^
-        version: link:../gasket-cjs
       '@gasket/core':
         specifier: workspace:^
         version: link:../gasket-core
@@ -655,9 +603,6 @@ importers:
         specifier: ^4.1.2
         version: 4.1.2
     devDependencies:
-      '@gasket/cjs':
-        specifier: workspace:^
-        version: link:../gasket-cjs
       '@gasket/core':
         specifier: workspace:^
         version: link:../gasket-core
@@ -680,9 +625,6 @@ importers:
         specifier: workspace:^
         version: link:../gasket-request
     devDependencies:
-      '@gasket/cjs':
-        specifier: workspace:^
-        version: link:../gasket-cjs
       '@gasket/core':
         specifier: workspace:^
         version: link:../gasket-core
@@ -720,9 +662,6 @@ importers:
         specifier: ^1.0.1
         version: 1.0.1
     devDependencies:
-      '@gasket/cjs':
-        specifier: workspace:^
-        version: link:../gasket-cjs
       '@gasket/core':
         specifier: workspace:^
         version: link:../gasket-core
@@ -760,9 +699,6 @@ importers:
         specifier: ^4.29.1
         version: 4.29.1
     devDependencies:
-      '@gasket/cjs':
-        specifier: workspace:^
-        version: link:../gasket-cjs
       '@gasket/core':
         specifier: workspace:^
         version: link:../gasket-core
@@ -800,9 +736,9 @@ importers:
       create-gasket-app:
         specifier: workspace:^
         version: link:../create-gasket-app
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.15))(@types/node@20.17.19)(typescript@5.8.2))
+      vitest:
+        specifier: ^3.2.0
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
 
   packages/gasket-plugin-happyfeet:
     dependencies:
@@ -810,9 +746,6 @@ importers:
         specifier: ^2.2.0
         version: 2.2.0
     devDependencies:
-      '@gasket/cjs':
-        specifier: workspace:^
-        version: link:../gasket-cjs
       '@gasket/core':
         specifier: workspace:^
         version: link:../gasket-core
@@ -853,9 +786,6 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0
     devDependencies:
-      '@gasket/cjs':
-        specifier: workspace:^
-        version: link:../gasket-cjs
       '@gasket/core':
         specifier: workspace:^
         version: link:../gasket-core
@@ -884,9 +814,6 @@ importers:
         specifier: ^1.18.1
         version: 1.18.1
     devDependencies:
-      '@gasket/cjs':
-        specifier: workspace:^
-        version: link:../gasket-cjs
       '@gasket/core':
         specifier: workspace:^
         version: link:../gasket-core
@@ -930,9 +857,6 @@ importers:
         specifier: ^7.7.1
         version: 7.7.1
     devDependencies:
-      '@gasket/cjs':
-        specifier: workspace:^
-        version: link:../gasket-cjs
       '@gasket/core':
         specifier: workspace:^
         version: link:../gasket-core
@@ -1057,9 +981,6 @@ importers:
 
   packages/gasket-plugin-logger:
     devDependencies:
-      '@gasket/cjs':
-        specifier: workspace:^
-        version: link:../gasket-cjs
       '@gasket/core':
         specifier: workspace:^
         version: link:../gasket-core
@@ -1143,9 +1064,6 @@ importers:
         specifier: workspace:^
         version: link:../gasket-plugin-logger
     devDependencies:
-      '@gasket/cjs':
-        specifier: workspace:^
-        version: link:../gasket-cjs
       '@gasket/plugin-webpack':
         specifier: workspace:^
         version: link:../gasket-plugin-webpack
@@ -1174,9 +1092,6 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
     devDependencies:
-      '@gasket/cjs':
-        specifier: workspace:^
-        version: link:../gasket-cjs
       '@gasket/core':
         specifier: workspace:^
         version: link:../gasket-core
@@ -1298,9 +1213,6 @@ importers:
         specifier: ^1.0.1
         version: 1.0.1
     devDependencies:
-      '@gasket/cjs':
-        specifier: workspace:^
-        version: link:../gasket-cjs
       '@gasket/core':
         specifier: workspace:^
         version: link:../gasket-core
@@ -1341,9 +1253,6 @@ importers:
       '@gasket/assets':
         specifier: workspace:^
         version: link:../gasket-assets
-      '@gasket/cjs':
-        specifier: workspace:^
-        version: link:../gasket-cjs
       '@gasket/core':
         specifier: workspace:^
         version: link:../gasket-core
@@ -1522,9 +1431,9 @@ importers:
       fastify:
         specifier: ^4.29.1
         version: 4.29.1
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.15))(@types/node@20.17.19)(typescript@5.8.2))
+      vitest:
+        specifier: ^3.2.0
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
 
   packages/gasket-plugin-swagger:
     dependencies:
@@ -1547,9 +1456,6 @@ importers:
         specifier: ^4.6.3
         version: 4.6.3(express@4.21.2)
     devDependencies:
-      '@gasket/cjs':
-        specifier: workspace:^
-        version: link:../gasket-cjs
       '@gasket/core':
         specifier: workspace:^
         version: link:../gasket-core
@@ -1595,21 +1501,18 @@ importers:
       create-gasket-app:
         specifier: workspace:^
         version: link:../create-gasket-app
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.15))(@types/node@20.17.19)(typescript@5.8.2))
       tsx:
         specifier: ^4.19.3
         version: 4.19.3
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
+      vitest:
+        specifier: ^3.2.0
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
 
   packages/gasket-plugin-vitest:
     devDependencies:
-      '@gasket/cjs':
-        specifier: workspace:^
-        version: link:../gasket-cjs
       '@gasket/core':
         specifier: workspace:^
         version: link:../gasket-core
@@ -1640,9 +1543,6 @@ importers:
 
   packages/gasket-plugin-webpack:
     devDependencies:
-      '@gasket/cjs':
-        specifier: workspace:^
-        version: link:../gasket-cjs
       '@gasket/core':
         specifier: workspace:^
         version: link:../gasket-core
@@ -1671,9 +1571,6 @@ importers:
         specifier: ^3.17.0
         version: 3.17.0
     devDependencies:
-      '@gasket/cjs':
-        specifier: workspace:^
-        version: link:../gasket-cjs
       '@gasket/core':
         specifier: workspace:^
         version: link:../gasket-core
@@ -1726,9 +1623,6 @@ importers:
       '@types/express':
         specifier: ^4.17.23
         version: 4.17.23
-      '@types/jest':
-        specifier: ^29.5.14
-        version: 29.5.14
       '@types/node':
         specifier: ^20.17.19
         version: 20.17.19
@@ -1738,9 +1632,9 @@ importers:
       create-gasket-app:
         specifier: workspace:^
         version: link:../create-gasket-app
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.15))(@types/node@20.17.19)(typescript@5.8.2))
+      vitest:
+        specifier: ^3.2.0
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
 
   packages/gasket-react-intl:
     dependencies:
@@ -1763,9 +1657,6 @@ importers:
         specifier: ^6.2.0
         version: 6.2.0
     devDependencies:
-      '@gasket/cjs':
-        specifier: workspace:^
-        version: link:../gasket-cjs
       '@testing-library/react':
         specifier: ^16.3.0
         version: 16.3.0(@testing-library/dom@10.4.0)(@types/react-dom@19.0.4(@types/react@19.0.12))(@types/react@19.0.12)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -1852,9 +1743,6 @@ importers:
         specifier: ^4.4.0
         version: 4.4.0(supports-color@5.5.0)
     devDependencies:
-      '@gasket/cjs':
-        specifier: workspace:^
-        version: link:../gasket-cjs
       '@gasket/core':
         specifier: workspace:^
         version: link:../gasket-core
@@ -2090,9 +1978,6 @@ importers:
         specifier: ^7.7.1
         version: 7.7.1
     devDependencies:
-      '@gasket/cjs':
-        specifier: workspace:^
-        version: link:../gasket-cjs
       '@gasket/core':
         specifier: workspace:^
         version: link:../gasket-core
@@ -2117,9 +2002,6 @@ importers:
       '@gasket/assets':
         specifier: workspace:^
         version: link:../../packages/gasket-assets
-      '@gasket/cjs':
-        specifier: workspace:^
-        version: link:../../packages/gasket-cjs
       '@gasket/core':
         specifier: workspace:^
         version: link:../../packages/gasket-core
