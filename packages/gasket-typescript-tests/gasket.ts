@@ -20,7 +20,6 @@ import pluginRedux from '@gasket/plugin-redux';
 import pluginData from '@gasket/plugin-data';
 import pluginServiceWorker from '@gasket/plugin-service-worker';
 import pluginSwagger from '@gasket/plugin-swagger';
-import pluginTypescript from '@gasket/plugin-typescript';
 import pluginWebpack from '@gasket/plugin-webpack';
 import pluginWinston from '@gasket/plugin-winston';
 import pluginWorkbox from '@gasket/plugin-workbox';
@@ -47,7 +46,6 @@ const config: GasketConfigDefinition = {
     pluginRedux,
     pluginServiceWorker,
     pluginSwagger,
-    pluginTypescript,
     pluginWebpack,
     pluginWinston,
     pluginWorkbox

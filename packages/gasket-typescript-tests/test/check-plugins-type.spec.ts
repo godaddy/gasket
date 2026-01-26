@@ -29,7 +29,6 @@ const require = createRequire(import.meta.url);
 const pluginElasticApm = require('@gasket/plugin-elastic-apm');
 const pluginRedux = require('@gasket/plugin-redux');
 const pluginServiceWorker = require('@gasket/plugin-service-worker');
-const pluginTypeScript = require('@gasket/plugin-typescript');
 const pluginWorkbox = require('@gasket/plugin-workbox');
 
 describe('check plugins type', () => {
@@ -58,7 +57,6 @@ describe('check plugins type', () => {
       pluginRedux,
       pluginServiceWorker,
       pluginSwagger,
-      pluginTypeScript,
       pluginWebpack,
       pluginWinston,
       pluginWorkbox
