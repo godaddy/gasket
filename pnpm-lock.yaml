@@ -632,9 +632,6 @@ importers:
       create-gasket-app:
         specifier: workspace:^
         version: link:../create-gasket-app
-      dotenv:
-        specifier: ^16.4.7
-        version: 16.4.7
       elastic-apm-node:
         specifier: ^4.11.0
         version: 4.11.0
