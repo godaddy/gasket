@@ -869,24 +869,12 @@ importers:
       '@gasket/plugin-service-worker':
         specifier: workspace:^
         version: link:../gasket-plugin-service-worker
-      '@gasket/react-intl':
-        specifier: workspace:^
-        version: link:../gasket-react-intl
       create-gasket-app:
         specifier: workspace:^
         version: link:../create-gasket-app
-      react:
-        specifier: ^19.0.0
-        version: 19.0.0
-      react-intl:
-        specifier: ^7.1.6
-        version: 7.1.9(react@19.0.0)(typescript@5.8.2)
       vitest:
         specifier: ^3.2.0
         version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
-      webpack:
-        specifier: ^5.98.0
-        version: 5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.15))
 
   packages/gasket-plugin-logger:
     devDependencies:
