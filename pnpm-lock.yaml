@@ -460,9 +460,6 @@ importers:
       '@gasket/utils':
         specifier: workspace:^
         version: link:../gasket-utils
-      lodash.merge:
-        specifier: ^4.6.2
-        version: 4.6.2
     devDependencies:
       '@gasket/cjs':
         specifier: workspace:^
@@ -470,9 +467,6 @@ importers:
       '@gasket/core':
         specifier: workspace:^
         version: link:../gasket-core
-      '@gasket/data':
-        specifier: workspace:^
-        version: link:../gasket-data
       '@gasket/plugin-command':
         specifier: workspace:^
         version: link:../gasket-plugin-command
