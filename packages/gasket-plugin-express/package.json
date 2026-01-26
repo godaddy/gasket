@@ -47,9 +47,7 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-express",
   "dependencies": {
-    "compression": "^1.8.0",
     "cookie-parser": "^1.4.7",
-    "diagnostics": "^2.0.2",
     "http2-express": "^1.0.1"
   },
   "devDependencies": {

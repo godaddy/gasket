@@ -641,15 +641,9 @@ importers:
 
   packages/gasket-plugin-express:
     dependencies:
-      compression:
-        specifier: ^1.8.0
-        version: 1.8.0
       cookie-parser:
         specifier: ^1.4.7
         version: 1.4.7
-      diagnostics:
-        specifier: ^2.0.2
-        version: 2.0.2
       http2-express:
         specifier: ^1.0.1
         version: 1.0.1
