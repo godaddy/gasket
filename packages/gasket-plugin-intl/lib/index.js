@@ -4,7 +4,6 @@ import packageJson from '../package.json' with { type: 'json' };
 import actions from './actions.js';
 import configure from './configure.js';
 import init from './init.js';
-import serviceWorkerCacheKey from './service-worker-cache-key.js';
 import apmTransaction from './apm-transaction.js';
 import publicGasketData from './public-gasket-data.js';
 import { getIntlConfig } from './utils/configure-utils.js';
@@ -23,7 +22,6 @@ const plugin = {
     build,
     apmTransaction,
     publicGasketData,
-    serviceWorkerCacheKey,
     metadata(gasket, meta) {
       const { localesDir } = getIntlConfig(gasket);
       return {

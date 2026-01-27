@@ -3,27 +3,22 @@
   "version": "8.0.0-next.0",
   "description": "Centralize doc files from plugins and modules",
   "type": "module",
-  "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
     "lib",
-    "cjs",
     "EXAMPLES.md"
   ],
   "exports": {
     ".": {
       "types": "./lib/index.d.ts",
-      "import": "./lib/index.js",
-      "require": "./cjs/index.js"
+      "import": "./lib/index.js"
     },
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "gasket-cjs",
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
     "posttest": "pnpm run lint && pnpm run typecheck",
-    "prepublishOnly": "pnpm run build",
     "test": "vitest run --globals",
     "test:coverage": "vitest run --coverage",
     "test:watch": "vitest",
@@ -52,7 +47,6 @@
     "rimraf": "^6.1.2"
   },
   "devDependencies": {
-    "@gasket/cjs": "workspace:^",
     "@gasket/core": "workspace:^",
     "@gasket/plugin-logger": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",

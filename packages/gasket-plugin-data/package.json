@@ -3,28 +3,23 @@
   "version": "8.0.0-next.0",
   "description": "Supports application-specific settings and configurations",
   "type": "module",
-  "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
-    "cjs",
+    "generator",
     "lib",
     "EXAMPLES.md"
   ],
   "exports": {
     ".": {
       "types": "./lib/index.d.ts",
-      "import": "./lib/index.js",
-      "require": "./cjs/index.cjs"
+      "import": "./lib/index.js"
     },
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "gasket-cjs ./lib",
-    "build:watch": "pnpm run build --watch",
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
     "posttest": "pnpm run lint && pnpm run typecheck",
-    "prepublishOnly": "pnpm run build",
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' vitest run",
     "test:coverage": "pnpm run test --coverage",
     "test:watch": "vitest watch",
@@ -49,11 +44,9 @@
     "@gasket/utils": "workspace:^"
   },
   "devDependencies": {
-    "@gasket/cjs": "workspace:^",
     "@gasket/core": "workspace:^",
     "@gasket/plugin-command": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",
-    "@gasket/plugin-redux": "workspace:^",
     "create-gasket-app": "workspace:^",
     "vitest": "^3.2.0"
   }

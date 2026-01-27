@@ -1,8 +1,8 @@
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
 import actions from './actions.js';
 import webpackConfig from './webpack-config.js';
-const { name, version, description } = require('../package.json');
+import packageJson from '../package.json' with { type: 'json' };
+const { name, version, description } = packageJson;
+import corePackageJson from '@gasket/core/package.json' with { type: 'json' };
 
 /** @type {import('@gasket/core').Plugin} */
 export default ({
@@ -13,7 +13,7 @@ export default ({
   hooks: {
     webpackConfig,
     metadata(gasket, meta) {
-      const mod = require('@gasket/core/package.json');
+      const mod = corePackageJson;
       return {
         ...meta,
         actions: [

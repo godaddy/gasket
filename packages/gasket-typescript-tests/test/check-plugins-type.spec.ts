@@ -12,7 +12,6 @@ import pluginFastify from '@gasket/plugin-fastify';
 import pluginHttps from '@gasket/plugin-https';
 import pluginHttpsProxy from '@gasket/plugin-https-proxy';
 import pluginLogger from '@gasket/plugin-logger';
-import pluginManifest from '@gasket/plugin-manifest';
 import pluginMetadata from '@gasket/plugin-metadata';
 import pluginMiddleware from '@gasket/plugin-middleware';
 import pluginMorgan from '@gasket/plugin-morgan';
@@ -23,13 +22,8 @@ import pluginHappyFeet from '@gasket/plugin-happyfeet';
 import pluginIntl from '@gasket/plugin-intl';
 import pluginSwagger from '@gasket/plugin-swagger';
 
-// Import CommonJS plugins that haven't been migrated to ESM yet
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
-const pluginElasticApm = require('@gasket/plugin-elastic-apm');
-const pluginRedux = require('@gasket/plugin-redux');
-const pluginServiceWorker = require('@gasket/plugin-service-worker');
-const pluginWorkbox = require('@gasket/plugin-workbox');
+// Import ESM plugins
+import pluginElasticApm from '@gasket/plugin-elastic-apm';
 
 describe('check plugins type', () => {
   it('should have correct type', () => {
@@ -49,17 +43,13 @@ describe('check plugins type', () => {
       pluginHttpsProxy,
       pluginIntl,
       pluginLogger,
-      pluginManifest,
       pluginMetadata,
       pluginMiddleware,
       pluginMorgan,
       pluginNextjs,
-      pluginRedux,
-      pluginServiceWorker,
       pluginSwagger,
       pluginWebpack,
-      pluginWinston,
-      pluginWorkbox
+      pluginWinston
     ];
   });
 });

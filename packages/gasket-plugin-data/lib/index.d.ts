@@ -1,10 +1,6 @@
 import type { MaybeAsync, Plugin } from '@gasket/core';
 import type { RequestLike, GasketRequest } from '@gasket/request' with { 'resolution-mode': 'import' };
 
-export interface ReduxState {
-  gasketData?: Record<string, unknown>;
-}
-
 export interface PublicGasketData extends Record<string, any> {
 }
 

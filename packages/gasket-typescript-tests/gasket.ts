@@ -12,17 +12,13 @@ import pluginHappyFeet from '@gasket/plugin-happyfeet';
 import pluginHttps from '@gasket/plugin-https';
 import pluginIntl from '@gasket/plugin-intl';
 import pluginLogger from '@gasket/plugin-logger';
-import pluginManifest from '@gasket/plugin-manifest';
 import pluginMetadata from '@gasket/plugin-metadata';
 import pluginMorgan from '@gasket/plugin-morgan';
 import pluginNextjs from '@gasket/plugin-nextjs';
-import pluginRedux from '@gasket/plugin-redux';
 import pluginData from '@gasket/plugin-data';
-import pluginServiceWorker from '@gasket/plugin-service-worker';
 import pluginSwagger from '@gasket/plugin-swagger';
 import pluginWebpack from '@gasket/plugin-webpack';
 import pluginWinston from '@gasket/plugin-winston';
-import pluginWorkbox from '@gasket/plugin-workbox';
 
 
 const config: GasketConfigDefinition = {
@@ -39,16 +35,12 @@ const config: GasketConfigDefinition = {
     pluginHttps,
     pluginIntl,
     pluginLogger,
-    pluginManifest,
     pluginMetadata,
     pluginMorgan,
     pluginNextjs,
-    pluginRedux,
-    pluginServiceWorker,
     pluginSwagger,
     pluginWebpack,
-    pluginWinston,
-    pluginWorkbox
+    pluginWinston
   ],
   compression: 'garbage',
   http: 8080,

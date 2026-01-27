@@ -3,30 +3,23 @@
   "version": "8.0.0-next.0",
   "description": "Adds express support to your application",
   "type": "module",
-  "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
     "docs",
     "lib",
-    "cjs",
     "EXAMPLES.md"
   ],
   "exports": {
     ".": {
       "types": "./lib/index.d.ts",
-      "import": "./lib/index.js",
-      "require": "./cjs/index.cjs",
-      "default": "./cjs/index.cjs"
+      "import": "./lib/index.js"
     },
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "gasket-cjs ./lib",
-    "build:watch": "pnpm run build --watch",
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
     "posttest": "pnpm run lint && pnpm run typecheck",
-    "prepublishOnly": "pnpm run build",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "test:watch": "vitest",
@@ -51,7 +44,6 @@
     "http2-express": "^1.0.1"
   },
   "devDependencies": {
-    "@gasket/cjs": "workspace:^",
     "@gasket/core": "workspace:^",
     "@gasket/plugin-https": "workspace:^",
     "@gasket/plugin-logger": "workspace:^",

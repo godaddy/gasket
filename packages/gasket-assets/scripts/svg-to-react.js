@@ -38,7 +38,7 @@ async function processFile(file) {
     const component = await svgr(data);
 
     //
-    // Transform JSX to React.createElement calls (needed for gasket-cjs)
+    // Transform JSX to React.createElement calls
     //
     const results = transform(component, babelOptions);
 

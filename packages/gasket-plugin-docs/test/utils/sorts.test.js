@@ -1,4 +1,4 @@
-const { sortModules, sortStructures, sortCommands, sortGuides, sortConfigurations } = require('../../lib/utils/sorts');
+import { sortModules, sortStructures, sortCommands, sortGuides, sortConfigurations } from '../../lib/utils/sorts.js';
 
 describe('utils - sorts', () => {
 

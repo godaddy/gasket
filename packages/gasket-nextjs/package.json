@@ -6,49 +6,35 @@
   "types": "lib/index.d.ts",
   "files": [
     "lib",
-    "cjs",
     "EXAMPLES.md"
   ],
   "exports": {
     ".": {
       "types": "./lib/index.d.ts",
-      "import": "./lib/index.js",
-      "require": "./cjs/index.cjs",
-      "default": "./cjs/index.cjs"
+      "import": "./lib/index.js"
     },
     "./document": {
       "types": "./lib/document/index.d.ts",
-      "import": "./lib/document/index.js",
-      "require": "./cjs/document/index.cjs",
-      "default": "./cjs/document/index.cjs"
+      "import": "./lib/document/index.js"
     },
     "./layout": {
       "types": "./lib/layout/index.d.ts",
-      "import": "./lib/layout/index.js",
-      "require": "./cjs/layout/index.cjs",
-      "default": "./cjs/layout/index.cjs"
+      "import": "./lib/layout/index.js"
     },
     "./request": {
       "types": "./lib/request/index.d.ts",
-      "import": "./lib/request/index.js",
-      "require": "./cjs/request/index.cjs",
-      "default": "./cjs/request/index.cjs"
+      "import": "./lib/request/index.js"
     },
     "./server": {
       "types": "./lib/server/index.d.ts",
-      "import": "./lib/server/index.js",
-      "require": "./cjs/server/index.cjs",
-      "default": "./cjs/server/index.cjs"
+      "import": "./lib/server/index.js"
     },
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "gasket-cjs ./lib",
-    "build:watch": "pnpm run build --watch",
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
     "posttest": "pnpm run lint && pnpm run typecheck",
-    "prepublishOnly": "pnpm run build",
     "test": "vitest run --globals",
     "test:coverage": "vitest run --coverage",
     "test:watch": "vitest",
@@ -74,7 +60,6 @@
     "htmlescape": "^1.1.1"
   },
   "devDependencies": {
-    "@gasket/cjs": "workspace:^",
     "@gasket/plugin-data": "workspace:^",
     "@gasket/plugin-intl": "workspace:^",
     "@testing-library/dom": "^10.4.0",

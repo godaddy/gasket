@@ -6,25 +6,19 @@
   "types": "lib/index.d.ts",
   "files": [
     "lib",
-    "cjs",
     "EXAMPLES.md"
   ],
   "exports": {
     ".": {
       "types": "./lib/index.d.ts",
-      "import": "./lib/index.js",
-      "require": "./cjs/index.cjs",
-      "default": "./cjs/index.cjs"
+      "import": "./lib/index.js"
     },
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "gasket-cjs ./lib",
-    "build:watch": "pnpm run build --watch",
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
     "posttest": "pnpm run lint && pnpm run typecheck",
-    "prepublishOnly": "pnpm run build",
     "test": "vitest run --globals",
     "test:coverage": "pnpm run test --coverage",
     "test:watch": "vitest --watch --globals",
@@ -49,7 +43,6 @@
     "@gasket/plugin-logger": "workspace:^"
   },
   "devDependencies": {
-    "@gasket/cjs": "workspace:^",
     "@gasket/plugin-webpack": "workspace:^",
     "@godaddy/dmd": "^1.0.4",
     "create-gasket-app": "workspace:^",

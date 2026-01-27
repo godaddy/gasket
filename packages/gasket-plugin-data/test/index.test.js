@@ -20,7 +20,6 @@ describe('Plugin', () => {
   it('has expected hooks', () => {
     const expected = [
       'configure',
-      'initReduxState',
       'metadata'
     ];
 

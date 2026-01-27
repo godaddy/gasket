@@ -21,7 +21,6 @@ export default defineConfig([
     '**/generator/**',
     '**/__mocks__/**',
     '**/test/fixtures/**',
-    '**/gasket-redux/lib',
     '**/template/dist',
     '**/template/.next',
     '**/template/.docs'
@@ -65,7 +64,8 @@ export default defineConfig([
       ...jest.configs.recommended.rules,
       'unicorn/filename-case': 'error',
       'no-sync': 'warn',
-      'vitest/expect-expect': 'warn'
+      'vitest/expect-expect': 'warn',
+      'no-undefined': 'warn'
     }
   },
   //
@@ -164,7 +164,7 @@ export default defineConfig([
   // Allow console and process.exit in CLI tools
   //
   {
-    files: ['packages/gasket-cjs/**/*.js', 'packages/create-gasket-app/**/*.js'],
+    files: ['packages/create-gasket-app/**/*.js'],
     rules: {
       'no-console': 'off',
       'no-process-exit': 'off'
