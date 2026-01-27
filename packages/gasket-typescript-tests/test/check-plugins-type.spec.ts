@@ -24,7 +24,6 @@ import pluginSwagger from '@gasket/plugin-swagger';
 
 // Import ESM plugins
 import pluginElasticApm from '@gasket/plugin-elastic-apm';
-import pluginGit from '@gasket/plugin-git';
 import pluginManifest from '@gasket/plugin-manifest';
 import pluginServiceWorker from '@gasket/plugin-service-worker';
 import pluginTypeScript from '@gasket/plugin-typescript';
@@ -53,7 +52,6 @@ describe('check plugins type', () => {
       pluginElasticApm,
       pluginExpress,
       pluginFastify,
-      pluginGit,
       pluginHappyFeet,
       pluginHttps,
       pluginHttpsProxy,

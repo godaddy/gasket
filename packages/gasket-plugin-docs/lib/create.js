@@ -1,5 +1,4 @@
 /// <reference types="create-gasket-app"/>
-/// <reference types="@gasket/plugin-git" />
 
 import { DEFAULT_CONFIG } from './utils/constants.js';
 import packageJson from '../package.json' with { type: 'json' };
@@ -9,6 +8,7 @@ const { name, version, devDependencies } = packageJson;
 export default function create(gasket, {
   pkg,
   gasketConfig,
+  // @ts-expect-error - gitignore is not typed
   gitignore,
   typescript,
   useDocs,
