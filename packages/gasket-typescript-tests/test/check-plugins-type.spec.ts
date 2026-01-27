@@ -12,7 +12,6 @@ import pluginFastify from '@gasket/plugin-fastify';
 import pluginHttps from '@gasket/plugin-https';
 import pluginHttpsProxy from '@gasket/plugin-https-proxy';
 import pluginLogger from '@gasket/plugin-logger';
-import pluginManifest from '@gasket/plugin-manifest';
 import pluginMetadata from '@gasket/plugin-metadata';
 import pluginMiddleware from '@gasket/plugin-middleware';
 import pluginMorgan from '@gasket/plugin-morgan';
@@ -23,19 +22,22 @@ import pluginHappyFeet from '@gasket/plugin-happyfeet';
 import pluginIntl from '@gasket/plugin-intl';
 import pluginSwagger from '@gasket/plugin-swagger';
 
+// Import ESM plugins
+import pluginElasticApm from '@gasket/plugin-elastic-apm';
+import pluginGit from '@gasket/plugin-git';
+import pluginManifest from '@gasket/plugin-manifest';
+import pluginServiceWorker from '@gasket/plugin-service-worker';
+import pluginTypeScript from '@gasket/plugin-typescript';
+import pluginWorkbox from '@gasket/plugin-workbox';
+
 // Import CommonJS plugins that haven't been migrated to ESM yet
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 const pluginCypress = require('@gasket/plugin-cypress');
-const pluginElasticApm = require('@gasket/plugin-elastic-apm');
-const pluginGit = require('@gasket/plugin-git');
 const pluginJest = require('@gasket/plugin-jest');
 const pluginLint = require('@gasket/plugin-lint');
 const pluginMocha = require('@gasket/plugin-mocha');
 const pluginRedux = require('@gasket/plugin-redux');
-const pluginServiceWorker = require('@gasket/plugin-service-worker');
-const pluginTypeScript = require('@gasket/plugin-typescript');
-const pluginWorkbox = require('@gasket/plugin-workbox');
 
 describe('check plugins type', () => {
   it('should have correct type', () => {
