@@ -1,5 +1,21 @@
 # generate-docs-index
 
+## 7.4.27
+
+### Patch Changes
+
+- Updated dependencies [756d0db]
+  - @gasket/plugin-middleware@7.5.2
+  - @gasket/plugin-fastify@7.5.2
+  - @gasket/plugin-manifest@7.3.9
+  - @gasket/plugin-morgan@7.4.0
+  - @gasket/plugin-redux@7.4.3
+  - @gasket/plugin-nextjs@7.7.2
+  - @gasket/plugin-service-worker@7.5.0
+  - @gasket/plugin-swagger@7.4.0
+  - @gasket/plugin-workbox@7.4.0
+  - @gasket/preset-api@7.6.5
+
 ## 7.4.26
 
 ### Patch Changes

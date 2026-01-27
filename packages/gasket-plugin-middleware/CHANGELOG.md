@@ -1,5 +1,11 @@
 # `@gasket/plugin-middleware`
 
+## 7.5.2
+
+### Patch Changes
+
+- 756d0db: Remove @fastify/express from fastify plugin, move to devDep in middleware plugin
+
 ## 7.5.1
 
 ### Patch Changes
