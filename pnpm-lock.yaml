@@ -430,9 +430,6 @@ importers:
       '@gasket/plugin-metadata':
         specifier: workspace:^
         version: link:../gasket-plugin-metadata
-      '@gasket/plugin-redux':
-        specifier: workspace:^
-        version: link:../gasket-plugin-redux
       create-gasket-app:
         specifier: workspace:^
         version: link:../create-gasket-app
@@ -790,9 +787,6 @@ importers:
       '@gasket/plugin-nextjs':
         specifier: workspace:^
         version: link:../gasket-plugin-nextjs
-      '@gasket/plugin-service-worker':
-        specifier: workspace:^
-        version: link:../gasket-plugin-service-worker
       create-gasket-app:
         specifier: workspace:^
         version: link:../create-gasket-app
@@ -817,58 +811,6 @@ importers:
       create-gasket-app:
         specifier: workspace:^
         version: link:../create-gasket-app
-      vitest:
-        specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
-
-  packages/gasket-plugin-manifest:
-    dependencies:
-      deepmerge:
-        specifier: ^4.3.1
-        version: 4.3.1
-      escape-string-regexp:
-        specifier: ^1.0.5
-        version: 1.0.5
-      mkdirp:
-        specifier: ^1.0.4
-        version: 1.0.4
-    devDependencies:
-      '@gasket/core':
-        specifier: workspace:^
-        version: link:../gasket-core
-      '@gasket/plugin-command':
-        specifier: workspace:^
-        version: link:../gasket-plugin-command
-      '@gasket/plugin-express':
-        specifier: workspace:^
-        version: link:../gasket-plugin-express
-      '@gasket/plugin-fastify':
-        specifier: workspace:^
-        version: link:../gasket-plugin-fastify
-      '@gasket/plugin-logger':
-        specifier: workspace:^
-        version: link:../gasket-plugin-logger
-      '@gasket/plugin-metadata':
-        specifier: workspace:^
-        version: link:../gasket-plugin-metadata
-      '@gasket/plugin-middleware':
-        specifier: workspace:^
-        version: link:../gasket-plugin-middleware
-      '@gasket/plugin-service-worker':
-        specifier: workspace:^
-        version: link:../gasket-plugin-service-worker
-      '@types/express':
-        specifier: ^4.17.23
-        version: 4.17.23
-      '@types/node':
-        specifier: ^20.17.19
-        version: 20.17.19
-      create-gasket-app:
-        specifier: workspace:^
-        version: link:../create-gasket-app
-      fastify:
-        specifier: ^4.29.1
-        version: 4.29.1
       vitest:
         specifier: ^3.2.0
         version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
@@ -1044,12 +986,6 @@ importers:
       '@gasket/plugin-nextjs':
         specifier: workspace:^
         version: 'link:'
-      '@gasket/plugin-service-worker':
-        specifier: workspace:^
-        version: link:../gasket-plugin-service-worker
-      '@gasket/plugin-workbox':
-        specifier: workspace:^
-        version: link:../gasket-plugin-workbox
       '@gasket/request':
         specifier: workspace:^
         version: link:../gasket-request
@@ -1071,112 +1007,6 @@ importers:
       webpack:
         specifier: ^5.98.0
         version: 5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.15))
-
-  packages/gasket-plugin-redux:
-    devDependencies:
-      '@gasket/core':
-        specifier: workspace:^
-        version: link:../gasket-core
-      '@gasket/plugin-express':
-        specifier: workspace:^
-        version: link:../gasket-plugin-express
-      '@gasket/plugin-logger':
-        specifier: workspace:^
-        version: link:../gasket-plugin-logger
-      '@gasket/plugin-metadata':
-        specifier: workspace:^
-        version: link:../gasket-plugin-metadata
-      '@gasket/plugin-middleware':
-        specifier: workspace:^
-        version: link:../gasket-plugin-middleware
-      '@gasket/plugin-webpack':
-        specifier: workspace:^
-        version: link:../gasket-plugin-webpack
-      '@gasket/redux':
-        specifier: workspace:^
-        version: link:../gasket-redux
-      acorn:
-        specifier: ^8.14.0
-        version: 8.14.0
-      create-gasket-app:
-        specifier: workspace:^
-        version: link:../create-gasket-app
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.15))(@types/node@20.17.19)(typescript@5.8.2))
-      react:
-        specifier: ^19.0.0
-        version: 19.0.0
-      react-dom:
-        specifier: ^19.0.0
-        version: 19.0.0(react@19.0.0)
-      react-redux:
-        specifier: ^9.2.0
-        version: 9.2.0(@types/react@19.2.7)(react@19.0.0)(redux@5.0.1)
-      redux:
-        specifier: ^5.0.1
-        version: 5.0.1
-      webpack:
-        specifier: ^5.98.0
-        version: 5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.15))
-
-  packages/gasket-plugin-service-worker:
-    dependencies:
-      '@swc/core':
-        specifier: ^1.10.18
-        version: 1.10.18(@swc/helpers@0.5.15)
-      deepmerge:
-        specifier: ^4.3.1
-        version: 4.3.1
-      lru-cache:
-        specifier: ^5.1.1
-        version: 5.1.1
-      mkdirp:
-        specifier: ^1.0.4
-        version: 1.0.4
-      webpack-inject-plugin:
-        specifier: ^1.5.5
-        version: 1.5.5(webpack@5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.15)))
-    devDependencies:
-      '@gasket/core':
-        specifier: workspace:^
-        version: link:../gasket-core
-      '@gasket/plugin-command':
-        specifier: workspace:^
-        version: link:../gasket-plugin-command
-      '@gasket/plugin-express':
-        specifier: workspace:^
-        version: link:../gasket-plugin-express
-      '@gasket/plugin-fastify':
-        specifier: workspace:^
-        version: link:../gasket-plugin-fastify
-      '@gasket/plugin-logger':
-        specifier: workspace:^
-        version: link:../gasket-plugin-logger
-      '@gasket/plugin-metadata':
-        specifier: workspace:^
-        version: link:../gasket-plugin-metadata
-      '@gasket/plugin-webpack':
-        specifier: workspace:^
-        version: link:../gasket-plugin-webpack
-      '@swc/types':
-        specifier: ^0.1.21
-        version: 0.1.21
-      '@types/lru-cache':
-        specifier: ^5.1.1
-        version: 5.1.1
-      create-gasket-app:
-        specifier: workspace:^
-        version: link:../create-gasket-app
-      express:
-        specifier: ^4.21.2
-        version: 4.21.2
-      fastify:
-        specifier: ^4.29.1
-        version: 4.29.1
-      vitest:
-        specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
 
   packages/gasket-plugin-swagger:
     dependencies:
@@ -1276,55 +1106,6 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
 
-  packages/gasket-plugin-workbox:
-    dependencies:
-      deepmerge:
-        specifier: ^4.3.1
-        version: 4.3.1
-      serve-static:
-        specifier: ^1.16.2
-        version: 1.16.2
-      workbox-build:
-        specifier: ^4.3.1
-        version: 4.3.1
-    devDependencies:
-      '@gasket/core':
-        specifier: workspace:^
-        version: link:../gasket-core
-      '@gasket/plugin-command':
-        specifier: workspace:^
-        version: link:../gasket-plugin-command
-      '@gasket/plugin-express':
-        specifier: workspace:^
-        version: link:../gasket-plugin-express
-      '@gasket/plugin-fastify':
-        specifier: workspace:^
-        version: link:../gasket-plugin-fastify
-      '@gasket/plugin-logger':
-        specifier: workspace:^
-        version: link:../gasket-plugin-logger
-      '@gasket/plugin-metadata':
-        specifier: workspace:^
-        version: link:../gasket-plugin-metadata
-      '@gasket/plugin-service-worker':
-        specifier: workspace:^
-        version: link:../gasket-plugin-service-worker
-      '@types/express':
-        specifier: ^4.17.23
-        version: 4.17.23
-      '@types/node':
-        specifier: ^20.17.19
-        version: 20.17.19
-      '@types/workbox-build':
-        specifier: ^5.1.0
-        version: 5.1.0
-      create-gasket-app:
-        specifier: workspace:^
-        version: link:../create-gasket-app
-      vitest:
-        specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
-
   packages/gasket-react-intl:
     dependencies:
       '@gasket/data':
@@ -1370,58 +1151,9 @@ importers:
       react-intl:
         specifier: ^7.1.6
         version: 7.1.9(react@19.0.0)(typescript@5.8.2)
-      react-redux:
-        specifier: ^9.2.0
-        version: 9.2.0(@types/react@19.0.12)(react@19.0.0)(redux@5.0.1)
       vitest:
         specifier: ^3.2.0
         version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
-
-  packages/gasket-redux:
-    dependencies:
-      '@babel/runtime':
-        specifier: ^7.26.9
-        version: 7.26.9
-      redux-logger:
-        specifier: ^3.0.6
-        version: 3.0.6
-      redux-thunk:
-        specifier: ^3.1.0
-        version: 3.1.0(redux@5.0.1)
-    devDependencies:
-      '@babel/cli':
-        specifier: ^7.26.4
-        version: 7.26.4(@babel/core@7.26.9)
-      '@babel/core':
-        specifier: ^7.26.9
-        version: 7.26.9
-      '@babel/plugin-proposal-object-rest-spread':
-        specifier: ^7.20.7
-        version: 7.20.7(@babel/core@7.26.9)
-      '@babel/plugin-transform-runtime':
-        specifier: ^7.26.9
-        version: 7.26.9(@babel/core@7.26.9)
-      '@babel/preset-env':
-        specifier: ^7.26.9
-        version: 7.26.9(@babel/core@7.26.9)
-      '@gasket/plugin-logger':
-        specifier: workspace:^
-        version: link:../gasket-plugin-logger
-      babel-core:
-        specifier: 7.0.0-bridge.0
-        version: 7.0.0-bridge.0(@babel/core@7.26.9)
-      babel-jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@babel/core@7.26.9)
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.15))(@types/node@20.17.19)(typescript@5.8.2))
-      jest-environment-jsdom:
-        specifier: ^29.7.0
-        version: 29.7.0
-      redux:
-        specifier: ^5.0.1
-        version: 5.0.1
 
   packages/gasket-request:
     dependencies:
@@ -1552,9 +1284,6 @@ importers:
       '@gasket/plugin-logger':
         specifier: workspace:^
         version: link:../gasket-plugin-logger
-      '@gasket/plugin-manifest':
-        specifier: workspace:^
-        version: link:../gasket-plugin-manifest
       '@gasket/plugin-metadata':
         specifier: workspace:^
         version: link:../gasket-plugin-metadata
@@ -1567,12 +1296,6 @@ importers:
       '@gasket/plugin-nextjs':
         specifier: workspace:^
         version: link:../gasket-plugin-nextjs
-      '@gasket/plugin-redux':
-        specifier: workspace:^
-        version: link:../gasket-plugin-redux
-      '@gasket/plugin-service-worker':
-        specifier: workspace:^
-        version: link:../gasket-plugin-service-worker
       '@gasket/plugin-swagger':
         specifier: workspace:^
         version: link:../gasket-plugin-swagger
@@ -1582,15 +1305,9 @@ importers:
       '@gasket/plugin-winston':
         specifier: workspace:^
         version: link:../gasket-plugin-winston
-      '@gasket/plugin-workbox':
-        specifier: workspace:^
-        version: link:../gasket-plugin-workbox
       '@gasket/react-intl':
         specifier: workspace:^
         version: link:../gasket-react-intl
-      '@gasket/redux':
-        specifier: workspace:^
-        version: link:../gasket-redux
       '@gasket/request':
         specifier: workspace:^
         version: link:../gasket-request
@@ -1609,18 +1326,12 @@ importers:
       fastify:
         specifier: ^4.29.1
         version: 4.29.1
-      redux:
-        specifier: ^5.0.1
-        version: 5.0.1
       vitest:
         specifier: ^3.2.0
         version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
       winston-transport:
         specifier: ^4.9.0
         version: 4.9.0
-      workbox-build:
-        specifier: ^4.3.1
-        version: 4.3.1
 
   packages/gasket-utils:
     dependencies:
@@ -1730,9 +1441,6 @@ importers:
       '@gasket/plugin-logger':
         specifier: workspace:^
         version: link:../../packages/gasket-plugin-logger
-      '@gasket/plugin-manifest':
-        specifier: workspace:^
-        version: link:../../packages/gasket-plugin-manifest
       '@gasket/plugin-metadata':
         specifier: workspace:^
         version: link:../../packages/gasket-plugin-metadata
@@ -1745,12 +1453,6 @@ importers:
       '@gasket/plugin-nextjs':
         specifier: workspace:^
         version: link:../../packages/gasket-plugin-nextjs
-      '@gasket/plugin-redux':
-        specifier: workspace:^
-        version: link:../../packages/gasket-plugin-redux
-      '@gasket/plugin-service-worker':
-        specifier: workspace:^
-        version: link:../../packages/gasket-plugin-service-worker
       '@gasket/plugin-swagger':
         specifier: workspace:^
         version: link:../../packages/gasket-plugin-swagger
@@ -1760,15 +1462,9 @@ importers:
       '@gasket/plugin-winston':
         specifier: workspace:^
         version: link:../../packages/gasket-plugin-winston
-      '@gasket/plugin-workbox':
-        specifier: workspace:^
-        version: link:../../packages/gasket-plugin-workbox
       '@gasket/react-intl':
         specifier: workspace:^
         version: link:../../packages/gasket-react-intl
-      '@gasket/redux':
-        specifier: workspace:^
-        version: link:../../packages/gasket-redux
       '@gasket/request':
         specifier: workspace:^
         version: link:../../packages/gasket-request
@@ -1892,13 +1588,6 @@ packages:
 
   '@asamuzakjp/css-color@3.2.0':
     resolution: {integrity: sha512-K1A6z8tS3XsmCMM86xoWdn7Fkdn9m6RSVtocUrJYIwZnFVkng/PvkEoWtOWmP+Scc6saYWHWZYbndEEXxl24jw==}
-
-  '@babel/cli@7.26.4':
-    resolution: {integrity: sha512-+mORf3ezU3p3qr+82WvJSnQNE1GAYeoCfEv4fik6B5/2cvKZ75AX8oawWQdXtM9MmndooQj15Jr9kelRFWsuRw==}
-    engines: {node: '>=6.9.0'}
-    hasBin: true
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
 
   '@babel/code-frame@7.26.2':
     resolution: {integrity: sha512-RJlIHRueQgwWitWgF8OdFYGZX328Ax5BCemNGlqHfplnRT9ESi8JkFlvaVYbS+UubVY6dpv87Fs2u5M29iNFVQ==}
@@ -2061,13 +1750,6 @@ packages:
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0
-
-  '@babel/plugin-proposal-object-rest-spread@7.20.7':
-    resolution: {integrity: sha512-d2S98yCiLxDVmBmE8UjGcfPvNEUbA1U5q5WxaWFUGRzJSVAZqm5W6MbPct0jxnegUZ0niLeNX+IOzEs7wYg9Dg==}
-    engines: {node: '>=6.9.0'}
-    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-object-rest-spread instead.
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
 
   '@babel/plugin-proposal-private-property-in-object@7.21.0-placeholder-for-preset-env.2':
     resolution: {integrity: sha512-SOSkfJDddaM7mak6cPEpswyTRnuRltl429hMraQEglW+OkovnCzsiszTmsrlY//qLFjCpQDFRvjdm2wA5pPm9w==}
@@ -3554,28 +3236,8 @@ packages:
   '@godaddy/terminus@4.12.1':
     resolution: {integrity: sha512-Tm+wVu1/V37uZXcT7xOhzdpFoovQReErff8x3y82k6YyWa1gzxWBjTyrx4G2enjEqoXPnUUmJ3MOmwH+TiP6Sw==}
 
-  '@hapi/address@2.1.4':
-    resolution: {integrity: sha512-QD1PhQk+s31P1ixsX0H0Suoupp3VMXzIVMSwobR3F3MSUO2YCV0B7xqLcUw/Bh8yuvd3LhpyqLQWTNcRmp6IdQ==}
-    deprecated: Moved to 'npm install @sideway/address'
-
-  '@hapi/bourne@1.3.2':
-    resolution: {integrity: sha512-1dVNHT76Uu5N3eJNTYcvxee+jzX4Z9lfciqRRHCU27ihbUcYi+iSc2iml5Ke1LXe1SyJCLA0+14Jh4tXJgOppA==}
-    deprecated: This version has been deprecated and is no longer supported or maintained
-
-  '@hapi/hoek@8.5.1':
-    resolution: {integrity: sha512-yN7kbciD87WzLGc5539Tn0sApjyiGHAJgKvG9W8C7O+6c7qmoQMfVs0W4bX17eqz6C78QJqqFrtgdK5EWf6Qow==}
-    deprecated: This version has been deprecated and is no longer supported or maintained
-
   '@hapi/hoek@9.3.0':
     resolution: {integrity: sha512-/c6rf4UJlmHlC9b5BaNvzAcFv7HZ2QHaV0D4/HNlBdvFnvQq8RI4kYdhyPCl7Xj+oWvTWQ8ujhqS53LIgAe6KQ==}
-
-  '@hapi/joi@15.1.1':
-    resolution: {integrity: sha512-entf8ZMOK8sc+8YfeOlM8pCfg3b5+WZIKBfUaaJT8UsjAAPjartzxIYm3TIbjvA4u+u++KbcXD38k682nVHDAQ==}
-    deprecated: Switch to 'npm install joi'
-
-  '@hapi/topo@3.1.6':
-    resolution: {integrity: sha512-tAag0jEcjwH+P2quUfipd7liWCNX2F8NvYjQp2wtInsZxnMlypdw0FtAOLxtvvkO+GSRRbmNi8m/5y42PQJYCQ==}
-    deprecated: This version has been deprecated and is no longer supported or maintained
 
   '@hapi/topo@5.1.0':
     resolution: {integrity: sha512-foQZKJig7Ob0BMAYBfcJk8d77QtOe7Wo4ox7ff1lQYoNNAb6jwcY1ncdoy2e9wQZzvNy7ODZCYJkK8kzmcAnAg==}
@@ -3911,9 +3573,6 @@ packages:
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
-
-  '@nicolo-ribaudo/chokidar-2@2.1.8-no-fsevents.3':
-    resolution: {integrity: sha512-s88O1aVtXftvp5bCPB7WnmXc5IwOZZ7YPuwNPt+GtOOXpPvad1LfbmjYv+qII7zP6RU2QGnqve27dnLycEnyEQ==}
 
   '@nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1':
     resolution: {integrity: sha512-54/JRvkLIzzDWshCWfuhadfrfZVPiElY8Fcgmg1HroEly/EDSszzhBAsarCux+D/kOslTRquNzuyGSmUSTTHGg==}
@@ -4486,14 +4145,8 @@ packages:
   '@types/jest@29.5.14':
     resolution: {integrity: sha512-ZN+4sdnLUbo8EVvVc2ao0GFW6oVrQRPn4K2lglySj7APvSrgzxHiNNK99us4WDMi57xxA2yggblIAMNhXOotLQ==}
 
-  '@types/jsdom@20.0.1':
-    resolution: {integrity: sha512-d0r18sZPmMQr1eG35u12FZfhIXNrnsPU/g5wvRKCUf/tOGilKKwYMYGqh33BNR6ba+2gkHw1EUiHoN3mn7E5IQ==}
-
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
-
-  '@types/lru-cache@5.1.1':
-    resolution: {integrity: sha512-ssE3Vlrys7sdIzs5LOxCzTVMsU7i9oa/IaW92wF32JFb3CVczqOkru2xspuKczHEbG3nvmPY7IFqVmGGHdNbYw==}
 
   '@types/mdast@4.0.4':
     resolution: {integrity: sha512-kGaNbPh1k7AFzgpud/gMdvIm5xuECykRR+JnWKQno9TAXVa6WIVCGTPvYGekIDL4uwCZQSYbUxNBSb1aUo79oA==}
@@ -4578,9 +4231,6 @@ packages:
   '@types/through@0.0.33':
     resolution: {integrity: sha512-HsJ+z3QuETzP3cswwtzt2vEIiHBk/dCcHGhbmG5X3ecnwFD/lPrMpliGXxSCg03L9AhrdwA4Oz/qfspkDW+xGQ==}
 
-  '@types/tough-cookie@4.0.5':
-    resolution: {integrity: sha512-/Ad8+nIOV7Rl++6f1BdKxFSMgmoqEoYbHRpPcx3JEfv8VRsQe9Z4mCXeJBzxs7mbHY/XOZZuXlRNfhpVPbs6ZA==}
-
   '@types/triple-beam@1.3.5':
     resolution: {integrity: sha512-6WaYesThRMCl19iryMYP7/x2OVgCtbIVflDGFpWnb9irXI3UjYE4AzmYuiUKY1AJstGijoY+MgUszMgRxIYTYw==}
 
@@ -4590,15 +4240,8 @@ packages:
   '@types/unist@3.0.3':
     resolution: {integrity: sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q==}
 
-  '@types/use-sync-external-store@0.0.6':
-    resolution: {integrity: sha512-zFDAD+tlpf2r4asuHEj0XH6pY6i0g5NeAHPn+15wk3BV6JA69eERFXC1gyGThDkVa1zCyKr5jox1+2LbV/AMLg==}
-
   '@types/webpack-bundle-analyzer@4.7.0':
     resolution: {integrity: sha512-c5i2ThslSNSG8W891BRvOd/RoCjI2zwph8maD22b1adtSns20j+0azDDMCK06DiVrzTgnwiDl5Ntmu1YRJw8Sg==}
-
-  '@types/workbox-build@5.1.0':
-    resolution: {integrity: sha512-kAu7EuhMG/h10bH9zxaUYLtfOQ7AczNvpzGzfW9ZPhlP6pcrx3gVhhxhTlU6AvIb5Q2udvSzwhRyvLcHHg+HiA==}
-    deprecated: This is a stub types definition. workbox-build provides its own type definitions, so you do not need this installed.
 
   '@types/ws@8.5.14':
     resolution: {integrity: sha512-bd/YFLW+URhBzMXurx7lWByOu+xzU9+kb3RboOteXYDfW+tr+JZa99OyNmPINEGB/ahzKrEuc8rcv4gnpJmxTw==}
@@ -5056,15 +4699,6 @@ packages:
     resolution: {integrity: sha512-qIj0G9wZbMGNLjLmg1PT6v2mE9AH2zlnADJD/2tC6E00hgmhUOfEB6greHPAfLRSufHqROIUTkw6E+M3lH0PTQ==}
     engines: {node: '>= 0.4'}
 
-  babel-core@7.0.0-bridge.0:
-    resolution: {integrity: sha512-poPX9mZH/5CSanm50Q+1toVci6pv5KSRv/5TWCwtzQS5XEwn40BcCrgIeMFWP9CKKIniKXNxoIOnOq4VVlGXhg==}
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-
-  babel-extract-comments@1.0.0:
-    resolution: {integrity: sha512-qWWzi4TlddohA91bFwgt6zO/J0X+io7Qp184Fw0m2JYRSTZnJbFR8+07KmzudHCZgOiKRCrjhylwv9Xd8gfhVQ==}
-    engines: {node: '>=4'}
-
   babel-jest@29.7.0:
     resolution: {integrity: sha512-BrvGY3xZSwEcCzKvKsCi2GgHqDqsYkOP4/by5xCgIwGXQxIEh+8ew3gmrE1y7XRR6LHZIj6yLYnUi/mm2KXKBg==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
@@ -5109,12 +4743,6 @@ packages:
     peerDependencies:
       '@babel/core': ^7.4.0 || ^8.0.0-0 <8.0.0
 
-  babel-plugin-syntax-object-rest-spread@6.13.0:
-    resolution: {integrity: sha512-C4Aq+GaAj83pRQ0EFgTvw5YO6T3Qz2KGrNRwIj9mSoNHVvdZY4KO2uA6HNtNXCw993iSZnckY1aLW8nOi8i4+w==}
-
-  babel-plugin-transform-object-rest-spread@6.26.0:
-    resolution: {integrity: sha512-ocgA9VJvyxwt+qJB0ncxV8kb/CjfTcECUY4tQ5VT7nP6Aohzobm8CDFaQ5FHdvZQzLmf0sgDxB8iRXZXxwZcyA==}
-
   babel-preset-current-node-syntax@1.1.0:
     resolution: {integrity: sha512-ldYss8SbBlWva1bs28q78Ju5Zq1F+8BrqBZZ0VFhLBvhh6lCpC2o3gDJi/5DRLs9FgYZCnmPYIVFU4lRXCkyUw==}
     peerDependencies:
@@ -5125,13 +4753,6 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     peerDependencies:
       '@babel/core': ^7.0.0
-
-  babel-runtime@6.26.0:
-    resolution: {integrity: sha512-ITKNuq2wKlW1fJg9sSW52eepoYgZBggvOAHC0u/CYu/qxQ9EVzThCgR69BnSXLHjy2f7SY5zaQ4yt7H9ZVxY2g==}
-
-  babylon@6.18.0:
-    resolution: {integrity: sha512-q/UEjfGJ2Cm3oKV71DJz9d25TPnq5rhBVL2Q4fA5wcC3jcrdn7+SssEybFIxwAvvP+YCsCYNKughoF33GxgycQ==}
-    hasBin: true
 
   bail@2.0.2:
     resolution: {integrity: sha512-0xO6mYd7JB2YesxDKplafRpsiOzPt9V02ddPCLbY1xYGPOX24NTyN50qnUxgCPcSoYMhKpAuBTjQoRZCAkUDRw==}
@@ -5482,10 +5103,6 @@ packages:
     resolution: {integrity: sha512-zP4jEKbe8SHzKJYQmq8Y9gYjtO/POJLgIdKgV7B9qNmABVFVc+ctqSX6iXh4mCpJfRBOabiZ2YKPg8ciDw6C+Q==}
     engines: {node: '>= 6'}
 
-  commander@6.2.1:
-    resolution: {integrity: sha512-U7VdrJFnJgo4xjrHpTzu0yrHPGImdsmD95ZlgYSEajAn2JKzDhDTPG9kBTefmObL2w/ngeZnilk+OV9CG3d7UA==}
-    engines: {node: '>= 6'}
-
   commander@7.2.0:
     resolution: {integrity: sha512-QrWXB+ZQSVPmIWIhtEO9H+gwHaMGYiF5ChvoJ+K9ZGHG/sVsa6yiesAD1GC/x46sET00Xlwo1u49RVVVzvcSkw==}
     engines: {node: '>= 10'}
@@ -5500,10 +5117,6 @@ packages:
 
   common-path-prefix@3.0.0:
     resolution: {integrity: sha512-QE33hToZseCH3jS0qN96O/bSh3kaw/h+Tq7ngyY9eWDUnTlTNUyqfqvCXioLe5Na5jFsL78ra/wuBU4iuEgd4w==}
-
-  common-tags@1.8.2:
-    resolution: {integrity: sha512-gk/Z852D2Wtb//0I+kRFNKKE9dIIVirjoqPoA1wJU+XePVXZfGeBpk45+A1rKO4Q43prqWBNY/MiIeRLbPWUaA==}
-    engines: {node: '>=4.0.0'}
 
   commondir@1.0.1:
     resolution: {integrity: sha512-W9pAhw0ja1Edb5GVdIF1mjZw/ASI0AlShXM83UUGe2DVr5TdAPEA1OA8m/g8zWp9x6On7gqufY+FatDbC3MDQg==}
@@ -5596,10 +5209,6 @@ packages:
 
   core-js-pure@3.40.0:
     resolution: {integrity: sha512-AtDzVIgRrmRKQai62yuSIN5vNiQjcJakJb4fbhVw3ehxx7Lohphvw9SGNWKhLFqSxC4ilD0g/L1huAYFQU3Q6A==}
-
-  core-js@2.6.12:
-    resolution: {integrity: sha512-Kb2wC0fvsWfQrgk8HU5lW6U/Lcs8+9aaYcy4ZFc6DDlo4nZ7n70dEgE5rtR0oG6ufKDUnrwfWL1mXR5ljDatrQ==}
-    deprecated: core-js@<3.23.3 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Some versions have web compatibility issues. Please, upgrade your dependencies to the actual version of core-js.
 
   core-js@3.40.0:
     resolution: {integrity: sha512-7vsMc/Lty6AGnn7uFpYT56QesI5D2Y/UkgKounk87OP9Z2H9Z8kj6jzcSGAxFmUtDOS0ntK6lbQz+Nsa0Jj6mQ==}
@@ -5870,9 +5479,6 @@ packages:
       babel-plugin-macros:
         optional: true
 
-  deep-diff@0.3.8:
-    resolution: {integrity: sha512-yVn6RZmHiGnxRKR9sJb3iVV2XTF1Ghh2DiWRZ3dMnGc43yUdWWF/kX6lQyk3+P84iprfWKU/8zFTrlkvtFm1ug==}
-
   deep-eql@5.0.2:
     resolution: {integrity: sha512-h5k/5U50IJJFpzfL6nO9jaaumfjO/f2NjK/oYB2Djzm4p9L+3T9qWpZqZ2hAbLPuuYq9wrU08WQyBTL5GbPk5Q==}
     engines: {node: '>=6'}
@@ -6064,10 +5670,6 @@ packages:
 
   emojilib@2.4.0:
     resolution: {integrity: sha512-5U0rVMU5Y2n2+ykNLQqMoqklN9ICBT/KsvC1Gz6vqHbz2AXXGkG+Pm5rMWk/8Vjrr/mY9985Hi8DYzn1F09Nyw==}
-
-  emojis-list@2.1.0:
-    resolution: {integrity: sha512-knHEZMgs8BB+MInokmNTg/OyPlAddghe1YBgNwJBc5zsJi/uyIcXoSDsL/W9ymOsBoBGdPIHXYJ9+qKFwRwDng==}
-    engines: {node: '>= 0.10'}
 
   emojis-list@3.0.0:
     resolution: {integrity: sha512-/kyM18EfinwXZbno9FyUGeFh87KC8HRQBQGildHZbEuRyWFOmv1U10o9BBp8XVZDVNNuQKyIGIu5ZYAAXJ0V2Q==}
@@ -6638,9 +6240,6 @@ packages:
     resolution: {integrity: sha512-Z4XaCL6dUDHfP/jT25jJKMmtxvuwbkrD1vNSMFlo9lNLY2c5FHYSQgHPRZUjAB26TpDEoW9HCOgplrdbaPV/ew==}
     engines: {node: '>=14.14'}
 
-  fs-extra@4.0.3:
-    resolution: {integrity: sha512-q6rbdDd1o2mAnQreO7YADIxf/Whx4AHBiRf6d+/cVT8h44ss+lHgxf1FemcqDnQt9X3ct4McHr+JMGlYSsK7Cg==}
-
   fs-extra@7.0.1:
     resolution: {integrity: sha512-YJDaCJZEnBmcbw13fvdAM9AwNOJwOzrE4pqMqBq5nFiEqXUqHwlK4B+3pUw6JNvfSPtX05xFHtYy/1ni01eGCw==}
     engines: {node: '>=6 <7 || >=8'}
@@ -6651,9 +6250,6 @@ packages:
 
   fs-monkey@1.0.6:
     resolution: {integrity: sha512-b1FMfwetIKymC0eioW7mTywihSQE4oLzQn1dB6rZB5fx/3NpNEdAWeCSMB+60/AeT0TCXsxzAlcYVEFCTAksWg==}
-
-  fs-readdir-recursive@1.1.0:
-    resolution: {integrity: sha512-GNanXlVr2pf02+sPN40XN8HG+ePaNcvM0q5mZBd668Obwb0yD5GiUbZOFgwn8kGMY6I3mdyDJzieUy3PTYyTRA==}
 
   fs.realpath@1.0.0:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}
@@ -7450,15 +7046,6 @@ packages:
     resolution: {integrity: sha512-gns+Er14+ZrEoC5fhOfYCY1LOHHr0TI+rQUHZS8Ttw2l7gl+80eHc/gFf2Ktkw0+SIACDTeWvpFcv3B04VembQ==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
-  jest-environment-jsdom@29.7.0:
-    resolution: {integrity: sha512-k9iQbsf9OyOfdzWH8HDmrRT0gSIcX+FLNW7IQq94tFX0gynPwqDTW0Ho6iMVNjGz/nb+l/vW3dWM2bbLLpkbXA==}
-    engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
-    peerDependencies:
-      canvas: ^2.5.0
-    peerDependenciesMeta:
-      canvas:
-        optional: true
-
   jest-environment-node@29.7.0:
     resolution: {integrity: sha512-DOSwCRqXirTOyheM+4d5YZOrWcdu0LNZ87ewUoywbcb2XR4wKgqiG8vNeYwhjFMbEkfju7wx2GYH0P2gevGvFw==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
@@ -7632,10 +7219,6 @@ packages:
   json-stable-stringify-without-jsonify@1.0.1:
     resolution: {integrity: sha512-Bdboy+l7tA3OGW6FjyFHWkP5LuByj1Tk33Ljyq0axyzdk9//JSi2u3fP1QSmd1KNwq6VOKYGlAu87CisVir6Pw==}
 
-  json5@1.0.2:
-    resolution: {integrity: sha512-g1MWMLBiz8FKi1e4w0UyVL3w+iJceWAFBAaBnnGKOpNa5f8TLktkbre1+s6oICydWAm+HRUGTmI+//xv2hvXYA==}
-    hasBin: true
-
   json5@2.2.3:
     resolution: {integrity: sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==}
     engines: {node: '>=6'}
@@ -7707,10 +7290,6 @@ packages:
     resolution: {integrity: sha512-3R/1M+yS3j5ou80Me59j7F9IMs4PXs3VqRrm0TU3AbKPxlmpoY1TNscJV/oGJXo8qCatFGTfDbY6W6ipGOYXfg==}
     engines: {node: '>=6.11.5'}
 
-  loader-utils@1.2.3:
-    resolution: {integrity: sha512-fkpz8ejdnEMG3s37wGL07iSBDg99O9D5yflE9RGNH3hRdx9SOwYfnGYdZOUIZitN8E+E2vkq3MUMYMvPYl5ZZA==}
-    engines: {node: '>=4.0.0'}
-
   loader-utils@2.0.4:
     resolution: {integrity: sha512-xXqpXoINfFhgua9xiqD8fPFHgkoq1mmmpE92WlDbm9rNRd/EbRb+Gqf908T2DMfuHjjJlksiK2RbHVOdD/MqSw==}
     engines: {node: '>=8.9.0'}
@@ -7730,9 +7309,6 @@ packages:
   locate-path@7.2.0:
     resolution: {integrity: sha512-gvVijfZvn7R+2qyPX8mAuKcFGDf6Nc61GdvGafQsHL0sBIxfKzA+usWn4GFC/bk+QdwPUD4kWFJLhElipq+0VA==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
-
-  lodash._reinterpolate@3.0.0:
-    resolution: {integrity: sha512-xYHt68QRoYGjeeM/XOE1uJtvXQAgvszfBhjV4yvsQH0u2i9I6cI6c6/eG4Hh3UAOVn0y/xAXwmTzEay49Q//HA==}
 
   lodash.debounce@4.0.8:
     resolution: {integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==}
@@ -7759,13 +7335,6 @@ packages:
 
   lodash.startcase@4.4.0:
     resolution: {integrity: sha512-+WKqsK294HMSc2jEbNgpHpd0JfIBhp7rEV4aqXWqFr6AlXov+SlcgB1Fv01y2kGe3Gc8nMW7VA0SrGuSkRfIEg==}
-
-  lodash.template@4.5.0:
-    resolution: {integrity: sha512-84vYFxIkmidUiFxidA/KjjH9pAycqW+h980j7Fuz5qxRtO9pgB7MDFTdys1N7A5mcucRiDyEq4fusljItR1T/A==}
-    deprecated: This package is deprecated. Use https://socket.dev/npm/package/eta instead.
-
-  lodash.templatesettings@4.2.0:
-    resolution: {integrity: sha512-stgLz+i3Aa9mZgnjr/O+v9ruKZsPsndy7qPZOchbqk2cnTU1ZaldKK+v7m54WoKIyxiuMZTKT2H81F8BeAc3ZQ==}
 
   lodash.uniq@4.5.0:
     resolution: {integrity: sha512-xfBaXQd9ryd9dlSDvnvI0lvxfLJlYAZzXomUYzLKtUeOQvOP5piqAWuGtrhWeqaXK9hhoM/iyJc5AV+XfsX3HQ==}
@@ -9050,10 +8619,6 @@ packages:
     engines: {node: '>=10.13.0'}
     hasBin: true
 
-  pretty-bytes@5.6.0:
-    resolution: {integrity: sha512-FFw039TmrBqFK8ma/7OL3sDz/VytdtJr044/QUJtH0wK9lb9jLq9tJyIxUwtQJHwar2BqtiA4iCWSwo9JLkzFg==}
-    engines: {node: '>=6'}
-
   pretty-error@4.0.0:
     resolution: {integrity: sha512-AoJ5YMAcXKYxKhuJGdcvse+Voc6v1RgnsR3nWcYU7q4t6z0Q6T86sv5Zq8VIRbOWWFpvdGE83LtdSMNd+6Y0xw==}
 
@@ -9207,18 +8772,6 @@ packages:
       react-loadable: '*'
       webpack: '>=4.41.1 || 5.x'
 
-  react-redux@9.2.0:
-    resolution: {integrity: sha512-ROY9fvHhwOD9ySfrF0wmvu//bKCQ6AeZZq1nJNtbDC+kk5DuSuNX/n6YWYF/SYy7bSba4D4FSz8DJeKY/S/r+g==}
-    peerDependencies:
-      '@types/react': ^18.2.25 || ^19
-      react: ^18.0 || ^19
-      redux: ^5.0.0
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-      redux:
-        optional: true
-
   react-router-config@5.1.1:
     resolution: {integrity: sha512-DuanZjaD8mQp1ppHjgnnUnyOlqYXZVjnov/JzFhjLEwd3Z4dYjMSnqrEzzGThH47vpCOqPPwJM2FtthLeJ8Pbg==}
     peerDependencies:
@@ -9282,17 +8835,6 @@ packages:
     resolution: {integrity: sha512-8HrF5ZsXk5FAH9dgsx3BlUer73nIhuj+9OrQwEbLTPOBzGkL1lsFCR01am+v+0m2Cmbs1nP12hLDl5FA7EszKA==}
     engines: {node: '>=6.0.0'}
 
-  redux-logger@3.0.6:
-    resolution: {integrity: sha512-JoCIok7bg/XpqA1JqCqXFypuqBbQzGQySrhFzewB7ThcnysTO30l4VCst86AuB9T9tuT03MAA56Jw2PNhRSNCg==}
-
-  redux-thunk@3.1.0:
-    resolution: {integrity: sha512-NW2r5T6ksUKXCabzhL9z+h206HQw/NJkcLm1GPImRQ8IzfXwRGqjVhKJGauHirT0DAuyy6hjdnMZaRoAcy0Klw==}
-    peerDependencies:
-      redux: ^5.0.0
-
-  redux@5.0.1:
-    resolution: {integrity: sha512-M9/ELqF6fy8FwmkpnF0S3YKOqMyoWJ4+CS5Efg2ct3oY9daQvd/Pc71FpGZsVsbl3Cpb+IIcjBDUnnyBdQbq4w==}
-
   reflect.getprototypeof@1.0.10:
     resolution: {integrity: sha512-00o4I+DVrefhv+nX0ulyi3biSHCPDe+yLv5o/p6d/UVlirijB8E16FtfwSAi4g3tcqrQ4lRAqQSoFEZJehYEcw==}
     engines: {node: '>= 0.4'}
@@ -9303,9 +8845,6 @@ packages:
 
   regenerate@1.4.2:
     resolution: {integrity: sha512-zrceR/XhGYU/d/opr2EKO7aRHUeiBI8qjtfHqADTwZd6Szfy16la6kqD0MIUs5z5hx6AaKa+PixpPrR289+I0A==}
-
-  regenerator-runtime@0.11.1:
-    resolution: {integrity: sha512-MguG95oij0fC3QV3URf4V2SDYGJhJnJGqvIIgdECeODCT98wSWDAJ94SSuVpYQUoTcGUIL6L4yNB7j1DFFHSBg==}
 
   regenerator-runtime@0.14.1:
     resolution: {integrity: sha512-dYnhHh0nJoMfnkZs6GmmhFknAGRrLznOu5nc9ML+EJxGvrx6H7teuevqVqCuPcPK//3eDrrjQhehXVx9cnkGdw==}
@@ -9699,10 +9238,6 @@ packages:
     resolution: {integrity: sha512-kUMbT1oBJCpgrnKoSr0o6wPtvRWT9W9UKvGLwfJYO2WuahZRHOpEyL1ckyMGgMWh0UdpmaoFqKKD29WTomNEGA==}
     engines: {node: '>=8'}
 
-  slash@2.0.0:
-    resolution: {integrity: sha512-ZYKh3Wh2z1PpEXWr0MpSBZ0V6mZHAQfYevttO11c51CaWjGTaadiKZ+wVt1PbMlDV5qhMFslpZCemhwOK7C89A==}
-    engines: {node: '>=6'}
-
   slash@3.0.0:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
     engines: {node: '>=8'}
@@ -9918,10 +9453,6 @@ packages:
   strip-bom@4.0.0:
     resolution: {integrity: sha512-3xurFv5tEgii33Zi8Jtp55wEIILR9eh34FAW00PZf+JnSsTmV/ioewSgQl97JHvgjoRGwPShsWm+IdrxB35d0w==}
     engines: {node: '>=8'}
-
-  strip-comments@1.0.2:
-    resolution: {integrity: sha512-kL97alc47hoyIQSV165tTt9rG5dn4w1dNnBhOQ3bOU1Nc1hel09jnXANaHJ7vzHLd4Ju8kseDGzlev96pghLFw==}
-    engines: {node: '>=4'}
 
   strip-final-newline@2.0.0:
     resolution: {integrity: sha512-BrpvfNAE3dcvq7ll3xVumzjKjZQ5tI1sEUIKr3Uoks0XUl45St3FlatVqef9prk4jRDzhW6WZg+3bk93y6pLjA==}
@@ -10358,11 +9889,6 @@ packages:
   url-parse@1.5.10:
     resolution: {integrity: sha512-WypcfiRhfeUP9vvF0j6rw0J3hrWrw6iZv3+22h6iRMJ/8z1Tj6XfLP4DsUix5MhMPnXpiHDoKyoZ/bdCkwBCiQ==}
 
-  use-sync-external-store@1.4.0:
-    resolution: {integrity: sha512-9WXSPC5fMv61vaupRkCKCxsPxBocVnwakBEkMIHHpkTTg6icbJtg6jzgtLDm4bl3cSHAca52rYWih0k4K3PfHw==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
@@ -10558,11 +10084,6 @@ packages:
       webpack-cli:
         optional: true
 
-  webpack-inject-plugin@1.5.5:
-    resolution: {integrity: sha512-cYhj/3X6m19zmIEb/Y09/VjCf9SeL+/7Wv6YrUi/wBGFQPFMINEfzHBJV0qokeqvUwE23h8NzrTIrkHALZ9PaA==}
-    peerDependencies:
-      webpack: '>=4.0.0'
-
   webpack-merge@5.10.0:
     resolution: {integrity: sha512-+4zXKdx7UnO+1jaN4l2lHVD+mFvnlZQP/6ljaJVb4SZiwIKeUnrT5l0gkT8z+n4hKpC+jpOv6O9R+gLtag7pSA==}
     engines: {node: '>=10.0.0'}
@@ -10684,53 +10205,6 @@ packages:
 
   wordwrap@1.0.0:
     resolution: {integrity: sha512-gvVzJFlPycKc5dZN4yPkP8w7Dc37BtP1yczEneOb4uq34pXZcvrtRTmWV8W+Ume+XCxKgbjM+nevkyFPMybd4Q==}
-
-  workbox-background-sync@4.3.1:
-    resolution: {integrity: sha512-1uFkvU8JXi7L7fCHVBEEnc3asPpiAL33kO495UMcD5+arew9IbKW2rV5lpzhoWcm/qhGB89YfO4PmB/0hQwPRg==}
-
-  workbox-broadcast-update@4.3.1:
-    resolution: {integrity: sha512-MTSfgzIljpKLTBPROo4IpKjESD86pPFlZwlvVG32Kb70hW+aob4Jxpblud8EhNb1/L5m43DUM4q7C+W6eQMMbA==}
-
-  workbox-build@4.3.1:
-    resolution: {integrity: sha512-UHdwrN3FrDvicM3AqJS/J07X0KXj67R8Cg0waq1MKEOqzo89ap6zh6LmaLnRAjpB+bDIz+7OlPye9iii9KBnxw==}
-    engines: {node: '>=4.0.0'}
-
-  workbox-cacheable-response@4.3.1:
-    resolution: {integrity: sha512-Rp5qlzm6z8IOvnQNkCdO9qrDgDpoPNguovs0H8C+wswLuPgSzSp9p2afb5maUt9R1uTIwOXrVQMmPfPypv+npw==}
-
-  workbox-core@4.3.1:
-    resolution: {integrity: sha512-I3C9jlLmMKPxAC1t0ExCq+QoAMd0vAAHULEgRZ7kieCdUd919n53WC0AfvokHNwqRhGn+tIIj7vcb5duCjs2Kg==}
-
-  workbox-expiration@4.3.1:
-    resolution: {integrity: sha512-vsJLhgQsQouv9m0rpbXubT5jw0jMQdjpkum0uT+d9tTwhXcEZks7qLfQ9dGSaufTD2eimxbUOJfWLbNQpIDMPw==}
-
-  workbox-google-analytics@4.3.1:
-    resolution: {integrity: sha512-xzCjAoKuOb55CBSwQrbyWBKqp35yg1vw9ohIlU2wTy06ZrYfJ8rKochb1MSGlnoBfXGWss3UPzxR5QL5guIFdg==}
-    deprecated: It is not compatible with newer versions of GA starting with v4, as long as you are using GAv3 it should be ok, but the package is not longer being maintained
-
-  workbox-navigation-preload@4.3.1:
-    resolution: {integrity: sha512-K076n3oFHYp16/C+F8CwrRqD25GitA6Rkd6+qAmLmMv1QHPI2jfDwYqrytOfKfYq42bYtW8Pr21ejZX7GvALOw==}
-
-  workbox-precaching@4.3.1:
-    resolution: {integrity: sha512-piSg/2csPoIi/vPpp48t1q5JLYjMkmg5gsXBQkh/QYapCdVwwmKlU9mHdmy52KsDGIjVaqEUMFvEzn2LRaigqQ==}
-
-  workbox-range-requests@4.3.1:
-    resolution: {integrity: sha512-S+HhL9+iTFypJZ/yQSl/x2Bf5pWnbXdd3j57xnb0V60FW1LVn9LRZkPtneODklzYuFZv7qK6riZ5BNyc0R0jZA==}
-
-  workbox-routing@4.3.1:
-    resolution: {integrity: sha512-FkbtrODA4Imsi0p7TW9u9MXuQ5P4pVs1sWHK4dJMMChVROsbEltuE79fBoIk/BCztvOJ7yUpErMKa4z3uQLX+g==}
-
-  workbox-strategies@4.3.1:
-    resolution: {integrity: sha512-F/+E57BmVG8dX6dCCopBlkDvvhg/zj6VDs0PigYwSN23L8hseSRwljrceU2WzTvk/+BSYICsWmRq5qHS2UYzhw==}
-
-  workbox-streams@4.3.1:
-    resolution: {integrity: sha512-4Kisis1f/y0ihf4l3u/+ndMkJkIT4/6UOacU3A4BwZSAC9pQ9vSvJpIi/WFGQRH/uPXvuVjF5c2RfIPQFSS2uA==}
-
-  workbox-sw@4.3.1:
-    resolution: {integrity: sha512-0jXdusCL2uC5gM3yYFT6QMBzKfBr2XTk0g5TPAV4y8IZDyVNDyj1a8uSXy3/XrvkVTmQvLN4O5k3JawGReXr9w==}
-
-  workbox-window@4.3.1:
-    resolution: {integrity: sha512-C5gWKh6I58w3GeSc0wp2Ne+rqVw8qwcmZnQGpjiek8A2wpbxSJb1FdCoQVO+jDJs35bFgo/WETgl1fqgsxN0Hg==}
 
   wrap-ansi@7.0.0:
     resolution: {integrity: sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==}
@@ -10992,20 +10466,6 @@ snapshots:
       '@csstools/css-tokenizer': 3.0.4
       lru-cache: 10.4.3
     optional: true
-
-  '@babel/cli@7.26.4(@babel/core@7.26.9)':
-    dependencies:
-      '@babel/core': 7.26.9
-      '@jridgewell/trace-mapping': 0.3.25
-      commander: 6.2.1
-      convert-source-map: 2.0.0
-      fs-readdir-recursive: 1.1.0
-      glob: 7.2.3
-      make-dir: 2.1.0
-      slash: 2.0.0
-    optionalDependencies:
-      '@nicolo-ribaudo/chokidar-2': 2.1.8-no-fsevents.3
-      chokidar: 3.6.0
 
   '@babel/code-frame@7.26.2':
     dependencies:
@@ -11337,15 +10797,6 @@ snapshots:
       '@babel/traverse': 7.26.9
     transitivePeerDependencies:
       - supports-color
-
-  '@babel/plugin-proposal-object-rest-spread@7.20.7(@babel/core@7.26.9)':
-    dependencies:
-      '@babel/compat-data': 7.26.8
-      '@babel/core': 7.26.9
-      '@babel/helper-compilation-targets': 7.26.5
-      '@babel/helper-plugin-utils': 7.26.5
-      '@babel/plugin-syntax-object-rest-spread': 7.8.3(@babel/core@7.26.9)
-      '@babel/plugin-transform-parameters': 7.25.9(@babel/core@7.26.9)
 
   '@babel/plugin-proposal-private-property-in-object@7.21.0-placeholder-for-preset-env.2(@babel/core@7.26.10)':
     dependencies:
@@ -13257,13 +12708,13 @@ snapshots:
       - utf-8-validate
       - webpack-cli
 
-  '@docusaurus/plugin-content-blog@3.8.1(@docusaurus/plugin-content-docs@3.8.1(@mdx-js/react@3.1.0(@types/react@19.0.12)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.2))(@mdx-js/react@3.1.0(@types/react@19.2.7)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.2)':
+  '@docusaurus/plugin-content-blog@3.8.1(@docusaurus/plugin-content-docs@3.8.1(@mdx-js/react@3.1.0(@types/react@19.2.7)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.2))(@mdx-js/react@3.1.0(@types/react@19.2.7)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.2)':
     dependencies:
       '@docusaurus/core': 3.8.1(@mdx-js/react@3.1.0(@types/react@19.2.7)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.2)
       '@docusaurus/logger': 3.8.1
       '@docusaurus/mdx-loader': 3.8.1(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      '@docusaurus/plugin-content-docs': 3.8.1(@mdx-js/react@3.1.0(@types/react@19.0.12)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.2)
-      '@docusaurus/theme-common': 3.8.1(@docusaurus/plugin-content-docs@3.8.1(@mdx-js/react@3.1.0(@types/react@19.0.12)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.2))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@docusaurus/plugin-content-docs': 3.8.1(@mdx-js/react@3.1.0(@types/react@19.2.7)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.2)
+      '@docusaurus/theme-common': 3.8.1(@docusaurus/plugin-content-docs@3.8.1(@mdx-js/react@3.1.0(@types/react@19.2.7)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.2))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@docusaurus/types': 3.8.1(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@docusaurus/utils': 3.8.1(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@docusaurus/utils-common': 3.8.1(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -13346,7 +12797,7 @@ snapshots:
       '@docusaurus/logger': 3.8.1
       '@docusaurus/mdx-loader': 3.8.1(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@docusaurus/module-type-aliases': 3.8.1(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      '@docusaurus/theme-common': 3.8.1(@docusaurus/plugin-content-docs@3.8.1(@mdx-js/react@3.1.0(@types/react@19.0.12)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.2))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@docusaurus/theme-common': 3.8.1(@docusaurus/plugin-content-docs@3.8.1(@mdx-js/react@3.1.0(@types/react@19.2.7)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.2))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@docusaurus/types': 3.8.1(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@docusaurus/utils': 3.8.1(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@docusaurus/utils-common': 3.8.1(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -13891,7 +13342,7 @@ snapshots:
   '@docusaurus/preset-classic@3.8.1(@algolia/client-search@5.20.3)(@mdx-js/react@3.1.0(@types/react@19.2.7)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(@types/react@19.2.7)(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(search-insights@2.17.3)(typescript@5.8.2)':
     dependencies:
       '@docusaurus/core': 3.8.1(@mdx-js/react@3.1.0(@types/react@19.2.7)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.2)
-      '@docusaurus/plugin-content-blog': 3.8.1(@docusaurus/plugin-content-docs@3.8.1(@mdx-js/react@3.1.0(@types/react@19.0.12)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.2))(@mdx-js/react@3.1.0(@types/react@19.2.7)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.2)
+      '@docusaurus/plugin-content-blog': 3.8.1(@docusaurus/plugin-content-docs@3.8.1(@mdx-js/react@3.1.0(@types/react@19.2.7)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.2))(@mdx-js/react@3.1.0(@types/react@19.2.7)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.2)
       '@docusaurus/plugin-content-docs': 3.8.1(@mdx-js/react@3.1.0(@types/react@19.2.7)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.2)
       '@docusaurus/plugin-content-pages': 3.8.1(@mdx-js/react@3.1.0(@types/react@19.2.7)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.2)
       '@docusaurus/plugin-css-cascade-layers': 3.8.1(@mdx-js/react@3.1.0(@types/react@19.2.7)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.2)
@@ -13902,7 +13353,7 @@ snapshots:
       '@docusaurus/plugin-sitemap': 3.8.1(@mdx-js/react@3.1.0(@types/react@19.2.7)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.2)
       '@docusaurus/plugin-svgr': 3.8.1(@mdx-js/react@3.1.0(@types/react@19.2.7)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.2)
       '@docusaurus/theme-classic': 3.8.1(@swc/core@1.10.18(@swc/helpers@0.5.15))(@types/react@19.2.7)(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.2)
-      '@docusaurus/theme-common': 3.8.1(@docusaurus/plugin-content-docs@3.8.1(@mdx-js/react@3.1.0(@types/react@19.0.12)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.2))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@docusaurus/theme-common': 3.8.1(@docusaurus/plugin-content-docs@3.8.1(@mdx-js/react@3.1.0(@types/react@19.2.7)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.2))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@docusaurus/theme-search-algolia': 3.8.1(@algolia/client-search@5.20.3)(@mdx-js/react@3.1.0(@types/react@19.2.7)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(@types/react@19.2.7)(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(search-insights@2.17.3)(typescript@5.8.2)
       '@docusaurus/types': 3.8.1(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       react: 19.0.0
@@ -13989,10 +13440,10 @@ snapshots:
       '@docusaurus/logger': 3.8.1
       '@docusaurus/mdx-loader': 3.8.1(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@docusaurus/module-type-aliases': 3.8.1(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      '@docusaurus/plugin-content-blog': 3.8.1(@docusaurus/plugin-content-docs@3.8.1(@mdx-js/react@3.1.0(@types/react@19.0.12)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.2))(@mdx-js/react@3.1.0(@types/react@19.2.7)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.2)
+      '@docusaurus/plugin-content-blog': 3.8.1(@docusaurus/plugin-content-docs@3.8.1(@mdx-js/react@3.1.0(@types/react@19.2.7)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.2))(@mdx-js/react@3.1.0(@types/react@19.2.7)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.2)
       '@docusaurus/plugin-content-docs': 3.8.1(@mdx-js/react@3.1.0(@types/react@19.2.7)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.2)
       '@docusaurus/plugin-content-pages': 3.8.1(@mdx-js/react@3.1.0(@types/react@19.2.7)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.2)
-      '@docusaurus/theme-common': 3.8.1(@docusaurus/plugin-content-docs@3.8.1(@mdx-js/react@3.1.0(@types/react@19.0.12)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.2))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@docusaurus/theme-common': 3.8.1(@docusaurus/plugin-content-docs@3.8.1(@mdx-js/react@3.1.0(@types/react@19.2.7)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.2))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@docusaurus/theme-translations': 3.8.1
       '@docusaurus/types': 3.8.1(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@docusaurus/utils': 3.8.1(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -14037,6 +13488,31 @@ snapshots:
       '@docusaurus/mdx-loader': 3.8.1(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@docusaurus/module-type-aliases': 3.8.1(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@docusaurus/plugin-content-docs': 3.8.1(@mdx-js/react@3.1.0(@types/react@19.0.12)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.2)
+      '@docusaurus/utils': 3.8.1(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@docusaurus/utils-common': 3.8.1(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@types/history': 4.7.11
+      '@types/react': 19.2.7
+      '@types/react-router-config': 5.0.11
+      clsx: 2.1.1
+      parse-numeric-range: 1.3.0
+      prism-react-renderer: 2.4.1(react@19.0.0)
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+      tslib: 2.8.1
+      utility-types: 3.11.0
+    transitivePeerDependencies:
+      - '@swc/core'
+      - acorn
+      - esbuild
+      - supports-color
+      - uglify-js
+      - webpack-cli
+
+  '@docusaurus/theme-common@3.8.1(@docusaurus/plugin-content-docs@3.8.1(@mdx-js/react@3.1.0(@types/react@19.2.7)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.2))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+    dependencies:
+      '@docusaurus/mdx-loader': 3.8.1(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@docusaurus/module-type-aliases': 3.8.1(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@docusaurus/plugin-content-docs': 3.8.1(@mdx-js/react@3.1.0(@types/react@19.2.7)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.2)
       '@docusaurus/utils': 3.8.1(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@docusaurus/utils-common': 3.8.1(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@types/history': 4.7.11
@@ -14105,7 +13581,7 @@ snapshots:
       '@docusaurus/core': 3.8.1(@mdx-js/react@3.1.0(@types/react@19.2.7)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.2)
       '@docusaurus/logger': 3.8.1
       '@docusaurus/plugin-content-docs': 3.8.1(@mdx-js/react@3.1.0(@types/react@19.2.7)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.2)
-      '@docusaurus/theme-common': 3.8.1(@docusaurus/plugin-content-docs@3.8.1(@mdx-js/react@3.1.0(@types/react@19.0.12)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.2))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@docusaurus/theme-common': 3.8.1(@docusaurus/plugin-content-docs@3.8.1(@mdx-js/react@3.1.0(@types/react@19.2.7)(react@19.0.0))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.2))(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@docusaurus/theme-translations': 3.8.1
       '@docusaurus/utils': 3.8.1(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@docusaurus/utils-validation': 3.8.1(@swc/core@1.10.18(@swc/helpers@0.5.15))(acorn@8.15.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -14563,24 +14039,7 @@ snapshots:
     dependencies:
       stoppable: 1.1.0
 
-  '@hapi/address@2.1.4': {}
-
-  '@hapi/bourne@1.3.2': {}
-
-  '@hapi/hoek@8.5.1': {}
-
   '@hapi/hoek@9.3.0': {}
-
-  '@hapi/joi@15.1.1':
-    dependencies:
-      '@hapi/address': 2.1.4
-      '@hapi/bourne': 1.3.2
-      '@hapi/hoek': 8.5.1
-      '@hapi/topo': 3.1.6
-
-  '@hapi/topo@3.1.6':
-    dependencies:
-      '@hapi/hoek': 8.5.1
 
   '@hapi/topo@5.1.0':
     dependencies:
@@ -14993,9 +14452,6 @@ snapshots:
   '@next/swc-win32-x64-msvc@15.5.7':
     optional: true
 
-  '@nicolo-ribaudo/chokidar-2@2.1.8-no-fsevents.3':
-    optional: true
-
   '@nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1':
     dependencies:
       eslint-scope: 5.1.1
@@ -15359,8 +14815,10 @@ snapshots:
       '@swc/core-win32-ia32-msvc': 1.10.18
       '@swc/core-win32-x64-msvc': 1.10.18
       '@swc/helpers': 0.5.15
+    optional: true
 
-  '@swc/counter@0.1.3': {}
+  '@swc/counter@0.1.3':
+    optional: true
 
   '@swc/helpers@0.5.15':
     dependencies:
@@ -15369,6 +14827,7 @@ snapshots:
   '@swc/types@0.1.21':
     dependencies:
       '@swc/counter': 0.1.3
+    optional: true
 
   '@szmarczak/http-timer@5.0.1':
     dependencies:
@@ -15566,15 +15025,7 @@ snapshots:
       expect: 29.7.0
       pretty-format: 29.7.0
 
-  '@types/jsdom@20.0.1':
-    dependencies:
-      '@types/node': 20.17.19
-      '@types/tough-cookie': 4.0.5
-      parse5: 7.2.1
-
   '@types/json-schema@7.0.15': {}
-
-  '@types/lru-cache@5.1.1': {}
 
   '@types/mdast@4.0.4':
     dependencies:
@@ -15671,15 +15122,11 @@ snapshots:
     dependencies:
       '@types/node': 20.17.19
 
-  '@types/tough-cookie@4.0.5': {}
-
   '@types/triple-beam@1.3.5': {}
 
   '@types/unist@2.0.11': {}
 
   '@types/unist@3.0.3': {}
-
-  '@types/use-sync-external-store@0.0.6': {}
 
   '@types/webpack-bundle-analyzer@4.7.0(@swc/core@1.10.18(@swc/helpers@0.5.15))':
     dependencies:
@@ -15691,10 +15138,6 @@ snapshots:
       - esbuild
       - uglify-js
       - webpack-cli
-
-  '@types/workbox-build@5.1.0':
-    dependencies:
-      workbox-build: 4.3.1
 
   '@types/ws@8.5.14':
     dependencies:
@@ -16254,14 +15697,6 @@ snapshots:
 
   axobject-query@4.1.0: {}
 
-  babel-core@7.0.0-bridge.0(@babel/core@7.26.9):
-    dependencies:
-      '@babel/core': 7.26.9
-
-  babel-extract-comments@1.0.0:
-    dependencies:
-      babylon: 6.18.0
-
   babel-jest@29.7.0(@babel/core@7.26.9):
     dependencies:
       '@babel/core': 7.26.9
@@ -16367,13 +15802,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  babel-plugin-syntax-object-rest-spread@6.13.0: {}
-
-  babel-plugin-transform-object-rest-spread@6.26.0:
-    dependencies:
-      babel-plugin-syntax-object-rest-spread: 6.13.0
-      babel-runtime: 6.26.0
-
   babel-preset-current-node-syntax@1.1.0(@babel/core@7.26.9):
     dependencies:
       '@babel/core': 7.26.9
@@ -16398,13 +15826,6 @@ snapshots:
       '@babel/core': 7.26.9
       babel-plugin-jest-hoist: 29.6.3
       babel-preset-current-node-syntax: 1.1.0(@babel/core@7.26.9)
-
-  babel-runtime@6.26.0:
-    dependencies:
-      core-js: 2.6.12
-      regenerator-runtime: 0.11.1
-
-  babylon@6.18.0: {}
 
   bail@2.0.2: {}
 
@@ -16769,8 +16190,6 @@ snapshots:
 
   commander@6.2.0: {}
 
-  commander@6.2.1: {}
-
   commander@7.2.0: {}
 
   commander@8.3.0: {}
@@ -16778,8 +16197,6 @@ snapshots:
   comment-parser@1.4.1: {}
 
   common-path-prefix@3.0.0: {}
-
-  common-tags@1.8.2: {}
 
   commondir@1.0.1: {}
 
@@ -16873,8 +16290,6 @@ snapshots:
       browserslist: 4.25.1
 
   core-js-pure@3.40.0: {}
-
-  core-js@2.6.12: {}
 
   core-js@3.40.0: {}
 
@@ -17164,8 +16579,6 @@ snapshots:
 
   dedent@1.5.3: {}
 
-  deep-diff@0.3.8: {}
-
   deep-eql@5.0.2: {}
 
   deep-extend@0.6.0: {}
@@ -17381,8 +16794,6 @@ snapshots:
   emoji-regex@9.2.2: {}
 
   emojilib@2.4.0: {}
-
-  emojis-list@2.1.0: {}
 
   emojis-list@3.0.0: {}
 
@@ -18259,12 +17670,6 @@ snapshots:
       jsonfile: 6.1.0
       universalify: 2.0.1
 
-  fs-extra@4.0.3:
-    dependencies:
-      graceful-fs: 4.2.11
-      jsonfile: 4.0.0
-      universalify: 0.1.2
-
   fs-extra@7.0.1:
     dependencies:
       graceful-fs: 4.2.11
@@ -18278,8 +17683,6 @@ snapshots:
       universalify: 0.1.2
 
   fs-monkey@1.0.6: {}
-
-  fs-readdir-recursive@1.1.0: {}
 
   fs.realpath@1.0.0: {}
 
@@ -19268,21 +18671,6 @@ snapshots:
       jest-util: 29.7.0
       pretty-format: 29.7.0
 
-  jest-environment-jsdom@29.7.0:
-    dependencies:
-      '@jest/environment': 29.7.0
-      '@jest/fake-timers': 29.7.0
-      '@jest/types': 29.6.3
-      '@types/jsdom': 20.0.1
-      '@types/node': 20.17.19
-      jest-mock: 29.7.0
-      jest-util: 29.7.0
-      jsdom: 20.0.3
-    transitivePeerDependencies:
-      - bufferutil
-      - supports-color
-      - utf-8-validate
-
   jest-environment-node@29.7.0:
     dependencies:
       '@jest/environment': 29.7.0
@@ -19618,10 +19006,6 @@ snapshots:
 
   json-stable-stringify-without-jsonify@1.0.1: {}
 
-  json5@1.0.2:
-    dependencies:
-      minimist: 1.2.8
-
   json5@2.2.3: {}
 
   jsonc-parser@3.3.1: {}
@@ -19689,12 +19073,6 @@ snapshots:
 
   loader-runner@4.3.0: {}
 
-  loader-utils@1.2.3:
-    dependencies:
-      big.js: 5.2.2
-      emojis-list: 2.1.0
-      json5: 1.0.2
-
   loader-utils@2.0.4:
     dependencies:
       big.js: 5.2.2
@@ -19718,8 +19096,6 @@ snapshots:
     dependencies:
       p-locate: 6.0.0
 
-  lodash._reinterpolate@3.0.0: {}
-
   lodash.debounce@4.0.8: {}
 
   lodash.defaultsdeep@4.6.1: {}
@@ -19735,15 +19111,6 @@ snapshots:
   lodash.sortby@4.7.0: {}
 
   lodash.startcase@4.4.0: {}
-
-  lodash.template@4.5.0:
-    dependencies:
-      lodash._reinterpolate: 3.0.0
-      lodash.templatesettings: 4.2.0
-
-  lodash.templatesettings@4.2.0:
-    dependencies:
-      lodash._reinterpolate: 3.0.0
 
   lodash.uniq@4.5.0: {}
 
@@ -21338,8 +20705,6 @@ snapshots:
 
   prettier@2.8.8: {}
 
-  pretty-bytes@5.6.0: {}
-
   pretty-error@4.0.0:
     dependencies:
       lodash: 4.17.21
@@ -21484,24 +20849,6 @@ snapshots:
       react-loadable: '@docusaurus/react-loadable@6.0.0(react@19.0.0)'
       webpack: 5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.15))
 
-  react-redux@9.2.0(@types/react@19.0.12)(react@19.0.0)(redux@5.0.1):
-    dependencies:
-      '@types/use-sync-external-store': 0.0.6
-      react: 19.0.0
-      use-sync-external-store: 1.4.0(react@19.0.0)
-    optionalDependencies:
-      '@types/react': 19.0.12
-      redux: 5.0.1
-
-  react-redux@9.2.0(@types/react@19.2.7)(react@19.0.0)(redux@5.0.1):
-    dependencies:
-      '@types/use-sync-external-store': 0.0.6
-      react: 19.0.0
-      use-sync-external-store: 1.4.0(react@19.0.0)
-    optionalDependencies:
-      '@types/react': 19.2.7
-      redux: 5.0.1
-
   react-router-config@5.1.1(react-router@5.3.4(react@19.0.0))(react@19.0.0):
     dependencies:
       '@babel/runtime': 7.26.9
@@ -21610,16 +20957,6 @@ snapshots:
     dependencies:
       minimatch: 3.1.2
 
-  redux-logger@3.0.6:
-    dependencies:
-      deep-diff: 0.3.8
-
-  redux-thunk@3.1.0(redux@5.0.1):
-    dependencies:
-      redux: 5.0.1
-
-  redux@5.0.1: {}
-
   reflect.getprototypeof@1.0.10:
     dependencies:
       call-bind: 1.0.8
@@ -21636,8 +20973,6 @@ snapshots:
       regenerate: 1.4.2
 
   regenerate@1.4.2: {}
-
-  regenerator-runtime@0.11.1: {}
 
   regenerator-runtime@0.14.1: {}
 
@@ -22165,8 +21500,6 @@ snapshots:
     dependencies:
       unicode-emoji-modifier-base: 1.0.0
 
-  slash@2.0.0: {}
-
   slash@3.0.0: {}
 
   slash@4.0.0: {}
@@ -22415,11 +21748,6 @@ snapshots:
   strip-bom@3.0.0: {}
 
   strip-bom@4.0.0: {}
-
-  strip-comments@1.0.2:
-    dependencies:
-      babel-extract-comments: 1.0.0
-      babel-plugin-transform-object-rest-spread: 6.26.0
 
   strip-final-newline@2.0.0: {}
 
@@ -22883,10 +22211,6 @@ snapshots:
       querystringify: 2.2.0
       requires-port: 1.0.0
 
-  use-sync-external-store@1.4.0(react@19.0.0):
-    dependencies:
-      react: 19.0.0
-
   util-deprecate@1.0.2: {}
 
   utila@0.4.0: {}
@@ -23166,11 +22490,6 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  webpack-inject-plugin@1.5.5(webpack@5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.15))):
-    dependencies:
-      loader-utils: 1.2.3
-      webpack: 5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.15))
-
   webpack-merge@5.10.0:
     dependencies:
       clone-deep: 4.0.1
@@ -23361,87 +22680,6 @@ snapshots:
   word-wrap@1.2.5: {}
 
   wordwrap@1.0.0: {}
-
-  workbox-background-sync@4.3.1:
-    dependencies:
-      workbox-core: 4.3.1
-
-  workbox-broadcast-update@4.3.1:
-    dependencies:
-      workbox-core: 4.3.1
-
-  workbox-build@4.3.1:
-    dependencies:
-      '@babel/runtime': 7.26.9
-      '@hapi/joi': 15.1.1
-      common-tags: 1.8.2
-      fs-extra: 4.0.3
-      glob: 7.2.3
-      lodash.template: 4.5.0
-      pretty-bytes: 5.6.0
-      stringify-object: 3.3.0
-      strip-comments: 1.0.2
-      workbox-background-sync: 4.3.1
-      workbox-broadcast-update: 4.3.1
-      workbox-cacheable-response: 4.3.1
-      workbox-core: 4.3.1
-      workbox-expiration: 4.3.1
-      workbox-google-analytics: 4.3.1
-      workbox-navigation-preload: 4.3.1
-      workbox-precaching: 4.3.1
-      workbox-range-requests: 4.3.1
-      workbox-routing: 4.3.1
-      workbox-strategies: 4.3.1
-      workbox-streams: 4.3.1
-      workbox-sw: 4.3.1
-      workbox-window: 4.3.1
-
-  workbox-cacheable-response@4.3.1:
-    dependencies:
-      workbox-core: 4.3.1
-
-  workbox-core@4.3.1: {}
-
-  workbox-expiration@4.3.1:
-    dependencies:
-      workbox-core: 4.3.1
-
-  workbox-google-analytics@4.3.1:
-    dependencies:
-      workbox-background-sync: 4.3.1
-      workbox-core: 4.3.1
-      workbox-routing: 4.3.1
-      workbox-strategies: 4.3.1
-
-  workbox-navigation-preload@4.3.1:
-    dependencies:
-      workbox-core: 4.3.1
-
-  workbox-precaching@4.3.1:
-    dependencies:
-      workbox-core: 4.3.1
-
-  workbox-range-requests@4.3.1:
-    dependencies:
-      workbox-core: 4.3.1
-
-  workbox-routing@4.3.1:
-    dependencies:
-      workbox-core: 4.3.1
-
-  workbox-strategies@4.3.1:
-    dependencies:
-      workbox-core: 4.3.1
-
-  workbox-streams@4.3.1:
-    dependencies:
-      workbox-core: 4.3.1
-
-  workbox-sw@4.3.1: {}
-
-  workbox-window@4.3.1:
-    dependencies:
-      workbox-core: 4.3.1
 
   wrap-ansi@7.0.0:
     dependencies:
