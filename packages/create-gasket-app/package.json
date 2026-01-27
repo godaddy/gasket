@@ -6,8 +6,17 @@
   "bin": {
     "create-gasket-app": "./lib/index.js"
   },
-  "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js"
+    },
+    "./lib/internal.d.ts": {
+      "types": "./lib/internal.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
   "files": [
     "lib",
     "EXAMPLES.md"
