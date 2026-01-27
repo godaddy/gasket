@@ -45,7 +45,7 @@ describe('fastify', () => {
     };
   });
 
-  it('registers the middie middleware plugin', async () => {
+  it('registers the @fastify/express plugin', async () => {
     await fastify(gasket, app);
 
     expect(app.register).toHaveBeenCalled();

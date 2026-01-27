@@ -753,9 +753,6 @@ importers:
 
   packages/gasket-plugin-fastify:
     dependencies:
-      '@fastify/express':
-        specifier: ^3.0.0
-        version: 3.0.0
       fastify:
         specifier: ^4.29.1
         version: 4.29.1
@@ -1161,9 +1158,6 @@ importers:
 
   packages/gasket-plugin-middleware:
     dependencies:
-      '@fastify/express':
-        specifier: ^3.0.0
-        version: 3.0.0
       compression:
         specifier: ^1.8.0
         version: 1.8.0
@@ -1174,6 +1168,9 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
     devDependencies:
+      '@fastify/express':
+        specifier: ^3.0.0
+        version: 3.0.0
       '@gasket/cjs':
         specifier: workspace:^
         version: link:../gasket-cjs

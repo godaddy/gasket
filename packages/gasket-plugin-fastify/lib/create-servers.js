@@ -5,23 +5,32 @@ import { getAppInstance } from './utils.js';
 
 /**
  * Create the Fastify instance and setup the lifecycle hooks.
- * Fastify is compatible with express middleware out of the box, so we can
- * use the same middleware lifecycles.
+ * Fastify is compatible with express middleware when @fastify/express is installed.
  * @type {import('@gasket/core').HookHandler<'createServers'>}
  */
 export default async function createServers(gasket, serverOpts) {
-  /** Cast to Fastify + Express hybrid because Gasket adds `.use()` via @fastify/express plugin */
-  const app = /** @type {import('fastify').FastifyInstance & { use: Function }} */ (getAppInstance(gasket));
+  const app = getAppInstance(gasket);
 
   // allow consuming apps to directly append options to their server
   await gasket.exec('fastify', app);
 
   const postRenderingStacks = (await gasket.exec('errorMiddleware')).filter(Boolean);
-  postRenderingStacks.forEach((stack) => {
-    /** @type {import('connect').NextHandleFunction} */
-    const middleware = stack;
-    app.use(middleware);
-  });
+  if (postRenderingStacks.length > 0) {
+    // app.use() is added by @fastify/express when registered via @gasket/plugin-middleware
+    // @ts-expect-error
+    if (typeof app.use !== 'function') {
+      throw new Error(
+        'errorMiddleware requires @fastify/express to be installed and registered. ' +
+        'Install @fastify/express and ensure @gasket/plugin-middleware is configured.'
+      );
+    }
+    postRenderingStacks.forEach((stack) => {
+      /** @type {import('connect').NextHandleFunction} */
+      const middleware = stack;
+      // @ts-expect-error
+      app.use(middleware);
+    });
+  }
 
   return {
     ...serverOpts,
