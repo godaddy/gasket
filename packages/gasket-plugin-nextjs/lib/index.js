@@ -4,8 +4,6 @@ import apmTransaction from './apm-transaction.js';
 import metadata from './metadata.js';
 import configure from './configure.js';
 import * as actions from './actions.js';
-import { prompt } from './prompt.js';
-import create from './create.js';
 import { webpackConfig } from './webpack-config.js';
 import express from './express.js';
 import fastify from './fastify.js';
@@ -23,8 +21,6 @@ const plugin = {
   hooks: {
     configure,
     webpackConfig,
-    prompt,
-    create,
     express,
     fastify,
     apmTransaction,

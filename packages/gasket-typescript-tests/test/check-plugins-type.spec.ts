@@ -26,24 +26,13 @@ import pluginSwagger from '@gasket/plugin-swagger';
 import pluginElasticApm from '@gasket/plugin-elastic-apm';
 import pluginManifest from '@gasket/plugin-manifest';
 import pluginServiceWorker from '@gasket/plugin-service-worker';
-import pluginTypeScript from '@gasket/plugin-typescript';
 import pluginWorkbox from '@gasket/plugin-workbox';
-
-// Import CommonJS plugins that haven't been migrated to ESM yet
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
-const pluginCypress = require('@gasket/plugin-cypress');
-const pluginJest = require('@gasket/plugin-jest');
-const pluginLint = require('@gasket/plugin-lint');
-const pluginMocha = require('@gasket/plugin-mocha');
-const pluginRedux = require('@gasket/plugin-redux');
 
 describe('check plugins type', () => {
   it('should have correct type', () => {
     const plugins: Plugin[] = [
       pluginAnalyze,
       pluginCommand,
-      pluginCypress,
       pluginData,
       pluginDocs,
       pluginDocsGraphs,
@@ -56,19 +45,14 @@ describe('check plugins type', () => {
       pluginHttps,
       pluginHttpsProxy,
       pluginIntl,
-      pluginJest,
-      pluginLint,
       pluginLogger,
       pluginManifest,
       pluginMetadata,
       pluginMiddleware,
-      pluginMocha,
       pluginMorgan,
       pluginNextjs,
-      pluginRedux,
       pluginServiceWorker,
       pluginSwagger,
-      pluginTypeScript,
       pluginWebpack,
       pluginWinston,
       pluginWorkbox

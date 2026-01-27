@@ -29,8 +29,6 @@ describe('Plugin', () => {
   it('has expected hooks', () => {
     const expected = [
       'configure',
-      'prompt',
-      'create',
       'webpackConfig',
       'middleware',
       'metadata'
@@ -41,42 +39,6 @@ describe('Plugin', () => {
     const hooks = Object.keys(plugin.hooks);
     expect(hooks).toEqual(expected);
     expect(hooks).toHaveLength(expected.length);
-  });
-
-  describe('create', () => {
-    it('has expected hook', () => {
-      expect(plugin.hooks).toHaveProperty('create', expect.any(Function));
-    });
-
-    it('adds the expected dependencies', async function () {
-      const { devDependencies } = require('../package');
-      const spy = {
-        useRedux: true,
-        pkg: { add: jest.fn() },
-        files: { add: jest.fn() }
-      };
-
-      await plugin.hooks.create({}, spy);
-      expect(spy.pkg.add).toHaveBeenCalledWith('dependencies', {
-        '@gasket/redux': devDependencies['@gasket/redux'],
-        'react-redux': devDependencies['react-redux'],
-        'redux': devDependencies.redux
-      });
-    });
-
-    it('adds the expected files', async function () {
-      const spy = {
-        useRedux: true,
-        pkg: { add: jest.fn() },
-        files: { add: jest.fn() }
-      };
-
-      await plugin.hooks.create({}, spy);
-      expect(spy.files.add).toHaveBeenCalledWith(
-        `${ process.cwd() }/lib/../generator/*`,
-        `${ process.cwd() }/lib/../generator/**/*`
-      );
-    });
   });
 
   describe('webpackConfig', () => {

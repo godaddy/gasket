@@ -1,17 +1,14 @@
 /// <reference types="@gasket/core" />
-/// <reference types="create-gasket-app" />
 /// <reference types="@gasket/plugin-express" />
 /// <reference types="@gasket/plugin-fastify" />
 /// <reference types="@gasket/plugin-metadata" />
 /// <reference types="@gasket/plugin-logger" />
-/// <reference types="@gasket/core" />
 /// <reference types="@gasket/plugin-command" />
 
 
 import path from 'node:path';
 import { readFile, access } from 'node:fs/promises';
 import buildSwaggerDefinition from './build-swagger-definition.js';
-import postCreate from './post-create.js';
 import { createRequire } from 'module';
 
 const require = createRequire(import.meta.url);
@@ -115,43 +112,6 @@ const plugin = {
         });
       }
     },
-    create(gasket, context) {
-      context.useSwagger = true;
-
-      context.pkg.add('dependencies', {
-        [name]: `^${version}`
-      });
-
-      // Only write build scripts if not TypeScript
-      if (!context.typescript) {
-        context.pkg.add('scripts', {
-          build: 'node gasket.js build'
-        });
-      }
-
-      context.gasketConfig.addPlugin('pluginSwagger', '@gasket/plugin-swagger');
-      context.gasketConfig.add('swagger', {
-        jsdoc: {
-          definition: {
-            info: {
-              title: context.appName,
-              version: '0.0.0'
-            }
-          },
-          apis: [
-            './routes/*',
-            './plugins/*'
-          ]
-        }
-      });
-
-      context.readme
-        .subHeading('Definitions')
-        .content('Use `@swagger` JSDocs to automatically generate the [swagger.json] spec file. Visit [swagger-jsdoc] for examples.')
-        .link('swagger-jsdoc', 'https://github.com/Surnet/swagger-jsdoc/')
-        .link('swagger.json', '/swagger.json');
-    },
-    postCreate,
     metadata(gasket, meta) {
       return {
         ...meta,

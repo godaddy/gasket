@@ -114,13 +114,8 @@ Code that is well-tested and conforms to familiar styles helps the collaboration
 process within teams and across organizations. Gasket apps come with some
 tooling options and configurations to assist in this important area.
 
-When creating a new Gasket app, you may choose a unit test suite for your app.
-If a test plugin is not set, you will be prompted to choose between either the
-[Jest plugin] or [Mocha plugin] with supporting packages.
-
-Additional code style choices are prompted during the create command. Some
-predefined choices are provided from the [lint plugin], or you can specify your
-own config.
+When creating a new Gasket app, you can configure your own test suite and
+linting setup according to your team's preferences.
 
 ## Lifecycles
 
@@ -282,9 +277,6 @@ The hook is passed the following parameters:
 [yarn]:https://yarnpkg.com
 [npm env vars]:https://docs.npmjs.com/misc/config#environment-variables
 [yarn env vars]:https://yarnpkg.com/en/docs/envvars#toc-npm-config
-[Jest plugin]:/packages/gasket-plugin-jest/README.md
-[Mocha plugin]:/packages/gasket-plugin-mocha/README.md
 [execWaterfall]:/packages/gasket-core/docs/gasket-engine.md#execwaterfallevent-value-args
 [exec]:/packages/gasket-core/docs/gasket-engine.md#execevent-args
 [inquirer questions]:https://github.com/SBoudrias/Inquirer.js#question
-[lint plugin]:/packages/gasket-plugin-lint/README.md

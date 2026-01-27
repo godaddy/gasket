@@ -8,9 +8,6 @@ import serviceWorkerCacheKey from './service-worker-cache-key.js';
 import apmTransaction from './apm-transaction.js';
 import publicGasketData from './public-gasket-data.js';
 import { getIntlConfig } from './utils/configure-utils.js';
-import create from './create.js';
-import postCreate from './post-create.js';
-import prompt from './prompt.js';
 import build from './build.js';
 const { name, version, description } = packageJson;
 
@@ -23,9 +20,6 @@ const plugin = {
   hooks: {
     init,
     configure,
-    create,
-    postCreate,
-    prompt,
     build,
     apmTransaction,
     publicGasketData,

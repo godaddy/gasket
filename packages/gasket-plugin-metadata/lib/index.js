@@ -1,4 +1,3 @@
-import create from './create.js';
 import actions from './actions.js';
 import webpackConfig from './webpack-config.js';
 import packageJson from '../package.json' with { type: 'json' };
@@ -12,7 +11,6 @@ export default ({
   description,
   actions,
   hooks: {
-    create,
     webpackConfig,
     metadata(gasket, meta) {
       const mod = corePackageJson;

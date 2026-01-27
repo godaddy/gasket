@@ -1,7 +1,6 @@
 /// <reference types="@gasket/core" />
 /// <reference types="@gasket/plugin-metadata" />
 /// <reference types="@gasket/plugin-logger" />
-/// <reference types="create-gasket-app" />
 
 import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
@@ -14,7 +13,6 @@ const pkg = JSON.parse(readFileSync(join(__dirname, '../package.json'), 'utf8'))
 const { name, version, description } = pkg;
 
 import * as actions from './actions.js';
-import createHook from './create.js';
 import configure from './configure.js';
 import metadata from './metadata.js';
 
@@ -25,7 +23,6 @@ const plugin = {
   description,
   actions,
   hooks: {
-    create: createHook,
     configure,
     metadata
   }

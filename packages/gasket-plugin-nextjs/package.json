@@ -5,7 +5,6 @@
   "type": "module",
   "types": "lib/index.d.ts",
   "files": [
-    "generator",
     "docs",
     "lib",
     "EXAMPLES.md"
@@ -14,9 +13,6 @@
     ".": {
       "types": "./lib/index.d.ts",
       "import": "./lib/index.js"
-    },
-    "./prompts": {
-      "import": "./lib/prompt.js"
     },
     "./package.json": "./package.json"
   },
@@ -53,7 +49,6 @@
     "@gasket/assets": "workspace:^",
     "@gasket/core": "workspace:^",
     "@gasket/intl": "workspace:^",
-    "@gasket/nextjs": "workspace:^",
     "@gasket/plugin-elastic-apm": "workspace:^",
     "@gasket/plugin-express": "workspace:^",
     "@gasket/plugin-fastify": "workspace:^",
@@ -67,15 +62,10 @@
     "@gasket/request": "workspace:^",
     "@types/express": "^4.17.23",
     "@types/node": "^20.17.19",
-    "@types/react": "^19.0.12",
-    "@types/webpack": "^5.28.5",
     "create-gasket-app": "workspace:^",
-    "lodash.merge": "^4.6.2",
     "next": "^15.5.9",
-    "nodemon": "^3.1.9",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "vitest": "^3.2.0"
+    "vitest": "^3.2.0",
+    "webpack": "^5.98.0"
   },
   "peerDependencies": {
     "@gasket/plugin-webpack": "^8.0.0-next.0",

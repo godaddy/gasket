@@ -1,7 +1,6 @@
 /// <reference types="@gasket/core" />
 /// <reference types="@gasket/plugin-metadata" />
 
-import create from './create.js';
 import createServers from './create-servers.js';
 import actions from './actions.js';
 import packageJson from '../package.json' with { type: 'json' };
@@ -14,7 +13,6 @@ const plugin = {
   description,
   actions,
   hooks: {
-    create,
     createServers,
     metadata(gasket, meta) {
       return {

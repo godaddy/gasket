@@ -13,9 +13,6 @@
       "types": "./lib/index.d.ts",
       "import": "./lib/index.js"
     },
-    "./prompts": {
-      "import": "./lib/prompt.js"
-    },
     "./package.json": "./package.json"
   },
   "scripts": {

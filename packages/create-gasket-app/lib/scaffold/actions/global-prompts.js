@@ -55,78 +55,6 @@ async function choosePackageManager(context, prompt) {
 }
 
 /**
- * Choose your unit test suite and integration test suite
- * @type {import('../../internal.js').chooseTestPlugins}
- */
-async function chooseTestPlugins(context, prompt) {
-  const knownTestPlugins = {
-    unit: {
-      jest: '@gasket/plugin-jest',
-      mocha: '@gasket/plugin-mocha',
-      vitest: '@gasket/plugin-vitest'
-    },
-    integration: {
-      cypress: '@gasket/plugin-cypress'
-    }
-  };
-
-  const testTypes = ['unit', 'integration'];
-  const testPlugins = [];
-
-  const testPromptOptions = {
-    unit: {
-      name: 'Vitest',
-      plugin: '@gasket/plugin-vitest',
-      isDefault: true
-    },
-    integration: {
-      name: 'Cypress',
-      plugin: '@gasket/plugin-cypress',
-      isDefault: false
-    }
-  };
-
-  if (!('testPlugins' in context)) {
-    for (const type of testTypes) {
-      if (type + 'TestSuite' in context) {
-        const testSuite = knownTestPlugins[type][context[type + 'TestSuite']];
-        if (testSuite) testPlugins.push(testSuite);
-      } else {
-        const { name, isDefault, plugin: testPlugin } = testPromptOptions[type];
-        const plugin = await promptForTestPlugin(
-          prompt,
-          `Do you want to use ${name} for ${type} testing?`,
-          isDefault
-        );
-
-        if (plugin) testPlugins.push(testPlugin);
-      }
-    }
-
-    if (testPlugins.length > 0) {
-      Object.assign(context, { testPlugins });
-    }
-  }
-}
-
-/**
- *
- * @type {import('../../internal.js').promptForTestPlugin}
- */
-async function promptForTestPlugin(prompt, message, isDefault) {
-  const { testPlugin } = await prompt([
-    {
-      name: 'testPlugin',
-      message,
-      type: 'confirm',
-      default: isDefault
-    }
-  ]);
-
-  return testPlugin !== 'none' ? testPlugin : null;
-}
-
-/**
  * Given that gasket is creating in an already existing directory, it should
  * confirm with the user that it's intentionally overwriting that directory
  * @type {import('../../internal.js').allowExtantOverwriting}
@@ -150,7 +78,6 @@ async function allowExtantOverwriting(context, prompt) {
 export const questions = [
   chooseAppDescription,
   choosePackageManager,
-  chooseTestPlugins,
   allowExtantOverwriting
 ];
 
