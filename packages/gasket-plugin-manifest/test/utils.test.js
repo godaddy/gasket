@@ -1,17 +1,14 @@
-const mockJoinStub = jest.fn();
+import { vi } from 'vitest';
 
-jest.mock('path', () => ({
-  join: mockJoinStub
-}));
-
-const { gatherManifestData } = require('../lib/utils');
+import { gatherManifestData } from '../lib/utils.js';
 
 describe('utils', function () {
   let gasket;
 
   beforeEach(function () {
+    vi.clearAllMocks();
     gasket = {
-      execWaterfall: jest.fn().mockResolvedValue([]),
+      execWaterfall: vi.fn().mockResolvedValue({}),
       config: {
         manifest: {
           name: 'Walter White',
@@ -23,13 +20,9 @@ describe('utils', function () {
         }
       },
       logger: {
-        debug: jest.fn()
+        debug: vi.fn()
       }
     };
-  });
-
-  afterEach(function () {
-    jest.clearAllMocks();
   });
 
   describe('#gatherManifestData', function () {
@@ -56,21 +49,21 @@ describe('utils', function () {
     it('does not include staticOutput in manifest file', async function () {
       await gatherManifestData(gasket, {});
       expect(gasket.execWaterfall).toHaveBeenCalledTimes(1);
-      expect(gasket.execWaterfall.mock.calls[0][1]).not.toContain('staticOutput');
+      expect(gasket.execWaterfall.mock.calls[0][1]).not.toHaveProperty('staticOutput');
     });
 
     it('does not include false staticOutput in manifest', async function () {
       gasket.config.manifest.staticOutput = false;
       await gatherManifestData(gasket, {});
       expect(gasket.execWaterfall).toHaveBeenCalledTimes(1);
-      expect(gasket.execWaterfall.mock.calls[0][1]).not.toContain('staticOutput');
+      expect(gasket.execWaterfall.mock.calls[0][1]).not.toHaveProperty('staticOutput');
     });
 
     it('does not include path manifest', async function () {
       gasket.config.manifest.path = '/custom/manifest.json';
       await gatherManifestData(gasket, {});
       expect(gasket.execWaterfall).toHaveBeenCalledTimes(1);
-      expect(gasket.execWaterfall.mock.calls[0][1]).not.toContain('path');
+      expect(gasket.execWaterfall.mock.calls[0][1]).not.toHaveProperty('path');
     });
 
     it('calls manifest waterfall', async function () {

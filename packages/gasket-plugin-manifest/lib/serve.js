@@ -1,11 +1,12 @@
-const baseConfig = require('./base-config');
+import baseConfig from './base-config.js';
+
 /**
  * If configured, serve the resolved manifest.json
  * @param  {import("@gasket/core").Gasket} gasket The gasket API
  * @param  {object} app gasket's express/fastify server
  * @async
  */
-async function serve(gasket, app) {
+export default async function serve(gasket, app) {
   const { config } = gasket;
   const { staticOutput } = (config && config.manifest) || {};
   const { path } = (config && config.manifest) || {};
@@ -16,5 +17,3 @@ async function serve(gasket, app) {
     });
   }
 }
-
-module.exports = serve;

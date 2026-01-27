@@ -2,8 +2,15 @@
   "name": "@gasket/plugin-manifest",
   "version": "8.0.0-next.0",
   "description": "The web app manifest for progressive Gasket applications",
-  "main": "lib/index.js",
+  "type": "module",
   "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js"
+    },
+    "./package.json": "./package.json"
+  },
   "files": [
     "lib",
     "EXAMPLES.md"
@@ -12,9 +19,9 @@
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
     "posttest": "pnpm run lint && pnpm run typecheck",
-    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
-    "test:coverage": "jest --coverage",
-    "test:watch": "jest --watch",
+    "test": "vitest run --globals",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
@@ -47,10 +54,9 @@
     "@gasket/plugin-middleware": "workspace:^",
     "@gasket/plugin-service-worker": "workspace:^",
     "@types/express": "^4.17.23",
-    "@types/jest": "^29.5.14",
     "@types/node": "^20.17.19",
     "create-gasket-app": "workspace:^",
     "fastify": "^4.29.1",
-    "jest": "^29.7.0"
+    "vitest": "^3.2.0"
   }
 }

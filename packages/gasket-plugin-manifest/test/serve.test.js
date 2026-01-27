@@ -1,8 +1,10 @@
-const serve = require('../lib/serve');
+import { vi } from 'vitest';
+
+import serve from '../lib/serve.js';
 
 describe('serve', function () {
   afterEach(function () {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('is a function', function () {
@@ -12,7 +14,7 @@ describe('serve', function () {
 
   it('adds a route to the express/fastify server', async function () {
     const app = {
-      get: jest.fn()
+      get: vi.fn()
     };
 
     await serve({}, app);
@@ -20,7 +22,7 @@ describe('serve', function () {
   });
 
   it('returns the configured manifest on the route /manifest.json when path option is not set', async function () {
-    const stub = jest.fn();
+    const stub = vi.fn();
     const get = function (route, f) {
       expect(route).toEqual('/manifest.json');
       f({}, { send: stub });
@@ -41,7 +43,7 @@ describe('serve', function () {
       }
     };
 
-    const stub = jest.fn();
+    const stub = vi.fn();
     const get = function (route, f) {
       expect(route).toEqual(customPath);
       f({}, { send: stub });

@@ -1,21 +1,26 @@
-const mockWriteFileStub = jest.fn();
-const mockMkdirpStub = jest.fn();
+import { vi } from 'vitest';
 
-jest.mock('fs', () => ({
-  promises: {
-    writeFile: mockWriteFileStub
-  }
+vi.mock('fs/promises', () => ({
+  writeFile: vi.fn()
 }));
-jest.mock('mkdirp', () => mockMkdirpStub);
+vi.mock('mkdirp', () => ({
+  default: vi.fn()
+}));
+vi.mock('../lib/utils.js', () => ({
+  gatherManifestData: vi.fn().mockResolvedValue({})
+}));
 
-const build = require('../lib/build');
+import build from '../lib/build.js';
+import { writeFile } from 'fs/promises';
+import mkdirp from 'mkdirp';
 
 describe('build', function () {
   let gasket;
 
   beforeEach(function () {
+    vi.clearAllMocks();
     gasket = {
-      execWaterfall: jest.fn().mockResolvedValue([]),
+      execWaterfall: vi.fn().mockResolvedValue([]),
       config: {
         root: 'test',
         manifest: {
@@ -23,15 +28,11 @@ describe('build', function () {
         }
       },
       logger: {
-        debug: jest.fn(),
-        error: jest.fn(),
-        info: jest.fn()
+        debug: vi.fn(),
+        error: vi.fn(),
+        info: vi.fn()
       }
     };
-  });
-
-  afterEach(function () {
-    jest.clearAllMocks();
   });
 
   it('is a function', function () {
@@ -43,23 +44,23 @@ describe('build', function () {
     gasket.config.manifest = {};
     await build(gasket);
 
-    expect(mockMkdirpStub).not.toHaveBeenCalled();
+    expect(mkdirp).not.toHaveBeenCalled();
   });
 
   it('creates custom output directory', async function () {
     gasket.config.manifest.staticOutput =
       '/super/cool/custom/path/manifest.json';
     await build(gasket);
-    expect(mockMkdirpStub).toHaveBeenCalled();
-    expect(mockMkdirpStub.mock.calls[0][0]).toEqual('/super/cool/custom/path/');
+    expect(mkdirp).toHaveBeenCalled();
+    expect(mkdirp.mock.calls[0][0]).toEqual('/super/cool/custom/path/');
   });
 
   it('writes manifest to specified path', async function () {
     await build(gasket);
-    expect(mockWriteFileStub.mock.calls.length).toBe(1);
-    expect(mockWriteFileStub.mock.calls[0]).toEqual([
+    expect(writeFile.mock.calls.length).toBe(1);
+    expect(writeFile.mock.calls[0]).toEqual([
       '/custom/manifest.json',
-      '[]',
+      '{}',
       'utf-8'
     ]);
   });

@@ -1,16 +1,16 @@
 /// <reference types="@gasket/plugin-command" />
 /// <reference types="@gasket/plugin-logger" />
 
-const path = require('path');
-const { writeFile } = require('fs').promises;
-const mkdirp = require('mkdirp');
-const { gatherManifestData } = require('./utils');
+import path from 'path';
+import { writeFile } from 'fs/promises';
+import mkdirp from 'mkdirp';
+import { gatherManifestData } from './utils.js';
 
 /**
  * Write a static web manifest file
  * @type {import('@gasket/core').HookHandler<'build'>}
  */
-module.exports = async function build(gasket) {
+export default async function build(gasket) {
   const {
     logger,
     config: { root, manifest }
@@ -36,4 +36,4 @@ module.exports = async function build(gasket) {
       )}).`
     );
   }
-};
+}

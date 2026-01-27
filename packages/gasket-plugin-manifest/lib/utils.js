@@ -4,9 +4,9 @@ const excludes = ['staticOutput', 'path'];
 /**
  * Merges manifest defaults with gasket.config manifest and passes to
  * every defined `manifest` hook for further manipulation.
- * @type {import('./internal').gatherManifestData}
+ * @type {import('./internal.d.ts').gatherManifestData}
  */
-async function gatherManifestData(gasket, context) {
+export async function gatherManifestData(gasket, context) {
   const { logger, execWaterfall, config } = gasket;
   const source = (context.req && context.req.originalUrl) || 'static manifest';
 
@@ -14,7 +14,7 @@ async function gatherManifestData(gasket, context) {
 
   /**
    * Remove excluded properties in manifest config
-   * @type {Partial<import('./index').Manifest>}
+   * @type {Partial<import('./index.d.ts').Manifest>}
    */
   const manifest = Object.keys(config.manifest).reduce((acc, key) => {
     if (!excludes.includes(key)) {
@@ -25,7 +25,3 @@ async function gatherManifestData(gasket, context) {
 
   return await execWaterfall('manifest', manifest, context);
 }
-
-module.exports = {
-  gatherManifestData
-};

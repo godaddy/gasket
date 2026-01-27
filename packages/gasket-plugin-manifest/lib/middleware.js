@@ -2,8 +2,8 @@
 /// <reference types="@gasket/plugin-express" />
 /// <reference types="@gasket/plugin-middleware" />
 
-const escapeRegex = require('escape-string-regexp');
-const { gatherManifestData } = require('./utils');
+import escapeRegex from 'escape-string-regexp';
+import { gatherManifestData } from './utils.js';
 
 /**
  * Add some middleware to gather manifest details for certain endpoints
@@ -20,7 +20,7 @@ function handler(gasket) {
 
     if (swUrl) endpoints.push(new RegExp(escapeRegex(swUrl)));
 
-    /** @type {import('.').manifestMiddleware} */
+    /** @type {import('./index.d.ts').manifestMiddleware} */
     return async function manifestMiddleware(req, res, next) {
       if (endpoints.some((p) => req.path.match(p))) {
         req.manifest = await gatherManifestData(gasket, { req, res });
@@ -31,7 +31,7 @@ function handler(gasket) {
   }
 }
 
-module.exports = {
+export default {
   timing: {
     last: true
   },

@@ -2,11 +2,12 @@
 /// <reference types="@gasket/plugin-fastify" />
 /// <reference types="@gasket/plugin-metadata" />
 
-const build = require('./build');
-const configure = require('./configure');
-const serve = require('./serve');
-const middleware = require('./middleware');
-const { name, version, description } = require('../package.json');
+import build from './build.js';
+import configure from './configure.js';
+import serve from './serve.js';
+import middleware from './middleware.js';
+import packageJson from '../package.json' with { type: 'json' };
+const { name, version, description } = packageJson;
 
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {
@@ -44,4 +45,4 @@ const plugin = {
   }
 };
 
-module.exports = plugin;
+export default plugin;

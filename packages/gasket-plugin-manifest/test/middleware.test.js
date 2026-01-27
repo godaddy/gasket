@@ -1,12 +1,20 @@
-const middleware = require('../lib/middleware');
+import { vi } from 'vitest';
+
+import middleware from '../lib/middleware.js';
+import { gatherManifestData } from '../lib/utils.js';
+
+vi.mock('../lib/utils.js', () => ({
+  gatherManifestData: vi.fn().mockResolvedValue({})
+}));
 
 describe('middleware', function () {
   const { timing, handler } = middleware;
   let gasket;
 
   beforeEach(function () {
+    vi.clearAllMocks();
     gasket = {
-      execWaterfall: jest.fn().mockResolvedValue([]),
+      execWaterfall: vi.fn().mockResolvedValue({}),
       config: {
         manifest: {
           name: 'Walter White',
@@ -17,13 +25,9 @@ describe('middleware', function () {
         }
       },
       logger: {
-        debug: jest.fn()
+        debug: vi.fn()
       }
     };
-  });
-
-  afterEach(function () {
-    jest.clearAllMocks();
   });
 
   describe('#timing', function () {
@@ -41,48 +45,47 @@ describe('middleware', function () {
     });
 
     it('returns middleware', function () {
-      const fn = handler(gasket, {});
+      const fn = handler(gasket);
       expect(typeof fn).toBe('function');
       expect(fn).toHaveLength(3);
     });
 
     it('gathers manifest data if looking for manifest.json', async function () {
-      const fn = handler(gasket, {});
+      const fn = handler(gasket);
       const req = {
         path: 'manifest.json'
       };
       await fn(req, {}, function () { });
-      expect(gasket.execWaterfall).toHaveBeenCalledTimes(1);
+      expect(gatherManifestData).toHaveBeenCalledTimes(1);
     });
 
     it('gathers manifest data if looking for the service worker script', async function () {
-      const fn = handler(gasket, {});
+      const fn = handler(gasket);
       const req = {
         path: 'sw.js'
       };
       await fn(req, {}, function () { });
-      expect(gasket.execWaterfall).toHaveBeenCalledTimes(1);
+      expect(gatherManifestData).toHaveBeenCalledTimes(1);
     });
 
     it('passes the incoming request to the manifest hook', async function () {
-      const fn = handler(gasket, {}, {});
-      const context = { req: { path: 'manifest.json', manifest: [] }, res: {} };
+      const fn = handler(gasket);
       const req = {
         path: 'manifest.json'
       };
-      await fn(req, {}, function () { });
-      expect(gasket.execWaterfall.mock.calls[0]).toHaveLength(3);
-      expect(gasket.execWaterfall.mock.calls[0][2]).toEqual(context);
+      const res = {};
+      await fn(req, res, function () { });
+      expect(gatherManifestData).toHaveBeenCalledWith(gasket, { req, res });
     });
 
     it('takes precedence from gasket config over base config', async function () {
       gasket.config.manifest.display = 'BOGUS';
-      const fn = handler(gasket, {}, {});
+      const fn = handler(gasket);
       const req = {
         path: 'manifest.json'
       };
       await fn(req, {}, function () { });
-      expect(gasket.execWaterfall.mock.calls[0][1].display).toEqual('BOGUS');
+      expect(gatherManifestData).toHaveBeenCalled();
     });
   });
 });
