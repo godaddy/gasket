@@ -7,6 +7,10 @@
     "create-gasket-app": "./lib/index.js"
   },
   "types": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "EXAMPLES.md"
+  ],
   "exports": {
     ".": {
       "types": "./lib/index.d.ts",
@@ -17,10 +21,6 @@
     },
     "./package.json": "./package.json"
   },
-  "files": [
-    "lib",
-    "EXAMPLES.md"
-  ],
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
