@@ -53,7 +53,6 @@
     "@gasket/core": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",
     "create-gasket-app": "workspace:^",
-    "dotenv": "^16.4.7",
     "elastic-apm-node": "^4.11.0",
     "vitest": "^3.2.0"
   }

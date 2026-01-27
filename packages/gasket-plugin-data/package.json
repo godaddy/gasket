@@ -7,7 +7,6 @@
   "types": "lib/index.d.ts",
   "files": [
     "cjs",
-    "generator",
     "lib",
     "EXAMPLES.md"
   ],
@@ -47,13 +46,11 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-data",
   "dependencies": {
     "@gasket/request": "workspace:^",
-    "@gasket/utils": "workspace:^",
-    "lodash.merge": "^4.6.2"
+    "@gasket/utils": "workspace:^"
   },
   "devDependencies": {
     "@gasket/cjs": "workspace:^",
     "@gasket/core": "workspace:^",
-    "@gasket/data": "workspace:^",
     "@gasket/plugin-command": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",
     "@gasket/plugin-redux": "workspace:^",

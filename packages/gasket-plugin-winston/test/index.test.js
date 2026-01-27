@@ -33,43 +33,6 @@ describe('@gasket/plugin-winston', function () {
     expect(plugin).toHaveProperty('description', description);
   });
 
-  describe('create hook', function () {
-    let mockContext;
-
-    beforeEach(() => {
-      mockContext = {
-        pkg: {
-          add: vi.fn()
-        },
-        gasketConfig: {
-          addPlugin: vi.fn()
-        }
-      };
-    });
-
-    it('adds itself to the dependencies', async function () {
-      gasket.execSync('create', mockContext);
-      expect(mockContext.pkg.add).toHaveBeenCalledWith('dependencies',
-        expect.objectContaining({
-          [name]: `^${version}`
-        }));
-    });
-
-    it('adds the expected dependencies', async function () {
-      gasket.execSync('create', mockContext);
-
-      expect(mockContext.pkg.add).toHaveBeenCalledWith('dependencies',
-        expect.objectContaining({
-          winston: require('../package.json').dependencies.winston
-        }));
-    });
-
-    it('adds plugin import to the gasket file', async function () {
-      gasket.execSync('create', mockContext);
-      expect(mockContext.gasketConfig.addPlugin).toHaveBeenCalledWith('pluginWinston', name);
-    });
-  });
-
   describe('createLogger hook', function () {
     it('creates a logger', function () {
       const [logger] = gasket.execSync('createLogger');

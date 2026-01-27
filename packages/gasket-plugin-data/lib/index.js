@@ -3,7 +3,6 @@
 import packageJson from '../package.json' with { type: 'json' };
 const { name, version, description } = packageJson;
 
-import create from './create.js';
 import configure from './configure.js';
 import { actions } from './actions.js';
 import initReduxState from './init-redux-state.js';
@@ -18,7 +17,6 @@ export default {
   description,
   actions,
   hooks: {
-    create,
     configure,
     initReduxState,
     metadata

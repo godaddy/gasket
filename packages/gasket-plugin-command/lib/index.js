@@ -1,6 +1,5 @@
 /// <reference types="@gasket/plugin-metadata" />
 
-import create from './create.js';
 import configure from './configure.js';
 import prepare from './prepare.js';
 import commands from './commands.js';
@@ -14,7 +13,6 @@ const plugin = {
   version,
   description,
   hooks: {
-    create,
     configure,
     prepare,
     commands,

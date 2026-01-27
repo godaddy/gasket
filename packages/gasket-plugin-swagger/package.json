@@ -16,10 +16,6 @@
       "require": "./cjs/index.js",
       "default": "./cjs/index.js"
     },
-    "./prompts": {
-      "import": "./lib/prompt.js",
-      "require": "./cjs/prompt.js"
-    },
     "./package.json": "./package.json"
   },
   "scripts": {

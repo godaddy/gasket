@@ -1,6 +1,5 @@
 /// <reference types="@gasket/plugin-metadata" />
 
-import create from './create.js';
 import prepare from './prepare.js';
 import packageJson from '../package.json' with { type: 'json' };
 const { name, version } = packageJson;
@@ -10,7 +9,6 @@ export default {
   name,
   version,
   hooks: {
-    create,
     prepare,
     metadata(gasket, meta) {
       return {

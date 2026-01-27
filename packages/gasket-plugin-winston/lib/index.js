@@ -7,8 +7,7 @@ import packageJson from '../package.json' with { type: 'json' };
 const {
   name,
   version,
-  description,
-  dependencies
+  description
 } = packageJson;
 
 /** @type {import('@gasket/core').Plugin} */
@@ -17,13 +16,6 @@ const plugin = {
   version,
   description,
   hooks: {
-    create(gasket, { pkg, gasketConfig }) {
-      gasketConfig.addPlugin('pluginWinston', '@gasket/plugin-winston');
-      pkg.add('dependencies', {
-        [name]: `^${version}`,
-        winston: dependencies.winston
-      });
-    },
     createLogger(gasket) {
       const { config } = gasket;
       const transportOrTransports = config.winston?.transports;

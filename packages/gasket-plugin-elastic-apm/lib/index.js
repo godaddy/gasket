@@ -1,8 +1,6 @@
-/// <reference types="create-gasket-app" />
 /// <reference types="@gasket/plugin-metadata" />
 
 import * as actions from './actions.js';
-import create from './create.js';
 import configure from './configure.js';
 import packageJson from '../package.json' with { type: 'json' };
 const { name, version, description } = packageJson;
@@ -15,7 +13,6 @@ const plugin = {
   actions,
   hooks: {
     configure,
-    create,
     metadata(gasket, meta) {
       return {
         ...meta,

@@ -5,7 +5,6 @@
   "type": "module",
   "types": "lib/index.d.ts",
   "files": [
-    "generator",
     "lib",
     "cjs",
     "EXAMPLES.md"
@@ -63,11 +62,7 @@
     "@gasket/plugin-metadata": "workspace:^",
     "@gasket/plugin-nextjs": "workspace:^",
     "@gasket/plugin-service-worker": "workspace:^",
-    "@gasket/react-intl": "workspace:^",
     "create-gasket-app": "workspace:^",
-    "react": "^19.0.0",
-    "react-intl": "^7.1.6",
-    "vitest": "^3.2.0",
-    "webpack": "^5.98.0"
+    "vitest": "^3.2.0"
   }
 }

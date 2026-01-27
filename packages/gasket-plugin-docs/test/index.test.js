@@ -18,10 +18,8 @@ describe('Plugin', function () {
   it('has expected hooks', () => {
     const expected = [
       'configure',
-      'create',
       'commands',
       'metadata',
-      'prompt',
       'docsSetup',
       'webpackConfig'
     ];
