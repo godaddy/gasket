@@ -129,15 +129,6 @@ From there, we recommend looking at the [withGasketData] HOC from the
 `@gasket/nextjs` package. This will use the [getPublicGasketData] action to get
 the `public` data and render it to a script tag for browser access.
 
-### Browser Access with Redux
-
-<!-- TODO: encourage users to move away from redux? -->
-
-Another way to access to data values in client-side code is through redux state.
-This plugin looks for a `public` property of your configuration in
-`gasket-data.js` and places it under a `gasketData` property in your initial
-public state by hooking the [initReduxState] lifecycle.
-
 ## Lifecycles
 
 ### gasketData
@@ -216,7 +207,6 @@ Configuration defined in a `gasket.js` file. It contains application settings, p
 
 [getPublicGasketData]: #getpublicgasketdata
 [withGasketData]: /packages/gasket-nextjs/README.md#withgasketdata
-[initReduxState]: /packages/gasket-plugin-redux/README.md#initreduxstate
 
 <!-- TODO - recover configuration doc -->
 [inline environment overrides]:/packages/gasket-cli/docs/configuration.md#environments

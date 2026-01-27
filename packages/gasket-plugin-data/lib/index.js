@@ -5,7 +5,6 @@ const { name, version, description } = packageJson;
 
 import configure from './configure.js';
 import { actions } from './actions.js';
-import initReduxState from './init-redux-state.js';
 import metadata from './metadata.js';
 
 /**
@@ -18,7 +17,6 @@ export default {
   actions,
   hooks: {
     configure,
-    initReduxState,
     metadata
   }
 };

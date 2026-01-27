@@ -47,7 +47,6 @@
     "@gasket/core": "workspace:^",
     "@gasket/plugin-command": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",
-    "@gasket/plugin-redux": "workspace:^",
     "create-gasket-app": "workspace:^",
     "vitest": "^3.2.0"
   }
