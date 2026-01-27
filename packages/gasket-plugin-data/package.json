@@ -3,10 +3,8 @@
   "version": "8.0.0-next.0",
   "description": "Supports application-specific settings and configurations",
   "type": "module",
-  "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
-    "cjs",
     "generator",
     "lib",
     "EXAMPLES.md"
@@ -14,18 +12,14 @@
   "exports": {
     ".": {
       "types": "./lib/index.d.ts",
-      "import": "./lib/index.js",
-      "require": "./cjs/index.cjs"
+      "import": "./lib/index.js"
     },
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "gasket-cjs ./lib",
-    "build:watch": "pnpm run build --watch",
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
     "posttest": "pnpm run lint && pnpm run typecheck",
-    "prepublishOnly": "pnpm run build",
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' vitest run",
     "test:coverage": "pnpm run test --coverage",
     "test:watch": "vitest watch",
@@ -51,7 +45,6 @@
     "lodash.merge": "^4.6.2"
   },
   "devDependencies": {
-    "@gasket/cjs": "workspace:^",
     "@gasket/core": "workspace:^",
     "@gasket/data": "workspace:^",
     "@gasket/plugin-command": "workspace:^",
