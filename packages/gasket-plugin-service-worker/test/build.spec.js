@@ -1,17 +1,17 @@
-const mkdirp = require('mkdirp');
-const build = require('../lib/build');
-const fs = require('fs');
+// eslint-disable no-undefined
+import { vi } from 'vitest';
 
-jest.mock('fs', () => {
-  const originalModule = jest.requireActual('fs');
+vi.mock('mkdirp', () => ({
+  default: vi.fn().mockResolvedValue(undefined)
+}));
 
-  return {
-    ...originalModule,
-    promises: {
-      writeFile: jest.fn(() => Promise.resolve(null))
-    }
-  };
-});
+vi.mock('fs/promises', () => ({
+  writeFile: vi.fn(() => Promise.resolve(null))
+}));
+
+import mkdirp from 'mkdirp';
+import build from '../lib/build.js';
+import { writeFile } from 'fs/promises';
 
 describe('build', () => {
   let mockConfig, mockGasket;
@@ -32,9 +32,9 @@ describe('build', () => {
         serviceWorker: mockConfig
       },
       logger: {
-        info: jest.fn()
+        info: vi.fn()
       },
-      execWaterfall: jest.fn()
+      execWaterfall: vi.fn()
     };
   });
 
@@ -69,7 +69,7 @@ describe('build', () => {
   it('writes file out', async () => {
     mockConfig.content = 'This is preconfigured content';
     await build.handler(mockGasket);
-    expect(fs.promises.writeFile).toHaveBeenCalledWith(
+    expect(writeFile).toHaveBeenCalledWith(
       '/some-root/public/sw.js',
       expect.stringContaining('strict'),
       'utf-8'

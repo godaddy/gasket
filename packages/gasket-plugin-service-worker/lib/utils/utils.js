@@ -1,4 +1,4 @@
-const { transformSync } = require('@swc/core');
+import { transformSync } from '@swc/core';
 
 const swHeader = `'use strict';
 
@@ -8,7 +8,7 @@ const swHeader = `'use strict';
 
 /**
  * minify the service worker content
- * @type {import('../index').minifyContent}
+ * @type {import('../index.d.ts').minifyContent}
  */
 function minifyContent(code, options = {}) {
   const result = transformSync(code, {
@@ -27,7 +27,7 @@ function minifyContent(code, options = {}) {
 
 /**
  * Get the service worker configuration from the gasket config
- * @type {import('../index').getSWConfig}
+ * @type {import('../index.d.ts').getSWConfig}
  */
 function getSWConfig(gasketPartial) {
   const { serviceWorker = {} } = gasketPartial?.config || {};
@@ -36,7 +36,7 @@ function getSWConfig(gasketPartial) {
 
 /**
  * Gathers thunks to key caches of composed sw scripts, based on req
- * @type {import('../index').getCacheKeys}
+ * @type {import('../index.d.ts').getCacheKeys}
  */
 async function getCacheKeys(gasket) {
   const { exec } = gasket;
@@ -50,7 +50,7 @@ async function getCacheKeys(gasket) {
 
 /**
  * Composes the service worker content from the configured content
- * @type {import('../index').getComposedContent}
+ * @type {import('../index.d.ts').getComposedContent}
  */
 async function getComposedContent(gasket, context) {
   const {
@@ -85,22 +85,24 @@ let __script;
 
 /**
  * Loads template file once with substitutions from config
- * @type {import('../index').loadRegisterScript}
+ * @type {import('../index.d.ts').loadRegisterScript}
  */
 async function loadRegisterScript(config) {
   if (!__script) {
-    const fs = require('fs').promises;
+    const { readFile } = await import('fs/promises');
+    const { createRequire } = await import('module');
+    const require = createRequire(import.meta.url);
     const { url, scope } = config;
     const template = require.resolve('./sw-register.template.js');
 
-    __script = (await fs.readFile(template, 'utf8'))
+    __script = (await readFile(template, 'utf8'))
       .replace('{URL}', url)
       .replace('{SCOPE}', scope);
   }
   return __script;
 }
 
-module.exports = {
+export {
   getSWConfig,
   getCacheKeys,
   getComposedContent,

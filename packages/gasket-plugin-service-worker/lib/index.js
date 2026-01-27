@@ -1,12 +1,13 @@
 /// <reference types="@gasket/plugin-metadata" />
 
-const configure = require('./configure');
-const build = require('./build');
-const actions = require('./actions');
-const express = require('./express');
-const webpackConfig = require('./webpack-config');
-const fastify = require('./fastify');
-const { name, version, description } = require('../package.json');
+import configure from './configure.js';
+import build from './build.js';
+import actions from './actions.js';
+import express from './express.js';
+import webpackConfig from './webpack-config.js';
+import fastify from './fastify.js';
+import packageJson from '../package.json' with { type: 'json' };
+const { name, version, description } = packageJson;
 
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {
@@ -115,4 +116,4 @@ const plugin = {
   }
 };
 
-module.exports = plugin;
+export default plugin;

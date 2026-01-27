@@ -1,10 +1,10 @@
 /// <reference types="@gasket/plugin-command" />
 /// <reference types="@gasket/plugin-logger" />
 
-const path = require('path');
-const { writeFile } = require('fs').promises;
-const mkdirp = require('mkdirp');
-const { getComposedContent, getSWConfig } = require('./utils/utils');
+import path from 'path';
+import { writeFile } from 'fs/promises';
+import mkdirp from 'mkdirp';
+import { getComposedContent, getSWConfig } from './utils/utils.js';
 
 /**
  * Write a static service worker file
@@ -33,7 +33,7 @@ async function handler(gasket) {
   return;
 }
 
-module.exports = {
+export default {
   timing: {
     last: true
   },

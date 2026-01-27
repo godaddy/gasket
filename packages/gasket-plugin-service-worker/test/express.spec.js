@@ -1,5 +1,21 @@
-const mockCache = require('lru-cache');
-const express = require('../lib/express');
+import { vi } from 'vitest';
+
+vi.mock('lru-cache', () => {
+  const getStub = vi.fn();
+  const setStub = vi.fn();
+  const mockCache = vi.fn(() => ({
+    get: getStub,
+    set: setStub
+  }));
+  mockCache.getStub = getStub;
+  mockCache.setStub = setStub;
+  return {
+    default: mockCache
+  };
+});
+
+import express from '../lib/express.js';
+import mockCache from 'lru-cache';
 
 describe('express', () => {
   let mockGasket, mockApp, mockConfig, mockReq, mockRes, mockCacheKeys;
@@ -19,24 +35,24 @@ describe('express', () => {
       config: {
         serviceWorker: mockConfig
       },
-      exec: jest.fn().mockReturnValue(Promise.resolve(mockCacheKeys)),
-      execWaterfall: jest.fn(),
+      exec: vi.fn().mockReturnValue(Promise.resolve(mockCacheKeys)),
+      execWaterfall: vi.fn(),
       logger: {
-        info: jest.fn()
+        info: vi.fn()
       }
     };
     mockApp = {
-      get: jest.fn()
+      get: vi.fn()
     };
     mockReq = {};
     mockRes = {
-      type: jest.fn(),
-      send: jest.fn()
+      type: vi.fn(),
+      send: vi.fn()
     };
     mockCache.mockClear();
 
-    cacheKeyA = jest.fn().mockResolvedValue('A');
-    cacheKeyB = jest.fn().mockResolvedValue('B');
+    cacheKeyA = vi.fn().mockResolvedValue('A');
+    cacheKeyB = vi.fn().mockResolvedValue('B');
   });
 
   /**

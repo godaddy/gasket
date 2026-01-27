@@ -1,5 +1,5 @@
-const webpack = require('../lib/webpack-config');
-const WebpackInjectPlugin = require('webpack-inject-plugin').default;
+import webpack from '../lib/webpack-config.js';
+import WebpackInjectPlugin from 'webpack-inject-plugin';
 
 const mockNextData = {
   defaultLoaders: {}

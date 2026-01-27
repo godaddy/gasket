@@ -1,4 +1,4 @@
-const { loadRegisterScript } = require('./utils/utils');
+import { loadRegisterScript } from './utils/utils.js';
 
 /** @type {import('@gasket/core').ActionHandler<'getSWRegisterScript'>} */
 async function getSWRegisterScript(gasket) {
@@ -7,6 +7,6 @@ async function getSWRegisterScript(gasket) {
   return `<script>${content}</script>`;
 }
 
-module.exports = {
+export default {
   getSWRegisterScript
 };

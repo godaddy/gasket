@@ -1,11 +1,11 @@
-const LRU = require('lru-cache');
-const { getCacheKeys, getComposedContent, getSWConfig } = require('./utils');
+import LRU from 'lru-cache';
+import { getCacheKeys, getComposedContent, getSWConfig } from './utils.js';
 
 /**
  * Configures the endpoint with the gasket config
- * @type {import('../index').configureEndpoint}
+ * @type {import('../index.d.ts').configureEndpoint}
  */
-module.exports = async function configureEndpoint(gasket) {
+export default async function configureEndpoint(gasket) {
   const { logger } = gasket;
   const { cache: cacheConfig = {} } = getSWConfig(gasket);
 

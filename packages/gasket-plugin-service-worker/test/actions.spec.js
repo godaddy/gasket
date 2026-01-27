@@ -1,6 +1,11 @@
-const utils = require('../lib/utils/utils');
-jest.mock('../lib/utils/utils');
-const { getSWRegisterScript } = require('../lib/actions');
+import { vi } from 'vitest';
+
+vi.mock('../lib/utils/utils.js', () => ({
+  loadRegisterScript: vi.fn()
+}));
+
+import actions from '../lib/actions.js';
+import * as utils from '../lib/utils/utils.js';
 
 const mockRegisterScript = 'mock script';
 
@@ -18,7 +23,7 @@ describe('actions', () => {
       config: {
         serviceWorker: mockConfig
       },
-      execWaterfall: jest.fn()
+      execWaterfall: vi.fn()
     };
     mockReq = {
       path: '/some/page'
@@ -27,7 +32,7 @@ describe('actions', () => {
 
   describe('getSWRegisterScript', () => {
     it('attaches swRegisterScript to req', async () => {
-      const swScript = await getSWRegisterScript(mockGasket, mockReq);
+      const swScript = await actions.getSWRegisterScript(mockGasket, mockReq);
       expect(swScript).toContain(mockRegisterScript);
     });
   });

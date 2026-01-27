@@ -1,9 +1,9 @@
-const transformSync = require('@swc/core').transformSync;
-const { getComposedContent } = require('../lib/utils/utils');
-const { getCacheKeys, getSWConfig, loadRegisterScript } = require('../lib/utils/utils');
+import { transformSync } from '@swc/core';
+import { getComposedContent, getCacheKeys, getSWConfig, loadRegisterScript } from '../lib/utils/utils.js';
+import { vi } from 'vitest';
 
-jest.mock('@swc/core', () => ({
-  transformSync: jest.fn(() => ({ code: 'minified code' }))
+vi.mock('@swc/core', () => ({
+  transformSync: vi.fn(() => ({ code: 'minified code' }))
 }));
 
 describe('utils', () => {
@@ -15,7 +15,7 @@ describe('utils', () => {
 
     beforeEach(() => {
       mockPluginCacheKeys = [];
-      mockExec = jest.fn().mockResolvedValue(mockPluginCacheKeys);
+      mockExec = vi.fn().mockResolvedValue(mockPluginCacheKeys);
       mockGasket = {
         config: {},
         exec: mockExec
@@ -81,9 +81,9 @@ describe('utils', () => {
           serviceWorker: mockConfig
         },
         logger: {
-          log: jest.fn()
+          log: vi.fn()
         },
-        execWaterfall: jest.fn()
+        execWaterfall: vi.fn()
       };
     });
 
@@ -138,11 +138,10 @@ describe('utils', () => {
     const mockConfig = { url: 'sw.js', scope: '/' };
     let fs;
 
-    beforeEach(() => {
-      jest.isolateModules(() => {
-        fs = require('fs').promises;
-        fs.readFile = jest.fn(() => Promise.resolve('mock {URL} and {SCOPE}'));
-      });
+    beforeEach(async () => {
+      const fsModule = await import('fs');
+      fs = fsModule.promises;
+      fs.readFile = vi.fn(() => Promise.resolve('mock {URL} and {SCOPE}'));
     });
 
     it('only reads the template file once', async () => {

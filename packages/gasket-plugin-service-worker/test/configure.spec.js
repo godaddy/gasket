@@ -1,5 +1,6 @@
-const path = require('path');
-const configure = require('../lib/configure');
+import { vi } from 'vitest';
+import path from 'path';
+import configure from '../lib/configure.js';
 
 describe('configure', () => {
 
@@ -11,7 +12,7 @@ describe('configure', () => {
         root: '/path/to/app'
       },
       logger: {
-        warn: jest.fn()
+        warn: vi.fn()
       }
     };
   });

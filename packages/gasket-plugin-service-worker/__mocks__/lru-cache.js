@@ -1,9 +1,14 @@
-const getStub = jest.fn();
-const setStub = jest.fn();
-module.exports = jest.fn(() => ({
+import { vi } from 'vitest';
+
+const getStub = vi.fn();
+const setStub = vi.fn();
+
+const mockCache = vi.fn(() => ({
   get: getStub,
   set: setStub
 }));
 
-module.exports.getStub = getStub;
-module.exports.setStub = setStub;
+mockCache.getStub = getStub;
+mockCache.setStub = setStub;
+
+export default mockCache;

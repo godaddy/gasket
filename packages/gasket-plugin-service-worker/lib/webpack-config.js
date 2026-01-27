@@ -1,12 +1,16 @@
 /// <reference types="@gasket/plugin-webpack" />
 
-const { getSWConfig } = require('./utils/utils');
+import { getSWConfig, loadRegisterScript } from './utils/utils.js';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const WebpackInjectPluginModule = require('webpack-inject-plugin');
+const WebpackInjectPlugin = WebpackInjectPluginModule.default || WebpackInjectPluginModule;
 
 /**
  * Add the analyzer webpack plugin if analyze flag has been set
  * @type {import('@gasket/core').HookHandler<'webpackConfig'>}
  */
-module.exports = function webpackConfigHook(gasket, webpackConfig, data) {
+export default function webpackConfigHook(gasket, webpackConfig, data) {
   const { config: { command } } = gasket;
   const swConfig = getSWConfig(gasket);
 
@@ -15,8 +19,6 @@ module.exports = function webpackConfigHook(gasket, webpackConfig, data) {
 
   // Do not register the service worker for local development or if webpackRegister is false
   if (webpackRegister !== false && !isServer && command !== 'local') {
-    const WebpackInjectPlugin = require('webpack-inject-plugin').default;
-    const { loadRegisterScript } = require('./utils/utils');
 
     let entryName;
     if (webpackRegister instanceof Function) {
@@ -32,6 +34,7 @@ module.exports = function webpackConfigHook(gasket, webpackConfig, data) {
       ...webpackConfig,
       plugins: [
         ...(webpackConfig.plugins || []),
+        // @ts-expect-error - webpack-inject-plugin is CJS and types don't match ESM import
         new WebpackInjectPlugin(
           () => loadRegisterScript(swConfig),
           entryName && { entryName }
@@ -41,4 +44,4 @@ module.exports = function webpackConfigHook(gasket, webpackConfig, data) {
   }
 
   return webpackConfig;
-};
+}
