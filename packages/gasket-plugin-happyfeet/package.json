@@ -3,24 +3,19 @@
   "version": "8.0.0-next.0",
   "description": "A gasket plugin to enable happyfeet healthchecks",
   "type": "module",
-  "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
     "lib",
-    "cjs",
     "EXAMPLES.md"
   ],
   "exports": {
     ".": {
       "types": "./lib/index.d.ts",
-      "import": "./lib/index.js",
-      "require": "./cjs/index.js",
-      "default": "./cjs/index.cjs"
+      "import": "./lib/index.js"
     },
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "gasket-cjs",
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
     "posttest": "pnpm run lint && pnpm run typecheck",
@@ -43,7 +38,6 @@
     "happy-feet": "^2.2.0"
   },
   "devDependencies": {
-    "@gasket/cjs": "workspace:^",
     "@gasket/core": "workspace:^",
     "@gasket/plugin-https": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",
