@@ -24,9 +24,6 @@ import pluginSwagger from '@gasket/plugin-swagger';
 
 // Import ESM plugins
 import pluginElasticApm from '@gasket/plugin-elastic-apm';
-import pluginManifest from '@gasket/plugin-manifest';
-import pluginServiceWorker from '@gasket/plugin-service-worker';
-import pluginWorkbox from '@gasket/plugin-workbox';
 
 describe('check plugins type', () => {
   it('should have correct type', () => {
@@ -46,16 +43,13 @@ describe('check plugins type', () => {
       pluginHttpsProxy,
       pluginIntl,
       pluginLogger,
-      pluginManifest,
       pluginMetadata,
       pluginMiddleware,
       pluginMorgan,
       pluginNextjs,
-      pluginServiceWorker,
       pluginSwagger,
       pluginWebpack,
-      pluginWinston,
-      pluginWorkbox
+      pluginWinston
     ];
   });
 });

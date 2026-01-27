@@ -23,8 +23,7 @@ describe('Plugin', function () {
       'configure',
       'publicGasketData',
       'init',
-      'metadata',
-      'serviceWorkerCacheKey'
+      'metadata'
     ];
 
     expect(plugin).toHaveProperty('hooks');

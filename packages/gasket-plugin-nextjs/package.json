@@ -57,8 +57,6 @@
     "@gasket/plugin-logger": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",
     "@gasket/plugin-nextjs": "workspace:^",
-    "@gasket/plugin-service-worker": "workspace:^",
-    "@gasket/plugin-workbox": "workspace:^",
     "@gasket/request": "workspace:^",
     "@types/express": "^4.17.23",
     "@types/node": "^20.17.19",

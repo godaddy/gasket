@@ -79,45 +79,6 @@ export default {
 };
 ```
 
-## Lifecycle timing
-
-Remember, if you need any of your injected middleware to come before or after
-middleware injected by another plugin, use the [timing mechanism] of the plugin
-engine. For example, if you need your middleware to access the server-side redux
-store created by [@gasket/plugin-redux], you can do something like this:
-
-```js
-import  getFeatureFlags from './get-feature-flags.js';
-
-export default {
-  dependencies: ['@gasket/redux'],
-  hooks: {
-    middleware: {
-      timing: {
-        after: ['@gasket/redux']
-      },
-      handler(gasket, app) {
-        return async (req, res, next) => {
-          try {
-            const flags = await getFeatureFlags({
-              userId: req.userId,
-              locale: req.cookies.market
-            });
-            req.store.dispatch({
-              type: 'SET_FEATURE_FLAGS',
-              payload: { flags }
-            });
-            next();
-          } catch (err) {
-            next(err);
-          }
-        }
-      }
-    }
-  }
-}
-```
-
 ## Middleware paths
 
 You can configure which paths middleware will run on by adding the middleware
@@ -151,6 +112,5 @@ export default makeGasket({
 
 [error handling]:http://expressjs.com/en/guide/error-handling.html
 [plugins]:/packages/gasket-cli/docs/plugins.md
-[@gasket/plugin-redux]:/packages/gasket-plugin-redux/README.md
 [timing mechanism]:/packages/gasket-engine/README.md
 [app.use pattern matching]: http://expressjs.com/en/4x/api.html#path-examples

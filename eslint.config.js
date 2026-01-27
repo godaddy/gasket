@@ -21,7 +21,6 @@ export default defineConfig([
     '**/generator/**',
     '**/__mocks__/**',
     '**/test/fixtures/**',
-    '**/gasket-redux/lib',
     '**/template/dist',
     '**/template/.next',
     '**/template/.docs'

@@ -56,7 +56,6 @@
     "@gasket/plugin-logger": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",
     "@gasket/plugin-nextjs": "workspace:^",
-    "@gasket/plugin-service-worker": "workspace:^",
     "create-gasket-app": "workspace:^",
     "vitest": "^3.2.0"
   }
