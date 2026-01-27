@@ -45,7 +45,6 @@
     "@gasket/plugin-docs": "workspace:^",
     "@gasket/plugin-docusaurus": "workspace:^",
     "@gasket/plugin-dynamic-plugins": "workspace:^",
-    "@gasket/plugin-git": "workspace:^",
     "@gasket/plugin-logger": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",
     "@gasket/request": "workspace:^",

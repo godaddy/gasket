@@ -49,7 +49,6 @@
     "@gasket/plugin-elastic-apm": "workspace:^",
     "@gasket/plugin-express": "workspace:^",
     "@gasket/plugin-fastify": "workspace:^",
-    "@gasket/plugin-git": "workspace:^",
     "@gasket/plugin-happyfeet": "workspace:^",
     "@gasket/plugin-https": "workspace:^",
     "@gasket/plugin-https-proxy": "workspace:^",
