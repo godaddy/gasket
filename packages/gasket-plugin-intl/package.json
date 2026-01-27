@@ -7,20 +7,16 @@
   "files": [
     "generator",
     "lib",
-    "cjs",
     "EXAMPLES.md"
   ],
   "exports": {
     ".": {
       "types": "./lib/index.d.ts",
-      "import": "./lib/index.js",
-      "require": "./cjs/index.js",
-      "default": "./cjs/index.cjs"
+      "import": "./lib/index.js"
     },
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "gasket-cjs lib cjs",
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
     "posttest": "pnpm run lint && pnpm run typecheck",
@@ -53,7 +49,6 @@
     "semver": "^7.7.1"
   },
   "devDependencies": {
-    "@gasket/cjs": "workspace:^",
     "@gasket/core": "workspace:^",
     "@gasket/intl": "workspace:^",
     "@gasket/plugin-command": "workspace:^",
