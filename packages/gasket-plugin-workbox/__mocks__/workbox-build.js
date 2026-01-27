@@ -1,3 +1,5 @@
+import { vi } from 'vitest';
+
 let __warnings = [];
 let __swString = `
 /**
@@ -28,15 +30,13 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 `;
 
-const getWarnings = () => __warnings;
-
-module.exports = {
-  __setWarnings: warnings => {
-    __warnings = warnings;
-  },
-  copyWorkboxLibraries: jest.fn(),
-  generateSWString: jest.fn(() => Promise.resolve({
-    warnings: __warnings,
-    swString: __swString
-  }))
+export const __setWarnings = warnings => {
+  __warnings = warnings;
 };
+
+export const copyWorkboxLibraries = vi.fn();
+
+export const generateSWString = vi.fn(() => Promise.resolve({
+  warnings: __warnings,
+  swString: __swString
+}));

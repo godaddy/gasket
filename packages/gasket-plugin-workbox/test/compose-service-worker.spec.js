@@ -1,6 +1,52 @@
-const composeServiceWorker = require('../lib/compose-service-worker');
-const utils = require('../lib/utils');
-const { generateSWString, __setWarnings } = require('workbox-build');
+import { vi } from 'vitest';
+
+let __warnings = [];
+const __swString = `
+/**
+ * Welcome to your Workbox-powered service worker!
+ *
+ * You'll need to register this file in your web app and you should
+ * disable HTTP caching for this file too.
+ * See https://goo.gl/nhQhGp
+ *
+ * The rest of the code is auto-generated. Please don't update this file
+ * directly; instead, make changes to your Workbox build configuration
+ * and re-run your build process.
+ * See https://goo.gl/2aRDsh
+ */
+ 
+importScripts(
+  "_workbox/workbox-v4.1.0/workbox-sw.js"
+);
+
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+});
+
+
+self.__precacheManifest = [].concat(self.__precacheManifest || []);
+workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
+`;
+
+vi.mock('workbox-build', () => {
+  const generateSWString = vi.fn(() => Promise.resolve({
+    warnings: __warnings,
+    swString: __swString
+  }));
+  const __setWarnings = warnings => {
+    __warnings = warnings;
+  };
+  return {
+    generateSWString,
+    __setWarnings
+  };
+});
+
+import composeServiceWorker from '../lib/compose-service-worker.js';
+import { defaultConfig } from '../lib/utils.js';
+import { generateSWString, __setWarnings } from 'workbox-build';
 
 describe('composeServiceWorker', () => {
   const expectedComment = 'Welcome to your Workbox-powered service worker!';
@@ -9,16 +55,17 @@ describe('composeServiceWorker', () => {
   let results, mockGasket, mockContent, mockContext;
 
   beforeEach(() => {
+    vi.clearAllMocks();
     mockGasket = {
       config: {
         root: '/some-root',
-        workbox: utils.defaultConfig
+        workbox: defaultConfig
       },
-      exec: jest
+      exec: vi
         .fn()
         .mockResolvedValue([{ configA: 'one' }, { configB: 'two' }]),
       logger: {
-        warn: jest.fn()
+        warn: vi.fn()
       }
     };
     mockContent = '/* mock sw content */';
@@ -30,7 +77,7 @@ describe('composeServiceWorker', () => {
     await composeServiceWorker(mockGasket, mockContent, mockContext);
     expect(mockGasket.exec).toHaveBeenCalledWith(
       'workbox',
-      utils.defaultConfig.config,
+      defaultConfig.config,
       mockContext
     );
   });
@@ -39,7 +86,7 @@ describe('composeServiceWorker', () => {
     await composeServiceWorker(mockGasket, mockContent, mockContext);
     expect(generateSWString).toHaveBeenCalledWith(
       expect.objectContaining({
-        ...utils.defaultConfig.config,
+        ...defaultConfig.config,
         configA: 'one',
         configB: 'two'
       })

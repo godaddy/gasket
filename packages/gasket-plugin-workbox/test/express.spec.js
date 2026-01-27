@@ -1,19 +1,28 @@
-const express = require('../lib/express');
-const utils = require('../lib/utils');
-const serveStatic = require('serve-static');
+import { vi } from 'vitest';
+
+vi.mock('serve-static', () => {
+  return {
+    default: vi.fn().mockReturnValue(() => {})
+  };
+});
+
+import express from '../lib/express.js';
+import { getOutputDir, defaultConfig } from '../lib/utils.js';
+import serveStatic from 'serve-static';
 
 describe('express', () => {
   let mockGasket, mockApp;
 
   beforeEach(() => {
+    vi.clearAllMocks();
     mockGasket = {
       config: {
         root: '/some-root',
-        workbox: utils.defaultConfig
+        workbox: defaultConfig
       }
     };
     mockApp = {
-      use: jest.fn()
+      use: vi.fn()
     };
   });
 
@@ -24,7 +33,7 @@ describe('express', () => {
 
   it('sets up endpoint to with serve static', () => {
     express(mockGasket, mockApp);
-    const expectedOutput = utils.getOutputDir(mockGasket);
+    const expectedOutput = getOutputDir(mockGasket);
     expect(serveStatic).toHaveBeenCalledWith(
       expectedOutput,
       expect.objectContaining({

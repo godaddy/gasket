@@ -2,8 +2,15 @@
   "name": "@gasket/plugin-workbox",
   "version": "8.0.0-next.0",
   "description": "DEPRECATED Gasket Workbox Plugin",
-  "main": "lib/index.js",
+  "type": "module",
   "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js"
+    },
+    "./package.json": "./package.json"
+  },
   "files": [
     "lib",
     "EXAMPLES.md"
@@ -12,9 +19,9 @@
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
     "posttest": "pnpm run lint && pnpm run typecheck",
-    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
-    "test:coverage": "jest --coverage",
-    "test:watch": "jest --watchAll",
+    "test": "vitest run --globals",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
@@ -45,11 +52,10 @@
     "@gasket/plugin-metadata": "workspace:^",
     "@gasket/plugin-service-worker": "workspace:^",
     "@types/express": "^4.17.23",
-    "@types/jest": "^29.5.14",
     "@types/node": "^20.17.19",
     "@types/workbox-build": "^5.1.0",
     "create-gasket-app": "workspace:^",
-    "jest": "^29.7.0"
+    "vitest": "^3.2.0"
   },
   "deprecated": "Package deprecated and will be removed in future major release."
 }

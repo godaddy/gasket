@@ -1,10 +1,10 @@
 /// <reference types="@gasket/plugin-express" />
 
-const serveStatic = require('serve-static');
-const { getOutputDir } = require('./utils');
+import serveStatic from 'serve-static';
+import { getOutputDir } from './utils.js';
 
 /** @type {import('@gasket/core').HookHandler<'express'>} */
-module.exports = function express(gasket, app) {
+export default function express(gasket, app) {
   const outputDir = getOutputDir(gasket);
 
   app.use('/_workbox', serveStatic(outputDir, {
@@ -12,4 +12,4 @@ module.exports = function express(gasket, app) {
     maxAge: '1y',
     immutable: true
   }));
-};
+}

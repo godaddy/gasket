@@ -1,10 +1,10 @@
 /// <reference types="@gasket/plugin-command" />
 
-const { copyWorkboxLibraries } = require('workbox-build');
-const { getOutputDir } = require('./utils');
+import { copyWorkboxLibraries } from 'workbox-build';
+import { getOutputDir } from './utils.js';
 
 /** @type {import('@gasket/core').HookHandler<'build'>} */
-module.exports = async function build(gasket) {
+export default async function build(gasket) {
   const buildDir = getOutputDir(gasket);
   await copyWorkboxLibraries(buildDir);
-};
+}

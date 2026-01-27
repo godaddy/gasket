@@ -1,8 +1,8 @@
 /// <reference types="@gasket/plugin-service-worker" />
 /// <reference types="@gasket/plugin-logger" />
 
-const { generateSWString } = require('workbox-build');
-const merge = require('deepmerge');
+import { generateSWString } from 'workbox-build';
+import merge from 'deepmerge';
 
 const reComments = /\/\*.*(\n.+)*\*\//g;
 
@@ -11,7 +11,7 @@ const reComments = /\/\*.*(\n.+)*\*\//g;
  * Generates service worker strings and appends to the service worker content.
  * @type {import('@gasket/core').HookHandler<'composeServiceWorker'>}
  */
-module.exports = async function composeServiceWorker(gasket, content, context) {
+export default async function composeServiceWorker(gasket, content, context) {
   const { exec, config, logger } = gasket;
   const { workbox } = config;
 
@@ -31,4 +31,4 @@ module.exports = async function composeServiceWorker(gasket, content, context) {
   }
 
   return content + workboxContent;
-};
+}

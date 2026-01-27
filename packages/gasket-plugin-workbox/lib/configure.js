@@ -1,10 +1,11 @@
-const {
+import {
   getWorkboxConfig,
   getBasePath
-} = require('./utils');
+} from './utils.js';
+import packageJson from 'workbox-build/package.json' with { type: 'json' };
 
 /** @type {import('@gasket/core').HookHandler<'configure'>} */
-module.exports = function configure(gasket, config) {
+export default function configure(gasket, config) {
   const workbox = getWorkboxConfig({ config });
   const basePath = getBasePath({ config });
 
@@ -14,7 +15,7 @@ module.exports = function configure(gasket, config) {
 
   workbox.basePath = basePath;
 
-  const { version } = require('workbox-build/package.json');
+  const { version } = packageJson;
   const libraryVersion = `workbox-v${version}`;
 
   const scriptUrl = [
@@ -30,4 +31,4 @@ module.exports = function configure(gasket, config) {
   workbox.config.importScripts = [scriptUrl, ...importScripts];
 
   return ({ ...config, workbox });
-};
+}

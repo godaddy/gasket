@@ -1,4 +1,4 @@
-const utils = require('../lib/utils');
+import { getWorkboxConfig, getBasePath, getOutputDir, defaultConfig } from '../lib/utils.js';
 
 const setupGasket = config => ({
   config: {
@@ -10,20 +10,20 @@ const setupGasket = config => ({
 describe('getWorkboxConfig', () => {
 
   it('returns defaults', () => {
-    const results = utils.getWorkboxConfig(setupGasket({}));
-    expect(results).toEqual(utils.defaultConfig);
+    const results = getWorkboxConfig(setupGasket({}));
+    expect(results).toEqual(defaultConfig);
   });
 
   it('returns config from gasket.js', () => {
-    const results = utils.getWorkboxConfig(setupGasket({}));
-    expect(results).toEqual({ ...utils.defaultConfig });
+    const results = getWorkboxConfig(setupGasket({}));
+    expect(results).toEqual({ ...defaultConfig });
   });
 });
 
 describe('getBasePath', () => {
 
   it('returns the basePath from workbox config', () => {
-    const results = utils.getBasePath(setupGasket({
+    const results = getBasePath(setupGasket({
       workbox: {
         basePath: '//cdn-a'
       }
@@ -32,14 +32,14 @@ describe('getBasePath', () => {
   });
 
   it('returns the basePath from next config', () => {
-    const results = utils.getBasePath(setupGasket({
+    const results = getBasePath(setupGasket({
       basePath: '//cdn-b'
     }));
     expect(results).toEqual('//cdn-b');
   });
 
   it('returns empty string if not configured', () => {
-    const results = utils.getBasePath(setupGasket({}));
+    const results = getBasePath(setupGasket({}));
     expect(results).toEqual('');
   });
 });
@@ -47,7 +47,7 @@ describe('getBasePath', () => {
 describe('getOutputDir', () => {
 
   it('returns full outputDir from config', () => {
-    const results = utils.getOutputDir(setupGasket({
+    const results = getOutputDir(setupGasket({
       workbox: {
         outputDir: './some/build/dir'
       }
@@ -56,7 +56,7 @@ describe('getOutputDir', () => {
   });
 
   it('returns default if not configured', () => {
-    const results = utils.getOutputDir(setupGasket({}));
+    const results = getOutputDir(setupGasket({}));
     expect(results).toEqual('/some-root/build/workbox');
   });
 });

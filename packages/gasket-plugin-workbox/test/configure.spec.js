@@ -1,5 +1,13 @@
-const utils = require('../lib/utils');
-const configure = require('../lib/configure');
+import { vi } from 'vitest';
+
+vi.mock('workbox-build/package.json', () => ({
+  default: {
+    version: '4.1.0'
+  }
+}));
+
+import { defaultConfig } from '../lib/utils.js';
+import configure from '../lib/configure.js';
 
 describe('configure', () => {
   let results, mockGasket;
@@ -7,7 +15,7 @@ describe('configure', () => {
   beforeAll(() => {
     mockGasket = {
       logger: {
-        warn: jest.fn()
+        warn: vi.fn()
       },
       config: {
         root: '/some-root'
@@ -32,9 +40,9 @@ describe('configure', () => {
     results = await configure(mockGasket, mockGasket.config);
     expect(results.workbox).toEqual(
       expect.objectContaining({
-        ...utils.defaultConfig,
+        ...defaultConfig,
         config: {
-          ...utils.defaultConfig.config,
+          ...defaultConfig.config,
           importScripts: expect.any(Array)
         }
       })

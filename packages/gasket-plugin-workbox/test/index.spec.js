@@ -1,5 +1,6 @@
-const plugin = require('../lib');
-const { name, version, description } = require('../package');
+import plugin from '../lib/index.js';
+import packageJson from '../package.json' with { type: 'json' };
+const { name, version, description } = packageJson;
 
 describe('Plugin', () => {
   it('is an object', () => {

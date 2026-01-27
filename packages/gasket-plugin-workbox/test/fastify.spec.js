@@ -1,19 +1,28 @@
-const fastify = require('../lib/fastify');
-const utils = require('../lib/utils');
-const serveStatic = require('serve-static');
+import { vi } from 'vitest';
+
+vi.mock('serve-static', () => {
+  return {
+    default: vi.fn().mockReturnValue(() => {})
+  };
+});
+
+import fastify from '../lib/fastify.js';
+import { getOutputDir, defaultConfig } from '../lib/utils.js';
+import serveStatic from 'serve-static';
 
 describe('fastify', () => {
   let mockGasket, mockApp;
 
   beforeEach(() => {
+    vi.clearAllMocks();
     mockGasket = {
       config: {
-        root: 'some-root',
-        workbox: utils.defaultConfig
+        root: '/some-root',
+        workbox: defaultConfig
       }
     };
     mockApp = {
-      register: jest.fn()
+      register: vi.fn()
     };
   });
 
@@ -24,7 +33,7 @@ describe('fastify', () => {
 
   it('sets up endpoint to with serve static', () => {
     fastify(mockGasket, mockApp);
-    const expectedOutput = utils.getOutputDir(mockGasket);
+    const expectedOutput = getOutputDir(mockGasket);
     expect(serveStatic).toHaveBeenCalledWith(
       expectedOutput,
       expect.objectContaining({

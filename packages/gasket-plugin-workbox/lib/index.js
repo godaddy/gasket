@@ -1,11 +1,12 @@
-const configure = require('./configure');
-const build = require('./build');
-const express = require('./express');
-const fastify = require('./fastify');
-const composeServiceWorker = require('./compose-service-worker');
-const { name, version, description } = require('../package.json');
+import configure from './configure.js';
+import build from './build.js';
+import express from './express.js';
+import fastify from './fastify.js';
+import composeServiceWorker from './compose-service-worker.js';
+import packageJson from '../package.json' with { type: 'json' };
+const { name, version, description } = packageJson;
 
-module.exports = {
+export default {
   name,
   version,
   description,

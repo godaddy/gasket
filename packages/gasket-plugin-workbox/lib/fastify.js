@@ -1,10 +1,10 @@
 /// <reference types="@gasket/plugin-fastify" />
 
-const serveStatic = require('serve-static');
-const { getOutputDir } = require('./utils');
+import serveStatic from 'serve-static';
+import { getOutputDir } from './utils.js';
 
 /** @type {import('@gasket/core').HookHandler<'fastify'>} */
-module.exports = function fastify(gasket, app) {
+export default function fastify(gasket, app) {
   const outputDir = getOutputDir(gasket);
 
   app.register(serveStatic(outputDir, {
@@ -12,4 +12,4 @@ module.exports = function fastify(gasket, app) {
     maxAge: '1y',
     immutable: true
   }), { prefix: '/_workbox' });
-};
+}
