@@ -15,7 +15,9 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-  
+        with:
+          ref: next
+
       - name: Install pnpm
         uses: pnpm/action-setup@v4.1.0
 
@@ -36,7 +38,7 @@ jobs:
 
       - name: Install Dependencies
         run: pnpm install --prefer-offline
-    
+
       - name: Build
         run: pnpm run build
 
@@ -51,5 +53,5 @@ jobs:
           cat publish_output.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    
+
     # TODO: Notify Slack?
