@@ -1,5 +1,49 @@
 # generate-docs-index
 
+## 8.0.0-next.1
+
+### Patch Changes
+
+- 63868e0: remove presets and related docs
+- ed9a857: Remove plugins: redux, manifest, service-worker & workbox
+- d99ffaf: remove create only plugins and create, prompt, postcreate hooks
+- ed9a857: ESM only exports
+- Updated dependencies [63868e0]
+- Updated dependencies [ed9a857]
+- Updated dependencies [d99ffaf]
+- Updated dependencies [ed9a857]
+  - @gasket/plugin-docusaurus@8.0.0-next.1
+  - @gasket/plugin-metadata@8.0.0-next.1
+  - @gasket/plugin-swagger@8.0.0-next.1
+  - @gasket/plugin-logger@8.0.0-next.1
+  - @gasket/plugin-docs@8.0.0-next.1
+  - create-gasket-app@8.0.0-next.1
+  - @gasket/request@8.0.0-next.1
+  - @gasket/core@8.0.0-next.1
+  - @gasket/plugin-dynamic-plugins@8.0.0-next.1
+  - @gasket/plugin-docs-graphs@8.0.0-next.1
+  - @gasket/plugin-elastic-apm@8.0.0-next.1
+  - @gasket/plugin-https-proxy@8.0.0-next.1
+  - @gasket/plugin-middleware@8.0.0-next.1
+  - @gasket/plugin-happyfeet@8.0.0-next.1
+  - @gasket/plugin-analyze@8.0.0-next.1
+  - @gasket/plugin-command@8.0.0-next.1
+  - @gasket/plugin-express@8.0.0-next.1
+  - @gasket/plugin-fastify@8.0.0-next.1
+  - @gasket/plugin-webpack@8.0.0-next.1
+  - @gasket/plugin-winston@8.0.0-next.1
+  - @gasket/plugin-morgan@8.0.0-next.1
+  - @gasket/plugin-nextjs@8.0.0-next.1
+  - @gasket/plugin-https@8.0.0-next.1
+  - @gasket/plugin-data@8.0.0-next.1
+  - @gasket/plugin-intl@8.0.0-next.1
+  - @gasket/react-intl@8.0.0-next.1
+  - @gasket/assets@8.0.0-next.1
+  - @gasket/nextjs@8.0.0-next.1
+  - @gasket/utils@8.0.0-next.1
+  - @gasket/data@8.0.0-next.1
+  - @gasket/intl@8.0.0-next.1
+
 ## 8.0.0-next.0
 
 ### Major Changes

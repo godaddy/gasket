@@ -1,5 +1,17 @@
 # `@gasket/plugin-nextjs`
 
+## 8.0.0-next.1
+
+### Patch Changes
+
+- ed9a857: Remove plugins: redux, manifest, service-worker & workbox
+- d99ffaf: remove create only plugins and create, prompt, postcreate hooks
+- ed9a857: ESM only exports
+- Updated dependencies [ed9a857]
+- Updated dependencies [d99ffaf]
+- Updated dependencies [ed9a857]
+  - @gasket/plugin-webpack@8.0.0-next.1
+
 ## 8.0.0-next.0
 
 ### Major Changes
