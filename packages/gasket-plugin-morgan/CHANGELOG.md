@@ -1,5 +1,17 @@
 # `@gasket/plugin-morgan`
 
+## 8.0.0-next.1
+
+### Patch Changes
+
+- ed9a857: Remove plugins: redux, manifest, service-worker & workbox
+- ed9a857: ESM only exports
+- Updated dependencies [63868e0]
+- Updated dependencies [ed9a857]
+- Updated dependencies [d99ffaf]
+- Updated dependencies [ed9a857]
+  - @gasket/plugin-logger@8.0.0-next.1
+
 ## 8.0.0-next.0
 
 ### Major Changes

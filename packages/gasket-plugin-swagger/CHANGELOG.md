@@ -1,5 +1,14 @@
 # `@gasket/plugin-swagger`
 
+## 8.0.0-next.1
+
+### Patch Changes
+
+- 63868e0: remove presets and related docs
+- ed9a857: Remove plugins: redux, manifest, service-worker & workbox
+- d99ffaf: remove create only plugins and create, prompt, postcreate hooks
+- ed9a857: ESM only exports
+
 ## 8.0.0-next.0
 
 ### Major Changes

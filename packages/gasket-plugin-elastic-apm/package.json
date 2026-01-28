@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-elastic-apm",
-  "version": "8.0.0-next.0",
+  "version": "8.0.0-next.1",
   "description": "Adds Elastic APM instrumentation to your application",
   "type": "module",
   "types": "lib/index.d.ts",
