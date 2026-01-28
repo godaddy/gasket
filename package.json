@@ -24,7 +24,7 @@
     "preinstall": "npx only-allow pnpm",
     "publish:canary": "pnpm changeset version --snapshot canary && pnpm changeset publish --tag canary",
     "publish:next": "pnpm changeset version --pre next && pnpm changeset publish --tag next --force-publish --exact",
-    "release": "changeset publish --tag next",
+    "release": "changeset publish",
     "replace-ws-aliases": "node scripts/replace-ws-aliases.js",
     "syncpack": "syncpack",
     "syncpack:fix": "syncpack fix-mismatches && syncpack format",
