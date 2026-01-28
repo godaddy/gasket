@@ -46,6 +46,17 @@ jobs:
       - name: Build
         run: pnpm run build
 
+      - name: Exit Pre Mode
+        run: |
+          pnpm changeset pre exit
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A .changeset/
+          git commit -m "chore: exit changeset pre mode" || echo "No changes to commit"
+          git push || echo "Nothing to push"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Publish to NPM
         id: publish
         run: |
