@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 7.0.5
+
+### Patch Changes
+
+- 4d6c78e: Update lockfile dependencies
+
 ## 7.0.4
 
 ### Patch Changes
