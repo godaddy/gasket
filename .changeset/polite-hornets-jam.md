@@ -28,8 +28,6 @@
 "@gasket/plugin-swagger": major
 "@gasket/plugin-webpack": major
 "@gasket/plugin-winston": major
-"@gasket/preset-api": major
-"@gasket/preset-nextjs": major
 "@gasket/react-intl": major
 "@gasket/request": major
 "@gasket/template-api-express": major
