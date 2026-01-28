@@ -48,3 +48,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           event-type: run-publish
+          client-payload: |
+            {
+              "branch": "${{ github.ref_name }}"
+            }

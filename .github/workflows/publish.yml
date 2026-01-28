@@ -1,4 +1,5 @@
 name: Publish
+run-name: Publish \(${{ github.event_name == 'repository_dispatch' && github.event.client_payload.branch || github.ref_name }}\)
 
 on:
   workflow_dispatch:
@@ -13,9 +14,12 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
+      - name: Checkout Dispatch Repository
         uses: actions/checkout@v4
-  
+        with:
+          ref: refs/heads/${{ github.event_name == 'repository_dispatch' && github.event.client_payload.branch || github.ref_name }}
+          fetch-depth: 0
+
       - name: Install pnpm
         uses: pnpm/action-setup@v4.1.0
 
@@ -36,7 +40,7 @@ jobs:
 
       - name: Install Dependencies
         run: pnpm install --prefer-offline
-    
+
       - name: Build
         run: pnpm run build
 
@@ -51,5 +55,5 @@ jobs:
           cat publish_output.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    
+
     # TODO: Notify Slack?
