@@ -29,6 +29,8 @@ jobs:
           node-version: '24'
           registry-url: 'https://registry.npmjs.org'
           cache: pnpm
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Cache pnpm store
         uses: actions/cache@v3
@@ -47,7 +49,12 @@ jobs:
       - name: Publish to NPM
         id: publish
         run: |
-          pnpm run release > publish_output.txt 2>&1
+          set -e
+          pnpm run release 2>&1 | tee publish_output.txt || {
+            echo "Publish failed. Output:"
+            cat publish_output.txt
+            exit 1
+          }
           git push --follow-tags
           echo "PUBLISH_OUTPUT<<EOF" >> $GITHUB_ENV
           cat publish_output.txt >> $GITHUB_ENV
@@ -55,5 +62,6 @@ jobs:
           cat publish_output.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
     # TODO: Notify Slack?
