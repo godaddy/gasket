@@ -1,6 +1,5 @@
 ---
 "@gasket/plugin-dynamic-plugins": patch
-"@gasket/plugin-service-worker": patch
 "@gasket/plugin-docs-graphs": patch
 "@gasket/plugin-elastic-apm": patch
 "@gasket/plugin-https-proxy": patch
@@ -8,7 +7,6 @@
 "@gasket/plugin-middleware": patch
 "@gasket/plugin-happyfeet": patch
 "@gasket/typescript-tests": patch
-"@gasket/plugin-manifest": patch
 "@gasket/plugin-metadata": patch
 "@gasket/plugin-analyze": patch
 "@gasket/plugin-command": patch
@@ -17,11 +15,9 @@
 "@gasket/plugin-swagger": patch
 "@gasket/plugin-webpack": patch
 "@gasket/plugin-winston": patch
-"@gasket/plugin-workbox": patch
 "@gasket/plugin-logger": patch
 "@gasket/plugin-morgan": patch
 "@gasket/plugin-nextjs": patch
-"@gasket/plugin-vitest": patch
 "@gasket/plugin-https": patch
 "@gasket/plugin-data": patch
 "@gasket/plugin-docs": patch

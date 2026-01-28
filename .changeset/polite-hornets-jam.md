@@ -1,7 +1,6 @@
 ---
 "create-gasket-app": major
 "@gasket/assets": major
-"@gasket/cjs": major
 "@gasket/core": major
 "@gasket/data": major
 "@gasket/fetch": major
