@@ -1,6 +1,6 @@
 {
   "name": "@gasket/template-nextjs-express",
-  "version": "8.0.0-next.0",
+  "version": "8.0.0",
   "description": "Gasket Next.js Pages Router template with Express",
   "type": "module",
   "files": [

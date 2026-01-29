@@ -1,5 +1,32 @@
 # `create-gasket-app`
 
+## 8.0.0
+
+### Major Changes
+
+- b235fc1: bump all package majors to 8
+
+### Patch Changes
+
+- 63868e0: remove presets and related docs
+- ed9a857: Remove plugins: redux, manifest, service-worker & workbox
+- d99ffaf: remove create only plugins and create, prompt, postcreate hooks
+- ed9a857: ESM only exports
+- Updated dependencies [63868e0]
+- Updated dependencies [ed9a857]
+- Updated dependencies [b235fc1]
+- Updated dependencies [d99ffaf]
+- Updated dependencies [ed9a857]
+  - @gasket/plugin-docusaurus@8.0.0
+  - @gasket/plugin-metadata@8.0.0
+  - @gasket/plugin-logger@8.0.0
+  - @gasket/plugin-docs@8.0.0
+  - @gasket/request@8.0.0
+  - @gasket/core@8.0.0
+  - @gasket/plugin-dynamic-plugins@8.0.0
+  - @gasket/plugin-command@8.0.0
+  - @gasket/utils@8.0.0
+
 ## 8.0.0-next.1
 
 ### Patch Changes

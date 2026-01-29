@@ -1,5 +1,16 @@
 # `@gasket/plugin-docs-graph`
 
+## 8.0.0
+
+### Major Changes
+
+- b235fc1: bump all package majors to 8
+
+### Patch Changes
+
+- ed9a857: Remove plugins: redux, manifest, service-worker & workbox
+- ed9a857: ESM only exports
+
 ## 8.0.0-next.1
 
 ### Patch Changes

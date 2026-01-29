@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## 8.0.0
+
+### Major Changes
+
+- b235fc1: bump all package majors to 8
+
+### Patch Changes
+
+- 82806fd: Update OS deps to next dist tag
+
 ## 8.0.0-next.0
 
 ### Major Changes

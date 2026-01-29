@@ -901,7 +901,7 @@ importers:
   packages/gasket-plugin-morgan:
     dependencies:
       '@gasket/plugin-logger':
-        specifier: ^8.0.0-next.1
+        specifier: ^8.0.0
         version: link:../gasket-plugin-logger
       express:
         specifier: ^4.21.2
@@ -1118,7 +1118,7 @@ importers:
         specifier: workspace:^
         version: link:../gasket-intl
       '@gasket/plugin-intl':
-        specifier: ^8.0.0-next.1
+        specifier: ^8.0.0
         version: link:../gasket-plugin-intl
       hoist-non-react-statics:
         specifier: ^3.3.2
