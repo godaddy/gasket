@@ -28,6 +28,7 @@
     "replace-ws-aliases": "node scripts/replace-ws-aliases.js",
     "syncpack": "syncpack",
     "syncpack:fix": "syncpack fix-mismatches && syncpack format",
+    "templates:regen:lockfiles": "node scripts/npm.js regen",
     "templates:validate": "node scripts/npm.js clean && node scripts/npm.js npm-ci && node scripts/npm.js build && node scripts/npm.js lint && node scripts/npm.js test",
     "templates:validate-dotfiles": "node scripts/templates-validate-dotfiles.js",
     "test": "pnpm run -r test",
