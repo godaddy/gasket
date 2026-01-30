@@ -10,6 +10,13 @@ docs with Fastify.
 npm i @gasket/plugin-swagger
 ```
 
+This plugin includes dependencies for **Fastify v5** by default. If you're using **Fastify v4**, you'll need to override the Swagger dependencies:
+
+**For Fastify v4 users only:**
+```bash
+npm i @fastify/swagger@^8.15.0 @fastify/swagger-ui@^4.2.0
+```
+
 Update your `gasket` file plugin configuration:
 
 ```diff

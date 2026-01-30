@@ -41,8 +41,7 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-nextjs",
   "dependencies": {
-    "@gasket/plugin-webpack": "workspace:^",
-    "fastify": "^4.29.1"
+    "@gasket/plugin-webpack": "workspace:^"
   },
   "devDependencies": {
     "@babel/preset-react": "^7.26.3",
@@ -67,8 +66,14 @@
   },
   "peerDependencies": {
     "@gasket/plugin-webpack": "^8.0.0-next.1",
+    "fastify": "^4.29.1 || ^5.0.0",
     "react": ">=18 <20",
     "react-dom": ">=18 <20"
+  },
+  "peerDependenciesMeta": {
+    "fastify": {
+      "optional": true
+    }
   },
   "babel": {
     "presets": [
