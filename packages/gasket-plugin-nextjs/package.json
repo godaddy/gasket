@@ -70,14 +70,14 @@
     "react": ">=18 <20",
     "react-dom": ">=18 <20"
   },
-  "peerDependenciesMeta": {
-    "fastify": {
-      "optional": true
-    }
-  },
   "babel": {
     "presets": [
       "@babel/preset-react"
     ]
+  },
+  "peerDependenciesMeta": {
+    "fastify": {
+      "optional": true
+    }
   }
 }
