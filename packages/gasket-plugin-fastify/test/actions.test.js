@@ -24,7 +24,7 @@ describe('getFastifyApp', () => {
     vi.clearAllMocks();
   });
 
-  it('returns the express instance', function () {
+  it('returns the fastify instance', function () {
     const result = getFastifyApp(gasket);
     expect(result).toEqual(mockApp);
   });

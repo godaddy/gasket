@@ -24,6 +24,18 @@ export default makeGasket({
 });
 ```
 
+## Fastify Version Support
+
+This plugin supports both Fastify v4 and v5 through an internal adapter pattern. The appropriate version-specific adapter is automatically selected based on your installed Fastify version.
+
+### Fastify v4
+- **Installation**: `npm install fastify@^4`
+
+### Fastify v5
+- **Installation**: `npm install fastify@^5`
+
+The plugin automatically detects your Fastify version and applies the correct configuration. No manual configuration is required.
+
 ## Configuration
 
 All the configurations for the plugin are added under `fastify` in the config:

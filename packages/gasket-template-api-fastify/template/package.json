@@ -27,7 +27,7 @@
     "@gasket/plugin-winston": "next",
     "@gasket/request": "next",
     "@gasket/utils": "next",
-    "fastify": "^4.29.1",
+    "fastify": "^5.0.0",
     "winston": "^3.17.0"
   },
   "devDependencies": {
