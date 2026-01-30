@@ -4,6 +4,15 @@ import { FastifyV4Adapter } from '../lib/adapters/fastify-v4-adapter.js';
 import { FastifyV5Adapter } from '../lib/adapters/fastify-v5-adapter.js';
 import { detectFastifyVersion, createFastifyAdapter } from '../lib/adapters/adapter-factory.js';
 
+// Mock the fastify module
+vi.mock('fastify', () => ({
+  default: vi.fn((options) => ({
+    server: {},
+    options,
+    ...options
+  }))
+}));
+
 describe('Base Adapter', () => {
   it('cannot be instantiated directly', () => {
     expect(() => new FastifyAdapter()).toThrow('FastifyAdapter is an abstract class');
@@ -19,9 +28,14 @@ describe('Base Adapter', () => {
 
 describe('Fastify v4 Adapter', () => {
   let adapter;
+  let mockFastify;
 
-  beforeEach(() => {
+  beforeEach(async () => {
+    const fastifyModule = await import('fastify');
+
     adapter = new FastifyV4Adapter();
+    mockFastify = fastifyModule.default;
+    vi.clearAllMocks();
   });
 
   it('aligns logger with fatal and trace levels', () => {
@@ -70,6 +84,22 @@ describe('Fastify v4 Adapter', () => {
 
     const instance = adapter.createInstance(config, mockLogger);
 
+    // Verify fastify was called with v4-style options
+    expect(mockFastify).toHaveBeenCalledWith(
+      expect.objectContaining({
+        logger: expect.objectContaining({
+          info: mockLogger.info,
+          warn: mockLogger.warn,
+          error: mockLogger.error,
+          debug: mockLogger.debug,
+          fatal: mockLogger.error, // v4 adapter maps fatal to error
+          trace: mockLogger.debug  // v4 adapter maps trace to debug
+        }),
+        trustProxy: true,
+        disableRequestLogging: false
+      })
+    );
+
     // Verify instance was created
     expect(instance).toBeDefined();
     expect(instance.server).toBeDefined();
@@ -78,9 +108,14 @@ describe('Fastify v4 Adapter', () => {
 
 describe('Fastify v5 Adapter', () => {
   let adapter;
+  let mockFastify;
 
-  beforeEach(() => {
+  beforeEach(async () => {
+    const fastifyModule = await import('fastify');
+
     adapter = new FastifyV5Adapter();
+    mockFastify = fastifyModule.default;
+    vi.clearAllMocks();
   });
 
   it('aligns logger with fatal and trace levels', () => {
@@ -113,6 +148,25 @@ describe('Fastify v5 Adapter', () => {
     };
 
     const instance = adapter.createInstance(config, mockLogger);
+
+    // Verify fastify was called with v5-style options
+    expect(mockFastify).toHaveBeenCalledWith(
+      expect.objectContaining({
+        loggerInstance: expect.objectContaining({
+          info: mockLogger.info,
+          warn: mockLogger.warn,
+          error: mockLogger.error,
+          debug: mockLogger.debug,
+          fatal: mockLogger.error, // v5 adapter maps fatal to error
+          trace: mockLogger.debug  // v5 adapter maps trace to debug
+        }),
+        trustProxy: true,
+        disableRequestLogging: false,
+        routerOptions: {
+          useSemicolonDelimiter: false
+        }
+      })
+    );
 
     // Verify instance was created
     expect(instance).toBeDefined();
