@@ -10,13 +10,14 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const packagesDir = path.join(__dirname, '../packages');
+const NPM_REGISTRY = 'https://registry.npmjs.org/';
 
 const OPERATIONS = {
   'npm-ci': {
     name: 'Installing dependencies',
     emoji: '📦',
     command: 'npm',
-    args: ['ci', '--prefer-offline']
+    args: ['ci', '--prefer-offline', '--registry', NPM_REGISTRY]
   },
   'build': {
     name: 'Building',
@@ -160,7 +161,7 @@ async function regenHandler(templateDir, packageName) {
   // Run npm install to regenerate package-lock.json
   console.log('📦 Running npm install to regenerate lockfiles...');
   try {
-    await runCommand('npm', ['install'], templateDir);
+    await runCommand('npm', ['install', '--registry', NPM_REGISTRY], templateDir);
     console.log('✅ Lockfiles regenerated successfully\n');
   } catch (error) {
     console.log(`❌ Failed to regenerate lockfiles: ${error.message}\n`);
