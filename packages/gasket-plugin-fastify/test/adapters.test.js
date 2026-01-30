@@ -69,15 +69,6 @@ describe('Fastify v4 Adapter', () => {
   });
 
   it('creates Fastify instance with v4 configuration', () => {
-    const detectedVersion = detectFastifyVersion();
-    const majorVersion = parseInt(detectedVersion.split('.')[0], 10);
-
-    // Skip this test if Fastify v5+ is installed, as v4 adapter logger format is incompatible
-    if (majorVersion >= 5) {
-      expect(true).toBe(true); // Skip with passing assertion
-      return;
-    }
-
     const mockLogger = {
       info: vi.fn(),
       warn: vi.fn(),
