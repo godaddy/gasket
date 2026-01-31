@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 import { createRequire } from 'module';
 import { FastifyV4Adapter } from './fastify-v4-adapter.js';
 import { FastifyV5Adapter } from './fastify-v5-adapter.js';

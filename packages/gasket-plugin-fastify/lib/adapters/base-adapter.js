@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 /**
  * Base abstract class for Fastify version adapters.
  * Provides a common interface for creating and configuring Fastify instances
@@ -23,7 +21,7 @@ export class FastifyAdapter {
    * @param {boolean} [config.http2] - Enable HTTP/2
    * @param {boolean} [config.disableRequestLogging] - Disable request logging
    * @param {object} logger - Gasket logger instance
-   * @returns {import('fastify').FastifyInstance} - Configured Fastify instance
+   * @returns {ReturnType<typeof import('fastify').default>} - Configured Fastify instance
    */
   // eslint-disable-next-line no-unused-vars
   createInstance(config, logger) {

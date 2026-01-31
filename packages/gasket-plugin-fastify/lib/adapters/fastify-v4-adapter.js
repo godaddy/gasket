@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 import fastify from 'fastify';
 import { FastifyAdapter } from './base-adapter.js';
 
@@ -37,7 +35,7 @@ export class FastifyV4Adapter extends FastifyAdapter {
    * Create a Fastify v4 instance.
    * @param {object} config - Fastify configuration
    * @param {object} logger - Gasket logger
-   * @returns {import('fastify').FastifyInstance} - Configured Fastify v4 instance
+   * @returns {ReturnType<typeof import('fastify').default>} - Configured Fastify v4 instance
    */
   createInstance(config, logger) {
     const { trustProxy = false, disableRequestLogging = true, https, http2, ...restConfig } = config;
