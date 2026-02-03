@@ -40,7 +40,6 @@
   },
   "devDependencies": {
     "@fastify/express": "^3.0.0",
-    "@gasket/cjs": "workspace:^",
     "@gasket/core": "workspace:^",
     "@gasket/plugin-express": "workspace:^",
     "@gasket/plugin-fastify": "workspace:^",
