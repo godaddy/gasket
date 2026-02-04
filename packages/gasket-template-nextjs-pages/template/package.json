@@ -74,7 +74,8 @@
   "eslintIgnore": [
     "dist",
     "coverage/",
-    "build/"
+    "build/",
+    "next-env.d.ts"
   ],
   "eslintConfig": {
     "extends": [
