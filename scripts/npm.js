@@ -160,7 +160,7 @@ async function regenHandler(templateDir, packageName) {
   // Run npm install to regenerate package-lock.json
   console.log('📦 Running npm install to regenerate lockfiles...');
   try {
-    await runCommand('npm', ['install'], templateDir);
+    await runCommand('npm', ['install', '--registry', 'https://registry.npmjs.org/'], templateDir);
     console.log('✅ Lockfiles regenerated successfully\n');
   } catch (error) {
     console.log(`❌ Failed to regenerate lockfiles: ${error.message}\n`);
