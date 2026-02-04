@@ -19,7 +19,7 @@ function App({ Component, pageProps }: { Component: React.ComponentType; pagePro
   const locale = router.locale ?? 'en-US';
 
   return (
-    <IntlMessagesProvider locale={locale}>
+    <IntlMessagesProvider locale={ locale }>
       <Component { ...pageProps } />
     </IntlMessagesProvider>
   );

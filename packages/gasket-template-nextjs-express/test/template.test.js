@@ -289,7 +289,7 @@ describe('@gasket/template-nextjs-express', () => {
       expect(appPageContent).toContain('import intlManager from \'../intl\'');
       expect(appPageContent).toContain('const IntlMessagesProvider = withMessagesProvider(intlManager)(IntlProvider)');
       expect(appPageContent).toContain('const router = useRouter()');
-      expect(appPageContent).toContain('<IntlMessagesProvider locale={ router.locale }>');
+      expect(appPageContent).toContain('<IntlMessagesProvider locale={ locale }>');
     });
 
     it('should have correct _document.ts configuration', () => {
