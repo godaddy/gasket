@@ -141,7 +141,7 @@ describe('@gasket/template-nextjs-express', () => {
       });
 
       expect(packageJson.scripts.docs).toBe('tsx gasket.ts docs');
-      expect(packageJson.scripts.build).toBe('npm run build:tsc && next build');
+      expect(packageJson.scripts.build).toBe('npm run build:tsc && next build --webpack');
       expect(packageJson.scripts.start).toBe('node dist/server.js');
       expect(packageJson.scripts.test).toBe('vitest run');
     });

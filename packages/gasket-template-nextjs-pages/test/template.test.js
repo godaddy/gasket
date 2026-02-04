@@ -51,9 +51,9 @@ describe('@gasket/template-nextjs-pages', () => {
       const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf8'));
 
       expect(packageJson.scripts).toBeDefined();
-      expect(packageJson.scripts.build).toBe('npm run build:tsc && next build');
+      expect(packageJson.scripts.build).toBe('npm run build:tsc && next build --webpack');
       expect(packageJson.scripts.start).toBe('npm run start:https & next start');
-      expect(packageJson.scripts.local).toBe('concurrently "npm run build:tsc:watch" "npm run local:https" "next dev"');
+      expect(packageJson.scripts.local).toBe('concurrently "npm run build:tsc:watch" "npm run local:https" "next dev --webpack"');
       expect(packageJson.scripts.test).toBe('vitest run');
       expect(packageJson.scripts['test:watch']).toBe('vitest');
       expect(packageJson.scripts['test:coverage']).toBe('vitest run --coverage');
