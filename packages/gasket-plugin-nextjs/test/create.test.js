@@ -261,9 +261,9 @@ describe('create hook', () => {
     it('adds default scripts', async function () {
       await create.handler({}, mockContext);
       expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
-        build: 'next build',
+        build: 'next build --webpack',
         start: 'next start',
-        local: 'next dev',
+        local: 'next dev --webpack',
         preview: 'npm run build && npm run start'
       });
     });
@@ -272,9 +272,9 @@ describe('create hook', () => {
       mockContext.packageManager = 'yarn';
       await create.handler({}, mockContext);
       expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
-        build: 'next build',
+        build: 'next build --webpack',
         start: 'next start',
-        local: 'next dev',
+        local: 'next dev --webpack',
         preview: 'yarn build && yarn start'
       });
     });
@@ -283,9 +283,9 @@ describe('create hook', () => {
       mockContext.packageManager = 'pnpm';
       await create.handler({}, mockContext);
       expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
-        build: 'next build',
+        build: 'next build --webpack',
         start: 'next start',
-        local: 'next dev',
+        local: 'next dev --webpack',
         preview: 'pnpm build && pnpm start'
       });
     });
@@ -294,9 +294,9 @@ describe('create hook', () => {
       mockContext.hasGasketIntl = true;
       await create.handler({}, mockContext);
       expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
-        build: 'next build',
+        build: 'next build --webpack',
         start: 'next start',
-        local: 'next dev',
+        local: 'next dev --webpack',
         preview: 'npm run build && npm run start',
         prebuild: 'node gasket.js build'
       });
@@ -306,7 +306,7 @@ describe('create hook', () => {
       mockContext.nextServerType = 'customServer';
       await create.handler({}, mockContext);
       expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
-        build: 'next build',
+        build: 'next build --webpack',
         start: 'node server.js',
         preview: 'npm run build && npm run start',
         local: 'GASKET_DEV=1 nodemon server.js'
@@ -318,9 +318,9 @@ describe('create hook', () => {
       mockContext.nextDevProxy = true;
       await create.handler({}, mockContext);
       expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
-        'build': 'next build',
+        'build': 'next build --webpack',
         'start': 'npm run start:https & next start',
-        'local': 'npm run local:https & next dev',
+        'local': 'npm run local:https & next dev --webpack',
         'preview': 'npm run build && npm run start',
         'start:https': 'node server.js',
         'local:https': 'nodemon server.js'
@@ -332,9 +332,9 @@ describe('create hook', () => {
       mockContext.hasGasketIntl = true;
       await create.handler({}, mockContext);
       expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
-        build: 'next build',
+        build: 'next build --webpack',
         start: 'next start',
-        local: 'next dev',
+        local: 'next dev --webpack',
         preview: 'npm run build && npm run start',
         prebuild: 'tsx gasket.ts build'
       });
@@ -348,7 +348,7 @@ describe('create hook', () => {
       expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
         'build:tsc': 'tsc -p ./tsconfig.server.json',
         'build:tsc:watch': 'tsc -p ./tsconfig.server.json --watch',
-        'build': 'npm run build:tsc && next build',
+        'build': 'npm run build:tsc && next build --webpack',
         'start': 'node dist/server.js',
         'preview': 'npm run build && npm run start',
         'local': 'concurrently "npm run build:tsc:watch" "GASKET_DEV=1 tsx watch server.ts"',
@@ -365,7 +365,7 @@ describe('create hook', () => {
       expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
         'build:tsc': 'tsc -p ./tsconfig.server.json',
         'build:tsc:watch': 'tsc -p ./tsconfig.server.json --watch',
-        'build': 'yarn build:tsc && next build',
+        'build': 'yarn build:tsc && next build --webpack',
         'start': 'node dist/server.js',
         'preview': 'yarn build && yarn start',
         'local': 'concurrently "yarn build:tsc:watch" "GASKET_DEV=1 tsx watch server.ts"',
@@ -383,10 +383,10 @@ describe('create hook', () => {
         'start:https': 'node dist/server.js',
         'local:https': 'tsx watch server.ts',
         'start': 'npm run start:https & next start',
-        'local': 'concurrently "npm run build:tsc:watch" "npm run local:https" "next dev"',
+        'local': 'concurrently "npm run build:tsc:watch" "npm run local:https" "next dev --webpack"',
         'build:tsc': 'tsc -p ./tsconfig.server.json',
         'build:tsc:watch': 'tsc -p ./tsconfig.server.json --watch',
-        'build': 'npm run build:tsc && next build',
+        'build': 'npm run build:tsc && next build --webpack',
         'preview': 'npm run build && npm run start',
         'prebuild': 'tsx gasket.ts build'
       });
@@ -403,10 +403,10 @@ describe('create hook', () => {
         'start:https': 'node dist/server.js',
         'local:https': 'tsx watch server.ts',
         'start': 'pnpm start:https & next start',
-        'local': 'concurrently "pnpm build:tsc:watch" "pnpm local:https" "next dev"',
+        'local': 'concurrently "pnpm build:tsc:watch" "pnpm local:https" "next dev --webpack"',
         'build:tsc': 'tsc -p ./tsconfig.server.json',
         'build:tsc:watch': 'tsc -p ./tsconfig.server.json --watch',
-        'build': 'pnpm build:tsc && next build',
+        'build': 'pnpm build:tsc && next build --webpack',
         'preview': 'pnpm build && pnpm start',
         'prebuild': 'tsx gasket.ts build'
       });
