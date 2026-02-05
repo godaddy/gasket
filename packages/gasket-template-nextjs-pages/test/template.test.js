@@ -141,7 +141,7 @@ describe('@gasket/template-nextjs-pages', () => {
       ]);
       expect(packageJson.eslintConfig.parser).toBe('@typescript-eslint/parser');
       expect(packageJson.eslintConfig.settings.localeFiles).toEqual(['locales/en-US.json']);
-      expect(packageJson.eslintIgnore).toEqual(['dist', 'coverage/', 'build/']);
+      expect(packageJson.eslintIgnore).toEqual(['dist', 'coverage/', 'build/', 'next-env.d.ts']);
     });
   });
 
@@ -162,7 +162,7 @@ describe('@gasket/template-nextjs-pages', () => {
       expect(tsconfig.compilerOptions.moduleResolution).toBe('bundler');
       expect(tsconfig.compilerOptions.resolveJsonModule).toBe(true);
       expect(tsconfig.compilerOptions.isolatedModules).toBe(true);
-      expect(tsconfig.compilerOptions.jsx).toBe('preserve');
+      expect(tsconfig.compilerOptions.jsx).toBe('react-jsx');
       expect(tsconfig.compilerOptions.incremental).toBe(true);
       expect(tsconfig.compilerOptions.plugins).toBeDefined();
       expect(tsconfig.compilerOptions.paths).toBeDefined();

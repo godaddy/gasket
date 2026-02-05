@@ -178,7 +178,7 @@ describe('@gasket/template-nextjs-express', () => {
       expect(tsconfig.compilerOptions.esModuleInterop).toBe(true);
       expect(tsconfig.compilerOptions.resolveJsonModule).toBe(true);
       expect(tsconfig.compilerOptions.isolatedModules).toBe(true);
-      expect(tsconfig.compilerOptions.jsx).toBe('preserve');
+      expect(tsconfig.compilerOptions.jsx).toBe('react-jsx');
       expect(tsconfig.compilerOptions.incremental).toBe(true);
       expect(tsconfig.compilerOptions.plugins).toBeDefined();
       expect(tsconfig.compilerOptions.paths).toBeDefined();
