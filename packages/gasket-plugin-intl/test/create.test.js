@@ -80,6 +80,11 @@ describe('create', function () {
     });
   });
 
+  it('adds the default intl.nextRouting config', async function () {
+    await plugin.hooks.create(mockGasket, mockContext);
+    expect(mockGasket.config.intl.nextRouting).toBe(false);
+  });
+
   it('does nothing if hasGasketIntl is false', async function () {
     mockContext.hasGasketIntl = false;
     await plugin.hooks.create(mockGasket, mockContext);
