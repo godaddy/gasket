@@ -23,7 +23,7 @@ const EXPECTED_DOT_FILES = ['.npmrc.template', '.gitignore.template'];
 
 // Dot files that are allowed to exist in templates without being packed
 // (e.g., .gitignore for the template's own development needs)
-const ALLOWED_UNPACKED_DOT_FILES = ['.gitignore'];
+const ALLOWED_UNPACKED_DOT_FILES = ['.gitignore', '.npmrc'];
 
 /**
  * Parse .gitignore file and return patterns
