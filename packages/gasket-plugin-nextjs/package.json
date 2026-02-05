@@ -69,7 +69,6 @@
     "@gasket/plugin-intl": "workspace:^",
     "@gasket/plugin-logger": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",
-    "@gasket/plugin-nextjs": "workspace:^",
     "@gasket/plugin-service-worker": "workspace:^",
     "@gasket/plugin-workbox": "workspace:^",
     "@gasket/request": "workspace:^",

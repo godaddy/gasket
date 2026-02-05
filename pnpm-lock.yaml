@@ -1371,9 +1371,6 @@ importers:
       '@gasket/plugin-metadata':
         specifier: workspace:^
         version: link:../gasket-plugin-metadata
-      '@gasket/plugin-nextjs':
-        specifier: workspace:^
-        version: 'link:'
       '@gasket/plugin-service-worker':
         specifier: workspace:^
         version: link:../gasket-plugin-service-worker
