@@ -76,7 +76,8 @@ describe('create', function () {
   it('adds the default intl.locales config', async function () {
     await plugin.hooks.create(mockGasket, mockContext);
     expect(addStub).toHaveBeenCalledWith('intl', {
-      locales: ['en-US', 'fr-FR']
+      locales: ['en-US', 'fr-FR'],
+      nextRouting: false
     });
   });
 
@@ -99,7 +100,8 @@ describe('create', function () {
     expect(addStub).toHaveBeenCalledWith('intl', {
       locales: ['en-US', 'fr-FR'],
       managerFilename: 'intl.ts',
-      defaultLocale: 'en-US'
+      defaultLocale: 'en-US',
+      nextRouting: false
     });
   });
 
