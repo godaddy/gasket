@@ -26,7 +26,8 @@ export default async function create(gasket, createContext) {
   gasketConfig.addPlugin('pluginIntl', name);
 
   const initialConfig = {
-    locales: gasket.config.intl.locales
+    locales: gasket.config.intl.locales,
+    nextRouting: gasket.config.intl.nextRouting
   };
 
   if (createContext.typescript) {
