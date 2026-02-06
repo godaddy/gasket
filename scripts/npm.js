@@ -16,7 +16,7 @@ const OPERATIONS = {
     name: 'Installing dependencies',
     emoji: '📦',
     command: 'npm',
-    args: ['ci', '--prefer-offline']
+    args: ['ci', '--prefer-offline', '--force'] // TODO: Remove force after PR is merged and published
   },
   'build': {
     name: 'Building',
