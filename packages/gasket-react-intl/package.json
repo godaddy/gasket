@@ -58,7 +58,7 @@
     "intl": "^1.2.5",
     "jsdom": "^20.0.3",
     "react": "^19.2.3",
-    "react-dom": "^19.0.0",
+    "react-dom": "^19.2.3",
     "react-intl": "^7.1.6",
     "react-redux": "^9.2.0",
     "vitest": "^3.2.0"
