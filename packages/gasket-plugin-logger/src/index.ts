@@ -1,28 +1,59 @@
-/// <reference types="create-gasket-app" />
-/// <reference types="@gasket/plugin-https" />
-/// <reference types="@gasket/plugin-metadata" />
-
 /* eslint-disable no-console */
+import type { MaybeAsync, Plugin, Gasket } from '@gasket/core';
+import type { CreateContext } from 'create-gasket-app';
+import type { PluginData } from '@gasket/plugin-metadata';
 import packageJson from '../package.json' with { type: 'json' };
-const { name, version, description } = packageJson;
-import { createChildLogger, verifyLoggerLevels } from './utils.js';
+import { createChildLogger, verifyLoggerLevels } from './utils';
 
-/** @type {import('@gasket/core').Plugin} */
-const plugin = {
+const { name, version, description } = packageJson;
+
+export type LogLevel = 'error' | 'warn' | 'info' | 'debug';
+
+interface LogMethods {
+  error: (...args: Array<unknown>) => void;
+  warn: (...args: Array<unknown>) => void;
+  info: (...args: Array<unknown>) => void;
+  debug: (...args: Array<unknown>) => void;
+}
+
+export interface Logger extends LogMethods {
+  close?: () => MaybeAsync<unknown>;
+  child: (meta: Record<string, unknown>) => Logger;
+}
+
+declare module '@gasket/core' {
+  interface Gasket {
+    logger: Logger;
+  }
+
+  export interface HookExecTypes {
+    createLogger(): Logger;
+    onSignal?(): MaybeAsync<void>;
+  }
+
+  export interface GasketActions {
+    getLogger(): Logger;
+  }
+}
+
+const plugin: Plugin = {
   name,
   version,
   description,
   actions: {
-    getLogger: (gasket) => gasket.logger
+    getLogger: (gasket: Gasket): Logger => gasket.logger
   },
   hooks: {
-    create(gasket, { pkg, gasketConfig }) {
+    create(gasket: Gasket, context: CreateContext): void {
+      const { pkg, gasketConfig } = context;
       gasketConfig.addPlugin('pluginLogger', '@gasket/plugin-logger');
       pkg.add('dependencies', {
         [name]: `^${version}`
       });
     },
-    init(gasket) {
+    init(gasket: Gasket): void {
+      // Must be sync - logger needs to be ready before other hooks run
+      // eslint-disable-next-line no-sync
       const loggers = gasket.execSync('createLogger');
 
       if (
@@ -33,12 +64,13 @@ const plugin = {
       }
 
       if (!loggers || loggers.length === 0) {
-        const defaultLogger = {
+        const defaultLogger: Logger = {
           debug: console.debug,
           error: console.error,
           info: console.info,
           warn: console.warn,
-          child: (meta) => createChildLogger(this, meta)
+          child: (meta: Record<string, unknown>): Logger =>
+            createChildLogger(defaultLogger, meta)
         };
         gasket.logger = defaultLogger;
       } else if (loggers.length > 1) {
@@ -50,10 +82,10 @@ const plugin = {
         gasket.logger = loggers[0];
       }
     },
-    async onSignal(gasket) {
+    async onSignal(gasket: Gasket): Promise<void> {
       await gasket.logger?.close?.();
     },
-    metadata(gasket, meta) {
+    metadata(gasket: Gasket, meta: PluginData): PluginData {
       return {
         ...meta,
         actions: [

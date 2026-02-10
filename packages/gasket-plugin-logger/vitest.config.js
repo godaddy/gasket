@@ -1,8 +1,4 @@
-import { defineConfig } from 'vitest/config';
+import sharedConfig from '../../configs/vitest.config.mts';
 
-export default defineConfig({
-  test: {
-    globals: true,
-    includeSource: ['lib/**/*.{js,jsx,ts,tsx}']
-  }
-});
+export default sharedConfig;
+

@@ -3,8 +3,9 @@
   "version": "7.4.0",
   "description": "Gasket plugin for logging",
   "type": "module",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "cjs/index.cjs",
+  "module": "lib/index.mjs",
+  "types": "lib/index.d.mts",
   "files": [
     "lib",
     "cjs",
@@ -12,25 +13,24 @@
   ],
   "exports": {
     ".": {
-      "types": "./lib/index.d.ts",
-      "import": "./lib/index.js",
+      "types": "./lib/index.d.mts",
+      "import": "./lib/index.mjs",
       "require": "./cjs/index.cjs",
       "default": "./cjs/index.cjs"
     },
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "gasket-cjs ./lib",
-    "build:watch": "pnpm run build --watch",
+    "build": "tsdown && echo '{}' > cjs/package.json",
+    "build:watch": "tsdown --watch",
+    "pretest": "pnpm run lint && pnpm run build && pnpm run typecheck",
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
-    "posttest": "pnpm run lint && pnpm run typecheck",
     "prepublishOnly": "pnpm run build",
-    "test": "vitest run --globals",
-    "test:coverage": "vitest run --coverage",
+    "test": "vitest run --coverage",
     "test:watch": "vitest",
-    "typecheck": "tsc",
-    "typecheck:watch": "tsc --watch"
+    "typecheck": "tsc --noEmit",
+    "typecheck:watch": "tsc --noEmit --watch"
   },
   "repository": "godaddy/gasket.git",
   "publishConfig": {
@@ -46,12 +46,13 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-logger",
   "devDependencies": {
-    "@gasket/cjs": "workspace:^",
     "@gasket/core": "workspace:^",
     "@gasket/plugin-https": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",
     "@vitest/coverage-v8": "^3.2.0",
     "create-gasket-app": "workspace:^",
+    "tsdown": "^0.20.3",
+    "typescript": "^5.8.3",
     "vitest": "^3.2.0"
   }
 }
