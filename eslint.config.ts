@@ -1,4 +1,3 @@
-import { defineConfig, globalIgnores } from 'eslint/config';
 import jest from 'eslint-plugin-jest';
 import goddaddyTypescript from 'eslint-config-godaddy-typescript';
 import goddaddyReactTypescript from 'eslint-config-godaddy-react-typescript';
@@ -8,24 +7,26 @@ import jsdoc from 'eslint-plugin-jsdoc';
 import typescriptParser from '@typescript-eslint/parser';
 import typescriptPlugin from '@typescript-eslint/eslint-plugin';
 
-export default defineConfig([
+export default [
   ...goddaddyTypescript,
   ...goddaddyReactTypescript,
   vitest.configs.recommended,
   jsdoc.configs['flat/recommended'],
-  globalIgnores([
-    '**/node_modules/**',
-    '**/dist/**',
-    '**/cjs/**',
-    '**/react/**',
-    '**/generator/**',
-    '**/__mocks__/**',
-    '**/test/fixtures/**',
-    '**/gasket-redux/lib',
-    '**/template/dist',
-    '**/template/.next',
-    '**/template/.docs'
-  ]),
+  {
+    ignores: [
+      '**/node_modules/**',
+      '**/dist/**',
+      '**/cjs/**',
+      '**/react/**',
+      '**/generator/**',
+      '**/__mocks__/**',
+      '**/test/fixtures/**',
+      '**/gasket-redux/lib',
+      '**/template/dist',
+      '**/template/.next',
+      '**/template/.docs'
+    ]
+  },
   //
   // Allow custom JSDoc tags
   //
@@ -71,11 +72,9 @@ export default defineConfig([
   //
   // Configurations for TypeScript files
   //
+  ...(typescriptPlugin.configs['flat/recommended'] as Array<unknown>),
   {
     files: ['**/*.{ts,tsx}'],
-    extends: [
-      typescriptPlugin.configs['flat/recommended']
-    ],
     plugins: {
       '@typescript-eslint': typescriptPlugin
     },
@@ -170,4 +169,4 @@ export default defineConfig([
       'no-process-exit': 'off'
     }
   }
-]);
+];
