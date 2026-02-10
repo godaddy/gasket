@@ -72,7 +72,6 @@ export default [
   //
   // Configurations for TypeScript files
   //
-  ...(typescriptPlugin.configs['flat/recommended'] as Array<unknown>),
   {
     files: ['**/*.{ts,tsx}'],
     plugins: {
@@ -89,6 +88,9 @@ export default [
       }
     },
     rules: {
+      ...((typescriptPlugin.configs['flat/recommended'] as Array<Record<string, unknown>>)
+        .find((config: Record<string, unknown>) => config.rules && !config.files)
+        ?.rules ?? {}),
       'no-unused-vars': 'off',
       'no-unused-expressions': 'off',
       'no-unused-labels': 'off',
