@@ -11,8 +11,10 @@
     "clean": "pnpm run clean:packages && pnpm run clean:root",
     "clean:packages": "pnpm -r exec rimraf dist node_modules coverage .nyc_output react cjs",
     "clean:root": "rimraf node_modules",
+    "deps:check": "syncpack fix-mismatches",
     "docs": "pnpm run -r docs && pnpm run generate-docs-index",
     "docs-view": "pnpm run generate-docs-index && cd site && docusaurus start",
+    "format:packageJson": "syncpack format",
     "generate-docs-index": "node scripts/generate-docs-index",
     "lint": "eslint scripts",
     "lint:all": "pnpm run lint && pnpm run -r lint",
@@ -22,12 +24,11 @@
     "postpublish": "node scripts/mark-deprecated.mjs",
     "posttest": "pnpm run lint",
     "preinstall": "npx only-allow pnpm",
+    "prepare": "husky",
     "publish:canary": "pnpm changeset version --snapshot canary && pnpm changeset publish --tag canary",
     "publish:next": "pnpm changeset version --pre next && pnpm changeset publish --tag next --force-publish --exact",
     "release": "changeset publish",
     "replace-ws-aliases": "node scripts/replace-ws-aliases.js",
-    "syncpack": "syncpack",
-    "syncpack:fix": "syncpack fix-mismatches && syncpack format",
     "templates:validate": "node scripts/npm.js clean && node scripts/npm.js npm-ci && node scripts/npm.js build && node scripts/npm.js lint && node scripts/npm.js test",
     "templates:validate-dotfiles": "node scripts/templates-validate-dotfiles.js",
     "test": "pnpm run -r test",
@@ -79,8 +80,10 @@
     "eslint-plugin-react": "^7.37.4",
     "eslint-plugin-unicorn": "^59.0.1",
     "glob": "^13.0.0",
+    "husky": "~9.1.7",
     "js-yaml": "^4.1.1",
     "jsdom": "^20.0.3",
+    "lint-staged": "~16.2.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "rimraf": "^6.1.2",
@@ -106,5 +109,10 @@
   "workspaces": [
     "packages/*",
     "scripts/generate-docs-index"
-  ]
+  ],
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,mjs,cjs}": [
+      "eslint --fix"
+    ]
+  }
 }

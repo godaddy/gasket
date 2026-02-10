@@ -58,7 +58,7 @@ importers:
         version: 8.38.0(eslint@9.31.0(jiti@1.21.7))(typescript@5.8.2)
       '@vitest/eslint-plugin':
         specifier: ^1.1.44
-        version: 1.1.44(@typescript-eslint/utils@8.38.0(eslint@9.31.0(jiti@1.21.7))(typescript@5.8.2))(eslint@9.31.0(jiti@1.21.7))(typescript@5.8.2)(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
+        version: 1.1.44(@typescript-eslint/utils@8.38.0(eslint@9.31.0(jiti@1.21.7))(typescript@5.8.2))(eslint@9.31.0(jiti@1.21.7))(typescript@5.8.2)(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2))
       chalk:
         specifier: ^4.1.2
         version: 4.1.2
@@ -92,12 +92,18 @@ importers:
       glob:
         specifier: ^13.0.0
         version: 13.0.0
+      husky:
+        specifier: ~9.1.7
+        version: 9.1.7
       js-yaml:
         specifier: ^4.1.1
         version: 4.1.1
       jsdom:
         specifier: ^20.0.3
         version: 20.0.3
+      lint-staged:
+        specifier: ~16.2.7
+        version: 16.2.7
       react:
         specifier: ^19.0.0
         version: 19.0.0
@@ -121,10 +127,10 @@ importers:
         version: 5.8.2
       vite-tsconfig-paths:
         specifier: ^6.1.0
-        version: 6.1.0(typescript@5.8.2)(vite@6.1.1(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
+        version: 6.1.0(typescript@5.8.2)(vite@6.1.1(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2))
       vitest:
         specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
 
   packages/create-gasket-app:
     dependencies:
@@ -197,13 +203,13 @@ importers:
         version: 8.38.0(eslint@9.31.0(jiti@1.21.7))(typescript@5.9.3)
       '@vitest/coverage-v8':
         specifier: ^3.2.0
-        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
+        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2))
       dotenv:
         specifier: ^16.4.7
         version: 16.4.7
       vitest:
         specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
 
   packages/gasket-assets:
     devDependencies:
@@ -246,10 +252,10 @@ importers:
     devDependencies:
       '@vitest/coverage-v8':
         specifier: ^3.2.0
-        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
+        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2))
       vitest:
         specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
 
   packages/gasket-core:
     dependencies:
@@ -268,10 +274,10 @@ importers:
         version: link:../gasket-plugin-metadata
       '@vitest/coverage-v8':
         specifier: ^3.2.0
-        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
+        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2))
       vitest:
         specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
 
   packages/gasket-data:
     dependencies:
@@ -290,13 +296,13 @@ importers:
         version: link:../gasket-plugin-data
       '@vitest/coverage-v8':
         specifier: ^3.2.0
-        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
+        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2))
       jsdom:
         specifier: ^20.0.3
         version: 20.0.3
       vitest:
         specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
 
   packages/gasket-fetch:
     dependencies:
@@ -342,10 +348,10 @@ importers:
         version: link:../gasket-cjs
       '@vitest/coverage-v8':
         specifier: ^3.2.0
-        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
+        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2))
       vitest:
         specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
 
   packages/gasket-nextjs:
     dependencies:
@@ -382,7 +388,7 @@ importers:
         version: 19.0.12
       '@vitest/coverage-v8':
         specifier: ^3.2.0
-        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
+        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2))
       jsdom:
         specifier: ^20.0.3
         version: 20.0.3
@@ -397,7 +403,7 @@ importers:
         version: 19.0.0(react@19.0.0)
       vitest:
         specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
 
   packages/gasket-plugin-analyze:
     dependencies:
@@ -425,13 +431,13 @@ importers:
         version: 4.7.0(@swc/core@1.10.18(@swc/helpers@0.5.15))
       '@vitest/coverage-v8':
         specifier: ^3.2.0
-        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
+        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2))
       create-gasket-app:
         specifier: workspace:^
         version: link:../create-gasket-app
       vitest:
         specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
 
   packages/gasket-plugin-command:
     dependencies:
@@ -453,13 +459,13 @@ importers:
         version: link:../gasket-plugin-metadata
       '@vitest/coverage-v8':
         specifier: ^3.2.0
-        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
+        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2))
       create-gasket-app:
         specifier: workspace:^
         version: link:../create-gasket-app
       vitest:
         specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
 
   packages/gasket-plugin-cypress:
     devDependencies:
@@ -532,7 +538,7 @@ importers:
         version: link:../create-gasket-app
       vitest:
         specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
 
   packages/gasket-plugin-docs:
     dependencies:
@@ -581,7 +587,7 @@ importers:
         version: link:../create-gasket-app
       vitest:
         specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
 
   packages/gasket-plugin-docs-graphs:
     devDependencies:
@@ -602,7 +608,7 @@ importers:
         version: link:../create-gasket-app
       vitest:
         specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
 
   packages/gasket-plugin-docusaurus:
     devDependencies:
@@ -632,7 +638,7 @@ importers:
         version: link:../gasket-plugin-webpack
       '@vitest/coverage-v8':
         specifier: ^3.2.0
-        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
+        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2))
       ajv:
         specifier: ^8.17.1
         version: 8.17.1
@@ -653,7 +659,7 @@ importers:
         version: 5.8.2
       vitest:
         specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
 
   packages/gasket-plugin-dynamic-plugins:
     dependencies:
@@ -672,13 +678,13 @@ importers:
         version: link:../gasket-plugin-metadata
       '@vitest/coverage-v8':
         specifier: ^3.2.0
-        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
+        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2))
       create-gasket-app:
         specifier: workspace:^
         version: link:../create-gasket-app
       vitest:
         specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
 
   packages/gasket-plugin-elastic-apm:
     dependencies:
@@ -706,7 +712,7 @@ importers:
         version: 4.11.0
       vitest:
         specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
 
   packages/gasket-plugin-express:
     dependencies:
@@ -755,7 +761,7 @@ importers:
         version: 4.21.2
       vitest:
         specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
 
   packages/gasket-plugin-fastify:
     dependencies:
@@ -786,7 +792,7 @@ importers:
         version: link:../create-gasket-app
       vitest:
         specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
 
   packages/gasket-plugin-git:
     dependencies:
@@ -833,7 +839,7 @@ importers:
         version: link:../create-gasket-app
       vitest:
         specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
 
   packages/gasket-plugin-https:
     dependencies:
@@ -873,13 +879,13 @@ importers:
         version: 1.17.16
       '@vitest/coverage-v8':
         specifier: ^3.2.0
-        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
+        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2))
       create-gasket-app:
         specifier: workspace:^
         version: link:../create-gasket-app
       vitest:
         specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
 
   packages/gasket-plugin-https-proxy:
     dependencies:
@@ -907,7 +913,7 @@ importers:
         version: link:../create-gasket-app
       vitest:
         specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
 
   packages/gasket-plugin-intl:
     dependencies:
@@ -977,7 +983,7 @@ importers:
         version: 7.1.9(react@19.0.0)(typescript@5.8.2)
       vitest:
         specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
       webpack:
         specifier: ^5.98.0
         version: 5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.15))
@@ -1071,7 +1077,7 @@ importers:
         version: link:../gasket-plugin-metadata
       '@vitest/coverage-v8':
         specifier: ^3.2.0
-        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
+        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2))
       create-gasket-app:
         specifier: workspace:^
         version: link:../create-gasket-app
@@ -1083,7 +1089,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
 
   packages/gasket-plugin-manifest:
     dependencies:
@@ -1163,7 +1169,7 @@ importers:
         version: link:../create-gasket-app
       vitest:
         specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
 
   packages/gasket-plugin-middleware:
     dependencies:
@@ -1215,7 +1221,7 @@ importers:
         version: 20.17.19
       '@vitest/coverage-v8':
         specifier: ^3.2.0
-        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
+        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2))
       create-gasket-app:
         specifier: workspace:^
         version: link:../create-gasket-app
@@ -1224,7 +1230,7 @@ importers:
         version: 4.29.1
       vitest:
         specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
 
   packages/gasket-plugin-mocha:
     devDependencies:
@@ -1324,13 +1330,13 @@ importers:
         version: 1.9.9
       '@vitest/coverage-v8':
         specifier: ^3.2.0
-        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
+        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2))
       create-gasket-app:
         specifier: workspace:^
         version: link:../create-gasket-app
       vitest:
         specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
 
   packages/gasket-plugin-nextjs:
     dependencies:
@@ -1424,7 +1430,7 @@ importers:
         version: 19.0.0(react@19.0.0)
       vitest:
         specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
 
   packages/gasket-plugin-redux:
     devDependencies:
@@ -1585,7 +1591,7 @@ importers:
         version: 12.1.3
       vitest:
         specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
 
   packages/gasket-plugin-typescript:
     devDependencies:
@@ -1630,10 +1636,10 @@ importers:
         version: 16.3.0(@testing-library/dom@10.4.0)(@types/react-dom@19.0.4(@types/react@19.2.7))(@types/react@19.2.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@vitejs/plugin-react':
         specifier: ^4.4.1
-        version: 4.4.1(vite@6.1.1(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
+        version: 4.4.1(vite@6.1.1(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2))
       '@vitest/coverage-v8':
         specifier: ^3.2.0
-        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
+        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2))
       create-gasket-app:
         specifier: workspace:^
         version: link:../create-gasket-app
@@ -1642,7 +1648,7 @@ importers:
         version: 20.0.3
       vitest:
         specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
 
   packages/gasket-plugin-webpack:
     devDependencies:
@@ -1663,7 +1669,7 @@ importers:
         version: link:../create-gasket-app
       vitest:
         specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
       webpack:
         specifier: ^5.98.0
         version: 5.98.0(@swc/core@1.10.18(@swc/helpers@0.5.15))
@@ -1694,7 +1700,7 @@ importers:
         version: 1.4.1
       vitest:
         specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
 
   packages/gasket-plugin-workbox:
     dependencies:
@@ -1810,7 +1816,7 @@ importers:
         version: link:../gasket-plugin-metadata
       '@vitest/coverage-v8':
         specifier: ^3.2.0
-        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
+        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2))
       create-gasket-app:
         specifier: workspace:^
         version: link:../create-gasket-app
@@ -1819,7 +1825,7 @@ importers:
         version: 3.1.9
       vitest:
         specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
 
   packages/gasket-preset-nextjs:
     dependencies:
@@ -1889,10 +1895,10 @@ importers:
         version: link:../gasket-cjs
       '@vitest/coverage-v8':
         specifier: ^3.2.0
-        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
+        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2))
       vitest:
         specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
 
   packages/gasket-react-intl:
     dependencies:
@@ -1926,7 +1932,7 @@ importers:
         version: 19.0.12
       '@vitest/coverage-v8':
         specifier: ^3.2.0
-        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
+        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2))
       intl:
         specifier: ^1.2.5
         version: 1.2.5
@@ -1947,7 +1953,7 @@ importers:
         version: 9.2.0(@types/react@19.0.12)(react@19.0.0)(redux@5.0.1)
       vitest:
         specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
 
   packages/gasket-redux:
     dependencies:
@@ -2012,55 +2018,55 @@ importers:
         version: link:../gasket-core
       '@vitest/coverage-v8':
         specifier: ^3.2.0
-        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
+        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2))
       vitest:
         specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
 
   packages/gasket-template-api-express:
     devDependencies:
       '@vitest/coverage-v8':
         specifier: ^3.2.0
-        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
+        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2))
       vitest:
         specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
 
   packages/gasket-template-api-fastify:
     devDependencies:
       '@vitest/coverage-v8':
         specifier: ^3.2.0
-        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
+        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2))
       vitest:
         specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
 
   packages/gasket-template-nextjs-app:
     devDependencies:
       '@vitest/coverage-v8':
         specifier: ^3.2.0
-        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
+        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2))
       vitest:
         specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
 
   packages/gasket-template-nextjs-express:
     devDependencies:
       '@vitest/coverage-v8':
         specifier: ^3.2.0
-        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
+        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2))
       vitest:
         specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
 
   packages/gasket-template-nextjs-pages:
     devDependencies:
       '@vitest/coverage-v8':
         specifier: ^3.2.0
-        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
+        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2))
       vitest:
         specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
 
   packages/gasket-typescript-tests:
     devDependencies:
@@ -2216,7 +2222,7 @@ importers:
         version: 5.0.1
       vitest:
         specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
       winston-transport:
         specifier: ^4.9.0
         version: 4.9.0
@@ -2262,13 +2268,13 @@ importers:
         version: 6.0.6
       '@vitest/coverage-v8':
         specifier: ^3.2.0
-        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
+        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2))
       abort-controller:
         specifier: ^3.0.0
         version: 3.0.0
       vitest:
         specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
 
   scripts/generate-docs-index:
     dependencies:
@@ -5710,6 +5716,10 @@ packages:
     resolution: {integrity: sha512-gKXj5ALrKWQLsYG9jlTRmR/xKluxHV+Z9QEwNIgCfM1/uwPMCuzVVnh5mwTd+OuBZcwSIMbqssNWRm1lE51QaQ==}
     engines: {node: '>=8'}
 
+  ansi-escapes@7.3.0:
+    resolution: {integrity: sha512-BvU8nYgGQBxcmMuEeUEmNTvrMVjJNSH7RgW24vXexN4Ven6qCvy4TntnvlnwnMLTVlcRQQdbRY8NKnaIoeWDNg==}
+    engines: {node: '>=18'}
+
   ansi-html-community@0.0.8:
     resolution: {integrity: sha512-1APHAyr3+PCamwNw3bXCPp4HFLONZt/yIH0sZp0/469KWNTEy+qN5jQ3GVX6DMZ1UXAi34yVwtTeaG/HpBuuzw==}
     engines: {'0': node >= 0.8.0}
@@ -6291,6 +6301,10 @@ packages:
     resolution: {integrity: sha512-n8fOixwDD6b/ObinzTrp1ZKFzbgvKZvuz/TvejnLn1aQfC6r52XEx85FmuC+3HI+JM7coBRXUvNqEU2PHVrHpg==}
     engines: {node: '>=8'}
 
+  cli-truncate@5.1.1:
+    resolution: {integrity: sha512-SroPvNHxUnk+vIW/dOSfNqdy1sPEFkrTk6TUtqLCnBlo3N7TNYYkzzN7uSD6+jVjrdO4+p8nH7JzH6cIvUem6A==}
+    engines: {node: '>=20'}
+
   cli-width@2.2.1:
     resolution: {integrity: sha512-GRMWDxpOB6Dgk2E5Uo+3eEBvtOOlimMmpbFiKuLFnQzYDavtLFY3K5ona41jgN/WdRZtG7utuVSVTL4HbZHGkw==}
 
@@ -6373,6 +6387,10 @@ packages:
   commander@13.1.0:
     resolution: {integrity: sha512-/rFeCpNJQbhSZjGVwO9RFV3xPqbnERS8MmIQzCtD/zl6gpJuV/bMLuN92oG3F7d8oDEHHRrujSXNUr8fpjntKw==}
     engines: {node: '>=18'}
+
+  commander@14.0.3:
+    resolution: {integrity: sha512-H+y0Jo/T1RZ9qPP4Eh1pkcQcLRglraJaSLoyOtHxu6AapkjWVCy2Sit1QQ4x3Dng8qDlSsZEet7g5Pq06MvTgw==}
+    engines: {node: '>=20'}
 
   commander@2.20.3:
     resolution: {integrity: sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==}
@@ -7074,6 +7092,10 @@ packages:
     resolution: {integrity: sha512-+h1lkLKhZMTYjog1VEpJNG7NZJWcuc2DDk/qsqSTRRCOXiLjeQ1d1/udrUGhqMxUgAlwKNZ0cf2uqan5GLuS2A==}
     engines: {node: '>=6'}
 
+  environment@1.1.0:
+    resolution: {integrity: sha512-xUtoPkMggbz0MPyPiIWr1Kp4aeWJjDZ6SMvURhimjdZgsRuDplF5/s9hcgGhyXMhs+6vpnuoiZ2kFiu3FMnS8Q==}
+    engines: {node: '>=18'}
+
   error-callsites@2.0.4:
     resolution: {integrity: sha512-V877Ch4FC4FN178fDK1fsrHN4I1YQIBdtjKrHh3BUHMnh3SMvwUVrqkaOgDpUuevgSNna0RBq6Ox9SGlxYrigA==}
     engines: {node: '>=6.x'}
@@ -7367,6 +7389,9 @@ packages:
 
   eventemitter3@4.0.7:
     resolution: {integrity: sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==}
+
+  eventemitter3@5.0.4:
+    resolution: {integrity: sha512-mlsTRyGaPBjPedk6Bvw+aqbsXDtoAyAzm5MO7JgU+yVRyMQ5O8bD4Kcci7BS85f93veegeCPkL8R4GLClnjLFw==}
 
   events@3.3.0:
     resolution: {integrity: sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==}
@@ -7695,6 +7720,10 @@ packages:
 
   get-east-asian-width@1.3.0:
     resolution: {integrity: sha512-vpeMIQKxczTD/0s2CdEWHcb0eeJe6TFjxb+J5xgX7hScxqrGuyjmv4c1D4A/gelKfyox0gJJwIHF+fLjeaM8kQ==}
+    engines: {node: '>=18'}
+
+  get-east-asian-width@1.4.0:
+    resolution: {integrity: sha512-QZjmEOC+IT1uk6Rx0sX22V6uHWVwbdbxf1faPqJ1QhLdGgsRGCZoyaQBm/piRdJy/D2um6hM1UP7ZEeQ4EkP+Q==}
     engines: {node: '>=18'}
 
   get-intrinsic@1.2.7:
@@ -8059,6 +8088,11 @@ packages:
   humanize-ms@1.2.1:
     resolution: {integrity: sha512-Fl70vYtsAFb/C06PTS9dZBo7ihau+Tu/DNCk/OyHhea07S+aeMWpFFkUaXRa8fI+ScZbEI8dfSxwY7gxZ9SAVQ==}
 
+  husky@9.1.7:
+    resolution: {integrity: sha512-5gs5ytaNjBrh5Ow3zrvdUUY+0VxIuWVL4i9irt6friV+BqdCfmV11CQTWMiBYWHbXhco+J1kHfTOUkePhCDvMA==}
+    engines: {node: '>=18'}
+    hasBin: true
+
   iconv-lite@0.4.24:
     resolution: {integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==}
     engines: {node: '>=0.10.0'}
@@ -8260,6 +8294,10 @@ packages:
   is-fullwidth-code-point@3.0.0:
     resolution: {integrity: sha512-zymm5+u+sCsSWyD9qNaejV3DFvhCKclKdizYaJUuHA83RLjb7nSuGnddCHGv0hk+KY7BMAlsWeK4Ueg6EV6XQg==}
     engines: {node: '>=8'}
+
+  is-fullwidth-code-point@5.1.0:
+    resolution: {integrity: sha512-5XHYaSyiqADb4RnZ1Bdad6cPp8Toise4TzEjcOYDHZkTCbKgiUl7WTUCpNWHuxmDt91wnsZBc9xinNzopv3JMQ==}
+    engines: {node: '>=18'}
 
   is-generator-fn@2.1.0:
     resolution: {integrity: sha512-cTIB4yPYL/Grw0EaSzASzg6bBy9gqCofvWN8okThAYIxKJZC+udlRAmGbM0XLeniEJSs8uEgHPGuHSe1XsOLSQ==}
@@ -8784,6 +8822,11 @@ packages:
   lines-and-columns@1.2.4:
     resolution: {integrity: sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==}
 
+  lint-staged@16.2.7:
+    resolution: {integrity: sha512-lDIj4RnYmK7/kXMya+qJsmkRFkGolciXjrsZ6PC25GdTfWOAWetR0ZbsNXRAj1EHHImRSalc+whZFg56F5DVow==}
+    engines: {node: '>=20.17'}
+    hasBin: true
+
   listr2@3.14.0:
     resolution: {integrity: sha512-TyWI8G99GX9GjE54cJ+RrNMcIFBfwMPxc3XTFiAYGN4s10hWROGtOg7+O6u6LE3mNkyld7RSLE6nrKBvTfcs3g==}
     engines: {node: '>=10.0.0'}
@@ -8792,6 +8835,10 @@ packages:
     peerDependenciesMeta:
       enquirer:
         optional: true
+
+  listr2@9.0.5:
+    resolution: {integrity: sha512-ME4Fb83LgEgwNw96RKNvKV4VTLuXfoKudAmm2lP8Kk87KaMK0/Xrx/aAkMWmT8mDb+3MlFDspfbCs7adjRxA2g==}
+    engines: {node: '>=20.0.0'}
 
   loader-runner@4.3.0:
     resolution: {integrity: sha512-3R/1M+yS3j5ou80Me59j7F9IMs4PXs3VqRrm0TU3AbKPxlmpoY1TNscJV/oGJXo8qCatFGTfDbY6W6ipGOYXfg==}
@@ -8881,6 +8928,10 @@ packages:
   log-update@4.0.0:
     resolution: {integrity: sha512-9fkkDevMefjg0mmzWFBW8YkFP91OrizzkW3diF7CpG+S2EYdy4+TVfGwz1zeF8x7hCx1ovSPTOE9Ngib74qqUg==}
     engines: {node: '>=10'}
+
+  log-update@6.1.0:
+    resolution: {integrity: sha512-9ie8ItPR6tjY5uYJh8K/Zrv/RMZ5VOlOWvtZdEHYSTFKZfIBPQa9tOAEeAWhd+AnIneLJ22w5fjOYtoutpWq5w==}
+    engines: {node: '>=18'}
 
   logform@2.7.0:
     resolution: {integrity: sha512-TFYA4jnP7PVbmlBIfhlSe+WKxs9dklXMTEGcBCIvLhE/Tn3H6Gk1norupVW7m5Cnd4bLcr08AytbyV/xj7f/kQ==}
@@ -9301,6 +9352,10 @@ packages:
 
   mute-stream@0.0.7:
     resolution: {integrity: sha512-r65nCZhrbXXb6dXOACihYApHw2Q6pV0M3V0PSxd74N0+D8nzAdEAITq2oAjA1jVnKI+tGvEBUpqiMh0+rW6zDQ==}
+
+  nano-spawn@2.0.0:
+    resolution: {integrity: sha512-tacvGzUY5o2D8CBh2rrwxyNojUsZNU2zjNTzKQrkgGJQTbGAfArVWXSKMBokBeeg6C7OLRGUEyoFlYbfeWQIqw==}
+    engines: {node: '>=20.17'}
 
   nanoid@3.3.11:
     resolution: {integrity: sha512-N8SpfPUnUp1bK+PMYW8qSWdl9U+wwNWI4QKxOYDy9JAro3WMX7p2OeVRF9v+347pnakNevPmiHhNmZ2HbFA76w==}
@@ -9729,6 +9784,11 @@ packages:
   picomatch@4.0.3:
     resolution: {integrity: sha512-5gTmgEY/sqK6gFXLIsQNH19lWb4ebPDLA4SdLP7dsWkIXHWlG66oPuVvXSGFPppYZz8ZDZq0dYYrbHfBCVUb1Q==}
     engines: {node: '>=12'}
+
+  pidtree@0.6.0:
+    resolution: {integrity: sha512-eG2dWTVw5bzqGRztnHExczNxt5VGsE6OwTeCG3fdUf9KBsZzO3R5OIIIzWR+iZA0NtZ+RDVdaoE2dK1cn6jH4g==}
+    engines: {node: '>=0.10'}
+    hasBin: true
 
   pify@2.3.0:
     resolution: {integrity: sha512-udgsAY+fTnvv7kI7aaxbqwWNb0AHiB0qBO89PZKPkoTmGOgdbrHDKD+0B2X4uTfJ/FT1R09r9gTsjUjNJotuog==}
@@ -10931,6 +10991,10 @@ packages:
     resolution: {integrity: sha512-qMCMfhY040cVHT43K9BFygqYbUPFZKHOg7K73mtTWJRb8pyP3fzf4Ixd5SzdEJQ6MRUg/WBnOLxghZtKKurENQ==}
     engines: {node: '>=10'}
 
+  slice-ansi@7.1.2:
+    resolution: {integrity: sha512-iOBWFgUX7caIZiuutICxVgX1SdxwAVFFKwt1EvMYYec/NWO5meOJ6K5uQxhrYBdQJne4KxiqZc+KptFOWFSI9w==}
+    engines: {node: '>=18'}
+
   snake-case@3.0.4:
     resolution: {integrity: sha512-LAOh4z89bGQvl9pFfNF8V146i7o7/CqFPbqzYgP+yYzDIDeS9HaNFtXABamRW+AQzEVODcvE79ljJ+8a9YSdMg==}
 
@@ -11067,6 +11131,10 @@ packages:
   stream-combiner@0.0.4:
     resolution: {integrity: sha512-rT00SPnTVyRsaSz5zgSPma/aHSOic5U1prhYdRy5HS2kTZviFpmDgzilbtsJsxiroqACmayynDN/9VzIbX5DOw==}
 
+  string-argv@0.3.2:
+    resolution: {integrity: sha512-aqD2Q0144Z+/RqG52NeHEkZauTAUWJO8c6yTftGJKO3Tja5tUgIfmIl6kExvhtxSDP7fXB6DvzkfMpCd/F3G+Q==}
+    engines: {node: '>=0.6.19'}
+
   string-length@4.0.2:
     resolution: {integrity: sha512-+l6rNN5fYHNhZZy41RXsYptCjA2Igmq4EG7kZAYFQI1E1VTXarr6ZPXBg6eq7Y6eK4FEhY6AJlyuFIb/v/S0VQ==}
     engines: {node: '>=10'}
@@ -11086,6 +11154,10 @@ packages:
   string-width@7.2.0:
     resolution: {integrity: sha512-tsaTIkKW9b4N+AEj+SVA+WhJzV7/zMhcSu78mLKWSk7cXMOSHsBKFWUs0fWwq8QyK3MgJBQRX6Gbi4kYbdvGkQ==}
     engines: {node: '>=18'}
+
+  string-width@8.1.1:
+    resolution: {integrity: sha512-KpqHIdDL9KwYk22wEOg/VIqYbrnLeSApsKT/bSj6Ez7pn3CftUiLAv2Lccpq1ALcpLV9UX1Ppn92npZWu2w/aw==}
+    engines: {node: '>=20'}
 
   string.prototype.includes@2.0.1:
     resolution: {integrity: sha512-o7+c9bW6zpAdJHTtujeePODAhkuicdAryFsfVKwA+wGw89wJ4GTY484WTucM9hLtDEOpOvI+aHnzqnC5lHp4Rg==}
@@ -12125,6 +12197,10 @@ packages:
     resolution: {integrity: sha512-si7QWI6zUMq56bESFvagtmzMdGOtoxfR+Sez11Mobfc7tm+VkUckk9bW2UeffTGVUbOksxmSw0AA2gs8g71NCQ==}
     engines: {node: '>=12'}
 
+  wrap-ansi@9.0.2:
+    resolution: {integrity: sha512-42AtmgqjV+X1VpdOfyTGOYRi0/zsoLqtXQckTmqTeybT+BDIbM/Guxo7x3pE2vtpr1ok6xRqM9OpBe+Jyoqyww==}
+    engines: {node: '>=18'}
+
   wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
 
@@ -12204,6 +12280,11 @@ packages:
   yaml@2.7.0:
     resolution: {integrity: sha512-+hSoy/QHluxmC9kCIJyL/uyFmLmc+e5CFR5Wa+bpIhIj85LVb9ZH2nVnqrHoSvKogwODv0ClqZkmiSSaIH5LTA==}
     engines: {node: '>= 14'}
+    hasBin: true
+
+  yaml@2.8.2:
+    resolution: {integrity: sha512-mplynKqc1C2hTVYxd0PU2xQAc22TI1vShAYGksCCfxbn/dFwnHTNi1bvYsBTkhdUNtGIf5xNOg938rrSSYvS9A==}
+    engines: {node: '>= 14.6'}
     hasBin: true
 
   yargs-parser@21.1.1:
@@ -17568,18 +17649,18 @@ snapshots:
 
   '@ungap/structured-clone@1.3.0': {}
 
-  '@vitejs/plugin-react@4.4.1(vite@6.1.1(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))':
+  '@vitejs/plugin-react@4.4.1(vite@6.1.1(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2))':
     dependencies:
       '@babel/core': 7.26.10
       '@babel/plugin-transform-react-jsx-self': 7.27.1(@babel/core@7.26.10)
       '@babel/plugin-transform-react-jsx-source': 7.27.1(@babel/core@7.26.10)
       '@types/babel__core': 7.20.5
       react-refresh: 0.17.0
-      vite: 6.1.1(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+      vite: 6.1.1(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
     transitivePeerDependencies:
       - supports-color
 
-  '@vitest/coverage-v8@3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))':
+  '@vitest/coverage-v8@3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2))':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@bcoe/v8-coverage': 1.0.2
@@ -17594,11 +17675,11 @@ snapshots:
       std-env: 3.9.0
       test-exclude: 7.0.1
       tinyrainbow: 2.0.0
-      vitest: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+      vitest: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
     transitivePeerDependencies:
       - supports-color
 
-  '@vitest/coverage-v8@3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))':
+  '@vitest/coverage-v8@3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2))':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@bcoe/v8-coverage': 1.0.2
@@ -17613,17 +17694,17 @@ snapshots:
       std-env: 3.9.0
       test-exclude: 7.0.1
       tinyrainbow: 2.0.0
-      vitest: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+      vitest: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
     transitivePeerDependencies:
       - supports-color
 
-  '@vitest/eslint-plugin@1.1.44(@typescript-eslint/utils@8.38.0(eslint@9.31.0(jiti@1.21.7))(typescript@5.8.2))(eslint@9.31.0(jiti@1.21.7))(typescript@5.8.2)(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))':
+  '@vitest/eslint-plugin@1.1.44(@typescript-eslint/utils@8.38.0(eslint@9.31.0(jiti@1.21.7))(typescript@5.8.2))(eslint@9.31.0(jiti@1.21.7))(typescript@5.8.2)(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2))':
     dependencies:
       '@typescript-eslint/utils': 8.38.0(eslint@9.31.0(jiti@1.21.7))(typescript@5.8.2)
       eslint: 9.31.0(jiti@1.21.7)
     optionalDependencies:
       typescript: 5.8.2
-      vitest: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+      vitest: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
 
   '@vitest/expect@3.2.0':
     dependencies:
@@ -17633,13 +17714,13 @@ snapshots:
       chai: 5.2.0
       tinyrainbow: 2.0.0
 
-  '@vitest/mocker@3.2.0(vite@6.1.1(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))':
+  '@vitest/mocker@3.2.0(vite@6.1.1(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2))':
     dependencies:
       '@vitest/spy': 3.2.0
       estree-walker: 3.0.3
       magic-string: 0.30.17
     optionalDependencies:
-      vite: 6.1.1(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+      vite: 6.1.1(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
 
   '@vitest/pretty-format@3.2.0':
     dependencies:
@@ -17869,6 +17950,10 @@ snapshots:
   ansi-escapes@4.3.2:
     dependencies:
       type-fest: 0.21.3
+
+  ansi-escapes@7.3.0:
+    dependencies:
+      environment: 1.1.0
 
   ansi-html-community@0.0.8: {}
 
@@ -18591,6 +18676,11 @@ snapshots:
       slice-ansi: 3.0.0
       string-width: 4.2.3
 
+  cli-truncate@5.1.1:
+    dependencies:
+      slice-ansi: 7.1.2
+      string-width: 8.1.1
+
   cli-width@2.2.1: {}
 
   client-only@0.0.1: {}
@@ -18661,6 +18751,8 @@ snapshots:
   commander@12.1.0: {}
 
   commander@13.1.0: {}
+
+  commander@14.0.3: {}
 
   commander@2.20.3: {}
 
@@ -19427,6 +19519,8 @@ snapshots:
 
   env-paths@2.2.1: {}
 
+  environment@1.1.0: {}
+
   error-callsites@2.0.4: {}
 
   error-ex@1.3.2:
@@ -19986,6 +20080,8 @@ snapshots:
 
   eventemitter3@4.0.7: {}
 
+  eventemitter3@5.0.4: {}
+
   events@3.3.0: {}
 
   execa@4.1.0:
@@ -20380,6 +20476,8 @@ snapshots:
   get-caller-file@2.0.5: {}
 
   get-east-asian-width@1.3.0: {}
+
+  get-east-asian-width@1.4.0: {}
 
   get-intrinsic@1.2.7:
     dependencies:
@@ -20900,6 +20998,8 @@ snapshots:
     dependencies:
       ms: 2.1.3
 
+  husky@9.1.7: {}
+
   iconv-lite@0.4.24:
     dependencies:
       safer-buffer: 2.1.2
@@ -21085,6 +21185,10 @@ snapshots:
   is-fullwidth-code-point@2.0.0: {}
 
   is-fullwidth-code-point@3.0.0: {}
+
+  is-fullwidth-code-point@5.1.0:
+    dependencies:
+      get-east-asian-width: 1.4.0
 
   is-generator-fn@2.1.0: {}
 
@@ -21886,6 +21990,16 @@ snapshots:
 
   lines-and-columns@1.2.4: {}
 
+  lint-staged@16.2.7:
+    dependencies:
+      commander: 14.0.3
+      listr2: 9.0.5
+      micromatch: 4.0.8
+      nano-spawn: 2.0.0
+      pidtree: 0.6.0
+      string-argv: 0.3.2
+      yaml: 2.8.2
+
   listr2@3.14.0(enquirer@2.4.1):
     dependencies:
       cli-truncate: 2.1.0
@@ -21898,6 +22012,15 @@ snapshots:
       wrap-ansi: 7.0.0
     optionalDependencies:
       enquirer: 2.4.1
+
+  listr2@9.0.5:
+    dependencies:
+      cli-truncate: 5.1.1
+      colorette: 2.0.20
+      eventemitter3: 5.0.4
+      log-update: 6.1.0
+      rfdc: 1.4.1
+      wrap-ansi: 9.0.2
 
   loader-runner@4.3.0: {}
 
@@ -21983,6 +22106,14 @@ snapshots:
       cli-cursor: 3.1.0
       slice-ansi: 4.0.0
       wrap-ansi: 6.2.0
+
+  log-update@6.1.0:
+    dependencies:
+      ansi-escapes: 7.3.0
+      cli-cursor: 5.0.0
+      slice-ansi: 7.1.2
+      strip-ansi: 7.1.0
+      wrap-ansi: 9.0.2
 
   logform@2.7.0:
     dependencies:
@@ -22669,6 +22800,8 @@ snapshots:
 
   mute-stream@0.0.7: {}
 
+  nano-spawn@2.0.0: {}
+
   nanoid@3.3.11: {}
 
   natural-compare@1.4.0: {}
@@ -23114,6 +23247,8 @@ snapshots:
   picomatch@4.0.2: {}
 
   picomatch@4.0.3: {}
+
+  pidtree@0.6.0: {}
 
   pify@2.3.0: {}
 
@@ -24564,6 +24699,11 @@ snapshots:
       astral-regex: 2.0.0
       is-fullwidth-code-point: 3.0.0
 
+  slice-ansi@7.1.2:
+    dependencies:
+      ansi-styles: 6.2.1
+      is-fullwidth-code-point: 5.1.0
+
   snake-case@3.0.4:
     dependencies:
       dot-case: 3.0.4
@@ -24721,6 +24861,8 @@ snapshots:
     dependencies:
       duplexer: 0.1.2
 
+  string-argv@0.3.2: {}
+
   string-length@4.0.2:
     dependencies:
       char-regex: 1.0.2
@@ -24746,6 +24888,11 @@ snapshots:
   string-width@7.2.0:
     dependencies:
       emoji-regex: 10.4.0
+      get-east-asian-width: 1.3.0
+      strip-ansi: 7.1.0
+
+  string-width@8.1.1:
+    dependencies:
       get-east-asian-width: 1.3.0
       strip-ansi: 7.1.0
 
@@ -25515,13 +25662,13 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.2
 
-  vite-node@3.2.0(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0):
+  vite-node@3.2.0(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2):
     dependencies:
       cac: 6.7.14
       debug: 4.4.3(supports-color@8.1.1)
       es-module-lexer: 1.7.0
       pathe: 2.0.3
-      vite: 6.1.1(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+      vite: 6.1.1(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
     transitivePeerDependencies:
       - '@types/node'
       - jiti
@@ -25536,17 +25683,17 @@ snapshots:
       - tsx
       - yaml
 
-  vite-tsconfig-paths@6.1.0(typescript@5.8.2)(vite@6.1.1(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)):
+  vite-tsconfig-paths@6.1.0(typescript@5.8.2)(vite@6.1.1(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)):
     dependencies:
       debug: 4.4.3(supports-color@8.1.1)
       globrex: 0.1.2
       tsconfck: 3.1.6(typescript@5.8.2)
-      vite: 6.1.1(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+      vite: 6.1.1(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
     transitivePeerDependencies:
       - supports-color
       - typescript
 
-  vite@6.1.1(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0):
+  vite@6.1.1(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2):
     dependencies:
       esbuild: 0.24.2
       postcss: 8.5.6
@@ -25557,13 +25704,13 @@ snapshots:
       jiti: 1.21.7
       terser: 5.39.0
       tsx: 4.19.3
-      yaml: 2.7.0
+      yaml: 2.8.2
 
-  vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0):
+  vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2):
     dependencies:
       '@types/chai': 5.2.2
       '@vitest/expect': 3.2.0
-      '@vitest/mocker': 3.2.0(vite@6.1.1(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
+      '@vitest/mocker': 3.2.0(vite@6.1.1(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2))
       '@vitest/pretty-format': 3.2.0
       '@vitest/runner': 3.2.0
       '@vitest/snapshot': 3.2.0
@@ -25581,8 +25728,8 @@ snapshots:
       tinyglobby: 0.2.14
       tinypool: 1.1.0
       tinyrainbow: 2.0.0
-      vite: 6.1.1(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
-      vite-node: 3.2.0(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+      vite: 6.1.1(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
+      vite-node: 3.2.0(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/debug': 4.1.12
@@ -25602,11 +25749,11 @@ snapshots:
       - tsx
       - yaml
 
-  vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0):
+  vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2):
     dependencies:
       '@types/chai': 5.2.2
       '@vitest/expect': 3.2.0
-      '@vitest/mocker': 3.2.0(vite@6.1.1(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
+      '@vitest/mocker': 3.2.0(vite@6.1.1(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2))
       '@vitest/pretty-format': 3.2.0
       '@vitest/runner': 3.2.0
       '@vitest/snapshot': 3.2.0
@@ -25624,8 +25771,8 @@ snapshots:
       tinyglobby: 0.2.14
       tinypool: 1.1.0
       tinyrainbow: 2.0.0
-      vite: 6.1.1(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
-      vite-node: 3.2.0(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+      vite: 6.1.1(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
+      vite-node: 3.2.0(@types/node@20.17.19)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.2)
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/debug': 4.1.12
@@ -26067,6 +26214,12 @@ snapshots:
       string-width: 5.1.2
       strip-ansi: 7.1.0
 
+  wrap-ansi@9.0.2:
+    dependencies:
+      ansi-styles: 6.2.1
+      string-width: 7.2.0
+      strip-ansi: 7.1.0
+
   wrappy@1.0.2: {}
 
   write-file-atomic@3.0.3:
@@ -26108,6 +26261,8 @@ snapshots:
   yaml@1.10.2: {}
 
   yaml@2.7.0: {}
+
+  yaml@2.8.2: {}
 
   yargs-parser@21.1.1: {}
 

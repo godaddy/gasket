@@ -1,0 +1,9 @@
+#!/bin/sh
+
+npx lint-staged
+
+echo "Checking dependencies..."
+pnpm run deps:check
+
+echo "Checking package.json formatting..."
+pnpm run format:packageJson
