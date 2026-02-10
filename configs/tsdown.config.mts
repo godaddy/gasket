@@ -13,7 +13,7 @@ export const shared: UserConfig = {
  * Creates a dual ESM/CJS build configuration
  * @param {string[]} entry - Array of entry points (e.g., ['src/index.ts', 'src/utils.ts'])
  */
-export const createDualConfig = (entry: string[]) => [
+export const createDualConfig = (entry: string[]): UserConfig[] => [
   // ESM build - outputs to lib/
   {
     ...shared,
@@ -30,4 +30,4 @@ export const createDualConfig = (entry: string[]) => [
     outDir: 'cjs',
     dts: false
   }
-] as const;
+];
