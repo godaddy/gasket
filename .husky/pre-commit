@@ -4,8 +4,8 @@ set -e
 
 npx lint-staged
 
-echo "Checking dependencies..."
-pnpm run deps:check
-
 echo "Checking package.json formatting..."
 pnpm run format:packageJson
+
+echo "Checking dependencies..."
+pnpm run deps:check

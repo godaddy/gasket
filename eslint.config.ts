@@ -88,9 +88,9 @@ export default [
       }
     },
     rules: {
-      ...((typescriptPlugin.configs['flat/recommended'] as Array<Record<string, unknown>>)
-        .find((config: Record<string, unknown>) => config.rules && !config.files)
-        ?.rules ?? {}),
+      ...(typescriptPlugin.configs['flat/recommended'] as Array<Record<string, unknown>>)
+        .filter((config: Record<string, unknown>) => config.rules)
+        .reduce((acc, config) => ({ ...acc, ...config.rules }), {}),
       'no-unused-vars': 'off',
       'no-unused-expressions': 'off',
       'no-unused-labels': 'off',
