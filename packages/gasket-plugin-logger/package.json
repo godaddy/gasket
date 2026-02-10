@@ -23,10 +23,10 @@
   "scripts": {
     "build": "tsdown && echo '{}' > cjs/package.json",
     "build:watch": "tsdown --watch",
-    "pretest": "pnpm run lint && pnpm run build && pnpm run typecheck",
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
     "prepublishOnly": "pnpm run build",
+    "pretest": "pnpm run lint && pnpm run build && pnpm run typecheck",
     "test": "vitest run --coverage",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",

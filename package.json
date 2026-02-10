@@ -11,7 +11,7 @@
     "clean": "pnpm run clean:packages && pnpm run clean:root",
     "clean:packages": "pnpm -r exec rimraf dist node_modules coverage .nyc_output react cjs",
     "clean:root": "rimraf node_modules",
-    "deps:check": "syncpack fix-mismatches",
+    "deps:check": "syncpack list-mismatches",
     "docs": "pnpm run -r docs && pnpm run generate-docs-index",
     "docs-view": "pnpm run generate-docs-index && cd site && docusaurus start",
     "format:packageJson": "syncpack format",
@@ -80,17 +80,18 @@
     "eslint-plugin-react": "^7.37.4",
     "eslint-plugin-unicorn": "^59.0.1",
     "glob": "^13.0.0",
-    "husky": "~9.1.7",
+    "husky": "^9.1.7",
     "js-yaml": "^4.1.1",
     "jsdom": "^20.0.3",
-    "lint-staged": "~16.2.7",
+    "lint-staged": "^16.2.7",
+    "markdownlint-cli2": "^0.20.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "rimraf": "^6.1.2",
     "search-insights": "^2.17.3",
     "syncpack": "^13.0.3",
     "tsdown": "^0.20.3",
-    "typescript": "^5.8.2",
+    "typescript": "^5.8.3",
     "vite-tsconfig-paths": "^6.1.0",
     "vitest": "^3.2.0"
   },
@@ -99,6 +100,14 @@
     "npm": "please-use-pnpm",
     "yarn": "please-use-pnpm",
     "node": ">=20"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,mjs,cjs}": [
+      "eslint --fix"
+    ],
+    "*.{md,mdx}": [
+      "markdownlint-cli2 --fix"
+    ]
   },
   "packageManager": "pnpm@10.4.1",
   "pnpm": {
@@ -109,10 +118,5 @@
   "workspaces": [
     "packages/*",
     "scripts/generate-docs-index"
-  ],
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx,mjs,cjs}": [
-      "eslint --fix"
-    ]
-  }
+  ]
 }

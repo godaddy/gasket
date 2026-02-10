@@ -1,5 +1,6 @@
-/** @type {import('syncpack').RcFile} */
-const config = {
+import type { RcFile } from 'syncpack';
+
+const config: RcFile = {
   customTypes: {
     dependencies: {
       strategy: 'versionsByName',
@@ -33,6 +34,7 @@ const config = {
     'type',
     'bin',
     'main',
+    'module',
     'browser',
     'types',
     'files',
@@ -58,15 +60,15 @@ const config = {
   versionGroups: [{
     label: 'workspace-packages',
     dependencies: [
-        'create-gasket-app',
-        '@gasket/*',
+      'create-gasket-app',
+      '@gasket/*'
     ],
     dependencyTypes: ['dependencies', 'devDependencies'],
     pinVersion: 'workspace:^'
   }],
-  'lintFormatting': true,
-  'lintSemverRanges': true,
-  'lintVersions': true
+  lintFormatting: true,
+  lintSemverRanges: true,
+  lintVersions: true
 };
 
-module.exports = config;
+export default config;
