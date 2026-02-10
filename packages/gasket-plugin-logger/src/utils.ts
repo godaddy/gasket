@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import type { Logger } from './index';
+import type { Logger } from './index.js';
 
 /**
  * Child loggers allow attaching contextual metadata (request ID, user ID, etc.)

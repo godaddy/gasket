@@ -28,9 +28,9 @@ export default defineConfig({
       ],
       reporter: ['text', 'json', 'html'],
       thresholds: {
-        autoUpdate: false,
-        perFile: true,
-        'src/**.{ts,tsx}': {
+        'autoUpdate': false,
+        'perFile': true,
+        'src/**/*.{ts,tsx}': {
           statements: 80,
           functions: 80,
           branches: 80,

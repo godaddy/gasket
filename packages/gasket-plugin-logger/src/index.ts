@@ -3,7 +3,7 @@ import type { MaybeAsync, Plugin, Gasket } from '@gasket/core';
 import type { CreateContext } from 'create-gasket-app';
 import type { PluginData } from '@gasket/plugin-metadata';
 import packageJson from '../package.json' with { type: 'json' };
-import { createChildLogger, verifyLoggerLevels } from './utils';
+import { createChildLogger, verifyLoggerLevels } from './utils.js';
 
 const { name, version, description } = packageJson;
 
