@@ -18,6 +18,6 @@ export default function create(gasket, { pkg, gasketConfig }) {
   });
 
   pkg.add('scripts', {
-    analyze: 'GASKET_ENV=local.analyze next build'
+    analyze: 'GASKET_ENV=local.analyze next build --webpack'
   });
 }

@@ -76,8 +76,14 @@ describe('create', function () {
   it('adds the default intl.locales config', async function () {
     await plugin.hooks.create(mockGasket, mockContext);
     expect(addStub).toHaveBeenCalledWith('intl', {
-      locales: ['en-US', 'fr-FR']
+      locales: ['en-US', 'fr-FR'],
+      nextRouting: false
     });
+  });
+
+  it('adds the default intl.nextRouting config', async function () {
+    await plugin.hooks.create(mockGasket, mockContext);
+    expect(mockGasket.config.intl.nextRouting).toBe(false);
   });
 
   it('does nothing if hasGasketIntl is false', async function () {
@@ -94,7 +100,8 @@ describe('create', function () {
     expect(addStub).toHaveBeenCalledWith('intl', {
       locales: ['en-US', 'fr-FR'],
       managerFilename: 'intl.ts',
-      defaultLocale: 'en-US'
+      defaultLocale: 'en-US',
+      nextRouting: false
     });
   });
 

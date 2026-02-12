@@ -4,9 +4,9 @@
   "description": "Gasket App",
   "scripts": {
     "docs": "tsx gasket.ts docs",
-    "build": "npm run build:tsc && next build",
+    "build": "npm run build:tsc && next build --webpack",
     "start": "npm run start:https & next start",
-    "local": "concurrently \"npm run build:tsc:watch\" \"npm run local:https\" \"next dev\"",
+    "local": "concurrently \"npm run build:tsc:watch\" \"npm run local:https\" \"next dev --webpack\"",
     "preview": "npm run build && npm run start",
     "prebuild": "tsx gasket.ts build",
     "start:https": "node dist/server.js",
@@ -24,21 +24,21 @@
     "@gasket/assets": "^7.4.3",
     "@gasket/core": "^7.5.2",
     "@gasket/intl": "^7.5.2",
-    "@gasket/nextjs": "^7.6.3",
+    "@gasket/nextjs": "^7.6.7",
     "@gasket/plugin-command": "^7.5.2",
     "@gasket/plugin-dynamic-plugins": "^7.4.1",
     "@gasket/plugin-https-proxy": "^7.4.1",
     "@gasket/plugin-intl": "^7.5.8",
     "@gasket/plugin-logger": "^7.3.7",
-    "@gasket/plugin-nextjs": "^7.6.3",
+    "@gasket/plugin-nextjs": "^7.7.2",
     "@gasket/plugin-webpack": "^7.3.8",
     "@gasket/plugin-winston": "^7.3.7",
     "@gasket/request": "^7.4.3",
     "@gasket/utils": "^7.4.2",
     "@types/react": "^19.0.12",
-    "next": "^15.5.9",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "next": "^16.1.6",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
     "react-intl": "^7.1.6",
     "tsx": "^4.19.3",
     "typescript": "^5.8.2",
@@ -73,7 +73,8 @@
   "eslintIgnore": [
     "dist",
     "coverage/",
-    "build/"
+    "build/",
+    "next-env.d.ts"
   ],
   "eslintConfig": {
     "extends": [

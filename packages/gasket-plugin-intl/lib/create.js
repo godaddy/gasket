@@ -14,6 +14,7 @@ export default async function create(gasket, createContext) {
   // adjust config
   gasket.config.intl.locales = ['en-US', 'fr-FR'];
   gasket.config.intl.managerFilename = 'intl.js';
+  gasket.config.intl.nextRouting = false;
   if (createContext.typescript) gasket.config.intl.managerFilename = 'intl.ts';
 
   const { files, pkg, gasketConfig } = createContext;
@@ -25,7 +26,8 @@ export default async function create(gasket, createContext) {
   gasketConfig.addPlugin('pluginIntl', name);
 
   const initialConfig = {
-    locales: gasket.config.intl.locales
+    locales: gasket.config.intl.locales,
+    nextRouting: gasket.config.intl.nextRouting
   };
 
   if (createContext.typescript) {
