@@ -1,5 +1,11 @@
 # `@gasket/plugin-intl`
 
+## 7.6.3
+
+### Patch Changes
+
+- 217acaa: React 19 & NextJS 16
+
 ## 7.6.2
 
 ### Patch Changes

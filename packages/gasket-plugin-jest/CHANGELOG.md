@@ -1,5 +1,11 @@
 # `@gasket/plugin-jest`
 
+## 7.5.8
+
+### Patch Changes
+
+- 217acaa: React 19 & NextJS 16
+
 ## 7.5.7
 
 ### Patch Changes

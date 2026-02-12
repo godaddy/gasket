@@ -1,5 +1,11 @@
 # `@gasket/plugin-analyze`
 
+## 7.4.2
+
+### Patch Changes
+
+- 217acaa: React 19 & NextJS 16
+
 ## 7.4.1
 
 ### Patch Changes
