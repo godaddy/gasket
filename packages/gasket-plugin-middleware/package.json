@@ -43,7 +43,7 @@
     "diagnostics": "^2.0.2"
   },
   "devDependencies": {
-    "@fastify/express": "^3.0.0",
+    "@fastify/express": "^4.0.3",
     "@gasket/cjs": "workspace:^",
     "@gasket/core": "workspace:^",
     "@gasket/plugin-express": "workspace:^",
