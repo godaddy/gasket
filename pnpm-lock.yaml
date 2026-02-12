@@ -99,10 +99,10 @@ importers:
         specifier: ^20.0.3
         version: 20.0.3
       react:
-        specifier: ^19.2.3
+        specifier: ^19.2.4
         version: 19.2.4
       react-dom:
-        specifier: ^19.2.3
+        specifier: ^19.2.4
         version: 19.2.4(react@19.2.4)
       rimraf:
         specifier: ^6.1.2
@@ -217,7 +217,7 @@ importers:
         specifier: ^1.0.4
         version: 1.0.4
       react:
-        specifier: ^19.2.3
+        specifier: ^19.2.4
         version: 19.2.4
       recursive-readdir:
         specifier: ^2.2.3
@@ -384,10 +384,10 @@ importers:
         specifier: ^16.1.6
         version: 16.1.6(@babel/core@7.26.10)(@opentelemetry/api@1.9.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       react:
-        specifier: ^19.2.3
+        specifier: ^19.2.4
         version: 19.2.4
       react-dom:
-        specifier: ^19.2.3
+        specifier: ^19.2.4
         version: 19.2.4(react@19.2.4)
       vitest:
         specifier: ^3.2.0
@@ -482,10 +482,10 @@ importers:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.15))(@types/node@20.17.19)(typescript@5.8.2))
       react:
-        specifier: ^19.2.3
+        specifier: ^19.2.4
         version: 19.2.4
       react-dom:
-        specifier: ^19.2.3
+        specifier: ^19.2.4
         version: 19.2.4(react@19.2.4)
       start-server-and-test:
         specifier: ^2.0.10
@@ -634,10 +634,10 @@ importers:
         specifier: workspace:^
         version: link:../create-gasket-app
       react:
-        specifier: ^19.2.3
+        specifier: ^19.2.4
         version: 19.2.4
       react-dom:
-        specifier: ^19.2.3
+        specifier: ^19.2.4
         version: 19.2.4(react@19.2.4)
       search-insights:
         specifier: ^2.17.3
@@ -964,7 +964,7 @@ importers:
         specifier: workspace:^
         version: link:../create-gasket-app
       react:
-        specifier: ^19.2.3
+        specifier: ^19.2.4
         version: 19.2.4
       react-intl:
         specifier: ^7.1.6
@@ -1012,10 +1012,10 @@ importers:
         specifier: ^16.1.6
         version: 16.1.6(@babel/core@7.26.10)(@opentelemetry/api@1.9.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       react:
-        specifier: ^19.2.3
+        specifier: ^19.2.4
         version: 19.2.4
       react-dom:
-        specifier: ^19.2.3
+        specifier: ^19.2.4
         version: 19.2.4(react@19.2.4)
       ts-jest:
         specifier: ^29.2.5
@@ -1271,10 +1271,10 @@ importers:
         specifier: ^20.0.3
         version: 20.0.3
       react:
-        specifier: ^19.2.3
+        specifier: ^19.2.4
         version: 19.2.4
       react-dom:
-        specifier: ^19.2.3
+        specifier: ^19.2.4
         version: 19.2.4(react@19.2.4)
       ts-node:
         specifier: ^10.9.2
@@ -1405,10 +1405,10 @@ importers:
         specifier: ^3.1.9
         version: 3.1.9
       react:
-        specifier: ^19.2.3
+        specifier: ^19.2.4
         version: 19.2.4
       react-dom:
-        specifier: ^19.2.3
+        specifier: ^19.2.4
         version: 19.2.4(react@19.2.4)
       vitest:
         specifier: ^3.2.0
@@ -1447,10 +1447,10 @@ importers:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.15))(@types/node@20.17.19)(typescript@5.8.2))
       react:
-        specifier: ^19.2.3
+        specifier: ^19.2.4
         version: 19.2.4
       react-dom:
-        specifier: ^19.2.3
+        specifier: ^19.2.4
         version: 19.2.4(react@19.2.4)
       react-redux:
         specifier: ^9.2.0
@@ -1922,10 +1922,10 @@ importers:
         specifier: ^20.0.3
         version: 20.0.3
       react:
-        specifier: ^19.2.3
+        specifier: ^19.2.4
         version: 19.2.4
       react-dom:
-        specifier: ^19.2.3
+        specifier: ^19.2.4
         version: 19.2.4(react@19.2.4)
       react-intl:
         specifier: ^7.1.6
