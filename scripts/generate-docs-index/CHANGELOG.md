@@ -1,5 +1,24 @@
 # generate-docs-index
 
+## 7.4.28
+
+### Patch Changes
+
+- Updated dependencies [217acaa]
+- Updated dependencies [4d6c78e]
+  - @gasket/template-nextjs-express@7.0.6
+  - @gasket/template-nextjs-pages@7.0.6
+  - @gasket/template-api-express@7.0.5
+  - @gasket/template-api-fastify@7.0.5
+  - @gasket/template-nextjs-app@7.0.6
+  - @gasket/plugin-analyze@7.4.2
+  - @gasket/plugin-nextjs@7.7.3
+  - @gasket/plugin-intl@7.6.3
+  - @gasket/plugin-jest@7.5.8
+  - @gasket/nextjs@7.6.8
+  - @gasket/preset-nextjs@7.6.5
+  - @gasket/preset-api@7.6.6
+
 ## 7.4.27
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # `@gasket/nextjs`
 
+## 7.6.8
+
+### Patch Changes
+
+- 217acaa: React 19 & NextJS 16
+
 ## 7.6.7
 
 ### Patch Changes
