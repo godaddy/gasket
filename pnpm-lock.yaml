@@ -99,10 +99,10 @@ importers:
         specifier: ^20.0.3
         version: 20.0.3
       react:
-        specifier: ^19.2.3
+        specifier: ^19.2.4
         version: 19.2.4
       react-dom:
-        specifier: ^19.2.3
+        specifier: ^19.2.4
         version: 19.2.4(react@19.2.4)
       rimraf:
         specifier: ^6.1.2
@@ -211,7 +211,7 @@ importers:
         specifier: ^1.0.4
         version: 1.0.4
       react:
-        specifier: ^19.2.3
+        specifier: ^19.2.4
         version: 19.2.4
       recursive-readdir:
         specifier: ^2.2.3
@@ -350,10 +350,10 @@ importers:
         specifier: ^15.5.9
         version: 15.5.9(@babel/core@7.26.10)(@opentelemetry/api@1.9.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       react:
-        specifier: ^19.2.3
+        specifier: ^19.2.4
         version: 19.2.4
       react-dom:
-        specifier: ^19.2.3
+        specifier: ^19.2.4
         version: 19.2.4(react@19.2.4)
       vitest:
         specifier: ^3.2.0
@@ -1146,10 +1146,10 @@ importers:
         specifier: ^20.0.3
         version: 20.0.3
       react:
-        specifier: ^19.2.3
+        specifier: ^19.2.4
         version: 19.2.4
       react-dom:
-        specifier: ^19.2.3
+        specifier: ^19.2.4
         version: 19.2.4(react@19.2.4)
       react-intl:
         specifier: ^7.1.6
