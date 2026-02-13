@@ -14,8 +14,8 @@ const manifest: LocaleManifest = {
   ],
   localesMap: {},
   imports: {
-    'locales/en-US': () => import('./locales/en-US.json'),
-    'locales/fr-FR': () => import('./locales/fr-FR.json')
+    'locales/fr-FR': () => import('./locales/fr-FR.json'),
+    'locales/en-US': () => import('./locales/en-US.json')
   }
 };
 
