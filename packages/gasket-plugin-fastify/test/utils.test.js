@@ -11,15 +11,16 @@ class MockApp {
   }
 }
 
-const mockFastify = vi.fn().mockReturnValue(new MockApp());
-const cookieParserMiddleware = vi.fn();
-const compressionMiddleware = vi.fn();
-const mockCookieParser = vi.fn().mockReturnValue(cookieParserMiddleware);
-const mockCompression = vi.fn().mockReturnValue(compressionMiddleware);
+const mockApp = new MockApp();
+const mockAdapter = {
+  createInstance: vi.fn().mockReturnValue(mockApp)
+};
 
-vi.mock('fastify', () => ({ default: mockFastify }));
-vi.mock('cookie-parser', () => ({ default: mockCookieParser }));
-vi.mock('compression', () => ({ default: mockCompression }));
+const mockCreateFastifyAdapter = vi.fn().mockReturnValue(mockAdapter);
+
+vi.mock('../lib/adapters/index.js', () => ({
+  createFastifyAdapter: mockCreateFastifyAdapter
+}));
 
 const {
   getAppInstance,
@@ -33,7 +34,12 @@ describe('getAppInstance', () => {
     vi.clearAllMocks();
     gasket = {
       middleware: {},
-      logger: {},
+      logger: {
+        info: vi.fn(),
+        warn: vi.fn(),
+        error: vi.fn(),
+        debug: vi.fn()
+      },
       config: {}
     };
   });
@@ -43,69 +49,47 @@ describe('getAppInstance', () => {
     testClearAppInstance();
   });
 
-  it('should return app from getFastifyApp action', () => {
-    expect(getAppInstance(gasket)).toBeInstanceOf(MockApp);
+  it('should return app from getAppInstance', () => {
+    const app = getAppInstance(gasket);
+    expect(app).toBe(mockApp);
   });
 
-  it('does not enable trust proxy by default', async () => {
+  it('creates adapter when first called', () => {
     getAppInstance(gasket);
-    expect(mockFastify).toHaveBeenCalledWith({
-      logger: gasket.logger,
-      trustProxy: false,
-      disableRequestLogging: true
-    });
+    expect(mockCreateFastifyAdapter).toHaveBeenCalledTimes(1);
   });
 
-  it('does enable trust proxy by if set to true', async () => {
-    gasket.config.fastify = { trustProxy: true };
+  it('passes config to adapter createInstance', () => {
+    gasket.config.fastify = { trustProxy: true, disableRequestLogging: false };
+    gasket.config.https = { key: 'test', cert: 'test' };
+    gasket.config.http2 = true;
+
     getAppInstance(gasket);
 
-    expect(mockFastify).toHaveBeenCalledWith({
-      logger: gasket.logger,
-      trustProxy: true,
-      disableRequestLogging: true
-    });
+    expect(mockAdapter.createInstance).toHaveBeenCalledWith(
+      {
+        trustProxy: true,
+        disableRequestLogging: false,
+        https: { key: 'test', cert: 'test' },
+        http2: true
+      },
+      gasket.logger
+    );
   });
 
-  it('does enable trust proxy by if set to string', async () => {
-    gasket.config.fastify = { trustProxy: '127.0.0.1' };
-    getAppInstance(gasket);
+  it('caches instance on subsequent calls', () => {
+    const app1 = getAppInstance(gasket);
+    const app2 = getAppInstance(gasket);
 
-    expect(mockFastify).toHaveBeenCalledWith({
-      logger: gasket.logger,
-      trustProxy: '127.0.0.1',
-      disableRequestLogging: true
-    });
+    expect(app1).toBe(app2);
+    expect(mockCreateFastifyAdapter).toHaveBeenCalledTimes(1);
   });
 
-  it('defaults to true for disableRequestLogging', async () => {
+  it('clears cache with testClearAppInstance', () => {
+    getAppInstance(gasket);
+    testClearAppInstance();
     getAppInstance(gasket);
 
-    expect(mockFastify).toHaveBeenCalledWith({
-      logger: gasket.logger,
-      trustProxy: false,
-      disableRequestLogging: true
-    });
-  });
-
-  it('allows request logging if disableRequestLogging is set to false', async () => {
-    gasket.config.fastify = { disableRequestLogging: false };
-    getAppInstance(gasket);
-
-    expect(mockFastify).toHaveBeenCalledWith({
-      logger: gasket.logger,
-      trustProxy: false,
-      disableRequestLogging: false
-    });
-  });
-
-  it('adds log plugin as logger to fastify', async function () {
-    getAppInstance(gasket);
-
-    expect(mockFastify).toHaveBeenCalledWith({
-      logger: gasket.logger,
-      trustProxy: false,
-      disableRequestLogging: true
-    });
+    expect(mockCreateFastifyAdapter).toHaveBeenCalledTimes(2);
   });
 });

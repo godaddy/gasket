@@ -11,6 +11,16 @@ To install the plugin, run:
 npm i @gasket/plugin-middleware
 ```
 
+### Fastify Support
+
+When using this plugin with Fastify, you must also install `@fastify/express` as a peer dependency:
+
+```sh
+npm i @fastify/express
+```
+
+This package is required for Express-style middleware compatibility with Fastify.
+
 Then, update your `gasket.js` configuration file to include the plugin:
 
 ```diff
