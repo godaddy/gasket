@@ -39,7 +39,6 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-swagger",
   "dependencies": {
-    "express": "^4.21.2",
     "js-yaml": "^4.1.1",
     "swagger-jsdoc": "^4.3.2",
     "swagger-ui-express": "^4.6.3"
@@ -61,5 +60,13 @@
   "peerDependencies": {
     "@fastify/swagger": "^8.15.0 || ^9.0.0",
     "@fastify/swagger-ui": "^4.2.0 || ^5.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@fastify/swagger": {
+      "optional": true
+    },
+    "@fastify/swagger-ui": {
+      "optional": true
+    }
   }
 }

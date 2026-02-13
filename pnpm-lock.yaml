@@ -1009,9 +1009,6 @@ importers:
 
   packages/gasket-plugin-swagger:
     dependencies:
-      express:
-        specifier: ^4.21.2
-        version: 4.21.2
       js-yaml:
         specifier: ^4.1.1
         version: 4.1.1
