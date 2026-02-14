@@ -51,7 +51,8 @@ describe('setupNextApp', () => {
       expect(mockNext).toHaveBeenCalledWith({
         dev: true,
         hostname: 'localhost',
-        port: 3000
+        port: 3000,
+        webpack: true
       });
     });
 
@@ -61,7 +62,8 @@ describe('setupNextApp', () => {
       expect(mockNext).toHaveBeenCalledWith({
         dev: false,
         hostname: 'localhost',
-        port: 3000
+        port: 3000,
+        webpack: true
       });
     });
 
@@ -73,7 +75,8 @@ describe('setupNextApp', () => {
       expect(mockNext).toHaveBeenCalledWith({
         dev: false,
         hostname: 'localhost',
-        port: 80
+        port: 80,
+        webpack: true
       });
     });
 
@@ -86,7 +89,8 @@ describe('setupNextApp', () => {
       expect(mockNext).toHaveBeenCalledWith({
         dev: false,
         hostname: 'localhost',
-        port: 8080
+        port: 8080,
+        webpack: true
       });
     });
   });

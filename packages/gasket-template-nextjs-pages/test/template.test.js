@@ -51,9 +51,9 @@ describe('@gasket/template-nextjs-pages', () => {
       const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf8'));
 
       expect(packageJson.scripts).toBeDefined();
-      expect(packageJson.scripts.build).toBe('npm run build:tsc && next build');
+      expect(packageJson.scripts.build).toBe('npm run build:tsc && next build --webpack');
       expect(packageJson.scripts.start).toBe('npm run start:https & next start');
-      expect(packageJson.scripts.local).toBe('concurrently "npm run build:tsc:watch" "npm run local:https" "next dev"');
+      expect(packageJson.scripts.local).toBe('concurrently "npm run build:tsc:watch" "npm run local:https" "next dev --webpack"');
       expect(packageJson.scripts.test).toBe('vitest run');
       expect(packageJson.scripts['test:watch']).toBe('vitest');
       expect(packageJson.scripts['test:coverage']).toBe('vitest run --coverage');
@@ -141,7 +141,7 @@ describe('@gasket/template-nextjs-pages', () => {
       ]);
       expect(packageJson.eslintConfig.parser).toBe('@typescript-eslint/parser');
       expect(packageJson.eslintConfig.settings.localeFiles).toEqual(['locales/en-US.json']);
-      expect(packageJson.eslintIgnore).toEqual(['dist', 'coverage/', 'build/']);
+      expect(packageJson.eslintIgnore).toEqual(['dist', 'coverage/', 'build/', 'next-env.d.ts']);
     });
   });
 
@@ -162,7 +162,7 @@ describe('@gasket/template-nextjs-pages', () => {
       expect(tsconfig.compilerOptions.moduleResolution).toBe('bundler');
       expect(tsconfig.compilerOptions.resolveJsonModule).toBe(true);
       expect(tsconfig.compilerOptions.isolatedModules).toBe(true);
-      expect(tsconfig.compilerOptions.jsx).toBe('preserve');
+      expect(tsconfig.compilerOptions.jsx).toBe('react-jsx');
       expect(tsconfig.compilerOptions.incremental).toBe(true);
       expect(tsconfig.compilerOptions.plugins).toBeDefined();
       expect(tsconfig.compilerOptions.paths).toBeDefined();

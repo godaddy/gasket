@@ -46,6 +46,7 @@ export default makeGasket({
       'fr-FR'
     ],
     defaultLocale: 'en-US',
-    managerFilename: 'intl.ts'
+    managerFilename: 'intl.ts',
+    nextRouting: false
   }
 } as GasketConfigDefinition);

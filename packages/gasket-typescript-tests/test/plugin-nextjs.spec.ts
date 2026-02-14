@@ -24,10 +24,7 @@ describe('@gasket/plugin-nextjs', () => {
     const handler: Hook<'nextConfig'> = (gasket: Gasket, config: NextConfig): NextConfig => {
       return {
         ...config,
-        future: {
-          ...config.future,
-          webpack5: true
-        }
+        poweredByHeader: false
       };
     };
   });

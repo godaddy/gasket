@@ -65,7 +65,7 @@ describe('@gasket/template-nextjs-app', () => {
       expect(tsconfig.compilerOptions).toHaveProperty('module', 'ESNext');
       expect(tsconfig.compilerOptions).toHaveProperty('moduleResolution', 'bundler');
       expect(tsconfig.compilerOptions).toHaveProperty('target', 'ESNext');
-      expect(tsconfig.compilerOptions).toHaveProperty('jsx', 'preserve');
+      expect(tsconfig.compilerOptions).toHaveProperty('jsx', 'react-jsx');
       expect(tsconfig.compilerOptions.lib).toContain('dom');
       expect(tsconfig.include).toContain('**/*.tsx');
     });

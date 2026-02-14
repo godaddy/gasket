@@ -27,7 +27,7 @@
     "noEmit": true,
     "incremental": true,
     "resolveJsonModule": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "plugins": [
       {
         "name": "next"
@@ -42,6 +42,7 @@
     "./plugins",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts"
   ]
 }
