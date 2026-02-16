@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 7.0.6
+
+### Patch Changes
+
+- fdd8860: Avoid **dirname and **filename const names
+
 ## 7.0.5
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # `@gasket/plugin-docusaurus`
 
+## 7.5.1
+
+### Patch Changes
+
+- fdd8860: Avoid **dirname and **filename const names
+  - @gasket/plugin-logger@7.4.0
+
 ## 7.5.0
 
 ### Minor Changes

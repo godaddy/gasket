@@ -1,5 +1,11 @@
 # `@gasket/utils`
 
+## 7.6.5
+
+### Patch Changes
+
+- fdd8860: Avoid **dirname and **filename const names
+
 ## 7.6.4
 
 ### Patch Changes

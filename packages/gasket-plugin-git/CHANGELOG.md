@@ -1,5 +1,12 @@
 # `@gasket/plugin-git`
 
+## 7.4.9
+
+### Patch Changes
+
+- Updated dependencies [fdd8860]
+  - @gasket/utils@7.6.5
+
 ## 7.4.8
 
 ### Patch Changes

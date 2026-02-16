@@ -1,5 +1,12 @@
 # `@gasket/core`
 
+## 7.7.3
+
+### Patch Changes
+
+- Updated dependencies [fdd8860]
+  - @gasket/utils@7.6.5
+
 ## 7.7.2
 
 ### Patch Changes

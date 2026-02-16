@@ -1,5 +1,29 @@
 # `@gasket/preset-api`
 
+## 7.6.7
+
+### Patch Changes
+
+- fdd8860: Avoid **dirname and **filename const names
+- Updated dependencies [fdd8860]
+  - @gasket/plugin-dynamic-plugins@7.5.1
+  - @gasket/plugin-docusaurus@7.5.1
+  - @gasket/plugin-express@7.5.1
+  - @gasket/plugin-fastify@7.5.3
+  - @gasket/plugin-vitest@7.2.1
+  - @gasket/plugin-https@7.4.1
+  - @gasket/plugin-mocha@7.5.6
+  - @gasket/plugin-docs@7.5.4
+  - @gasket/plugin-jest@7.5.8
+  - @gasket/plugin-lint@7.4.4
+  - @gasket/plugin-swagger@7.4.0
+  - @gasket/plugin-logger@7.4.0
+  - @gasket/plugin-command@7.6.4
+  - @gasket/plugin-cypress@7.5.3
+  - @gasket/plugin-git@7.4.9
+  - @gasket/plugin-typescript@7.4.6
+  - @gasket/plugin-winston@7.4.0
+
 ## 7.6.6
 
 ### Patch Changes
