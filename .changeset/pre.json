@@ -43,8 +43,11 @@
     "generate-docs-index": "8.0.0-next.1"
   },
   "changesets": [
+    "curvy-mammals-hope",
     "giant-hornets-shout",
     "grumpy-streets-stop",
+    "hungry-rats-report",
+    "mighty-ears-bet",
     "polite-hornets-jam",
     "spicy-buttons-learn",
     "weak-foxes-prove"

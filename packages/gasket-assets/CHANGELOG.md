@@ -1,5 +1,11 @@
 # `@gasket/assets`
 
+## 8.0.0-next.2
+
+### Patch Changes
+
+- 9f53191: React 19 upgrade
+
 ## 8.0.0-next.1
 
 ### Patch Changes

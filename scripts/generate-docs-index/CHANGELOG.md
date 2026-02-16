@@ -1,5 +1,23 @@
 # generate-docs-index
 
+## 8.0.0-next.2
+
+### Patch Changes
+
+- Updated dependencies [a92c7ed]
+- Updated dependencies [9f53191]
+- Updated dependencies [82806fd]
+  - @gasket/template-nextjs-express@8.0.0-next.1
+  - @gasket/template-nextjs-pages@8.0.0-next.1
+  - @gasket/template-nextjs-app@8.0.0-next.1
+  - @gasket/plugin-nextjs@8.0.0-next.2
+  - @gasket/nextjs@8.0.0-next.2
+  - @gasket/template-api-express@8.0.0-next.1
+  - @gasket/template-api-fastify@8.0.0-next.1
+  - @gasket/react-intl@8.0.0-next.2
+  - @gasket/assets@8.0.0-next.2
+  - @gasket/plugin-intl@8.0.0-next.1
+
 ## 8.0.0-next.1
 
 ### Patch Changes
