@@ -13,9 +13,9 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import chalk from 'chalk';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const ROOT = join(__dirname, '..');
+const fileName = fileURLToPath(import.meta.url);
+const dirName = dirname(fileName);
+const ROOT = join(dirName, '..');
 const PACKAGES_DIR = join(ROOT, 'packages');
 
 // Expected dot files that should exist in template directories (with .template suffix)

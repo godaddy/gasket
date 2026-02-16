@@ -4,8 +4,8 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import create from '../lib/create.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const fileName = fileURLToPath(import.meta.url);
+const dirName = dirname(fileName);
 
 const { name, version, devDependencies } = JSON.parse(
   readFileSync(new URL('../package.json', import.meta.url), 'utf-8')
@@ -13,7 +13,7 @@ const { name, version, devDependencies } = JSON.parse(
 
 describe('create hook', () => {
   let mockContext;
-  const root = path.join(__dirname, '..', 'lib');
+  const root = path.join(dirName, '..', 'lib');
 
   beforeEach(() => {
     mockContext = {

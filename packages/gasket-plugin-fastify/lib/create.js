@@ -4,8 +4,8 @@
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import packageJson from '../package.json' with { type: 'json' };
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const fileName = fileURLToPath(import.meta.url);
+const dirName = dirname(fileName);
 const { name, version, devDependencies } = packageJson;
 
 const createTestFiles = ({ files, generatorDir, testPlugins, globIgnore }) => {
@@ -42,7 +42,7 @@ export default async function create(gasket, context) {
     pkg,
     gasketConfig
   } = context;
-  const generatorDir = `${__dirname}/../generator`;
+  const generatorDir = `${dirName}/../generator`;
 
   gasketConfig.addPlugin('pluginFastify', name);
 

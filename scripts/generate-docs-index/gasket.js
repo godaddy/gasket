@@ -7,9 +7,9 @@ import { createRequire } from 'module';
 import configPlugin from './plugins/config-plugin.js';
 import siteDocsPlugin from './plugins/site-docs-plugin.js';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const dirName = path.dirname(fileURLToPath(import.meta.url));
 const require = createRequire(import.meta.url);
-const projectRoot = path.resolve(__dirname, '..', '..');
+const projectRoot = path.resolve(dirName, '..', '..');
 const packagesDir = path.join(projectRoot, 'packages');
 const packageDirs = fs.readdirSync(packagesDir, { withFileTypes: true });
 

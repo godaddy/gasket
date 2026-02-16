@@ -3,9 +3,9 @@ import { readFileSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const templateDir = join(__dirname, '..', 'template');
+const fileName = fileURLToPath(import.meta.url);
+const dirName = dirname(fileName);
+const templateDir = join(dirName, '..', 'template');
 
 describe('@gasket/template-nextjs-pages', () => {
   describe('template structure', () => {

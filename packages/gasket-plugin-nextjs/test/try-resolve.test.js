@@ -2,8 +2,8 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import tryResolve from '../lib/utils/try-resolve.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const fileName = fileURLToPath(import.meta.url);
+const dirName = dirname(fileName);
 
 describe('tryResolve', () => {
   it('returns resolved path when module exists', () => {
@@ -30,7 +30,7 @@ describe('tryResolve', () => {
   });
 
   it('handles relative module paths', () => {
-    const result = tryResolve('./webpack-config.test.js', [__dirname]);
+    const result = tryResolve('./webpack-config.test.js', [dirName]);
     expect(result).toContain('webpack-config.test.js');
   });
 

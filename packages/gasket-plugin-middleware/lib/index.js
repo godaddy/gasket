@@ -4,9 +4,9 @@ import { dirname, join } from 'node:path';
 import express from './express.js';
 import fastify from './fastify.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const packageJson = JSON.parse(readFileSync(join(__dirname, '../package.json'), 'utf8'));
+const fileName = fileURLToPath(import.meta.url);
+const dirName = dirname(fileName);
+const packageJson = JSON.parse(readFileSync(join(dirName, '../package.json'), 'utf8'));
 
 const { name, version, description } = packageJson;
 

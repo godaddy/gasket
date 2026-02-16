@@ -6,11 +6,11 @@ import { fileURLToPath } from 'url';
 import yaml from 'js-yaml';
 
 // Get __dirname equivalent for ESM
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const fileName = fileURLToPath(import.meta.url);
+const dirName = path.dirname(fileName);
 
 // Resolve paths relative to the monorepo root
-const rootDir = path.resolve(__dirname, '..'); // Move up from `scripts/`
+const rootDir = path.resolve(dirName, '..'); // Move up from `scripts/`
 const packagesDir = path.join(rootDir, 'packages');
 const workspaceYamlPath = path.join(rootDir, 'pnpm-workspace.yaml');
 const rootPackageJsonPath = path.join(rootDir, 'package.json'); // Root package.json

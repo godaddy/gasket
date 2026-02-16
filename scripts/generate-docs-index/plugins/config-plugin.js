@@ -3,8 +3,8 @@ import { mkdir, copyFile } from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const projectRoot = path.resolve(__dirname, '..', '..', '..');
+const dirName = path.dirname(fileURLToPath(import.meta.url));
+const projectRoot = path.resolve(dirName, '..', '..', '..');
 const packagesDir = path.join(projectRoot, 'packages');
 
 export default {

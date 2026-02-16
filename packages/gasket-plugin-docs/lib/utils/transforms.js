@@ -90,12 +90,12 @@ const txAbsoluteLinks = {
   test: isMarkdown,
   handler: function txAbsoluteLinks(content, { filename, docsConfig }) {
     const { targetRoot } = docsConfig;
-    const dirname = path.dirname(path.join(targetRoot, filename));
+    const dirName = path.dirname(path.join(targetRoot, filename));
 
     const tx = makeLinkTransform((link) => {
       return link.replace(/(^\/.+)(#.+)/, (match, p1, p2) => {
         const linkTarget = path.join(targetRoot, p1);
-        const relLink = path.relative(dirname, linkTarget);
+        const relLink = path.relative(dirName, linkTarget);
         return [relLink, p2].join('');
       });
     });

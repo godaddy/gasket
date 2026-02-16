@@ -6,7 +6,7 @@ import addFrontMatter from './add-front-matter.js';
 import transformLinks from './transform-links.js';
 import createDir from './create-dir.js';
 import { fileURLToPath } from 'url';
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const dirName = path.dirname(fileURLToPath(import.meta.url));
 
 /**
  * transformFile - Transform the content of a file
@@ -166,7 +166,7 @@ async function copyRootDocs(projectRoot, targetRoot) {
  * @param {string} projectRoot The root of the project
  */
 export default async function copySiteDocs(projectRoot) {
-  const sourceRoot = path.join(__dirname, '..', '.docs', 'docs');
+  const sourceRoot = path.join(dirName, '..', '.docs', 'docs');
   const targetRoot = path.join(projectRoot, 'site', 'docs');
   await copyPackageDocs(sourceRoot, targetRoot);
   await copyCreateGasketApp(projectRoot);
