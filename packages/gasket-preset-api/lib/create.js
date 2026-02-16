@@ -16,8 +16,8 @@ export default function create(gasket, context) {
     runCmd = 'npm run';
   }
 
-  const __dirname = fileURLToPath(import.meta.url);
-  const generatorDir = path.join(__dirname, '..', '..', 'generator');
+  const fileName = fileURLToPath(import.meta.url);
+  const generatorDir = path.join(fileName, '..', '..', 'generator');
   files.add(`${generatorDir}/*.md`);
 
   if (!context.typescript) {

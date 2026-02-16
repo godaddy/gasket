@@ -7,9 +7,9 @@ import path from 'path';
 import { spawn } from 'child_process';
 import { fileURLToPath } from 'url';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const packagesDir = path.join(__dirname, '../packages');
+const fileName = fileURLToPath(import.meta.url);
+const dirName = path.dirname(fileName);
+const packagesDir = path.join(dirName, '../packages');
 
 const OPERATIONS = {
   'npm-ci': {

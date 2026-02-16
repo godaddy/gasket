@@ -48,14 +48,14 @@ async function load(url, context, defaultLoad) {
       return { source, format };
     }
 
-    const filename = urlModule.fileURLToPath(url);
+    const fileName = urlModule.fileURLToPath(url);
 
     // Babel config files can themselves be ES modules,
     // but we cannot transform those since doing so would cause an infinite loop.
-    if (isBabelConfigFile(filename)) {
+    if (isBabelConfigFile(fileName)) {
       return {
         source,
-        format: /\.(c|m)?js$/.test(filename) ? 'module' : 'json'
+        format: /\.(c|m)?js$/.test(fileName) ? 'module' : 'json'
       };
     }
 
@@ -63,7 +63,7 @@ async function load(url, context, defaultLoad) {
       sourceType: format || 'module',
       root: `${process.cwd()}/test/`,
       rootMode: 'root',
-      filename: filename,
+      filename: fileName,
       configFile: `${process.cwd()}/test/.babelrc`
     });
 

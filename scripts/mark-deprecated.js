@@ -4,7 +4,7 @@ import * as path from 'path';
 import { execSync } from 'child_process';
 
 const require = createRequire(import.meta.url);
-const __dirname = path.dirname(new URL(import.meta.url).pathname);
+const dirName = path.dirname(new URL(import.meta.url).pathname);
 
 /**
  * Find all packages with a `deprecated` property and `npm deprecate` them.
@@ -12,7 +12,7 @@ const __dirname = path.dirname(new URL(import.meta.url).pathname);
  */
 function main() {
   const packagePaths = globSync('packages/*/package.json');
-  const deprecated = packagePaths.map(p => require(path.join(__dirname, '..', p))).filter(pkg => pkg.deprecated);
+  const deprecated = packagePaths.map(p => require(path.join(dirName, '..', p))).filter(pkg => pkg.deprecated);
 
   deprecated.forEach(pkg => {
     const cmd = `npm deprecate ${ pkg.name }@${ pkg.version } "${ pkg.deprecated }"`;

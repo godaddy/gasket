@@ -6,8 +6,8 @@ import generateDefaultConfig from '../lib/generate-default-config.js';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const fileName = fileURLToPath(import.meta.url);
+const dirName = dirname(fileName);
 
 const mockReadFileStub = vi.hoisted(() => vi.fn());
 
@@ -15,7 +15,7 @@ vi.mock('node:fs/promises', () => ({
   readFile: mockReadFileStub
 }));
 
-const DEFAULT_CONFIG = fs.readFileSync(path.join(__dirname, '..', 'generator', 'docusaurus.config.js'), 'utf-8');
+const DEFAULT_CONFIG = fs.readFileSync(path.join(dirName, '..', 'generator', 'docusaurus.config.js'), 'utf-8');
 const GASKET_APP_NAME = 'test-gasket';
 const GASKET_DOCS_OUTPUTDIR = 'my-docs';
 

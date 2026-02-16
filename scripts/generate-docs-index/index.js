@@ -5,19 +5,19 @@ import { readFile, writeFile } from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const dirName = path.dirname(fileURLToPath(import.meta.url));
 const startTag = '<!-- START GENERATED -->';
 const endTag = '<!-- END GENERATED -->';
 
-const projectRoot = path.resolve(__dirname, '..', '..');
-const sourcePath = path.join(__dirname, '.docs', 'docs', 'README.md');
+const projectRoot = path.resolve(dirName, '..', '..');
+const sourcePath = path.join(dirName, '.docs', 'docs', 'README.md');
 const targetPath = path.join(projectRoot, 'README.md');
 
 /**
  *
  */
 async function main() {
-  await runShellCommand('node', ['gasket.js', 'docs', '--no-view'], { cwd: __dirname });
+  await runShellCommand('node', ['gasket.js', 'docs', '--no-view'], { cwd: dirName });
 
   let content = await readFile(sourcePath, 'utf-8');
 

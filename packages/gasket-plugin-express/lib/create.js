@@ -5,8 +5,8 @@ import { dirname, join } from 'node:path';
 
 import packageJson from '../package.json' with { type: 'json' };
 const { name, version, devDependencies } = packageJson;
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const fileName = fileURLToPath(import.meta.url);
+const dirName = dirname(fileName);
 
 const createTestFiles = ({ files, generatorDir, testPlugins, globIgnore }) => {
   if (!testPlugins || testPlugins.length === 0) return;
@@ -42,7 +42,7 @@ export default async function create(gasket, context) {
     pkg,
     gasketConfig
   } = context;
-  const generatorDir = join(__dirname, '..', 'generator');
+  const generatorDir = join(dirName, '..', 'generator');
 
   gasketConfig.addPlugin('pluginExpress', name);
 

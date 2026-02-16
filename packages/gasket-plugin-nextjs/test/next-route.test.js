@@ -2,8 +2,8 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const fileName = fileURLToPath(import.meta.url);
+const dirName = dirname(fileName);
 
 describe('next-route', () => {
   let gasket, req, getNextRoute;
@@ -16,7 +16,7 @@ describe('next-route', () => {
 
     gasket = {
       config: {
-        root: path.join(__dirname, 'mock-repo')
+        root: path.join(dirName, 'mock-repo')
       },
       logger: {
         warn: vi.fn()
@@ -28,7 +28,7 @@ describe('next-route', () => {
 
 
   it('returns null if a valid routes manifest could not be found', async () => {
-    gasket.config.root = __dirname;
+    gasket.config.root = dirName;
 
     const route = await getNextRoute(gasket, req);
 
@@ -37,7 +37,7 @@ describe('next-route', () => {
 
   describe('if a valid .next/routes-manifest.json exists', () => {
     beforeEach(() => {
-      gasket.config.root = path.resolve(__dirname, './mock-repo');
+      gasket.config.root = path.resolve(dirName, './mock-repo');
     });
 
     it('returns null if the URL does not match a route', async () => {

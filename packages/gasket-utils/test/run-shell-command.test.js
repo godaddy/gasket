@@ -8,10 +8,10 @@ const runShellCommand = (await import('../lib/run-shell-command.js')).default;
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const fileName = fileURLToPath(import.meta.url);
+const dirName = dirname(fileName);
 
-const cwd = __dirname;
+const cwd = dirName;
 const failMode = true;
 
 const pause = ms => new Promise((resolve) => {
