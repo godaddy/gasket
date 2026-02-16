@@ -1,29 +1,9 @@
 // @ts-nocheck
 
-import fastify from 'fastify';
-
-const fallbackMap = {
-  fatal: 'error',
-  trace: 'debug'
-};
-
-/**
- * A helper function to ensure that all the required log levels
- * for a Fastify server are present.
- * @type {import('@gasket/plugin-fastify').alignLogger}
- */
-function alignLogger(logger) {
-  const fastifyLogger = logger;
-  ['fatal', 'trace'].map(level => {
-    if (!logger[level]) {
-      fastifyLogger[level] = logger[fallbackMap[level]];
-    }
-  });
-
-  return fastifyLogger;
-}
+import { createFastifyAdapter } from './adapters/index.js';
 
 let instance = null;
+let adapter = null;
 
 /**
  * Get the Fastify instance.
@@ -33,16 +13,23 @@ let instance = null;
 export function getAppInstance(gasket) {
   if (!instance) {
     const { fastify: fastifyConfig = {}, http2, https } = gasket.config;
-    const { trustProxy = false, disableRequestLogging = true } = fastifyConfig;
-    const fastifyLogger = alignLogger(gasket.logger);
 
-    instance = fastify({ logger: fastifyLogger, trustProxy, https, http2, disableRequestLogging });
+    // Create the appropriate adapter for the installed Fastify version
+    adapter = createFastifyAdapter();
+
+    // Use the adapter to create the Fastify instance
+    instance = adapter.createInstance(
+      {
+        ...fastifyConfig,
+        https,
+        http2
+      },
+      gasket.logger
+    );
   }
 
   return instance;
 }
-
-export { alignLogger };
 
 /**
  * Clear the Fastify app instance (for testing only)
@@ -50,4 +37,5 @@ export { alignLogger };
  */
 export function testClearAppInstance() {
   instance = null;
+  adapter = null;
 }
