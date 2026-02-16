@@ -1,5 +1,11 @@
 # @gasket/typescript-tests
 
+## 7.5.1
+
+### Patch Changes
+
+- 217acaa: React 19 & NextJS 16
+
 ## 7.5.0
 
 ### Minor Changes
