@@ -1,5 +1,18 @@
 # generate-docs-index
 
+## 8.0.0-next.3
+
+### Patch Changes
+
+- Updated dependencies [4aaacd0]
+  - @gasket/template-api-fastify@8.0.0-next.2
+  - @gasket/plugin-middleware@8.0.0-next.2
+  - @gasket/plugin-fastify@8.0.0-next.2
+  - @gasket/plugin-swagger@8.0.0-next.2
+  - @gasket/plugin-nextjs@8.0.0-next.3
+  - @gasket/plugin-morgan@8.0.0-next.1
+  - @gasket/plugin-intl@8.0.0-next.1
+
 ## 8.0.0-next.2
 
 ### Patch Changes

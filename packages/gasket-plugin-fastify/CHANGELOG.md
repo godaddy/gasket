@@ -1,5 +1,11 @@
 # `@gasket/plugin-fastify`
 
+## 8.0.0-next.2
+
+### Patch Changes
+
+- 4aaacd0: Update fastify to use v5 and use adapters
+
 ## 8.0.0-next.1
 
 ### Patch Changes
