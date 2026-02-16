@@ -1,5 +1,12 @@
 # `@gasket/plugin-intl`
 
+## 7.6.4
+
+### Patch Changes
+
+- fdd8860: Avoid **dirname and **filename const names
+  - @gasket/request@7.5.5
+
 ## 7.6.3
 
 ### Patch Changes

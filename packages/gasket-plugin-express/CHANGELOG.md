@@ -1,5 +1,11 @@
 # `@gasket/plugin-express`
 
+## 7.5.1
+
+### Patch Changes
+
+- fdd8860: Avoid **dirname and **filename const names
+
 ## 7.5.0
 
 ### Minor Changes

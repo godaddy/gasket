@@ -1,5 +1,12 @@
 # `@gasket/plugin-metadata`
 
+## 7.5.9
+
+### Patch Changes
+
+- @gasket/plugin-logger@7.4.0
+- @gasket/core@7.7.3
+
 ## 7.5.8
 
 ### Patch Changes

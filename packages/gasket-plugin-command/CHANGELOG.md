@@ -1,5 +1,13 @@
 # `@gasket/plugin-command`
 
+## 7.6.4
+
+### Patch Changes
+
+- Updated dependencies [fdd8860]
+  - @gasket/utils@7.6.5
+  - @gasket/core@7.7.3
+
 ## 7.6.3
 
 ### Patch Changes

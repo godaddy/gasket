@@ -1,5 +1,13 @@
 # `@gasket/plugin-nextjs`
 
+## 7.7.4
+
+### Patch Changes
+
+- fdd8860: Fix try-resolve import in transpiled cjs
+- fdd8860: Avoid **dirname and **filename const names
+  - @gasket/plugin-webpack@7.4.0
+
 ## 7.7.3
 
 ### Patch Changes
