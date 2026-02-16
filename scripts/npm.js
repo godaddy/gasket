@@ -17,7 +17,7 @@ const OPERATIONS = {
     name: 'Installing dependencies',
     emoji: '📦',
     command: 'npm',
-    args: ['ci', '--prefer-offline', '--registry', NPM_REGISTRY]
+    args: ['ci', '--prefer-offline', '--registry', NPM_REGISTRY, '--legacy-peer-deps'] // TODO: Remove after PR is merged and published
   },
   'build': {
     name: 'Building',
@@ -161,7 +161,7 @@ async function regenHandler(templateDir, packageName) {
   // Run npm install to regenerate package-lock.json
   console.log('📦 Running npm install to regenerate lockfiles...');
   try {
-    await runCommand('npm', ['install', '--registry', NPM_REGISTRY], templateDir);
+    await runCommand('npm', ['install', '--registry', NPM_REGISTRY, '--legacy-peer-deps'], templateDir);
     console.log('✅ Lockfiles regenerated successfully\n');
   } catch (error) {
     console.log(`❌ Failed to regenerate lockfiles: ${error.message}\n`);
