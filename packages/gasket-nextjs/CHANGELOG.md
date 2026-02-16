@@ -1,5 +1,12 @@
 # `@gasket/nextjs`
 
+## 8.0.0-next.2
+
+### Patch Changes
+
+- a92c7ed: upgrade to next 16
+- 9f53191: React 19 upgrade
+
 ## 8.0.0-next.1
 
 ### Patch Changes

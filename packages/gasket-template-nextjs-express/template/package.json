@@ -4,7 +4,7 @@
   "description": "Gasket App",
   "scripts": {
     "docs": "tsx gasket.ts docs",
-    "build": "npm run build:tsc && next build",
+    "build": "npm run build:tsc && next build --webpack",
     "start": "node dist/server.js",
     "local": "concurrently \"npm run build:tsc:watch\" \"GASKET_DEV=1 tsx watch server.ts\"",
     "preview": "npm run build && npm run start",
@@ -37,7 +37,7 @@
     "@gasket/utils": "next",
     "@types/react": "^19.0.12",
     "express": "^4.21.2",
-    "next": "^15.5.9",
+    "next": "^16.1.6",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-intl": "^7.1.6",
@@ -74,7 +74,8 @@
   "eslintIgnore": [
     "dist",
     "coverage/",
-    "build/"
+    "build/",
+    "next-env.d.ts"
   ],
   "eslintConfig": {
     "extends": [

@@ -141,7 +141,7 @@ describe('@gasket/template-nextjs-express', () => {
       });
 
       expect(packageJson.scripts.docs).toBe('tsx gasket.ts docs');
-      expect(packageJson.scripts.build).toBe('npm run build:tsc && next build');
+      expect(packageJson.scripts.build).toBe('npm run build:tsc && next build --webpack');
       expect(packageJson.scripts.start).toBe('node dist/server.js');
       expect(packageJson.scripts.test).toBe('vitest run');
     });
@@ -178,7 +178,7 @@ describe('@gasket/template-nextjs-express', () => {
       expect(tsconfig.compilerOptions.esModuleInterop).toBe(true);
       expect(tsconfig.compilerOptions.resolveJsonModule).toBe(true);
       expect(tsconfig.compilerOptions.isolatedModules).toBe(true);
-      expect(tsconfig.compilerOptions.jsx).toBe('preserve');
+      expect(tsconfig.compilerOptions.jsx).toBe('react-jsx');
       expect(tsconfig.compilerOptions.incremental).toBe(true);
       expect(tsconfig.compilerOptions.plugins).toBeDefined();
       expect(tsconfig.compilerOptions.paths).toBeDefined();
@@ -289,7 +289,7 @@ describe('@gasket/template-nextjs-express', () => {
       expect(appPageContent).toContain('import intlManager from \'../intl\'');
       expect(appPageContent).toContain('const IntlMessagesProvider = withMessagesProvider(intlManager)(IntlProvider)');
       expect(appPageContent).toContain('const router = useRouter()');
-      expect(appPageContent).toContain('<IntlMessagesProvider locale={ router.locale }>');
+      expect(appPageContent).toContain('<IntlMessagesProvider locale={ locale }>');
     });
 
     it('should have correct _document.ts configuration', () => {

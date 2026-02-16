@@ -1,5 +1,11 @@
 # @gasket/typescript-tests
 
+## 8.0.0-next.2
+
+### Patch Changes
+
+- a92c7ed: upgrade to next 16
+
 ## 8.0.0-next.1
 
 ### Patch Changes

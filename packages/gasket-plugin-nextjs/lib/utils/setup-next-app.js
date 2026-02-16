@@ -79,7 +79,8 @@ async function setupNextApp(gasket) {
   const app = /** @type {any} */ (createNextApp({
     dev: isDevServer(),
     hostname: config.hostname,
-    port: resolvePort(config)
+    port: resolvePort(config),
+    webpack: true
   }));
 
   await gasket.exec('next', app);
