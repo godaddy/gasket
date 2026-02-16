@@ -7,16 +7,16 @@ import path from 'path';
 import { spawn } from 'child_process';
 import { fileURLToPath } from 'url';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const packagesDir = path.join(__dirname, '../packages');
+const fileName = fileURLToPath(import.meta.url);
+const dirName = path.dirname(fileName);
+const packagesDir = path.join(dirName, '../packages');
 
 const OPERATIONS = {
   'npm-ci': {
     name: 'Installing dependencies',
     emoji: '📦',
     command: 'npm',
-    args: ['ci', '--prefer-offline']
+    args: ['ci', '--prefer-offline', '--force'] // TODO: Remove force after PR is merged and published
   },
   'build': {
     name: 'Building',
@@ -160,7 +160,7 @@ async function regenHandler(templateDir, packageName) {
   // Run npm install to regenerate package-lock.json
   console.log('📦 Running npm install to regenerate lockfiles...');
   try {
-    await runCommand('npm', ['install'], templateDir);
+    await runCommand('npm', ['install', '--registry', 'https://registry.npmjs.org/', '--force'], templateDir);
     console.log('✅ Lockfiles regenerated successfully\n');
   } catch (error) {
     console.log(`❌ Failed to regenerate lockfiles: ${error.message}\n`);

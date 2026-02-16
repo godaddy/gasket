@@ -5,8 +5,8 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import packageJson from '../package.json' with { type: 'json' };
 const { name, version, devDependencies } = packageJson;
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const fileName = fileURLToPath(import.meta.url);
+const dirName = dirname(fileName);
 
 /**
  * Type definitions for create-gasket-app APIs.
@@ -186,7 +186,7 @@ function addCustomServerScripts(scripts, { runCmd, watcher, fileExtension, types
   if (typescript) {
     scripts['build:tsc'] = 'tsc -p ./tsconfig.server.json';
     scripts['build:tsc:watch'] = 'tsc -p ./tsconfig.server.json --watch';
-    scripts.build = `${runCmd} build:tsc && next build`;
+    scripts.build = `${runCmd} build:tsc && next build --webpack`;
     scripts.start = 'node dist/server.js';
     scripts.local = `concurrently "${runCmd} build:tsc:watch" "GASKET_DEV=1 ${watcher} server.${fileExtension}"`;
   }
@@ -205,13 +205,13 @@ function addDevProxyScripts(scripts, { runCmd, watcher, fileExtension, typescrip
   scripts['start:https'] = `node server.js`;
   scripts['local:https'] = `${watcher} server.${fileExtension}`;
   scripts.start = `${runCmd} start:https & next start`;
-  scripts.local = `${runCmd} local:https & next dev`;
+  scripts.local = `${runCmd} local:https & next dev --webpack`;
   if (typescript) {
     scripts['build:tsc:watch'] = 'tsc -p ./tsconfig.server.json --watch';
     scripts['build:tsc'] = 'tsc -p ./tsconfig.server.json';
-    scripts.build = `${runCmd} build:tsc && next build`;
+    scripts.build = `${runCmd} build:tsc && next build --webpack`;
     scripts['start:https'] = `node dist/server.js`;
-    scripts.local = `concurrently "${runCmd} build:tsc:watch" "${runCmd} local:https" "next dev"`;
+    scripts.local = `concurrently "${runCmd} build:tsc:watch" "${runCmd} local:https" "next dev --webpack"`;
   }
 }
 
@@ -233,9 +233,9 @@ function addNpmScripts({ pkg, nextServerType, nextDevProxy, typescript, hasGaske
   const prebuild = hasGasketIntl ? { prebuild: `${bin} gasket.${fileExtension} build` } : {};
 
   const scripts = {
-    build: 'next build',
+    build: 'next build --webpack',
     start: 'next start',
-    local: 'next dev',
+    local: 'next dev --webpack',
     preview: `${runCmd} build && ${runCmd} start`,
     ...prebuild
   };
@@ -304,7 +304,7 @@ export default {
       context.reactIntlPkg = 'react-intl';
     }
 
-    const generatorDir = `${__dirname}/../generator`;
+    const generatorDir = `${dirName}/../generator`;
     const appStructure = nextServerType === 'appRouter' ? 'app-router' : 'page-router';
 
     await createAppFiles({ files, generatorDir, nextServerType, appStructure, typescript, readme });

@@ -1,5 +1,22 @@
 # `create-gasket-app`
 
+## 7.4.19
+
+### Patch Changes
+
+- fdd8860: Avoid **dirname and **filename const names
+- Updated dependencies [fdd8860]
+  - @gasket/plugin-dynamic-plugins@7.5.1
+  - @gasket/plugin-docusaurus@7.5.1
+  - @gasket/plugin-docs@7.5.4
+  - @gasket/utils@7.6.5
+  - @gasket/plugin-logger@7.4.0
+  - @gasket/plugin-command@7.6.4
+  - @gasket/plugin-git@7.4.9
+  - @gasket/plugin-metadata@7.5.9
+  - @gasket/core@7.7.3
+  - @gasket/request@7.5.5
+
 ## 7.4.18
 
 ### Patch Changes

@@ -11,9 +11,9 @@ const isGasketPluginPath = /(@gasket\/plugin-|@[\w-]+\/gasket-plugin-)/;
 const isGasketCore = /@gasket[/\\]core$/;
 
 // Generate empty module programmatically to avoid committing a file
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const emptyModulePath = join(__dirname, 'noop-replacement.mjs');
+const fileName = fileURLToPath(import.meta.url);
+const dirName = dirname(fileName);
+const emptyModulePath = join(dirName, 'noop-replacement.mjs');
 
 /**
  * Function to validate that '@gasket/core' is not used in browser code.

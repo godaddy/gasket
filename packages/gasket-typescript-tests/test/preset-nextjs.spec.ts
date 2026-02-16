@@ -14,9 +14,7 @@ describe('@gasket/preset-nextjs', () => {
         compression: true
       },
       nextConfig: {
-        future: {
-          webpack5: true
-        }
+        poweredByHeader: false
       }
     };
   });
@@ -36,9 +34,7 @@ describe('@gasket/preset-nextjs', () => {
         nextConfig(gasket, config) {
           return {
             ...config,
-            future: {
-              webpack5: true
-            }
+            poweredByHeader: false
           };
         }
       }

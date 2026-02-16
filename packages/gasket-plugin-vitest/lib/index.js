@@ -25,8 +25,8 @@ const plugin = {
       },
       handler: async function create(gasket, context) {
         const { files, pkg, apiApp } = context;
-        const __dirname = fileURLToPath(import.meta.url);
-        const generatorDir = path.join(__dirname, '..', '..', 'generator');
+        const fileName = fileURLToPath(import.meta.url);
+        const generatorDir = path.join(fileName, '..', '..', 'generator');
         const isReactProject = pkg.has('dependencies', 'react');
 
         pkg.add('devDependencies', {

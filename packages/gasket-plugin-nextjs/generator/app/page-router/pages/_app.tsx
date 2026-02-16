@@ -19,7 +19,7 @@ function App({ Component, pageProps }) {
 
   return (
   {{#if hasGasketIntl}}
-  <IntlMessagesProvider locale={ router.locale }>
+  <IntlMessagesProvider locale={ router.locale ?? 'en-US' }>
   {{/if}}
     <Component { ...pageProps } />
   {{#if hasGasketIntl}}

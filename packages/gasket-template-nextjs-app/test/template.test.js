@@ -3,9 +3,9 @@ import { readFileSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const templateDir = join(__dirname, '..', 'template');
+const fileName = fileURLToPath(import.meta.url);
+const dirName = dirname(fileName);
+const templateDir = join(dirName, '..', 'template');
 
 describe('@gasket/template-nextjs-app', () => {
   describe('template structure', () => {
@@ -65,7 +65,7 @@ describe('@gasket/template-nextjs-app', () => {
       expect(tsconfig.compilerOptions).toHaveProperty('module', 'ESNext');
       expect(tsconfig.compilerOptions).toHaveProperty('moduleResolution', 'bundler');
       expect(tsconfig.compilerOptions).toHaveProperty('target', 'ESNext');
-      expect(tsconfig.compilerOptions).toHaveProperty('jsx', 'preserve');
+      expect(tsconfig.compilerOptions).toHaveProperty('jsx', 'react-jsx');
       expect(tsconfig.compilerOptions.lib).toContain('dom');
       expect(tsconfig.include).toContain('**/*.tsx');
     });

@@ -6,8 +6,8 @@ import { readFile as read } from 'fs/promises';
 import { createRequire } from 'node:module';
 import plugin from '../lib/index.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const fileName = fileURLToPath(import.meta.url);
+const dirName = dirname(fileName);
 const require = createRequire(import.meta.url);
 const { name, version, description } = require('../package.json');
 
@@ -17,7 +17,7 @@ describe('docs graph plugin', function () {
   let mockGasket, docsConfigSet;
   beforeEach(function () {
     docsConfigSet = {
-      docsRoot: path.join(__dirname, 'fixtures'),
+      docsRoot: path.join(dirName, 'fixtures'),
       lifecycles: []
     };
     mockGasket = {
@@ -40,7 +40,7 @@ describe('docs graph plugin', function () {
     expect(data.name).toEqual('Lifecycle Flowchart');
     expect(data.description).toEqual('A flowchart detailing how lifecycles are interrelated.');
     expect(data.link).toEqual('/lifecycle-graphs.md');
-    expect(data.targetRoot).toEqual(path.join(__dirname, 'fixtures', 'generated-docs'));
+    expect(data.targetRoot).toEqual(path.join(dirName, 'fixtures', 'generated-docs'));
   });
 
   it('provides a mermaid markdown block', async function () {

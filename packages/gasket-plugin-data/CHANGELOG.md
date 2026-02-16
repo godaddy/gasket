@@ -1,5 +1,14 @@
 # `@gasket/plugin-data`
 
+## 7.5.2
+
+### Patch Changes
+
+- fdd8860: Avoid **dirname and **filename const names
+- Updated dependencies [fdd8860]
+  - @gasket/utils@7.6.5
+  - @gasket/request@7.5.5
+
 ## 7.5.1
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-nextjs",
-  "version": "7.7.2",
+  "version": "7.7.4",
   "description": "Adds Next support to your application",
   "type": "module",
   "types": "lib/index.d.ts",
@@ -69,7 +69,6 @@
     "@gasket/plugin-intl": "workspace:^",
     "@gasket/plugin-logger": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",
-    "@gasket/plugin-nextjs": "workspace:^",
     "@gasket/plugin-service-worker": "workspace:^",
     "@gasket/plugin-workbox": "workspace:^",
     "@gasket/request": "workspace:^",
@@ -79,16 +78,16 @@
     "@types/webpack": "^5.28.5",
     "create-gasket-app": "workspace:^",
     "lodash.merge": "^4.6.2",
-    "next": "^15.5.9",
+    "next": "^16.1.6",
     "nodemon": "^3.1.9",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
     "vitest": "^3.2.0"
   },
   "peerDependencies": {
     "@gasket/plugin-webpack": "^7.4.0",
-    "react": ">=18 <20",
-    "react-dom": ">=18 <20"
+    "react": ">=18",
+    "react-dom": ">=18"
   },
   "babel": {
     "presets": [

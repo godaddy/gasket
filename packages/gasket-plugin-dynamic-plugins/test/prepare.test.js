@@ -3,8 +3,8 @@ import { makeGasket } from '@gasket/core';
 import * as path from 'path';
 import { setTimeout } from 'timers/promises';
 
-const __dirname = new URL('.', import.meta.url).pathname;
-const mockDir = path.join(__dirname, '__mocks__');
+const dirName = new URL('.', import.meta.url).pathname;
+const mockDir = path.join(dirName, '__mocks__');
 
 const {
   mockPluginStatic, mockPluginOne, mockPluginTwo

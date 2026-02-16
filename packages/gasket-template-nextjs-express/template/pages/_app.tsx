@@ -16,9 +16,10 @@ const IntlMessagesProvider = withMessagesProvider(intlManager)(IntlProvider);
  */
 function App({ Component, pageProps }: { Component: React.ComponentType; pageProps: object; }): React.ReactElement {
   const router = useRouter();
+  const locale = router.locale ?? 'en-US';
 
   return (
-    <IntlMessagesProvider locale={ router.locale }>
+    <IntlMessagesProvider locale={ locale }>
       <Component { ...pageProps } />
     </IntlMessagesProvider>
   );

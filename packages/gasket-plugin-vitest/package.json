@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-vitest",
-  "version": "7.2.0",
+  "version": "7.2.1",
   "description": "Integrates Vitest based testing in to your Gasket application",
   "type": "module",
   "types": "lib/index.d.ts",

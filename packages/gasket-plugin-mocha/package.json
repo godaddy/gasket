@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-mocha",
-  "version": "7.5.5",
+  "version": "7.5.6",
   "description": "Integrates mocha based testing in to your Gasket application",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -65,8 +65,8 @@
     "global-jsdom": "^8.8.0",
     "jest": "^29.7.0",
     "jsdom": "^20.0.3",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
     "ts-node": "^10.9.2"
   },
   "babel": {

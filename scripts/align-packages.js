@@ -3,12 +3,12 @@ import path from 'path';
 import { promisify } from 'util';
 import { fileURLToPath } from 'url';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const fileName = fileURLToPath(import.meta.url);
+const dirName = path.dirname(fileName);
 
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
-const projectRoot = path.resolve(__dirname, '..');
+const projectRoot = path.resolve(dirName, '..');
 
 /**
  * Shortcut to stringfy and object in a readable way

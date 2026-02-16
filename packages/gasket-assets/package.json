@@ -1,6 +1,6 @@
 {
   "name": "@gasket/assets",
-  "version": "7.5.0",
+  "version": "7.5.1",
   "description": "Gasket assets",
   "type": "module",
   "files": [
@@ -50,7 +50,7 @@
     "@gasket/cjs": "workspace:^",
     "@svgr/core": "^6.5.1",
     "mkdirp": "^1.0.4",
-    "react": "^19.0.0",
+    "react": "^19.2.4",
     "recursive-readdir": "^2.2.3",
     "rimraf": "^6.1.2"
   }

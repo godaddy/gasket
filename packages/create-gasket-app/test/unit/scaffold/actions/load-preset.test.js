@@ -53,7 +53,7 @@ vi.mock('path', () => ({
   }
 }));
 
-const __dirname = fileURLToPath(new URL('.', import.meta.url));
+const fileName = fileURLToPath(new URL('.', import.meta.url));
 
 // Set up the mock implementations after imports
 mockPathResolve.mockImplementation((...args) => {
@@ -62,7 +62,7 @@ mockPathResolve.mockImplementation((...args) => {
 });
 
 // Set up mockMkTemp to return the actual mock directory
-mockMkTemp.mockResolvedValue(nodePath.join(__dirname, '..', '..', '..', '__mocks__'));
+mockMkTemp.mockResolvedValue(nodePath.join(fileName, '..', '..', '..', '__mocks__'));
 
 const presetDefaults = { default: { name: '@gasket/preset-default-export', hooks: {} } };
 const presetDoubleDefaults = {
@@ -94,7 +94,7 @@ describe('loadPreset', () => {
 
   beforeEach(() => {
     mockContext = {
-      cwd: __dirname,
+      cwd: fileName,
       rawPresets: ['@gasket/preset-bogus@^1.0.0'],
       localPresets: [],
       errors: [],
@@ -114,14 +114,14 @@ describe('loadPreset', () => {
 
   describe('remote and local packages', () => {
     beforeEach(() => {
-      mockContext.localPresets = [`${__dirname}../../../__mocks__/gasket-preset-local`];
+      mockContext.localPresets = [`${fileName}../../../__mocks__/gasket-preset-local`];
     });
 
     it('instantiates PackageManager with package name', async () => {
       await loadPreset({ context: mockContext });
       expect(mockConstructorStub).toHaveBeenCalled();
       expect(mockConstructorStub.mock.calls[0][0]).toHaveProperty('packageManager', 'npm');
-      expect(mockConstructorStub.mock.calls[0][0]).toHaveProperty('dest', `${nodePath.join(__dirname, '..', '..', '..', '__mocks__')}`);
+      expect(mockConstructorStub.mock.calls[0][0]).toHaveProperty('dest', `${nodePath.join(fileName, '..', '..', '..', '__mocks__')}`);
     });
 
     it('determines the correct pkg manager verb', async () => {
@@ -137,7 +137,7 @@ describe('loadPreset', () => {
         '@gasket/preset-bogus@^1.0.0'
       ]);
       expect(mockContext).toHaveProperty('localPresets', [
-        `${__dirname}../../../__mocks__/gasket-preset-local`
+        `${fileName}../../../__mocks__/gasket-preset-local`
       ]);
       expect(mockContext.presets).toHaveLength(2);
     });
@@ -145,8 +145,8 @@ describe('loadPreset', () => {
     it('includes multiple of remote and local packages', async () => {
       mockContext.rawPresets = ['@gasket/preset-bogus@^1.0.0', '@gasket/preset-all-i-ever-wanted@^2.0.0'];
       mockContext.localPresets = [
-        `${__dirname}../../../__mocks__/gasket-preset-local`,
-        `${__dirname}../../../__mocks__/gasket-preset-local`
+        `${fileName}../../../__mocks__/gasket-preset-local`,
+        `${fileName}../../../__mocks__/gasket-preset-local`
       ];
 
       await loadPreset({ context: mockContext });
@@ -157,8 +157,8 @@ describe('loadPreset', () => {
         ]);
       expect(mockContext)
         .toHaveProperty('localPresets', [
-          `${__dirname}../../../__mocks__/gasket-preset-local`,
-          `${__dirname}../../../__mocks__/gasket-preset-local`
+          `${fileName}../../../__mocks__/gasket-preset-local`,
+          `${fileName}../../../__mocks__/gasket-preset-local`
         ]);
       expect(mockContext.presets).toEqual([
         expect.objectContaining(presetBogus),
@@ -172,8 +172,8 @@ describe('loadPreset', () => {
     it('supports preset extensions', async () => {
       mockContext.rawPresets = ['@gasket/preset-bogus@^1.0.0', '@gasket/preset-all-i-ever-wanted@^2.0.0'];
       mockContext.localPresets = [
-        `${__dirname}../../../__mocks__/gasket-preset-local`,
-        `${__dirname}../../../__mocks__/gasket-preset-local`
+        `${fileName}../../../__mocks__/gasket-preset-local`,
+        `${fileName}../../../__mocks__/gasket-preset-local`
       ];
 
       await loadPreset({ context: mockContext });
@@ -184,8 +184,8 @@ describe('loadPreset', () => {
         ]);
       expect(mockContext)
         .toHaveProperty('localPresets', [
-          `${__dirname}../../../__mocks__/gasket-preset-local`,
-          `${__dirname}../../../__mocks__/gasket-preset-local`
+          `${fileName}../../../__mocks__/gasket-preset-local`,
+          `${fileName}../../../__mocks__/gasket-preset-local`
         ]);
       expect(mockContext.presets).toEqual([
         expect.objectContaining(presetBogus),
@@ -201,14 +201,14 @@ describe('loadPreset', () => {
 
     beforeEach(() => {
       mockContext.rawPresets = [];
-      mockContext.localPresets = [`${__dirname}../../../__mocks__/gasket-preset-local`];
+      mockContext.localPresets = [`${fileName}../../../__mocks__/gasket-preset-local`];
     });
 
 
     it('adds multiple local packages', async () => {
       mockContext.localPresets = [
-        `${__dirname}../../../__mocks__/gasket-preset-local`,
-        `${__dirname}../../../__mocks__/gasket-preset-local`
+        `${fileName}../../../__mocks__/gasket-preset-local`,
+        `${fileName}../../../__mocks__/gasket-preset-local`
       ];
 
       await loadPreset({ context: mockContext });
@@ -220,12 +220,12 @@ describe('loadPreset', () => {
     });
 
     it('throws error if local preset fails to install', async () => {
-      mockContext.rawPresets = [`${__dirname}../../../__mocks__/gasket-preset-local-bogus`];
+      mockContext.rawPresets = [`${fileName}../../../__mocks__/gasket-preset-local-bogus`];
 
       await expect(async () => {
         await loadPreset({ context: mockContext });
       }).rejects.toThrow(
-        `Failed to install preset ${__dirname}../../../__mocks__/gasket-preset-local-bogus@latest`
+        `Failed to install preset ${fileName}../../../__mocks__/gasket-preset-local-bogus@latest`
       );
     });
   });
@@ -292,7 +292,7 @@ describe('loadPreset', () => {
   });
 
   it('supports preset with file version', async () => {
-    const filePath = nodePath.resolve(__dirname, '..', '..', '..', '__mocks__', '@gasket', 'preset-bogus');
+    const filePath = nodePath.resolve(fileName, '..', '..', '..', '__mocks__', '@gasket', 'preset-bogus');
 
     mockContext.rawPresets = [
       `@gasket/preset-bogus@file:${filePath}`

@@ -1,5 +1,11 @@
 # `@gasket/plugin-docs-graph`
 
+## 7.4.1
+
+### Patch Changes
+
+- fdd8860: Avoid **dirname and **filename const names
+
 ## 7.4.0
 
 ### Minor Changes

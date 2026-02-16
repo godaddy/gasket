@@ -1,5 +1,12 @@
 # `@gasket/plugin-docs`
 
+## 7.5.4
+
+### Patch Changes
+
+- fdd8860: Avoid **dirname and **filename const names
+  - @gasket/plugin-command@7.6.4
+
 ## 7.5.3
 
 ### Patch Changes

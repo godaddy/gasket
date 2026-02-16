@@ -1,5 +1,11 @@
 # `@gasket/plugin-middleware`
 
+## 7.5.3
+
+### Patch Changes
+
+- fdd8860: Avoid **dirname and **filename const names
+
 ## 7.5.2
 
 ### Patch Changes
