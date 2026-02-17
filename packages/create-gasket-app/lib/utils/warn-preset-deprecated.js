@@ -50,6 +50,6 @@ export function warnPresetDeprecated(context) {
     suggestions.forEach(t => lines.push(`    --template ${t}`));
     lines.push('');
   }
-  lines.push('  See: https://github.com/godaddy/gasket/tree/main/packages/create-gasket-app#templates');
+  lines.push('  See: https://gasket.dev/docs/create-gasket-app/#templates');
   console.warn(lines.join('\n'));
 }
