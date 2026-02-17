@@ -34,7 +34,7 @@ with the values being either the function itself or an object specifying
 
 It is recommended that the `name` property in plugins and presets adhere to the project-type prefixed naming convention.
 
-When naming a plugin, prefix it with `gasket-plugin-` and when naming a preset, prefix it with `gasket-preset-`. This will help you easily identify the type of package you are installing.
+When naming a plugin, prefix it with `gasket-plugin-` and when naming a preset, prefix it with `gasket-preset-`. (Presets are deprecated for app creation; use templates instead.) This will help you easily identify the type of package you are installing.
 
 For example, if you were to create a plugin called `foo` you would name it `gasket-plugin-foo`. If you were to create a preset called `bar` you would name it `gasket-preset-bar`.
 
