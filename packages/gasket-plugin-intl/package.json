@@ -47,7 +47,7 @@
     "@gasket/request": "workspace:^",
     "debug": "^4.4.0",
     "fs-extra": "^10.1.0",
-    "glob": "^13.0.0",
+    "glob": "^13.0.1",
     "intl": "^1.2.5",
     "negotiator": "^1.0.0",
     "semver": "^7.7.1"
