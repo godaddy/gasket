@@ -15,18 +15,6 @@ npx create-gasket-app@latest my-app --template @gasket/template-nextjs-pages
 
 # With presets (deprecated; prefer --template)
 npx create-gasket-app@latest my-app --presets @gasket/preset-nextjs
-
-# With package manager selection
-npx create-gasket-app@latest my-app --package-manager pnpm
-
-# With configuration
-npx create-gasket-app@latest my-app --config '{"typescript": true}'
-
-# With config file
-npx create-gasket-app@latest my-app --config-file ./create-config.json
-
-# Skip prompts (for CI) — use template
-npx create-gasket-app@latest my-app --template @gasket/template-nextjs-pages
 ```
 
 ## Templates
