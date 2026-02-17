@@ -2,6 +2,8 @@
 
 When modifying plugins or presets, you may want to test your changes locally before merging to the main branch. This guide describes how you can test your plugin or preset changes on your local machine.
 
+**Note:** Presets are deprecated. Prefer testing with `--template-path` and a template package when creating new apps.
+
 ## Testing preset changes locally
 
 To test a preset locally, you can create a new Gasket app using `create-gasket-app` and utilize the `--preset-path` flag to specify the absolute path of the local preset you intend to test.

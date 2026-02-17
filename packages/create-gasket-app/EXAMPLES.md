@@ -10,7 +10,10 @@ The main interface for `create-gasket-app` is the command line:
 # Basic app creation
 npx create-gasket-app@latest my-app
 
-# With presets
+# With template (recommended)
+npx create-gasket-app@latest my-app --template @gasket/template-nextjs-pages
+
+# With presets (deprecated; prefer --template)
 npx create-gasket-app@latest my-app --presets @gasket/preset-nextjs
 
 # With package manager selection
@@ -22,8 +25,8 @@ npx create-gasket-app@latest my-app --config '{"typescript": true}'
 # With config file
 npx create-gasket-app@latest my-app --config-file ./create-config.json
 
-# Skip prompts (for CI)
-npx create-gasket-app@latest my-app --presets @gasket/preset-nextjs --no-prompts
+# Skip prompts (for CI) — use template
+npx create-gasket-app@latest my-app --template @gasket/template-nextjs-pages
 ```
 
 ## Templates

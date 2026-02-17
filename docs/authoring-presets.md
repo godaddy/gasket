@@ -1,5 +1,7 @@
 # Gasket Preset Authoring Guide
 
+> **Deprecation:** Presets are deprecated for app creation. Use [templates](https://github.com/godaddy/gasket/tree/main/packages/create-gasket-app#templates) instead when creating new Gasket apps with `create-gasket-app`. This guide remains for teams still using presets.
+
 ## Background
 
 Presets are used to provide configuration and prompting to facilitate app generation using `create-gasket-app`.

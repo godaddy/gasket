@@ -202,7 +202,10 @@ describe('create', function () {
     } catch {
       // Commander will throw when process.exit is called
     }
-    expect(consoleWarnStub).toHaveBeenCalledWith('Warning: At least one of the options is required: --template, --template-path, --presets, --preset-path');
+    expect(consoleWarnStub).toHaveBeenCalledWith(
+      'Warning: At least one option is required: --template (preferred), --template-path, ' +
+        '--presets (deprecated), or --preset-path (deprecated).'
+    );
     expect(processExitStub).toHaveBeenCalledWith(1);
   });
 
@@ -214,6 +217,12 @@ describe('create', function () {
   it('allows for longhand options', async () => {
     await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--presets', 'nextjs,react']);
     expect(cmdOptions.presets).toEqual(['nextjs', 'react']);
+  });
+
+  it('warns that presets are deprecated when using --presets', async () => {
+    await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--presets', '@gasket/preset-nextjs']);
+    const deprecationCalls = consoleWarnStub.mock.calls.filter(call => call[0]?.includes?.('Presets are deprecated'));
+    expect(deprecationCalls.length).toBeGreaterThan(0);
   });
 
   it('executes expected actions', async () => {
