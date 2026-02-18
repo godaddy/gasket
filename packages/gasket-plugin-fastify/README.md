@@ -98,10 +98,8 @@ export default {
 
 ### errorMiddleware
 
-Executed after the `fastify` event. Error handler functions returned from this
-hook are registered via Fastify's `setErrorHandler` and chained in order.
-Handlers must use the Express-style 4-argument signature `(err, req, res, next)`,
-where `req` and `res` are the raw Node.js `IncomingMessage` and `ServerResponse` objects.
+Executed after the `fastify` event. All error handler functions returned from this
+hook will be applied to Fastify in order.
 
 ```js
 export default {
