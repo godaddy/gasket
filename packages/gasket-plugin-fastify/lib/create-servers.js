@@ -15,6 +15,10 @@ export default async function createServers(gasket, serverOpts) {
 
   const postRenderingStacks = (await gasket.exec('errorMiddleware')).filter(Boolean);
   if (postRenderingStacks.length) {
+    // Fastify only supports one setErrorHandler per scope, so all Express-style
+    // error handlers (err, req, res, next) are chained manually through a single
+    // handler. request.raw and reply.raw expose the underlying Node.js
+    // IncomingMessage and ServerResponse that Express-style handlers expect.
     app.setErrorHandler((error, request, reply) => {
       let index = 0;
       const next = (err) => {

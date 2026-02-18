@@ -89,7 +89,6 @@ export default {
     *
     * @param {Gasket} gasket The Gasket API
     * @param {Fastify} fastify Fastify app instance
-    * @returns {function|function[]} middleware(s)
     */
     fastify: async function (gasket, fastify) {
     }
@@ -99,20 +98,26 @@ export default {
 
 ### errorMiddleware
 
-Executed after the `fastify` event. All middleware functions returned from this
-hook will be applied to Fastify.
+Executed after the `fastify` event. Error handler functions returned from this
+hook are registered via Fastify's `setErrorHandler` and chained in order.
+Handlers must use the Express-style 4-argument signature `(err, req, res, next)`,
+where `req` and `res` are the raw Node.js `IncomingMessage` and `ServerResponse` objects.
 
 ```js
 export default {
   name: 'sample-plugin',
   hooks: {
     /**
-    * Add Fastify error middlewares
+    * Add error handling for Fastify
     *
     * @param {Gasket} gasket The Gasket API
-    * @returns {function|function[]} error middleware(s)
+    * @returns {function|function[]} error handler(s)
     */
     errorMiddleware: function (gasket) {
+      return function (err, req, res, next) {
+        // handle error or pass to next handler
+        next(err);
+      };
     }
   }
 };

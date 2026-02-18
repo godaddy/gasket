@@ -2,8 +2,6 @@ import type { MaybeAsync, MaybeMultiple, Plugin } from '@gasket/core';
 import type { Logger } from '@gasket/plugin-logger';
 import type {
   FastifyInstance,
-  FastifyRequest,
-  FastifyReply,
   FastifyServerOptions,
   FastifyBaseLogger,
   FastifyTypeProviderDefault,
@@ -34,11 +32,11 @@ declare module '@gasket/core' {
   }
 
 
-  /** Error handler function type */
+  /** Error handler function type (Express-style, receives raw Node.js req/res) */
   type ErrorHandler = (
     error: Error,
-    req: FastifyRequest,
-    res: FastifyReply,
+    req: IncomingMessage,
+    res: ServerResponse,
     next: (error?: Error) => void
   ) => void;
 
