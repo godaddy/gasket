@@ -40,8 +40,6 @@ The plugin automatically detects your Fastify version and applies the correct co
 
 All the configurations for the plugin are added under `fastify` in the config:
 
-- `compression`: true by default. Can be set to false if applying compression
-  differently.
 - `trustProxy`: Enable trust proxy option, [see Fastify documentation for possible values](https://fastify.dev/docs/latest/Reference/Server/#trustproxy)
 - `disableRequestLogging`: Turn off request logging, true by default
 
@@ -53,8 +51,6 @@ export default makeGasket({
     pluginFastify
   ],
   fastify: {
-    compression: false,
-    excludedRoutesRegex: /^(?!\/_next\/)/,
     trustProxy: true
   }
 });
@@ -82,8 +78,7 @@ export default {
 
 ### fastify
 
-Executed **after** the `middleware` event for when you need full control over
-the `fastify` instance.
+Used to add routes and middleware directly to the `fastify` instance.
 
 ```js
 export default {

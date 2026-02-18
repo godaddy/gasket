@@ -12,8 +12,6 @@ import type {
 import type { IncomingMessage, ServerResponse } from 'http';
 
 export interface FastifyConfig {
-  /** Enable compression */
-  compression?: boolean;
   /** Trust proxy configuration */
   trustProxy?: FastifyServerOptions['trustProxy'];
   /** Fastify request logging per route */

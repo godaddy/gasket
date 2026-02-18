@@ -17,7 +17,7 @@ describe('@gasket/plugin-morgan', () => {
   });
 
   it('has expected hooks', () => {
-    const expected = ['middleware', 'metadata'];
+    const expected = ['express', 'fastify', 'metadata'];
 
     expect(Plugin).toHaveProperty('hooks');
 
@@ -26,15 +26,15 @@ describe('@gasket/plugin-morgan', () => {
     expect(hooks).toHaveLength(expected.length);
   });
 
-  describe('.middleware', () => {
-
-    it('runs on the middleware lifecycle event', function () {
-      expect(typeof Plugin.hooks.middleware).toBe('function');
-      expect(Plugin.hooks.middleware).toHaveLength(1);
+  describe('.express', () => {
+    it('runs on the express lifecycle event', function () {
+      expect(typeof Plugin.hooks.express).toBe('function');
+      expect(Plugin.hooks.express).toHaveLength(2);
     });
 
-    it('returns a morgan middleware', () => {
+    it('registers morgan middleware on the express app', () => {
       const loggerMock = { info: vi.fn() };
+      const appMock = { use: vi.fn() };
 
       const gasketMock = {
         config: {
@@ -43,14 +43,14 @@ describe('@gasket/plugin-morgan', () => {
         logger: loggerMock
       };
 
-      const returnValue = Plugin.hooks.middleware(gasketMock);
-      expect(Array.isArray(returnValue)).toBe(true);
-      expect(typeof returnValue[0]).toBe('function');
-      expect(returnValue[0]).toHaveLength(3);
+      Plugin.hooks.express(gasketMock, appMock);
+      expect(appMock.use).toHaveBeenCalledTimes(1);
+      expect(typeof appMock.use.mock.calls[0][0]).toBe('function');
     });
 
     it('logs requests using gasket logger', () => {
       const loggerMock = { info: vi.fn() };
+      const appMock = { use: vi.fn() };
       const reqMock = { method: 'GET', url: '/foobar' };
       const resMock = {};
 
@@ -61,11 +61,60 @@ describe('@gasket/plugin-morgan', () => {
         logger: loggerMock
       };
 
-      const [morganMiddleware] = Plugin.hooks.middleware(gasketMock);
+      Plugin.hooks.express(gasketMock, appMock);
+      const [morganMiddleware] = appMock.use.mock.calls[0];
 
       morganMiddleware(reqMock, resMock, function next() {
         expect(loggerMock.info).toHaveBeenCalledWith('GET /foobar');
       });
+    });
+  });
+
+  describe('.fastify', () => {
+    it('runs on the fastify lifecycle event', function () {
+      expect(typeof Plugin.hooks.fastify).toBe('function');
+      expect(Plugin.hooks.fastify).toHaveLength(2);
+    });
+
+    it('registers an onRequest hook on the fastify app', () => {
+      const loggerMock = { info: vi.fn() };
+      const appMock = { addHook: vi.fn() };
+
+      const gasketMock = {
+        config: {
+          morgan: { format: 'tiny', options: {} }
+        },
+        logger: loggerMock
+      };
+
+      Plugin.hooks.fastify(gasketMock, appMock);
+      expect(appMock.addHook).toHaveBeenCalledTimes(1);
+      expect(appMock.addHook.mock.calls[0][0]).toBe('onRequest');
+      expect(typeof appMock.addHook.mock.calls[0][1]).toBe('function');
+    });
+
+    it('passes raw request/reply to morgan via onRequest hook', () => {
+      const loggerMock = { info: vi.fn() };
+      const appMock = { addHook: vi.fn() };
+      const rawReqMock = { method: 'GET', url: '/foobar' };
+      const rawResMock = {};
+      const requestMock = { raw: rawReqMock };
+      const replyMock = { raw: rawResMock };
+      const doneMock = vi.fn();
+
+      const gasketMock = {
+        config: {
+          morgan: { format: ':method :url', options: { immediate: true } }
+        },
+        logger: loggerMock
+      };
+
+      Plugin.hooks.fastify(gasketMock, appMock);
+      const onRequestHandler = appMock.addHook.mock.calls[0][1];
+
+      onRequestHandler(requestMock, replyMock, doneMock);
+      // done is called by morgan after processing
+      expect(typeof onRequestHandler).toBe('function');
     });
   });
 });

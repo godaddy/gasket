@@ -21,13 +21,11 @@ describe('createServers', () => {
     mockMwPlugins = [];
 
     lifecycles = {
-      middleware: vi.fn().mockResolvedValue([]),
       errorMiddleware: vi.fn().mockResolvedValue([]),
       fastify: vi.fn().mockResolvedValue()
     };
 
     gasket = {
-      middleware: {},
       logger: {},
       config: {
         fastify: {}

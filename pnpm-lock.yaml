@@ -836,64 +836,6 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
 
-  packages/gasket-plugin-middleware:
-    dependencies:
-      compression:
-        specifier: ^1.8.0
-        version: 1.8.0
-      cookie-parser:
-        specifier: ^1.4.7
-        version: 1.4.7
-      diagnostics:
-        specifier: ^2.0.2
-        version: 2.0.2
-    devDependencies:
-      '@fastify/express':
-        specifier: ^3.0.0
-        version: 3.0.0
-      '@gasket/core':
-        specifier: workspace:^
-        version: link:../gasket-core
-      '@gasket/plugin-express':
-        specifier: workspace:^
-        version: link:../gasket-plugin-express
-      '@gasket/plugin-fastify':
-        specifier: workspace:^
-        version: link:../gasket-plugin-fastify
-      '@gasket/plugin-https':
-        specifier: workspace:^
-        version: link:../gasket-plugin-https
-      '@gasket/plugin-logger':
-        specifier: workspace:^
-        version: link:../gasket-plugin-logger
-      '@gasket/plugin-metadata':
-        specifier: workspace:^
-        version: link:../gasket-plugin-metadata
-      '@types/compression':
-        specifier: ^1.7.5
-        version: 1.7.5
-      '@types/cookie-parser':
-        specifier: ^1.4.8
-        version: 1.4.8(@types/express@4.17.23)
-      '@types/express':
-        specifier: ^4.17.23
-        version: 4.17.23
-      '@types/node':
-        specifier: ^20.17.19
-        version: 20.17.19
-      '@vitest/coverage-v8':
-        specifier: ^3.2.0
-        version: 3.2.0(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
-      create-gasket-app:
-        specifier: workspace:^
-        version: link:../create-gasket-app
-      fastify:
-        specifier: ^5.0.0
-        version: 5.7.4
-      vitest:
-        specifier: ^3.2.0
-        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
-
   packages/gasket-plugin-morgan:
     dependencies:
       '@gasket/plugin-logger':
@@ -915,12 +857,12 @@ importers:
       '@gasket/plugin-express':
         specifier: workspace:^
         version: link:../gasket-plugin-express
+      '@gasket/plugin-fastify':
+        specifier: workspace:^
+        version: link:../gasket-plugin-fastify
       '@gasket/plugin-metadata':
         specifier: workspace:^
         version: link:../gasket-plugin-metadata
-      '@gasket/plugin-middleware':
-        specifier: workspace:^
-        version: link:../gasket-plugin-middleware
       '@types/morgan':
         specifier: ^1.9.9
         version: 1.9.9
@@ -1283,9 +1225,6 @@ importers:
       '@gasket/plugin-metadata':
         specifier: workspace:^
         version: link:../gasket-plugin-metadata
-      '@gasket/plugin-middleware':
-        specifier: workspace:^
-        version: link:../gasket-plugin-middleware
       '@gasket/plugin-morgan':
         specifier: workspace:^
         version: link:../gasket-plugin-morgan
@@ -1440,9 +1379,6 @@ importers:
       '@gasket/plugin-metadata':
         specifier: workspace:^
         version: link:../../packages/gasket-plugin-metadata
-      '@gasket/plugin-middleware':
-        specifier: workspace:^
-        version: link:../../packages/gasket-plugin-middleware
       '@gasket/plugin-morgan':
         specifier: workspace:^
         version: link:../../packages/gasket-plugin-morgan
@@ -3181,9 +3117,6 @@ packages:
   '@fastify/error@4.2.0':
     resolution: {integrity: sha512-RSo3sVDXfHskiBZKBPRgnQTtIqpi/7zhJOEmAxCiBcM7d0uwdGdxLlsCaLzGs8v8NnxIRlfG0N51p5yFaOentQ==}
 
-  '@fastify/express@3.0.0':
-    resolution: {integrity: sha512-Ug6aulXCUiHgMyrHVYQqnQbGdsAV0aTad6nZxbOr6w3QjKn1mdQS3Kyzvc+I0xMjZ9yIyMUWHSooHgZ0l7nOng==}
-
   '@fastify/fast-json-stringify-compiler@5.0.3':
     resolution: {integrity: sha512-uik7yYHkLr6fxd8hJSZ8c+xF4WafPK+XzneQDPU+D10r5X19GW8lJcom2YijX2+qtFF1ENJlHXKFM9ouXNJYgQ==}
 
@@ -4060,9 +3993,6 @@ packages:
   '@types/chai@5.2.2':
     resolution: {integrity: sha512-8kB30R7Hwqf40JPiKhVzodJs2Qc1ZJ5zuT3uzw5Hq/dhNCl3G3l83jfpdI1e20BP348+fV7VIL/+FxaXkqBmWg==}
 
-  '@types/compression@1.7.5':
-    resolution: {integrity: sha512-AAQvK5pxMpaT+nDvhHrsBhLSYG5yQdtkaJE1WYieSNY2mVFKAgmU4ks65rkZD5oqnGCFLyQpUr1CqI4DmUMyDg==}
-
   '@types/concat-stream@2.0.3':
     resolution: {integrity: sha512-3qe4oQAPNwVNwK4C9c8u+VJqv9kez+2MR4qJpoPFfXtgxxif1QbFusvXzK0/Wra2VX07smostI2VMmJNSpZjuQ==}
 
@@ -4071,11 +4001,6 @@ packages:
 
   '@types/connect@3.4.38':
     resolution: {integrity: sha512-K6uROf1LD88uDQqJCktA4yzL1YYAK6NgfsI0v/mTgyPKWsX1CnJ0XPSDhViejru1GcRkLWb8RlzFYJRqGUbaug==}
-
-  '@types/cookie-parser@1.4.8':
-    resolution: {integrity: sha512-l37JqFrOJ9yQfRQkljb41l0xVphc7kg5JTjjr+pLRZ0IyZ49V4BQ8vbF4Ut2C2e+WH4al3xD3ZwYwIUfnbT4NQ==}
-    peerDependencies:
-      '@types/express': '*'
 
   '@types/cross-spawn@6.0.6':
     resolution: {integrity: sha512-fXRhhUkG4H3TQk5dBhQ7m/JDdSNHKwR2BBia62lhwEIq9xGiQKLxd6LymNhn47SjXhsUEPmxi+PKw2OkW4LLjA==}
@@ -6094,9 +6019,6 @@ packages:
 
   fast-uri@3.0.6:
     resolution: {integrity: sha512-Atfo14OibSv5wAp4VWNsFYE1AchQRTv9cBGWET4pZWHzYshFSS9NQI6I57rdKn9croWVMbYFbLhJ+yJvmZIIHw==}
-
-  fastify-plugin@4.5.1:
-    resolution: {integrity: sha512-stRHYGeuqpEZTL1Ef0Ovr2ltazUT9g844X5z/zEBFLG8RYlpDiOCIG+ATvYEp+/zmc7sN29mcIMp8gvYplYPIQ==}
 
   fastify-plugin@5.1.0:
     resolution: {integrity: sha512-FAIDA8eovSt5qcDgcBvDuX/v0Cjz0ohGhENZ/wpc3y+oZCY2afZ9Baqql3g/lC+OHRnciQol4ww7tuthOb9idw==}
@@ -13975,13 +13897,6 @@ snapshots:
 
   '@fastify/error@4.2.0': {}
 
-  '@fastify/express@3.0.0':
-    dependencies:
-      express: 4.21.2
-      fastify-plugin: 4.5.1
-    transitivePeerDependencies:
-      - supports-color
-
   '@fastify/fast-json-stringify-compiler@5.0.3':
     dependencies:
       fast-json-stringify: 6.3.0
@@ -14947,10 +14862,6 @@ snapshots:
     dependencies:
       '@types/deep-eql': 4.0.2
 
-  '@types/compression@1.7.5':
-    dependencies:
-      '@types/express': 4.17.23
-
   '@types/concat-stream@2.0.3':
     dependencies:
       '@types/node': 20.17.19
@@ -14963,10 +14874,6 @@ snapshots:
   '@types/connect@3.4.38':
     dependencies:
       '@types/node': 20.17.19
-
-  '@types/cookie-parser@1.4.8(@types/express@4.17.23)':
-    dependencies:
-      '@types/express': 4.17.23
 
   '@types/cross-spawn@6.0.6':
     dependencies:
@@ -17539,8 +17446,6 @@ snapshots:
       end-of-stream: 1.4.4
 
   fast-uri@3.0.6: {}
-
-  fastify-plugin@4.5.1: {}
 
   fastify-plugin@5.1.0: {}
 
