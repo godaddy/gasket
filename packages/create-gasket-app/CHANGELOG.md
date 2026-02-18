@@ -1,5 +1,18 @@
 # `create-gasket-app`
 
+## 7.4.20
+
+### Patch Changes
+
+- 03196ab: deprecate presets
+  - @gasket/plugin-command@7.6.4
+  - @gasket/plugin-docs@7.5.4
+  - @gasket/plugin-docusaurus@7.5.1
+  - @gasket/plugin-dynamic-plugins@7.5.1
+  - @gasket/plugin-git@7.4.9
+  - @gasket/plugin-logger@7.4.0
+  - @gasket/plugin-metadata@7.5.9
+
 ## 7.4.19
 
 ### Patch Changes
