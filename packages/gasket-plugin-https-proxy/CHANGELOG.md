@@ -1,5 +1,11 @@
 # `@gasket/plugin-https-proxy`
 
+## 7.5.1
+
+### Patch Changes
+
+- 788cda7: Lift RequireAtLeastOne type from optional dependency to ensure it is available
+
 ## 7.5.0
 
 ### Minor Changes

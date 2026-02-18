@@ -1,5 +1,13 @@
 # generate-docs-index
 
+## 7.4.31
+
+### Patch Changes
+
+- Updated dependencies [788cda7]
+  - @gasket/plugin-https-proxy@7.5.1
+  - @gasket/preset-nextjs@7.6.7
+
 ## 7.4.30
 
 ### Patch Changes
