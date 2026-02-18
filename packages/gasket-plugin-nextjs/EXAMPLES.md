@@ -49,12 +49,12 @@ export default gasket.actions.getNextConfig();
 Get route information for a specific request in server middleware.
 
 ```js
-// In Express middleware
+// In Express lifecycle
 export default {
   name: 'route-analytics-plugin',
   hooks: {
-    middleware(gasket) {
-      return async (req, res, next) => {
+    express(gasket, app) {
+      app.use(async (req, res, next) => {
         const route = await gasket.actions.getNextRoute(req);
 
         if (route) {
@@ -69,7 +69,7 @@ export default {
         }
 
         next();
-      };
+      });
     }
   }
 };

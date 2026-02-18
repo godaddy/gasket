@@ -53,7 +53,7 @@ export default makeGasket({
 export default {
   name: 'api-plugin',
   hooks: {
-    middleware(gasket, app) {
+    express(gasket, app) {
       const { apiUrl } = gasket.config;
       app.get('/api/config', (req, res) => {
         res.json({ apiUrl });
