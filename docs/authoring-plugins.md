@@ -63,7 +63,6 @@ export default {
       },
       handler: async function express(gasket, app) {
         app.use((req, res, next) => {
-          // custom middleware logic
           next();
         });
       }
@@ -119,7 +118,6 @@ export default {
       },
       handler: async function express(gasket, app) {
         app.use((req, res, next) => {
-          // custom middleware logic
           next();
         });
       }

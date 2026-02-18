@@ -33,7 +33,6 @@ describe('getAppInstance', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     gasket = {
-      middleware: {},
       logger: {
         info: vi.fn(),
         warn: vi.fn(),
