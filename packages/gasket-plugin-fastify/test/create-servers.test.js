@@ -6,7 +6,7 @@ const mockApp = {
     emit: vi.fn()
   },
   register: vi.fn(),
-  use: vi.fn()
+  setErrorHandler: vi.fn()
 };
 
 vi.mock('../lib/utils.js');
@@ -73,24 +73,13 @@ describe('createServers', () => {
     expect(gasket.exec.mock.calls[1]).toContain('errorMiddleware');
   });
 
-  it('adds the errorMiddleware', async () => {
+  it('adds the errorMiddleware via setErrorHandler', async () => {
     const errorMiddlewares = [vi.fn()];
     gasket.exec.mockResolvedValue(errorMiddlewares);
 
     await createServers(gasket, {});
 
-    const errorMiddleware = findCall(
-      mockApp.use,
-      (mw) => mw === errorMiddlewares[0]);
-    expect(errorMiddleware).not.toBeNull();
+    expect(mockApp.setErrorHandler).toHaveBeenCalledTimes(1);
+    expect(mockApp.setErrorHandler).toHaveBeenCalledWith(expect.any(Function));
   });
-
-  function findCall(aSpy, aPredicate) {
-    const callIdx = findCallIndex(aSpy, aPredicate);
-    return callIdx === -1 ? null : aSpy.mock.calls[callIdx][0];
-  }
-
-  function findCallIndex(aSpy, aPredicate) {
-    return aSpy.mock.calls.map((args) => aPredicate(...args)).indexOf(true);
-  }
 });
