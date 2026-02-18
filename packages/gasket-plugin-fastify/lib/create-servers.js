@@ -14,15 +14,20 @@ export default async function createServers(gasket, serverOpts) {
   await gasket.exec('fastify', app);
 
   const postRenderingStacks = (await gasket.exec('errorMiddleware')).filter(Boolean);
-  postRenderingStacks.forEach((stack) => {
+  if (postRenderingStacks.length) {
     app.setErrorHandler((error, request, reply) => {
-      stack(error, request.raw, reply.raw, (err) => {
-        if (err && !reply.sent) {
-          reply.send(err);
+      let index = 0;
+      const next = (err) => {
+        const current = err || error;
+        if (index < postRenderingStacks.length) {
+          postRenderingStacks[index++](current, request.raw, reply.raw, next);
+        } else if (!reply.sent) {
+          reply.send(current);
         }
-      });
+      };
+      next(error);
     });
-  });
+  }
 
   return {
     ...serverOpts,

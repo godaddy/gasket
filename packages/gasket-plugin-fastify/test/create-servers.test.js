@@ -73,13 +73,38 @@ describe('createServers', () => {
     expect(gasket.exec.mock.calls[1]).toContain('errorMiddleware');
   });
 
-  it('adds the errorMiddleware via setErrorHandler', async () => {
-    const errorMiddlewares = [vi.fn()];
+  it('registers a single setErrorHandler when errorMiddleware exists', async () => {
+    const errorMiddlewares = [vi.fn(), vi.fn()];
     gasket.exec.mockResolvedValue(errorMiddlewares);
 
     await createServers(gasket, {});
 
     expect(mockApp.setErrorHandler).toHaveBeenCalledTimes(1);
     expect(mockApp.setErrorHandler).toHaveBeenCalledWith(expect.any(Function));
+  });
+
+  it('does not register setErrorHandler when no errorMiddleware', async () => {
+    gasket.exec.mockResolvedValue([]);
+
+    await createServers(gasket, {});
+
+    expect(mockApp.setErrorHandler).not.toHaveBeenCalled();
+  });
+
+  it('chains multiple errorMiddleware handlers in order', async () => {
+    const calls = [];
+    const mw1 = vi.fn((e, req, res, next) => { calls.push('mw1'); next(); });
+    const mw2 = vi.fn((e, req, res, next) => { calls.push('mw2'); next(); });
+    gasket.exec.mockResolvedValue([mw1, mw2]);
+
+    await createServers(gasket, {});
+
+    const handler = mockApp.setErrorHandler.mock.calls[0][0];
+    const mockRequest = { raw: {} };
+    const mockReply = { raw: {}, sent: false, send: vi.fn() };
+    handler(new Error('test'), mockRequest, mockReply);
+
+    expect(calls).toEqual(['mw1', 'mw2']);
+    expect(mockReply.send).toHaveBeenCalled();
   });
 });
