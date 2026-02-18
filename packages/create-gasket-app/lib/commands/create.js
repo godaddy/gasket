@@ -24,6 +24,7 @@ import linkModules from '../scaffold/actions/link-modules.js';
 import postCreateHooks from '../scaffold/actions/post-create-hooks.js';
 import printReport from '../scaffold/actions/print-report.js';
 import gitInit from '../scaffold/actions/git-init.js';
+import { warnPresetDeprecated } from '../utils/warn-preset-deprecated.js';
 
 /**
  * Parses comma separated option input to array
@@ -112,10 +113,14 @@ const createCommand = {
  * @returns {import('../internal.js').PartialCreateContext} Validated context
  */
 function validateOptions(context) {
-  const hasOption = (context) => Boolean(context.template || context.templatePath || context.rawPresets.length || context.localPresets.length);
+  const hasOption = (ctx) =>
+    Boolean(ctx.template || ctx.templatePath || ctx.rawPresets?.length || ctx.localPresets?.length);
 
   if (!hasOption(context)) {
-    console.warn('Warning: At least one of the options is required: --template, --template-path, --presets, --preset-path');
+    console.warn(
+      'Warning: At least one option is required: --template (preferred), --template-path, ' +
+        '--presets (deprecated), or --preset-path (deprecated).'
+    );
     process.exit(1);
   }
 
@@ -196,6 +201,7 @@ createCommand.action = async function run(appname, options, command) {
   process.env.GASKET_ENV = 'create';
   const context = makeCreateContext([appname], options);
   validateOptions(context);
+  warnPresetDeprecated(context);
 
   try {
     await handleCreate(context);
