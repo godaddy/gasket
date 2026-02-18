@@ -50,6 +50,12 @@ const OPERATIONS = {
     emoji: '🔒',
     isCustom: true,
     handler: regenHandler
+  },
+  'update-scoped': {
+    name: 'Updating @gasket/@godaddy to latest',
+    emoji: '⬆️',
+    isCustom: true,
+    handler: updateScopedHandler
   }
 };
 
@@ -166,6 +172,49 @@ async function regenHandler(templateDir, packageName) {
   } catch (error) {
     console.log(`❌ Failed to regenerate lockfiles: ${error.message}\n`);
     throw error;
+  }
+}
+
+/**
+ * Updates @gasket packages to latest
+ * @param {string} templateDir
+ * @param {string} packageName
+ * @returns {Promise<void>}
+ */
+async function updateScopedHandler(templateDir, packageName) {
+  console.log(`⬆️  Updating @gasket packages for ${packageName}/template`);
+
+  const packageJsonPath = path.join(templateDir, 'package.json');
+  if (!fs.existsSync(packageJsonPath)) {
+    console.log('⚠️  No package.json found, skipping\n');
+    return;
+  }
+
+  try {
+    await runCommand('npx', [
+      'npm-check-updates',
+      '-u',
+      '-f', '/^@gasket\\/.*$/'
+    ], templateDir);
+  } catch (ncuError) {
+    console.log(`❌ npm-check-updates failed: ${ncuError.message}\n`);
+    throw ncuError;
+  }
+
+  console.log('📦 Running npm install to refresh lockfile...');
+  try {
+    await runCommand('npm', ['install', '--registry', NPM_REGISTRY], templateDir);
+    console.log('✅ @gasket updated successfully\n');
+  } catch {
+    console.log('⚠️  npm install failed, retrying with --legacy-peer-deps...');
+
+    try {
+      await runCommand('npm', ['install', '--registry', NPM_REGISTRY, '--legacy-peer-deps'], templateDir);
+      console.log('✅ @gasket updated successfully with --legacy-peer-deps\n');
+    } catch (retryError) {
+      console.log(`❌ Failed to install even with --legacy-peer-deps: ${retryError.message}\n`);
+      throw retryError;
+    }
   }
 }
 
