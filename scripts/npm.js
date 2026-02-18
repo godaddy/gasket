@@ -203,7 +203,7 @@ async function updateScopedHandler(templateDir, packageName) {
 
   console.log('📦 Running npm install to refresh lockfile...');
   try {
-    await runCommand('npm', ['install', '--registry', NPM_REGISTRY,], templateDir);
+    await runCommand('npm', ['install', '--registry', NPM_REGISTRY], templateDir);
     console.log('✅ @gasket updated successfully\n');
   } catch {
     console.log('⚠️  npm install failed, retrying with --legacy-peer-deps...');
