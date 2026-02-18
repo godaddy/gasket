@@ -211,8 +211,8 @@ in favor of using the new GasketActions API introduced in v7.
 ### Motivation
 
 Middleware in Gasket apps runs for every request, regardless of whether it is
-used or not. Controlling which paths middleware runs on can help reduce this,
-but it still requires the developer to manage something that should be
+used or not. We added support for [middleware paths] to help reduce this, but it
+is still not ideal and requires the developer to manage something that should be
 optimized already by the plugin.
 
 As a caveat of the middleware pattern, when the `req` and `res` objects are
@@ -1026,6 +1026,7 @@ register('@gasket/plugin-mocha/node-loader-babel', pathToFileURL('./test'));
 ```
 
 <!-- Links -->
+[middleware paths]:/packages/gasket-plugin-middleware/README.md#middleware-paths
 [streaming]: https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming
 [App Router]: https://nextjs.org/docs/app/building-your-application/routing
 [Next.js 14]: https://nextjs.org/docs/pages/building-your-application/upgrading/version-14
