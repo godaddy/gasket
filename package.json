@@ -35,6 +35,10 @@
     "test:coverage": "pnpm run -r test:coverage",
     "test:package": "pnpm run -r --filter $* test",
     "typecheck:all": "pnpm run -r typecheck",
+    "verdaccio:start": "verdaccio --config verdaccio/config.yaml --listen 4873",
+    "verdaccio:publish": "bash scripts/verdaccio-publish.sh",
+    "verdaccio:template-install": "node scripts/verdaccio-template-install.js",
+    "verdaccio:clean": "rm -rf .verdaccio && echo 'Verdaccio storage cleaned'",
     "version": "changeset version && pnpm install --prefer-offline --no-frozen-lockfile"
   },
   "repository": "godaddy/gasket.git",
@@ -87,6 +91,7 @@
     "rimraf": "^6.1.2",
     "search-insights": "^2.17.3",
     "syncpack": "^13.0.3",
+    "verdaccio": "^6.0.0",
     "typescript": "^5.8.2",
     "vitest": "^3.2.0"
   },

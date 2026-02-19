@@ -1,0 +1,35 @@
+# Local Verdaccio config for testing branch packages.
+# Start: pnpm verdaccio:start
+# Publish: pnpm verdaccio:publish
+
+storage: ../.verdaccio/storage
+
+auth:
+  htpasswd:
+    file: ../.verdaccio/htpasswd
+    max_users: -1
+
+uplinks:
+  npmjs:
+    url: https://registry.npmjs.org/
+
+packages:
+  '@gasket/*':
+    access: $all
+    publish: $anonymous
+    unpublish: $anonymous
+
+  'create-gasket-app':
+    access: $all
+    publish: $anonymous
+    unpublish: $anonymous
+
+  '**':
+    access: $all
+    publish: $anonymous
+    proxy: npmjs
+
+log:
+  type: stdout
+  format: pretty
+  level: warn

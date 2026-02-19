@@ -89,6 +89,9 @@ packages/create-gasket-app/test/fixtures/create/*
 !packages/create-gasket-app/test/fixtures/create/.gitkeep
 packages/gasket-core/cjs
 
+# Verdaccio local registry storage
+.verdaccio/
+
 # Generated LLM rules - md2llm
 .cursor/*
 .cursorrules
