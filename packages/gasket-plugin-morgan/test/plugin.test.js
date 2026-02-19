@@ -27,9 +27,14 @@ describe('@gasket/plugin-morgan', () => {
   });
 
   describe('.express', () => {
+    it('has timing set to run first', () => {
+      expect(Plugin.hooks.express).toHaveProperty('timing');
+      expect(Plugin.hooks.express.timing).toEqual({ first: true });
+    });
+
     it('runs on the express lifecycle event', function () {
-      expect(typeof Plugin.hooks.express).toBe('function');
-      expect(Plugin.hooks.express).toHaveLength(2);
+      expect(typeof Plugin.hooks.express.handler).toBe('function');
+      expect(Plugin.hooks.express.handler).toHaveLength(2);
     });
 
     it('registers morgan middleware on the express app', () => {
@@ -43,7 +48,7 @@ describe('@gasket/plugin-morgan', () => {
         logger: loggerMock
       };
 
-      Plugin.hooks.express(gasketMock, appMock);
+      Plugin.hooks.express.handler(gasketMock, appMock);
       expect(appMock.use).toHaveBeenCalledTimes(1);
       expect(typeof appMock.use.mock.calls[0][0]).toBe('function');
     });
@@ -61,7 +66,7 @@ describe('@gasket/plugin-morgan', () => {
         logger: loggerMock
       };
 
-      Plugin.hooks.express(gasketMock, appMock);
+      Plugin.hooks.express.handler(gasketMock, appMock);
       const [morganMiddleware] = appMock.use.mock.calls[0];
 
       morganMiddleware(reqMock, resMock, function next() {
