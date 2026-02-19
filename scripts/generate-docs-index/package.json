@@ -31,7 +31,6 @@
     "@gasket/plugin-intl": "workspace:^",
     "@gasket/plugin-logger": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",
-    "@gasket/plugin-middleware": "workspace:^",
     "@gasket/plugin-morgan": "workspace:^",
     "@gasket/plugin-nextjs": "workspace:^",
     "@gasket/plugin-swagger": "workspace:^",

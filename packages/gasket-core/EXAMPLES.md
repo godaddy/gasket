@@ -197,24 +197,24 @@ console.log(result); // 'Processed: HELLO'
 ```js
 const gasket = makeGasket({
   plugins: [{
-    name: 'middleware-plugin',
+    name: 'express-plugin',
     hooks: {
-      middleware(gasket) {
-        return (req, res, next) => {
-          console.log('Middleware executed');
+      express(gasket, app) {
+        app.use((req, res, next) => {
+          console.log('Handler executed');
           next();
-        };
+        });
       }
     }
   }]
 });
 
 // Apply custom logic to each plugin's hook
-const results = await gasket.engine.execApply(gasket, 'middleware', async (plugin, handler) => {
-  console.log(`Processing middleware from ${plugin.name}`);
-  const middleware = handler(gasket);
-  // Could register middleware here
-  return middleware;
+const results = await gasket.engine.execApply(gasket, 'express', async (plugin, handler) => {
+  console.log(`Processing express hook from ${plugin.name}`);
+  const result = handler(gasket);
+  // Could perform additional setup here
+  return result;
 });
 ```
 

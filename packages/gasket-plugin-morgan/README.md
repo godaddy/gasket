@@ -55,7 +55,7 @@ export default makeGasket({
 
 ## How it works
 
-This plugins hooks the [middleware] lifecycle from [@gasket/plugin-express] or [@gasket/plugin-fastify],
+This plugin hooks the `express` and `fastify` lifecycles from [@gasket/plugin-express] and [@gasket/plugin-fastify],
 adding [Morgan] to format http requests to be logged using the [@gasket/plugin-logger].
 
 ## License
@@ -67,3 +67,4 @@ adding [Morgan] to format http requests to be logged using the [@gasket/plugin-l
 [Morgan]: http://expressjs.com/en/resources/middleware/morgan.html
 [@gasket/plugin-express]: /packages/gasket-plugin-express/README.md
 [@gasket/plugin-fastify]: /packages/gasket-plugin-fastify/README.md
+[@gasket/plugin-logger]: /packages/gasket-plugin-logger/README.md

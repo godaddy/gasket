@@ -2,11 +2,7 @@ import type { MaybeAsync, MaybeMultiple, Plugin } from '@gasket/core';
 import type { Application, ErrorRequestHandler } from 'express';
 
 
-export interface ExpressConfig {
-  /** Whether responses are compressed (true by default) */
-  compression?: boolean;
-  trustProxy?: boolean | string | number | Function;
-}
+export interface ExpressConfig {}
 declare module '@gasket/core' {
   export interface GasketActions {
     /** @deprecated */

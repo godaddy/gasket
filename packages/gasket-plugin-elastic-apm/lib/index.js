@@ -44,7 +44,7 @@ const plugin = {
             method: 'exec',
             description: 'Modify the APM transaction',
             link: 'README.md#apmtransaction',
-            parent: 'middleware'
+            parent: 'express'
           }
         ]
       };

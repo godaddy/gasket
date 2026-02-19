@@ -18,45 +18,6 @@ export default makeGasket({
 });
 ```
 
-### Express Configuration
-
-```js
-// gasket.js
-import { makeGasket } from '@gasket/core';
-import pluginExpress from '@gasket/plugin-express';
-
-export default makeGasket({
-  plugins: [
-    pluginExpress
-  ],
-  express: {
-    compression: false,
-    trustProxy: true
-  }
-});
-```
-
-### Advanced Trust Proxy Configuration
-
-```js
-// gasket.js
-import { makeGasket } from '@gasket/core';
-import pluginExpress from '@gasket/plugin-express';
-
-export default makeGasket({
-  plugins: [
-    pluginExpress
-  ],
-  express: {
-    compression: true,
-    trustProxy: (ip) => {
-      // Trust only specific IP addresses
-      return ip === '127.0.0.1' || ip === '::1';
-    }
-  }
-});
-```
-
 ## Lifecycle Hooks
 
 ### express

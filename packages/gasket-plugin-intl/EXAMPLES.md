@@ -59,19 +59,19 @@ export default makeGasket({
 Get the current locale for a request.
 
 ```js
-// In middleware
+// In express lifecycle
 export default {
-  name: 'locale-middleware',
+  name: 'locale-plugin',
   hooks: {
-    middleware(gasket) {
-      return async (req, res, next) => {
+    express(gasket, app) {
+      app.use(async (req, res, next) => {
         const locale = await gasket.actions.getIntlLocale(req);
         console.log('Current locale:', locale);
 
         // Use locale for request processing
         res.locals.locale = locale;
         next();
-      };
+      });
     }
   }
 };

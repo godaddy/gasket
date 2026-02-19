@@ -1,7 +1,8 @@
 /// <reference types="@gasket/plugin-metadata" />
 
 import { createRequire } from 'module';
-import middleware from './middleware.js';
+import express from './express.js';
+import fastify from './fastify.js';
 
 const require = createRequire(import.meta.url);
 const { name, version, description } = require('../package.json');
@@ -14,7 +15,8 @@ const plugin = {
   version,
   description,
   hooks: {
-    middleware,
+    express,
+    fastify,
     metadata(gasket, meta) {
       return {
         ...meta,

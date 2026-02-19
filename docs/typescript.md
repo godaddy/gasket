@@ -58,21 +58,19 @@ import type {
 const plugin: Plugin = {
   name: 'my-plugin',
   hooks: {
-    middleware(gasket, express) {
-      return [
-        async (req, res, next) => {
-          const customHeader = await gasket.execWaterfall(
-            'customHeader',
-            gasket.config.customHeader
-          );
+    express(gasket, app) {
+      app.use(async (req, res, next) => {
+        const customHeader = await gasket.execWaterfall(
+          'customHeader',
+          gasket.config.customHeader
+        );
 
-          if (customHeader) {
-            res.set('x-silly-header', customHeader);
-          }
-
-          next();
+        if (customHeader) {
+          res.set('x-silly-header', customHeader);
         }
-      ];
+
+        next();
+      });
     }
   }
 };
