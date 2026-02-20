@@ -45,7 +45,7 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-docs",
   "dependencies": {
     "@gasket/plugin-command": "workspace:^",
-    "glob": "^13.0.0",
+    "glob": "^13.0.1",
     "lodash.defaultsdeep": "^4.6.1",
     "markdown-table": "^1.1.3",
     "mkdirp": "^1.0.4",
