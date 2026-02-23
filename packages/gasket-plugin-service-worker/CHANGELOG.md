@@ -1,5 +1,11 @@
 # `@gasket/plugin-service-worker`
 
+## 7.5.1
+
+### Patch Changes
+
+- ee86f4a: Upgrade express version
+
 ## 7.5.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # `@gasket/plugin-mocha`
 
+## 7.5.7
+
+### Patch Changes
+
+- ee86f4a: Upgrade express version
+
 ## 7.5.6
 
 ### Patch Changes

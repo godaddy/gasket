@@ -1,5 +1,13 @@
 # `@gasket/nextjs`
 
+## 7.6.9
+
+### Patch Changes
+
+- ee86f4a: Upgrade express version
+  - @gasket/data@7.5.5
+  - @gasket/request@7.5.5
+
 ## 7.6.8
 
 ### Patch Changes

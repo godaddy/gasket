@@ -1,5 +1,12 @@
 # `@gasket/plugin-intl`
 
+## 7.6.5
+
+### Patch Changes
+
+- ee86f4a: Upgrade express version
+  - @gasket/request@7.5.5
+
 ## 7.6.4
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # `@gasket/plugin-docusaurus`
 
+## 7.5.2
+
+### Patch Changes
+
+- ee86f4a: Upgrade express version
+  - @gasket/plugin-logger@7.4.0
+
 ## 7.5.1
 
 ### Patch Changes

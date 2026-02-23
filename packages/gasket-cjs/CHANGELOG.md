@@ -1,5 +1,11 @@
 # `@gasket/cjs`
 
+## 7.1.2
+
+### Patch Changes
+
+- ee86f4a: Upgrade express version
+
 ## 7.1.1
 
 ### Patch Changes

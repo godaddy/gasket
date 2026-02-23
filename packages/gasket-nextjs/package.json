@@ -1,6 +1,6 @@
 {
   "name": "@gasket/nextjs",
-  "version": "7.6.8",
+  "version": "7.6.9",
   "description": "Gasket integrations for Next.js apps",
   "type": "module",
   "types": "lib/index.d.ts",

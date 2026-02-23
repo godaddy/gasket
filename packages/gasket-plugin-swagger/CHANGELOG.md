@@ -1,5 +1,11 @@
 # `@gasket/plugin-swagger`
 
+## 7.4.1
+
+### Patch Changes
+
+- ee86f4a: Upgrade express version
+
 ## 7.4.0
 
 ### Minor Changes

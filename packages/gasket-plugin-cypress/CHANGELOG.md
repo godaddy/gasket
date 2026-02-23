@@ -1,5 +1,11 @@
 # @gasket/plugin-cypress
 
+## 7.5.4
+
+### Patch Changes
+
+- ee86f4a: Upgrade express version
+
 ## 7.5.3
 
 ### Patch Changes
