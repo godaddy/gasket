@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 7.0.9
+
+### Patch Changes
+
+- ee86f4a: Upgrade express version
+
 ## 7.0.8
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # `@gasket/utils`
 
+## 7.6.6
+
+### Patch Changes
+
+- ee86f4a: Upgrade express version
+
 ## 7.6.5
 
 ### Patch Changes

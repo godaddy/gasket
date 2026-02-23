@@ -1,5 +1,12 @@
 # `@gasket/plugin-nextjs`
 
+## 7.7.5
+
+### Patch Changes
+
+- ee86f4a: Upgrade express version
+  - @gasket/plugin-webpack@7.4.0
+
 ## 7.7.4
 
 ### Patch Changes

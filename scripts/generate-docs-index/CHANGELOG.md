@@ -1,5 +1,62 @@
 # generate-docs-index
 
+## 7.4.32
+
+### Patch Changes
+
+- ee86f4a: Upgrade express version
+- Updated dependencies [ee86f4a]
+  - @gasket/template-nextjs-express@7.0.9
+  - @gasket/plugin-dynamic-plugins@7.5.2
+  - @gasket/plugin-service-worker@7.5.1
+  - @gasket/template-nextjs-pages@7.0.9
+  - @gasket/template-api-express@7.0.8
+  - @gasket/template-api-fastify@7.0.8
+  - @gasket/template-nextjs-app@7.0.9
+  - @gasket/plugin-docs-graphs@7.4.2
+  - @gasket/plugin-docusaurus@7.5.2
+  - @gasket/plugin-middleware@7.5.4
+  - @gasket/plugin-metadata@7.5.10
+  - @gasket/plugin-analyze@7.4.3
+  - @gasket/plugin-command@7.6.5
+  - @gasket/plugin-cypress@7.5.4
+  - @gasket/plugin-express@7.5.2
+  - @gasket/plugin-fastify@7.5.4
+  - @gasket/plugin-swagger@7.4.1
+  - @gasket/plugin-nextjs@7.7.5
+  - @gasket/plugin-vitest@7.2.2
+  - @gasket/preset-nextjs@7.6.8
+  - @gasket/plugin-https@7.4.2
+  - @gasket/plugin-mocha@7.5.7
+  - @gasket/plugin-redux@7.4.4
+  - @gasket/plugin-data@7.5.3
+  - @gasket/plugin-docs@7.5.5
+  - @gasket/plugin-intl@7.6.5
+  - @gasket/plugin-jest@7.5.9
+  - create-gasket-app@7.4.21
+  - @gasket/plugin-git@7.4.10
+  - @gasket/preset-api@7.6.8
+  - @gasket/react-intl@7.7.2
+  - @gasket/assets@7.5.2
+  - @gasket/nextjs@7.6.9
+  - @gasket/utils@7.6.6
+  - @gasket/core@7.7.4
+  - @gasket/cjs@7.1.2
+  - @gasket/plugin-manifest@7.3.9
+  - @gasket/plugin-workbox@7.4.0
+  - @gasket/plugin-morgan@7.4.0
+  - @gasket/plugin-elastic-apm@7.5.1
+  - @gasket/plugin-happyfeet@7.4.0
+  - @gasket/plugin-https-proxy@7.5.1
+  - @gasket/plugin-lint@7.4.4
+  - @gasket/plugin-logger@7.4.0
+  - @gasket/plugin-typescript@7.4.6
+  - @gasket/plugin-webpack@7.4.0
+  - @gasket/plugin-winston@7.4.0
+  - @gasket/data@7.5.5
+  - @gasket/request@7.5.5
+  - @gasket/intl@7.5.3
+
 ## 7.4.31
 
 ### Patch Changes

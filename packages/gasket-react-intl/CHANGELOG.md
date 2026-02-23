@@ -1,5 +1,15 @@
 # `@gasket/react-intl`
 
+## 7.7.2
+
+### Patch Changes
+
+- ee86f4a: Upgrade express version
+- Updated dependencies [ee86f4a]
+  - @gasket/plugin-intl@7.6.5
+  - @gasket/data@7.5.5
+  - @gasket/intl@7.5.3
+
 ## 7.7.1
 
 ### Patch Changes

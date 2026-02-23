@@ -1,5 +1,11 @@
 # `@gasket/plugin-redux`
 
+## 7.4.4
+
+### Patch Changes
+
+- ee86f4a: Upgrade express version
+
 ## 7.4.3
 
 ### Patch Changes
