@@ -1,4 +1,4 @@
-name: CI
+name: Continuous Integration
 
 on:
   workflow_dispatch:
@@ -8,13 +8,41 @@ on:
       - main
       - lts
 
+permissions:
+  contents: read
+  pull-requests: read
+
 # Avoid redundant runs for same PRs
 concurrency:
   group: ci-${{ github.head_ref || github.ref }}
   cancel-in-progress: true
 
 jobs:
-  ci:
+  # Check what files have changed to determine which jobs should run
+  Changes:
+    runs-on: ubuntu-latest
+    outputs:
+      templates: ${{ steps.changes.outputs.templates }}
+      code: ${{ steps.changes.outputs.code }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Detect Changes
+        uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            templates:
+              - 'packages/**/template/**'
+            code:
+              - '**'
+              - '!packages/**/template/**'
+              - '!**/*.md'
+
+  UnitTests:
+    needs: Changes
+    if: needs.Changes.outputs.code == 'true'
     runs-on: ubuntu-latest
 
     strategy:
@@ -28,7 +56,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v4
 
-      - name: Set up Node.js ${{ matrix.node-version }}
+      - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
@@ -42,16 +70,68 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-${{ matrix.node-version }}-
 
-      - name: Install Dependencies
+      - name: Install dependencies
         run: pnpm install --prefer-offline
 
       - name: Build
         run: pnpm run build
 
-      - name: Run Tests & Lint
+      - name: Test & Lint
         run: pnpm run test
+
+  TemplateTests:
+    needs: Changes
+    if: needs.Changes.outputs.templates == 'true'
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x, 22.x, 24.x]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: pnpm
+
+      - name: Cache pnpm store
+        uses: actions/cache@v3
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ matrix.node-version }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-${{ matrix.node-version }}-
+
+      - name: Install dependencies
+        run: pnpm install --prefer-offline
+
+      - name: Build
+        run: pnpm run build
 
       - name: Validate Templates
         run: |
           pnpm run templates:validate-dotfiles
           pnpm run templates:validate
+
+  Complete:
+    name: CI Success
+    needs: [UnitTests, TemplateTests]
+    if: always()
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check for Failures
+        run: |
+          if [ "${{ needs.UnitTests.result }}" == "failure" ] || \
+             [ "${{ needs.TemplateTests.result }}" == "failure" ]; then
+            echo "One or more jobs failed. Please check the logs."
+            exit 1
+          fi
+          echo "All jobs completed successfully."
