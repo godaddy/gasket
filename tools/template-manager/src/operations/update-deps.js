@@ -1,5 +1,9 @@
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const ncuBin = path.resolve(__dirname, '../../node_modules/.bin/ncu');
 
 export const name = 'update-deps';
 export const description = 'Update dependencies to latest (default: scoped packages only)';
@@ -32,7 +36,6 @@ export async function handler(template, ctx) {
   const packageFile = `packages/${packageName}/template/package.json`;
 
   const args = [
-    'npm-check-updates',
     '-u',
     '--packageFile', packageFile,
     '--filter', filterPattern
@@ -40,7 +43,7 @@ export async function handler(template, ctx) {
 
   try {
     await runner.runCommand(
-      'npx',
+      ncuBin,
       args,
       config.root,
       { npm_config_loglevel: 'error' }

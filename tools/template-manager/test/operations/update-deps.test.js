@@ -8,7 +8,7 @@ describe('update-deps', () => {
     vi.restoreAllMocks();
   });
 
-  it('calls npm-check-updates -u with packageFile and filter (no npm install)', async () => {
+  it('calls ncu -u with packageFile and filter (no npm install)', async () => {
     const fs = await import('fs');
     vi.mocked(fs.existsSync).mockReturnValue(true);
 
@@ -23,8 +23,8 @@ describe('update-deps', () => {
     expect(runner.runCommand).toHaveBeenCalledTimes(1);
     expect(runner.runCommand).toHaveBeenNthCalledWith(
       1,
-      'npx',
-      ['npm-check-updates', '-u', '--packageFile', 'packages/gasket-template-webapp-app/template/package.json', '--filter', baseConfig.updateDepsFilter],
+      expect.stringContaining('node_modules/.bin/ncu'),
+      ['-u', '--packageFile', 'packages/gasket-template-webapp-app/template/package.json', '--filter', baseConfig.updateDepsFilter],
       '/repo',
       { npm_config_loglevel: 'error' }
     );
@@ -57,8 +57,8 @@ describe('update-deps', () => {
 
     expect(runner.runCommand).toHaveBeenNthCalledWith(
       1,
-      'npx',
-      ['npm-check-updates', '-u', '--packageFile', 'packages/gasket-template-webapp-app/template/package.json', '--filter', '^eslint$'],
+      expect.stringContaining('node_modules/.bin/ncu'),
+      ['-u', '--packageFile', 'packages/gasket-template-webapp-app/template/package.json', '--filter', '^eslint$'],
       '/repo',
       { npm_config_loglevel: 'error' }
     );
@@ -78,8 +78,8 @@ describe('update-deps', () => {
 
     expect(runner.runCommand).toHaveBeenNthCalledWith(
       1,
-      'npx',
-      ['npm-check-updates', '-u', '--packageFile', 'packages/gasket-template-webapp-app/template/package.json', '--filter', '^eslint$'],
+      expect.stringContaining('node_modules/.bin/ncu'),
+      ['-u', '--packageFile', 'packages/gasket-template-webapp-app/template/package.json', '--filter', '^eslint$'],
       '/repo',
       { npm_config_loglevel: 'error' }
     );
