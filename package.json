@@ -28,9 +28,15 @@
     "replace-ws-aliases": "node scripts/replace-ws-aliases.js",
     "syncpack": "syncpack",
     "syncpack:fix": "syncpack fix-mismatches && syncpack format",
-    "templates:regen:lockfiles": "node scripts/npm.js regen",
-    "templates:validate": "node scripts/npm.js clean && node scripts/npm.js npm-ci && node scripts/npm.js build && node scripts/npm.js lint && node scripts/npm.js test",
-    "templates:validate-dotfiles": "node scripts/templates-validate-dotfiles.js",
+    "template": "node tools/template-manager/src/index.js",
+    "templates:audit": "pnpm template audit",
+    "templates:peer-deps": "pnpm template peer-deps",
+    "templates:regen:lockfiles": "pnpm template regen",
+    "templates:status": "pnpm template status",
+    "templates:sync-deps": "pnpm template sync-deps",
+    "templates:validate": "pnpm template clean && pnpm template npm-ci && pnpm template build && pnpm template lint && pnpm template test",
+    "templates:validate-dotfiles": "pnpm template validate-dotfiles",
+    "templates:validate-structure": "pnpm template validate-structure",
     "test": "pnpm run -r test",
     "test:coverage": "pnpm run -r test:coverage",
     "test:package": "pnpm run -r --filter $* test",
@@ -104,6 +110,7 @@
   },
   "workspaces": [
     "packages/*",
-    "scripts/generate-docs-index"
+    "scripts/generate-docs-index",
+    "tools/template-manager"
   ]
 }

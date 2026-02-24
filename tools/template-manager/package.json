@@ -1,0 +1,24 @@
+{
+  "name": "template-manager",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Template management tool for Gasket monorepo",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "npm-check-updates": "^17.1.15",
+    "prompts": "^2.4.2",
+    "semver": "^7.7.1"
+  },
+  "devDependencies": {
+    "vitest": "^3.2.0"
+  }
+}
