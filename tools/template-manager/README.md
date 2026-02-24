@@ -117,8 +117,13 @@ All config is in `src/config.js`. When copying to OS repo, only this file needs 
 
 | Option | Type | Description |
 |--------|------|-------------|
-| `validateDotfiles` | `object` | Expected/allowed dotfiles |
-| `validateStructure` | `object` | Expected scripts, files, forbidden files |
+| `validateDotfiles.expectedDotFiles` | `string[]` | Dotfiles that must exist |
+| `validateDotfiles.allowedUnpackedDotFiles` | `string[]` | Dotfiles excluded from npm pack check |
+| `validateStructure.expectedScripts` | `string[]` | Scripts all templates must have |
+| `validateStructure.expectedFiles` | `(string\|RegExp)[]` | Files all templates must have |
+| `validateStructure.expectedFilesByTemplate` | `object` | Per-template file requirements |
+| `validateStructure.expectedScriptsByTemplate` | `object` | Per-template script requirements |
+| `validateStructure.forbiddenFiles` | `string[]` | Files that must not exist |
 
 ## Testing
 
