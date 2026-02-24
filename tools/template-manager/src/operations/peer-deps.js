@@ -62,7 +62,7 @@ export async function handler(templates, ctx) {
       'npm',
       ['ls', '--all', '--json'],
       t.templateDir,
-      { customEnv: noLegacyEnv }
+      noLegacyEnv
     );
     const data = parseNpmLs(stdout);
     const problems = data.problems || [];
