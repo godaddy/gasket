@@ -60,8 +60,8 @@ importers:
         specifier: ^1.1.44
         version: 1.6.9(eslint@9.39.3(jiti@1.21.7))(typescript@5.9.3)(vitest@3.2.4(@types/debug@4.1.12)(@types/node@20.19.33)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.46.0)(yaml@2.8.2))
       chalk:
-        specifier: ^4.1.2
-        version: 4.1.2
+        specifier: ^5.3.0
+        version: 5.6.2
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -150,8 +150,8 @@ importers:
         specifier: workspace:^
         version: link:../gasket-utils
       chalk:
-        specifier: ^4.1.2
-        version: 4.1.2
+        specifier: ^5.3.0
+        version: 5.6.2
       commander:
         specifier: ^12.1.0
         version: 12.1.0
@@ -540,8 +540,8 @@ importers:
   packages/gasket-plugin-dynamic-plugins:
     dependencies:
       chalk:
-        specifier: ^4.1.2
-        version: 4.1.2
+        specifier: ^5.3.0
+        version: 5.6.2
     devDependencies:
       '@gasket/core':
         specifier: workspace:^
@@ -1332,8 +1332,8 @@ importers:
   packages/gasket-utils:
     dependencies:
       chalk:
-        specifier: ^4.1.2
-        version: 4.1.2
+        specifier: ^5.3.0
+        version: 5.6.2
       concat-stream:
         specifier: ^2.0.0
         version: 2.0.0

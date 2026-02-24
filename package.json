@@ -70,7 +70,7 @@
     "@typescript-eslint/eslint-plugin": "^8.38.0",
     "@typescript-eslint/parser": "^8.38.0",
     "@vitest/eslint-plugin": "^1.1.44",
-    "chalk": "^4.1.2",
+    "chalk": "^5.3.0",
     "cross-env": "^7.0.3",
     "eslint": "^9.31.0",
     "eslint-config-godaddy-react-typescript": "^5.0.0",
