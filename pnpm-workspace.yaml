@@ -1,3 +1,4 @@
 packages:
   - packages/*
   - scripts/generate-docs-index
+  - tools/template-manager
