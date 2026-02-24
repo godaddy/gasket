@@ -81,13 +81,10 @@ Available from repo root via `pnpm`:
 ```bash
 pnpm templates:validate           # clean → npm-ci → build → lint → test
 pnpm templates:validate-dotfiles  # validate-dotfiles
-pnpm templates:regen:lockfiles    # regen
-pnpm templates:status             # status
-pnpm templates:sync-deps          # sync-deps
-pnpm templates:peer-deps          # peer-deps
-pnpm templates:audit              # audit
 pnpm templates:validate-structure # validate-structure
 ```
+
+Other operations (regen, status, sync-deps, peer-deps, audit) are run via `pnpm template <operation>`.
 
 ## Configuration
 
