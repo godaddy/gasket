@@ -98,29 +98,50 @@ export default {
         'next.config.js',
         'app',
         'locales',
-        'test'
+        'server.ts',
+        'tsconfig.json',
+        'tsconfig.server.json',
+        'intl.ts',
+        'next-env.d.ts',
+        'README.md'
       ],
       'gasket-template-nextjs-pages': [
         'next.config.js',
         'pages',
         'locales',
-        'test'
+        'components',
+        'server.ts',
+        'tsconfig.json',
+        'tsconfig.server.json',
+        'intl.ts',
+        'next-env.d.ts',
+        'README.md'
       ],
       'gasket-template-nextjs-express': [
         'next.config.js',
         'pages',
         'locales',
-        'test'
+        'components',
+        'server.ts',
+        'tsconfig.json',
+        'tsconfig.server.json',
+        'intl.ts',
+        'next-env.d.ts',
+        'README.md'
       ],
       'gasket-template-api-express': [
         'server.ts',
         'plugins',
-        'swagger.json'
+        'swagger.json',
+        'tsconfig.json',
+        'README.md'
       ],
       'gasket-template-api-fastify': [
         'server.ts',
         'plugins',
-        'swagger.json'
+        'swagger.json',
+        'tsconfig.json',
+        'README.md'
       ]
     },
     expectedScriptsByTemplate: {
