@@ -35,6 +35,9 @@ export default {
   /** Retry npm ci/install with --legacy-peer-deps on peer dep failures. */
   retryWithLegacyPeerDeps: true,
 
+  /** When true, peer-deps treats extraneous packages as non-fatal (only missing/invalid fail). Default: false. */
+  allowExtraneous: false,
+
   /** Args passed to npm ci. */
   npmCiArgs: ['ci', '--prefer-offline'],
 

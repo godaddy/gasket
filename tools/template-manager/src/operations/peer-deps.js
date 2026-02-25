@@ -52,7 +52,8 @@ function formatProblem(p, invalidReasons = {}) {
 }
 
 export async function handler(templates, ctx) {
-  const { runner, results } = ctx;
+  const { runner, results, config } = ctx;
+  const allowExtraneous = config.allowExtraneous === true;
   const noLegacyEnv = { ...process.env, npm_config_legacy_peer_deps: 'false' };
 
   console.log(chalk.bold('\nPeer Dependency Analysis:\n'));
@@ -65,7 +66,10 @@ export async function handler(templates, ctx) {
       noLegacyEnv
     );
     const data = parseNpmLs(stdout);
-    const problems = data.problems || [];
+    const allProblems = data.problems || [];
+    const problems = allowExtraneous
+      ? allProblems.filter((p) => typeof p !== 'string' || !p.startsWith('extraneous:'))
+      : allProblems;
     const invalidReasons = buildInvalidReasons(data);
 
     if (problems.length === 0) {

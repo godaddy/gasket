@@ -43,4 +43,44 @@ describe('peer-deps', () => {
       '1 peer dep problem(s)'
     );
   });
+
+  it('with allowExtraneous: true, extraneous-only problems pass', async () => {
+    const runner = mockRunner();
+    runner.runCommandCaptureStdout = vi.fn().mockResolvedValue({
+      stdout: JSON.stringify({
+        problems: ['extraneous: @emnapi/runtime@1.8.1']
+      })
+    });
+    const results = { record: vi.fn() };
+    const { handler } = await import('../../src/operations/peer-deps.js');
+    await handler([baseTemplate], {
+      runner,
+      config: { ...baseConfig, allowExtraneous: true },
+      results,
+      flags: {}
+    });
+    expect(results.record).toHaveBeenCalledWith(baseTemplate.name, 'passed');
+  });
+
+  it('with allowExtraneous: false (default), extraneous problems fail', async () => {
+    const runner = mockRunner();
+    runner.runCommandCaptureStdout = vi.fn().mockResolvedValue({
+      stdout: JSON.stringify({
+        problems: ['extraneous: @emnapi/runtime@1.8.1']
+      })
+    });
+    const results = { record: vi.fn() };
+    const { handler } = await import('../../src/operations/peer-deps.js');
+    await handler([baseTemplate], {
+      runner,
+      config: { ...baseConfig, allowExtraneous: false },
+      results,
+      flags: {}
+    });
+    expect(results.record).toHaveBeenCalledWith(
+      baseTemplate.name,
+      'failed',
+      '1 peer dep problem(s)'
+    );
+  });
 });

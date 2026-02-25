@@ -105,6 +105,7 @@ All config is in `src/config.js`. When copying to OS repo, only this file needs 
 |--------|------|-------------|
 | `updateDepsFilter` | `string` | Regex for update-deps (ncu --filter) |
 | `retryWithLegacyPeerDeps` | `boolean` | Retry with --legacy-peer-deps on failure |
+| `allowExtraneous` | `boolean` | If true, peer-deps treats extraneous packages as non-fatal (only missing/invalid fail). Default: false |
 | `npmCiArgs` | `string[]` | Args for npm ci |
 | `cleanDirs` | `string[]` | Directories to remove on clean |
 | `lintEnv` | `object` | Environment variables for lint |
