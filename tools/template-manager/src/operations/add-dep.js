@@ -31,8 +31,7 @@ export async function handler(templates, ctx) {
     const { stdout, code } = await runner.runCommandCaptureStdout(
       'npm',
       viewArgs,
-      config.root || process.cwd(),
-      { log: () => {} }
+      config.root || process.cwd()
     );
     if (code !== 0 || !stdout.trim()) {
       throw new Error(`Could not resolve latest version for ${name_}. Is it published?`);

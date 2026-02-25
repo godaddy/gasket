@@ -25,7 +25,7 @@ function getDepVersions(templates) {
 }
 
 export async function handler(templates, ctx) {
-  const { config, results } = ctx;
+  const { results } = ctx;
 
   console.log(chalk.bold('\nTemplate Status:\n'));
 
@@ -69,7 +69,7 @@ export async function handler(templates, ctx) {
     console.log(`  ${t.name}: ${status}`);
   }
 
-  const byDep = getDepVersions(templates, config);
+  const byDep = getDepVersions(templates);
   const shared = Object.entries(byDep).filter(([, versions]) => Object.keys(versions).length > 1);
   if (shared.length === 0) return;
 
