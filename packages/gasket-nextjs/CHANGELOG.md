@@ -1,5 +1,11 @@
 # `@gasket/nextjs`
 
+## 7.6.10
+
+### Patch Changes
+
+- 8efb166: Fix peerDep range for next
+
 ## 7.6.9
 
 ### Patch Changes
