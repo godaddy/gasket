@@ -50,20 +50,19 @@ a `Promise`.
 If multiple plugins hook the same event, they'll run in parallel if async or in
 arbitrary order if synchronous. If a plugin wants to specify more specific
 sequencing, the hook should be an object with a timing property and handler
-function instead of a plain function. For example, this plugin contains a
-`middleware` hook that specifically runs *after* the `@gasket/plugin-nextjs` plugin:
+function instead of a plain function. For example, this plugin contains an
+`express` hook that specifically runs *after* the `@gasket/plugin-nextjs` plugin:
 
 ```js
 export default {
   name: 'will-run-after-nextjs-plugin',
   hooks: {
-    middleware: {
+    express: {
       timing: {
         after: ['@gasket/plugin-nextjs']
       },
-      handler: async function middleware(gasket, app) {
+      handler: async function express(gasket, app) {
         app.use((req, res, next) => {
-          // custom middleware logic
           next();
         });
       }
@@ -104,7 +103,7 @@ functions available on a `Gasket` object [here].
 ## Testing
 
 Because Gasket plugins are just Objects of functions, it's fairly trivial to
-test them. For example, let's say we have this plugin which hooks the `middleware`
+test them. For example, let's say we have this plugin which hooks the `express`
 lifecycle.
 
 ```js
@@ -113,13 +112,12 @@ export default {
   description: 'An example plugin',
   version: '1.1.1',
   hooks: {
-    middleware: {
+    express: {
       timing: {
         after: ['@gasket/plugin-nextjs']
       },
-      handler: async function middleware(gasket, app) {
+      handler: async function express(gasket, app) {
         app.use((req, res, next) => {
-          // custom middleware logic
           next();
         });
       }
@@ -136,11 +134,11 @@ import plugin from '/path/to/plugin';
 describe('example plugin', function () {
   it('hooks the correct lifecycles', function() {
     const hooks = plugin.hooks;
-    expect(Object.keys(hooks)).equals(['middleware']);
+    expect(Object.keys(hooks)).equals(['express']);
   });
 
-  it('has the correct middleware hook timings', function () {
-    expect(plugin.hooks.middleware.timing.after).toEqual(['@gasket/plugin-nextjs']);
+  it('has the correct express hook timings', function () {
+    expect(plugin.hooks.express.timing.after).toEqual(['@gasket/plugin-nextjs']);
   });
 
   it('has expected properties', function () {

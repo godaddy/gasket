@@ -130,7 +130,7 @@ To filter out other data, use the [APM Add Filter API].
 According to the [Elastic APM docs], the _Elastic APM agent for Node.js is a
 singleton_.
 This means that you can import and configure the singleton in various
-hooks of your Gasket app, such as with the [init] or [middleware] lifecycles.
+hooks of your Gasket app, such as with the [init] or [express]/[fastify] lifecycles.
 
 ## Actions
 
@@ -221,7 +221,8 @@ such as for sensitive cookies.
 <!-- LINKS -->
 
 [init]:/packages/gasket-core/README.md#init
-[middleware]:/packages/gasket-plugin-middleware/README.md#middleware
+[express]:/packages/gasket-plugin-express/README.md#express
+[fastify]:/packages/gasket-plugin-fastify/README.md#fastify
 [configuration options documentation]:https://www.elastic.co/guide/en/apm/agent/nodejs/current/configuration.html
 [start recommendations]:https://www.elastic.co/guide/en/apm/agent/nodejs/master/agent-api.html#apm-start
 [Elastic APM docs]:https://www.elastic.co/guide/en/apm/agent/nodejs/master/agent-api.html

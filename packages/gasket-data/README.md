@@ -40,7 +40,6 @@ To add to the data exposed in `@gasket/data`, see the [@gasket/plugin-data] docu
 
 <!-- LINKS -->
 
-[middleware lifecycle]:/packages/gasket-plugin-express/README.md#middleware
 [script tag]:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script
 [@gasket/plugin-data]:/packages/gasket-plugin-data/README.md
 [publicGasketData]:/packages/gasket-plugin-data#publicgasketdata

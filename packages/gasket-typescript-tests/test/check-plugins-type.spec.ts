@@ -13,7 +13,6 @@ import pluginHttps from '@gasket/plugin-https';
 import pluginHttpsProxy from '@gasket/plugin-https-proxy';
 import pluginLogger from '@gasket/plugin-logger';
 import pluginMetadata from '@gasket/plugin-metadata';
-import pluginMiddleware from '@gasket/plugin-middleware';
 import pluginMorgan from '@gasket/plugin-morgan';
 import pluginNextjs from '@gasket/plugin-nextjs';
 import pluginWebpack from '@gasket/plugin-webpack';
@@ -44,7 +43,6 @@ describe('check plugins type', () => {
       pluginIntl,
       pluginLogger,
       pluginMetadata,
-      pluginMiddleware,
       pluginMorgan,
       pluginNextjs,
       pluginSwagger,

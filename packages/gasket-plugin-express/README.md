@@ -29,25 +29,8 @@ export default makeGasket({
 
 ## Configuration
 
-All the configurations for the plugin are added under `express` in the config:
+All the configurations for the plugin are added under `express` in the config.
 
-- `compression`: true by default. Can be set to false if applying compression
-  differently.
-- `trustProxy`: Enable trust proxy option, [see Express documentation on Express behind proxies](https://expressjs.com/en/guide/behind-proxies.html)
-
-#### Example configuration
-
-```js
-export default makeGasket({
-  plugins: [
-    pluginExpress
-  ],
-  express: {
-    compression: false,
-    trustProxy: true
-  }
-});
-```
 ### Route Definition
 
 Routes can be defined in a in-app plugin in the `plugins` directory. The plugin will hook the `express` lifecycle to add the routes to the express app.
@@ -70,8 +53,7 @@ export default {
 
 ### express
 
-Executed **after** the `middleware` event for when you need full control over
-the `express` instance.
+Used to add routes and middleware directly to the `express` instance.
 
 ```js
 export default {

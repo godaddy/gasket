@@ -42,11 +42,11 @@ apm.start({
 Access and decorate the current APM transaction:
 
 ```js
-// In a middleware or lifecycle
+// In the express lifecycle
 export default {
   name: 'my-plugin',
   hooks: {
-    middleware(gasket, app) {
+    express(gasket, app) {
       app.use(async (req, res, next) => {
         const transaction = await gasket.actions.getApmTransaction(req);
 

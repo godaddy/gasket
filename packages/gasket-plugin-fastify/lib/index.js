@@ -31,8 +31,7 @@ const plugin = {
             method: 'exec',
             description: 'Modify the Fastify instance to for adding endpoints',
             link: 'README.md#express',
-            parent: 'createServers',
-            after: 'middleware'
+            parent: 'createServers'
           },
           {
             name: 'errorMiddleware',
@@ -50,19 +49,6 @@ const plugin = {
             link: 'README.md#configuration',
             description: 'Fastify configuration object',
             type: 'object'
-          },
-          {
-            name: 'fastify.compression',
-            link: 'README.md#configuration',
-            description: 'Automatic compression',
-            type: 'boolean',
-            default: true
-          },
-          {
-            name: 'fastify.excludedRoutesRegex',
-            link: 'README.md#configuration',
-            description: 'Routes to be excluded based on a regex',
-            type: 'RegExp'
           }
         ]
       };

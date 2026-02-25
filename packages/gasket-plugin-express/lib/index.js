@@ -37,8 +37,7 @@ export default {
             method: 'exec',
             description: 'Modify the Express instance to for adding endpoints',
             link: 'README.md#express',
-            parent: 'createServers',
-            after: 'middleware'
+            parent: 'createServers'
           },
           {
             name: 'errorMiddleware',
@@ -54,12 +53,6 @@ export default {
           link: 'README.md#configuration',
           description: 'Express plugin configuration',
           type: 'object'
-        }, {
-          name: 'express.compression',
-          link: 'README.md#configuration',
-          description: 'Automatic compression',
-          type: 'boolean',
-          default: true
         }]
       };
     }
