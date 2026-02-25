@@ -32,7 +32,13 @@ jobs:
             ${{ runner.os }}-pnpm-24-
 
       - name: Install Dependencies
-        run: pnpm install --prefer-offline
+        run: |
+          for i in 1 2 3; do
+            pnpm install --prefer-offline && exit 0
+            echo "Attempt $i failed, retrying in 10s..."
+            sleep 10
+          done
+          exit 1
 
       - name: Create Release Pull Request
         id: changesets
