@@ -67,7 +67,6 @@ export default defineConfig([
       'no-sync': 'warn',
       'vitest/expect-expect': 'warn',
       'vitest/no-conditional-expect': 'warn',
-      'vitest/no-unneeded-async-expect-function': 'warn',
       'no-undefined': 'warn'
     }
   },
