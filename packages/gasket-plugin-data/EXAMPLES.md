@@ -13,7 +13,7 @@ Get the complete Gasket data configuration.
 export default {
   name: 'example-plugin',
   hooks: {
-    async middleware(gasket, app) {
+    async express(gasket, app) {
       const gasketData = await gasket.actions.getGasketData();
       console.log('API URL:', gasketData.apiUrl);
       console.log('Private setting:', gasketData.privateKey);
@@ -35,16 +35,16 @@ async function getConfig() {
 Get public Gasket data for a specific request. This data is safe to expose to the client.
 
 ```js
-// In Express middleware
+// In Express lifecycle
 export default {
   name: 'example-plugin',
   hooks: {
-    middleware(gasket) {
-      return async (req, res, next) => {
+    express(gasket, app) {
+      app.use(async (req, res, next) => {
         const publicData = await gasket.actions.getPublicGasketData(req);
         console.log('Public data:', publicData);
         next();
-      };
+      });
     }
   }
 };

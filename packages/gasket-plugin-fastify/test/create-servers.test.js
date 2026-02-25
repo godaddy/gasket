@@ -6,7 +6,7 @@ const mockApp = {
     emit: vi.fn()
   },
   register: vi.fn(),
-  use: vi.fn()
+  setErrorHandler: vi.fn()
 };
 
 vi.mock('../lib/utils.js');
@@ -21,13 +21,11 @@ describe('createServers', () => {
     mockMwPlugins = [];
 
     lifecycles = {
-      middleware: vi.fn().mockResolvedValue([]),
       errorMiddleware: vi.fn().mockResolvedValue([]),
       fastify: vi.fn().mockResolvedValue()
     };
 
     gasket = {
-      middleware: {},
       logger: {},
       config: {
         fastify: {}
@@ -75,24 +73,38 @@ describe('createServers', () => {
     expect(gasket.exec.mock.calls[1]).toContain('errorMiddleware');
   });
 
-  it('adds the errorMiddleware', async () => {
-    const errorMiddlewares = [vi.fn()];
+  it('registers a single setErrorHandler when errorMiddleware exists', async () => {
+    const errorMiddlewares = [vi.fn(), vi.fn()];
     gasket.exec.mockResolvedValue(errorMiddlewares);
 
     await createServers(gasket, {});
 
-    const errorMiddleware = findCall(
-      mockApp.use,
-      (mw) => mw === errorMiddlewares[0]);
-    expect(errorMiddleware).not.toBeNull();
+    expect(mockApp.setErrorHandler).toHaveBeenCalledTimes(1);
+    expect(mockApp.setErrorHandler).toHaveBeenCalledWith(expect.any(Function));
   });
 
-  function findCall(aSpy, aPredicate) {
-    const callIdx = findCallIndex(aSpy, aPredicate);
-    return callIdx === -1 ? null : aSpy.mock.calls[callIdx][0];
-  }
+  it('does not register setErrorHandler when no errorMiddleware', async () => {
+    gasket.exec.mockResolvedValue([]);
 
-  function findCallIndex(aSpy, aPredicate) {
-    return aSpy.mock.calls.map((args) => aPredicate(...args)).indexOf(true);
-  }
+    await createServers(gasket, {});
+
+    expect(mockApp.setErrorHandler).not.toHaveBeenCalled();
+  });
+
+  it('chains multiple errorMiddleware handlers in order', async () => {
+    const calls = [];
+    const mw1 = vi.fn((e, req, res, next) => { calls.push('mw1'); next(); });
+    const mw2 = vi.fn((e, req, res, next) => { calls.push('mw2'); next(); });
+    gasket.exec.mockResolvedValue([mw1, mw2]);
+
+    await createServers(gasket, {});
+
+    const handler = mockApp.setErrorHandler.mock.calls[0][0];
+    const mockRequest = { raw: {} };
+    const mockReply = { raw: {}, sent: false, send: vi.fn() };
+    handler(new Error('test'), mockRequest, mockReply);
+
+    expect(calls).toEqual(['mw1', 'mw2']);
+    expect(mockReply.send).toHaveBeenCalled();
+  });
 });

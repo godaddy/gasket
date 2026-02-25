@@ -40,8 +40,6 @@ The plugin automatically detects your Fastify version and applies the correct co
 
 All the configurations for the plugin are added under `fastify` in the config:
 
-- `compression`: true by default. Can be set to false if applying compression
-  differently.
 - `trustProxy`: Enable trust proxy option, [see Fastify documentation for possible values](https://fastify.dev/docs/latest/Reference/Server/#trustproxy)
 - `disableRequestLogging`: Turn off request logging, true by default
 
@@ -53,8 +51,6 @@ export default makeGasket({
     pluginFastify
   ],
   fastify: {
-    compression: false,
-    excludedRoutesRegex: /^(?!\/_next\/)/,
     trustProxy: true
   }
 });
@@ -82,8 +78,7 @@ export default {
 
 ### fastify
 
-Executed **after** the `middleware` event for when you need full control over
-the `fastify` instance.
+Used to add routes and middleware directly to the `fastify` instance.
 
 ```js
 export default {
@@ -94,7 +89,6 @@ export default {
     *
     * @param {Gasket} gasket The Gasket API
     * @param {Fastify} fastify Fastify app instance
-    * @returns {function|function[]} middleware(s)
     */
     fastify: async function (gasket, fastify) {
     }
@@ -104,20 +98,24 @@ export default {
 
 ### errorMiddleware
 
-Executed after the `fastify` event. All middleware functions returned from this
-hook will be applied to Fastify.
+Executed after the `fastify` event. All error handler functions returned from this
+hook will be applied to Fastify in order.
 
 ```js
 export default {
   name: 'sample-plugin',
   hooks: {
     /**
-    * Add Fastify error middlewares
+    * Add error handling for Fastify
     *
     * @param {Gasket} gasket The Gasket API
-    * @returns {function|function[]} error middleware(s)
+    * @returns {function|function[]} error handler(s)
     */
     errorMiddleware: function (gasket) {
+      return function (err, req, res, next) {
+        // handle error or pass to next handler
+        next(err);
+      };
     }
   }
 };

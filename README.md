@@ -194,7 +194,6 @@ Available plugins
 | [@gasket/plugin-logger]          | 8.0.0-next.0 | Gasket plugin for logging                                                 |
 | [@gasket/plugin-manifest]        | 8.0.0-next.0 | The web app manifest for progressive Gasket applications                  |
 | [@gasket/plugin-metadata]        | 8.0.0-next.0 | Adds metadata to gasket lifecycles                                        |
-| [@gasket/plugin-middleware]      | 8.0.0-next.0 | Handles common server engine setups for routing and executing lifecycles. |
 | [@gasket/plugin-mocha]           | 8.0.0-next.0 | Integrates mocha based testing in to your Gasket application              |
 | [@gasket/plugin-morgan]          | 8.0.0-next.0 | Adds morgan request logger to your app                                    |
 | [@gasket/plugin-nextjs]          | 8.0.0-next.0 | Adds Next support to your application                                     |
@@ -392,7 +391,6 @@ Available configuration options in the `gasket.js`
 [@gasket/plugin-logger]:/packages/gasket-plugin-logger/README.md
 [@gasket/plugin-manifest]:/packages/gasket-plugin-manifest/README.md
 [@gasket/plugin-metadata]:/packages/gasket-plugin-metadata/README.md
-[@gasket/plugin-middleware]:/packages/gasket-plugin-middleware/README.md
 [@gasket/plugin-morgan]:/packages/gasket-plugin-morgan/README.md
 [@gasket/plugin-nextjs]:/packages/gasket-plugin-nextjs/README.md
 [@gasket/plugin-redux]:/packages/gasket-plugin-redux/README.md
