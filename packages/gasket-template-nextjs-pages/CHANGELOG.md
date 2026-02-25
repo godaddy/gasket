@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 8.0.0-next.2
+
+### Patch Changes
+
+- de4da28: Upgrade chalk, regen lockfiles
+
 ## 8.0.0-next.1
 
 ### Patch Changes
