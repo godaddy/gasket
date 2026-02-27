@@ -17,23 +17,6 @@ This guide assumes you have created a Gasket application using the
 npx create-gasket-app@latest my-app --template @gasket/template-nextjs-app
 ```
 
-The template gives you the following project structure:
-
-```
-my-app/
-├── app/
-│   ├── layout.tsx         # Root layout with withGasketData
-│   └── page.tsx           # Home page
-├── locales/
-├── test/
-├── gasket.ts              # Gasket configuration
-├── intl.ts
-├── server.ts
-├── next.config.js
-├── tsconfig.json
-└── package.json
-```
-
 ### Install dependencies
 
 ```bash
