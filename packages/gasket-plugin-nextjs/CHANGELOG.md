@@ -1,5 +1,11 @@
 # `@gasket/plugin-nextjs`
 
+## 7.7.6
+
+### Patch Changes
+
+- 5cbd789: Add next as peerDependency to fix module resolution in monorepo workspaces
+
 ## 7.7.5
 
 ### Patch Changes
