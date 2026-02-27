@@ -141,7 +141,7 @@ export function writeGasketConfig(params: { context: PartialCreateContext }): Pr
 export function writeImports(imports: object | null): string;
 export function writeExpressions(expressions: string[] | null): string;
 export function createInjectionAssignments(config: object, assignments: (object | null)): string;
-export function cleanupFields(config: ConfigBuilder<>): void;
+export function cleanupFields(config: ConfigBuilder<object>): void;
 export function writePluginImports(plugins: string[]): string;
 export function replaceInjectionAssignments(content: string, assignments: (object | null)): string;
 

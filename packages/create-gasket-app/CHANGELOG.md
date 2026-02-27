@@ -1,5 +1,14 @@
 # `create-gasket-app`
 
+## 8.0.0-next.2
+
+### Patch Changes
+
+- de4da28: Upgrade chalk, regen lockfiles
+- Updated dependencies [de4da28]
+  - @gasket/plugin-dynamic-plugins@8.0.0-next.2
+  - @gasket/utils@8.0.0-next.2
+
 ## 8.0.0-next.1
 
 ### Patch Changes

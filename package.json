@@ -28,9 +28,10 @@
     "replace-ws-aliases": "node scripts/replace-ws-aliases.js",
     "syncpack": "syncpack",
     "syncpack:fix": "syncpack fix-mismatches && syncpack format",
-    "templates:regen:lockfiles": "node scripts/npm.js regen",
-    "templates:validate": "node scripts/npm.js clean && node scripts/npm.js npm-ci && node scripts/npm.js build && node scripts/npm.js lint && node scripts/npm.js test",
-    "templates:validate-dotfiles": "node scripts/templates-validate-dotfiles.js",
+    "template": "node tools/template-manager/src/index.js",
+    "templates:validate": "pnpm template clean && pnpm template npm-ci && pnpm template build && pnpm template lint && pnpm template test",
+    "templates:validate-dotfiles": "pnpm template validate-dotfiles",
+    "templates:validate-structure": "pnpm template validate-structure",
     "test": "pnpm run -r test",
     "test:coverage": "pnpm run -r test:coverage",
     "test:package": "pnpm run -r --filter $* test",
@@ -69,7 +70,7 @@
     "@typescript-eslint/eslint-plugin": "^8.38.0",
     "@typescript-eslint/parser": "^8.38.0",
     "@vitest/eslint-plugin": "^1.1.44",
-    "chalk": "^4.1.2",
+    "chalk": "^5.3.0",
     "cross-env": "^7.0.3",
     "eslint": "^9.31.0",
     "eslint-config-godaddy-react-typescript": "^5.0.0",
@@ -104,6 +105,7 @@
   },
   "workspaces": [
     "packages/*",
-    "scripts/generate-docs-index"
+    "scripts/generate-docs-index",
+    "tools/template-manager"
   ]
 }

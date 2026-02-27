@@ -60,8 +60,8 @@ importers:
         specifier: ^1.1.44
         version: 1.1.44(@typescript-eslint/utils@8.38.0(eslint@9.31.0(jiti@1.21.7))(typescript@5.8.2))(eslint@9.31.0(jiti@1.21.7))(typescript@5.8.2)(vitest@3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
       chalk:
-        specifier: ^4.1.2
-        version: 4.1.2
+        specifier: ^5.3.0
+        version: 5.4.1
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -150,8 +150,8 @@ importers:
         specifier: workspace:^
         version: link:../gasket-utils
       chalk:
-        specifier: ^4.1.2
-        version: 4.1.2
+        specifier: ^5.3.0
+        version: 5.4.1
       commander:
         specifier: ^12.1.0
         version: 12.1.0
@@ -540,8 +540,8 @@ importers:
   packages/gasket-plugin-dynamic-plugins:
     dependencies:
       chalk:
-        specifier: ^4.1.2
-        version: 4.1.2
+        specifier: ^5.3.0
+        version: 5.4.1
     devDependencies:
       '@gasket/core':
         specifier: workspace:^
@@ -1271,8 +1271,8 @@ importers:
   packages/gasket-utils:
     dependencies:
       chalk:
-        specifier: ^4.1.2
-        version: 4.1.2
+        specifier: ^5.3.0
+        version: 5.4.1
       concat-stream:
         specifier: ^2.0.0
         version: 2.0.0
@@ -1421,6 +1421,25 @@ importers:
       create-gasket-app:
         specifier: workspace:^
         version: link:../../packages/create-gasket-app
+
+  tools/template-manager:
+    dependencies:
+      chalk:
+        specifier: ^5.3.0
+        version: 5.4.1
+      npm-check-updates:
+        specifier: ^17.1.15
+        version: 17.1.18
+      prompts:
+        specifier: ^2.4.2
+        version: 2.4.2
+      semver:
+        specifier: ^7.7.1
+        version: 7.7.2
+    devDependencies:
+      vitest:
+        specifier: ^3.2.0
+        version: 3.2.0(@types/debug@4.1.12)(@types/node@20.17.19)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
 
 packages:
 
@@ -7794,6 +7813,11 @@ packages:
     resolution: {integrity: sha512-IO9QvjUMWxPQQhs60oOu10CRkWCiZzSUkzbXGGV9pviYl1fXYcvkzQ5jV9z8Y6un8ARoVRl4EtC6v6jNqbaJ/w==}
     engines: {node: '>=14.16'}
 
+  npm-check-updates@17.1.18:
+    resolution: {integrity: sha512-bkUy2g4v1i+3FeUf5fXMLbxmV95eG4/sS7lYE32GrUeVgQRfQEk39gpskksFunyaxQgTIdrvYbnuNbO/pSUSqw==}
+    engines: {node: ^18.18.0 || >=20.0.0, npm: '>=8.12.1'}
+    hasBin: true
+
   npm-package-arg@12.0.2:
     resolution: {integrity: sha512-f1NpFjNI9O4VbKMOlA5QoBq/vSQPORHcTZ2feJpFkTHJ9eQkdlmZEKSjcAhxTGInC7RlEyScT9ui67NaOsjFWA==}
     engines: {node: ^18.17.0 || >=20.5.0}
@@ -11944,7 +11968,7 @@ snapshots:
       package-manager-detector: 0.2.9
       picocolors: 1.1.1
       resolve-from: 5.0.0
-      semver: 7.7.1
+      semver: 7.7.2
       spawndamnit: 3.0.1
       term-size: 2.2.1
 
@@ -19835,6 +19859,8 @@ snapshots:
 
   normalize-url@8.0.1: {}
 
+  npm-check-updates@17.1.18: {}
+
   npm-package-arg@12.0.2:
     dependencies:
       hosted-git-info: 8.0.2
@@ -21811,7 +21837,7 @@ snapshots:
       ora: 8.2.0
       prompts: 2.4.2
       read-yaml-file: 2.1.0
-      semver: 7.7.1
+      semver: 7.7.2
       tightrope: 0.2.0
       ts-toolbelt: 9.6.0
     transitivePeerDependencies:

@@ -66,6 +66,7 @@ export default defineConfig([
       'unicorn/filename-case': 'error',
       'no-sync': 'warn',
       'vitest/expect-expect': 'warn',
+      'vitest/no-conditional-expect': 'warn',
       'no-undefined': 'warn'
     }
   },

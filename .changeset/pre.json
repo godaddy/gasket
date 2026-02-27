@@ -40,10 +40,12 @@
     "@gasket/template-nextjs-pages": "8.0.0-next.0",
     "@gasket/typescript-tests": "8.0.0-next.1",
     "@gasket/utils": "8.0.0-next.1",
-    "generate-docs-index": "8.0.0-next.1"
+    "generate-docs-index": "8.0.0-next.1",
+    "template-manager": "1.0.0"
   },
   "changesets": [
     "curvy-mammals-hope",
+    "few-waves-yell",
     "giant-hornets-shout",
     "grumpy-streets-stop",
     "hungry-rats-report",
