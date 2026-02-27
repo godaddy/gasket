@@ -5,119 +5,138 @@
 Our current implementation of Redux in Gasket apps relies heavily on `getInitialProps` and the `_app.js` file which is not available in the App Router project structure. We use `next-redux-wrapper` in our current `@gasket/redux` and `@gasket/plugin-redux` packages. 
 It is now recommended to use the `@reduxjs/toolkit` in place of the `redux` package. In particular, the `createStore` method is deprecated, which we currently use in the `@gasket/redux` package. 
 
-In the new version of Gasket, we have decided to have the user setup Redux, instead of having a 
-package available.
+If your app needs Redux with App Router, set it up directly with
+[@reduxjs/toolkit] instead.
 
 ## Setup Guide
 
-Follow the steps below to add Redux to an existing Gasket application that is using the NextJS App Router architecture. 
-
-This guide assumes that a Gasket application has already been created using the `@gasket/preset-nextjs` preset. For details on how to do so please see the [quick start guide].  
+This guide assumes you have created a Gasket application using the
+[Next.js App Router template]. If you haven't yet, create one with:
 
 ```bash
-create-gasket-app --presets @gasket/preset-nextjs
+npx create-gasket-app@latest my-app --template @gasket/template-nextjs-app
 ```
 
-When prompted, make sure to select yes to using the App Router architecture.
+The template gives you the following project structure:
 
-### Install `react-redux` and `@reduxjs/toolkit` in your Gasket app
+```
+my-app/
+├── app/
+│   ├── layout.tsx         # Root layout with withGasketData
+│   └── page.tsx           # Home page
+├── locales/
+├── test/
+├── gasket.ts              # Gasket configuration
+├── intl.ts
+├── server.ts
+├── next.config.js
+├── tsconfig.json
+└── package.json
+```
+
+### Install dependencies
 
 ```bash
 npm install @reduxjs/toolkit react-redux
 ```
 
-### Create your redux store
+### Create your Redux store
 
-In the root of your project, create a redux folder as well as a store and hooks file. You should have something like the following for your folder and file structure.
+Create a `redux/` directory at the project root with a store and hooks file:
 
 ```
-/app
-  layout.js
-  page.js
-/components
-  index-page.js
-/redux
-  hooks.js
-  store.js
+my-app/
+├── app/
+│   ├── layout.tsx
+│   └── page.tsx
+├── redux/
+│   ├── hooks.ts
+│   └── store.ts
+├── gasket.ts
+└── ...
 ```
 
-Then define a `makeStore` function in `store.js` to be used across your application that will create a new store for each request.
+Define a `makeStore` function in `store.ts` that creates a new store instance.
+Each request should get its own store to avoid sharing state between users.
 
-```javascript
-// store.js
-
+```typescript
+// redux/store.ts
 import { configureStore } from '@reduxjs/toolkit';
 
 export const makeStore = () => {
   return configureStore({
-    reducer: {},
+    reducer: {}
   });
-}
+};
+
+export type AppStore = ReturnType<typeof makeStore>;
+export type RootState = ReturnType<AppStore['getState']>;
+export type AppDispatch = AppStore['dispatch'];
 ```
 
-If you have an existing Redux setup that you would like to replicate, please refer to the Redux Toolkit docs on [configureStore]. This documentation includes some helpful ways to migrate to modern redux patterns. There is also a detailed example using Middleware and Persistance for reference.
+If you have an existing Redux setup you'd like to replicate, refer to the
+Redux Toolkit docs on [configureStore] for migration patterns.
 
-We will also need to establish some hooks in the `hooks.js` file. This is especially helpful
-when using TypeScript to avoid circular dependencies.
+Create typed hooks in `hooks.ts` to use throughout your app instead of the
+plain `react-redux` hooks:
 
-```javascript
-// hooks.js
+```typescript
+// redux/hooks.ts
+import { useDispatch, useSelector, useStore } from 'react-redux';
+import type { AppDispatch, AppStore, RootState } from './store';
 
-import { useDispatch, useSelector } from 'react-redux';
-
-// Use throughout your app instead of plain `useDispatch` and `useSelector`
-export const useAppDispatch = useDispatch.withTypes();
-export const useAppSelector = useSelector.withTypes();
-export const useAppStore = useStore.withTypes();
+export const useAppDispatch = useDispatch.withTypes<AppDispatch>();
+export const useAppSelector = useSelector.withTypes<RootState>();
+export const useAppStore = useStore.withTypes<AppStore>();
 ```
 
-### Create a Provider Wrapper
+### Create a store provider
 
-This provider will use the `makeStore` function defined in the `store.js` file. The provider will create the store and share it with the children components. We will add the Provider component to the app directory. Your file structure should now look something like the following.
+The provider is a client component that creates the store instance and shares
+it with the component tree. Add it to the `app/` directory:
 
 ```
-/app
-  layout.js
-  page.js
-  store-provider.jsx
-/components
-  index-page.js
-/redux
-  hooks.js
-  store.js
+my-app/
+├── app/
+│   ├── layout.tsx
+│   ├── page.tsx
+│   └── store-provider.tsx
+├── redux/
+│   ├── hooks.ts
+│   └── store.ts
+└── ...
 ```
 
-```javascript
-// app/store-provider.jsx
-'use client'
-import { useRef } from 'react'
-import { Provider } from 'react-redux'
-import { makeStore } from '../redux/store'
+```tsx
+// app/store-provider.tsx
+'use client';
+import { useRef } from 'react';
+import { Provider } from 'react-redux';
+import { makeStore, AppStore } from '../redux/store';
 
-export default function StoreProvider({ children }) {
-  const storeRef = useRef()
+export default function StoreProvider({ children }: { children: React.ReactNode }) {
+  const storeRef = useRef<AppStore>(null);
   if (!storeRef.current) {
-    // Create the store instance the first time this renders
-    storeRef.current = makeStore()
+    storeRef.current = makeStore();
   }
 
-  return <Provider store={storeRef.current}>{children}</Provider>
+  return <Provider store={ storeRef.current }>{children}</Provider>;
 }
 ```
 
-### Wrap Gasket App with Provider
+### Update the root layout
 
-Now that we have the store provider created, we have to wrap the layout component if all the routes will need the Redux store. Otherwise we can wrap each route handler specifically with the provider. 
+The template's `app/layout.tsx` already uses `withGasketData` to inject Gasket
+data. Add the `StoreProvider` inside the layout so it wraps all routes:
 
-Here's an example of a layout component with the StoreProvider we created in the previous step.
-
-```javascript
-// app/layout.js
+```diff
+// app/layout.tsx
 import React from 'react';
-import PropTypes from 'prop-types';
-import StoreProvider from './store-provider.jsx'
+import gasket from '@/gasket';
+import { withGasketData } from '@gasket/nextjs/layout';
++ import StoreProvider from './store-provider';
 
-export default function RootLayout({ children }) {
+function RootLayout({ children }: { children: React.ReactNode }): React.ReactElement {
   return (
     <StoreProvider>
       <html lang='en'>
@@ -127,13 +146,18 @@ export default function RootLayout({ children }) {
   );
 }
 
-RootLayout.propTypes = {
-  children: PropTypes.node
-};
+export default withGasketData(gasket)(RootLayout);
 ```
 
-Any component that interacts with the Redux store, _must_ be a client component. Accessing the Redux store requires React context that is only available via client components.
+If only certain routes need the Redux store, you can wrap those route layouts
+individually instead of the root layout.
+
+Any component that interacts with the Redux store **must** be a client
+component. Accessing the Redux store requires React context that is only
+available in client components.
 
 <!-- Links -->
-[quick start guide]:https://github.com/godaddy/gasket/blob/main/docs/quick-start.md
+[Next.js App Router template]:https://github.com/godaddy/gasket/tree/main/packages/gasket-template-nextjs-app
+[next-redux-wrapper]:https://github.com/kirill-konshin/next-redux-wrapper
+[@reduxjs/toolkit]:https://redux-toolkit.js.org/
 [configureStore]:https://redux-toolkit.js.org/usage/migrating-to-modern-redux#store-setup-with-configurestore
