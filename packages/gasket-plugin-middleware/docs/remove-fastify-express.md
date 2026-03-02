@@ -299,44 +299,64 @@ export default {
 };
 ```
 
-#### Converting res.locals Pattern
+#### Avoiding the res.locals Pattern
 
-The `@gasket/plugin-middleware` adds `res.locals` support for Fastify via `@fastify/express`. Here's how to migrate:
+The `@gasket/plugin-middleware` adds `res.locals` support for Fastify via `@fastify/express`. However, **using `res.locals` is deprecated** in Gasket v7 in favor of [GasketActions].
+
+The `res.locals` pattern has several drawbacks:
+- Middleware runs for every request, regardless of whether the data is used
+- It's not always clear what properties are available and when
+- It prevents full utilization of Next.js 14 features like App Router and streaming
+
+**Recommended: Use GasketActions**
+
+Instead of attaching data to `res.locals`, create a GasketAction in your plugin:
 
 **Before (using res.locals):**
 
 ```js
-// In middleware
-req.res.locals.user = await getUser(req);
-
-// Later in route handler
-const user = req.res.locals.user;
-```
-
-**After (using request decorators):**
-
-```js
+// In middleware - runs on EVERY request
 export default {
   name: 'my-plugin',
   hooks: {
-    fastify: async function (gasket, app) {
-      // Decorate request with a place to store data
-      app.decorateRequest('locals', null);
-
-      app.addHook('preHandler', async (request, reply) => {
-        request.locals = {};
-        request.locals.user = await getUser(request);
-      });
+    middleware: function (gasket, app) {
+      return async (req, res, next) => {
+        res.locals.user = await getUser(req);
+        next();
+      };
     }
   }
 };
 
 // In route handler
+app.get('/profile', (req, res) => {
+  const user = res.locals.user;
+  res.json({ user });
+});
+```
+
+**After (using GasketActions):**
+
+```js
+// Define a GasketAction - only called when needed
+export default {
+  name: 'my-plugin',
+  actions: {
+    async getUser(gasket, req) {
+      // Returns the user
+      // Use the req argument to access headers, cookies, queries, etc.
+    }
+  }
+};
+
+// In route handler or anywhere you have access to gasket
 app.get('/profile', async (request, reply) => {
-  const user = request.locals.user;
+  const user = await gasket.actions.getUser(request);
   return { user };
 });
 ```
+
+For more details on migrating to GasketActions, see the [Switch to GasketActions] section of the v7 upgrade guide.
 
 ### Step 3: Remove Dependencies
 
@@ -481,3 +501,7 @@ This error occurs when code expects Express's `app.use()` method on a Fastify in
 - [Fastify Hooks Documentation](https://fastify.dev/docs/latest/Reference/Hooks/)
 - [Fastify Plugins Ecosystem](https://fastify.dev/docs/latest/Guides/Ecosystem/)
 - [Migrating from Express](https://fastify.dev/docs/latest/Guides/Migration-Guide-V4/)
+
+<!-- Links -->
+[GasketActions]: /docs/upgrade-to-7.md#switch-to-gasketactions
+[Switch to GasketActions]: /docs/upgrade-to-7.md#switch-to-gasketactions
