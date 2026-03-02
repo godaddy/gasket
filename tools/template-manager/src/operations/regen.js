@@ -50,7 +50,9 @@ export async function handler(template, ctx) {
         console.log('⚠️  Peer dependency conflict, retrying with --legacy-peer-deps...');
         await runner.runCommand('npm', [...installArgs, '--legacy-peer-deps'], templateDir);
       } else {
-        throw new Error(`Command failed with code ${code}`);
+        const cmd = `npm ${installArgs.join(' ')}`;
+        const detail = stderr ? `\n${stderr.trim()}` : '';
+        throw new Error(`${cmd} failed with code ${code}${detail}`);
       }
     }
     console.log('✅ Lockfiles regenerated successfully');

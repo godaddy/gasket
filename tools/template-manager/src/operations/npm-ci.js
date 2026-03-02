@@ -59,8 +59,8 @@ export async function handler(template, ctx) {
   try {
     await runner.runCommand('npm', args, templateDir);
     console.log('✅ Dependencies installed successfully');
-  } catch {
-    if (!retryWithLegacy) throw new Error('npm ci failed');
+  } catch (error) {
+    if (!retryWithLegacy) throw error;
 
     console.log('⚠️  npm ci failed, retrying with --legacy-peer-deps...');
     try {
