@@ -40,7 +40,7 @@ Arguments:
   appname                              Name of the Gasket application to create
 
 Options:
-  -p, --presets [presets]              Initial Gasket preset(s) to use.
+  -p, --presets [presets]              (Deprecated.) Initial Gasket preset(s). Prefer --template.
         Can be set as short name with version (e.g. --presets nextjs@^1.0.0)
         Or other (multiple) custom presets (e.g. --presets my-gasket-preset@1.0.0.beta-1,nextjs@^1.0.0)
   --template [template]                Selects which template you would like to use during

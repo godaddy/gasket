@@ -2,6 +2,8 @@
 
 When developing and testing Gasket packages locally, you'll need to handle workspace dependencies differently. The `replace-ws-aliases` script is essential for this process.
 
+**Note:** Presets are deprecated; use templates and `--template-path` when testing locally for new app creation.
+
 ## Why It's Necessary
 
 When creating a preset that uses workspace packages (marked with `workspace:*`), these dependencies won't work outside your local workspace. This becomes problematic when:

@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## 7.0.8
+
+### Patch Changes
+
+- ee86f4a: Upgrade express version
+
+## 7.0.7
+
+### Patch Changes
+
+- 966049e: Add update-scoped script, regen
+- 72e613d: regen lockfiles
+
 ## 7.0.6
 
 ### Patch Changes
