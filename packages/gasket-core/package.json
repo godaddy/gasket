@@ -1,6 +1,6 @@
 {
   "name": "@gasket/core",
-  "version": "7.7.3",
+  "version": "7.7.4",
   "description": "Entry point to setting up Gasket instances",
   "type": "module",
   "types": "lib/index.d.ts",

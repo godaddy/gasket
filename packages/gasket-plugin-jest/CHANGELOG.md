@@ -1,5 +1,11 @@
 # `@gasket/plugin-jest`
 
+## 7.5.9
+
+### Patch Changes
+
+- ee86f4a: Upgrade express version
+
 ## 7.5.8
 
 ### Patch Changes

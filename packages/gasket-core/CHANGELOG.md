@@ -1,5 +1,13 @@
 # `@gasket/core`
 
+## 7.7.4
+
+### Patch Changes
+
+- ee86f4a: Upgrade express version
+- Updated dependencies [ee86f4a]
+  - @gasket/utils@7.6.6
+
 ## 7.7.3
 
 ### Patch Changes

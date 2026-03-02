@@ -1,5 +1,22 @@
 # `create-gasket-app`
 
+## 7.4.21
+
+### Patch Changes
+
+- ee86f4a: Upgrade express version
+- Updated dependencies [ee86f4a]
+  - @gasket/plugin-dynamic-plugins@7.5.2
+  - @gasket/plugin-docusaurus@7.5.2
+  - @gasket/plugin-metadata@7.5.10
+  - @gasket/plugin-command@7.6.5
+  - @gasket/plugin-docs@7.5.5
+  - @gasket/plugin-git@7.4.10
+  - @gasket/utils@7.6.6
+  - @gasket/core@7.7.4
+  - @gasket/plugin-logger@7.4.0
+  - @gasket/request@7.5.5
+
 ## 7.4.20
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # `@gasket/plugin-data`
 
+## 7.5.3
+
+### Patch Changes
+
+- ee86f4a: Upgrade express version
+- Updated dependencies [ee86f4a]
+  - @gasket/utils@7.6.6
+  - @gasket/request@7.5.5
+
 ## 7.5.2
 
 ### Patch Changes

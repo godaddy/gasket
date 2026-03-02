@@ -1,6 +1,6 @@
 {
   "name": "@gasket/utils",
-  "version": "7.6.5",
+  "version": "7.6.6",
   "description": "Reusable utilities for Gasket internals",
   "type": "module",
   "files": [

@@ -1,6 +1,6 @@
 {
   "name": "@gasket/template-api-fastify",
-  "version": "7.0.7",
+  "version": "7.0.8",
   "description": "Gasket API template for Fastify",
   "type": "module",
   "files": [

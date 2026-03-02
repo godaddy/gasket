@@ -1,5 +1,13 @@
 # `@gasket/plugin-docs`
 
+## 7.5.5
+
+### Patch Changes
+
+- ee86f4a: Upgrade express version
+- Updated dependencies [ee86f4a]
+  - @gasket/plugin-command@7.6.5
+
 ## 7.5.4
 
 ### Patch Changes
