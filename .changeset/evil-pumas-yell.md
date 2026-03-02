@@ -14,7 +14,6 @@
 "@gasket/plugin-nextjs": patch
 "@gasket/plugin-data": patch
 "@gasket/plugin-intl": patch
-"generate-docs-index": patch
 "@gasket/react-intl": patch
 "@gasket/assets": patch
 "@gasket/nextjs": patch
