@@ -132,9 +132,6 @@ function RootLayout({ children }: { children: React.ReactNode }): React.ReactEle
 export default withGasketData(gasket)(RootLayout);
 ```
 
-If only certain routes need the Redux store, you can wrap those route layouts
-individually instead of the root layout.
-
 Any component that interacts with the Redux store **must** be a client
 component. Accessing the Redux store requires React context that is only
 available in client components.
