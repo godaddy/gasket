@@ -33,7 +33,7 @@ export default {
   updateDepsFilter: '/^@gasket\\/.*$/',
 
   /** Retry npm ci/install with --legacy-peer-deps on peer dep failures. */
-  retryWithLegacyPeerDeps: true,
+  retryWithLegacyPeerDeps: false,
 
   /** When true, peer-deps treats extraneous packages as non-fatal (only missing/invalid fail). Default: false. */
   allowExtraneous: false,
