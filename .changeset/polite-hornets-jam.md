@@ -22,7 +22,6 @@
 "@gasket/plugin-intl": major
 "@gasket/plugin-logger": major
 "@gasket/plugin-metadata": major
-"@gasket/plugin-middleware": major
 "@gasket/plugin-morgan": major
 "@gasket/plugin-nextjs": major
 "@gasket/plugin-swagger": major
@@ -37,7 +36,6 @@
 "@gasket/template-nextjs-pages": major
 "@gasket/typescript-tests": major
 "@gasket/utils": major
-"generate-docs-index": major
 ---
 
 bump all package majors to 8

@@ -4,7 +4,6 @@
 "@gasket/plugin-elastic-apm": patch
 "@gasket/plugin-https-proxy": patch
 "@gasket/plugin-docusaurus": patch
-"@gasket/plugin-middleware": patch
 "@gasket/plugin-happyfeet": patch
 "@gasket/typescript-tests": patch
 "@gasket/plugin-metadata": patch
@@ -22,7 +21,6 @@
 "@gasket/plugin-data": patch
 "@gasket/plugin-docs": patch
 "@gasket/plugin-intl": patch
-"generate-docs-index": patch
 "create-gasket-app": patch
 "@gasket/react-intl": patch
 "@gasket/request": patch

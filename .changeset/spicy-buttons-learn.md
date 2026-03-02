@@ -18,7 +18,6 @@
 "@gasket/plugin-data": patch
 "@gasket/plugin-docs": patch
 "@gasket/plugin-intl": patch
-"generate-docs-index": patch
 "create-gasket-app": patch
 "@gasket/request": patch
 "@gasket/core": patch
