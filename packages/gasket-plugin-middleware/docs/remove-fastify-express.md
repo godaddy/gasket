@@ -474,14 +474,6 @@ This error occurs when code expects Express's `app.use()` method on a Fastify in
 - `app.addHook()` for middleware
 - `app.register()` for plugins
 - `app.route()` or `app.get/post/etc.` for routes
-
-### Plugins using res.locals
-
-If third-party plugins depend on `res.locals`, you may need to:
-1. Keep `@fastify/express` temporarily
-2. Contact the plugin maintainer about Fastify-native support
-3. Fork and update the plugin yourself
-
 ---
 
 ## Additional Resources
