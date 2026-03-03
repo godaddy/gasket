@@ -66,7 +66,6 @@ describe('@gasket/template-nextjs-express', () => {
         'react',
         'react-dom',
         'react-intl',
-        'tsx',
         'typescript',
         'winston'
       ];
@@ -140,7 +139,7 @@ describe('@gasket/template-nextjs-express', () => {
         expect(packageJson.scripts).toHaveProperty(script);
       });
 
-      expect(packageJson.scripts.docs).toBe('tsx gasket.ts docs');
+      expect(packageJson.scripts.docs).toBe('node gasket.ts docs');
       expect(packageJson.scripts.build).toBe('npm run build:tsc && next build --webpack');
       expect(packageJson.scripts.start).toBe('node dist/server.js');
       expect(packageJson.scripts.test).toBe('vitest run');
@@ -229,7 +228,7 @@ describe('@gasket/template-nextjs-express', () => {
       const serverPath = join(templateDir, 'server.ts');
       const serverContent = readFileSync(serverPath, 'utf8');
 
-      expect(serverContent).toContain("import gasket from './gasket.js'");
+      expect(serverContent).toContain("import gasket from './gasket.ts'");
       expect(serverContent).toContain('gasket.actions.startServer()');
     });
 

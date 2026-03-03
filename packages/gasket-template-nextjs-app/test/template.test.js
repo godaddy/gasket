@@ -121,7 +121,6 @@ describe('@gasket/template-nextjs-app', () => {
         'react',
         'react-dom',
         'react-intl',
-        'tsx',
         'typescript',
         'winston'
       ];
@@ -207,7 +206,7 @@ describe('@gasket/template-nextjs-app', () => {
       const serverPath = join(templateDir, 'server.ts');
       const serverContent = readFileSync(serverPath, 'utf8');
 
-      expect(serverContent).toContain("import gasket from './gasket.js'");
+      expect(serverContent).toContain("import gasket from './gasket.ts'");
       expect(serverContent).toContain('gasket.actions.startProxyServer()');
     });
 

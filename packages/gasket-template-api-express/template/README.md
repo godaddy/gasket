@@ -67,7 +67,7 @@ Run `build` and `start` together:
 npm run preview
 ```
 
-Compiled code will be placed in the `dist` directory. For local development, the [tsx] runtime is used and the watcher will be started automatically when running the `local` script.
+Compiled code will be placed in the `dist` directory. For local development, Node.js (24+) native TypeScript is used and the watcher will be started automatically when running the `local` script.
 
 #### ESM & TypeScript
 
@@ -85,7 +85,6 @@ For more information, see the extended documentation in the [Gasket TypeScript] 
 <!-- LINKS -->
 [EcmaScript Modules]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules
 [Docusaurus]: https://docusaurus.io/
-[tsx]: https://tsx.is/
 [@gasket/plugin-typescript]: https://gasket.dev/docs/plugins/plugin-typescript/
 [Gasket TypeScript]: https://gasket.dev/docs/typescript/
 [swagger-jsdoc]: https://github.com/Surnet/swagger-jsdoc/

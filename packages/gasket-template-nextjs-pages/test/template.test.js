@@ -80,7 +80,6 @@ describe('@gasket/template-nextjs-pages', () => {
         'react',
         'react-dom',
         'react-intl',
-        'tsx',
         'typescript',
         'winston'
       ];
@@ -235,7 +234,7 @@ describe('@gasket/template-nextjs-pages', () => {
       const serverPath = join(templateDir, 'server.ts');
       const serverContent = readFileSync(serverPath, 'utf8');
 
-      expect(serverContent).toContain("import gasket from './gasket.js'");
+      expect(serverContent).toContain("import gasket from './gasket.ts'");
       expect(serverContent).toContain('gasket.actions.startProxyServer()');
     });
 
@@ -251,7 +250,7 @@ describe('@gasket/template-nextjs-pages', () => {
       const nextConfigPath = join(templateDir, 'next.config.js');
       const nextConfigContent = readFileSync(nextConfigPath, 'utf8');
 
-      expect(nextConfigContent).toContain("import 'tsx'");
+      expect(nextConfigContent).not.toContain("import 'tsx'");
       expect(nextConfigContent).toContain("const gasket = (await import('./gasket.ts')).default");
       expect(nextConfigContent).toContain('export default gasket.actions.getNextConfig()');
     });

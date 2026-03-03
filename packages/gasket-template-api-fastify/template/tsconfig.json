@@ -3,6 +3,7 @@
     "skipLibCheck": true,
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
+    "rewriteRelativeImportExtensions": true,
     "target": "ESNext",
     "isolatedModules": true,
     "esModuleInterop": true,
