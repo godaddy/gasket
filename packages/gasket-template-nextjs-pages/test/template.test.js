@@ -16,7 +16,6 @@ describe('@gasket/template-nextjs-pages', () => {
         'server.ts',
         'intl.ts',
         'next.config.js',
-        'next-env.d.ts',
         'tsconfig.json',
         'tsconfig.server.json',
         'vitest.config.js',

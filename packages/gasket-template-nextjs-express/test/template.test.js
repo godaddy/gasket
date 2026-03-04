@@ -16,7 +16,6 @@ describe('@gasket/template-nextjs-express', () => {
         'server.ts',
         'intl.ts',
         'next.config.js',
-        'next-env.d.ts',
         'tsconfig.json',
         'tsconfig.server.json',
         'vitest.config.js',
@@ -257,11 +256,6 @@ describe('@gasket/template-nextjs-express', () => {
 
       expect(nextConfigContent).toContain("const gasket = (await import('./gasket.ts')).default");
       expect(nextConfigContent).toContain('export default gasket.actions.getNextConfig()');
-    });
-
-    it('should have next-env.d.ts file', () => {
-      const nextEnvPath = join(templateDir, 'next-env.d.ts');
-      expect(existsSync(nextEnvPath)).toBe(true);
     });
   });
 

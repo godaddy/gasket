@@ -105,7 +105,6 @@ export default {
         'tsconfig.json',
         'tsconfig.server.json',
         'intl.ts',
-        'next-env.d.ts',
         'README.md'
       ],
       'gasket-template-nextjs-pages': [
@@ -117,7 +116,6 @@ export default {
         'tsconfig.json',
         'tsconfig.server.json',
         'intl.ts',
-        'next-env.d.ts',
         'README.md'
       ],
       'gasket-template-nextjs-express': [
@@ -129,7 +127,6 @@ export default {
         'tsconfig.json',
         'tsconfig.server.json',
         'intl.ts',
-        'next-env.d.ts',
         'README.md'
       ],
       'gasket-template-api-express': [
