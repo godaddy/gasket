@@ -115,6 +115,10 @@ export default {
 
 This plugins hooks the [createServers] lifecycles from [@gasket/plugin-https].
 
+## Guides
+
+- [Removing @fastify/express] - Migration guide for removing `@fastify/express` dependency and using native Fastify patterns
+
 ## License
 
 [MIT](./LICENSE.md)
@@ -123,3 +127,4 @@ This plugins hooks the [createServers] lifecycles from [@gasket/plugin-https].
 
 [@gasket/plugin-https]:/packages/gasket-plugin-https/README.md
 [createServers]:/packages/gasket-plugin-https/README.md#createservers
+[Removing @fastify/express]:docs/remove-fastify-express.md
