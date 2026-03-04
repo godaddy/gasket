@@ -94,5 +94,9 @@ packages/gasket-core/cjs
 .cursorrules
 .junie/*
 .github/copilot-instructions.md
-CLAUDE.md
 .claude/*
+
+# Local agent working documents
+docs/plans/
+docs/solutions/
+docs/brainstorms/
