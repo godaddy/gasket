@@ -6,7 +6,7 @@
     "docs": "node gasket.ts docs",
     "build": "npm run build:tsc && next build --webpack",
     "start": "node dist/server.js",
-    "local": "concurrently \"npm run build:tsc:watch\" \"GASKET_DEV=1 node --watch server.ts\"",
+    "local": "concurrently \"npm run build:tsc:watch\" \"GASKET_DEV=1 node server.ts\"",
     "preview": "npm run build && npm run start",
     "prebuild": "node gasket.ts build",
     "build:tsc": "tsc -p ./tsconfig.server.json",

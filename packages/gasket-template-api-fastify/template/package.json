@@ -8,7 +8,7 @@
     "build": "tsc",
     "preview": "npm run build && npm run start",
     "start": "node dist/server.js",
-    "local": "node --watch server.ts",
+    "local": "node --watch-path=./server.ts --watch-path=./gasket.ts --watch-path=./plugins server.ts",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",

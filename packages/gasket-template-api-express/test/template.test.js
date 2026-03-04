@@ -122,7 +122,6 @@ describe('@gasket/template-api-express', () => {
         'react',
         'react-dom',
         'search-insights',
-        'tsx',
         'typescript',
         'vitest'
       ];
@@ -162,7 +161,7 @@ describe('@gasket/template-api-express', () => {
       const serverPath = join(templateDir, 'server.ts');
       const serverContent = readFileSync(serverPath, 'utf8');
 
-      expect(serverContent).toContain("import gasket from './gasket.js'");
+      expect(serverContent).toContain("import gasket from './gasket.ts'");
       expect(serverContent).toContain('gasket.actions.startServer()');
     });
   });

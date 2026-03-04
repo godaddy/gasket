@@ -88,6 +88,10 @@ declare module '@gasket/engine' {
 export default plugin;
 ```
 
+## Templates and Node 24 Native TypeScript
+
+Gasket templates require **Node.js 24+**, which runs TypeScript natively (no separate runtime). Scripts use `node gasket.ts docs`, `node gasket.ts build`, and `node --watch server.ts`. Root-level `.ts` files use `.ts` extensions in imports; `tsconfig.server.json` (or the API template `tsconfig.json`) sets `rewriteRelativeImportExtensions: true` so emitted `dist/` keeps `.js` for the Next.js app and the `@/gasket` alias.
+
 ## Conclusion
 
 With Gasket, TypeScript users can now take full advantage of TypeScript’s type-checking capabilities by writing their `gasket.ts` configuration files and plugins in TypeScript using ESM syntax. This enhances the developer experience, ensuring that configurations and plugins are validated throughout the development process.

@@ -9,6 +9,7 @@ import pluginHttps from '@gasket/plugin-https';
 import pluginExpress from '@gasket/plugin-express';
 import pluginNextjs from '@gasket/plugin-nextjs';
 import pluginIntl from '@gasket/plugin-intl';
+console.log('gasket.ts');
 
 export default makeGasket({
   plugins: [
