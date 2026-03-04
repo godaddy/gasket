@@ -1,5 +1,13 @@
 # `@gasket/preset-api`
 
+## 7.6.9
+
+### Patch Changes
+
+- Updated dependencies [258e3ef]
+  - @gasket/plugin-fastify@7.5.5
+  - @gasket/plugin-swagger@7.4.1
+
 ## 7.6.8
 
 ### Patch Changes

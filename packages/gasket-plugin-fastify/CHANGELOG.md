@@ -1,5 +1,11 @@
 # `@gasket/plugin-fastify`
 
+## 7.5.5
+
+### Patch Changes
+
+- 258e3ef: Create guide for removing @fastify/express package
+
 ## 7.5.4
 
 ### Patch Changes
