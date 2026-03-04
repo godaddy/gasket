@@ -13,7 +13,7 @@
     "preview": "npm run build && npm run start",
     "prebuild": "node gasket.ts build",
     "start:https": "node dist/server.js",
-    "local:https": "node --watch --watch-path=./server.ts --watch-path=./gasket.ts --watch-path=./gasket-data.ts --watch-path=./app server.ts",
+    "local:https": "node --watch-path=./server.ts --watch-path=./gasket.ts --watch-path=./app server.ts",
     "build:tsc:watch": "tsc -p ./tsconfig.server.json --watch",
     "build:tsc": "tsc -p ./tsconfig.server.json",
     "test": "vitest run",
