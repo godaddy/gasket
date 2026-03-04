@@ -20,7 +20,8 @@
     "allowJs": true,
     "strict": false,
     "incremental": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "preserveWatchOutput": true
   },
   "exclude": [
     "node_modules"
