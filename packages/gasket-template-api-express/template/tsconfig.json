@@ -3,20 +3,17 @@
     "skipLibCheck": true,
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "rewriteRelativeImportExtensions": true,
     "target": "ESNext",
     "isolatedModules": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "outDir": "dist",
+    "noEmit": true,
     "lib": [
       "esnext"
     ],
     "types": [
       "node"
     ],
-    "baseUrl": "./",
-    "allowJs": true,
     "strict": false,
     "incremental": true,
     "resolveJsonModule": true
