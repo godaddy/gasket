@@ -17,7 +17,6 @@ describe('@gasket/template-nextjs-app', () => {
         'intl.ts',
         'next.config.js',
         'tsconfig.json',
-        'tsconfig.server.json',
         'vitest.config.js',
         'README.md',
         'app/layout.tsx',
@@ -68,16 +67,6 @@ describe('@gasket/template-nextjs-app', () => {
       expect(tsconfig.compilerOptions).toHaveProperty('jsx', 'react-jsx');
       expect(tsconfig.compilerOptions.lib).toContain('dom');
       expect(tsconfig.include).toContain('**/*.tsx');
-    });
-
-    it('should have valid server TypeScript configuration', () => {
-      const tsconfigServerPath = join(templateDir, 'tsconfig.server.json');
-      const tsconfigServer = JSON.parse(readFileSync(tsconfigServerPath, 'utf8'));
-
-      expect(tsconfigServer.compilerOptions).toHaveProperty('module', 'NodeNext');
-      expect(tsconfigServer.compilerOptions).toHaveProperty('moduleResolution', 'NodeNext');
-      expect(tsconfigServer.compilerOptions).toHaveProperty('target', 'ESNext');
-      expect(tsconfigServer.compilerOptions).toHaveProperty('outDir', 'dist');
     });
 
     it('should have valid ESLint configuration', () => {
@@ -225,7 +214,7 @@ describe('@gasket/template-nextjs-app', () => {
       const layoutContent = readFileSync(layoutPath, 'utf8');
 
       expect(layoutContent).toContain('import React from \'react\'');
-      expect(layoutContent).toContain("import gasket from '@/gasket'");
+      expect(layoutContent).toContain("import gasket from '../gasket'");
       expect(layoutContent).toContain("import { withGasketData } from '@gasket/nextjs/layout'");
       expect(layoutContent).toContain('function RootLayout');
       expect(layoutContent).toContain('withGasketData(gasket)(RootLayout)');
