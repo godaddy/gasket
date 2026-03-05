@@ -58,7 +58,7 @@ describe('@gasket/template-api-express', () => {
       expect(tsconfig.compilerOptions).toHaveProperty('module', 'NodeNext');
       expect(tsconfig.compilerOptions).toHaveProperty('moduleResolution', 'NodeNext');
       expect(tsconfig.compilerOptions).toHaveProperty('target', 'ESNext');
-      expect(tsconfig.compilerOptions).toHaveProperty('outDir', 'dist');
+      expect(tsconfig.compilerOptions).toHaveProperty('noEmit', true);
       expect(tsconfig.include).toContain('./plugins');
       expect(tsconfig.include).toContain('gasket.ts');
       expect(tsconfig.include).toContain('server.ts');
