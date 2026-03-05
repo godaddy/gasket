@@ -51,13 +51,7 @@ This Gasket app uses Next.js 14 Page Router with a [Custom Server] implementatio
 
 ### TypeScript & Custom Server
 
-This Gasket app uses TypeScript with Next.js and a [Custom Server] for enhanced type safety and flexibility. A separate `tsc` process and `tsconfig.server` file are necessary to compile TypeScript code for the custom server and additional files. It’s essential to include root-level Gasket files in the Next.js TypeScript build and configure TypeScript aliases in the Next.js application to correctly import these Gasket TypeScript files into the Next.js application code. This setup ensures that all TypeScript code integrates smoothly and maintains strong type checking.
-
-### Aliases
-
-In Gasket apps that use TypeScript with Next.js [Page Router] and [Custom Server], it’s essential to configure TypeScript aliases to import Gasket TypeScript files correctly. The use-cases are as follows:
-
-- `tsconfig.json` - Aliases for importing root-level Gasket files into application code.
+This Gasket app uses TypeScript with Next.js and a [Custom Server] for enhanced type safety and flexibility. Root-level Gasket files (e.g. `gasket.ts`, `server.ts`) run with Node.js 24+, which runs TypeScript natively. Next.js application code imports the Gasket instance via a relative path to `gasket.ts` (e.g. `import gasket from '../gasket'`). This setup ensures that all TypeScript code integrates smoothly with no separate compile step or path aliases.
 
 Here is an example TypeScript plugin:
 
@@ -95,7 +89,7 @@ An example of importing a Gasket TypeScript file into Next.js application code:
 
 ```tsx
 // index.tsx
-import gasket from '@/gasket'; // preconfigured TypeScript alias
+import gasket from '../gasket';
 
 export default function Home() {
   return (
@@ -106,7 +100,7 @@ export default function Home() {
 }
 ```
 
-For `.ts` Gasket files that need to be used in NextJS application code, be sure to configure the appropriate TypeScript aliases in the `tsconfig.json` file.
+Use a relative path from your application file to the root-level `gasket.ts` file.
 
 
 ### Docusaurus

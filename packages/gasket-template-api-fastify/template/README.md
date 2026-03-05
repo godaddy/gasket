@@ -67,7 +67,7 @@ Run `build` and `start` together:
 npm run preview
 ```
 
-Compiled code will be placed in the `dist` directory. For local development, Node.js (24+) native TypeScript is used and the watcher will be started automatically when running the `local` script.
+The server runs from source with Node.js 24+, which runs TypeScript natively. For local development, the watcher is started automatically when running the `local` script.
 
 #### ESM & TypeScript
 

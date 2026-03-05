@@ -90,7 +90,7 @@ export default plugin;
 
 ## Templates and Node 24 Native TypeScript
 
-Gasket templates require **Node.js 24+**, which runs TypeScript natively (no separate runtime). Scripts use `node gasket.ts docs`, `node gasket.ts build`, and `node --watch server.ts`. Root-level `.ts` files use `.ts` extensions in imports; `tsconfig.server.json` (or the API template `tsconfig.json`) sets `rewriteRelativeImportExtensions: true` so emitted `dist/` keeps `.js` for the Next.js app and the `@/gasket` alias.
+Gasket templates require **Node.js 24+**, which runs TypeScript natively (no separate runtime). Scripts use `node gasket.ts docs`, `node gasket.ts build`, and `node server.ts` (or `node --watch server.ts` for local dev). Root-level `.ts` files use `.ts` extensions in imports. Next.js app code imports the Gasket instance via a relative path to `gasket.ts` (no tsc build or path alias).
 
 ## Conclusion
 
