@@ -7,10 +7,9 @@
   },
   "scripts": {
     "docs": "node gasket.ts docs",
-    "prebuild": "node gasket.ts build",
-    "build": "tsc",
+    "build": "node gasket.ts build",
     "preview": "npm run build && npm run start",
-    "start": "node dist/server.js",
+    "start": "node server.ts",
     "local": "node --watch-path=./server.ts --watch-path=./gasket.ts --watch-path=./plugins server.ts",
     "test": "vitest run",
     "test:watch": "vitest",
