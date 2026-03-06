@@ -13,7 +13,7 @@
     "preview": "npm run build && npm run start",
     "prebuild": "node gasket.ts build",
     "start:https": "node server.ts",
-    "local:https": "node --watch-path=./server.ts --watch-path=./gasket.ts --watch-path=./app server.ts",
+    "local:https": "node --watch server.ts",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",

@@ -10,7 +10,7 @@
     "build": "node gasket.ts build",
     "preview": "npm run build && npm run start",
     "start": "node server.ts",
-    "local": "node --watch-path=./server.ts --watch-path=./gasket.ts --watch-path=./plugins server.ts",
+    "local": "node --watch server.ts",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
