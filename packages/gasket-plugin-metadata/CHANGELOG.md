@@ -1,5 +1,13 @@
 # `@gasket/plugin-metadata`
 
+## 8.0.0-next.2
+
+### Patch Changes
+
+- Updated dependencies [dc01fac]
+  - @gasket/core@8.0.0-next.2
+  - @gasket/plugin-logger@8.0.0-next.1
+
 ## 8.0.0-next.1
 
 ### Patch Changes

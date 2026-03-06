@@ -1,5 +1,11 @@
 # `@gasket/plugin-fastify`
 
+## 8.0.0-next.3
+
+### Patch Changes
+
+- dc01fac: remove middleware plugin
+
 ## 8.0.0-next.2
 
 ### Patch Changes

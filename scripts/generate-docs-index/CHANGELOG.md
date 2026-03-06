@@ -1,5 +1,47 @@
 # generate-docs-index
 
+## 8.0.0-next.4
+
+### Patch Changes
+
+- Updated dependencies [dc01fac]
+- Updated dependencies [20eafa6]
+- Updated dependencies [5832e5b]
+  - @gasket/template-nextjs-express@8.0.0-next.3
+  - @gasket/template-nextjs-pages@8.0.0-next.3
+  - @gasket/template-api-express@8.0.0-next.3
+  - @gasket/template-api-fastify@8.0.0-next.4
+  - @gasket/template-nextjs-app@8.0.0-next.3
+  - @gasket/plugin-elastic-apm@8.0.0-next.2
+  - @gasket/plugin-express@8.0.0-next.2
+  - @gasket/plugin-fastify@8.0.0-next.3
+  - @gasket/plugin-swagger@8.0.0-next.3
+  - @gasket/plugin-webpack@8.0.0-next.2
+  - @gasket/plugin-morgan@8.0.0-next.2
+  - @gasket/plugin-nextjs@8.0.0-next.4
+  - @gasket/plugin-data@8.0.0-next.2
+  - @gasket/plugin-intl@8.0.0-next.2
+  - @gasket/react-intl@8.0.0-next.3
+  - @gasket/assets@8.0.0-next.3
+  - @gasket/nextjs@8.0.0-next.3
+  - @gasket/core@8.0.0-next.2
+  - @gasket/data@8.0.0-next.2
+  - @gasket/plugin-analyze@8.0.0-next.1
+  - @gasket/plugin-docs@8.0.0-next.2
+  - @gasket/plugin-docusaurus@8.0.0-next.1
+  - @gasket/plugin-metadata@8.0.0-next.2
+  - create-gasket-app@8.0.0-next.3
+  - @gasket/plugin-command@8.0.0-next.2
+  - @gasket/plugin-docs-graphs@8.0.0-next.1
+  - @gasket/plugin-dynamic-plugins@8.0.0-next.2
+  - @gasket/plugin-happyfeet@8.0.0-next.1
+  - @gasket/plugin-https@8.0.0-next.1
+  - @gasket/plugin-https-proxy@8.0.0-next.1
+  - @gasket/plugin-logger@8.0.0-next.1
+  - @gasket/plugin-winston@8.0.0-next.1
+  - @gasket/request@8.0.0-next.1
+  - @gasket/utils@8.0.0-next.2
+
 ## 8.0.0-next.3
 
 ### Patch Changes
