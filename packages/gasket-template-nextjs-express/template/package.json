@@ -2,15 +2,16 @@
   "name": "{{{appName}}}",
   "version": "0.0.0",
   "description": "Gasket App",
+  "engines": {
+    "node": ">=24"
+  },
   "scripts": {
-    "docs": "tsx gasket.ts docs",
-    "build": "npm run build:tsc && next build --webpack",
-    "start": "node dist/server.js",
-    "local": "concurrently \"npm run build:tsc:watch\" \"GASKET_DEV=1 tsx watch server.ts\"",
+    "docs": "node gasket.ts docs",
+    "build": "next build --webpack",
+    "start": "node server.ts",
+    "local": "GASKET_DEV=1 node --watch-path=./server.ts --watch-path=./gasket.ts server.ts",
     "preview": "npm run build && npm run start",
-    "prebuild": "tsx gasket.ts build",
-    "build:tsc": "tsc -p ./tsconfig.server.json",
-    "build:tsc:watch": "tsc -p ./tsconfig.server.json --watch",
+    "prebuild": "node gasket.ts build",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
@@ -41,7 +42,6 @@
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-intl": "^7.1.6",
-    "tsx": "^4.19.3",
     "typescript": "^5.8.2",
     "winston": "^3.17.0"
   },

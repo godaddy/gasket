@@ -73,7 +73,6 @@ When using [Docusaurus], generated docs will be available at `http://localhost:3
 [Gasket]: https://gasket.dev
 [Next.js]: https://nextjs.org
 [EcmaScript Modules]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules
-[tsx]: https://tsx.is/
 [@gasket/plugin-typescript]: https://gasket.dev/docs/plugins/plugin-typescript/
 [Gasket TypeScript]: https://gasket.dev/docs/typescript/
 [Page Router]: https://nextjs.org/docs/pages

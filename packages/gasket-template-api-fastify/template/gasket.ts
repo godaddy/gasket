@@ -6,7 +6,7 @@ import pluginHttps from '@gasket/plugin-https';
 import pluginLogger from '@gasket/plugin-logger';
 import pluginWinston from '@gasket/plugin-winston';
 import pluginFastify from '@gasket/plugin-fastify';
-import pluginRoutes from './plugins/routes-plugin.js';
+import pluginRoutes from './plugins/routes-plugin.ts';
 import pluginSwagger from '@gasket/plugin-swagger';
 
 export default makeGasket({

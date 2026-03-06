@@ -103,9 +103,7 @@ export default {
         'locales',
         'server.ts',
         'tsconfig.json',
-        'tsconfig.server.json',
         'intl.ts',
-        'next-env.d.ts',
         'README.md'
       ],
       'gasket-template-nextjs-pages': [
@@ -115,9 +113,7 @@ export default {
         'components',
         'server.ts',
         'tsconfig.json',
-        'tsconfig.server.json',
         'intl.ts',
-        'next-env.d.ts',
         'README.md'
       ],
       'gasket-template-nextjs-express': [
@@ -127,9 +123,7 @@ export default {
         'components',
         'server.ts',
         'tsconfig.json',
-        'tsconfig.server.json',
         'intl.ts',
-        'next-env.d.ts',
         'README.md'
       ],
       'gasket-template-api-express': [
@@ -151,21 +145,15 @@ export default {
       'gasket-template-nextjs-app': [
         'preview',
         'start:https',
-        'local:https',
-        'build:tsc:watch',
-        'build:tsc'
+        'local:https'
       ],
       'gasket-template-nextjs-pages': [
         'preview',
         'start:https',
-        'local:https',
-        'build:tsc:watch',
-        'build:tsc'
+        'local:https'
       ],
       'gasket-template-nextjs-express': [
-        'preview',
-        'build:tsc:watch',
-        'build:tsc'
+        'preview'
       ],
       'gasket-template-api-express': [
         'preview'

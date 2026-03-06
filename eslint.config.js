@@ -23,8 +23,7 @@ export default defineConfig([
     '**/test/fixtures/**',
     '**/template/dist',
     '**/template/.next',
-    '**/template/.docs',
-    '**/template/next-env.d.ts'
+    '**/template/.docs'
   ]),
   //
   // Allow custom JSDoc tags

@@ -16,9 +16,7 @@ describe('@gasket/template-nextjs-express', () => {
         'server.ts',
         'intl.ts',
         'next.config.js',
-        'next-env.d.ts',
         'tsconfig.json',
-        'tsconfig.server.json',
         'vitest.config.js',
         'README.md',
         'pages/_app.tsx',
@@ -66,7 +64,6 @@ describe('@gasket/template-nextjs-express', () => {
         'react',
         'react-dom',
         'react-intl',
-        'tsx',
         'typescript',
         'winston'
       ];
@@ -126,8 +123,6 @@ describe('@gasket/template-nextjs-express', () => {
         'local',
         'preview',
         'prebuild',
-        'build:tsc',
-        'build:tsc:watch',
         'test',
         'test:watch',
         'test:coverage',
@@ -140,9 +135,9 @@ describe('@gasket/template-nextjs-express', () => {
         expect(packageJson.scripts).toHaveProperty(script);
       });
 
-      expect(packageJson.scripts.docs).toBe('tsx gasket.ts docs');
-      expect(packageJson.scripts.build).toBe('npm run build:tsc && next build --webpack');
-      expect(packageJson.scripts.start).toBe('node dist/server.js');
+      expect(packageJson.scripts.docs).toBe('node gasket.ts docs');
+      expect(packageJson.scripts.build).toBe('next build --webpack');
+      expect(packageJson.scripts.start).toBe('node server.ts');
       expect(packageJson.scripts.test).toBe('vitest run');
     });
 
@@ -181,21 +176,6 @@ describe('@gasket/template-nextjs-express', () => {
       expect(tsconfig.compilerOptions.jsx).toBe('react-jsx');
       expect(tsconfig.compilerOptions.incremental).toBe(true);
       expect(tsconfig.compilerOptions.plugins).toBeDefined();
-      expect(tsconfig.compilerOptions.paths).toBeDefined();
-      expect(tsconfig.compilerOptions.paths['@/gasket']).toEqual(['./dist/gasket.js']);
-    });
-
-    it('should have valid tsconfig.server.json', () => {
-      const tsconfigServerPath = join(templateDir, 'tsconfig.server.json');
-      const tsconfigServer = JSON.parse(readFileSync(tsconfigServerPath, 'utf8'));
-
-      expect(tsconfigServer.compilerOptions).toBeDefined();
-      expect(tsconfigServer.compilerOptions.module).toBe('NodeNext');
-      expect(tsconfigServer.compilerOptions.moduleResolution).toBe('NodeNext');
-      expect(tsconfigServer.compilerOptions.target).toBe('ESNext');
-      expect(tsconfigServer.compilerOptions.outDir).toBe('dist');
-      expect(tsconfigServer.include).toContain('server.ts');
-      expect(tsconfigServer.include).toContain('gasket.ts');
     });
   });
 
@@ -229,7 +209,7 @@ describe('@gasket/template-nextjs-express', () => {
       const serverPath = join(templateDir, 'server.ts');
       const serverContent = readFileSync(serverPath, 'utf8');
 
-      expect(serverContent).toContain("import gasket from './gasket.js'");
+      expect(serverContent).toContain("import gasket from './gasket.ts'");
       expect(serverContent).toContain('gasket.actions.startServer()');
     });
 
@@ -258,11 +238,6 @@ describe('@gasket/template-nextjs-express', () => {
 
       expect(nextConfigContent).toContain("const gasket = (await import('./gasket.ts')).default");
       expect(nextConfigContent).toContain('export default gasket.actions.getNextConfig()');
-    });
-
-    it('should have next-env.d.ts file', () => {
-      const nextEnvPath = join(templateDir, 'next-env.d.ts');
-      expect(existsSync(nextEnvPath)).toBe(true);
     });
   });
 
@@ -298,7 +273,7 @@ describe('@gasket/template-nextjs-express', () => {
 
       expect(documentPageContent).toContain('import Document from \'next/document\'');
       expect(documentPageContent).toContain('import { withGasketData } from \'@gasket/nextjs/document\'');
-      expect(documentPageContent).toContain('import gasket from \'@/gasket\'');
+      expect(documentPageContent).toContain('import gasket from \'../gasket\'');
       expect(documentPageContent).toContain('export default withGasketData(gasket)(Document)');
     });
 

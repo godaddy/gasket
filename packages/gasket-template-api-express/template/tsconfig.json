@@ -7,15 +7,13 @@
     "isolatedModules": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "outDir": "dist",
+    "noEmit": true,
     "lib": [
       "esnext"
     ],
     "types": [
       "node"
     ],
-    "baseUrl": "./",
-    "allowJs": true,
     "strict": false,
     "incremental": true,
     "resolveJsonModule": true

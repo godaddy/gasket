@@ -57,7 +57,7 @@ describe('@gasket/template-api-fastify', () => {
       expect(tsconfig.compilerOptions).toHaveProperty('module', 'NodeNext');
       expect(tsconfig.compilerOptions).toHaveProperty('moduleResolution', 'NodeNext');
       expect(tsconfig.compilerOptions).toHaveProperty('target', 'ESNext');
-      expect(tsconfig.compilerOptions).toHaveProperty('outDir', 'dist');
+      expect(tsconfig.compilerOptions).toHaveProperty('noEmit', true);
       expect(tsconfig.include).toContain('./plugins');
       expect(tsconfig.include).toContain('gasket.ts');
       expect(tsconfig.include).toContain('server.ts');
@@ -121,7 +121,6 @@ describe('@gasket/template-api-fastify', () => {
         'react',
         'react-dom',
         'search-insights',
-        'tsx',
         'typescript',
         'vitest'
       ];
@@ -161,7 +160,7 @@ describe('@gasket/template-api-fastify', () => {
       const serverPath = join(templateDir, 'server.ts');
       const serverContent = readFileSync(serverPath, 'utf8');
 
-      expect(serverContent).toContain("import gasket from './gasket.js'");
+      expect(serverContent).toContain("import gasket from './gasket.ts'");
       expect(serverContent).toContain('gasket.actions.startServer()');
     });
   });
