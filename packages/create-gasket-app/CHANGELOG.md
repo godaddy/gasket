@@ -1,5 +1,20 @@
 # `create-gasket-app`
 
+## 8.0.0-next.3
+
+### Patch Changes
+
+- Updated dependencies [dc01fac]
+  - @gasket/core@8.0.0-next.2
+  - @gasket/plugin-docs@8.0.0-next.2
+  - @gasket/plugin-docusaurus@8.0.0-next.1
+  - @gasket/plugin-metadata@8.0.0-next.2
+  - @gasket/plugin-command@8.0.0-next.2
+  - @gasket/plugin-dynamic-plugins@8.0.0-next.2
+  - @gasket/plugin-logger@8.0.0-next.1
+  - @gasket/request@8.0.0-next.1
+  - @gasket/utils@8.0.0-next.2
+
 ## 8.0.0-next.2
 
 ### Patch Changes

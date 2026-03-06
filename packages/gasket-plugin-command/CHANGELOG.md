@@ -1,5 +1,13 @@
 # `@gasket/plugin-command`
 
+## 8.0.0-next.2
+
+### Patch Changes
+
+- Updated dependencies [dc01fac]
+  - @gasket/core@8.0.0-next.2
+  - @gasket/utils@8.0.0-next.2
+
 ## 8.0.0-next.1
 
 ### Patch Changes

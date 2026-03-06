@@ -1,5 +1,13 @@
 # `@gasket/plugin-data`
 
+## 8.0.0-next.2
+
+### Patch Changes
+
+- dc01fac: remove middleware plugin
+  - @gasket/request@8.0.0-next.1
+  - @gasket/utils@8.0.0-next.2
+
 ## 8.0.0-next.1
 
 ### Patch Changes

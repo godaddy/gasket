@@ -1,5 +1,11 @@
 # `@gasket/plugin-docs`
 
+## 8.0.0-next.2
+
+### Patch Changes
+
+- @gasket/plugin-command@8.0.0-next.2
+
 ## 8.0.0-next.1
 
 ### Patch Changes
