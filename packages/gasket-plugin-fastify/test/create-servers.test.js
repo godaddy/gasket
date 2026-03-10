@@ -1,9 +1,11 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 
+const mockRequestListener = vi.fn();
 const mockApp = {
   ready: vi.fn(),
   server: {
-    emit: vi.fn()
+    emit: vi.fn(),
+    listeners: vi.fn().mockReturnValue([mockRequestListener])
   },
   register: vi.fn(),
   use: vi.fn()
@@ -55,7 +57,9 @@ describe('createServers', () => {
     await result.handler(request);
 
     expect(mockApp.ready).toHaveBeenCalled();
-    expect(mockApp.server.emit).toHaveBeenCalledWith('request', request);
+    expect(mockApp.server.listeners).toHaveBeenCalledWith('request');
+    expect(mockRequestListener).toHaveBeenCalledWith(request);
+    expect(mockRequestListener).toHaveBeenLastCalledWith(request);
   });
 
 
