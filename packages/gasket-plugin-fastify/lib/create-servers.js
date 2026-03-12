@@ -41,10 +41,7 @@ export default async function createServers(gasket, serverOpts) {
       // record a second "incoming request" for the same req/res (double trace).
       const listeners = app.server.listeners('request');
       for (const listener of listeners) {
-        const result = listener.apply(app.server, args);
-        if (result != null && typeof result.then === 'function') {
-          await result;
-        }
+        listener.apply(app.server, args);
       }
     }
   };
