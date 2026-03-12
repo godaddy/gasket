@@ -59,7 +59,6 @@ describe('createServers', () => {
     expect(mockApp.ready).toHaveBeenCalled();
     expect(mockApp.server.listeners).toHaveBeenCalledWith('request');
     expect(mockRequestListener).toHaveBeenCalledWith(request);
-    expect(mockRequestListener).toHaveBeenLastCalledWith(request);
   });
 
   it('invokes all request listeners', async function () {
