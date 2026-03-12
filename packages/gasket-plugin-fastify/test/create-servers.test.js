@@ -1,9 +1,11 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 
+const mockRequestListener = vi.fn();
 const mockApp = {
   ready: vi.fn(),
   server: {
-    emit: vi.fn()
+    emit: vi.fn(),
+    listeners: vi.fn().mockReturnValue([mockRequestListener])
   },
   register: vi.fn(),
   use: vi.fn()
@@ -55,9 +57,25 @@ describe('createServers', () => {
     await result.handler(request);
 
     expect(mockApp.ready).toHaveBeenCalled();
-    expect(mockApp.server.emit).toHaveBeenCalledWith('request', request);
+    expect(mockApp.server.listeners).toHaveBeenCalledWith('request');
+    expect(mockRequestListener).toHaveBeenCalledWith(request);
   });
 
+  it('invokes all request listeners', async function () {
+    const listener1 = vi.fn();
+    const listener2 = vi.fn();
+    const listener3 = vi.fn();
+    mockApp.server.listeners.mockReturnValue([listener1, listener2, listener3]);
+
+    const result = await createServers(gasket, {});
+    const request = { mock: 'request' };
+    const response = { mock: 'response' };
+    await result.handler(request, response);
+
+    expect(listener1).toHaveBeenCalledWith(request, response);
+    expect(listener2).toHaveBeenCalledWith(request, response);
+    expect(listener3).toHaveBeenCalledWith(request, response);
+  });
 
   it('executes the `fastify` lifecycle', async function () {
     await createServers(gasket, {});
