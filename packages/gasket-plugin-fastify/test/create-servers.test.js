@@ -62,6 +62,21 @@ describe('createServers', () => {
     expect(mockRequestListener).toHaveBeenLastCalledWith(request);
   });
 
+  it('invokes all request listeners', async function () {
+    const listener1 = vi.fn();
+    const listener2 = vi.fn();
+    const listener3 = vi.fn();
+    mockApp.server.listeners.mockReturnValue([listener1, listener2, listener3]);
+
+    const result = await createServers(gasket, {});
+    const request = { mock: 'request' };
+    const response = { mock: 'response' };
+    await result.handler(request, response);
+
+    expect(listener1).toHaveBeenCalledWith(request, response);
+    expect(listener2).toHaveBeenCalledWith(request, response);
+    expect(listener3).toHaveBeenCalledWith(request, response);
+  });
 
   it('executes the `fastify` lifecycle', async function () {
     await createServers(gasket, {});
