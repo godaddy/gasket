@@ -36,7 +36,13 @@ export default async function createServers(gasket, serverOpts) {
     ...serverOpts,
     handler: async function handler(...args) {
       await app.ready();
-      app.server.emit('request', ...args);
+      // Invoke Fastify's request listeners directly instead of emitting 'request'
+      // on app.server. Emit would cause OpenTelemetry HTTP instrumentation to
+      // record a second "incoming request" for the same req/res (double trace).
+      const listeners = app.server.listeners('request');
+      for (const listener of listeners) {
+        listener.apply(app.server, args);
+      }
     }
   };
 }
