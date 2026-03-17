@@ -1,5 +1,12 @@
 # `@gasket/plugin-fastify`
 
+## 7.5.5
+
+### Patch Changes
+
+- 258e3ef: Create guide for removing @fastify/express package
+- 2af5f91: Invoke Fastify's request listeners directly
+
 ## 7.5.4
 
 ### Patch Changes

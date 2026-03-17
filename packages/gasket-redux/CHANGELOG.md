@@ -1,5 +1,11 @@
 # `@gasket/redux`
 
+## 7.4.1
+
+### Patch Changes
+
+- 4162981: "Update redux guide for App Router"
+
 ## 7.4.0
 
 ### Minor Changes
