@@ -1,5 +1,6 @@
 /** @type {import('syncpack').RcFile} */
 const config = {
+  source: ['packages/*', '!**/{template,test}/**'],
   customTypes: {
     dependencies: {
       strategy: 'versionsByName',
@@ -10,19 +11,21 @@ const config = {
       path: 'devDependencies'
     }
   },
-  dependencyTypes: ['dependencies', 'devDependencies'],
   semverGroups: [
     {
+      label: 'Use exact versions for nx',
       range: '',
-      packages: ['**'],
       dependencyTypes: ['dependencies', 'devDependencies'],
       dependencies: ['nx']
     },
     {
+      label: 'Use caret for dependencies and devDependencies',
       range: '^',
-      dependencyTypes: ['dependencies', 'devDependencies'],
-      dependencies: ['**'],
-      packages: ['**']
+      dependencyTypes: ['dependencies', 'devDependencies']
+    },
+    {
+      label: 'Ignore everything else',
+      isIgnored: true
     }
   ],
   sortFirst: [
@@ -55,18 +58,25 @@ const config = {
     'eslintIgnore',
     'gasket'
   ],
-  versionGroups: [{
-    label: 'workspace-packages',
-    dependencies: [
-        'create-gasket-app',
-        '@gasket/*',
-    ],
-    dependencyTypes: ['dependencies', 'devDependencies'],
-    pinVersion: 'workspace:^'
-  }],
-  'lintFormatting': true,
-  'lintSemverRanges': true,
-  'lintVersions': true
+  versionGroups: [
+    {
+      label: 'Use workspace protocol when developing local packages',
+      dependencies: ['$LOCAL'],
+      dependencyTypes: ['!local', 'devDependencies', 'dependencies'],
+      packages: ['!{{{appName}}}'],
+      pinVersion: 'workspace:^'
+    },
+    {
+      label: 'workspace-packages',
+      dependencies: ['create-gasket-app', '@gasket/*'],
+      dependencyTypes: ['dependencies', 'devDependencies'],
+      pinVersion: 'workspace:^'
+    },
+    {
+      label: 'Ignore everything else',
+      isIgnored: true
+    }
+  ]
 };
 
 module.exports = config;
