@@ -35,7 +35,8 @@ export default makeGasket({
     supported.
   - **`ui`** - (object) Optional custom UI options. See
     [swagger-ui-express] options for what is supported.
-  - **`uiConfig`** - (object) Optional custom UI options. Only for use with Fastify. See [@fastify/swagger-ui] options for what is supported.
+  - **`uiOptions`** - (object) Optional custom UI options. Only for use with Fastify. See [@fastify/swagger-ui] options for what is supported.
+  - **`openapi`** - (object) OpenAPI spec object for runtime route introspection (Fastify only). When set, routes are discovered automatically and the `definitionFile` is not used.
 
 #### Example from JSDocs
 
@@ -88,7 +89,7 @@ export default makeGasket({
       apis: ['api.js'] // Glob path to API Docs
     },
     definitionFile: 'swagger.json', // Default
-    apiDocs: '/api-docs'            // Default
+    apiDocsRoute: '/api-docs'       // Default
   }
 });
 ```
@@ -107,6 +108,29 @@ export default makeGasket({
   }
 });
 ```
+
+#### Example with OpenAPI (Fastify)
+
+For Fastify apps using TypeBox or other schema providers, set the `openapi`
+option to enable runtime route introspection. Routes are discovered
+automatically — no definition file or JSDocs needed.
+
+```js
+// gasket.js
+
+export default makeGasket({
+  swagger: {
+    openapi: {
+      info: {
+        title: 'My API',
+        version: '1.0.0'
+      }
+    }
+  }
+});
+```
+
+> In Gasket, all `fastify` lifecycle hooks receive the same root Fastify instance, and `@fastify/swagger` uses Fastify's `onRoute` hook to collect routes — including routes registered before the swagger plugin. Route ordering does not affect discovery.
 
 ## License
 

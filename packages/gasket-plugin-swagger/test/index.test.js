@@ -119,12 +119,18 @@ describe('Swagger Plugin', function () {
     let mockGasket;
 
     beforeEach(function () {
-      mockGasket = {};
+      mockGasket = { config: { swagger: {} } };
     });
 
     it('sets up swagger spec', async function () {
       await plugin.hooks.build(mockGasket);
       expect(mockBuildSwaggerDefinition).toHaveBeenCalled();
+    });
+
+    it('skips buildSwaggerDefinition when openapi is set', async function () {
+      mockGasket.config.swagger.openapi = { info: { title: 'Test', version: '1.0.0' } };
+      await plugin.hooks.build(mockGasket);
+      expect(mockBuildSwaggerDefinition).not.toHaveBeenCalled();
     });
   });
 
@@ -135,7 +141,8 @@ describe('Swagger Plugin', function () {
       mockGasket = {
         logger: {
           info: vi.fn(),
-          error: vi.fn()
+          error: vi.fn(),
+          warn: vi.fn()
         },
         config: {
           root: '/path/to/app',
@@ -194,6 +201,15 @@ describe('Swagger Plugin', function () {
       await plugin.hooks.express.handler(mockGasket, mockApp);
       expect(mockApp.use.mock.calls[0][0]).toEqual('/api-docs');
     });
+
+    it('logs warning and skips when openapi is set', async function () {
+      mockGasket.config.swagger.openapi = { info: { title: 'Test', version: '1.0.0' } };
+      await plugin.hooks.express.handler(mockGasket, mockApp);
+      expect(mockGasket.logger.warn).toHaveBeenCalledWith(
+        'swagger.openapi is only supported with Fastify. Skipping Express Swagger UI setup.'
+      );
+      expect(mockApp.use).not.toHaveBeenCalled();
+    });
   });
 
   describe('fastify hook', function () {
@@ -203,7 +219,8 @@ describe('Swagger Plugin', function () {
       mockGasket = {
         logger: {
           info: vi.fn(),
-          error: vi.fn()
+          error: vi.fn(),
+          warn: vi.fn()
         },
         config: {
           root: '/path/to/app',
@@ -264,6 +281,37 @@ describe('Swagger Plugin', function () {
       expect(mockApp.register).toHaveBeenCalledWith(expect.any(Function), {
         swagger: undefined
       });
+    });
+
+    it('registers @fastify/swagger with openapi config when openapi is set', async function () {
+      const openapi = { info: { title: 'Test API', version: '1.0.0' } };
+      mockGasket.config.swagger.openapi = openapi;
+      await plugin.hooks.fastify.handler(mockGasket, mockApp);
+      expect(mockApp.register).toHaveBeenCalledWith(expect.any(Function), { openapi });
+    });
+
+    it('does not load swagger spec file when openapi is set', async function () {
+      mockGasket.config.swagger.openapi = { info: { title: 'Test API', version: '1.0.0' } };
+      await plugin.hooks.fastify.handler(mockGasket, mockApp);
+      expect(mockAccessStub).not.toHaveBeenCalled();
+      expect(mockReadFileStub).not.toHaveBeenCalled();
+    });
+
+    it('still registers @fastify/swagger-ui with apiDocsRoute when openapi is set', async function () {
+      mockGasket.config.swagger.openapi = { info: { title: 'Test API', version: '1.0.0' } };
+      await plugin.hooks.fastify.handler(mockGasket, mockApp);
+      expect(mockApp.register).toHaveBeenCalledWith(expect.any(Function), {
+        routePrefix: '/api-docs'
+      });
+    });
+
+    it('openapi takes precedence when both openapi and definitionFile are set', async function () {
+      const openapi = { info: { title: 'Test API', version: '1.0.0' } };
+      mockGasket.config.swagger.openapi = openapi;
+      mockGasket.config.swagger.definitionFile = 'swagger.json';
+      await plugin.hooks.fastify.handler(mockGasket, mockApp);
+      expect(mockApp.register).toHaveBeenCalledWith(expect.any(Function), { openapi });
+      expect(mockAccessStub).not.toHaveBeenCalled();
     });
   });
 });
