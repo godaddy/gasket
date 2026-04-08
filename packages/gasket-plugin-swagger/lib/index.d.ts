@@ -32,6 +32,14 @@ type SwaggerOptions = {
    * supported.
    */
   uiOptions?: FastifySwaggerUiOptions
+
+  /**
+   * OpenAPI spec object for runtime route introspection (Fastify only).
+   * When set, @fastify/swagger discovers routes automatically and the
+   * static definitionFile is not used. Accepts an OpenAPI 3.x document
+   * object (info, components, security, etc.).
+   */
+  openapi?: Record<string, unknown>
 }
 
 declare module '@gasket/core' {

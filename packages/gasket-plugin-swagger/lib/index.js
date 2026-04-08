@@ -64,15 +64,25 @@ const plugin = {
       return baseConfig;
     },
     async build(gasket) {
-      await buildSwaggerDefinition(gasket, {});
+      const { swagger = {} } = gasket.config;
+      if (!swagger.openapi) {
+        await buildSwaggerDefinition(gasket, {});
+      }
     },
     express: {
       timing: {
         before: ['@gasket/plugin-nextjs']
       },
       handler: async function express(gasket, app) {
-        const swaggerUi = await import('swagger-ui-express');
         const { swagger, root } = gasket.config;
+        const { openapi } = swagger;
+
+        if (openapi) {
+          gasket.logger.warn('swagger.openapi is only supported with Fastify. Skipping Express Swagger UI setup.');
+          return;
+        }
+
+        const swaggerUi = await import('swagger-ui-express');
         const { ui = {}, apiDocsRoute, definitionFile } = swagger;
 
         const swaggerSpec = await loadSwaggerSpec(
@@ -90,24 +100,23 @@ const plugin = {
     },
     fastify: {
       timing: {
-        before: ['@gasket/plugin-nextjs']
+        first: true
       },
       handler: async function fastify(gasket, app) {
-        const { swagger, root } = gasket.config;
-        const { uiOptions = {}, apiDocsRoute = '/api-docs', definitionFile } = swagger;
-
-        const swaggerSpec = await loadSwaggerSpec(
-          root,
-          definitionFile,
-          gasket.logger
-        );
+        const { swagger } = gasket.config;
+        const { uiOptions = {}, apiDocsRoute = '/api-docs', openapi } = swagger;
 
         const fastifySwagger = await import('@fastify/swagger');
         const fastifySwaggerUi = await import('@fastify/swagger-ui');
 
-        await app.register(fastifySwagger.default, {
-          swagger: swaggerSpec
-        });
+        if (openapi) {
+          await app.register(fastifySwagger.default, { openapi });
+        } else {
+          const { root } = gasket.config;
+          const { definitionFile } = swagger;
+          const swaggerSpec = await loadSwaggerSpec(root, definitionFile, gasket.logger);
+          await app.register(fastifySwagger.default, { swagger: swaggerSpec });
+        }
 
         await app.register(fastifySwaggerUi.default, {
           routePrefix: apiDocsRoute,
@@ -187,6 +196,12 @@ const plugin = {
             name: 'swagger.ui',
             link: 'README.md#configuration',
             description: 'Optional custom UI options',
+            type: 'object'
+          },
+          {
+            name: 'swagger.openapi',
+            link: 'README.md#configuration',
+            description: 'OpenAPI spec object for runtime route introspection (Fastify only). When set, the static definitionFile is not used.',
             type: 'object'
           }
         ]
