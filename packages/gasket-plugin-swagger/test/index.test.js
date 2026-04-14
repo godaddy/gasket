@@ -33,6 +33,15 @@ vi.mock('util', () => {
   };
 });
 
+const mockSwaggerUiServe = vi.fn();
+const mockSwaggerUiSetup = vi.fn().mockReturnValue(vi.fn());
+vi.mock('swagger-ui-express', () => ({
+  default: {
+    serve: mockSwaggerUiServe,
+    setup: mockSwaggerUiSetup
+  }
+}));
+
 vi.mock('/path/to/app/swagger.json', () => ({ data: true }), {
   virtual: true
 });
@@ -88,10 +97,21 @@ describe('Swagger Plugin', function () {
       const results = plugin.hooks.configure({}, {});
       expect(results).toEqual({
         swagger: {
+          mode: 'static',
           definitionFile: 'swagger.json',
           apiDocsRoute: '/api-docs'
         }
       });
+    });
+
+    it('defaults mode to "static" when not specified', function () {
+      const results = plugin.hooks.configure({}, { swagger: {} });
+      expect(results.swagger.mode).toEqual('static');
+    });
+
+    it('preserves mode when explicitly set', function () {
+      const results = plugin.hooks.configure({}, { swagger: { mode: 'introspect' } });
+      expect(results.swagger.mode).toEqual('introspect');
     });
 
     it('uses specified definitionFile', function () {
@@ -129,10 +149,16 @@ describe('Swagger Plugin', function () {
       expect(mockBuildSwaggerDefinition).toHaveBeenCalled();
     });
 
-    it('skips buildSwaggerDefinition when openapi is set', async function () {
-      mockGasket.config.swagger.openapi = { info: { title: 'Test', version: '1.0.0' } };
+    it('skips buildSwaggerDefinition when mode is introspect', async function () {
+      mockGasket.config.swagger.mode = 'introspect';
       await plugin.hooks.build(mockGasket);
       expect(mockBuildSwaggerDefinition).not.toHaveBeenCalled();
+    });
+
+    it('runs buildSwaggerDefinition when mode is static', async function () {
+      mockGasket.config.swagger.mode = 'static';
+      await plugin.hooks.build(mockGasket);
+      expect(mockBuildSwaggerDefinition).toHaveBeenCalled();
     });
   });
 
@@ -204,13 +230,23 @@ describe('Swagger Plugin', function () {
       expect(mockApp.use.mock.calls[0][0]).toEqual('/api-docs');
     });
 
-    it('logs warning and skips when openapi is set', async function () {
-      mockGasket.config.swagger.openapi = { info: { title: 'Test', version: '1.0.0' } };
+    it('logs warning and skips when mode is introspect', async function () {
+      mockGasket.config.swagger.mode = 'introspect';
       await plugin.hooks.express.handler(mockGasket, mockApp);
       expect(mockGasket.logger.warn).toHaveBeenCalledWith(
-        'swagger.openapi is only supported with Fastify. Skipping Express Swagger UI setup.'
+        'swagger.mode "introspect" is only supported with Fastify. ' +
+        'Skipping Swagger UI for Express. To use Swagger with Express, use mode "static".'
       );
       expect(mockApp.use).not.toHaveBeenCalled();
+    });
+
+    it('logs warning when swagger.spec is set in static mode', async function () {
+      mockGasket.config.swagger.spec = { info: { title: 'Test', version: '1.0.0' } };
+      await plugin.hooks.express.handler(mockGasket, mockApp);
+      expect(mockGasket.logger.warn).toHaveBeenCalledWith(
+        'swagger.spec is only used when swagger.mode is "introspect". ' +
+        'It has no effect in static mode.'
+      );
     });
   });
 
@@ -285,35 +321,70 @@ describe('Swagger Plugin', function () {
       });
     });
 
-    it('registers @fastify/swagger with openapi config when openapi is set', async function () {
-      const openapi = { info: { title: 'Test API', version: '1.0.0' } };
-      mockGasket.config.swagger.openapi = openapi;
+    it('introspect mode: registers @fastify/swagger with openapi key when no version in spec', async function () {
+      mockGasket.config.swagger.mode = 'introspect';
+      const spec = { info: { title: 'Test API', version: '1.0.0' } };
+      mockGasket.config.swagger.spec = spec;
       await plugin.hooks.fastify.handler(mockGasket, mockApp);
-      expect(mockApp.register).toHaveBeenCalledWith(expect.any(Function), { openapi });
+      expect(mockApp.register).toHaveBeenCalledWith(expect.any(Function), { openapi: spec });
     });
 
-    it('does not load swagger spec file when openapi is set', async function () {
-      mockGasket.config.swagger.openapi = { info: { title: 'Test API', version: '1.0.0' } };
+    it('introspect mode: registers with empty spec object when swagger.spec is not set', async function () {
+      mockGasket.config.swagger.mode = 'introspect';
+      await plugin.hooks.fastify.handler(mockGasket, mockApp);
+      expect(mockApp.register).toHaveBeenCalledWith(expect.any(Function), { openapi: {} });
+    });
+
+    it('introspect mode: uses swagger key when spec.swagger is set (Swagger 2.0)', async function () {
+      mockGasket.config.swagger.mode = 'introspect';
+      const spec = { swagger: '2.0', info: { title: 'Test API', version: '1.0.0' } };
+      mockGasket.config.swagger.spec = spec;
+      await plugin.hooks.fastify.handler(mockGasket, mockApp);
+      expect(mockApp.register).toHaveBeenCalledWith(expect.any(Function), { swagger: spec });
+    });
+
+    it('introspect mode: does not load swagger spec file', async function () {
+      mockGasket.config.swagger.mode = 'introspect';
       await plugin.hooks.fastify.handler(mockGasket, mockApp);
       expect(mockAccessStub).not.toHaveBeenCalled();
       expect(mockReadFileStub).not.toHaveBeenCalled();
     });
 
-    it('still registers @fastify/swagger-ui with apiDocsRoute when openapi is set', async function () {
-      mockGasket.config.swagger.openapi = { info: { title: 'Test API', version: '1.0.0' } };
+    it('introspect mode: still registers @fastify/swagger-ui with apiDocsRoute', async function () {
+      mockGasket.config.swagger.mode = 'introspect';
       await plugin.hooks.fastify.handler(mockGasket, mockApp);
       expect(mockApp.register).toHaveBeenCalledWith(expect.any(Function), {
         routePrefix: '/api-docs'
       });
     });
 
-    it('openapi takes precedence when both openapi and definitionFile are set', async function () {
-      const openapi = { info: { title: 'Test API', version: '1.0.0' } };
-      mockGasket.config.swagger.openapi = openapi;
-      mockGasket.config.swagger.definitionFile = 'swagger.json';
+    it('introspect mode: warns when jsdoc is also set', async function () {
+      mockGasket.config.swagger.mode = 'introspect';
+      mockGasket.config.swagger.jsdoc = { definition: { info: { title: 'Test', version: '1.0.0' } } };
       await plugin.hooks.fastify.handler(mockGasket, mockApp);
-      expect(mockApp.register).toHaveBeenCalledWith(expect.any(Function), { openapi });
-      expect(mockAccessStub).not.toHaveBeenCalled();
+      expect(mockGasket.logger.warn).toHaveBeenCalledWith(
+        'swagger.jsdoc is ignored when swagger.mode is "introspect". ' +
+        'Route introspection discovers routes automatically.'
+      );
+    });
+
+    it('logs warning when swagger.spec is set in static mode', async function () {
+      mockGasket.config.swagger.spec = { info: { title: 'Test', version: '1.0.0' } };
+      await plugin.hooks.fastify.handler(mockGasket, mockApp);
+      expect(mockGasket.logger.warn).toHaveBeenCalledWith(
+        'swagger.spec is only used when swagger.mode is "introspect". ' +
+        'It has no effect in static mode.'
+      );
+    });
+
+    it('static mode: uses openapi key when loaded file has openapi property (OpenAPI 3.x)', async function () {
+      const openapiSpec = { openapi: '3.0.0', info: { title: 'Test', version: '1.0.0' } };
+      mockYamlSafeLoadStub.mockReturnValueOnce(openapiSpec);
+      mockGasket.config.swagger.definitionFile = 'swagger.yaml';
+      await plugin.hooks.fastify.handler(mockGasket, mockApp);
+      expect(mockApp.register).toHaveBeenCalledWith(expect.any(Function), {
+        openapi: openapiSpec
+      });
     });
   });
 

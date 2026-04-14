@@ -27,16 +27,31 @@ export default makeGasket({
 ## Configuration
 
 - **`swagger`** - (object) The base gasket.config object.
+  - **`mode`** - (string) `'static'` (default) or `'introspect'`. Controls how the API spec is produced. See [Modes](#modes) below.
   - **`definitionFile`** - (string) Target swagger spec file, either json or
     yaml. (Default: `'swagger.json'`)
   - **`apiDocsRoute`** - (string) Route to Swagger UI (Default: `'/api-docs'`)
   - **`jsdoc`** - (object) If set, the definitionFile will be generated based on
     JSDocs in the configured files. See the [swagger-jsdocs] options for what is
-    supported.
+    supported. Ignored when `mode` is `'introspect'`.
   - **`ui`** - (object) Optional custom UI options. See
     [swagger-ui-express] options for what is supported.
   - **`uiOptions`** - (object) Optional custom UI options. Only for use with Fastify. See [@fastify/swagger-ui] options for what is supported.
-  - **`openapi`** - (object) OpenAPI spec object for runtime route introspection (Fastify only). When set, routes are discovered automatically and the `definitionFile` is not used.
+  - **`spec`** - (object) Base metadata for introspect mode (info, components, security, servers, etc.). Ignored when `mode` is `'static'`. The output format is auto-detected from the spec content: if `spec.swagger` is present, Swagger 2.0 output is used; otherwise OpenAPI 3.x is the default.
+
+## Modes
+
+### `static` (default)
+
+Serves a pre-built definition file. Compatible with both Express and Fastify. All existing apps use this mode automatically — no config change needed.
+
+The output format is auto-detected from the loaded file: if the file has an `openapi` key, it is served as OpenAPI 3.x; otherwise Swagger 2.0 is assumed.
+
+### `introspect` (Fastify only)
+
+`@fastify/swagger` discovers your routes automatically via its `onRoute` hook. No definition file is built or loaded. The `spec` property provides base metadata (title, version, security schemes, etc.).
+
+The output format is auto-detected from `spec` content: if `spec.swagger` is set, Swagger 2.0 output is produced; otherwise OpenAPI 3.x is used (the default).
 
 #### Example from JSDocs
 
@@ -109,18 +124,21 @@ export default makeGasket({
 });
 ```
 
-#### Example with OpenAPI (Fastify)
+#### Example with introspect mode (Fastify)
 
-For Fastify apps using TypeBox or other schema providers, set the `openapi`
-option to enable runtime route introspection. Routes are discovered
-automatically — no definition file or JSDocs needed.
+For Fastify apps using TypeBox or other schema providers, set `mode: 'introspect'`
+to enable runtime route introspection. Routes are discovered automatically —
+no definition file or JSDocs needed.
+
+Output defaults to OpenAPI 3.x. Pass `spec.swagger: '2.0'` to produce Swagger 2.0 output instead.
 
 ```js
 // gasket.js
 
 export default makeGasket({
   swagger: {
-    openapi: {
+    mode: 'introspect',
+    spec: {
       info: {
         title: 'My API',
         version: '1.0.0'

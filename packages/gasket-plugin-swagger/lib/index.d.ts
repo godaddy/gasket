@@ -34,12 +34,21 @@ type SwaggerOptions = {
   uiOptions?: FastifySwaggerUiOptions
 
   /**
-   * OpenAPI spec object for runtime route introspection (Fastify only).
-   * When set, @fastify/swagger discovers routes automatically and the
-   * static definitionFile is not used. Accepts an OpenAPI 3.x document
-   * object (info, components, security, etc.).
+   * Selects the documentation mode.
+   * - "static" (default): serves a pre-built definition file (swagger.json / swagger.yaml).
+   *   Compatible with both Express and Fastify. All existing apps use this mode automatically.
+   * - "introspect": Fastify only. @fastify/swagger discovers routes automatically via its
+   *   onRoute hook. No definition file is built or loaded.
    */
-  openapi?: Record<string, unknown>
+  mode?: 'static' | 'introspect'
+
+  /**
+   * Base metadata for introspect mode (info, components, security, servers, etc.).
+   * Ignored when mode is "static".
+   * Format is auto-detected from content: if spec.swagger is present, Swagger 2.0
+   * output is produced; otherwise OpenAPI 3.x is used (the default).
+   */
+  spec?: Record<string, unknown>
 }
 
 declare module '@gasket/core' {
