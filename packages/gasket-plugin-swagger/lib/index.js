@@ -58,7 +58,6 @@ const plugin = {
 
       baseConfig.swagger = {
         ...swagger,
-        mode: swagger.mode || 'static',
         definitionFile: swagger.definitionFile || 'swagger.json',
         apiDocsRoute: swagger.apiDocsRoute || '/api-docs'
       };
@@ -66,7 +65,7 @@ const plugin = {
     },
     async build(gasket) {
       const { swagger = {} } = gasket.config;
-      if (swagger.mode !== 'introspect') {
+      if (!swagger.introspect) {
         await buildSwaggerDefinition(gasket, {});
       }
     },
@@ -77,19 +76,12 @@ const plugin = {
       handler: async function express(gasket, app) {
         const { swagger, root } = gasket.config;
 
-        if (swagger.mode === 'introspect') {
+        if (swagger.introspect) {
           gasket.logger.warn(
-            'swagger.mode "introspect" is only supported with Fastify. ' +
-            'Skipping Swagger UI for Express. To use Swagger with Express, use mode "static".'
+            'swagger.introspect is only supported with Fastify. ' +
+            'Skipping Swagger UI for Express. To use Swagger with Express, remove swagger.introspect.'
           );
           return;
-        }
-
-        if (swagger.spec) {
-          gasket.logger.warn(
-            'swagger.spec is only used when swagger.mode is "introspect". ' +
-            'It has no effect in static mode.'
-          );
         }
 
         const swaggerUi = await import('swagger-ui-express');
@@ -112,34 +104,51 @@ const plugin = {
       timing: {
         first: true
       },
-      // eslint-disable-next-line max-statements
+      // eslint-disable-next-line max-statements, complexity
       handler: async function fastify(gasket, app) {
         const { swagger } = gasket.config;
-        const { uiOptions = {}, apiDocsRoute = '/api-docs' } = swagger;
+        const { uiOptions = {}, apiDocsRoute } = swagger;
 
         const fastifySwagger = await import('@fastify/swagger');
         const fastifySwaggerUi = await import('@fastify/swagger-ui');
 
-        if (swagger.spec && swagger.mode !== 'introspect') {
-          gasket.logger.warn(
-            'swagger.spec is only used when swagger.mode is "introspect". ' +
-            'It has no effect in static mode.'
-          );
-        }
-
-        if (swagger.mode === 'introspect') {
+        if (swagger.introspect) {
+          if (typeof swagger.introspect !== 'object' || Array.isArray(swagger.introspect)) {
+            throw new Error('swagger.introspect must be a plain object');
+          }
           // Introspect: @fastify/swagger discovers routes via onRoute hook.
-          // swagger.spec provides base metadata (info, security, etc.) but no file is loaded.
-          // Defaults to OpenAPI 3.x; set spec.swagger to produce Swagger 2.0 output instead.
+          // swagger.introspect provides base metadata (info, security, etc.) but no file is loaded.
+          // Defaults to OpenAPI 3.x; set introspect.swagger to produce Swagger 2.0 output instead.
           if (swagger.jsdoc) {
             gasket.logger.warn(
-              'swagger.jsdoc is ignored when swagger.mode is "introspect". ' +
+              'swagger.jsdoc is ignored when swagger.introspect is set. ' +
               'Route introspection discovers routes automatically.'
             );
           }
-          const spec = swagger.spec ?? {};
-          const specKey = spec.swagger ? 'swagger' : 'openapi';
-          await app.register(fastifySwagger.default, { [specKey]: spec });
+          const { routes, ...introspectMeta } = swagger.introspect;
+          const specKey = introspectMeta.swagger ? 'swagger' : 'openapi';
+          const { include, exclude } = routes || {};
+          const warnNoSlash = (arr, field) => arr?.forEach(p => {
+            if (!p.startsWith('/')) {
+              gasket.logger.warn(
+                `swagger.introspect.routes.${field} entry "${p}" does not start with "/" ` +
+                'and will never match a Fastify route URL.'
+              );
+            }
+          });
+          warnNoSlash(include, 'include');
+          warnNoSlash(exclude, 'exclude');
+          const swaggerOptions = {
+            [specKey]: introspectMeta,
+            ...(include || exclude) && {
+              transform({ schema, url }) {
+                const included = !include || include.some(p => url.startsWith(p));
+                const excluded = exclude && exclude.some(p => url.startsWith(p));
+                return (included && !excluded) ? { schema, url } : { schema: { hide: true }, url };
+              }
+            }
+          };
+          await app.register(fastifySwagger.default, swaggerOptions);
         } else {
           // Static: load the pre-built definition file and serve it as-is.
           // Format auto-detected from file content: openapi key → 3.x, otherwise Swagger 2.0.
@@ -188,6 +197,7 @@ const plugin = {
 
       context.readme
         .subHeading('Definitions')
+        // eslint-disable-next-line max-len
         .content('Use `@swagger` JSDocs to automatically generate the [swagger.json] spec file. Visit [swagger-jsdoc] for examples.')
         .link('swagger-jsdoc', 'https://github.com/Surnet/swagger-jsdoc/')
         .link('swagger.json', '/swagger.json');
@@ -231,20 +241,22 @@ const plugin = {
             type: 'object'
           },
           {
-            name: 'swagger.mode',
+            name: 'swagger.introspect',
             link: 'README.md#configuration',
             description:
-              'Set to "introspect" to enable Fastify route introspection. ' +
-              'Defaults to "static" for backward compatibility.',
-            type: 'string',
-            default: 'static'
+              'When set, enables Fastify route introspection via @fastify/swagger. ' +
+              'The object provides base metadata (info, security, servers, etc.). ' +
+              'Format auto-detected: introspect.swagger present means Swagger 2.0; otherwise OpenAPI 3.x.',
+            type: 'object'
           },
           {
-            name: 'swagger.spec',
+            name: 'swagger.introspect.routes',
             link: 'README.md#configuration',
             description:
-              'Base metadata for introspect mode. Ignored in static mode. ' +
-              'Format auto-detected: spec.swagger present means Swagger 2.0; otherwise OpenAPI 3.x.',
+              'Filter which routes appear in the spec via include/exclude prefix arrays. ' +
+              'Nested inside swagger.introspect — only applies to introspect mode. ' +
+              'include: show only routes whose URL starts with one of these prefixes. ' +
+              'exclude: hide routes whose URL starts with one of these prefixes.',
             type: 'object'
           }
         ]

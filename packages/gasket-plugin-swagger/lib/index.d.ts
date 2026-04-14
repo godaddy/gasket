@@ -34,21 +34,28 @@ type SwaggerOptions = {
   uiOptions?: FastifySwaggerUiOptions
 
   /**
-   * Selects the documentation mode.
-   * - "static" (default): serves a pre-built definition file (swagger.json / swagger.yaml).
-   *   Compatible with both Express and Fastify. All existing apps use this mode automatically.
-   * - "introspect": Fastify only. @fastify/swagger discovers routes automatically via its
-   *   onRoute hook. No definition file is built or loaded.
-   */
-  mode?: 'static' | 'introspect'
-
-  /**
-   * Base metadata for introspect mode (info, components, security, servers, etc.).
-   * Ignored when mode is "static".
-   * Format is auto-detected from content: if spec.swagger is present, Swagger 2.0
+   * When set, enables Fastify route introspection. The `@fastify/swagger` plugin discovers
+   * routes automatically via its onRoute hook — no definition file is built or loaded.
+   * The object provides base metadata (info, components, security, servers, etc.).
+   * Format is auto-detected from content: if introspect.swagger is present, Swagger 2.0
    * output is produced; otherwise OpenAPI 3.x is used (the default).
+   *
+   * Use `routes` inside this object to filter which routes appear in the generated spec.
+   * - `routes.include`: show only routes whose URL starts with one of these prefixes.
+   * - `routes.exclude`: hide routes whose URL starts with one of these prefixes.
+   * A route must satisfy both conditions when both are set.
+   * @example
+   * introspect: { routes: { include: ['/api/v1'] }, info: { ... } }
+   * introspect: { routes: { exclude: ['/internal'] }, info: { ... } }
    */
-  spec?: Record<string, unknown>
+  introspect?: {
+    routes?: {
+      include?: string[];
+      exclude?: string[];
+    };
+    [key: string]: unknown;
+  }
+
 }
 
 declare module '@gasket/core' {
