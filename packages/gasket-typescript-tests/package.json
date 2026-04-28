@@ -80,7 +80,7 @@
     "@types/express": "^4.17.23",
     "@types/node": "^20.17.19",
     "create-gasket-app": "workspace:^",
-    "fastify": "^4.29.1",
+    "fastify": "^5.7.3",
     "redux": "^5.0.1",
     "vitest": "^3.2.0",
     "winston-transport": "^4.9.0",
