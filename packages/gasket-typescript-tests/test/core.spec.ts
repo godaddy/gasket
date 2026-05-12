@@ -7,6 +7,10 @@ declare module '@gasket/core' {
     example(str: string, num: number, bool: boolean): MaybeAsync<boolean>
   }
 
+  interface GasketActions {
+    exampleAction(value: string): number;
+  }
+
   interface GasketConfig {
     someConfigSection?: {
       foo: string;
@@ -71,6 +75,45 @@ describe('@gasket/core', () => {
           return true;
         }
       }
+    };
+  });
+
+  it('requires at least one of hooks or actions on a Plugin', () => {
+    const hooksOnly: Plugin = {
+      name: 'hooks-only',
+      hooks: {
+        example(gasket, a, b, c) {
+          return true;
+        }
+      }
+    };
+
+    const actionsOnly: Plugin = {
+      name: 'actions-only',
+      actions: {
+        exampleAction(gasket, value) {
+          return value.length;
+        }
+      }
+    };
+
+    const both: Plugin = {
+      name: 'both',
+      hooks: {
+        example(gasket, a, b, c) {
+          return true;
+        }
+      },
+      actions: {
+        exampleAction(gasket, value) {
+          return value.length;
+        }
+      }
+    };
+
+    // @ts-expect-error — neither hooks nor actions provided
+    const neither: Plugin = {
+      name: 'neither'
     };
   });
 

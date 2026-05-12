@@ -30,6 +30,9 @@ a prerequisite. The `hooks` map has a key for every event the plugin handles,
 with the values being either the function itself or an object specifying
 `timing` options and the `handler`.
 
+A plugin must define at least one of `hooks` or `actions` (see [Gasket Actions]).
+A plugin that only contributes actions can omit `hooks` entirely, and vice versa.
+
 ## Recommended naming convention
 
 It is recommended that the `name` property in plugins and presets adhere to the project-type prefixed naming convention.
@@ -199,3 +202,4 @@ versioned, published, and imported to your different apps.
 [here]:/packages/gasket-core/docs/gasket-engine.md
 [@gasket/plugin-docs]:/packages/gasket-plugin-docs/README.md
 [scoped packages]: https://docs.npmjs.com/about-scopes
+[Gasket Actions]:/docs/gasket-actions.md

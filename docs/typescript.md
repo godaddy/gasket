@@ -49,6 +49,8 @@ With TypeScript, these plugin hooks can be directly authored in `.ts` files usin
 
 The `@gasket/core` package exports a `Plugin` type which can be used to validate your plugin definitions. If your plugin introduces additional configuration properties or lifecycles, you should extend the `GasketConfig` and `HookExecTypes` interfaces. Useful helper types can also be found in `@gasket/core`.
 
+The `Plugin` type requires at least one of `hooks` or `actions`. The example below defines `hooks`; a plugin that only exposes actions can omit `hooks` and provide `actions` instead.
+
 ```typescript
 // my-plugin.ts
 import type {
