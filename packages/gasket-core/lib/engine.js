@@ -64,14 +64,15 @@ export class GasketEngine {
         throw new Error(`Plugin ${plugin.name} must be an object`);
       }
 
-      const { name, hooks } = plugin;
+      const { name, hooks, actions } = plugin;
 
       if (!name) throw new Error('Plugin must have a name');
-      if (!hooks) throw new Error(`Plugin (${name}) must have hooks`);
+      if (!hooks && !actions) throw new Error(`Plugin (${name}) must have hooks or actions`);
 
       // Add base metadata hook if not present
-      if (!hooks.metadata) {
-        hooks.metadata = async (_, metadata) => metadata;
+      plugin.hooks ??= {};
+      if (!plugin.hooks.metadata) {
+        plugin.hooks.metadata = async (_, metadata) => metadata;
       }
 
       acc[name] = plugin;
