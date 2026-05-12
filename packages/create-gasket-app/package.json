@@ -46,7 +46,7 @@
     "deepmerge": "^4.3.1",
     "diagnostics": "^2.0.2",
     "glob": "^13.0.1",
-    "handlebars": "^4.7.8",
+    "handlebars": "^4.7.9",
     "inquirer": "^6.5.2",
     "json5": "^2.2.3",
     "mkdirp": "^1.0.4",
