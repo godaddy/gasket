@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 7.0.9
+
+### Patch Changes
+
+- ea49a62: Upgrade dependencies
+
 ## 7.0.8
 
 ### Patch Changes

@@ -1,5 +1,22 @@
 # `create-gasket-app`
 
+## 7.4.22
+
+### Patch Changes
+
+- ea49a62: Upgrade dependencies
+- Updated dependencies [c2957ff]
+  - @gasket/core@7.7.5
+  - @gasket/plugin-command@7.6.6
+  - @gasket/plugin-docs@7.5.6
+  - @gasket/plugin-docusaurus@7.5.2
+  - @gasket/plugin-dynamic-plugins@7.5.2
+  - @gasket/plugin-git@7.4.10
+  - @gasket/plugin-logger@7.4.0
+  - @gasket/plugin-metadata@7.5.11
+  - @gasket/request@7.5.5
+  - @gasket/utils@7.6.6
+
 ## 7.4.21
 
 ### Patch Changes

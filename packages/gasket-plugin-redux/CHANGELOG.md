@@ -1,5 +1,11 @@
 # `@gasket/plugin-redux`
 
+## 7.4.5
+
+### Patch Changes
+
+- ea49a62: Upgrade dependencies
+
 ## 7.4.4
 
 ### Patch Changes
