@@ -24,19 +24,19 @@ We will continue to use the `scripts/align-packages.js` script for the following
 
 ## Commands
 
-[List issues](https://jamiemason.github.io/syncpack/command/list/)
+[List issues](https://syncpack.dev/command/list/)
 
 ```sh
 syncpack list
 ```
 
-[Fix auto-fixable issues](https://jamiemason.github.io/syncpack/command/fix-mismatches/)
+[Fix auto-fixable issues](https://syncpack.dev/command/fix/)
 
 ```sh
-syncpack fix-mismatches
+syncpack fix
 ```
 
-[Format package.json](https://jamiemason.github.io/syncpack/command/format/)
+[Format package.json](https://syncpack.dev/command/format/)
 
 ```sh
 syncpack format
