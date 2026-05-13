@@ -1,5 +1,11 @@
 # `@gasket/plugin-jest`
 
+## 7.5.10
+
+### Patch Changes
+
+- ea49a62: Upgrade dependencies
+
 ## 7.5.9
 
 ### Patch Changes

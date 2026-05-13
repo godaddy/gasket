@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-nextjs",
-  "version": "7.7.6",
+  "version": "7.7.7",
   "description": "Adds Next support to your application",
   "type": "module",
   "types": "lib/index.d.ts",
@@ -85,7 +85,7 @@
     "vitest": "^3.2.0"
   },
   "peerDependencies": {
-    "@gasket/plugin-webpack": "^7.4.0",
+    "@gasket/plugin-webpack": "^7.4.1",
     "next": ">=14",
     "react": ">=18",
     "react-dom": ">=18"

@@ -1,5 +1,12 @@
 # `@gasket/plugin-intl`
 
+## 7.6.6
+
+### Patch Changes
+
+- ea49a62: Upgrade dependencies
+  - @gasket/request@7.5.5
+
 ## 7.6.5
 
 ### Patch Changes
