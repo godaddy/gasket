@@ -142,10 +142,7 @@ export type Hook<Id extends HookId> = HookWithTimings<Id> | HookHandler<Id>;
  *    Plugin Definition   *
  * ----------------------- */
 
-/**
- * A Gasket plugin defines hooks, optional actions, and plugin metadata.
- */
-export type Plugin = {
+type PluginBase = {
   /** Plugin name (required) */
   name: string;
 
@@ -158,19 +155,21 @@ export type Plugin = {
   /** Optional dependency plugin names */
   dependencies?: Array<string>;
 
-  /** Lifecycle hooks this plugin implements */
-  hooks: {
-    [K in HookId]?: Hook<K>;
-  };
-
-  /** Optional actions this plugin can register */
-  actions?: {
-    [K in ActionId]?: ActionHandler<K>;
-  };
-
   /** Arbitrary plugin-specific metadata */
   metadata?: Record<string, any>;
 };
+
+type PluginHooks = { [K in HookId]?: Hook<K> };
+type PluginActions = { [K in ActionId]?: ActionHandler<K> };
+
+/**
+ * A Gasket plugin defines hooks and/or actions, plus plugin metadata.
+ * At least one of `hooks` or `actions` must be provided.
+ */
+export type Plugin = PluginBase & (
+  | { hooks: PluginHooks; actions?: PluginActions }
+  | { hooks?: PluginHooks; actions: PluginActions }
+);
 
 /**
  * Preset is a plugin without any actions defined.

@@ -1,5 +1,12 @@
 # `@gasket/core`
 
+## 7.7.5
+
+### Patch Changes
+
+- c2957ff: Adjust types to allow actions-only plugins
+  - @gasket/utils@7.6.6
+
 ## 7.7.4
 
 ### Patch Changes

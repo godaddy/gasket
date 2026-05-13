@@ -1,5 +1,11 @@
 # `@gasket/plugin-service-worker`
 
+## 7.5.2
+
+### Patch Changes
+
+- ea49a62: Upgrade dependencies
+
 ## 7.5.1
 
 ### Patch Changes

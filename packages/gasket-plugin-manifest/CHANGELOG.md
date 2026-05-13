@@ -1,5 +1,11 @@
 # `@gasket/plugin-manifest`
 
+## 7.3.10
+
+### Patch Changes
+
+- ea49a62: Upgrade dependencies
+
 ## 7.3.9
 
 ### Patch Changes

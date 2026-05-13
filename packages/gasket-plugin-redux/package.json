@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-redux",
-  "version": "7.4.4",
+  "version": "7.4.5",
   "description": "DEPRECATED Gasket Redux Setup",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -46,7 +46,7 @@
     "react-dom": "^19.2.4",
     "react-redux": "^9.2.0",
     "redux": "^5.0.1",
-    "webpack": "^5.98.0"
+    "webpack": "^5.104.1"
   },
   "deprecated": "Package deprecated and will be removed in future major release."
 }

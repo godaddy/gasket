@@ -33,7 +33,7 @@ export default function webpackConfigHook(gasket, webpackConfig, context) {
       ...webpackConfig,
       plugins: [
         ...(webpackConfig.plugins || []),
-        new BundleAnalyzerPlugin(analyzerOptions)
+        /** @type {any} */ (new BundleAnalyzerPlugin(analyzerOptions))
       ]
     };
   }

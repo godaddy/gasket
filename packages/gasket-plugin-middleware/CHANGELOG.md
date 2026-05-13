@@ -1,5 +1,11 @@
 # `@gasket/plugin-middleware`
 
+## 7.5.5
+
+### Patch Changes
+
+- ea49a62: Upgrade dependencies
+
 ## 7.5.4
 
 ### Patch Changes

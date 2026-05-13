@@ -1,5 +1,11 @@
 # `@gasket/plugin-swagger`
 
+## 7.4.2
+
+### Patch Changes
+
+- ea49a62: Upgrade dependencies
+
 ## 7.4.1
 
 ### Patch Changes

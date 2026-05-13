@@ -1,5 +1,11 @@
 # `@gasket/plugin-analyze`
 
+## 7.4.4
+
+### Patch Changes
+
+- ea49a62: Upgrade dependencies
+
 ## 7.4.3
 
 ### Patch Changes

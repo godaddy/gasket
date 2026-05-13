@@ -1,5 +1,13 @@
 # `@gasket/plugin-nextjs`
 
+## 7.7.7
+
+### Patch Changes
+
+- ea49a62: Upgrade dependencies
+- Updated dependencies [ea49a62]
+  - @gasket/plugin-webpack@7.4.1
+
 ## 7.7.6
 
 ### Patch Changes

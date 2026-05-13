@@ -1,5 +1,11 @@
 # @gasket/typescript-tests
 
+## 7.5.3
+
+### Patch Changes
+
+- ea49a62: Upgrade dependencies
+
 ## 7.5.2
 
 ### Patch Changes
