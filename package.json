@@ -99,7 +99,8 @@
   "packageManager": "pnpm@10.4.1",
   "pnpm": {
     "overrides": {
-      "react-json-view-lite": "^2.3.0"
+      "react-json-view-lite": "^2.3.0",
+      "webpackbar": "^7.0.0"
     }
   },
   "workspaces": [
