@@ -1,0 +1,55 @@
+name: Fallow
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+# Cancel in-flight fallow runs for the same PR
+concurrency:
+  group: fallow-${{ github.head_ref }}
+  cancel-in-progress: true
+
+jobs:
+  fallow:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          # Base ref must be present for `fallow audit --base` attribution
+          fetch-depth: 0
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Use Node.js 24.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.x
+          cache: pnpm
+
+      - name: Cache pnpm store
+        uses: actions/cache@v3
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-24-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-24-
+
+      - name: Install Dependencies
+        run: pnpm install --prefer-offline
+
+      - name: Fallow audit
+        # `github.base_ref` is the bare branch name (e.g. `next`) on pull_request
+        # events, which does not resolve in the checkout — only `origin/next` exists,
+        # so prefix with `origin/`. On manual workflow_dispatch it is empty; fall back
+        # to the default branch.
+        # Exit codes: 0 = no introduced error-severity issues, 1 = introduced
+        # error-severity issues (fail the PR), 2 = runtime error (e.g. bad base ref).
+        # JSON is printed for reviewer visibility; the exit code is the gate.
+        run: |
+          base="${{ github.base_ref }}"
+          base="origin/${base:-main}"
+          echo "Auditing against base ref: $base"
+          pnpm exec fallow audit --base "$base" --format json --quiet
