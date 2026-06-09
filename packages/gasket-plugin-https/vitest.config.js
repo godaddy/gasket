@@ -11,7 +11,13 @@ export default defineConfig({
       // Cover executable JS only; index.d.ts is type declarations with no
       // runtime to exercise. Matches the convention in sibling plugins.
       include: ['lib/**/*.js'],
-      exclude: ['**/node_modules/**', '**/test/**']
+      exclude: ['**/node_modules/**', '**/test/**'],
+      thresholds: {
+        statements: 80,
+        branches: 80,
+        functions: 80,
+        lines: 80
+      }
     }
   }
 });
