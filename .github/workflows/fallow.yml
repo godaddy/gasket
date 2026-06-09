@@ -9,6 +9,13 @@ concurrency:
   group: fallow-${{ github.head_ref || github.ref }}
   cancel-in-progress: true
 
+# Needed for the health-score step to post/update its PR comment. Read-only
+# otherwise. Note: on fork PRs GITHUB_TOKEN is read-only regardless, so the
+# comment no-ops there (the secure default — we do not use pull_request_target).
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   fallow:
     runs-on: ubuntu-latest
@@ -62,9 +69,40 @@ jobs:
         # so it reports even when the audit step above fails; `|| true` so a health
         # hiccup never changes the job outcome. Watch the grade climb as passive
         # cleanup drains existing findings.
+        id: health
         if: always()
         run: |
           score=$(pnpm exec fallow health --score --format json --quiet 2>/dev/null \
             | node -e "let d='';process.stdin.on('data',c=>d+=c).on('end',()=>{try{const h=JSON.parse(d).health_score;console.log(h.score+' ('+h.grade+')')}catch(e){console.log('unavailable')}})") || true
-          echo "Fallow health score: ${score:-unavailable}"
-          echo "**Fallow health score:** ${score:-unavailable}" >> "$GITHUB_STEP_SUMMARY"
+          score="${score:-unavailable}"
+          echo "Fallow health score: $score"
+          echo "**Fallow health score:** $score" >> "$GITHUB_STEP_SUMMARY"
+          echo "score=$score" >> "$GITHUB_OUTPUT"
+
+      - name: Comment health score on PR
+        # Sticky comment: one comment per PR, updated in place on every push (found
+        # by the hidden marker below). No-ops outside PRs and on fork PRs where
+        # GITHUB_TOKEN is read-only. Failure never affects the job outcome.
+        if: always() && github.event_name == 'pull_request'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+          SCORE: ${{ steps.health.outputs.score }}
+          SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          marker="<!-- fallow-health-score -->"
+          body="$marker
+          **Fallow health score:** ${SCORE:-unavailable}
+
+          <sub>Repo-wide score, reported for trend visibility — not a merge gate. Updated on each push (\`${SHA:0:7}\`).</sub>"
+
+          # Find an existing fallow-health comment by its marker; update it if
+          # present, otherwise create one. Keeps a single sticky comment per PR.
+          id=$(gh api "repos/${GITHUB_REPOSITORY}/issues/${PR}/comments" \
+            --jq "map(select(.body | contains(\"$marker\"))) | .[0].id // empty")
+          if [ -n "$id" ]; then
+            gh api --method PATCH "repos/${GITHUB_REPOSITORY}/issues/comments/${id}" -f body="$body"
+          else
+            gh api --method POST "repos/${GITHUB_REPOSITORY}/issues/${PR}/comments" -f body="$body"
+          fi
