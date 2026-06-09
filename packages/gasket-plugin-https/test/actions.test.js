@@ -177,76 +177,24 @@ describe('actions', () => {
       gasketAPI.execWaterfall.mockImplementation(() => Promise.resolve(gasketAPI.config));
     });
 
-    it('is output when the servers have been started', async () => {
-      gasketAPI.config = {
-        hostname: 'local.gasket.godaddy.com',
-        http: 8080
-      };
+    it.each([
+      ['is output when the servers have been started', { hostname: 'local.gasket.godaddy.com', http: 8080 }, /http:\/\/local\.gasket\.godaddy\.com:8080\//],
+      ['readable http log when port and hostname not configured', { http: true }, /http:\/\/localhost\//],
+      ['contains the configured hostname', { hostname: 'myapp.godaddy.com', https: { port: 8443 } }, /https:\/\/myapp\.godaddy\.com:8443\//],
+      ['contains the configured hostname for http2', { hostname: 'myapp.godaddy.com', http2: { port: 8443 } }, /https:\/\/myapp\.godaddy\.com:8443\//],
+      ['contains the configured port numbers', { hostname: 'local.gasket.godaddy.com', https: { port: 3000 } }, /https:\/\/local\.gasket\.godaddy\.com:3000\//],
+      ['readable https log when port and hostname not configured', { https: {} }, /https:\/\/localhost\//]
+    ])('%s', async (_name, config, expected) => {
+      gasketAPI.config = config;
 
       await startServer(gasketAPI);
       const logMessages = gasketAPI.logger.info.mock.calls.flat().map(message => message);
 
-      expect(logMessages[0]).toMatch(/http:\/\/local\.gasket\.godaddy\.com:8080\//);
+      expect(logMessages[0]).toMatch(expected);
     });
 
-    it('readable http log when port and hostname not configured', async () => {
-      gasketAPI.config = {
-        http: true
-      };
-
-      await startServer(gasketAPI);
-
-      const logMessages = gasketAPI.logger.info.mock.calls.flat().map(message => message);
-      expect(logMessages[0]).toMatch(/http:\/\/localhost\//);
-    });
-
-    it('contains the configured hostname', async () => {
-      gasketAPI.config = {
-        hostname: 'myapp.godaddy.com',
-        https: { port: 8443 }
-      };
-
-      await startServer(gasketAPI);
-
-      const logMessages = gasketAPI.logger.info.mock.calls.flat().map(message => message);
-      expect(logMessages[0]).toMatch(/https:\/\/myapp\.godaddy\.com:8443\//);
-    });
-
-    it('contains the configured hostname for http2', async () => {
-      gasketAPI.config = {
-        hostname: 'myapp.godaddy.com',
-        http2: { port: 8443 }
-      };
-
-      await startServer(gasketAPI);
-
-      const logMessages = gasketAPI.logger.info.mock.calls.flat().map(message => message);
-      expect(logMessages[0]).toMatch(/https:\/\/myapp\.godaddy\.com:8443\//);
-    });
-
-    it('contains the configured port numbers', async () => {
-      gasketAPI.config = {
-        hostname: 'local.gasket.godaddy.com',
-        https: { port: 3000 }
-      };
-
-      await startServer(gasketAPI);
-
-      const logMessages = gasketAPI.logger.info.mock.calls.flat().map(message => message);
-      expect(logMessages[0]).toMatch(/https:\/\/local\.gasket\.godaddy\.com:3000\//);
-    });
-
-    it('readable https log when port and hostname not configured', async () => {
-      gasketAPI.config = {
-        https: { }
-      };
-
-      await startServer(gasketAPI);
-
-      const logMessages = gasketAPI.logger.info.mock.calls.flat().map(message => message);
-      expect(logMessages[0]).toMatch(/https:\/\/localhost\//);
-    });
-
+    // Kept separate: this case overrides the execWaterfall mock to prove the
+    // logged URL comes from the createServers lifecycle result, not gasket.config.
     it('uses config from createServers lifecycle', async () => {
       gasketAPI.config = {
         hostname: 'local.gasket.godaddy.com',
