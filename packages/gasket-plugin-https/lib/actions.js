@@ -57,6 +57,50 @@ function logServersStarted(serverOpts, logger) {
 }
 
 /**
+ * Build the shared terminus options object used for every created server.
+ *
+ * It's possible that we are creating multiple servers that are going to hook
+ * into terminus. We want to eliminate the possibility of double lifecycle
+ * execution so we create a single options object used for all terminus-based
+ * instances. Lifecycles that could potentially be called multiple times are
+ * wrapped with a `one-time` function to ensure the callback only executes once.
+ * @param {import('@gasket/core').Gasket} gasket Gasket instance
+ * @param {import('@gasket/core').Gasket['logger']} logger Gasket logger
+ * @param {string[]} routes Healthcheck route paths
+ * @param {object} terminusDefaults Remaining terminus options to spread in
+ * @returns {object} Terminus options
+ */
+function buildTerminusOptions(gasket, logger, routes, terminusDefaults) {
+  /**
+   * Health check request handler
+   */
+  async function healthCheckRequested() {
+    await gasket.traceRoot().exec('healthcheck', HealthCheckError);
+  }
+
+  return {
+    logger: logger.error.bind(logger),
+    onSendFailureDuringShutdown: one(async function onSendFailureDuringShutdown() {
+      await gasket.exec('onSendFailureDuringShutdown');
+    }),
+    beforeShutdown: one(async function beforeShutdown() {
+      await gasket.exec('beforeShutdown');
+    }),
+    onSignal: one(async function onSignal() {
+      await gasket.exec('onSignal');
+    }),
+    onShutdown: one(async function onShutdown() {
+      await gasket.exec('onShutdown');
+    }),
+    healthChecks: routes.reduce((acc, cur) => {
+      acc[cur] = healthCheckRequested;
+      return acc;
+    }, {}),
+    ...terminusDefaults
+  };
+}
+
+/**
  * Gasket action: startServer
  * @param {import('@gasket/core').Gasket} gasket Gasket instance
  * @returns {Promise<void>} promise
@@ -93,45 +137,7 @@ async function startServer(gasket) {
     serverOpts.http = getPortFallback(env);
   }
 
-  /**
-   * Health check request handler
-   */
-  async function healthCheckRequested() {
-    await gasket.traceRoot().exec('healthcheck', HealthCheckError);
-  }
-
-  //
-  // It's possible that we are creating multiple servers that are going to hook
-  // into terminus. We want to eliminate the possibility of double lifecycle
-  // execution so we're going to create a single options object that is going
-  // to be used for all terminus based instances.
-  //
-  // Lifecycles that could potentially be called multiple times are wrapped
-  // with a `one-time` function to ensure that the callback is only executed
-  // once.
-  //
-  const terminusOpts = {
-    logger: logger.error.bind(logger),
-    onSendFailureDuringShutdown: one(
-      async function onSendFailureDuringShutdown() {
-        await gasket.exec('onSendFailureDuringShutdown');
-      }
-    ),
-    beforeShutdown: one(async function beforeShutdown() {
-      await gasket.exec('beforeShutdown');
-    }),
-    onSignal: one(async function onSignal() {
-      await gasket.exec('onSignal');
-    }),
-    onShutdown: one(async function onShutdown() {
-      await gasket.exec('onShutdown');
-    }),
-    healthChecks: routes.reduce((acc, cur) => {
-      acc[cur] = healthCheckRequested;
-      return acc;
-    }, {}),
-    ...terminusDefaults
-  };
+  const terminusOpts = buildTerminusOptions(gasket, logger, routes, terminusDefaults);
 
   create(serverOpts, async function created(errors, servers) {
     if (errors) {

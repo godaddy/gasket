@@ -94,82 +94,84 @@ describe('actions', () => {
     });
   });
 
-  it('does not create an HTTP server if `http` is `null`', async () => {
-    gasketAPI.config = {
-      hostname: 'local.gasket.godaddy.com',
-      http: null,
-      https: { port: 3000 }
-    };
+  describe('server creation', () => {
+    it('does not create an HTTP server if `http` is `null`', async () => {
+      gasketAPI.config = {
+        hostname: 'local.gasket.godaddy.com',
+        http: null,
+        https: { port: 3000 }
+      };
 
-    await startServer(gasketAPI);
-    const createServerOpts = mockCreateServersModule.mock.calls[mockCreateServersModule.mock.calls.length - 1][0];
-    expect(createServerOpts).not.toHaveProperty('http');
-    expect(createServerOpts).toHaveProperty('https');
-    expect(createServerOpts).not.toHaveProperty('http2');
-  });
+      await startServer(gasketAPI);
+      const createServerOpts = mockCreateServersModule.mock.calls[mockCreateServersModule.mock.calls.length - 1][0];
+      expect(createServerOpts).not.toHaveProperty('http');
+      expect(createServerOpts).toHaveProperty('https');
+      expect(createServerOpts).not.toHaveProperty('http2');
+    });
 
-  it('does not create an HTTPS server if `https` is `null`', async () => {
-    gasketAPI.config = {
-      hostname: 'local.gasket.godaddy.com',
-      http: 8080,
-      https: null
-    };
+    it('does not create an HTTPS server if `https` is `null`', async () => {
+      gasketAPI.config = {
+        hostname: 'local.gasket.godaddy.com',
+        http: 8080,
+        https: null
+      };
 
-    await startServer(gasketAPI);
+      await startServer(gasketAPI);
 
-    const createServerOpts = mockCreateServersModule.mock.calls[mockCreateServersModule.mock.calls.length - 1][0];
-    expect(createServerOpts).toHaveProperty('http');
-    expect(createServerOpts).not.toHaveProperty('https');
-    expect(createServerOpts).not.toHaveProperty('http2');
-  });
+      const createServerOpts = mockCreateServersModule.mock.calls[mockCreateServersModule.mock.calls.length - 1][0];
+      expect(createServerOpts).toHaveProperty('http');
+      expect(createServerOpts).not.toHaveProperty('https');
+      expect(createServerOpts).not.toHaveProperty('http2');
+    });
 
-  it('can create an http2 server', async () => {
-    gasketAPI.config = {
-      hostname: 'local.gasket.godaddy.com',
-      http2: 8080
-    };
+    it('can create an http2 server', async () => {
+      gasketAPI.config = {
+        hostname: 'local.gasket.godaddy.com',
+        http2: 8080
+      };
 
-    await startServer(gasketAPI);
+      await startServer(gasketAPI);
 
-    const createServerOpts = mockCreateServersModule.mock.calls[mockCreateServersModule.mock.calls.length - 1][0];
-    expect(createServerOpts).not.toHaveProperty('http');
-    expect(createServerOpts).not.toHaveProperty('https');
-    expect(createServerOpts).toHaveProperty('http2');
-  });
+      const createServerOpts = mockCreateServersModule.mock.calls[mockCreateServersModule.mock.calls.length - 1][0];
+      expect(createServerOpts).not.toHaveProperty('http');
+      expect(createServerOpts).not.toHaveProperty('https');
+      expect(createServerOpts).toHaveProperty('http2');
+    });
 
-  it('defaults HTTP server to port 80 if neither `http` or `https` or `http2`', async () => {
-    gasketAPI.config = {};
+    it('defaults HTTP server to port 80 if neither `http` or `https` or `http2`', async () => {
+      gasketAPI.config = {};
 
-    await startServer(gasketAPI);
+      await startServer(gasketAPI);
 
-    const createServerOpts = mockCreateServersModule.mock.calls[mockCreateServersModule.mock.calls.length - 1][0];
-    expect(createServerOpts).toHaveProperty('http', 80);
-    expect(createServerOpts).not.toHaveProperty('https');
-  });
+      const createServerOpts = mockCreateServersModule.mock.calls[mockCreateServersModule.mock.calls.length - 1][0];
+      expect(createServerOpts).toHaveProperty('http', 80);
+      expect(createServerOpts).not.toHaveProperty('https');
+    });
 
-  it('defaults HTTP server to port 8080 if env is local', async () => {
-    gasketAPI.config = {
-      env: 'local'
-    };
+    it('defaults HTTP server to port 8080 if env is local', async () => {
+      gasketAPI.config = {
+        env: 'local'
+      };
 
-    await startServer(gasketAPI);
+      await startServer(gasketAPI);
 
-    const createServerOpts = mockCreateServersModule.mock.calls[mockCreateServersModule.mock.calls.length - 1][0];
-    expect(createServerOpts).toHaveProperty('http', 8080);
-    expect(createServerOpts).not.toHaveProperty('https');
-  });
+      const createServerOpts = mockCreateServersModule.mock.calls[mockCreateServersModule.mock.calls.length - 1][0];
+      expect(createServerOpts).toHaveProperty('http', 8080);
+      expect(createServerOpts).not.toHaveProperty('https');
+    });
 
-  it('does not defaults HTTP port if configured', async () => {
-    gasketAPI.config = {
-      env: 'local',
-      http: 1234
-    };
+    it('does not defaults HTTP port if configured', async () => {
+      gasketAPI.config = {
+        env: 'local',
+        http: 1234
+      };
 
-    await startServer(gasketAPI);
+      await startServer(gasketAPI);
 
-    const createServerOpts = mockCreateServersModule.mock.calls[mockCreateServersModule.mock.calls.length - 1][0];
-    expect(createServerOpts).toHaveProperty('http', 1234);
-    expect(createServerOpts).not.toHaveProperty('https');
+      const createServerOpts = mockCreateServersModule.mock.calls[mockCreateServersModule.mock.calls.length - 1][0];
+      expect(createServerOpts).toHaveProperty('http', 1234);
+      expect(createServerOpts).not.toHaveProperty('https');
+    });
   });
 
   describe('success message', () => {
@@ -178,13 +180,37 @@ describe('actions', () => {
     });
 
     it.each([
-      ['is output when the servers have been started', { hostname: 'local.gasket.godaddy.com', http: 8080 }, /http:\/\/local\.gasket\.godaddy\.com:8080\//],
-      ['readable http log when port and hostname not configured', { http: true }, /http:\/\/localhost\//],
-      ['contains the configured hostname', { hostname: 'myapp.godaddy.com', https: { port: 8443 } }, /https:\/\/myapp\.godaddy\.com:8443\//],
-      ['contains the configured hostname for http2', { hostname: 'myapp.godaddy.com', http2: { port: 8443 } }, /https:\/\/myapp\.godaddy\.com:8443\//],
-      ['contains the configured port numbers', { hostname: 'local.gasket.godaddy.com', https: { port: 3000 } }, /https:\/\/local\.gasket\.godaddy\.com:3000\//],
-      ['readable https log when port and hostname not configured', { https: {} }, /https:\/\/localhost\//]
-    ])('%s', async (_name, config, expected) => {
+      {
+        name: 'is output when the servers have been started',
+        config: { hostname: 'local.gasket.godaddy.com', http: 8080 },
+        expected: /http:\/\/local\.gasket\.godaddy\.com:8080\//
+      },
+      {
+        name: 'readable http log when port and hostname not configured',
+        config: { http: true },
+        expected: /http:\/\/localhost\//
+      },
+      {
+        name: 'contains the configured hostname',
+        config: { hostname: 'myapp.godaddy.com', https: { port: 8443 } },
+        expected: /https:\/\/myapp\.godaddy\.com:8443\//
+      },
+      {
+        name: 'contains the configured hostname for http2',
+        config: { hostname: 'myapp.godaddy.com', http2: { port: 8443 } },
+        expected: /https:\/\/myapp\.godaddy\.com:8443\//
+      },
+      {
+        name: 'contains the configured port numbers',
+        config: { hostname: 'local.gasket.godaddy.com', https: { port: 3000 } },
+        expected: /https:\/\/local\.gasket\.godaddy\.com:3000\//
+      },
+      {
+        name: 'readable https log when port and hostname not configured',
+        config: { https: {} },
+        expected: /https:\/\/localhost\//
+      }
+    ])('$name', async ({ config, expected }) => {
       gasketAPI.config = config;
 
       await startServer(gasketAPI);
@@ -210,108 +236,112 @@ describe('actions', () => {
     });
   });
 
-  it('rejects with an Error on failure', async () => {
-    mockCreateServersModule.mockImplementation((_, fn) => {
-      const httpsError = errs.create({
-        message: 'Cert file not found',
-        code: 'something'
+  describe('server start errors', () => {
+    it('rejects with an Error on failure', async () => {
+      mockCreateServersModule.mockImplementation((_, fn) => {
+        const httpsError = errs.create({
+          message: 'Cert file not found',
+          code: 'something'
+        });
+
+        fn(
+          errs.create({
+            message: httpsError.message,
+            https: httpsError
+          })
+        );
       });
 
-      fn(
-        errs.create({
-          message: httpsError.message,
-          https: httpsError
-        })
-      );
+      await startServer(gasketAPI);
+
+      const expected = 'Failed to start the web servers: Cert file not found';
+      expect(gasketAPI.logger.error).toHaveBeenCalledWith(expected);
+      expect(mockDebugStub.mock.calls[0][0].message).toEqual(expected);
+      expect(mockDebugStub.mock.calls[0][1].https.message).toEqual('Cert file not found');
     });
 
-    await startServer(gasketAPI);
+    it('rejects with an Error about ports on failure (with http)', async () => {
+      mockCreateServersModule.mockImplementation((_, fn) => fn(
+        errs.create({
+          http: {
+            code: 'EADDRINUSE'
+          }
+        })
+      ));
 
-    const expected = 'Failed to start the web servers: Cert file not found';
-    expect(gasketAPI.logger.error).toHaveBeenCalledWith(expected);
-    expect(mockDebugStub.mock.calls[0][0].message).toEqual(expected);
-    expect(mockDebugStub.mock.calls[0][1].https.message).toEqual('Cert file not found');
+
+      await startServer(gasketAPI);
+
+      const expected = 'Port is already in use';
+      expect(gasketAPI.logger.error).toHaveBeenCalledWith(expect.stringContaining(expected));
+      expect(mockDebugStub.mock.calls[0][0].message).toMatch(expected);
+      expect(mockDebugStub.mock.calls[0][1].http.code).toEqual('EADDRINUSE');
+    });
+
+    it('rejects with an Error about ports on failure (with https)', async () => {
+      mockCreateServersModule.mockImplementation((_, fn) => fn(
+        errs.create({
+          https: {
+            code: 'EADDRINUSE'
+          }
+        })
+      ));
+
+      await startServer(gasketAPI);
+
+      expect(mockDebugStub.mock.calls[0][0].message).toMatch('Port is already in use');
+      expect(mockDebugStub.mock.calls[0][1].https.code).toEqual('EADDRINUSE');
+    });
+
+    it('rejects with an Error about ports on failure (with http2)', async () => {
+      mockCreateServersModule.mockImplementation((_, fn) => fn(
+        errs.create({
+          http2: {
+            code: 'EADDRINUSE'
+          }
+        })
+      ));
+
+      await startServer(gasketAPI);
+
+      expect(mockDebugStub.mock.calls[0][0].message).toMatch('Port is already in use');
+      expect(mockDebugStub.mock.calls[0][1].http2.code).toEqual('EADDRINUSE');
+    });
   });
 
-  it('rejects with an Error about ports on failure (with http)', async () => {
-    mockCreateServersModule.mockImplementation((_, fn) => fn(
-      errs.create({
-        http: {
-          code: 'EADDRINUSE'
-        }
-      })
-    ));
+  describe('preboot lifecycle', () => {
+    it('calls preboot', async () => {
+      await startServer(gasketAPI);
+      expect(gasketAPI.exec).toHaveBeenCalledWith('preboot');
+    });
 
+    it('waits for isReady before calling preboot', async () => {
+      let readyResolved = false;
+      gasketAPI.isReady = new Promise(resolve => setTimeout(() => {
+        readyResolved = true;
+        resolve();
+      }, 10));
 
-    await startServer(gasketAPI);
+      await startServer(gasketAPI);
 
-    const expected = 'Port is already in use';
-    expect(gasketAPI.logger.error).toHaveBeenCalledWith(expect.stringContaining(expected));
-    expect(mockDebugStub.mock.calls[0][0].message).toMatch(expected);
-    expect(mockDebugStub.mock.calls[0][1].http.code).toEqual('EADDRINUSE');
-  });
+      expect(readyResolved).toBe(true);
+      expect(gasketAPI.exec).toHaveBeenCalledWith('preboot');
+    });
 
-  it('rejects with an Error about ports on failure (with https)', async () => {
-    mockCreateServersModule.mockImplementation((_, fn) => fn(
-      errs.create({
-        https: {
-          code: 'EADDRINUSE'
-        }
-      })
-    ));
+    it('calls exec("preboot") exactly once', async () => {
+      await startServer(gasketAPI);
+      expect(gasketAPI.exec).toHaveBeenCalledWith('preboot');
+    });
 
-    await startServer(gasketAPI);
+    it('propagates errors from isReady', async () => {
+      gasketAPI.isReady = Promise.reject(new Error('fail'));
+      await expect(startServer(gasketAPI)).rejects.toThrow('fail');
+    });
 
-    expect(mockDebugStub.mock.calls[0][0].message).toMatch('Port is already in use');
-    expect(mockDebugStub.mock.calls[0][1].https.code).toEqual('EADDRINUSE');
-  });
-
-  it('rejects with an Error about ports on failure (with http2)', async () => {
-    mockCreateServersModule.mockImplementation((_, fn) => fn(
-      errs.create({
-        http2: {
-          code: 'EADDRINUSE'
-        }
-      })
-    ));
-
-    await startServer(gasketAPI);
-
-    expect(mockDebugStub.mock.calls[0][0].message).toMatch('Port is already in use');
-    expect(mockDebugStub.mock.calls[0][1].http2.code).toEqual('EADDRINUSE');
-  });
-
-  it('calls preboot', async () => {
-    await startServer(gasketAPI);
-    expect(gasketAPI.exec).toHaveBeenCalledWith('preboot');
-  });
-
-  it('waits for isReady before calling preboot', async () => {
-    let readyResolved = false;
-    gasketAPI.isReady = new Promise(resolve => setTimeout(() => {
-      readyResolved = true;
-      resolve();
-    }, 10));
-
-    await startServer(gasketAPI);
-
-    expect(readyResolved).toBe(true);
-    expect(gasketAPI.exec).toHaveBeenCalledWith('preboot');
-  });
-
-  it('calls exec("preboot") exactly once', async () => {
-    await startServer(gasketAPI);
-    expect(gasketAPI.exec).toHaveBeenCalledWith('preboot');
-  });
-
-  it('propagates errors from isReady', async () => {
-    gasketAPI.isReady = Promise.reject(new Error('fail'));
-    await expect(startServer(gasketAPI)).rejects.toThrow('fail');
-  });
-
-  it('propagates errors from exec("preboot")', async () => {
-    gasketAPI.exec = vi.fn().mockRejectedValue(new Error('preboot fail'));
-    await expect(startServer(gasketAPI)).rejects.toThrow('preboot fail');
+    it('propagates errors from exec("preboot")', async () => {
+      gasketAPI.exec = vi.fn().mockRejectedValue(new Error('preboot fail'));
+      await expect(startServer(gasketAPI)).rejects.toThrow('preboot fail');
+    });
   });
 
   describe('terminus', function () {
