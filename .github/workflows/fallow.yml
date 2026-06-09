@@ -6,7 +6,7 @@ on:
 
 # Cancel in-flight fallow runs for the same PR
 concurrency:
-  group: fallow-${{ github.head_ref }}
+  group: fallow-${{ github.head_ref || github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -44,12 +44,15 @@ jobs:
         # `github.base_ref` is the bare branch name (e.g. `next`) on pull_request
         # events, which does not resolve in the checkout — only `origin/next` exists,
         # so prefix with `origin/`. On manual workflow_dispatch it is empty; fall back
-        # to the default branch.
+        # to `next`, the branch PRs target.
+        # Passed via env (not inline `${{ }}` in the script) so the branch name can
+        # never be interpreted as shell.
         # Exit codes: 0 = no introduced error-severity issues, 1 = introduced
         # error-severity issues (fail the PR), 2 = runtime error (e.g. bad base ref).
         # JSON is printed for reviewer visibility; the exit code is the gate.
+        env:
+          BASE_REF: ${{ github.base_ref }}
         run: |
-          base="${{ github.base_ref }}"
-          base="origin/${base:-main}"
+          base="origin/${BASE_REF:-next}"
           echo "Auditing against base ref: $base"
           pnpm exec fallow audit --base "$base" --format json --quiet
