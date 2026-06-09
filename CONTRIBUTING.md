@@ -102,6 +102,46 @@ by the [Godaddy JS styleguide][style].
 
 Please ensure that all contributed code utilizes our defined type checking method outlined in our [Type Safety with JSDoc document].
 
+## Code Quality
+
+Pull requests run a [Fallow] gate that flags dead code, unused dependencies,
+duplication, and complexity. The gate is scoped to the changeset: it only fails
+on issues your PR *introduces*. Existing findings in files you didn't touch are
+reported as inherited and won't block you. Editing a file that already carries a
+finding pulls that finding into scope, so the repo cleans up gradually.
+
+### Suppressing false positives
+
+The plugin architecture (dynamic loading, generator templates) can produce false
+positives. Suppress them inline at the source:
+
+```js
+// fallow-ignore-next-line unused-export
+export const loadedAtRuntime = () => {};
+```
+
+```js
+// fallow-ignore-file unused-file
+```
+
+Suppress only genuine false positives, not real findings you'd rather not fix.
+
+### Manual cleanup
+
+Run the gate locally against your PR base, or scan and auto-fix the whole repo:
+
+```bash
+# Same check CI runs (use your PR's base branch)
+pnpm fallow audit --base origin/next
+
+# See all repo-wide findings
+pnpm fallow dead-code --summary
+
+# Auto-fix unused exports and dependencies (files/members stay manual)
+pnpm fallow fix --dry-run   # preview
+pnpm fallow fix --yes       # apply
+```
+
 ## Markdown Documentation
 
 Each package should have a `README.md`, with guides and other documents under a
@@ -237,6 +277,7 @@ This will trigger the CI to publish the packages to npm.
 - [JSDoc]
 
 [issues]: https://github.com/godaddy/gasket/issues
+[Fallow]: https://github.com/fallow-rs/fallow
 [JSDoc]: https://jsdoc.app/
 [npm]: http://npmjs.org/
 [style]: https://github.com/godaddy/javascript/#godaddy-style
