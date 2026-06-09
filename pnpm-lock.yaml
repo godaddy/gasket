@@ -110,9 +110,6 @@ importers:
       rimraf:
         specifier: ^6.1.2
         version: 6.1.3
-      search-insights:
-        specifier: ^2.17.3
-        version: 2.17.3
       syncpack:
         specifier: ^13.0.3
         version: 13.0.4(typescript@5.9.3)
@@ -192,9 +189,6 @@ importers:
       '@vitest/coverage-v8':
         specifier: ^3.2.0
         version: 3.2.6(vitest@3.2.6(@types/debug@4.1.13)(@types/node@20.19.42)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.48.0)(yaml@2.9.0))
-      dotenv:
-        specifier: ^16.4.7
-        version: 16.6.1
       vitest:
         specifier: ^3.2.0
         version: 3.2.6(@types/debug@4.1.13)(@types/node@20.19.42)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.48.0)(yaml@2.9.0)
@@ -476,9 +470,6 @@ importers:
       '@gasket/plugin-webpack':
         specifier: workspace:^
         version: link:../gasket-plugin-webpack
-      '@godaddy/dmd':
-        specifier: ^1.0.4
-        version: 1.0.4
       create-gasket-app:
         specifier: workspace:^
         version: link:../create-gasket-app
@@ -826,9 +817,6 @@ importers:
       '@gasket/plugin-webpack':
         specifier: workspace:^
         version: link:../gasket-plugin-webpack
-      '@godaddy/dmd':
-        specifier: ^1.0.4
-        version: 1.0.4
       create-gasket-app:
         specifier: workspace:^
         version: link:../create-gasket-app
@@ -991,9 +979,6 @@ importers:
       fastify:
         specifier: ^5.0.0
         version: 5.8.5
-      openapi-types:
-        specifier: ^12.1.3
-        version: 12.1.3
       vitest:
         specifier: ^3.2.0
         version: 3.2.6(@types/debug@4.1.13)(@types/node@20.19.42)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.48.0)(yaml@2.9.0)
@@ -1061,9 +1046,6 @@ importers:
       htmlescape:
         specifier: ^1.1.1
         version: 1.1.1
-      just-extend:
-        specifier: ^6.2.0
-        version: 6.2.0
     devDependencies:
       '@testing-library/react':
         specifier: ^16.3.0
@@ -1168,9 +1150,6 @@ importers:
       '@gasket/data':
         specifier: workspace:^
         version: link:../gasket-data
-      '@gasket/fetch':
-        specifier: workspace:^
-        version: link:../gasket-fetch
       '@gasket/intl':
         specifier: workspace:^
         version: link:../gasket-intl
@@ -1322,9 +1301,6 @@ importers:
       '@gasket/data':
         specifier: workspace:^
         version: link:../../packages/gasket-data
-      '@gasket/fetch':
-        specifier: workspace:^
-        version: link:../../packages/gasket-fetch
       '@gasket/intl':
         specifier: workspace:^
         version: link:../../packages/gasket-intl
@@ -3101,9 +3077,6 @@ packages:
     peerDependenciesMeta:
       typescript:
         optional: true
-
-  '@godaddy/dmd@1.0.4':
-    resolution: {integrity: sha512-f/Usjur8YE3gyko+fbBkFjQ5Q7j/uftPBuqHZPOGhT3pePe9X78HQixIKqvIM+C/Bwv70A+j3aV5t0N5yDkoTA==}
 
   '@godaddy/terminus@4.12.1':
     resolution: {integrity: sha512-Tm+wVu1/V37uZXcT7xOhzdpFoovQReErff8x3y82k6YyWa1gzxWBjTyrx4G2enjEqoXPnUUmJ3MOmwH+TiP6Sw==}
@@ -5621,10 +5594,6 @@ packages:
     resolution: {integrity: sha512-tE7ztYzXHIeyvc7N+hR3oi7FIbf/NIjVP9hmAt3yMXzrQ072/fpjGLx2GxNxGxUl5V73MEqYzioOMoVhGMJ5cA==}
     engines: {node: '>=10'}
 
-  dotenv@16.6.1:
-    resolution: {integrity: sha512-uBq4egWHTcTt33a72vpSG0z3HnPuIl6NqYcTrKEg2azoEyl2hpW0zqlxysq2pK9HlDIHyHyakeYaYnSAwd8bow==}
-    engines: {node: '>=12'}
-
   dunder-proto@1.0.1:
     resolution: {integrity: sha512-KIN/nDJBQRcXw0MLVhZE9iQHmG68qAVIBg9CqmUYjmQIhgij9U5MFvrqkUL5FbtyyzZuOeOt0zdeRe4UY7ct+A==}
     engines: {node: '>= 0.4'}
@@ -7227,9 +7196,6 @@ packages:
   jsx-ast-utils@3.3.5:
     resolution: {integrity: sha512-ZZow9HBI5O6EPgSJLUb8n2NKgmVWTwCvHGwFuJlMjvLFqlGG6pjirPhtdsseaLZjSibD8eegzmYpUZwoIlj2cQ==}
     engines: {node: '>=4.0'}
-
-  just-extend@6.2.0:
-    resolution: {integrity: sha512-cYofQu2Xpom82S6qD778jBDpwvvy39s1l/hrYij2u9AMdQcGRpaBu6kY4mVhuno5kJVi1DAz4aiphA2WI1/OAw==}
 
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
@@ -12976,8 +12942,6 @@ snapshots:
     optionalDependencies:
       typescript: 5.9.3
 
-  '@godaddy/dmd@1.0.4': {}
-
   '@godaddy/terminus@4.12.1':
     dependencies:
       stoppable: 1.1.0
@@ -15750,8 +15714,6 @@ snapshots:
     dependencies:
       is-obj: 2.0.0
 
-  dotenv@16.6.1: {}
-
   dunder-proto@1.0.1:
     dependencies:
       call-bind-apply-helpers: 1.0.2
@@ -17941,8 +17903,6 @@ snapshots:
       array.prototype.flat: 1.3.3
       object.assign: 4.1.7
       object.values: 1.2.1
-
-  just-extend@6.2.0: {}
 
   keyv@4.5.4:
     dependencies:
