@@ -3,6 +3,9 @@
   "duplicates": {
     "minOccurrences": 3
   },
+  "ignorePatterns": [
+    "**/generator/**"
+  ],
   "ignoreDependencies": [
     "@gasket/plugin-metadata"
   ]

@@ -110,10 +110,30 @@ on issues your PR *introduces*. Existing findings in files you didn't touch are
 reported as inherited and won't block you. Editing a file that already carries a
 finding pulls that finding into scope, so the repo cleans up gradually.
 
-### Suppressing false positives
+### Handling false positives
 
-The plugin architecture (dynamic loading, generator templates) can produce false
-positives. Suppress them inline at the source:
+A finding is usually real — fix it first. Only reach for suppression once you've
+confirmed the code is genuinely used and Fallow's static scan can't see it (the
+plugin architecture's dynamic loading and generator templates are the common
+cause).
+
+When a false positive is **structural** — a whole directory, a runtime-loaded
+pattern, or a recurring export shape — capture it once in `.fallowrc.json` rather
+than scattering inline comments:
+
+| Pattern | Config key |
+|---------|------------|
+| Files loaded at runtime, not statically imported | `dynamicallyLoaded` |
+| A directory Fallow shouldn't analyze (e.g. `generator/`) | `ignorePatterns` |
+| Exports consumed dynamically across many files | `ignoreExports` (glob + export names) |
+| Unused dependency (no comment syntax in `package.json`) | `ignoreDependencies` |
+
+`@gasket/plugin-metadata` is in `ignoreDependencies` because plugins consume it via
+a `/// <reference types="@gasket/plugin-metadata" />` directive, which Fallow's
+static scan does not count as a use.
+
+Inline suppression is the last resort, for a genuine one-off that no config rule
+generalizes:
 
 ```js
 // fallow-ignore-next-line unused-export
@@ -123,14 +143,6 @@ export const loadedAtRuntime = () => {};
 ```js
 // fallow-ignore-file unused-file
 ```
-
-Suppress only genuine false positives, not real findings you'd rather not fix.
-
-For unused-dependency false positives, inline comments don't work (`package.json`
-has no comment syntax) — add the package to `ignoreDependencies` in `.fallowrc.json`
-instead. `@gasket/plugin-metadata` is listed there because plugins consume it via
-a `/// <reference types="@gasket/plugin-metadata" />` directive, which Fallow's
-static scan does not count as a use.
 
 ### Manual cleanup
 

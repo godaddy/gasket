@@ -9,7 +9,7 @@ export default defineConfig({
       enabled: true,
       reporter: ['text', 'json', 'html', 'lcovonly'],
       // Cover executable JS only; index.d.ts is type declarations with no
-      // runtime to exercise. Matches the convention in sibling plugins.
+      // runtime to exercise.
       include: ['lib/**/*.js'],
       exclude: ['**/node_modules/**', '**/test/**'],
       thresholds: {
