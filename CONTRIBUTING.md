@@ -126,6 +126,12 @@ export const loadedAtRuntime = () => {};
 
 Suppress only genuine false positives, not real findings you'd rather not fix.
 
+For unused-dependency false positives, inline comments don't work (`package.json`
+has no comment syntax) — add the package to `ignoreDependencies` in `.fallowrc.json`
+instead. `@gasket/plugin-metadata` is listed there because plugins consume it via
+a `/// <reference types="@gasket/plugin-metadata" />` directive, which Fallow's
+static scan does not count as a use.
+
 ### Manual cleanup
 
 Run the gate locally against your PR base, or scan and auto-fix the whole repo:

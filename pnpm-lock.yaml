@@ -709,9 +709,6 @@ importers:
       '@vitest/coverage-v8':
         specifier: ^3.2.0
         version: 3.2.6(vitest@3.2.6(@types/debug@4.1.13)(@types/node@20.19.42)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.48.0)(yaml@2.9.0))
-      create-gasket-app:
-        specifier: workspace:^
-        version: link:../create-gasket-app
       vitest:
         specifier: ^3.2.0
         version: 3.2.6(@types/debug@4.1.13)(@types/node@20.19.42)(jiti@1.21.7)(jsdom@20.0.3)(terser@5.48.0)(yaml@2.9.0)
