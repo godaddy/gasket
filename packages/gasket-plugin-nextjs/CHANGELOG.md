@@ -1,5 +1,13 @@
 # `@gasket/plugin-nextjs`
 
+## 8.0.0-next.4
+
+### Patch Changes
+
+- dc01fac: remove middleware plugin
+- Updated dependencies [dc01fac]
+  - @gasket/plugin-webpack@8.0.0-next.2
+
 ## 8.0.0-next.3
 
 ### Patch Changes
