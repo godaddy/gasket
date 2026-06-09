@@ -8,6 +8,53 @@ import { getPortFallback, portInUseError, startProxy, getRawServerConfig } from 
 const debugLogger = debug('gasket:https');
 
 /**
+ * Log the create-servers failure, distinguishing port-in-use from other causes.
+ * @param {object} errors Errors received from create-servers
+ * @param {object} serverOpts Server options passed to create-servers
+ * @param {import('@gasket/core').Gasket['logger']} logger Gasket logger
+ */
+function logServerError(errors, serverOpts, logger) {
+  const message = portInUseError(errors)
+    ? 'Port is already in use. Please ensure you are not running the same process from another terminal!'
+    : `Failed to start the web servers: ${errors.message}`;
+  const errorMessage = errs.create({ message, serverOpts });
+
+  debugLogger(errorMessage, errors);
+  logger.error(errorMessage.message);
+}
+
+/**
+ * Resolve a server config's port into a `:NNNN` URL suffix (empty when unset).
+ * `http` may be a bare port number or a config object; https/http2 are always
+ * objects — `.port` on a number is harmlessly undefined.
+ * @param {number|object} server A server config value from serverOpts
+ * @returns {string} Port suffix for a URL, e.g. `:8080` or ``
+ */
+function portSuffix(server) {
+  const port = (typeof server === 'number' ? server : server.port) ?? '';
+  return port ? `:${port}` : '';
+}
+
+/**
+ * Log the started-server URLs, one line per protocol that was created.
+ * http and https/http2 are reported separately because they map to different
+ * URL schemes; https and http2 share the `https://` scheme.
+ * @param {object} serverOpts Server options passed to create-servers
+ * @param {import('@gasket/core').Gasket['logger']} logger Gasket logger
+ */
+function logServersStarted(serverOpts, logger) {
+  const { http: _http, https: _https, http2: _http2, hostname = 'localhost' } = serverOpts;
+
+  if (_http) {
+    logger.info(`Server started at http://${hostname}${portSuffix(_http)}/`);
+  }
+
+  if (_https || _http2) {
+    logger.info(`Server started at https://${hostname}${portSuffix(_https ?? _http2)}/`);
+  }
+}
+
+/**
  * Gasket action: startServer
  * @param {import('@gasket/core').Gasket} gasket Gasket instance
  * @returns {Promise<void>} promise
@@ -84,26 +131,9 @@ async function startServer(gasket) {
     ...terminusDefaults
   };
 
-  // eslint-disable-next-line max-statements
   create(serverOpts, async function created(errors, servers) {
     if (errors) {
-      let errorMessage;
-
-      if (portInUseError(errors)) {
-        errorMessage = errs.create({
-          message:
-            'Port is already in use. Please ensure you are not running the same process from another terminal!',
-          serverOpts
-        });
-      } else {
-        errorMessage = errs.create({
-          message: `Failed to start the web servers: ${errors.message}`,
-          serverOpts
-        });
-      }
-
-      debugLogger(errorMessage, errors);
-      logger.error(errorMessage.message);
+      logServerError(errors, serverOpts, logger);
       return;
     }
 
@@ -114,28 +144,7 @@ async function startServer(gasket) {
       .forEach((server) => createTerminus(server, terminusOpts));
 
     await gasket.exec('servers', servers);
-    const {
-      http: _http,
-      https: _https,
-      http2: _http2,
-      hostname: _hostname = 'localhost'
-    } = serverOpts;
-
-    if (_http) {
-      let _port = (typeof _http === 'number' ? _http : _http.port) ?? '';
-      if (_port) _port = `:${_port}`;
-
-      logger.info(`Server started at http://${_hostname}${_port}/`);
-    }
-
-    if (_https || _http2) {
-      let _port = (_https ?? _http2).port ?? '';
-      if (_port) _port = `:${_port}`;
-
-      logger.info(
-        `Server started at https://${_hostname}${_port}/`
-      );
-    }
+    logServersStarted(serverOpts, logger);
   });
 }
 
