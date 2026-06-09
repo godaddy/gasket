@@ -2,7 +2,7 @@
 /// <reference types="@gasket/plugin-https" />
 
 import type { GasketConfigDefinition, Hook } from '@gasket/core';
-import type { ClientRequest, ServerResponse } from 'http';
+import type { IncomingMessage, ServerResponse } from 'http';
 // import '@gasket/plugin-https';
 
 describe('@gasket/plugin-https', () => {
@@ -79,7 +79,7 @@ describe('@gasket/plugin-https', () => {
     const handler: Hook<'createServers'> = (gasket, configs) => {
       return {
         ...configs,
-        handler: (req: ClientRequest, res: ServerResponse) => res.end('ok')
+        handler: (req: IncomingMessage, res: ServerResponse) => res.end('ok')
       };
     };
   });
