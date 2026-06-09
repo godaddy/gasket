@@ -1,5 +1,11 @@
 # `@gasket/plugin-webpack`
 
+## 8.0.0-next.2
+
+### Patch Changes
+
+- dc01fac: remove middleware plugin
+
 ## 8.0.0-next.1
 
 ### Patch Changes

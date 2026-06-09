@@ -1,5 +1,14 @@
 # `@gasket/react-intl`
 
+## 8.0.0-next.3
+
+### Patch Changes
+
+- dc01fac: remove middleware plugin
+- Updated dependencies [dc01fac]
+  - @gasket/plugin-intl@8.0.0-next.2
+  - @gasket/data@8.0.0-next.2
+
 ## 8.0.0-next.2
 
 ### Patch Changes

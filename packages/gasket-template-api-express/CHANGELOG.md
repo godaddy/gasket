@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 8.0.0-next.3
+
+### Patch Changes
+
+- dc01fac: remove middleware plugin
+- 5832e5b: Remove tsx from template in favor of Node 24
+
 ## 8.0.0-next.2
 
 ### Patch Changes
