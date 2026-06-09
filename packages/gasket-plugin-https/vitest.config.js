@@ -8,7 +8,9 @@ export default defineConfig({
       provider: 'v8',
       enabled: true,
       reporter: ['text', 'json', 'html', 'lcovonly'],
-      include: ['lib/**'],
+      // Cover executable JS only; index.d.ts is type declarations with no
+      // runtime to exercise. Matches the convention in sibling plugins.
+      include: ['lib/**/*.js'],
       exclude: ['**/node_modules/**', '**/test/**']
     }
   }
