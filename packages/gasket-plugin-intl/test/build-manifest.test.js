@@ -81,9 +81,8 @@ describe('buildManifest', function () {
 
   it('logs error if failed to write manifest', async function () {
     mockWriteFileStub.mockRejectedValue(new Error('Bad things man'));
-    await expect(async () => {
-      await buildManifest(mockGasket);
-    }).rejects.toThrow('Bad things man');
+    await expect(buildManifest(mockGasket))
+      .rejects.toThrow('Bad things man');
     expect(mockGasket.logger.error).toHaveBeenCalledWith(
       'build:locales: Unable to write intl manager (intl.js).'
     );

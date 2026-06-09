@@ -2,3 +2,18 @@ packages:
   - packages/*
   - scripts/generate-docs-index
   - tools/template-manager
+
+strictPeerDependencies: true
+linkWorkspacePackages: true
+preferWorkspacePackages: true
+minimumReleaseAge: 0
+
+overrides:
+  react-json-view-lite: "^2.3.0"
+
+allowBuilds:
+  esbuild: true
+  sharp: true
+  storage-engine: true
+  "@scarf/scarf": false
+  core-js: false

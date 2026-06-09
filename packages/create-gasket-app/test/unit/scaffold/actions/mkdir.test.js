@@ -35,9 +35,8 @@ describe('mkdir', () => {
   });
 
   it('Rejects with message if directory was not allowed to be overwritten', async () => {
-    await expect(async () => {
-      await mkDir({ context: { ...mockContext, extant: true, destOverride: false } });
-    }).rejects.toThrow('was not allowed to be overwritten');
+    await expect(mkDir({ context: { ...mockContext, extant: true, destOverride: false } }))
+      .rejects.toThrow('was not allowed to be overwritten');
   });
 
   it('Does not create a directory if allowed to override an existing one', async () => {
@@ -49,8 +48,7 @@ describe('mkdir', () => {
   it('Rejects with original error for other issues', async () => {
     const mockError = { code: 'BOGUS' };
     mockMkdirStub.mockRejectedValue(mockError);
-    await expect(async () => {
-      await mkDir({ context: mockContext });
-    }).rejects.toEqual(mockError);
+    await expect(mkDir({ context: mockContext }))
+      .rejects.toEqual(mockError);
   });
 });
