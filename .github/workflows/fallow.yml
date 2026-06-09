@@ -56,3 +56,15 @@ jobs:
           base="origin/${BASE_REF:-next}"
           echo "Auditing against base ref: $base"
           pnpm exec fallow audit --base "$base" --format json --quiet
+
+      - name: Fallow health score (report only)
+        # Repo-wide health score for trend visibility — NOT a gate. `if: always()`
+        # so it reports even when the audit step above fails; `|| true` so a health
+        # hiccup never changes the job outcome. Watch the grade climb as passive
+        # cleanup drains existing findings.
+        if: always()
+        run: |
+          score=$(pnpm exec fallow health --score --format json --quiet 2>/dev/null \
+            | node -e "let d='';process.stdin.on('data',c=>d+=c).on('end',()=>{try{const h=JSON.parse(d).health_score;console.log(h.score+' ('+h.grade+')')}catch(e){console.log('unavailable')}})") || true
+          echo "Fallow health score: ${score:-unavailable}"
+          echo "**Fallow health score:** ${score:-unavailable}" >> "$GITHUB_STEP_SUMMARY"
