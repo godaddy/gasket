@@ -25,8 +25,10 @@ function logServerError(errors, serverOpts, logger) {
 
 /**
  * Resolve a server config's port into a `:NNNN` URL suffix (empty when unset).
- * `http` may be a bare port number or a config object; https/http2 are always
- * objects — `.port` on a number is harmlessly undefined.
+ * The number-vs-object branch exists for `http`, which may be a bare port
+ * number or a config object. https/http2 are always objects per ServerOptions,
+ * so the number branch is a harmless no-op for them — keep it so this stays a
+ * single shared formatter for all three.
  * @param {number|object} server A server config value from serverOpts
  * @returns {string} Port suffix for a URL, e.g. `:8080` or ``
  */
