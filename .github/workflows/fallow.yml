@@ -69,40 +69,80 @@ jobs:
         # so it reports even when the audit step above fails; `|| true` so a health
         # hiccup never changes the job outcome. Watch the grade climb as passive
         # cleanup drains existing findings.
+        #
+        # Renders a markdown report (grade header + penalty breakdown) to
+        # fallow-comment.md, consumed by both the step summary and the PR comment.
+        # The marker on line 1 lets the comment step find and update its sticky
+        # comment in place. SHA is templated in here (not in the comment step) so
+        # the comment step needs no extra env.
         id: health
         if: always()
+        env:
+          SHA: ${{ github.event.pull_request.head.sha || github.sha }}
         run: |
-          score=$(pnpm exec fallow health --score --format json --quiet 2>/dev/null \
-            | node -e "let d='';process.stdin.on('data',c=>d+=c).on('end',()=>{try{const h=JSON.parse(d).health_score;console.log(h.score+' ('+h.grade+')')}catch(e){console.log('unavailable')}})") || true
-          score="${score:-unavailable}"
-          echo "Fallow health score: $score"
-          echo "**Fallow health score:** $score" >> "$GITHUB_STEP_SUMMARY"
-          echo "score=$score" >> "$GITHUB_OUTPUT"
+          pnpm exec fallow health --score --format json --quiet 2>/dev/null > health.json || true
+          SHA="$SHA" node -e '
+            const fs = require("fs");
+            const marker = "<!-- fallow-health-score -->";
+            let h;
+            try { h = JSON.parse(fs.readFileSync("health.json", "utf8")).health_score; } catch {}
+            const sha = (process.env.SHA || "").slice(0, 7);
+            let md;
+            if (!h) {
+              md = marker + "\n## 🌱 Fallow Health\n\nScore unavailable for this run.\n";
+            } else {
+              // Grade emoji gives an at-a-glance read; penalties drive the "why".
+              const badge = { A: "🟢", B: "🟢", C: "🟡", D: "🟠", F: "🔴" }[h.grade] || "⚪";
+              const labels = {
+                unused_deps: "Unused dependencies", unit_size: "Unit size",
+                duplication: "Duplication", coupling: "Coupling",
+                circular_deps: "Circular dependencies", dead_files: "Dead files",
+                dead_exports: "Dead exports", complexity: "Complexity",
+                p90_complexity: "Complexity (p90)", maintainability: "Maintainability"
+              };
+              // Only non-zero penalties, largest first — the actionable list.
+              const rows = Object.entries(h.penalties || {})
+                .filter(([, v]) => v > 0)
+                .sort((a, b) => b[1] - a[1])
+                .map(([k, v]) => `| ${labels[k] || k} | −${v.toFixed(1)} |`);
+              const table = rows.length
+                ? ["| Check | Penalty |", "|:------|--------:|", ...rows].join("\n")
+                : "_No penalties — clean across all checks._";
+              md = [
+                marker,
+                `## 🌱 Fallow Health: ${badge} ${h.grade} · ${h.score} / 100`,
+                "",
+                "What is costing points, repo-wide:",
+                "",
+                table,
+                "",
+                `<sub>Repo-wide score for trend visibility — not a merge gate. ` +
+                `Watch the grade climb as PRs clean up touched files. Updated each push (\`${sha}\`).</sub>`
+              ].join("\n");
+            }
+            fs.writeFileSync("fallow-comment.md", md + "\n");
+            // Plain one-liner for logs + GITHUB_OUTPUT.
+            fs.appendFileSync(process.env.GITHUB_OUTPUT, `score=${h ? h.score + " (" + h.grade + ")" : "unavailable"}\n`);
+          '
+          cat fallow-comment.md >> "$GITHUB_STEP_SUMMARY"
 
       - name: Comment health score on PR
         # Sticky comment: one comment per PR, updated in place on every push (found
-        # by the hidden marker below). No-ops outside PRs and on fork PRs where
-        # GITHUB_TOKEN is read-only. Failure never affects the job outcome.
+        # by the hidden marker on line 1 of fallow-comment.md). No-ops outside PRs
+        # and on fork PRs where GITHUB_TOKEN is read-only. Failure never affects the
+        # job outcome.
         if: always() && github.event_name == 'pull_request'
         continue-on-error: true
         env:
           GH_TOKEN: ${{ github.token }}
           PR: ${{ github.event.pull_request.number }}
-          SCORE: ${{ steps.health.outputs.score }}
-          SHA: ${{ github.event.pull_request.head.sha }}
         run: |
           marker="<!-- fallow-health-score -->"
-          body="$marker
-          **Fallow health score:** ${SCORE:-unavailable}
-
-          <sub>Repo-wide score, reported for trend visibility — not a merge gate. Updated on each push (\`${SHA:0:7}\`).</sub>"
-
-          # Find an existing fallow-health comment by its marker; update it if
-          # present, otherwise create one. Keeps a single sticky comment per PR.
-          id=$(gh api "repos/${GITHUB_REPOSITORY}/issues/${PR}/comments" \
+          # Update the existing sticky comment if one exists, else create it.
+          id=$(gh api "repos/${GITHUB_REPOSITORY}/issues/${PR}/comments" --paginate \
             --jq "map(select(.body | contains(\"$marker\"))) | .[0].id // empty")
           if [ -n "$id" ]; then
-            gh api --method PATCH "repos/${GITHUB_REPOSITORY}/issues/comments/${id}" -f body="$body"
+            gh api --method PATCH "repos/${GITHUB_REPOSITORY}/issues/comments/${id}" -F body=@fallow-comment.md
           else
-            gh api --method POST "repos/${GITHUB_REPOSITORY}/issues/${PR}/comments" -f body="$body"
+            gh api --method POST "repos/${GITHUB_REPOSITORY}/issues/${PR}/comments" -F body=@fallow-comment.md
           fi
