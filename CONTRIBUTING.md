@@ -128,9 +128,23 @@ than scattering inline comments:
 | Exports consumed dynamically across many files | `ignoreExports` (glob + export names) |
 | Unused dependency (no comment syntax in `package.json`) | `ignoreDependencies` |
 
-`@gasket/plugin-metadata` is in `ignoreDependencies` because plugins consume it via
-a `/// <reference types="@gasket/plugin-metadata" />` directive, which Fallow's
-static scan does not count as a use.
+The `ignoreDependencies` entries are deps Fallow's static scan can't see a use
+for, grouped by why:
+
+- **`@gasket/plugin-metadata`** — consumed via a `/// <reference types="..." />`
+  directive, which the scan doesn't count as a use.
+- **Babel toolchain** (`@babel/preset-env`, `@babel/preset-react`,
+  `@babel/plugin-transform-runtime`, `@babel/register`, `core-js`,
+  `regenerator-runtime`) — referenced from the `babel` key in `package.json` or
+  pulled in transitively by the transform, never `import`ed.
+- **`npm-check-updates`** — invoked as the `ncu` CLI binary, not imported.
+- **`@gasket/template-*`** — loaded by `generate-docs-index` via string paths.
+- **eslint shared-config peers** (`@eslint/eslintrc`, `@eslint/js`,
+  `eslint-plugin-jsx-a11y`, `eslint-plugin-react`) — transitive peers of the
+  `eslint-config-godaddy-*` flat configs, not imported directly.
+
+Confirm a dep is genuinely used-but-invisible before adding it here — if it's
+actually unused, remove it from `package.json` instead.
 
 Inline suppression is the last resort, for a genuine one-off that no config rule
 generalizes:

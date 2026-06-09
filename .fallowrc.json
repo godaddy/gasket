@@ -7,6 +7,23 @@
     "**/generator/**"
   ],
   "ignoreDependencies": [
-    "@gasket/plugin-metadata"
+    "@gasket/plugin-metadata",
+    "@babel/preset-env",
+    "@babel/preset-react",
+    "@babel/plugin-transform-runtime",
+    "@babel/register",
+    "core-js",
+    "regenerator-runtime",
+    "npm-check-updates",
+    "prompts",
+    "@gasket/template-api-express",
+    "@gasket/template-api-fastify",
+    "@gasket/template-nextjs-app",
+    "@gasket/template-nextjs-express",
+    "@gasket/template-nextjs-pages",
+    "@eslint/eslintrc",
+    "@eslint/js",
+    "eslint-plugin-jsx-a11y",
+    "eslint-plugin-react"
   ]
 }
