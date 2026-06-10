@@ -335,7 +335,8 @@ describe('actions', () => {
 
     it('calls exec("preboot") exactly once', async () => {
       await startServer(gasketAPI);
-      expect(gasketAPI.exec).toHaveBeenCalledWith('preboot');
+      const prebootCalls = gasketAPI.exec.mock.calls.filter(([lifecycle]) => lifecycle === 'preboot');
+      expect(prebootCalls).toHaveLength(1);
     });
 
     it('propagates errors from isReady', async () => {
