@@ -5,7 +5,7 @@
 /* eslint-disable no-console */
 import packageJson from '../package.json' with { type: 'json' };
 const { name, version, description } = packageJson;
-import { createChildLogger, verifyLoggerLevels } from './utils.js';
+import { createChildLogger, overrideConsole, verifyLoggerLevels } from './utils.js';
 
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {
@@ -24,6 +24,7 @@ const plugin = {
     },
     init(gasket) {
       const loggers = gasket.execSync('createLogger');
+      let hasCustomLogger = false;
 
       if (
         loggers &&
@@ -48,6 +49,11 @@ const plugin = {
       } else {
         verifyLoggerLevels(loggers[0]);
         gasket.logger = loggers[0];
+        hasCustomLogger = true;
+      }
+
+      if (hasCustomLogger && gasket.config?.logger?.overrideConsole) {
+        overrideConsole(gasket.logger);
       }
     },
     async onSignal(gasket) {

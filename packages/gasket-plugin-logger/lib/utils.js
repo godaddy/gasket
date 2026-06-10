@@ -29,7 +29,21 @@ function verifyLoggerLevels(logger) {
   });
 }
 
+/**
+ * Override global console methods to route output through the provided logger.
+ * @param {import('./index.d.ts').Logger} logger - The gasket logger instance to route console calls through.
+ */
+function overrideConsole(logger) {
+  console.error = (...args) => logger.error(...args);
+  console.warn = (...args) => logger.warn(...args);
+  console.log = (...args) => logger.info(...args);
+  console.info = (...args) => logger.info(...args);
+  console.debug = (...args) => logger.debug(...args);
+  logger.info('[gasket-plugin-logger] console overridden to use gasket.logger');
+}
+
 export {
   createChildLogger,
+  overrideConsole,
   verifyLoggerLevels
 };

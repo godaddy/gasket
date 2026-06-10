@@ -7,6 +7,33 @@ Gasket applications.
 At this time, there is only one plugin which implements a
 custom logger: `@gasket/plugin-winston`.
 
+## Configuration
+
+Configuration for `@gasket/plugin-logger` lives under the `logger` key in `gasket.config`.
+
+| Option | Type | Default | Description |
+|---|---|---|---|
+| `overrideConsole` | `boolean` | `false` | When `true`, replaces the global `console` methods (`log`, `info`, `warn`, `error`, `debug`) with calls to `gasket.logger`. |
+
+### overrideConsole
+
+>  **Note:** `overrideConsole` only takes effect when a custom logger is registered via the `createLogger` lifecycle; it has no effect when the default console-based fallback logger is in us
+
+Some third-party packages (e.g. SDKs, component libraries) call `console.*` directly and bypass the configured logger pipeline entirely. This causes issues such as multi-line plain-text output appearing in structured log aggregators (e.g. Elastic) instead of properly formatted log entries, because the formatting, transport, and metadata configuration in `gasket.logger` is never applied.
+
+Enabling `overrideConsole` patches the global `console` methods during the `init` lifecycle — early enough to capture all subsequent output — and routes them through `gasket.logger`, so log levels, structured metadata, and transports work consistently across the entire app.
+
+```js
+// gasket.config.js
+export default {
+  logger: {
+    overrideConsole: true
+  }
+};
+```
+
+> **Note:** This is an opt-in stop-gap for apps where third-party dependencies cannot be updated to accept a custom logger instance. The preferred long-term solution is to update those libraries to accept a logger instance so that `gasket.logger` can be passed down directly.
+
 ## Installation
 
 This plugin is only used by presets for `create-gasket-app` and is not installed for apps.

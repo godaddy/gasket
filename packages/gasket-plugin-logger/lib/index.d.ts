@@ -24,6 +24,17 @@ declare module '@gasket/core' {
     logger: Logger;
   }
 
+  export interface GasketConfig {
+    logger?: {
+      /**
+       * When true, overrides the global console methods (log, info, warn, error, debug)
+       * to route all output through gasket.logger. Useful for capturing third-party
+       * dependencies that call console.* directly.
+       */
+      overrideConsole?: boolean;
+    };
+  }
+
   export interface HookExecTypes {
     createLogger(): Logger;
   }
