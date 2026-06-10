@@ -12,9 +12,8 @@ function getPortFallback(env = '') {
 
 /**
  * Check if the supplied errors are a result of the port being in use.
- * @param {Array<object>} errors Errors received from create-servers
- * @returns {boolean} Indication if the port was in use.
- * @private
+ * Accepts the create-servers error directly or as a single-element array.
+ * @type {import('./internal.d.ts').portInUseError}
  */
 function portInUseError(errors) {
   const error = Array.isArray(errors) ? errors[0] : errors;

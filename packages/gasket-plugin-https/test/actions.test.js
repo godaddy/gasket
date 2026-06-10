@@ -209,6 +209,11 @@ describe('actions', () => {
         name: 'readable https log when port and hostname not configured',
         config: { https: {} },
         expected: /https:\/\/localhost\//
+      },
+      {
+        name: 'omits port suffix when a protocol is configured as an array',
+        config: { hostname: 'local.gasket.godaddy.com', http: [{ port: 8080 }] },
+        expected: /http:\/\/local\.gasket\.godaddy\.com\/$/
       }
     ])('$name', async ({ config, expected }) => {
       gasketAPI.config = config;

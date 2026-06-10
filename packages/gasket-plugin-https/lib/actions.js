@@ -9,9 +9,7 @@ const debugLogger = debug('gasket:https');
 
 /**
  * Log the create-servers failure, distinguishing port-in-use from other causes.
- * @param {object} errors Errors received from create-servers
- * @param {object} serverOpts Server options passed to create-servers
- * @param {import('@gasket/core').Gasket['logger']} logger Gasket logger
+ * @type {import('./internal.d.ts').logServerError}
  */
 function logServerError(errors, serverOpts, logger) {
   const message = portInUseError(errors)
@@ -29,11 +27,12 @@ function logServerError(errors, serverOpts, logger) {
  * number or a config object. https/http2 are always objects per ServerOptions,
  * so the number branch is a harmless no-op for them — keep it so this stays a
  * single shared formatter for all three.
- * @param {number|object} server A server config value from serverOpts
- * @returns {string} Port suffix for a URL, e.g. `:8080` or ``
+ * @type {import('./internal.d.ts').portSuffix}
  */
 function portSuffix(server) {
-  const port = (typeof server === 'number' ? server : server.port) ?? '';
+  // Arrays (multiple configs) and falsy values carry no single port to format.
+  const single = server && !Array.isArray(server) ? server : null;
+  const port = (typeof single === 'number' ? single : single?.port) ?? '';
   return port ? `:${port}` : '';
 }
 
@@ -41,8 +40,7 @@ function portSuffix(server) {
  * Log the started-server URLs, one line per protocol that was created.
  * http and https/http2 are reported separately because they map to different
  * URL schemes; https and http2 share the `https://` scheme.
- * @param {object} serverOpts Server options passed to create-servers
- * @param {import('@gasket/core').Gasket['logger']} logger Gasket logger
+ * @type {import('./internal.d.ts').logServersStarted}
  */
 function logServersStarted(serverOpts, logger) {
   const { http: _http, https: _https, http2: _http2, hostname = 'localhost' } = serverOpts;
@@ -64,11 +62,7 @@ function logServersStarted(serverOpts, logger) {
  * execution so we create a single options object used for all terminus-based
  * instances. Lifecycles that could potentially be called multiple times are
  * wrapped with a `one-time` function to ensure the callback only executes once.
- * @param {import('@gasket/core').Gasket} gasket Gasket instance
- * @param {import('@gasket/core').Gasket['logger']} logger Gasket logger
- * @param {string[]} routes Healthcheck route paths
- * @param {object} terminusDefaults Remaining terminus options to spread in
- * @returns {object} Terminus options
+ * @type {import('./internal.d.ts').buildTerminusOptions}
  */
 function buildTerminusOptions(gasket, logger, routes, terminusDefaults) {
   /**
@@ -102,8 +96,7 @@ function buildTerminusOptions(gasket, logger, routes, terminusDefaults) {
 
 /**
  * Gasket action: startServer
- * @param {import('@gasket/core').Gasket} gasket Gasket instance
- * @returns {Promise<void>} promise
+ * @type {import('./internal.d.ts').startServer}
  * @public
  */
 async function startServer(gasket) {
