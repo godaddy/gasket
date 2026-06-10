@@ -4,7 +4,8 @@
     "minOccurrences": 3
   },
   "ignorePatterns": [
-    "**/generator/**"
+    "**/generator/**",
+    "site/**"
   ],
   "ignoreDependencies": [
     "@gasket/plugin-metadata",
