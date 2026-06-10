@@ -142,6 +142,21 @@ for, grouped by why:
 - **eslint shared-config peers** (`@eslint/eslintrc`, `@eslint/js`,
   `eslint-plugin-jsx-a11y`, `eslint-plugin-react`) — transitive peers of the
   `eslint-config-godaddy-*` flat configs, not imported directly.
+- **Cross-workspace plugin/sibling deps** (`@gasket/plugin-command`,
+  `@gasket/plugin-data`, `@gasket/plugin-docs`, `@gasket/plugin-docusaurus`,
+  `@gasket/plugin-dynamic-plugins`, `@gasket/plugin-elastic-apm`,
+  `@gasket/plugin-express`, `@gasket/plugin-fastify`, `@gasket/plugin-https`,
+  `@gasket/plugin-intl`, `@gasket/plugin-logger`, `@gasket/plugin-nextjs`,
+  `@gasket/plugin-webpack`, `@gasket/assets`, `@gasket/data`, `@gasket/intl`,
+  `@gasket/nextjs`, `@gasket/react-intl`, `@gasket/request`, `@gasket/utils`,
+  `create-gasket-app`, `@godaddy/terminus`, `debug`, `fastify`, `react`,
+  `react-intl`) — declared as sibling deps for scaffolding or integration tests
+  that load them dynamically. Fallow sees them used in *other* workspaces but not
+  the declaring one, and won't auto-remove a dep another workspace imports.
+
+`scripts/generate-docs-index` is added to `ignorePatterns` — it's a private build
+tool that `await import()`s every plugin from a filesystem scan, so a static dep
+scan flags all of them. Excluding the directory is cleaner than listing each.
 
 Confirm a dep is genuinely used-but-invisible before adding it here — if it's
 actually unused, remove it from `package.json` instead.
