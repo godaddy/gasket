@@ -1,4 +1,5 @@
 import type { Gasket, ServerOptions } from '@gasket/core';
+import type { TerminusOptions } from '@godaddy/terminus';
 
 /**
  * A create-servers failure. Error-like (has `.message`), optionally carrying a
@@ -76,5 +77,5 @@ export function buildTerminusOptions(
   /** Healthcheck route paths */
   routes: string[],
   /** Remaining terminus options to spread in */
-  terminusDefaults: object
-): object;
+  terminusDefaults: TerminusOptions
+): TerminusOptions;
