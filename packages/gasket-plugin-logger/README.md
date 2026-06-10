@@ -17,7 +17,7 @@ Configuration for `@gasket/plugin-logger` lives under the `logger` key in `gaske
 
 ### overrideConsole
 
->  **Note:** `overrideConsole` only takes effect when a custom logger is registered via the `createLogger` lifecycle; it has no effect when the default console-based fallback logger is in us
+>  **Note:** `overrideConsole` only takes effect when a custom logger is registered via the `createLogger` lifecycle; it has no effect when the default console-based fallback logger is in use.
 
 Some third-party packages (e.g. SDKs, component libraries) call `console.*` directly and bypass the configured logger pipeline entirely. This causes issues such as multi-line plain-text output appearing in structured log aggregators (e.g. Elastic) instead of properly formatted log entries, because the formatting, transport, and metadata configuration in `gasket.logger` is never applied.
 
