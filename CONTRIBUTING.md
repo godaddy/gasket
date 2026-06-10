@@ -153,10 +153,18 @@ for, grouped by why:
   `react-intl`) — declared as sibling deps for scaffolding or integration tests
   that load them dynamically. Fallow sees them used in *other* workspaces but not
   the declaring one, and won't auto-remove a dep another workspace imports.
+- **`generate-docs-index`-only plugins** (`@gasket/plugin-analyze`,
+  `@gasket/plugin-docs-graphs`, `@gasket/plugin-happyfeet`,
+  `@gasket/plugin-https-proxy`, `@gasket/plugin-morgan`, `@gasket/plugin-swagger`,
+  `@gasket/plugin-winston`) — declared only by the docs-index build tool, which
+  `await import()`s them from a filesystem scan. `dynamicallyLoaded` resolves the
+  imports but doesn't clear the package.json dep, so the names are listed here too.
 
-`scripts/generate-docs-index` is added to `ignorePatterns` — it's a private build
-tool that `await import()`s every plugin from a filesystem scan, so a static dep
-scan flags all of them. Excluding the directory is cleaner than listing each.
+`scripts/generate-docs-index` is in `dynamicallyLoaded`, not `ignorePatterns` —
+it's a private build tool that `await import()`s every plugin from a filesystem
+scan. `dynamicallyLoaded` treats those imports as used while keeping the directory
+under analysis (dead-code, complexity, dupes still run on it), which an
+`ignorePatterns` exclusion would skip.
 
 Confirm a dep is genuinely used-but-invisible before adding it here — if it's
 actually unused, remove it from `package.json` instead.
