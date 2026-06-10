@@ -20,6 +20,18 @@ export type ServerConfigValue =
   | ServerOptions['https']
   | ServerOptions['http2'];
 
+/** Provide port defaults. */
+export function getPortFallback(
+  /** env property from gasket config */
+  env?: string
+): number;
+
+/** Get server options from the gasket config. */
+export function getRawServerConfig(
+  /** Gasket instance */
+  gasket: Gasket
+): ServerOptions;
+
 /** Check if the supplied errors are a result of the port being in use. */
 export function portInUseError(
   /** Errors received from create-servers (single or single-element array) */

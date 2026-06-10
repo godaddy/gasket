@@ -2,9 +2,7 @@ import proxy from 'http-proxy';
 
 /**
  * Provide port defaults
- * @param {string} env env property from gasket config
- * @returns {number} Default port number
- * @public
+ * @type {import('./internal.d.ts').getPortFallback}
  */
 function getPortFallback(env = '') {
   return /local/.test(env) ? 8080 : 80;
@@ -42,8 +40,7 @@ function startProxy(opts, logger) {
 
 /**
  * Get server options from the gasket config
- * @param {import('@gasket/core').Gasket} gasket Gasket instance
- * @returns {import('@gasket/core').ServerOptions} config
+ * @type {import('./internal.d.ts').getRawServerConfig}
  */
 function getRawServerConfig(gasket) {
   const { hostname, http2, https, http, root } = gasket.config;
