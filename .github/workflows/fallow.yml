@@ -51,8 +51,15 @@ jobs:
           score: true
           trend: true
           save-snapshot: true
+          hotspots: true
+          targets: true
           comment: true
           # Distinct sticky-comment id so the health summary does not collide
           # with the audit gate's comment (both default to `fallow-results`).
           comment-id: fallow-health
+          # Report repo-wide, not just findings on PR-touched lines. Default
+          # `added` scoping shows nothing on docs/config-only PRs; this is a
+          # trend/visibility comment, not a gate, so it should reflect the
+          # whole repo.
+          diff-filter: nofilter
           fail-on-issues: false
