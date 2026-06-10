@@ -3,7 +3,6 @@
 
 import type { GasketConfigDefinition, Hook } from '@gasket/core';
 import type { IncomingMessage, ServerResponse } from 'http';
-// import '@gasket/plugin-https';
 
 describe('@gasket/plugin-https', () => {
   const { log } = console;
@@ -122,7 +121,6 @@ describe('@gasket/plugin-https', () => {
 
   it('adds the beforeShutdown lifecycle', () => {
     const handler: Hook<'beforeShutdown'> = async (gasket) => {
-      // await shutdownTheThing();
     };
   });
 
@@ -134,7 +132,6 @@ describe('@gasket/plugin-https', () => {
 
   it('adds the onShutdown lifecycle', () => {
     const handler: Hook<'onShutdown'> = async (gasket) => {
-      // await cleanupStuff();
     };
   });
 });
