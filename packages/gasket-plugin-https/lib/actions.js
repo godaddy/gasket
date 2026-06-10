@@ -96,8 +96,7 @@ function buildTerminusOptions(gasket, logger, routes, terminusDefaults) {
 
 /**
  * Gasket action: startServer
- * @type {import('./internal.d.ts').startServer}
- * @public
+ * @type {import('@gasket/core').ActionHandler<'startServer'>}
  */
 async function startServer(gasket) {
   await gasket.isReady;

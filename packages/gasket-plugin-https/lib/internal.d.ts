@@ -78,9 +78,3 @@ export function buildTerminusOptions(
   /** Remaining terminus options to spread in */
   terminusDefaults: object
 ): object;
-
-/** Gasket action: startServer */
-export function startServer(
-  /** Gasket instance */
-  gasket: Gasket
-): Promise<void>;
