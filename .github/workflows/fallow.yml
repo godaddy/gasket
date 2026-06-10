@@ -35,21 +35,15 @@ jobs:
           node-version: 24.x
           cache: pnpm
 
-      - name: Cache pnpm store
-        uses: actions/cache@v3
-        with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-pnpm-24-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-24-
-
       # Only the health step (pnpm exec fallow) needs this; the audit action
-      # installs its own binary.
+      # installs its own binary. setup-node's cache: pnpm already restores the
+      # store, so no separate actions/cache step.
       - name: Install Dependencies
         run: pnpm install --prefer-offline
 
       - name: Fallow audit (gate)
-        uses: fallow-rs/fallow@v2
+        # Pinned to a commit (third-party action, holds the write token). v2.91.0.
+        uses: fallow-rs/fallow@6e87e12ff54a666badd1650aa191ededaad73237
         with:
           command: audit
           comment: true
@@ -59,52 +53,12 @@ jobs:
       # gate above fails; `|| true` keeps a health hiccup from failing the job.
       # The line-1 marker is what the comment step greps to update in place.
       - name: Fallow health score (report only)
-        id: health
         if: always()
         env:
           SHA: ${{ github.event.pull_request.head.sha || github.sha }}
         run: |
           pnpm exec fallow health --score --format json --quiet 2>/dev/null > health.json || true
-          SHA="$SHA" node -e '
-            const fs = require("fs");
-            const marker = "<!-- fallow-health-score -->";
-            let h;
-            try { h = JSON.parse(fs.readFileSync("health.json", "utf8")).health_score; } catch {}
-            const sha = (process.env.SHA || "").slice(0, 7);
-            let md;
-            if (!h) {
-              md = marker + "\n## 🌱 Fallow Health\n\nScore unavailable for this run.\n";
-            } else {
-              const badge = { A: "🟢", B: "🟢", C: "🟡", D: "🟠", F: "🔴" }[h.grade] || "⚪";
-              const labels = {
-                unused_deps: "Unused dependencies", unit_size: "Unit size",
-                duplication: "Duplication", coupling: "Coupling",
-                circular_deps: "Circular dependencies", dead_files: "Dead files",
-                dead_exports: "Dead exports", complexity: "Complexity",
-                p90_complexity: "Complexity (p90)", maintainability: "Maintainability"
-              };
-              const rows = Object.entries(h.penalties || {})
-                .filter(([, v]) => v > 0)
-                .sort((a, b) => b[1] - a[1])
-                .map(([k, v]) => `| ${labels[k] || k} | −${v.toFixed(1)} |`);
-              const table = rows.length
-                ? ["| Check | Penalty |", "|:------|--------:|", ...rows].join("\n")
-                : "_No penalties — clean across all checks._";
-              md = [
-                marker,
-                `## 🌱 Fallow Health: ${badge} ${h.grade} · ${h.score} / 100`,
-                "",
-                "What is costing points, repo-wide:",
-                "",
-                table,
-                "",
-                `<sub>Repo-wide score for trend visibility — not a merge gate. ` +
-                `Watch the grade climb as PRs clean up touched files. Updated each push (\`${sha}\`).</sub>`
-              ].join("\n");
-            }
-            fs.writeFileSync("fallow-comment.md", md + "\n");
-            fs.appendFileSync(process.env.GITHUB_OUTPUT, `score=${h ? h.score + " (" + h.grade + ")" : "unavailable"}\n`);
-          '
+          node scripts/fallow-health-comment.js health.json "$SHA" > fallow-comment.md || true
           cat fallow-comment.md >> "$GITHUB_STEP_SUMMARY"
 
       # continue-on-error: a failed comment post (e.g. read-only fork token)
@@ -117,10 +71,17 @@ jobs:
           PR: ${{ github.event.pull_request.number }}
         run: |
           marker="<!-- fallow-health-score -->"
-          id=$(gh api "repos/${GITHUB_REPOSITORY}/issues/${PR}/comments" --paginate \
-            --jq "map(select(.body | contains(\"$marker\"))) | .[0].id // empty")
-          if [ -n "$id" ]; then
-            gh api --method PATCH "repos/${GITHUB_REPOSITORY}/issues/comments/${id}" -F body=@fallow-comment.md
+          # Match only our own bot-authored comment so a user pasting the marker
+          # can't capture the sticky update. Distinguish a failed find call from
+          # "not found": on error, skip rather than fall through to POST (which
+          # would orphan a duplicate sticky comment).
+          if ! existing=$(gh api "repos/${GITHUB_REPOSITORY}/issues/${PR}/comments" --paginate \
+            --jq "map(select(.user.type == \"Bot\" and (.body | contains(\"$marker\")))) | .[0].id // empty"); then
+            echo "::warning::Could not list PR comments; skipping health-comment update."
+            exit 0
+          fi
+          if [ -n "$existing" ]; then
+            gh api --method PATCH "repos/${GITHUB_REPOSITORY}/issues/comments/${existing}" -F body=@fallow-comment.md
           else
             gh api --method POST "repos/${GITHUB_REPOSITORY}/issues/${PR}/comments" -F body=@fallow-comment.md
           fi

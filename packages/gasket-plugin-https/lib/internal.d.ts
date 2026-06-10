@@ -50,10 +50,10 @@ export function logServerError(
 
 /**
  * Resolve a server config's port into a `:NNNN` URL suffix (empty when unset).
- * The number-vs-object branch exists for `http`, which may be a bare port
- * number or a config object. https/http2 are always objects per ServerOptions,
- * so the number branch is a harmless no-op for them — keep it so this stays a
- * single shared formatter for all three.
+ * The number-vs-object branch exists for `http`, which `ServerOptions` types as
+ * `number | false | null | config(s)`. https/http2 are typed as object configs
+ * only (never a bare number), so the `typeof === 'number'` test is unreachable
+ * for them — the branch is kept so one formatter serves all three protocols.
  */
 export function portSuffix(
   /** A single server config value from serverOpts (number port or config object) */
