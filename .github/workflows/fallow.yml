@@ -51,4 +51,8 @@ jobs:
           score: true
           trend: true
           save-snapshot: true
+          comment: true
+          # Distinct sticky-comment id so the health summary does not collide
+          # with the audit gate's comment (both default to `fallow-results`).
+          comment-id: fallow-health
           fail-on-issues: false
