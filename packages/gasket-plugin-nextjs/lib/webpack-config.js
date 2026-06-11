@@ -120,6 +120,8 @@ function webpackConfigHook(gasket, webpackConfig, { webpack, isServer }) {
     throw new Error('Expected webpackConfig.externals to be an array');
   }
 
+  // plugins is optional in webpack configs; seed it before pushing.
+  webpackConfig.plugins ??= [];
   webpackConfig.plugins.push(
     new webpack.EnvironmentPlugin({
       GASKET_ENV: gasket.config.env

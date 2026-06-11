@@ -91,6 +91,13 @@ describe('webpackConfigHook', () => {
     }));
   });
 
+  it('seeds plugins when absent from the webpack config', () => {
+    delete mockWebpackConfig.plugins;
+
+    const result = webpackConfig(mockGasket, mockWebpackConfig, mockContext);
+    expect(result.plugins.some((p) => p instanceof webpack.EnvironmentPlugin)).toBe(true);
+  });
+
   // validateNoGasketCore is internal; it is wired in as the first client external.
   describe('client @gasket/core externals guard', () => {
     let guard, mockCallback;
