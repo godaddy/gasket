@@ -30,22 +30,6 @@ function validateNoGasketCore(ctx, callback) {
 }
 
 /**
- * Externalize @gasket/core in the server build.
- * We do this to enable GASKET_ENV to be picked up and passed to the plugins.
- * Otherwise, unique builds per environment would be required.
- * @param {{ request: string, dependencyType?: string }} ctx - The context object containing the request string.
- * @param {(error?: Error | null, result?: any) => void} callback - The externals callback.
- * @returns {void|*} Returns void or the result of the callback
- */
-function externalizeGasketCore(ctx, callback) {
-  if (isGasketCore.test(ctx.request)) {
-    const externalsType = ctx.dependencyType === 'esm' ? 'module' : 'commonjs';
-    return callback(null, [externalsType, ctx.request].join(' '));
-  }
-  return callback();
-}
-
-/**
  * Setup webpack resolve aliases
  * @param {import('webpack').Configuration} webpackConfig
  *   The webpack configuration object
@@ -145,4 +129,4 @@ function webpackConfigHook(gasket, webpackConfig, { webpack, isServer }) {
   return replaceGasketFiles(webpack, webpackConfig);
 }
 
-export { validateNoGasketCore, externalizeGasketCore, replaceGasketFiles, webpackConfigHook as webpackConfig };
+export { webpackConfigHook as webpackConfig };
