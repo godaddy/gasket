@@ -8,7 +8,10 @@
     "site/**"
   ],
   "dynamicallyLoaded": [
-    "scripts/generate-docs-index/**"
+    "scripts/generate-docs-index/**",
+    "packages/gasket-plugin-nextjs/lib/noop-replacement.mjs",
+    "packages/gasket-plugin-dynamic-plugins/test/__mocks__/plugin-custom.js",
+    "syncpack.config.cjs"
   ],
   "ignoreDependencies": [
     "@babel/plugin-transform-runtime",
