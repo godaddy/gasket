@@ -53,7 +53,7 @@ describe('CreateRuntime', () => {
     expect(runtime.appName).not.toEqual(appName);
   });
 
-  it('silently refuses to set { pkg, source }', () => {
+  it('throws when setting { pkg, source }', () => {
     const { pkg, source } = runtime;
 
     // Setting a protected key throws in strict mode (the set trap returns false).
