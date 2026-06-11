@@ -16,7 +16,7 @@ function wrapWithSpinner(label, task, { startSpinner = true } = {}) {
     } catch (error) {
       spinner.fail();
       context.errors = context.errors || [];
-      context.errors.push(error.stack);
+      context.errors.push(error.stack ?? String(error));
       throw error;
     }
   }

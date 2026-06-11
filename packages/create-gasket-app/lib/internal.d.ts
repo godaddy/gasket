@@ -58,7 +58,7 @@ export function wrapWithSpinner(
   task: SpinnerTask,
   options?: SpinnerOptions
 ): (context: { context: SpinnerContext['context'] } & {
-  errors?: Error[]
+  errors?: string[]
 }) => Promise<void>;
 
 /**
@@ -86,7 +86,7 @@ export function spinnerAction(params: {
 }): Promise<void>;
 
 export function execute(params: { gasket: Gasket, context: PartialCreateContext } & {
-  errors?: Error[]
+  errors?: string[]
 }): Promise<void>;
 
 /** sacaffold/actions */
