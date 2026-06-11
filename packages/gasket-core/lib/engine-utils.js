@@ -38,19 +38,6 @@ export function createAsyncThunk(plugin, subscriber, event, traceHookStart) {
 }
 
 /**
- * Create a thunk for sync plugin execution
- * @type {import('@gasket/core').createSyncThunk}
- */
-export function createSyncThunk(plugin, subscriber, event, traceHookStart) {
-  return (gasket, ...args) => {
-    traceHookStart?.(plugin, event);
-    return /** @type {(gasket: import('@gasket/core').Gasket, ...args: any[]) => any} */ (
-      subscriber.invoke
-    )(gasket, ...args);
-  };
-}
-
-/**
  * Generate a unique plugin name for dynamically registered hooks.
  * Used when no `pluginName` is provided explicitly.
  * @type {import('@gasket/core').getDynamicPluginName}
