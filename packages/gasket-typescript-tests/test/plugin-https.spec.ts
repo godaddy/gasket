@@ -121,6 +121,7 @@ describe('@gasket/plugin-https', () => {
 
   it('adds the beforeShutdown lifecycle', () => {
     const handler: Hook<'beforeShutdown'> = async (gasket) => {
+      // perform shutdown logic
     };
   });
 
@@ -132,6 +133,7 @@ describe('@gasket/plugin-https', () => {
 
   it('adds the onShutdown lifecycle', () => {
     const handler: Hook<'onShutdown'> = async (gasket) => {
+      // perform shutdown logic
     };
   });
 });

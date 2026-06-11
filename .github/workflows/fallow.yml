@@ -3,6 +3,8 @@ name: Fallow
 on:
   workflow_dispatch:
   pull_request:
+    branches:
+      - next
 
 concurrency:
   group: fallow-${{ github.head_ref || github.ref }}
@@ -57,9 +59,10 @@ jobs:
         env:
           SHA: ${{ github.event.pull_request.head.sha || github.sha }}
         run: |
-          pnpm exec fallow health --score --format json --quiet 2>/dev/null > health.json || true
-          node scripts/fallow-health-comment.js health.json "$SHA" > fallow-comment.md || true
-          cat fallow-comment.md >> "$GITHUB_STEP_SUMMARY"
+          mkdir -p .fallow
+          pnpm exec fallow health --score --format json --quiet 2>/dev/null > .fallow/health.json || true
+          node scripts/fallow-health-comment.js .fallow/health.json "$SHA" > .fallow/comment.md || true
+          cat .fallow/comment.md >> "$GITHUB_STEP_SUMMARY"
 
       # continue-on-error: a failed comment post (e.g. read-only fork token)
       # must not fail the job.
@@ -81,7 +84,7 @@ jobs:
             exit 0
           fi
           if [ -n "$existing" ]; then
-            gh api --method PATCH "repos/${GITHUB_REPOSITORY}/issues/comments/${existing}" -F body=@fallow-comment.md
+            gh api --method PATCH "repos/${GITHUB_REPOSITORY}/issues/comments/${existing}" -F body=@.fallow/comment.md
           else
-            gh api --method POST "repos/${GITHUB_REPOSITORY}/issues/${PR}/comments" -F body=@fallow-comment.md
+            gh api --method POST "repos/${GITHUB_REPOSITORY}/issues/${PR}/comments" -F body=@.fallow/comment.md
           fi
