@@ -14,11 +14,6 @@ function makeCreateRuntime(context, source) {
   //
   const overrides = {
     source,
-    files: {
-      add(...globs) {
-        context.files.add({ globs, source });
-      }
-    },
     pkg: {
       extend(fields) {
         context.pkg.extend(fields, source);
@@ -44,7 +39,7 @@ function makeCreateRuntime(context, source) {
       return obj[key];
     },
     set(obj, key, value) {
-      if (key !== 'pkg' && key !== 'files' && key !== 'source') {
+      if (key !== 'pkg' && key !== 'source') {
         obj[key] = value;
         return true; // The set trap in a Proxy must return a boolean value indicating whether the property was successfully set
       }
@@ -109,8 +104,7 @@ export function makeCreateContext(argv = [], options = {}) {
     errors: [],
     nextSteps: [],
     generatedFiles: new Set(),
-    prompts,
-    readme: []
+    prompts
   });
 
   readConfig(context, { config, configFile });

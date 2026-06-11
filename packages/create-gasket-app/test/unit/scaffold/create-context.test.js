@@ -8,7 +8,6 @@ describe('CreateRuntime', () => {
   let pkgAddStub;
   let pkgExtendStub;
   let pkgHasStub;
-  let filesAddStub;
   let context;
   let runtime;
 
@@ -16,7 +15,6 @@ describe('CreateRuntime', () => {
     pkgAddStub = vi.fn();
     pkgExtendStub = vi.fn();
     pkgHasStub = vi.fn().mockReturnValue(true);
-    filesAddStub = vi.fn();
     mockPlugin = { name: 'mockPlugin' };
 
     mockContext = {
@@ -28,9 +26,6 @@ describe('CreateRuntime', () => {
         add: pkgAddStub,
         extend: pkgExtendStub,
         has: pkgHasStub
-      },
-      files: {
-        add: filesAddStub
       }
     };
 
@@ -44,7 +39,7 @@ describe('CreateRuntime', () => {
 
   it('has all properties of the inner context', () => {
     Object.keys(mockContext).forEach(key => {
-      if (key === 'pkg' || key === 'files') return;
+      if (key === 'pkg') return;
       expect(runtime[key]).toEqual(context[key]);
     });
   });
@@ -62,16 +57,13 @@ describe('CreateRuntime', () => {
     }
   });
 
-  it('silently refuses to set { files, pkg, source }', () => {
-    const { files, pkg, source } = runtime;
+  it('silently refuses to set { pkg, source }', () => {
+    const { pkg, source } = runtime;
 
     try {
-      runtime.files = '';
       runtime.pkg = '';
       runtime.source = '';
     } catch {
-      // eslint-disable-next-line jest/no-conditional-expect
-      expect(runtime.files).toEqual(files);
       // eslint-disable-next-line jest/no-conditional-expect
       expect(runtime.pkg).toEqual(pkg);
       // eslint-disable-next-line jest/no-conditional-expect
@@ -83,12 +75,8 @@ describe('CreateRuntime', () => {
     expect(runtime.source).toEqual(mockPlugin);
   });
 
-  it('proxies to another files object', () => {
-    expect(runtime.files).not.toEqual(mockContext.files);
-  });
-
   it('proxies to another pkg object', () => {
-    expect(runtime.files).not.toEqual(mockContext.files);
+    expect(runtime.pkg).not.toEqual(mockContext.pkg);
   });
 
   it('invokes context.pkg.add with source plugin', () => {
@@ -129,15 +117,6 @@ describe('CreateRuntime', () => {
     );
 
     expect(result).toBeTruthy();
-  });
-
-  it('invokes context.files.add with source plugin', () => {
-    const globs = ['foo/bar/bazz', 'buzz/fizz/foo'];
-    runtime.files.add(...globs);
-    expect(filesAddStub).toHaveBeenCalledWith({
-      globs,
-      source: mockPlugin
-    });
   });
 });
 
