@@ -11,27 +11,10 @@ describe('create-gasket-app', () => {
 
   it('describes the create context helpers', () => {
     const hook: Hook<'create'> = async (gasket: Gasket, context: CreateContext) => {
-      const { pkg, files, readme, gasketConfig, pkgManager } = context;
+      const { pkg, gasketConfig, pkgManager } = context;
 
       pkg.add('devDependencies', { 'left-pad': '^1.0.0' });
       pkg.add('devDependencies', { 'left-pad': '^1.0.0' }, { force: true });
-
-      files.add('generator/**/*');
-      files.add(
-        'generator/*',
-        'generator/**/*'
-      );
-
-      readme
-        .heading('Hello, World')
-        .heading('Hello, World', 1)
-        .subHeading('Subheading')
-        .content('Hello, World')
-        .list(['one', 'two', 'three'])
-        .link('https://example.com', 'Example')
-        .codeBlock('console.log("Hello, World")')
-        .codeBlock('console.log("Hello, World")', 'javascript');
-      await readme.markdownFile('README.md');
 
       gasketConfig.addPlugin('pluginAny', '@my/gasket-plugin');
       gasketConfig.addImport('{ readFile }', 'fs/promises');
