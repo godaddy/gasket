@@ -104,9 +104,8 @@ describe('with-spinner', () => {
       const mockError = new Error('bad stuff');
       mockTask.mockRejectedValue(mockError);
       const action = withSpinner(mockLabel, mockTask);
-      const args = { context: mockContext };
-      await expect(action(args)).rejects.toThrow();
-      expect(args.errors).toContain(mockError.stack);
+      await expect(action({ context: mockContext })).rejects.toThrow();
+      expect(mockContext.errors).toContain(mockError.stack);
     });
   });
 
