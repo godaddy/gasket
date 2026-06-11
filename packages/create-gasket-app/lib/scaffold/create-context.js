@@ -39,10 +39,14 @@ function makeCreateRuntime(context, source) {
       return obj[key];
     },
     set(obj, key, value) {
-      if (key !== 'pkg' && key !== 'source') {
-        obj[key] = value;
-        return true; // The set trap in a Proxy must return a boolean value indicating whether the property was successfully set
+      // The set trap must return a boolean indicating whether the property was set.
+      // Protected keys (pkg, source) are read-only on the runtime proxy; refusing
+      // returns false, which throws in strict mode (ESM).
+      if (key === 'pkg' || key === 'source') {
+        return false;
       }
+      obj[key] = value;
+      return true;
     }
   });
 }

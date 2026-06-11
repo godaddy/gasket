@@ -47,28 +47,25 @@ describe('CreateRuntime', () => {
   it('proxies set for ordinary properties', () => {
     const { appName } = runtime;
 
-    try {
-      runtime.appName = 'proxied';
-    } catch {
-      // eslint-disable-next-line jest/no-conditional-expect
-      expect(runtime.appName).toEqual('proxied');
-      // eslint-disable-next-line jest/no-conditional-expect
-      expect(runtime.appName).not.toEqual(appName);
-    }
+    runtime.appName = 'proxied';
+
+    expect(runtime.appName).toEqual('proxied');
+    expect(runtime.appName).not.toEqual(appName);
   });
 
   it('silently refuses to set { pkg, source }', () => {
     const { pkg, source } = runtime;
 
-    try {
+    // Setting a protected key throws in strict mode (the set trap returns false).
+    expect(() => {
       runtime.pkg = '';
+    }).toThrow();
+    expect(() => {
       runtime.source = '';
-    } catch {
-      // eslint-disable-next-line jest/no-conditional-expect
-      expect(runtime.pkg).toEqual(pkg);
-      // eslint-disable-next-line jest/no-conditional-expect
-      expect(runtime.source).toEqual(source);
-    }
+    }).toThrow();
+
+    expect(runtime.pkg).toEqual(pkg);
+    expect(runtime.source).toEqual(source);
   });
 
   it('sets the source to be the plugin provided', () => {
