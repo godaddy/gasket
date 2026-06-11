@@ -1,7 +1,5 @@
 import type {
   CreateContext,
-  CreatePrompt,
-  ConfigBuilder,
   CreateCommand,
   CommandArgument,
   CommandOption,
@@ -89,39 +87,9 @@ export function execute(params: { gasket: Gasket, context: PartialCreateContext 
   errors?: Error[]
 }): Promise<void>;
 
-/** sacaffold/actions */
-
-export function createHooks(params: { gasket?: Gasket; context: PartialCreateContext }): Promise<void>;
-
-export function chooseAppDescription(context: PartialCreateContext, prompt: CreatePrompt): Promise<void>;
-export function choosePackageManager(context: PartialCreateContext, prompt: CreatePrompt): Promise<void>;
-export function chooseTestPlugins(context: PartialCreateContext, prompt: CreatePrompt): Promise<void>;
-export function promptForTestPlugin(
-  prompt: CreatePrompt,
-  message: string,
-  isDefault: boolean
-): Promise<string | null>;
-export function allowExtantOverwriting(context: PartialCreateContext, prompt: CreatePrompt): Promise<void>;
-export function globalPrompts(params: { context: PartialCreateContext }): Promise<void>;
-
-export function promptHooks(params: { gasket?: Gasket; context: PartialCreateContext }): Promise<void>;
-export function execPluginPrompts(gasket: Gasket, context: PartialCreateContext): Promise<void>;
+/** scaffold/actions */
 
 export function mkDir({ context, spinner }: { context: CreateContext, spinner: Ora }): Promise<void>;
-
-export function setupPkg(params: { context: PartialCreateContext }): Promise<void>;
-
-export function writePkg(params: { context: PartialCreateContext }): Promise<void>;
-
-export type Descriptior = {
-  pattern: string;
-  base: string;
-  srcFile: string;
-  targetFile: string;
-  target: string;
-  from: string;
-  overrides?: string;
-}
 
 /** Templates */
 export function loadTemplate(params: { context: PartialCreateContext }): Promise<void>;
@@ -129,27 +97,6 @@ export function copyTemplate(params: { context: PartialCreateContext }): Promise
 export function customizeTemplate(params: { context: PartialCreateContext }): Promise<void>;
 export function installTemplateDeps(params: { context: PartialCreateContext }): Promise<void>;
 export function gitInit(params: { context: PartialCreateContext }): Promise<void>;
-
-/** File Generation */
-export function generateFiles({ context, spinner }: { context: CreateContext, spinner: Ora }): Promise<void>;
-export function performGenerate(context: CreateContext, descriptors: Descriptior[]): boolean[];
-export function getDescriptors(context: CreateContext): Promise<Descriptior[]>;
-export function assembleDescriptors(dest: string, from: string, pattern: string, srcPaths: string[]): Descriptior[];
-export function reduceDescriptors(descriptors: Descriptior[]): Descriptior[];
-
-export function writeGasketConfig(params: { context: PartialCreateContext }): Promise<void>;
-export function writeImports(imports: object | null): string;
-export function writeExpressions(expressions: string[] | null): string;
-export function createInjectionAssignments(config: object, assignments: (object | null)): string;
-export function cleanupFields(config: ConfigBuilder<object>): void;
-export function writePluginImports(plugins: string[]): string;
-export function replaceInjectionAssignments(content: string, assignments: (object | null)): string;
-
-export function installModules(params: { context: PartialCreateContext }): Promise<void>;
-
-export function linkModules(params: { context: CreateContext, spinner: Ora }): Promise<void>;
-
-export function postCreateHooks(params: { gasket?: Gasket, context: PartialCreateContext }): Promise<void>;
 
 export function printReport(params: {
   context: PartialCreateContext
