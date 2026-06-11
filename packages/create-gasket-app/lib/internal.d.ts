@@ -55,9 +55,7 @@ export function wrapWithSpinner(
   label: string,
   task: SpinnerTask,
   options?: SpinnerOptions
-): (context: { context: SpinnerContext['context'] } & {
-  errors?: Error[]
-}) => Promise<void>;
+): (args: { gasket?: Gasket; context: SpinnerContext['context'] }) => Promise<void>;
 
 /**
  * Wraps a task with a spinner, using both gasket and context.
@@ -83,9 +81,7 @@ export function spinnerAction(params: {
   spinner?: Ora
 }): Promise<void>;
 
-export function execute(params: { gasket: Gasket, context: PartialCreateContext } & {
-  errors?: Error[]
-}): Promise<void>;
+export function execute(args: { gasket?: Gasket; context: PartialCreateContext }): Promise<void>;
 
 /** scaffold/actions */
 
