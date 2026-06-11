@@ -102,6 +102,101 @@ by the [Godaddy JS styleguide][style].
 
 Please ensure that all contributed code utilizes our defined type checking method outlined in our [Type Safety with JSDoc document].
 
+## Code Quality
+
+Pull requests run a [Fallow] gate that flags dead code, unused dependencies,
+duplication, and complexity. The gate is scoped to the changeset: it only fails
+on issues your PR *introduces*. Existing findings in files you didn't touch are
+reported as inherited and won't block you. Editing a file that already carries a
+finding pulls that finding into scope, so the repo cleans up gradually.
+
+### Handling false positives
+
+A finding is usually real — fix it first. Only reach for suppression once you've
+confirmed the code is genuinely used and Fallow's static scan can't see it (the
+plugin architecture's dynamic loading and generator templates are the common
+cause).
+
+When a false positive is **structural** — a whole directory, a runtime-loaded
+pattern, or a recurring export shape — capture it once in `.fallowrc.json` rather
+than scattering inline comments:
+
+| Pattern | Config key |
+|---------|------------|
+| Files loaded at runtime, not statically imported | `dynamicallyLoaded` |
+| A directory Fallow shouldn't analyze (e.g. `generator/`) | `ignorePatterns` |
+| Exports consumed dynamically across many files | `ignoreExports` (glob + export names) |
+| Unused dependency (no comment syntax in `package.json`) | `ignoreDependencies` |
+
+The `ignoreDependencies` entries are deps Fallow's static scan can't see a use
+for, grouped by why:
+
+- **`@gasket/plugin-metadata`** — consumed via a `/// <reference types="..." />`
+  directive, which the scan doesn't count as a use.
+- **Babel toolchain** (`@babel/preset-env`, `@babel/preset-react`,
+  `@babel/plugin-transform-runtime`, `@babel/register`, `core-js`,
+  `regenerator-runtime`) — referenced from the `babel` key in `package.json` or
+  pulled in transitively by the transform, never `import`ed.
+- **`npm-check-updates`** — invoked as the `ncu` CLI binary, not imported.
+- **`@gasket/template-*`** — loaded by `generate-docs-index` via string paths.
+- **eslint shared-config peers** (`@eslint/eslintrc`, `@eslint/js`,
+  `eslint-plugin-jsx-a11y`, `eslint-plugin-react`) — transitive peers of the
+  `eslint-config-godaddy-*` flat configs, not imported directly.
+- **Cross-workspace plugin/sibling deps** (`@gasket/plugin-command`,
+  `@gasket/plugin-data`, `@gasket/plugin-docs`, `@gasket/plugin-docusaurus`,
+  `@gasket/plugin-dynamic-plugins`, `@gasket/plugin-elastic-apm`,
+  `@gasket/plugin-express`, `@gasket/plugin-fastify`, `@gasket/plugin-https`,
+  `@gasket/plugin-intl`, `@gasket/plugin-logger`, `@gasket/plugin-nextjs`,
+  `@gasket/plugin-webpack`, `@gasket/assets`, `@gasket/data`, `@gasket/intl`,
+  `@gasket/nextjs`, `@gasket/react-intl`, `@gasket/request`, `@gasket/utils`,
+  `create-gasket-app`, `@godaddy/terminus`, `debug`, `fastify`, `react`,
+  `react-intl`) — declared as sibling deps for scaffolding or integration tests
+  that load them dynamically. Fallow sees them used in *other* workspaces but not
+  the declaring one, and won't auto-remove a dep another workspace imports.
+- **`generate-docs-index`-only plugins** (`@gasket/plugin-analyze`,
+  `@gasket/plugin-docs-graphs`, `@gasket/plugin-happyfeet`,
+  `@gasket/plugin-https-proxy`, `@gasket/plugin-morgan`, `@gasket/plugin-swagger`,
+  `@gasket/plugin-winston`) — declared only by the docs-index build tool, which
+  `await import()`s them from a filesystem scan. `dynamicallyLoaded` resolves the
+  imports but doesn't clear the package.json dep, so the names are listed here too.
+
+`scripts/generate-docs-index` is in `dynamicallyLoaded`, not `ignorePatterns` —
+it's a private build tool that `await import()`s every plugin from a filesystem
+scan. `dynamicallyLoaded` treats those imports as used while keeping the directory
+under analysis (dead-code, complexity, dupes still run on it), which an
+`ignorePatterns` exclusion would skip.
+
+Confirm a dep is genuinely used-but-invisible before adding it here — if it's
+actually unused, remove it from `package.json` instead.
+
+Inline suppression is the last resort, for a genuine one-off that no config rule
+generalizes:
+
+```js
+// fallow-ignore-next-line unused-export
+export const loadedAtRuntime = () => {};
+```
+
+```js
+// fallow-ignore-file unused-file
+```
+
+### Manual cleanup
+
+Run the gate locally against your PR base, or scan and auto-fix the whole repo:
+
+```bash
+# Same check CI runs (use your PR's base branch)
+pnpm fallow audit --base origin/next
+
+# See all repo-wide findings
+pnpm fallow dead-code --summary
+
+# Auto-fix unused exports and dependencies (files/members stay manual)
+pnpm fallow fix --dry-run   # preview
+pnpm fallow fix --yes       # apply
+```
+
 ## Markdown Documentation
 
 Each package should have a `README.md`, with guides and other documents under a
@@ -237,6 +332,7 @@ This will trigger the CI to publish the packages to npm.
 - [JSDoc]
 
 [issues]: https://github.com/godaddy/gasket/issues
+[Fallow]: https://github.com/fallow-rs/fallow
 [JSDoc]: https://jsdoc.app/
 [npm]: http://npmjs.org/
 [style]: https://github.com/godaddy/javascript/#godaddy-style

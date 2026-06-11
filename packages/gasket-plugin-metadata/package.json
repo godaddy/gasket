@@ -44,7 +44,6 @@
   },
   "devDependencies": {
     "@gasket/plugin-webpack": "workspace:^",
-    "@godaddy/dmd": "^1.0.4",
     "create-gasket-app": "workspace:^",
     "vitest": "^3.2.0"
   }

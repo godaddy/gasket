@@ -5,7 +5,7 @@ import type {
   Plugin
 } from '@gasket/core';
 import type { HealthCheckError, TerminusOptions } from '@godaddy/terminus';
-import type { Server as HttpServer } from 'http';
+import type { Server as HttpServer, RequestListener } from 'http';
 import type { Server as HttpsServer } from 'https';
 import type { ServerOptions as ProxyServerOptions } from 'http-proxy';
 import type { SecureContextOptions } from 'tls';
@@ -25,7 +25,7 @@ declare module '@gasket/core' {
     port?: number;
     host?: string;
     timeout?: number;
-    handler?: Function;
+    handler?: RequestListener;
     keepAliveTimeout?: number;
   };
 
@@ -81,7 +81,7 @@ declare module '@gasket/core' {
         sni?: Record<string, HttpsSettings>;
       }
     >;
-    handler?: Function;
+    handler?: RequestListener;
   }
 
   export interface GasketConfig extends ServerOptions {

@@ -1,0 +1,90 @@
+name: Fallow
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - next
+
+concurrency:
+  group: fallow-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+# Fork PRs get a read-only GITHUB_TOKEN, so comment posting no-ops there
+# (the secure default — we do not use pull_request_target).
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  fallow:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          # Default checkout is shallow; the audit action needs full history
+          # to derive the PR base diff.
+          fetch-depth: 0
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Use Node.js 24.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.x
+          cache: pnpm
+
+      # Only the health step (pnpm exec fallow) needs this; the audit action
+      # installs its own binary. setup-node's cache: pnpm already restores the
+      # store, so no separate actions/cache step.
+      - name: Install Dependencies
+        run: pnpm install --prefer-offline
+
+      - name: Fallow audit (gate)
+        # Pinned to a commit (third-party action, holds the write token). v2.91.0.
+        uses: fallow-rs/fallow@6e87e12ff54a666badd1650aa191ededaad73237
+        with:
+          command: audit
+          comment: true
+
+      # Hand-rolled because the action's own health comment is PR-diff-scoped
+      # and can't show a repo-wide grade. `if: always()` reports even when the
+      # gate above fails; `|| true` keeps a health hiccup from failing the job.
+      # The line-1 marker is what the comment step greps to update in place.
+      - name: Fallow health score (report only)
+        if: always()
+        env:
+          SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          mkdir -p .fallow
+          pnpm exec fallow health --score --format json --quiet 2>/dev/null > .fallow/health.json || true
+          node scripts/fallow-health-comment.js .fallow/health.json "$SHA" > .fallow/comment.md || true
+          cat .fallow/comment.md >> "$GITHUB_STEP_SUMMARY"
+
+      # continue-on-error: a failed comment post (e.g. read-only fork token)
+      # must not fail the job.
+      - name: Comment health score on PR
+        if: always() && github.event_name == 'pull_request'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          marker="<!-- fallow-health-score -->"
+          # Match only our own bot-authored comment so a user pasting the marker
+          # can't capture the sticky update. Distinguish a failed find call from
+          # "not found": on error, skip rather than fall through to POST (which
+          # would orphan a duplicate sticky comment).
+          if ! existing=$(gh api "repos/${GITHUB_REPOSITORY}/issues/${PR}/comments" --paginate \
+            --jq "map(select(.user.type == \"Bot\" and (.body | contains(\"$marker\")))) | .[0].id // empty"); then
+            echo "::warning::Could not list PR comments; skipping health-comment update."
+            exit 0
+          fi
+          if [ -n "$existing" ]; then
+            gh api --method PATCH "repos/${GITHUB_REPOSITORY}/issues/comments/${existing}" -F body=@.fallow/comment.md
+          else
+            gh api --method POST "repos/${GITHUB_REPOSITORY}/issues/${PR}/comments" -F body=@.fallow/comment.md
+          fi

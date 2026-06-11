@@ -8,10 +8,95 @@ import { getPortFallback, portInUseError, startProxy, getRawServerConfig } from 
 const debugLogger = debug('gasket:https');
 
 /**
+ * Log the create-servers failure, distinguishing port-in-use from other causes.
+ * @type {import('./internal.d.ts').logServerError}
+ */
+function logServerError(errors, serverOpts, logger) {
+  const message = portInUseError(errors)
+    ? 'Port is already in use. Please ensure you are not running the same process from another terminal!'
+    : `Failed to start the web servers: ${errors.message}`;
+  const errorMessage = errs.create({ message, serverOpts });
+
+  debugLogger(errorMessage, errors);
+  logger.error(errorMessage.message);
+}
+
+/**
+ * Resolve a server config's port into a `:NNNN` URL suffix (empty when unset).
+ * The number-vs-object branch exists for `http`, which `ServerOptions` types as
+ * `number | false | null | config(s)`. https/http2 are typed as object configs
+ * only (never a bare number), so the `typeof === 'number'` test is unreachable
+ * for them — the branch is kept so one formatter serves all three protocols.
+ * @type {import('./internal.d.ts').portSuffix}
+ */
+function portSuffix(server) {
+  // Arrays (multiple configs) and falsy values carry no single port to format.
+  const single = server && !Array.isArray(server) ? server : null;
+  const port = (typeof single === 'number' ? single : single?.port) ?? '';
+  return port ? `:${port}` : '';
+}
+
+/**
+ * Log the started-server URLs, one line per protocol that was created.
+ * http and https/http2 are reported separately because they map to different
+ * URL schemes; https and http2 share the `https://` scheme.
+ * @type {import('./internal.d.ts').logServersStarted}
+ */
+function logServersStarted(serverOpts, logger) {
+  const { http: _http, https: _https, http2: _http2, hostname = 'localhost' } = serverOpts;
+
+  if (_http) {
+    logger.info(`Server started at http://${hostname}${portSuffix(_http)}/`);
+  }
+
+  if (_https || _http2) {
+    logger.info(`Server started at https://${hostname}${portSuffix(_https ?? _http2)}/`);
+  }
+}
+
+/**
+ * Build the shared terminus options object used for every created server.
+ *
+ * It's possible that we are creating multiple servers that are going to hook
+ * into terminus. We want to eliminate the possibility of double lifecycle
+ * execution so we create a single options object used for all terminus-based
+ * instances. Lifecycles that could potentially be called multiple times are
+ * wrapped with a `one-time` function to ensure the callback only executes once.
+ * @type {import('./internal.d.ts').buildTerminusOptions}
+ */
+function buildTerminusOptions(gasket, logger, routes, terminusDefaults) {
+  /**
+   * Health check request handler
+   */
+  async function healthCheckRequested() {
+    await gasket.traceRoot().exec('healthcheck', HealthCheckError);
+  }
+
+  return {
+    logger: logger.error.bind(logger),
+    onSendFailureDuringShutdown: one(async function onSendFailureDuringShutdown() {
+      await gasket.exec('onSendFailureDuringShutdown');
+    }),
+    beforeShutdown: one(async function beforeShutdown() {
+      await gasket.exec('beforeShutdown');
+    }),
+    onSignal: one(async function onSignal() {
+      await gasket.exec('onSignal');
+    }),
+    onShutdown: one(async function onShutdown() {
+      await gasket.exec('onShutdown');
+    }),
+    healthChecks: routes.reduce((acc, cur) => {
+      acc[cur] = healthCheckRequested;
+      return acc;
+    }, {}),
+    ...terminusDefaults
+  };
+}
+
+/**
  * Gasket action: startServer
- * @param {import('@gasket/core').Gasket} gasket Gasket instance
- * @returns {Promise<void>} promise
- * @public
+ * @type {import('@gasket/core').ActionHandler<'startServer'>}
  */
 async function startServer(gasket) {
   await gasket.isReady;
@@ -44,66 +129,11 @@ async function startServer(gasket) {
     serverOpts.http = getPortFallback(env);
   }
 
-  /**
-   * Health check request handler
-   */
-  async function healthCheckRequested() {
-    await gasket.traceRoot().exec('healthcheck', HealthCheckError);
-  }
+  const terminusOpts = buildTerminusOptions(gasket, logger, routes, terminusDefaults);
 
-  //
-  // It's possible that we are creating multiple servers that are going to hook
-  // into terminus. We want to eliminate the possibility of double lifecycle
-  // execution so we're going to create a single options object that is going
-  // to be used for all terminus based instances.
-  //
-  // Lifecycles that could potentially be called multiple times are wrapped
-  // with a `one-time` function to ensure that the callback is only executed
-  // once.
-  //
-  const terminusOpts = {
-    logger: logger.error.bind(logger),
-    onSendFailureDuringShutdown: one(
-      async function onSendFailureDuringShutdown() {
-        await gasket.exec('onSendFailureDuringShutdown');
-      }
-    ),
-    beforeShutdown: one(async function beforeShutdown() {
-      await gasket.exec('beforeShutdown');
-    }),
-    onSignal: one(async function onSignal() {
-      await gasket.exec('onSignal');
-    }),
-    onShutdown: one(async function onShutdown() {
-      await gasket.exec('onShutdown');
-    }),
-    healthChecks: routes.reduce((acc, cur) => {
-      acc[cur] = healthCheckRequested;
-      return acc;
-    }, {}),
-    ...terminusDefaults
-  };
-
-  // eslint-disable-next-line max-statements
   create(serverOpts, async function created(errors, servers) {
     if (errors) {
-      let errorMessage;
-
-      if (portInUseError(errors)) {
-        errorMessage = errs.create({
-          message:
-            'Port is already in use. Please ensure you are not running the same process from another terminal!',
-          serverOpts
-        });
-      } else {
-        errorMessage = errs.create({
-          message: `Failed to start the web servers: ${errors.message}`,
-          serverOpts
-        });
-      }
-
-      debugLogger(errorMessage, errors);
-      logger.error(errorMessage.message);
+      logServerError(errors, serverOpts, logger);
       return;
     }
 
@@ -114,28 +144,7 @@ async function startServer(gasket) {
       .forEach((server) => createTerminus(server, terminusOpts));
 
     await gasket.exec('servers', servers);
-    const {
-      http: _http,
-      https: _https,
-      http2: _http2,
-      hostname: _hostname = 'localhost'
-    } = serverOpts;
-
-    if (_http) {
-      let _port = (typeof _http === 'number' ? _http : _http.port) ?? '';
-      if (_port) _port = `:${_port}`;
-
-      logger.info(`Server started at http://${_hostname}${_port}/`);
-    }
-
-    if (_https || _http2) {
-      let _port = (_https ?? _http2).port ?? '';
-      if (_port) _port = `:${_port}`;
-
-      logger.info(
-        `Server started at https://${_hostname}${_port}/`
-      );
-    }
+    logServersStarted(serverOpts, logger);
   });
 }
 

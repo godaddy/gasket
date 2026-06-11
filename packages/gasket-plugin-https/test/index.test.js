@@ -8,31 +8,25 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const pkg = JSON.parse(readFileSync(join(__dirname, '../package.json'), 'utf8'));
-const { name, version, description } = pkg;
 
 describe('Plugin', () => {
-  it('is an object', () => {
-    expect(typeof plugin).toBe('object');
+  it('exports an object', () => {
+    expect(plugin).toBeTypeOf('object');
   });
 
-  it('has expected properties', () => {
-    expect(plugin).toHaveProperty('name', name);
-    expect(plugin).toHaveProperty('version', version);
-    expect(plugin).toHaveProperty('description', description);
-    expect(plugin).toHaveProperty('actions');
-    expect(plugin).toHaveProperty('hooks');
+  it.each([
+    ['name', pkg.name],
+    ['version', pkg.version],
+    ['description', pkg.description]
+  ])('mirrors package %s', (prop, value) => {
+    expect(plugin[prop]).toBe(value);
   });
 
-  it('has expected hooks', () => {
-    const expected = [
-      'configure',
-      'metadata'
-    ];
+  it.each(['actions', 'hooks'])('exposes %s', (prop) => {
+    expect(plugin[prop]).toBeDefined();
+  });
 
-    expect(plugin).toHaveProperty('hooks');
-
-    const hooks = Object.keys(plugin.hooks);
-    expect(hooks).toEqual(expected);
-    expect(hooks).toHaveLength(expected.length);
+  it('hooks exactly configure and metadata', () => {
+    expect(Object.keys(plugin.hooks)).toStrictEqual(['configure', 'metadata']);
   });
 });

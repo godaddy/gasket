@@ -96,3 +96,4 @@ packages/gasket-core/cjs
 .github/copilot-instructions.md
 CLAUDE.md
 .claude/*
+.fallow/

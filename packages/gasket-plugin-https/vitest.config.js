@@ -8,8 +8,16 @@ export default defineConfig({
       provider: 'v8',
       enabled: true,
       reporter: ['text', 'json', 'html', 'lcovonly'],
-      include: ['lib/**'],
-      exclude: ['**/node_modules/**', '**/test/**']
+      // Cover executable JS only; index.d.ts is type declarations with no
+      // runtime to exercise.
+      include: ['lib/**/*.js'],
+      exclude: ['**/node_modules/**', '**/test/**'],
+      thresholds: {
+        statements: 80,
+        branches: 80,
+        functions: 80,
+        lines: 80
+      }
     }
   }
 });

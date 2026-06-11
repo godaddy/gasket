@@ -2,8 +2,7 @@
 /// <reference types="@gasket/plugin-https" />
 
 import type { GasketConfigDefinition, Hook } from '@gasket/core';
-import type { ClientRequest, ServerResponse } from 'http';
-// import '@gasket/plugin-https';
+import type { IncomingMessage, ServerResponse } from 'http';
 
 describe('@gasket/plugin-https', () => {
   const { log } = console;
@@ -79,7 +78,7 @@ describe('@gasket/plugin-https', () => {
     const handler: Hook<'createServers'> = (gasket, configs) => {
       return {
         ...configs,
-        handler: (req: ClientRequest, res: ServerResponse) => res.end('ok')
+        handler: (req: IncomingMessage, res: ServerResponse) => res.end('ok')
       };
     };
   });
@@ -122,7 +121,7 @@ describe('@gasket/plugin-https', () => {
 
   it('adds the beforeShutdown lifecycle', () => {
     const handler: Hook<'beforeShutdown'> = async (gasket) => {
-      // await shutdownTheThing();
+      // perform shutdown logic
     };
   });
 
@@ -134,7 +133,7 @@ describe('@gasket/plugin-https', () => {
 
   it('adds the onShutdown lifecycle', () => {
     const handler: Hook<'onShutdown'> = async (gasket) => {
-      // await cleanupStuff();
+      // perform shutdown logic
     };
   });
 });

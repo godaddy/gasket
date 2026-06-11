@@ -12,7 +12,6 @@
     "@gasket/assets": "workspace:^",
     "@gasket/core": "workspace:^",
     "@gasket/data": "workspace:^",
-    "@gasket/fetch": "workspace:^",
     "@gasket/intl": "workspace:^",
     "@gasket/nextjs": "workspace:^",
     "@gasket/plugin-analyze": "workspace:^",
