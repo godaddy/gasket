@@ -1,5 +1,12 @@
 # `@gasket/plugin-winston`
 
+## 7.4.1
+
+### Patch Changes
+
+- Updated dependencies [ee27a36]
+  - @gasket/plugin-logger@7.5.0
+
 ## 7.4.0
 
 ### Minor Changes

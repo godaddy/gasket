@@ -1,5 +1,12 @@
 # `@gasket/plugin-morgan`
 
+## 8.0.0
+
+### Patch Changes
+
+- Updated dependencies [ee27a36]
+  - @gasket/plugin-logger@7.5.0
+
 ## 7.4.0
 
 ### Minor Changes
