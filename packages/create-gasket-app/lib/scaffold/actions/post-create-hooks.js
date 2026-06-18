@@ -25,6 +25,7 @@ async function postCreateHooks({ gasket, context }) {
     return await runShellCommand(cmd, ['run', script], { cwd: dest });
   }
 
+  // Object so future utilities can be added without breaking the hook signature
   const utils = { runScript };
   await gasket.exec('postCreate', context, utils);
 }

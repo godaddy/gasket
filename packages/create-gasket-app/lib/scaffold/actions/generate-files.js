@@ -15,7 +15,7 @@ const joinSep = pthArr => pthArr.join(path.sep);
 const splitSep = pthStr => pthStr.split(reSep);
 
 /**
- * Last in wins.
+ * Deduplicates target files, tracking overrides. Last in wins.
  * @type {import('../../internal.d.ts').reduceDescriptors}
  */
 function reduceDescriptors(descriptors) {
