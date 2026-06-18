@@ -1,5 +1,14 @@
 # `create-gasket-app`
 
+## 8.0.0-next.3
+
+### Patch Changes
+
+- a0a6713: remove dead exports flagged by fallow
+- f930b6d: fix spinner error stacks recorded on create context, not wrapper args
+- Updated dependencies [a0a6713]
+  - @gasket/core@8.0.0-next.3
+
 ## 8.0.0-next.2
 
 ### Patch Changes

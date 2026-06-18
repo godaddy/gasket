@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 8.0.0-next.5
+
+### Patch Changes
+
+- fc2c954: regen lockfiles
+
 ## 8.0.0-next.4
 
 ### Patch Changes
