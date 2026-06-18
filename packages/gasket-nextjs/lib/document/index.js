@@ -15,6 +15,7 @@ function isDocumentClass(maybeClass) {
  * To avoid polluting <head/>, we want to render our JSON in the <body/>
  * but before our other scripts so that it is available to query.
  * In a basic Next.js app, this is between the Main and NextScript tags.
+ * @type {import('./internal.d.ts').lookupIndex}
  */
 function lookupIndex(bodyChildren, index = -1) {
   const lookups = [
