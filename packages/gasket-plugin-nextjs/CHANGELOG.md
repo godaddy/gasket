@@ -1,5 +1,11 @@
 # `@gasket/plugin-nextjs`
 
+## 8.0.0-next.5
+
+### Patch Changes
+
+- a0a6713: remove dead exports flagged by fallow
+
 ## 8.0.0-next.4
 
 ### Patch Changes
