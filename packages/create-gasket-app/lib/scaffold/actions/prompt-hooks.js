@@ -1,11 +1,7 @@
 import inquirer from 'inquirer';
 import { withGasketSpinner } from '../with-spinner.js';
 
-/**
- * Initializes engine with provided plugins
- * to execute their prompt lifecycle hooks.
- * @type {import('../../internal.js').execPluginPrompts}
- */
+/** @type {import('../../internal.d.ts').execPluginPrompts} */
 async function execPluginPrompts(gasket, context) {
   //
   // @see: https://github.com/SBoudrias/Inquirer.js/#inquirercreatepromptmodule---prompt-function
@@ -18,11 +14,7 @@ async function execPluginPrompts(gasket, context) {
   Object.assign(context, nextContext);
 }
 
-/**
- * Executes the `prompt` hook for all registered plugins.
- * Adds `prompt` util function for prompting features.
- * @type {import('../../internal.js').promptHooks}
- */
+/** @type {import('../../internal.d.ts').promptHooks} */
 async function promptHooks({ gasket, context }) {
   //
   // Because `execPluginPrompts` is recursive, we need to start it

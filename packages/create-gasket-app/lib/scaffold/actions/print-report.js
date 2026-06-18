@@ -3,29 +3,15 @@ const { bold } = pkg;
 import { withSpinner } from '../with-spinner.js';
 import { logo } from '../../utils/index.js';
 
-/**
- * Logs a new line in the console
- * @private
- */
 const newline = () => {
   console.log('');
 };
 
-/**
- * Converts a camelCase string to Space Case
- * https://stackoverflow.com/questions/4149276/javascript-camelcase-to-regular-form?answertab=active#tab-top
- * @param {string} str - camelCase string to fixup
- * @returns {string} result
- * @private
- */
+// https://stackoverflow.com/questions/4149276/javascript-camelcase-to-regular-form?answertab=active#tab-top
 const toSpaceCase = str => str.replace(/([A-Z])/g, ' $1')
   .replace(/^./, s => s.toUpperCase());
 
-/**
- * Builds the report object from context
- * @type {import('../../internal.js').buildReport}
- * @private
- */
+/** @type {import('../../internal.d.ts').buildReport} */
 function buildReport(context) {
   const {
     appName,
@@ -50,10 +36,7 @@ function buildReport(context) {
   };
 }
 
-/**
- * Outputs create command details to the console
- * @type {import('../../internal.js').printReport}
- */
+/** @type {import('../../internal.d.ts').printReport} */
 async function printReport({ context }) {
   const report = buildReport(context);
   const { warnings, errors } = context;

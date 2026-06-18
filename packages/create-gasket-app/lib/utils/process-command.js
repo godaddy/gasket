@@ -4,10 +4,7 @@ import { processOptions } from './process-options.js';
 import { createOption } from './create-option.js';
 const program = new Command();
 
-/**
- * isValidCommand - Validates the command configuration
- * @type {import('../internal.js').isValidCommand}
- */
+/** @type {import('../internal.d.ts').isValidCommand} */
 function isValidCommand(command) {
   const keys = Object.keys(command);
   return keys.length &&
@@ -19,10 +16,7 @@ function isValidCommand(command) {
     typeof command.action === 'function';
 }
 
-/**
- * processCommand - Process the command configuration
- * @type {import('../internal.js').processCommand}
- */
+/** @type {import('../internal.d.ts').processCommand} */
 export function processCommand(command) {
   if (!isValidCommand(command)) throw new Error('Invalid command configuration');
   const { id, description, action, args, options, hidden = false, default: isDefault = false } = command;

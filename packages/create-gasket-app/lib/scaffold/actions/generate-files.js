@@ -15,10 +15,8 @@ const joinSep = pthArr => pthArr.join(path.sep);
 const splitSep = pthStr => pthStr.split(reSep);
 
 /**
- * Find all duplicate target files and reduce to single descriptor.
- * Keeps track of overrides.
  * Last in wins.
- * @type {import('../../internal.js').reduceDescriptors}
+ * @type {import('../../internal.d.ts').reduceDescriptors}
  */
 function reduceDescriptors(descriptors) {
   const reduced = descriptors.reduce((acc, desc) => {
@@ -37,10 +35,7 @@ function reduceDescriptors(descriptors) {
   return Array.from(reduced.values());
 }
 
-/**
- * Assemble the description objects from glob results
- * @type {import('../../internal.js').assembleDescriptors}
- */
+/** @type {import('../../internal.d.ts').assembleDescriptors} */
 function assembleDescriptors(dest, from, pattern, srcPaths) {
   const output = joinSep(splitSep(dest));
   const baseParts = splitSep(path.resolve(pattern.replace(/[/\\]+\.?\*.*$/, '')));
@@ -60,10 +55,7 @@ function assembleDescriptors(dest, from, pattern, srcPaths) {
   });
 }
 
-/**
- * Build a list of descriptions of all files we want to generate
- * @type {import('../../internal.js').getDescriptors}
- */
+/** @type {import('../../internal.d.ts').getDescriptors} */
 async function getDescriptors(context) {
   const { dest, files } = context;
   const descriptors = (
@@ -81,10 +73,7 @@ async function getDescriptors(context) {
   return reduceDescriptors(descriptors);
 }
 
-/**
- * Read file content, apply templating, then write out target file.
- * @type {import('../../internal.js').performGenerate}
- */
+/** @type {import('../../internal.d.ts').performGenerate} */
 async function performGenerate(context, descriptors) {
   const { warnings, errors, generatedFiles } = context;
   let hasWarning = false;
@@ -147,10 +136,7 @@ async function performGenerate(context, descriptors) {
   return [hasWarning, hasError];
 }
 
-/**
- * Generate the app files and templates using context
- * @type {import('../../internal.js').generateFiles}
- */
+/** @type {import('../../internal.d.ts').generateFiles} */
 async function generateFiles({ context, spinner }) {
   const { files } = context;
 

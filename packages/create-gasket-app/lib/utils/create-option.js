@@ -1,9 +1,6 @@
 import { Option } from 'commander';
 
-/**
- * createOption - Create a commander option
- * @type {import('../internal.js').createOption}
- */
+/** @type {import('../internal.d.ts').createOption} */
 export function createOption(definition) {
   const option = new Option(...definition.options);
   const { defaultValue, conflicts, parse, hidden, required } = definition;

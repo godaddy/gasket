@@ -1,18 +1,11 @@
 import { withGasketSpinner } from '../with-spinner.js';
 import { runShellCommand } from '@gasket/utils';
 
-/**
- * Executes the `postCreate` hook for all registered plugins.
- * @type {import('../../internal.js').postCreateHooks}
- */
+/** @type {import('../../internal.d.ts').postCreateHooks} */
 async function postCreateHooks({ gasket, context }) {
   const { dest, packageManager } = context;
 
-  /**
-   * Determines the correct command for running scripts based on the package manager.
-   * @param {string} script - The name of the script to run.
-   * @returns {Promise} A promise that resolves if the script runs successfully.
-   */
+  /** @type {import('../../internal.d.ts').runScript} */
   async function runScript(script) {
     let cmd;
 
@@ -32,9 +25,6 @@ async function postCreateHooks({ gasket, context }) {
     return await runShellCommand(cmd, ['run', script], { cwd: dest });
   }
 
-  /**
-   * An object with one value for now, so adding more utilities in future is easy.
-   */
   const utils = { runScript };
   await gasket.exec('postCreate', context, utils);
 }

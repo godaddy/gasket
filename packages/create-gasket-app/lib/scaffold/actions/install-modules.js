@@ -1,9 +1,6 @@
 import { withSpinner } from '../with-spinner.js';
 
-/**
- * Installs node_modules using the selected package manager
- * @type {import('../../internal.js').installModules}
- */
+/** @type {import('../../internal.d.ts').installModules} */
 async function installModules({ context }) {
   const { pkgManager } = context;
 
