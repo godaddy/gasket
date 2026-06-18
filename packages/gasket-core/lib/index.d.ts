@@ -622,21 +622,6 @@ export function createAsyncThunk<Id extends HookId>(
 ): PluginThunk<Id>;
 
 /**
- * Create a thunk for sync plugin execution
- * @param {string} plugin - Name of the plugin
- * @param {HookSubscriber} subscriber - Hook subscriber configuration
- * @param {string} event - Name of the event
- * @param {Function} [traceHookStart] - Optional function to trace hook start
- * @returns {SyncPluginThunk} Sync thunk function for plugin execution
- */
-export function createSyncThunk(
-  plugin: string,
-  subscriber: HookSubscriber,
-  event: string,
-  traceHookStart?: (pluginName: string, event: string) => void
-): SyncPluginThunk;
-
-/**
  * Generate a unique plugin name for dynamically registered hooks.
  * Used when no `pluginName` is provided explicitly.
  * @returns {string} Unique plugin name string
