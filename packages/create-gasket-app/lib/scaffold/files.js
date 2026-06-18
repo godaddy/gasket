@@ -1,6 +1,6 @@
 /**
  * Utility for plugins to add files and templates for generating
- * @type {import('../index.js').Files}
+ * @type {import('../index.d.ts').Files}
  */
 export class Files {
   constructor() {

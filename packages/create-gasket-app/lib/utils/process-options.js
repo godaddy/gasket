@@ -1,7 +1,4 @@
-/**
- * isValidOption - Validate the option
- * @type {import('../internal.js').isValidOption}
- */
+/** @type {import('../internal.d.ts').isValidOption} */
 function isValidOption(option) {
   const keys = Object.keys(option);
   return !!keys.length &&
@@ -10,10 +7,7 @@ function isValidOption(option) {
     !!option.description;
 }
 
-/**
- * processOptions - Process the options configuration
- * @type {import('../internal.js').processOptions}
- */
+/** @type {import('../internal.d.ts').processOptions} */
 export function processOptions(options) {
   if (!Array.isArray(options) || !options.every(isValidOption)) throw new Error('Invalid option(s) configuration');
 

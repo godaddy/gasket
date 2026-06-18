@@ -3,10 +3,7 @@ import path from 'path';
 import { writeFile } from 'fs/promises';
 import { withSpinner } from '../with-spinner.js';
 
-/**
- * writePluginImports - Write string imports as value(s)
- * @type {import('../../internal.js').writePluginImports}
- */
+/** @type {import('../../internal.d.ts').writePluginImports} */
 function writePluginImports(plugins) {
   return plugins.reduce((acc, cur, index) => {
     acc += `\t\t${cur}${index < plugins.length - 1 ? ',\n' : ''}`;
@@ -14,19 +11,14 @@ function writePluginImports(plugins) {
   }, '');
 }
 
-/**
- * writeImports - Write imports to file using key value pairs
- * @type {import('../../internal.js').writeImports}
- */
+/** @type {import('../../internal.d.ts').writeImports} */
 function writeImports(imports) {
   if (!imports) return '';
   return `${Object.entries(imports).map(([importDef, importPath]) => `import ${importDef} from '${importPath}';`).join('\n')}\n`;
 }
 
-/**
- * createInjectionAssignments - replace object path with a temp string value
- * @type {import('../../internal.js').createInjectionAssignments}
- */
+// Placeholder strings let raw JS expressions survive JSON5.stringify
+/** @type {import('../../internal.d.ts').createInjectionAssignments} */
 function createInjectionAssignments(config, assignments) {
   if (!assignments) return '';
   Object.keys(assignments).forEach((key) => {
@@ -42,10 +34,7 @@ function createInjectionAssignments(config, assignments) {
   });
 }
 
-/**
- * replaceInjectionAssignments - replace temp string value with actual value
- * @type {import('../../internal.js').replaceInjectionAssignments}
- */
+/** @type {import('../../internal.d.ts').replaceInjectionAssignments} */
 function replaceInjectionAssignments(content, assignments) {
   if (!assignments) return content;
   Object.keys(assignments).forEach((key) => {
@@ -55,19 +44,13 @@ function replaceInjectionAssignments(content, assignments) {
   return content;
 }
 
-/**
- * writeExpressions - Write expressions to file
- * @type {import('../../internal.js').writeExpressions}
- */
+/** @type {import('../../internal.d.ts').writeExpressions} */
 function writeExpressions(expressions) {
   if (!expressions) return '';
   return `${expressions.map((expression) => `${expression}`).join('\n')}\n`;
 }
 
-/**
- * cleanupFields - Remove fields from config object
- * @type {import('../../internal.js').cleanupFields}
- */
+/** @type {import('../../internal.d.ts').cleanupFields} */
 function cleanupFields(config) {
   delete config.fields.imports;
   delete config.fields.pluginImports;
@@ -75,10 +58,7 @@ function cleanupFields(config) {
   delete config.fields.injectionAssignments;
 }
 
-/**
- * Writes the contents of `pkg` to the app's package.json.
- * @type {import('../../internal.js').writeGasketConfig}
- */
+/** @type {import('../../internal.d.ts').writeGasketConfig} */
 async function writeGasketConfig({ context }) {
   const { dest, gasketConfig, generatedFiles, typescript } = context;
   const fileName = typescript ? 'gasket.ts' : 'gasket.js';

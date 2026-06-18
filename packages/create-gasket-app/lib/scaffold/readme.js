@@ -1,6 +1,6 @@
 import { readFile } from 'fs/promises';
 
-/** @type {import('../index.js').Readme} */
+/** @type {import('../index.d.ts').Readme} */
 export default class Readme {
   constructor() {
     this.markdown = [];

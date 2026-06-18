@@ -2,7 +2,7 @@ import path from 'path';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 
-/** @type {import('../internal.js').readConfig} */
+/** @type {import('../internal.d.ts').readConfig} */
 export function readConfig(context, { config, configFile }) {
   if (config) {
     const parsedConfig = JSON.parse(config);

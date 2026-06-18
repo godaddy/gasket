@@ -6,7 +6,7 @@ import { readConfig } from '../scaffold/utils.js';
  * The CreateRuntime represents a shallow proxy to a CreateContext
  * that automatically adds transactional information for providing
  * CLI users with blame information in the event of conflicts.
- * @type {import('../internal.js').makeCreateRuntime}
+ * @type {import('../internal.d.ts').makeCreateRuntime}
  */
 function makeCreateRuntime(context, source) {
   //
@@ -68,7 +68,7 @@ export class CreateContext {
   }
 }
 
-/** @type {import('../internal.js').makeCreateContext} */
+/** @type {import('../internal.d.ts').makeCreateContext} */
 export function makeCreateContext(argv = [], options = {}) {
   const appName = argv[0] || 'templated-app';
   const {
@@ -92,7 +92,7 @@ export function makeCreateContext(argv = [], options = {}) {
 
   /**
    * Input context which will be appended by prompts and passed to create hooks
-   * @type {import('../index.js').CreateContext}
+   * @type {import('../index.d.ts').CreateContext}
    */
   // @ts-ignore - some properties not defined in constructor will be added later
   const context = new CreateContext({

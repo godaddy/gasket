@@ -16,6 +16,10 @@ export type PartialCreateContext = Partial<CreateContext>;
 
 export function commasToArray(value: string): string[];
 
+export function validateOptions(context: PartialCreateContext): PartialCreateContext;
+
+export function handleTemplate(context: PartialCreateContext): Promise<void>;
+
 /** scaffold */
 
 export function readConfig(
@@ -144,6 +148,8 @@ export function replaceInjectionAssignments(content: string, assignments: (objec
 export function installModules(params: { context: PartialCreateContext }): Promise<void>;
 
 export function linkModules(params: { context: CreateContext, spinner: Ora }): Promise<void>;
+
+export function runScript(script: string): Promise<{ stdout: string }>;
 
 export function postCreateHooks(params: { gasket?: Gasket, context: PartialCreateContext }): Promise<void>;
 

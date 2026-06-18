@@ -1,10 +1,7 @@
 import inquirer from 'inquirer';
 import { withSpinner } from '../with-spinner.js';
 
-/**
- * What is your app description?
- * @type {import('../../internal.js').chooseAppDescription}
- */
+/** @type {import('../../internal.d.ts').chooseAppDescription} */
 async function chooseAppDescription(context, prompt) {
   if (!('appDescription' in context)) {
     const { appDescription } = await prompt([
@@ -20,10 +17,7 @@ async function chooseAppDescription(context, prompt) {
   }
 }
 
-/**
- * What package manager do you want to use?
- * @type {import('../../internal.js').choosePackageManager}
- */
+/** @type {import('../../internal.d.ts').choosePackageManager} */
 async function choosePackageManager(context, prompt) {
   const packageManager =
     context.packageManager ||
@@ -57,7 +51,7 @@ async function choosePackageManager(context, prompt) {
 /**
  * Given that gasket is creating in an already existing directory, it should
  * confirm with the user that it's intentionally overwriting that directory
- * @type {import('../../internal.js').allowExtantOverwriting}
+ * @type {import('../../internal.d.ts').allowExtantOverwriting}
  */
 async function allowExtantOverwriting(context, prompt) {
   const { dest, extant } = context;
@@ -81,10 +75,7 @@ export const questions = [
   allowExtantOverwriting
 ];
 
-/**
- * Fire off prompts for user input
- * @type {import('../../internal.js').globalPrompts}
- */
+/** @type {import('../../internal.d.ts').globalPrompts} */
 async function globalPrompts({ context }) {
   const prompt = context.prompts ? inquirer.createPromptModule() : () => ({});
 

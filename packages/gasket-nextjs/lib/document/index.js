@@ -6,7 +6,7 @@ import { injectGasketData } from '../inject-gasket-data.js';
 
 const reClass = /^class\s/;
 
-/** @type {import('./internal.js').isDocumentClass} */
+/** @type {import('./internal.d.ts').isDocumentClass} */
 function isDocumentClass(maybeClass) {
   return typeof maybeClass === 'function' && reClass.test(Function.prototype.toString.call(maybeClass));
 }
@@ -14,11 +14,8 @@ function isDocumentClass(maybeClass) {
 /**
  * To avoid polluting <head/>, we want to render our JSON in the <body/>
  * but before our other scripts so that it is available to query.
- * In a basic Next.js app, this is between the Main and NextScript tags.*
- * @param {Array} bodyChildren - Children of body element
- * @param {number} index - Element index
- * @returns {number} index
- * @private
+ * In a basic Next.js app, this is between the Main and NextScript tags.
+ * @type {import('./internal.d.ts').lookupIndex}
  */
 function lookupIndex(bodyChildren, index = -1) {
   const lookups = [
@@ -32,11 +29,7 @@ function lookupIndex(bodyChildren, index = -1) {
   return lookups.reduce((acc, cur) => acc !== -1 ? acc : cur(), index);
 }
 
-/**
- * Make a wrapper to extend the Next.js Document, injecting a script with the
- * `gasketData` from the response object.
- * @type {import('./index.d.ts').withGasketData}
- */
+/** @type {import('./index.d.ts').withGasketData} */
 export function withGasketData(
   gasket,
   options = {}

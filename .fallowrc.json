@@ -5,7 +5,12 @@
   },
   "ignorePatterns": [
     "**/generator/**",
-    "site/**"
+    "**/template/**",
+    "site/**",
+    "index.html"
+  ],
+  "ignoreUnresolvedImports": [
+    "/path/to/app/**"
   ],
   "dynamicallyLoaded": [
     "scripts/generate-docs-index/**",

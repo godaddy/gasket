@@ -5,7 +5,7 @@ import { withSpinner } from '../with-spinner.js';
  * Validates this instance can execute without common blockers:
  * - Target destination on disk is available. Validate by acquiring
  * a lock through `mkdir`.
- * @type {import('../../internal.js').mkDir}
+ * @type {import('../../internal.d.ts').mkDir}
  */
 async function mkDir({ context, spinner }) {
   const { dest, relDest, extant, destOverride } = context;
