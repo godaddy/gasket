@@ -14,6 +14,10 @@ export type PartialCreateContext = Partial<CreateContext>;
 
 export function commasToArray(value: string): string[];
 
+export function validateOptions(context: PartialCreateContext): PartialCreateContext;
+
+export function handleTemplate(context: PartialCreateContext): Promise<void>;
+
 /** scaffold */
 
 export function readConfig(
