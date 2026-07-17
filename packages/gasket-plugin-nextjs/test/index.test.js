@@ -60,6 +60,7 @@ describe('Plugin', function () {
       'express',
       'fastify',
       'metadata',
+      'nextConfig',
       'prompt',
       'webpackConfig',
       'workbox'

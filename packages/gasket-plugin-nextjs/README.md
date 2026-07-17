@@ -64,10 +64,13 @@ export default gasket.actions.getNextConfig();
 ### Next.js 16 and the Webpack bundler
 
 This plugin requires **Next.js 16** or later and injects Webpack configuration
-into your Next app. In Next.js 16, Turbopack is the default bundler, so Gasket
-apps must use the `--webpack` flag when running the Next CLI. Generated apps
-and scripts use `next build --webpack` and `next dev --webpack` by default.
-Next.js 16 also requires **Node.js 20.9+**.
+into your Next app. Generated apps and scripts use `next build --webpack` and
+`next dev --webpack` by default. Apps can opt into Turbopack by setting
+`TURBOPACK=1` and using the `--turbopack` Next CLI flag. In this mode, the
+plugin removes its Webpack callback and externalizes loaded Gasket plugins for
+the server bundle. App-specific Webpack aliases and fallbacks must still be
+represented in the app's `turbopack` configuration. Next.js 16 also requires
+**Node.js 20.9+**.
 
 For general Webpack configurations, it is recommended to use features of the
 Gasket [Webpack plugin], which will be merged into the Next.js configuration.
