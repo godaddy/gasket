@@ -1,4 +1,3 @@
-// @ts-nocheck - preboot is typed by @gasket/plugin-https which is not a direct dependency
 /// <reference types="@gasket/plugin-https" />
 
 /**

@@ -1,5 +1,4 @@
 /// <reference types="@gasket/plugin-metadata" />
-/// <reference types="@gasket/plugin-https" />
 
 import packageJson from '../package.json' with { type: 'json' };
 import actions from './actions.js';
