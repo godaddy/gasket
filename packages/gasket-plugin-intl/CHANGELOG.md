@@ -1,5 +1,11 @@
 # `@gasket/plugin-intl`
 
+## 7.6.7
+
+### Patch Changes
+
+- 7ca221e: add preboot hook to await locale loading before server opens port
+
 ## 7.6.6
 
 ### Patch Changes
