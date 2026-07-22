@@ -60,6 +60,7 @@
     "@gasket/plugin-data": "workspace:^",
     "@gasket/plugin-elastic-apm": "workspace:^",
     "@gasket/plugin-logger": "workspace:^",
+    "@gasket/plugin-https": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",
     "@gasket/plugin-nextjs": "workspace:^",
     "@gasket/plugin-service-worker": "workspace:^",
