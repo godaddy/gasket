@@ -12,6 +12,7 @@ import create from './create.js';
 import postCreate from './post-create.js';
 import prompt from './prompt.js';
 import build from './build.js';
+import preboot from './preboot.js';
 const { name, version, description } = packageJson;
 
 /** @type {import('@gasket/core').Plugin} */
@@ -23,6 +24,7 @@ const plugin = {
   hooks: {
     init,
     configure,
+    preboot,
     create,
     postCreate,
     prompt,

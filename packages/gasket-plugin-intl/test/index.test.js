@@ -27,6 +27,7 @@ describe('Plugin', function () {
       'publicGasketData',
       'init',
       'metadata',
+      'preboot',
       'serviceWorkerCacheKey'
     ];
 
