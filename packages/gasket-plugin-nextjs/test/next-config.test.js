@@ -1,38 +1,32 @@
-import { afterEach, describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import nextConfig from '../lib/next-config.js';
 
-// eslint-disable-next-line no-process-env
-const processEnv = process.env;
-const originalTurbopack = processEnv.TURBOPACK;
-
 describe('nextConfig', function () {
-  afterEach(function () {
-    if (typeof originalTurbopack === 'undefined') {
-      delete processEnv.TURBOPACK;
-    } else {
-      processEnv.TURBOPACK = originalTurbopack;
-    }
-  });
-
-  it('returns the existing config when Turbopack is disabled', function () {
-    delete processEnv.TURBOPACK;
+  it('returns the existing config when gasket.config.turbopack is unset', function () {
     const config = { webpack: function webpack() {} };
 
     expect(nextConfig({ config: {} }, config)).toBe(config);
   });
 
-  it('removes webpack configuration under Turbopack', function () {
-    processEnv.TURBOPACK = '1';
+  it('returns the existing config when gasket.config.turbopack is false', function () {
+    const config = { webpack: function webpack() {} };
 
-    const result = nextConfig({ config: {} }, { webpack: function webpack() {} });
+    expect(nextConfig({ config: { turbopack: false } }, config)).toBe(config);
+  });
+
+  it('removes webpack configuration under Turbopack', function () {
+    const result = nextConfig(
+      { config: { turbopack: true } },
+      { webpack: function webpack() {} }
+    );
 
     expect(result).not.toHaveProperty('webpack');
   });
 
-  it('externalizes Gasket core and loaded plugins', function () {
-    processEnv.TURBOPACK = '1';
+  it('externalizes only @gasket/core and @gasket/plugin-nextjs (does not auto-scan other plugins)', function () {
     const gasket = {
       config: {
+        turbopack: true,
         plugins: [
           { name: '@gasket/plugin-nextjs' },
           { name: '@godaddy/gasket-plugin-uxp' },
@@ -46,22 +40,15 @@ describe('nextConfig', function () {
 
     expect(result.serverExternalPackages).toEqual([
       '@gasket/core',
-      '@gasket/plugin-nextjs',
-      '@godaddy/gasket-plugin-uxp'
+      '@gasket/plugin-nextjs'
     ]);
   });
 
   it('preserves and deduplicates existing server externals', function () {
-    processEnv.TURBOPACK = '1';
-    const gasket = {
-      config: {
-        plugins: [{ name: '@gasket/plugin-nextjs' }]
-      }
-    };
-
-    const result = nextConfig(gasket, {
-      serverExternalPackages: ['existing-package', '@gasket/core']
-    });
+    const result = nextConfig(
+      { config: { turbopack: true } },
+      { serverExternalPackages: ['existing-package', '@gasket/core'] }
+    );
 
     expect(result.serverExternalPackages).toEqual([
       'existing-package',
