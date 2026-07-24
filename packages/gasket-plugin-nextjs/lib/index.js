@@ -7,6 +7,7 @@ import * as actions from './actions.js';
 import { prompt } from './prompt.js';
 import create from './create.js';
 import { webpackConfig } from './webpack-config.js';
+import nextConfig from './next-config.js';
 import express from './express.js';
 import fastify from './fastify.js';
 import workbox from './workbox.js';
@@ -23,6 +24,7 @@ const plugin = {
   hooks: {
     configure,
     webpackConfig,
+    nextConfig,
     prompt,
     create,
     express,
