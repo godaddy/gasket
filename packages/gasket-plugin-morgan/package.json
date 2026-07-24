@@ -45,7 +45,7 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-morgan",
   "dependencies": {
-    "morgan": "^1.10.0",
+    "morgan": "^1.11.0",
     "split": "^1.0.1"
   },
   "devDependencies": {
