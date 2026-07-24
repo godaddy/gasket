@@ -1,5 +1,14 @@
 # generate-docs-index
 
+## 7.4.39
+
+### Patch Changes
+
+- Updated dependencies [225b798]
+  - @gasket/plugin-nextjs@7.8.0
+  - @gasket/plugin-intl@7.6.7
+  - @gasket/preset-nextjs@7.6.13
+
 ## 7.4.38
 
 ### Patch Changes

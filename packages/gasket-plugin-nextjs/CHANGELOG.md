@@ -1,5 +1,16 @@
 # `@gasket/plugin-nextjs`
 
+## 7.8.0
+
+### Minor Changes
+
+- 225b798: Add opt-in Turbopack support gated on `gasket.config.turbopack` (set via
+  `makeGasket({ turbopack: true })`). When enabled, this plugin's `nextConfig`
+  hook removes its Webpack callback and adds `@gasket/core` and
+  `@gasket/plugin-nextjs` to Next.js `serverExternalPackages`. Other Gasket
+  plugins should hook `nextConfig` to self-register additional server externals
+  under this flag.
+
 ## 7.7.7
 
 ### Patch Changes
