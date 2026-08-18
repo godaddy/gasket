@@ -13,12 +13,12 @@
     ".": {
       "types": "./lib/index.d.ts",
       "import": "./lib/index.js",
-      "require": "./cjs/index.js",
-      "default": "./cjs/index.js"
+      "require": "./cjs/index.cjs",
+      "default": "./cjs/index.cjs"
     },
     "./prompts": {
       "import": "./lib/prompt.js",
-      "require": "./cjs/prompt.js"
+      "require": "./cjs/prompt.cjs"
     },
     "./package.json": "./package.json"
   },
