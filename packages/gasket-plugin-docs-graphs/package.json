@@ -12,8 +12,8 @@
     ".": {
       "types": "./lib/index.d.ts",
       "import": "./lib/index.js",
-      "require": "./cjs/index.js",
-      "default": "./cjs/index.js"
+      "require": "./cjs/index.cjs",
+      "default": "./cjs/index.cjs"
     },
     "./package.json": "./package.json"
   },
