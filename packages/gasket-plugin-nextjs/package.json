@@ -26,7 +26,6 @@
   },
   "scripts": {
     "build": "gasket-cjs ./lib && node scripts/fix-cjs-paths.js",
-    "build:watch": "pnpm run build --watch",
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
     "posttest": "pnpm run lint && pnpm run typecheck",
