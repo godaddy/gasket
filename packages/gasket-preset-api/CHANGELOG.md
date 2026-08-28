@@ -1,5 +1,31 @@
 # `@gasket/preset-api`
 
+## 7.6.12
+
+### Patch Changes
+
+- 680f916: Remove the `build:watch` script from these 20 packages. Each one's `build` script runs `gasket-cjs`, and `build:watch` was `pnpm run build --watch` — but `gasket-cjs` (a Commander CLI) has no `--watch` support and exits with `error: unknown option '--watch'` on every invocation. The script has never worked since these packages moved to `gasket-cjs`; removing it rather than reintroducing watch mode, since no consumer of `gasket-cjs` currently supports it (tracked in PFX-1184, same root cause fixed for the internal fork's equivalent packages in gdcorp-uxp/gasket#2298).
+- Updated dependencies [c607816]
+- Updated dependencies [680f916]
+- Updated dependencies [c607816]
+  - @gasket/plugin-docs@7.5.7
+  - @gasket/plugin-command@7.6.7
+  - @gasket/plugin-docusaurus@8.0.1
+  - @gasket/plugin-dynamic-plugins@7.5.3
+  - @gasket/plugin-express@7.5.3
+  - @gasket/plugin-logger@7.5.1
+  - @gasket/plugin-vitest@7.2.3
+  - @gasket/plugin-swagger@7.4.3
+  - @gasket/plugin-cypress@7.5.4
+  - @gasket/plugin-fastify@7.5.6
+  - @gasket/plugin-git@7.4.11
+  - @gasket/plugin-https@7.4.2
+  - @gasket/plugin-jest@7.5.10
+  - @gasket/plugin-lint@7.4.4
+  - @gasket/plugin-mocha@7.5.7
+  - @gasket/plugin-typescript@7.4.6
+  - @gasket/plugin-winston@7.4.2
+
 ## 7.6.11
 
 ### Patch Changes

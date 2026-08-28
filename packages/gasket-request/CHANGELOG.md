@@ -1,5 +1,11 @@
 # `@gasket/request`
 
+## 7.5.6
+
+### Patch Changes
+
+- 680f916: Remove the `build:watch` script from these 20 packages. Each one's `build` script runs `gasket-cjs`, and `build:watch` was `pnpm run build --watch` — but `gasket-cjs` (a Commander CLI) has no `--watch` support and exits with `error: unknown option '--watch'` on every invocation. The script has never worked since these packages moved to `gasket-cjs`; removing it rather than reintroducing watch mode, since no consumer of `gasket-cjs` currently supports it (tracked in PFX-1184, same root cause fixed for the internal fork's equivalent packages in gdcorp-uxp/gasket#2298).
+
 ## 7.5.5
 
 ### Patch Changes

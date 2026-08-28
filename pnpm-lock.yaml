@@ -1287,7 +1287,7 @@ importers:
   packages/gasket-plugin-morgan:
     dependencies:
       '@gasket/plugin-logger':
-        specifier: ^7.5.0
+        specifier: ^7.5.1
         version: link:../gasket-plugin-logger
       express:
         specifier: ^4.21.2
@@ -1895,7 +1895,7 @@ importers:
         specifier: workspace:^
         version: link:../gasket-intl
       '@gasket/plugin-intl':
-        specifier: ^7.6.5
+        specifier: ^7.6.8
         version: link:../gasket-plugin-intl
       hoist-non-react-statics:
         specifier: ^3.3.2
@@ -15209,7 +15209,7 @@ snapshots:
 
   '@docusaurus/react-loadable@6.0.0(react@19.2.4)':
     dependencies:
-      '@types/react': 19.2.7
+      '@types/react': 19.2.14
       react: 19.2.4
 
   '@docusaurus/theme-classic@3.8.1(@swc/core@1.10.18(@swc/helpers@0.5.15))(@types/react@19.0.12)(acorn@8.15.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.8.2)':
@@ -16953,7 +16953,7 @@ snapshots:
   '@types/react-router-dom@5.3.3':
     dependencies:
       '@types/history': 4.7.11
-      '@types/react': 19.2.7
+      '@types/react': 19.2.14
       '@types/react-router': 5.1.20
 
   '@types/react-router@5.1.20':
