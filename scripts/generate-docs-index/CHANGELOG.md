@@ -1,5 +1,57 @@
 # generate-docs-index
 
+## 7.4.40
+
+### Patch Changes
+
+- Updated dependencies [c607816]
+- Updated dependencies [680f916]
+- Updated dependencies [c607816]
+  - @gasket/plugin-docs@7.5.7
+  - @gasket/plugin-intl@7.6.8
+  - @gasket/core@7.7.6
+  - @gasket/intl@7.5.4
+  - @gasket/nextjs@7.6.12
+  - @gasket/plugin-command@7.6.7
+  - @gasket/plugin-data@7.5.4
+  - @gasket/plugin-docusaurus@8.0.1
+  - @gasket/plugin-dynamic-plugins@7.5.3
+  - @gasket/plugin-elastic-apm@7.5.2
+  - @gasket/plugin-express@7.5.3
+  - @gasket/plugin-https-proxy@7.5.2
+  - @gasket/plugin-logger@7.5.1
+  - @gasket/plugin-metadata@7.5.13
+  - @gasket/plugin-morgan@8.0.1
+  - @gasket/plugin-nextjs@7.8.1
+  - @gasket/plugin-vitest@7.2.3
+  - @gasket/preset-api@7.6.12
+  - @gasket/preset-nextjs@7.6.14
+  - @gasket/react-intl@7.7.3
+  - @gasket/request@7.5.6
+  - @gasket/utils@7.6.7
+  - @gasket/plugin-docs-graphs@7.4.3
+  - @gasket/plugin-happyfeet@7.4.1
+  - @gasket/plugin-swagger@7.4.3
+  - create-gasket-app@7.4.24
+  - @gasket/data@7.5.6
+  - @gasket/plugin-analyze@7.4.4
+  - @gasket/plugin-cypress@7.5.4
+  - @gasket/plugin-fastify@7.5.6
+  - @gasket/plugin-git@7.4.11
+  - @gasket/plugin-https@7.4.2
+  - @gasket/plugin-jest@7.5.10
+  - @gasket/plugin-lint@7.4.4
+  - @gasket/plugin-manifest@7.3.10
+  - @gasket/plugin-middleware@7.5.5
+  - @gasket/plugin-mocha@7.5.7
+  - @gasket/plugin-redux@7.4.5
+  - @gasket/plugin-service-worker@7.5.2
+  - @gasket/plugin-typescript@7.4.6
+  - @gasket/plugin-webpack@7.4.1
+  - @gasket/plugin-winston@7.4.2
+  - @gasket/plugin-workbox@7.4.0
+  - @gasket/redux@7.4.1
+
 ## 7.4.39
 
 ### Patch Changes

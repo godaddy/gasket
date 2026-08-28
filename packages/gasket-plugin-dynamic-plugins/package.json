@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-dynamic-plugins",
-  "version": "7.5.2",
+  "version": "7.5.3",
   "description": "Gasket plugin for dynamically adding plugins to Gasket",
   "type": "module",
   "types": "lib/index.d.ts",
