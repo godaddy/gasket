@@ -33,7 +33,7 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-cypress",
   "devDependencies": {
-    "@babel/core": "^7.26.9",
+    "@babel/core": "^7.29.6",
     "@gasket/core": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",
     "@testing-library/react": "^16.3.0",
