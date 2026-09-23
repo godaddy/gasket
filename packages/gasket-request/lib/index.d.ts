@@ -114,6 +114,23 @@ export class WeakPromiseKeeper<Key extends WeakKey = WeakKey, Value = any> {
 export function makeGasketRequest(req: RequestLike): MaybeAsync<GasketRequest>;
 
 /**
+ * Returns the request instance a GasketRequest was normalized from, for reading
+ * framework-specific fields such as `ip` that GasketRequest does not normalize.
+ *
+ * Returns `undefined` for a directly constructed GasketRequest, for a
+ * serialized and revived one, and for any value that is not a GasketRequest.
+ *
+ * Under the Next.js App Router there is no request instance: the returned value
+ * is the assembled request-like, which is truthy but carries only headers,
+ * cookies and query. Guard the field you need, not the object.
+ *
+ * The type parameter is an unchecked assertion of the framework in use.
+ */
+export function getOriginalRequest<T extends RequestLike = RequestLike>(
+  gasketRequest: GasketRequest
+): T | undefined;
+
+/**
  * Wraps a request action function with a GasketRequest transformation.
  */
 type RequestActionFn<Result, Args extends Array<unknown>> = (

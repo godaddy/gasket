@@ -2,6 +2,11 @@ import { WeakPromiseKeeper } from './keeper.js';
 import { parse } from 'cookie';
 
 /**
+ * Registry-global so duplicate installs of this package address the same slot.
+ */
+const kOriginalRequest = Symbol.for('gasket.originalRequest');
+
+/**
  * Represents a normalized Gasket request.
  * @type {import('@gasket/request').GasketRequest}
  */
@@ -108,16 +113,34 @@ export async function makeGasketRequest(requestLike) {
         ? requestLike.method.toUpperCase()
         : undefined;
 
-      return new GasketRequest(Object.seal({
+      const gasketRequest = new GasketRequest(Object.seal({
         headers,
         cookies: 'getAll' in cookies ? await objectFromCookieStore(cookies) : cookies,
         query: query instanceof URLSearchParams ? objectFromSearchParams(query) : query,
         path,
         method
       }));
+
+      // Runs once per headers object, so the first request-like normalized for
+      // a given headers object is the one kept.
+      Object.defineProperty(gasketRequest, kOriginalRequest, {
+        value: requestLike,
+        enumerable: false,
+        writable: false,
+        configurable: false
+      });
+
+      return gasketRequest;
     };
 
     keeper.set(rawHeaders, normalize());
   }
   return keeper.get(rawHeaders);
+}
+
+/**
+ * @type {import('@gasket/request').getOriginalRequest}
+ */
+export function getOriginalRequest(gasketRequest) {
+  return gasketRequest?.[kOriginalRequest];
 }
