@@ -122,9 +122,13 @@ export async function makeGasketRequest(requestLike) {
       }));
 
       // Runs once per headers object, so the first request-like normalized for
-      // a given headers object is the one kept.
+      // a given headers object is the one kept. Unwrap when the input already
+      // carries an original: under duplicate installs `instanceof` fails across
+      // copies, so an already-normalized request gets normalized again, and
+      // nesting it would hand callers a GasketRequest where they expect the
+      // framework request.
       Object.defineProperty(gasketRequest, kOriginalRequest, {
-        value: requestLike,
+        value: kOriginalRequest in requestLike ? requestLike[kOriginalRequest] : requestLike,
         enumerable: false,
         writable: false,
         configurable: false

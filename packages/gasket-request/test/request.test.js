@@ -310,6 +310,12 @@ describe('makeGasketRequest', () => {
     expect(result.method).toBeUndefined();
   });
 
+  it('has no method when the source method is null', async () => {
+    const result = await makeGasketRequest({ headers: { header13: 'value13' }, method: null });
+
+    expect(result.method).toBeUndefined();
+  });
+
   it('captures the method from a NextRequest style object', async () => {
     const headers = new Map([['header10', 'value10']]);
     const nextUrl = new URL('https://example.com/path/to/page?query1=value1');
@@ -493,6 +499,23 @@ describe('getOriginalRequest', () => {
     });
 
     expect(getOriginalRequest(standIn)).toBe(requestLike);
+  });
+
+  it('unwraps the original when a second copy of the package re-normalizes', async () => {
+    // A duplicate install means instanceof fails across copies, so the second
+    // copy re-normalizes an already-normalized request rather than passing it
+    // through. The original must stay the framework request, not the
+    // intermediate GasketRequest.
+    const copy2 = await import('../lib/request.js?copy=2');
+    const requestLike = { headers: { header12: 'value12' }, ip: '203.0.113.42' };
+
+    const fromCopy2 = await copy2.makeGasketRequest(requestLike);
+    expect(fromCopy2).not.toBeInstanceOf(GasketRequest);
+
+    const fromCopy1 = await makeGasketRequest(fromCopy2);
+
+    expect(getOriginalRequest(fromCopy1)).toBe(requestLike);
+    expect(getOriginalRequest(fromCopy1).ip).toEqual('203.0.113.42');
   });
 
   it('has no original after a serialize and revive round trip', async () => {

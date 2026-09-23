@@ -118,16 +118,20 @@ export function makeGasketRequest(req: RequestLike): MaybeAsync<GasketRequest>;
  * framework-specific fields such as `ip` that GasketRequest does not normalize.
  *
  * Returns `undefined` for a directly constructed GasketRequest, for a
- * serialized and revived one, and for any value that is not a GasketRequest.
+ * serialized and revived one, and for any absent value.
  *
  * Under the Next.js App Router there is no request instance: the returned value
  * is the assembled request-like, which is truthy but carries only headers,
  * cookies and query. Guard the field you need, not the object.
  *
+ * Read-only. Do not mutate the returned request or consume its body — a fetch
+ * `Request` or `IncomingMessage` body is a single-use stream, and draining it
+ * here leaves nothing for the handler that reads it next.
+ *
  * The type parameter is an unchecked assertion of the framework in use.
  */
 export function getOriginalRequest<T extends RequestLike = RequestLike>(
-  gasketRequest: GasketRequest
+  gasketRequest: GasketRequest | null | undefined
 ): T | undefined;
 
 /**

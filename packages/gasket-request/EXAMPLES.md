@@ -52,6 +52,7 @@ app.get('/users', async (req, res) => {
   console.log(gasketRequest.cookies);
   console.log(gasketRequest.query);
   console.log(gasketRequest.path);
+  console.log(gasketRequest.method); // 'GET'
 
   res.json({ success: true });
 });
@@ -70,6 +71,7 @@ export async function middleware(request) {
   console.log(gasketRequest.path);
   console.log(gasketRequest.query);
   console.log(gasketRequest.cookies);
+  console.log(gasketRequest.method); // 'GET'
 
   return NextResponse.next();
 }
@@ -125,7 +127,11 @@ normalize, such as `ip`.
 Returns `undefined` when there is no original request to return — see
 [Caveats](#caveats).
 
-### Express Request
+Treat the result as read-only. Do not mutate the request or consume its body: a
+fetch `Request` or `IncomingMessage` body is a single-use stream, so reading it
+here leaves nothing for the handler that reads it next.
+
+### Express original request
 
 Express derives `req.ip` from the `trust proxy` setting, so it is not something
 `GasketRequest` can normalize. Reach it through the original request:
@@ -153,7 +159,7 @@ export default {
 };
 ```
 
-### Fastify Request
+### Fastify original request
 
 Fastify exposes `request.ip`, and `request.ips` when `trustProxy` is enabled:
 

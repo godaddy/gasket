@@ -90,6 +90,8 @@ request-like object from `next/headers`, which has two consequences for the
   `ip` on it. Guard the field you need, not the object:
 
 ```js
+import { getOriginalRequest } from '@gasket/request';
+
 const ip = getOriginalRequest(req)?.ip;
 if (!ip) {
   // No client IP available in this environment

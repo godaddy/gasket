@@ -74,8 +74,12 @@ const ip = getOriginalRequest(gasketRequest)?.ip;
 ```
 
 Returns `undefined` when there is no original request — a directly constructed
-`GasketRequest`, a serialized and revived one, or any value that is not a
-`GasketRequest`.
+`GasketRequest`, a serialized and revived one, or any absent value.
+
+Treat the result as read-only. Do not mutate the request or consume its body: a
+fetch `Request` or `IncomingMessage` body is a single-use stream, so reading it
+here leaves nothing for the handler that reads it next, and the failure surfaces
+far from this call.
 
 In the Next.js App Router there is no request instance, so the returned value is
 the request-like object assembled from `next/headers`. It is truthy but carries
