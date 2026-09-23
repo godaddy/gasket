@@ -7,6 +7,7 @@ describe('index', () => {
     const expected = [
       'GasketRequest',
       'makeGasketRequest',
+      'getOriginalRequest',
       'withGasketRequest',
       'withGasketRequestCache',
       'WeakPromiseKeeper'

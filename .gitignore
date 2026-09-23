@@ -67,6 +67,9 @@ typings/
 *.iml
 .vscode/
 
+# Agent scratch: plans, specs, working notes — never committed
+.tmp/
+
 # generated docs files
 .docs
 

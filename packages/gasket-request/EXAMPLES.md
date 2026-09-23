@@ -52,6 +52,7 @@ app.get('/users', async (req, res) => {
   console.log(gasketRequest.cookies);
   console.log(gasketRequest.query);
   console.log(gasketRequest.path);
+  console.log(gasketRequest.method); // 'GET'
 
   res.json({ success: true });
 });
@@ -70,6 +71,7 @@ export async function middleware(request) {
   console.log(gasketRequest.path);
   console.log(gasketRequest.query);
   console.log(gasketRequest.cookies);
+  console.log(gasketRequest.method); // 'GET'
 
   return NextResponse.next();
 }
@@ -114,6 +116,113 @@ const gasketRequest = await makeGasketRequest({
 });
 
 console.log(gasketRequest.headers['content-type']); // 'application/json'
+```
+
+## getOriginalRequest
+
+Retrieves the original framework request that a `GasketRequest` was normalized
+from. Use it to reach framework-specific fields that `GasketRequest` does not
+normalize, such as `ip`.
+
+Returns `undefined` when there is no original request to return — see
+[Caveats](#caveats).
+
+Treat the result as read-only. Do not mutate the request or consume its body: a
+fetch `Request` or `IncomingMessage` body is a single-use stream, so reading it
+here leaves nothing for the handler that reads it next.
+
+### Express original request
+
+Express derives `req.ip` from the `trust proxy` setting, so it is not something
+`GasketRequest` can normalize. Reach it through the original request:
+
+```js
+import express from 'express';
+import { getOriginalRequest } from '@gasket/request';
+
+const app = express();
+app.set('trust proxy', true);
+
+export default {
+  name: 'audit-plugin',
+  hooks: {
+    // The hook only receives the normalized GasketRequest
+    async publicGasketData(gasket, data, { req }) {
+      const original = getOriginalRequest(req);
+
+      console.log(original?.ip); // '203.0.113.42'
+      console.log(req.method); // 'GET' — normalized, no lookup needed
+
+      return data;
+    }
+  }
+};
+```
+
+### Fastify original request
+
+Fastify exposes `request.ip`, and `request.ips` when `trustProxy` is enabled:
+
+```js
+import Fastify from 'fastify';
+import { getOriginalRequest, makeGasketRequest } from '@gasket/request';
+
+const fastify = Fastify({ trustProxy: true });
+
+fastify.get('/users', async (request, reply) => {
+  const gasketRequest = await makeGasketRequest(request);
+
+  // Later, anywhere holding only the GasketRequest
+  const original = getOriginalRequest(gasketRequest);
+
+  console.log(original?.ip); // '203.0.113.42'
+  console.log(original?.ips); // ['203.0.113.42', '198.51.100.7']
+
+  return { ok: true };
+});
+```
+
+### TypeScript
+
+The return type is generic so you can assert the framework you are in. The
+assertion is unchecked — you are telling TypeScript what you already know:
+
+```ts
+import type { Request as ExpressRequest } from 'express';
+import type { FastifyRequest } from 'fastify';
+import { getOriginalRequest } from '@gasket/request';
+
+const expressReq = getOriginalRequest<ExpressRequest>(req);
+const fastifyReq = getOriginalRequest<FastifyRequest>(req);
+
+const ip = expressReq?.ip; // string | undefined
+```
+
+### Caveats
+
+`getOriginalRequest` returns `undefined` when no original request exists — a
+directly constructed `GasketRequest`, or anything that is not a
+`GasketRequest`.
+
+In the Next.js App Router there is no request instance. `@gasket/nextjs`
+assembles a request-like object from `next/headers`, so `getOriginalRequest`
+returns **a truthy object that has no `ip`**:
+
+```js
+// App Router — RSC
+const original = getOriginalRequest(req);
+
+console.log(Boolean(original)); // true — the check you reach for does not help
+console.log(original.ip); // undefined
+```
+
+Guard the field, not the object:
+
+```js
+const ip = getOriginalRequest(req)?.ip;
+if (!ip) {
+  // No client IP available in this environment
+}
 ```
 
 ## withGasketRequest

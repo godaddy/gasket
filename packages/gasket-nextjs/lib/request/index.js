@@ -40,6 +40,9 @@ export async function request(params) {
         }
       }
 
+      // No method: next/headers exposes none, and defaulting to GET would be
+      // wrong during a Server Action, which is a POST that re-renders this
+      // component in the same request.
       return makeGasketRequest({
         headers: headerEntries,
         cookies: cookieEntries,
