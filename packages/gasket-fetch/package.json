@@ -39,7 +39,7 @@
     "@babel/plugin-transform-runtime": "^7.26.9",
     "@babel/preset-env": "^7.26.9",
     "@babel/register": "^7.25.9",
-    "core-js": "^3.40.0",
+    "core-js": "^3.50.0",
     "jest": "^29.7.0",
     "jsdom": "^20.0.3",
     "regenerator-runtime": "^0.14.1",

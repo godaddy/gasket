@@ -45,17 +45,17 @@
     "commander": "^12.1.0",
     "deepmerge": "^4.3.1",
     "diagnostics": "^2.0.2",
-    "glob": "^13.0.1",
+    "glob": "^13.0.6",
     "handlebars": "^4.7.9",
     "inquirer": "^6.5.2",
     "json5": "^2.2.3",
     "mkdirp": "^1.0.4",
     "ora": "^3.4.0",
-    "semver": "^7.7.1"
+    "semver": "^7.8.5"
   },
   "devDependencies": {
     "@gasket/request": "workspace:^",
-    "@typescript-eslint/parser": "^8.38.0",
+    "@typescript-eslint/parser": "^8.70.1",
     "@vitest/coverage-v8": "^3.2.0",
     "dotenv": "^16.4.7",
     "vitest": "^3.2.0"

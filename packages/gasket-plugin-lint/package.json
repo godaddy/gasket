@@ -33,13 +33,13 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-lint",
   "dependencies": {
-    "semver": "^7.7.1"
+    "semver": "^7.8.5"
   },
   "devDependencies": {
     "@gasket/core": "workspace:^",
     "@gasket/plugin-express": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",
-    "@typescript-eslint/parser": "^8.38.0",
+    "@typescript-eslint/parser": "^8.70.1",
     "create-gasket-app": "workspace:^",
     "jest": "^29.7.0",
     "typescript": "^5.8.2"

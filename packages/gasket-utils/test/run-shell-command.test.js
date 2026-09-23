@@ -38,24 +38,21 @@ describe('runShellCommand', function () {
   });
 
   it('rejects with details object', async function () {
+    const err = await runShellCommand('node', ['./fixtures/test-script.js', failMode], { cwd }).catch(e => e);
 
-    try {
-      await runShellCommand('node', ['./fixtures/test-script.js', failMode], { cwd });
-    } catch (err) {
-      expect(err).toBeInstanceOf(Object);
-      expect(err).toHaveProperty('message');
-      expect(err.message).toContain('exited with non-zero code');
+    expect(err).toBeInstanceOf(Object);
+    expect(err).toHaveProperty('message');
+    expect(err.message).toContain('exited with non-zero code');
 
-      expect(err).toHaveProperty('argv');
-      expect(err).toHaveProperty('stdout');
-      expect(err.stdout).toContain('waiting');
+    expect(err).toHaveProperty('argv');
+    expect(err).toHaveProperty('stdout');
+    expect(err.stdout).toContain('waiting');
 
-      expect(err).toHaveProperty('stderr');
-      expect(err.stderr).toContain('fail');
+    expect(err).toHaveProperty('stderr');
+    expect(err.stderr).toContain('fail');
 
-      expect(err).toHaveProperty('code', 1);
-      expect(err).toHaveProperty('aborted', false);
-    }
+    expect(err).toHaveProperty('code', 1);
+    expect(err).toHaveProperty('aborted', false);
   });
 
   describe('with AbortController', function () {
@@ -78,18 +75,16 @@ describe('runShellCommand', function () {
 
     it('early abort rejects with details object', async function () {
       controller.abort();
-      try {
-        await runShellCommand('node', ['./fixtures/test-script.js'], { cwd, signal });
-      } catch (err) {
-        expect(err).toBeInstanceOf(Object);
-        expect(err).toHaveProperty('message');
-        expect(err.message).toContain('aborted');
+      const err = await runShellCommand('node', ['./fixtures/test-script.js'], { cwd, signal }).catch(e => e);
 
-        expect(err).toHaveProperty('argv');
-        expect(err).not.toHaveProperty('stdout');
-        expect(err).not.toHaveProperty('stderr');
-        expect(err).toHaveProperty('aborted', true);
-      }
+      expect(err).toBeInstanceOf(Object);
+      expect(err).toHaveProperty('message');
+      expect(err.message).toContain('aborted');
+
+      expect(err).toHaveProperty('argv');
+      expect(err).not.toHaveProperty('stdout');
+      expect(err).not.toHaveProperty('stderr');
+      expect(err).toHaveProperty('aborted', true);
     });
 
     it('abort rejects after run', async function () {
@@ -100,23 +95,21 @@ describe('runShellCommand', function () {
     });
 
     it('abort rejects with details object', async function () {
-      try {
-        const promise = runShellCommand('node', ['./fixtures/test-script.js', !failMode, 100], { cwd, signal });
-        await pause(10);
-        controller.abort();
-        await promise;
-      } catch (err) {
-        expect(err).toBeInstanceOf(Object);
-        expect(err).toHaveProperty('message');
-        expect(err.message).toContain('exited with non-zero code');
+      const promise = runShellCommand('node', ['./fixtures/test-script.js', !failMode, 100], { cwd, signal });
+      await pause(10);
+      controller.abort();
+      const err = await promise.catch(e => e);
 
-        expect(err).toHaveProperty('argv');
-        expect(err).toHaveProperty('stdout');
-        expect(err).toHaveProperty('stderr');
-        expect(err).toHaveProperty('code');
+      expect(err).toBeInstanceOf(Object);
+      expect(err).toHaveProperty('message');
+      expect(err.message).toContain('exited with non-zero code');
 
-        expect(err).toHaveProperty('aborted', true);
-      }
+      expect(err).toHaveProperty('argv');
+      expect(err).toHaveProperty('stdout');
+      expect(err).toHaveProperty('stderr');
+      expect(err).toHaveProperty('code');
+
+      expect(err).toHaveProperty('aborted', true);
     });
   });
 });

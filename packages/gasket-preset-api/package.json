@@ -61,7 +61,7 @@
     "@gasket/plugin-metadata": "workspace:^",
     "@vitest/coverage-v8": "^3.2.0",
     "create-gasket-app": "workspace:^",
-    "nodemon": "^3.1.9",
+    "nodemon": "^3.1.14",
     "vitest": "^3.2.0"
   }
 }

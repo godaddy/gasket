@@ -90,7 +90,8 @@ describe('Express', () => {
     await express(gasket, app);
 
     const req = {};
-    const res = {};
+    // compression registers a 'close' listener on the response as soon as it runs
+    const res = { on: vi.fn() };
     const next = vi.fn();
 
     app.use.mock.calls.forEach(([middleware]) => middleware(req, res, next));

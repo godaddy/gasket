@@ -222,9 +222,7 @@ describe('loadPreset', () => {
     it('throws error if local preset fails to install', async () => {
       mockContext.rawPresets = [`${fileName}../../../__mocks__/gasket-preset-local-bogus`];
 
-      await expect(async () => {
-        await loadPreset({ context: mockContext });
-      }).rejects.toThrow(
+      await expect(loadPreset({ context: mockContext })).rejects.toThrow(
         `Failed to install preset ${fileName}../../../__mocks__/gasket-preset-local-bogus@latest`
       );
     });
@@ -246,9 +244,7 @@ describe('loadPreset', () => {
     it('throws error if remote preset fails to install', async () => {
       mockContext.rawPresets = ['@gasket/preset-bogus-bogus@^1.0.0'];
 
-      await expect(async () => {
-        await loadPreset({ context: mockContext });
-      }).rejects.toThrow('Failed to install preset @gasket/preset-bogus-bogus@^1.0.0');
+      await expect(loadPreset({ context: mockContext })).rejects.toThrow('Failed to install preset @gasket/preset-bogus-bogus@^1.0.0');
     });
   });
 
@@ -317,17 +313,13 @@ describe('loadPreset', () => {
   it('throws error if preset name is short name', async () => {
     mockContext.rawPresets = ['@gasket/bogus'];
 
-    await expect(async () => {
-      await loadPreset({ context: mockContext });
-    }).rejects.toThrow('Invalid preset short name: @gasket/bogus. Presets must be a full name.');
+    await expect(loadPreset({ context: mockContext })).rejects.toThrow('Invalid preset short name: @gasket/bogus. Presets must be a full name.');
   });
 
   it('throws error if preset name is mispelled', async () => {
     mockContext.rawPresets = ['@gasket/bogus-preset'];
 
-    await expect(async () => {
-      await loadPreset({ context: mockContext });
-    }).rejects.toThrow('Invalid preset name: @gasket/bogus-preset. Please check the name and try again.');
+    await expect(loadPreset({ context: mockContext })).rejects.toThrow('Invalid preset name: @gasket/bogus-preset. Please check the name and try again.');
   });
 
   it('throws error if preset is not found in registry', async () => {
@@ -344,9 +336,7 @@ describe('loadPreset', () => {
       return Promise.resolve();
     });
 
-    await expect(async () => {
-      await loadPreset({ context: mockContext });
-    }).rejects.toThrow('Preset not found in registry: @gasket/preset-bogus-not-found@latest. Use npm_config_registry=<registry> to use privately scoped presets.');
+    await expect(loadPreset({ context: mockContext })).rejects.toThrow('Preset not found in registry: @gasket/preset-bogus-not-found@latest. Use npm_config_registry=<registry> to use privately scoped presets.');
   });
 
   it('uses path.resolve for proper path construction in pathToFileURL', async () => {

@@ -177,20 +177,20 @@ describe('create', function () {
 
     CreateCommand.options.forEach((option, index) => {
       if (!option.short) {
-        // eslint-disable-next-line jest/no-conditional-expect
+        // eslint-disable-next-line jest/no-conditional-expect, vitest/no-conditional-expect
         if (!options[index].long) expect(`--${option.name}`).toEqual(options[index].short);
       }
 
       if (option.short) {
-        // eslint-disable-next-line jest/no-conditional-expect
+        // eslint-disable-next-line jest/no-conditional-expect, vitest/no-conditional-expect
         expect(`--${option.name}`).toEqual(options[index].long);
-        // eslint-disable-next-line jest/no-conditional-expect
+        // eslint-disable-next-line jest/no-conditional-expect, vitest/no-conditional-expect
         expect(`-${option.short}`).toEqual(options[index].short);
       }
 
-      // eslint-disable-next-line jest/no-conditional-expect
+      // eslint-disable-next-line jest/no-conditional-expect, vitest/no-conditional-expect
       if (option.default) expect(option.default).toEqual(options[index].defaultValue);
-      // eslint-disable-next-line jest/no-conditional-expect
+      // eslint-disable-next-line jest/no-conditional-expect, vitest/no-conditional-expect
       if (option.parse) expect(option.parse).toEqual(options[index].parseArg);
       expect(option.description).toEqual(options[index].description);
     });
@@ -249,7 +249,7 @@ describe('create', function () {
     try {
       await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--presets=nextjs']);
     } catch (err) {
-      // eslint-disable-next-line jest/no-conditional-expect
+      // eslint-disable-next-line jest/no-conditional-expect, vitest/no-conditional-expect
       expect(err.message).toEqual('YOUR DRIVE EXPLODED!');
     }
   });
@@ -259,9 +259,9 @@ describe('create', function () {
     try {
       await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--presets=nextjs']);
     } catch (err) {
-      // eslint-disable-next-line jest/no-conditional-expect
+      // eslint-disable-next-line jest/no-conditional-expect, vitest/no-conditional-expect
       expect(err.message).toEqual('YOUR DRIVE EXPLODED!');
-      // eslint-disable-next-line jest/no-conditional-expect
+      // eslint-disable-next-line jest/no-conditional-expect, vitest/no-conditional-expect
       expect(mockDumpErrorContext).toHaveBeenCalled();
     }
   });
@@ -271,9 +271,9 @@ describe('create', function () {
     try {
       await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--presets=nextjs']);
     } catch (err) {
-      // eslint-disable-next-line jest/no-conditional-expect
+      // eslint-disable-next-line jest/no-conditional-expect, vitest/no-conditional-expect
       expect(err.message).toEqual('YOUR DRIVE EXPLODED!');
-      // eslint-disable-next-line jest/no-conditional-expect
+      // eslint-disable-next-line jest/no-conditional-expect, vitest/no-conditional-expect
       expect(consoleErrorStub).toHaveBeenCalled();
     }
   });
@@ -283,7 +283,7 @@ describe('create', function () {
     try {
       await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--presets', 'some-preset']);
     } catch (err) {
-      // eslint-disable-next-line jest/no-conditional-expect
+      // eslint-disable-next-line jest/no-conditional-expect, vitest/no-conditional-expect
       expect(err.message).toEqual('No preset found');
     }
   });
