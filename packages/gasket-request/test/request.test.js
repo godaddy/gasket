@@ -286,6 +286,63 @@ describe('makeGasketRequest', () => {
     expect(result.path).toEqual('/path/to/page');
   });
 
+  it('captures the method from the request', async () => {
+    const result = await makeGasketRequest({ headers: { header1: 'value1' }, method: 'POST' });
+
+    expect(result.method).toEqual('POST');
+  });
+
+  it('uppercases the method', async () => {
+    const result = await makeGasketRequest({ headers: { header2: 'value2' }, method: 'get' });
+
+    expect(result.method).toEqual('GET');
+  });
+
+  it('has no method when the source provides none', async () => {
+    const result = await makeGasketRequest({ headers: { header3: 'value3' } });
+
+    expect(result.method).toBeUndefined();
+  });
+
+  it('has no method when the source method is not a string', async () => {
+    const result = await makeGasketRequest({ headers: { header4: 'value4' }, method: 123 });
+
+    expect(result.method).toBeUndefined();
+  });
+
+  it('captures the method from a NextRequest style object', async () => {
+    const headers = new Map([['header10', 'value10']]);
+    const nextUrl = new URL('https://example.com/path/to/page?query1=value1');
+
+    const result = await makeGasketRequest({ headers, nextUrl, method: 'DELETE' });
+
+    expect(result.method).toEqual('DELETE');
+    expect(result.path).toEqual('/path/to/page');
+  });
+
+  it('reads method from the prototype, as fetch Request exposes it', async () => {
+    // method and url are prototype getters on Request, not own properties
+    const request = new Request('https://example.com/path/to/page', { method: 'post' });
+
+    const result = await makeGasketRequest(request);
+
+    expect(result.method).toEqual('POST');
+    expect(result.path).toEqual('/path/to/page');
+  });
+
+  it('has no method for an App Router style request-like, and does not assume GET', async () => {
+    // next/headers exposes no method; a GET default would be wrong during a
+    // Server Action, which runs as POST and re-renders RSC in the same request
+    const result = await makeGasketRequest({
+      headers: { header5: 'value5' },
+      cookies: { cookie1: 'value1' },
+      query: { query1: 'value1' }
+    });
+
+    expect(result.method).toBeUndefined();
+    expect(result.method).not.toEqual('GET');
+  });
+
   it('parses cookie header if cookies property is missing', async () => {
     const headers = {
       cookie: 'cookie1=value1; cookie2=value2'

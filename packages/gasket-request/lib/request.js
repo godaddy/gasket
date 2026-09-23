@@ -6,11 +6,12 @@ import { parse } from 'cookie';
  * @type {import('@gasket/request').GasketRequest}
  */
 export class GasketRequest {
-  constructor({ headers, cookies, query, path }) {
+  constructor({ headers, cookies, query, path, method }) {
     this.headers = headers;
     this.cookies = cookies;
     this.query = query;
     this.path = path;
+    this.method = method;
   }
 }
 
@@ -100,11 +101,19 @@ export async function makeGasketRequest(requestLike) {
         cookies = 'cookie' in headers ? parse(headers.cookie) : {};
       }
 
+      // Absent for assembled request-likes such as the App Router's, where
+      // next/headers exposes no method. Never defaulted — a Server Action is a
+      // POST that re-renders RSC in the same request.
+      const method = typeof requestLike.method === 'string'
+        ? requestLike.method.toUpperCase()
+        : undefined;
+
       return new GasketRequest(Object.seal({
         headers,
         cookies: 'getAll' in cookies ? await objectFromCookieStore(cookies) : cookies,
         query: query instanceof URLSearchParams ? objectFromSearchParams(query) : query,
-        path
+        path,
+        method
       }));
     };
 

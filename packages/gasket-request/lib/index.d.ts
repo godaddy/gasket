@@ -57,6 +57,7 @@ export type RequestLike = {
   cookies?: CookieStore | Record<string, string>;
   query?: URLSearchParams | Record<string, string | string[]> | ExpressRequest['query'] | FastifyRequest['query'];
   url?: string;
+  method?: string;
   [key: string]: any;
 };
 
@@ -83,12 +84,18 @@ export class GasketRequest {
     cookies: Record<string, string>;
     query: Record<string, string>;
     path: string;
+    method?: string;
   });
 
   headers: Record<string, string>;
   cookies: Record<string, string>;
   query: Record<string, string>;
   path: string;
+  /**
+   * Uppercased HTTP method, or `undefined` when the source exposes none —
+   * notably the Next.js App Router, where `headers()` provides no method.
+   */
+  method?: string;
 }
 
 /**
