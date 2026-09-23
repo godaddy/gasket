@@ -452,6 +452,7 @@ describe('getOriginalRequest', () => {
 
   it('returns undefined rather than throwing for values that are not requests', () => {
     expect(getOriginalRequest(null)).toBeUndefined();
+    // eslint-disable-next-line no-undefined
     expect(getOriginalRequest(undefined)).toBeUndefined();
     expect(getOriginalRequest({})).toBeUndefined();
     expect(getOriginalRequest('nope')).toBeUndefined();

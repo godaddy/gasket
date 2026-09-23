@@ -111,7 +111,7 @@ export async function makeGasketRequest(requestLike) {
       // POST that re-renders RSC in the same request.
       const method = typeof requestLike.method === 'string'
         ? requestLike.method.toUpperCase()
-        : undefined;
+        : void 0;
 
       const gasketRequest = new GasketRequest(Object.seal({
         headers,

@@ -21,12 +21,19 @@ across different request handling frameworks.
 
 A `GasketRequest` object has the following properties:
 
-| Property | Type   | Description       | Arguments     |
-|----------|--------|-------------------|---------------|
-| headers  | object | Request headers   | required      |
-| cookies  | object | Request cookies   | default: `{}` |
-| query    | object | Query parameters  | default: `{}` |
-| path     | string | Request path      | default: `''` |
+| Property | Type   | Description                | Arguments     |
+|----------|--------|----------------------------|---------------|
+| headers  | object | Request headers            | required      |
+| cookies  | object | Request cookies            | default: `{}` |
+| query    | object | Query parameters           | default: `{}` |
+| path     | string | Request path               | default: `''` |
+| method   | string | Request method, uppercased | optional      |
+
+`method` is `undefined` when the source request exposes none. Most notably this
+is the case in the Next.js App Router, where `next/headers` provides no method.
+It is deliberately not defaulted to `GET`: a Server Action runs as a `POST` and
+re-renders server components within that same request, so a default would be
+wrong rather than merely imprecise.
 
 ### makeGasketRequest
 
@@ -53,6 +60,27 @@ const headers = {
 
 const staticGasketRequest = await makeGasketRequest({ headers });
 ````
+
+### getOriginalRequest
+
+Returns the original framework request a `GasketRequest` was normalized from.
+Use it to reach framework-specific fields that `GasketRequest` does not
+normalize, such as `ip`.
+
+```js
+import { getOriginalRequest } from '@gasket/request';
+
+const ip = getOriginalRequest(gasketRequest)?.ip;
+```
+
+Returns `undefined` when there is no original request — a directly constructed
+`GasketRequest`, a serialized and revived one, or any value that is not a
+`GasketRequest`.
+
+In the Next.js App Router there is no request instance, so the returned value is
+the request-like object assembled from `next/headers`. It is truthy but carries
+only headers, cookies, and query. Guard the field you need, not the object. See
+[EXAMPLES.md](./EXAMPLES.md#getoriginalrequest).
 
 ### withGasketRequest
 
