@@ -1,5 +1,16 @@
 # `@gasket/nextjs`
 
+## 7.6.13
+
+### Patch Changes
+
+- 75e8bd8: Document that a `GasketRequest` from the App Router has no `method`, and that
+  `getOriginalRequest` returns the assembled request-like rather than a framework
+  request.
+- Updated dependencies [75e8bd8]
+  - @gasket/request@7.6.0
+  - @gasket/data@7.5.7
+
 ## 7.6.12
 
 ### Patch Changes
