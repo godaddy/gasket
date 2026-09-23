@@ -1,4 +1,4 @@
-/* eslint-disable vitest/expect-expect, jest/expect-expect */
+/* eslint-disable vitest/expect-expect */
 import { Gasket, Hook } from '@gasket/core';
 import '@gasket/plugin-typescript';
 

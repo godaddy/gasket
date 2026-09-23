@@ -1,4 +1,4 @@
-/* eslint-disable vitest/expect-expect, jest/expect-expect */
+/* eslint-disable vitest/expect-expect */
 import type { Gasket, Hook } from '@gasket/core';
 import { CreateContext } from 'create-gasket-app';
 import type { PartialCreateContext } from 'create-gasket-app/lib/internal.d.ts';
