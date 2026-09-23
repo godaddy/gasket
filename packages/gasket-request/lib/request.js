@@ -122,11 +122,17 @@ export async function makeGasketRequest(requestLike) {
       }));
 
       // Runs once per headers object, so the first request-like normalized for
-      // a given headers object is the one kept. Unwrap when the input already
-      // carries an original: under duplicate installs `instanceof` fails across
-      // copies, so an already-normalized request gets normalized again, and
-      // nesting it would hand callers a GasketRequest where they expect the
-      // framework request.
+      // a given headers object is the one kept.
+      //
+      // This makes the keeper's value reach its own key, since requestLike owns
+      // rawHeaders. That is not a leak: WeakMap is an ephemeron map, so a value
+      // is live only while the key is live independently of the map, and the
+      // cycle dies with the key.
+      //
+      // Unwrap when the input already carries an original: under duplicate
+      // installs `instanceof` fails across copies, so an already-normalized
+      // request gets normalized again, and nesting it would hand callers a
+      // GasketRequest where they expect the framework request.
       Object.defineProperty(gasketRequest, kOriginalRequest, {
         value: kOriginalRequest in requestLike ? requestLike[kOriginalRequest] : requestLike,
         enumerable: false,
