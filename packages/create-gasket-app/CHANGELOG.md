@@ -1,5 +1,22 @@
 # `create-gasket-app`
 
+## 7.4.26
+
+### Patch Changes
+
+- e5b5a4b: Bump runtime dependencies to their latest patch/minor releases: @swc/core, compression, debug, glob, http2-express, is-plain-object, js-yaml, morgan, negotiator, rimraf, semver, winston
+- Updated dependencies [e5b5a4b]
+  - @gasket/core@7.7.7
+  - @gasket/plugin-docs@7.5.8
+  - @gasket/request@7.6.1
+  - @gasket/utils@7.6.8
+  - @gasket/plugin-command@7.6.8
+  - @gasket/plugin-docusaurus@8.0.1
+  - @gasket/plugin-dynamic-plugins@7.5.3
+  - @gasket/plugin-git@7.4.12
+  - @gasket/plugin-logger@7.5.1
+  - @gasket/plugin-metadata@7.5.14
+
 ## 7.4.25
 
 ### Patch Changes

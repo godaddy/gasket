@@ -1,5 +1,14 @@
 # `@gasket/react-intl`
 
+## 7.7.5
+
+### Patch Changes
+
+- Updated dependencies [e5b5a4b]
+  - @gasket/plugin-intl@7.6.10
+  - @gasket/data@7.5.8
+  - @gasket/intl@7.5.4
+
 ## 7.7.4
 
 ### Patch Changes
