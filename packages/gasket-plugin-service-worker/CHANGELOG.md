@@ -1,5 +1,12 @@
 # `@gasket/plugin-service-worker`
 
+## 7.5.3
+
+### Patch Changes
+
+- e5b5a4b: Bump runtime dependencies to their latest patch/minor releases: @swc/core, compression, debug, glob, http2-express, is-plain-object, js-yaml, morgan, negotiator, rimraf, semver, winston
+- df5559b: Replace `webpack-inject-plugin` with an inline loader, dropping the vulnerable `loader-utils@1.2.3` (CVE-2022-37601). On webpack 5, named `webpackRegister` entries are now injected, and `dependOn` is left untouched. Registration injection requires webpack 5, now declared as an optional peer dependency.
+
 ## 7.5.2
 
 ### Patch Changes

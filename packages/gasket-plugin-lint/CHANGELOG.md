@@ -1,5 +1,11 @@
 # `@gasket/plugin-lint`
 
+## 7.4.5
+
+### Patch Changes
+
+- e5b5a4b: Bump runtime dependencies to their latest patch/minor releases: @swc/core, compression, debug, glob, http2-express, is-plain-object, js-yaml, morgan, negotiator, rimraf, semver, winston
+
 ## 7.4.4
 
 ### Patch Changes

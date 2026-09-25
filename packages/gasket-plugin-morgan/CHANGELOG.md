@@ -1,5 +1,12 @@
 # `@gasket/plugin-morgan`
 
+## 8.0.2
+
+### Patch Changes
+
+- e5b5a4b: Bump runtime dependencies to their latest patch/minor releases: @swc/core, compression, debug, glob, http2-express, is-plain-object, js-yaml, morgan, negotiator, rimraf, semver, winston
+  - @gasket/plugin-logger@7.5.1
+
 ## 8.0.1
 
 ### Patch Changes
