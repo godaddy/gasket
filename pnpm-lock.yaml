@@ -1477,9 +1477,6 @@ importers:
       mkdirp:
         specifier: ^1.0.4
         version: 1.0.4
-      webpack-inject-plugin:
-        specifier: ^1.5.5
-        version: 1.5.5(webpack@5.111.1(@swc/core@1.16.2(@swc/helpers@0.5.23)))
     devDependencies:
       '@gasket/core':
         specifier: workspace:^
@@ -1520,6 +1517,9 @@ importers:
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@26.6.2)(ts-node@10.9.2(@swc/core@1.16.2(@swc/helpers@0.5.23))(@types/node@26.6.2)(typescript@5.8.2))
+      webpack:
+        specifier: ^5.104.1
+        version: 5.111.1(@swc/core@1.16.2(@swc/helpers@0.5.23))
 
   packages/gasket-plugin-swagger:
     dependencies:
@@ -7752,10 +7752,6 @@ packages:
   emojilib@2.4.0:
     resolution: {integrity: sha512-5U0rVMU5Y2n2+ykNLQqMoqklN9ICBT/KsvC1Gz6vqHbz2AXXGkG+Pm5rMWk/8Vjrr/mY9985Hi8DYzn1F09Nyw==}
 
-  emojis-list@2.1.0:
-    resolution: {integrity: sha512-knHEZMgs8BB+MInokmNTg/OyPlAddghe1YBgNwJBc5zsJi/uyIcXoSDsL/W9ymOsBoBGdPIHXYJ9+qKFwRwDng==}
-    engines: {node: '>= 0.10'}
-
   emojis-list@3.0.0:
     resolution: {integrity: sha512-/kyM18EfinwXZbno9FyUGeFh87KC8HRQBQGildHZbEuRyWFOmv1U10o9BBp8XVZDVNNuQKyIGIu5ZYAAXJ0V2Q==}
     engines: {node: '>= 4'}
@@ -9442,10 +9438,6 @@ packages:
   json-stringify-safe@5.0.1:
     resolution: {integrity: sha512-ZClg6AaYvamvYEE82d3Iyd3vSSIjQ+odgjaTzRuO3s7toCdFKczob2i0zCh7JE8kWn17yvAWhUVxvqGwUalsRA==}
 
-  json5@1.0.2:
-    resolution: {integrity: sha512-g1MWMLBiz8FKi1e4w0UyVL3w+iJceWAFBAaBnnGKOpNa5f8TLktkbre1+s6oICydWAm+HRUGTmI+//xv2hvXYA==}
-    hasBin: true
-
   json5@2.2.3:
     resolution: {integrity: sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==}
     engines: {node: '>=6'}
@@ -9536,10 +9528,6 @@ packages:
   loader-runner@4.3.0:
     resolution: {integrity: sha512-3R/1M+yS3j5ou80Me59j7F9IMs4PXs3VqRrm0TU3AbKPxlmpoY1TNscJV/oGJXo8qCatFGTfDbY6W6ipGOYXfg==}
     engines: {node: '>=6.11.5'}
-
-  loader-utils@1.2.3:
-    resolution: {integrity: sha512-fkpz8ejdnEMG3s37wGL07iSBDg99O9D5yflE9RGNH3hRdx9SOwYfnGYdZOUIZitN8E+E2vkq3MUMYMvPYl5ZZA==}
-    engines: {node: '>=4.0.0'}
 
   loader-utils@2.0.4:
     resolution: {integrity: sha512-xXqpXoINfFhgua9xiqD8fPFHgkoq1mmmpE92WlDbm9rNRd/EbRb+Gqf908T2DMfuHjjJlksiK2RbHVOdD/MqSw==}
@@ -12839,11 +12827,6 @@ packages:
         optional: true
       webpack-cli:
         optional: true
-
-  webpack-inject-plugin@1.5.5:
-    resolution: {integrity: sha512-cYhj/3X6m19zmIEb/Y09/VjCf9SeL+/7Wv6YrUi/wBGFQPFMINEfzHBJV0qokeqvUwE23h8NzrTIrkHALZ9PaA==}
-    peerDependencies:
-      webpack: '>=4.0.0'
 
   webpack-merge@5.10.0:
     resolution: {integrity: sha512-+4zXKdx7UnO+1jaN4l2lHVD+mFvnlZQP/6ljaJVb4SZiwIKeUnrT5l0gkT8z+n4hKpC+jpOv6O9R+gLtag7pSA==}
@@ -21240,8 +21223,6 @@ snapshots:
 
   emojilib@2.4.0: {}
 
-  emojis-list@2.1.0: {}
-
   emojis-list@3.0.0: {}
 
   emoticon@4.1.0: {}
@@ -23851,10 +23832,6 @@ snapshots:
 
   json-stringify-safe@5.0.1: {}
 
-  json5@1.0.2:
-    dependencies:
-      minimist: 1.2.8
-
   json5@2.2.3: {}
 
   jsonc-parser@3.3.1: {}
@@ -23949,12 +23926,6 @@ snapshots:
       enquirer: 2.4.1
 
   loader-runner@4.3.0: {}
-
-  loader-utils@1.2.3:
-    dependencies:
-      big.js: 5.2.2
-      emojis-list: 2.1.0
-      json5: 1.0.2
 
   loader-utils@2.0.4:
     dependencies:
@@ -28127,11 +28098,6 @@ snapshots:
       - debug
       - supports-color
       - utf-8-validate
-
-  webpack-inject-plugin@1.5.5(webpack@5.111.1(@swc/core@1.16.2(@swc/helpers@0.5.23))):
-    dependencies:
-      loader-utils: 1.2.3
-      webpack: 5.111.1(@swc/core@1.16.2(@swc/helpers@0.5.23))
 
   webpack-merge@5.10.0:
     dependencies:

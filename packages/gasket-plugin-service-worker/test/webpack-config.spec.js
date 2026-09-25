@@ -1,5 +1,5 @@
 const webpack = require('../lib/webpack-config');
-const WebpackInjectPlugin = require('webpack-inject-plugin').default;
+const { RegisterPlugin } = require('../lib/utils/register-plugin');
 
 const mockNextData = {
   defaultLoaders: {}
@@ -25,25 +25,25 @@ describe('webpackConfig', () => {
     expect(results).toHaveProperty('plugins', expect.any(Array));
   });
 
-  it('adds WebpackInjectPlugin to plugins', () => {
+  it('adds RegisterPlugin to plugins', () => {
     results = webpack(mockGasket, mockWebpackConfig, mockNextData);
     const expectedPlugin = results.plugins[0];
-    expect(expectedPlugin).toBeInstanceOf(WebpackInjectPlugin);
+    expect(expectedPlugin).toBeInstanceOf(RegisterPlugin);
   });
 
-  it('does not add WebpackInjectPlugin if local command', () => {
+  it('does not add RegisterPlugin if local command', () => {
     mockGasket.config.command = 'local';
     results = webpack(mockGasket, mockWebpackConfig, mockNextData);
     expect(results).toBe(mockWebpackConfig);
   });
 
-  it('does not add WebpackInjectPlugin if webpackRegister = false', () => {
+  it('does not add RegisterPlugin if webpackRegister = false', () => {
     mockGasket.config.serviceWorker = { webpackRegister: false };
     results = webpack(mockGasket, mockWebpackConfig, mockNextData);
     expect(results).toBe(mockWebpackConfig);
   });
 
-  it('does not add WebpackInjectPlugin if isServer', () => {
+  it('does not add RegisterPlugin if isServer', () => {
     results = webpack(mockGasket, mockWebpackConfig, { ...mockNextData, isServer: true });
     expect(results).toBe(mockWebpackConfig);
   });
@@ -51,14 +51,14 @@ describe('webpackConfig', () => {
   it('defaults to all entries', () => {
     results = webpack(mockGasket, mockWebpackConfig, mockNextData);
     const expectedPlugin = results.plugins[0];
-    expect(expectedPlugin.options.entryName).toBeUndefined();
+    expect(expectedPlugin.filter('any')).toBe(true);
   });
 
   it('only injects to singled named entry', () => {
     mockGasket.config.serviceWorker = { webpackRegister: 'main' };
     results = webpack(mockGasket, mockWebpackConfig, mockNextData);
     const expectedPlugin = results.plugins[0];
-    const { entryName } = expectedPlugin.options;
+    const { filter: entryName } = expectedPlugin;
     expect(entryName('bad')).toBe(false);
     expect(entryName('main')).toBe(true);
   });
@@ -67,7 +67,7 @@ describe('webpackConfig', () => {
     mockGasket.config.serviceWorker = { webpackRegister: ['page1', 'page2'] };
     results = webpack(mockGasket, mockWebpackConfig, mockNextData);
     const expectedPlugin = results.plugins[0];
-    const { entryName } = expectedPlugin.options;
+    const { filter: entryName } = expectedPlugin;
     expect(entryName('bad')).toBe(false);
     expect(entryName('page1')).toBe(true);
     expect(entryName('page2')).toBe(true);
@@ -77,7 +77,7 @@ describe('webpackConfig', () => {
     mockGasket.config.serviceWorker = { webpackRegister: key => /page*/.test(key) };
     results = webpack(mockGasket, mockWebpackConfig, mockNextData);
     const expectedPlugin = results.plugins[0];
-    const { entryName } = expectedPlugin.options;
+    const { filter: entryName } = expectedPlugin;
     expect(entryName('bad')).toBe(false);
     expect(entryName('page1')).toBe(true);
     expect(entryName('page2')).toBe(true);
