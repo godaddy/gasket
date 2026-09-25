@@ -47,7 +47,7 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-core",
   "dependencies": {
     "@gasket/utils": "workspace:^",
-    "debug": "^4.4.0"
+    "debug": "^4.4.3"
   },
   "devDependencies": {
     "@gasket/cjs": "workspace:^",

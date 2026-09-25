@@ -32,7 +32,7 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-service-worker",
   "dependencies": {
-    "@swc/core": "^1.10.18",
+    "@swc/core": "^1.16.2",
     "deepmerge": "^4.3.1",
     "lru-cache": "^5.1.1",
     "mkdirp": "^1.0.4",
@@ -46,7 +46,7 @@
     "@gasket/plugin-logger": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",
     "@gasket/plugin-webpack": "workspace:^",
-    "@swc/types": "^0.1.21",
+    "@swc/types": "^0.1.28",
     "@types/lru-cache": "^5.1.1",
     "create-gasket-app": "workspace:^",
     "express": "^4.22.1",

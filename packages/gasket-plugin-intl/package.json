@@ -45,12 +45,12 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-intl",
   "dependencies": {
     "@gasket/request": "workspace:^",
-    "debug": "^4.4.0",
+    "debug": "^4.4.3",
     "fs-extra": "^10.1.0",
-    "glob": "^13.0.1",
+    "glob": "^13.0.6",
     "intl": "^1.2.5",
-    "negotiator": "^1.0.0",
-    "semver": "^7.7.1"
+    "negotiator": "^1.1.0",
+    "semver": "^7.8.5"
   },
   "devDependencies": {
     "@gasket/cjs": "workspace:^",
@@ -59,16 +59,16 @@
     "@gasket/plugin-command": "workspace:^",
     "@gasket/plugin-data": "workspace:^",
     "@gasket/plugin-elastic-apm": "workspace:^",
-    "@gasket/plugin-logger": "workspace:^",
     "@gasket/plugin-https": "workspace:^",
+    "@gasket/plugin-logger": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",
     "@gasket/plugin-nextjs": "workspace:^",
     "@gasket/plugin-service-worker": "workspace:^",
     "@gasket/react-intl": "workspace:^",
     "create-gasket-app": "workspace:^",
-    "react": "^19.2.4",
+    "react": "^19.3.0",
     "react-intl": "^7.1.6",
     "vitest": "^3.2.0",
-    "webpack": "^5.104.1"
+    "webpack": "^5.111.1"
   }
 }
