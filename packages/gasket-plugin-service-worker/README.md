@@ -213,7 +213,8 @@ and can be included with your app in a couple of ways.
 When using the [@gasket/plugin-webpack] in your app, the service worker
 registration script will automatically be injected to entry modules by default
 at build time. If you are also using the [@gasket/plugin-nextjs], only the
-`_app` entry module will be injected with the script.
+`_app` entry module will be injected with the script. Injection requires
+webpack 5.
 
 If you otherwise need to tune which Webpack entry modules are injected, you can
 set the `webpackRegister` to the name or array of names of the entries you want

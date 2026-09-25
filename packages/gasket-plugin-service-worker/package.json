@@ -53,5 +53,13 @@
     "jest": "^29.7.0",
     "webpack": "^5.104.1"
   },
+  "peerDependencies": {
+    "webpack": "^5.0.0"
+  },
+  "peerDependenciesMeta": {
+    "webpack": {
+      "optional": true
+    }
+  },
   "deprecated": "Package deprecated and will be removed in future major release."
 }
