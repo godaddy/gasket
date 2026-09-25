@@ -136,13 +136,15 @@ describe('utils', () => {
 
   describe('loadRegisterScript', () => {
     const mockConfig = { url: 'sw.js', scope: '/' };
-    let fs;
+    const fs = require('fs').promises;
 
     beforeEach(() => {
-      jest.isolateModules(() => {
-        fs = require('fs').promises;
-        fs.readFile = jest.fn(() => Promise.resolve('mock {URL} and {SCOPE}'));
-      });
+      jest.spyOn(fs, 'readFile').mockResolvedValue('mock {URL} and {SCOPE}');
+    });
+
+    // fs is shared across test files in a worker, so the stub must not outlive this suite.
+    afterEach(() => {
+      jest.restoreAllMocks();
     });
 
     it('only reads the template file once', async () => {
