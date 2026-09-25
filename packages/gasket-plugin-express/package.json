@@ -47,11 +47,11 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-express",
   "dependencies": {
-    "compression": "^1.8.0",
+    "compression": "^1.8.2",
     "cookie-parser": "^1.4.7",
     "diagnostics": "^2.0.2",
-    "glob": "^13.0.1",
-    "http2-express": "^1.0.1"
+    "glob": "^13.0.6",
+    "http2-express": "^1.1.1"
   },
   "devDependencies": {
     "@gasket/cjs": "workspace:^",

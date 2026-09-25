@@ -7,7 +7,7 @@ import type {
   CommandOption,
   CreateCommandOptions
 } from './index.d.ts';
-import type { GasketEngine, Plugin, Gasket } from '@gasket/core';
+import type { GasketEngine, Plugin, Gasket, GasketConfigDefinition } from '@gasket/core';
 import type { Ora } from 'ora';
 import type { Command, Option } from 'commander';
 
@@ -145,7 +145,7 @@ export function writeGasketConfig(params: { context: PartialCreateContext }): Pr
 export function writeImports(imports: object | null): string;
 export function writeExpressions(expressions: string[] | null): string;
 export function createInjectionAssignments(config: object, assignments: (object | null)): string;
-export function cleanupFields(config: ConfigBuilder<>): void;
+export function cleanupFields(config: ConfigBuilder<GasketConfigDefinition>): void;
 export function writePluginImports(plugins: string[]): string;
 export function replaceInjectionAssignments(content: string, assignments: (object | null)): string;
 
