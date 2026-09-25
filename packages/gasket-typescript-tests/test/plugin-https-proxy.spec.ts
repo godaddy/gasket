@@ -1,4 +1,4 @@
-/* eslint-disable vitest/expect-expect, jest/expect-expect */
+/* eslint-disable vitest/expect-expect */
 /// <reference types="@gasket/plugin-https-proxy" />
 
 import type { GasketConfigDefinition, Hook } from '@gasket/core';
