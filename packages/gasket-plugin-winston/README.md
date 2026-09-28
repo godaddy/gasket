@@ -154,8 +154,9 @@ export default {
 To add log levels without restating the whole level map, hook the
 `winstonLevels` lifecycle and return a levels object. Results are merged over
 the base levels — the app's `winston.levels` if set, otherwise the default
-levels — with later hooks winning when two define the same level. Return a
-falsy value to add nothing.
+levels — with whichever hook runs last, by plugin order and any `timing`
+constraints, winning when two define the same level. Return a falsy value to
+add nothing.
 
 ```js
 // sample-plugin.js
