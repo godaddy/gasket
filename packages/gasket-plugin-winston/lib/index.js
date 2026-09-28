@@ -40,15 +40,24 @@ const plugin = {
       }
 
       const pluginTransports = gasket.execSync('winstonTransports');
-      const defaultFormat = gasket.config.env.startsWith('local') ?
+
+      const baseLevels = config.winston?.levels ??
+        Object.assign({ fatal: 0, warn: 4, trace: 7 }, winstonConfig.syslog.levels);
+      const pluginLevels = gasket.execSync('winstonLevels').filter(Boolean);
+      const levels = pluginLevels.length ? Object.assign({}, baseLevels, ...pluginLevels) : baseLevels;
+
+      const baseFormat = config.winston?.format ?? (gasket.config.env.startsWith('local') ?
         format.simple() :
-        format.combine(format.splat(), format.json());
+        format.combine(format.splat(), format.json()));
+      // Contributed formats run first so they enrich the entry before the base format serializes it
+      const pluginFormats = gasket.execSync('winstonFormats').filter(Boolean);
+      const resolvedFormat = pluginFormats.length ? format.combine(...pluginFormats, baseFormat) : baseFormat;
 
       return createLogger({
-        format: defaultFormat,
-        levels: Object.assign({ fatal: 0, warn: 4, trace: 7 }, winstonConfig.syslog.levels),
         exitOnError: true,
         ...config.winston,
+        levels,
+        format: resolvedFormat,
         transports: configTransports.concat(
           pluginTransports.flat().filter(Boolean)
         )
@@ -63,6 +72,20 @@ const plugin = {
             method: 'execSync',
             description: 'Setup Winston log transports',
             link: 'README.md#winstonTransports',
+            parent: 'createLogger'
+          },
+          {
+            name: 'winstonLevels',
+            method: 'execSync',
+            description: 'Add Winston log levels',
+            link: 'README.md#winstonLevels',
+            parent: 'createLogger'
+          },
+          {
+            name: 'winstonFormats',
+            method: 'execSync',
+            description: 'Add Winston log formats',
+            link: 'README.md#winstonFormats',
             parent: 'createLogger'
           }
         ],
