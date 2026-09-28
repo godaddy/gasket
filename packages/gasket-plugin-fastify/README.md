@@ -30,7 +30,7 @@ All the configurations for the plugin are added under `fastify` in the config:
 
 - `compression`: true by default. Can be set to false if applying compression
   differently.
-- `trustProxy`: Enable trust proxy option, [see Fastify documentation for possible values](https://fastify.dev/docs/latest/Reference/Server/#trustproxy).
+- `trustProxy`: Enable trust proxy option, [see Fastify documentation for possible values](https://fastify.dev/docs/v4.29.x/Reference/Server/#trustproxy).
   See [trustProxy](#trustproxy) below for the recommended setting.
 - `disableRequestLogging`: Turn off request logging, true by default
 
@@ -42,10 +42,12 @@ first — any client can prepend its own entry to that header. Leave it unset
 when nothing sits in front of the app — `request.ip` is then the socket peer.
 
 A hop count assumes every request passes through the same number of proxies.
-When paths vary — for example, some traffic reaches the load balancer without
-the CDN — a client on the shorter path supplies the entry the count selects.
-Trust the proxies by address instead: an IP or CIDR list such as
-`['10.0.0.0/8']`, or a function.
+When paths vary or the app is reachable directly — for example, some traffic
+reaches the load balancer without the CDN — a client on the shorter path
+supplies the entry the count selects. Trust the proxies by address instead: an
+IP or CIDR list such as `['10.0.0.0/8']`, or a function. Fastify releases newer
+than the v4 line this plugin supports disable hop-count trust entirely, so use
+addresses there.
 
 #### Example configuration
 

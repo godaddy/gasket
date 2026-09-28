@@ -184,5 +184,5 @@ functions.
 
 [fastify-trust-proxy]:../gasket-plugin-fastify/README.md#trustproxy
 [express-trust-proxy]:../gasket-plugin-express/README.md#trustproxy
-[Fastify trust proxy documentation]:https://fastify.dev/docs/latest/Reference/Server/#trustproxy
+[Fastify trust proxy documentation]:https://fastify.dev/docs/v4.29.x/Reference/Server/#trustproxy
 [Express trust proxy documentation]:https://expressjs.com/en/guide/behind-proxies.html
