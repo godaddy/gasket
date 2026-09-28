@@ -43,6 +43,12 @@ Set it to the number of proxies in front of the app. `true` trusts the whole
 first — any client can prepend its own entry to that header. Leave it unset
 when nothing sits in front of the app — `request.ip` is then the socket peer.
 
+A hop count assumes every request passes through the same number of proxies.
+When paths vary — for example, some traffic reaches the load balancer without
+the CDN — a client on the shorter path supplies the entry the count selects.
+Trust the proxies by address instead: an IP or CIDR list such as
+`['10.0.0.0/8']`, or a function.
+
 #### Example configuration
 
 ```js

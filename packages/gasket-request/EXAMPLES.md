@@ -135,8 +135,8 @@ here leaves nothing for the handler that reads it next.
 
 Express derives `req.ip` from the `trust proxy` setting, so it is not something
 `GasketRequest` can normalize. Reach it through the original request. See
-[trustProxy](../gasket-plugin-fastify/README.md#trustproxy) for the
-recommended hop-count value:
+[trustProxy](../gasket-plugin-express/README.md#trustproxy) for the
+recommended setting:
 
 ```js
 import express from 'express';
@@ -165,7 +165,7 @@ export default {
 
 Fastify exposes `request.ip`, and `request.ips` when `trustProxy` is enabled.
 See [trustProxy](../gasket-plugin-fastify/README.md#trustproxy) for the
-recommended hop-count value:
+recommended setting:
 
 ```js
 import Fastify from 'fastify';
