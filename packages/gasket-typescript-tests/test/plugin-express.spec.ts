@@ -13,6 +13,16 @@ describe('@gasket/plugin-express', () => {
     };
   });
 
+  it('accepts every trustProxy form Express supports', () => {
+    const forms: GasketConfigDefinition['express'][] = [
+      { trustProxy: true },
+      { trustProxy: 1 },
+      { trustProxy: '10.0.0.0/8, 172.16.0.0/12' },
+      { trustProxy: ['10.0.0.0/8', '172.16.0.0/12'] },
+      { trustProxy: (ip: string) => ip === '127.0.0.1' }
+    ];
+  });
+
   it('declares the express lifecycle', () => {
     const hook: Hook<'express'> = (gasket: Gasket, app: Application) => {
       app.use((req, res, next) => next());

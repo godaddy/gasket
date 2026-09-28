@@ -5,7 +5,7 @@ import type { Application, ErrorRequestHandler } from 'express';
 export interface ExpressConfig {
   /** Whether responses are compressed (true by default) */
   compression?: boolean;
-  trustProxy?: boolean | string | number | Function;
+  trustProxy?: boolean | string | string[] | number | Function;
 }
 declare module '@gasket/core' {
   export interface GasketActions {
