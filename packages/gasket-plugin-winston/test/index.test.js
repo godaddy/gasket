@@ -210,6 +210,14 @@ describe('@gasket/plugin-winston', function () {
         expect(passedLevels().security).toBe(5);
       });
 
+      it('lets a hook win over an app level of the same name', function () {
+        gasket.config.winston = { levels: { critical: 0, security: 7 } };
+        gasket.hook({ event: 'winstonLevels', handler: () => ({ security: 3 }) });
+        gasket.execSync('createLogger');
+
+        expect(passedLevels()).toEqual({ critical: 0, security: 3 });
+      });
+
       it('ignores a hook that returns nothing', function () {
         const levels = { critical: 0, awesome: 4 };
         gasket.config.winston = { levels };
@@ -251,6 +259,21 @@ describe('@gasket/plugin-winston', function () {
 
         logger.info('test');
         expect(calls).toEqual(['hook', 'base']);
+      });
+
+      it('runs contributed formats in hook order, then the app format', function () {
+        const calls = [];
+        const tracking = (name) => format((info) => {
+          calls.push(name);
+          return info;
+        })();
+        gasket.config.winston = { format: tracking('base') };
+        gasket.hook({ event: 'winstonFormats', handler: () => tracking('first') });
+        gasket.hook({ event: 'winstonFormats', handler: () => tracking('second') });
+        const [logger] = gasket.execSync('createLogger');
+
+        logger.info('test');
+        expect(calls).toEqual(['first', 'second', 'base']);
       });
 
       it('enriches the entry before the default format serializes it', function () {
