@@ -35,7 +35,7 @@ export default makeGasket({
   express: {
     middlewareInclusionRegex: /^(?!\/_next\/)/,
     compression: true,
-    trustProxy: true
+    trustProxy: 1 // one load balancer in front
   }
 });
 ```

@@ -134,14 +134,16 @@ here leaves nothing for the handler that reads it next.
 ### Express original request
 
 Express derives `req.ip` from the `trust proxy` setting, so it is not something
-`GasketRequest` can normalize. Reach it through the original request:
+`GasketRequest` can normalize. Reach it through the original request. See
+[trustProxy](../gasket-plugin-fastify/README.md#trustproxy) for the
+recommended hop-count value:
 
 ```js
 import express from 'express';
 import { getOriginalRequest } from '@gasket/request';
 
 const app = express();
-app.set('trust proxy', true);
+app.set('trust proxy', 1); // one load balancer in front
 
 export default {
   name: 'audit-plugin',
@@ -161,13 +163,15 @@ export default {
 
 ### Fastify original request
 
-Fastify exposes `request.ip`, and `request.ips` when `trustProxy` is enabled:
+Fastify exposes `request.ip`, and `request.ips` when `trustProxy` is enabled.
+See [trustProxy](../gasket-plugin-fastify/README.md#trustproxy) for the
+recommended hop-count value:
 
 ```js
 import Fastify from 'fastify';
 import { getOriginalRequest, makeGasketRequest } from '@gasket/request';
 
-const fastify = Fastify({ trustProxy: true });
+const fastify = Fastify({ trustProxy: 1 }); // one load balancer in front
 
 fastify.get('/users', async (request, reply) => {
   const gasketRequest = await makeGasketRequest(request);
