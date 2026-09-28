@@ -31,7 +31,7 @@ export default makeGasket({
   ],
   express: {
     compression: false,
-    trustProxy: true
+    trustProxy: 1 // one load balancer in front
   }
 });
 ```
