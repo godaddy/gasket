@@ -30,8 +30,16 @@ All the configurations for the plugin are added under `fastify` in the config:
 
 - `compression`: true by default. Can be set to false if applying compression
   differently.
-- `trustProxy`: Enable trust proxy option, [see Fastify documentation for possible values](https://fastify.dev/docs/latest/Reference/Server/#trustproxy)
+- `trustProxy`: Enable trust proxy option, [see Fastify documentation for possible values](https://fastify.dev/docs/latest/Reference/Server/#trustproxy).
+  See [trustProxy](#trustproxy) below for the recommended setting.
 - `disableRequestLogging`: Turn off request logging, true by default
+
+#### trustProxy
+
+Set it to the number of proxies in front of the app. `true` trusts the whole
+`X-Forwarded-For` chain, so `request.ip` becomes whatever the client sent
+first — any client can prepend its own entry to that header. Leave it unset
+when nothing sits in front of the app — `request.ip` is then the socket peer.
 
 #### Example configuration
 
@@ -43,7 +51,7 @@ export default makeGasket({
   fastify: {
     compression: false,
     excludedRoutesRegex: /^(?!\/_next\/)/,
-    trustProxy: true
+    trustProxy: 1 // one load balancer in front
   }
 });
 ```
