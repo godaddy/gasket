@@ -1,5 +1,12 @@
 # `@gasket/plugin-intl`
 
+## 7.6.11
+
+### Patch Changes
+
+- Updated dependencies [457352c]
+  - @gasket/request@7.6.2
+
 ## 7.6.10
 
 ### Patch Changes

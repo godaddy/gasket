@@ -1,5 +1,15 @@
 # `@gasket/plugin-winston`
 
+## 7.5.0
+
+### Minor Changes
+
+- e5eec0f: Add `winstonLevels` and `winstonFormats` lifecycles so plugins can add log levels and formats without replacing the app's or the default ones.
+
+### Patch Changes
+
+- @gasket/plugin-logger@7.5.1
+
 ## 7.4.3
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # `@gasket/request`
 
+## 7.6.2
+
+### Patch Changes
+
+- 457352c: Document `trustProxy` as a hop count instead of `true` throughout examples, since `true` trusts the whole `X-Forwarded-For` chain and lets a client spoof `request.ip`.
+
 ## 7.6.1
 
 ### Patch Changes
