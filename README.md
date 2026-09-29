@@ -133,6 +133,8 @@ Available lifecycles
 | [serviceWorkerCacheKey]                                    | Get cache keys for request based service workers              |
 | [terminus]                                                 | Setup the `terminus` options                                  |
 | [webpackConfig]                                            | Transform the Webpack config                                  |
+| [winstonFormats]                                           | Add Winston log formats                                       |
+| [winstonLevels]                                            | Add Winston log levels                                        |
 | [winstonTransports]                                        | Setup Winston log transports                                  |
 | [workbox]                                                  | Setup Workbox config and options                              |
 
@@ -369,6 +371,8 @@ Available configuration options in the `gasket.js`
 [serviceWorkerCacheKey]:/packages/gasket-plugin-service-worker/README.md#serviceWorkerCacheKey
 [terminus]:/packages/gasket-plugin-https/README.md#terminus
 [webpackConfig]:/packages/gasket-plugin-webpack/README.md#webpackConfig
+[winstonFormats]:/packages/gasket-plugin-winston/README.md#winstonFormats
+[winstonLevels]:/packages/gasket-plugin-winston/README.md#winstonLevels
 [winstonTransports]:/packages/gasket-plugin-winston/README.md#winstonTransports
 [workbox]:/packages/gasket-plugin-workbox/README.md#workbox
 [.docs/docs/]:/packages/gasket-plugin-docs/README.md#options
