@@ -33,7 +33,22 @@ All the configurations for the plugin are added under `express` in the config:
 
 - `compression`: true by default. Can be set to false if applying compression
   differently.
-- `trustProxy`: Enable trust proxy option, [see Express documentation on Express behind proxies](https://expressjs.com/en/guide/behind-proxies.html)
+- `trustProxy`: Enable trust proxy option, [see Express documentation on Express behind proxies](https://expressjs.com/en/guide/behind-proxies.html).
+  See [trustProxy](#trustproxy) below for the recommended setting.
+
+#### trustProxy
+
+Set it to the number of proxies in front of the app. `true` trusts the whole
+`X-Forwarded-For` chain, so `req.ip` becomes whatever the client sent first —
+any client can prepend its own entry to that header. Leave it unset when
+nothing sits in front of the app — `req.ip` is then the socket peer.
+
+A hop count assumes every request passes through the same number of proxies.
+When paths vary or the app is reachable directly — for example, some traffic
+reaches the load balancer without the CDN — a client on the shorter path
+supplies the entry the count selects. Trust the proxies by address instead: an
+IP or CIDR list such as `['10.0.0.0/8']`, or a function — see
+[Advanced Trust Proxy Configuration](./EXAMPLES.md#advanced-trust-proxy-configuration).
 
 #### Example configuration
 
@@ -44,7 +59,7 @@ export default makeGasket({
   ],
   express: {
     compression: false,
-    trustProxy: true
+    trustProxy: 1 // one load balancer in front
   }
 });
 ```

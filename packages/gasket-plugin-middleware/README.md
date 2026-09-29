@@ -51,7 +51,9 @@ using.
   routes like static resource paths.
 - `trustProxy`: Enable the "trust proxy" option. Refer to the [Fastify trust
   proxy documentation] or the [Express trust proxy documentation] for more
-  details.
+  details. See the [Fastify plugin's][fastify-trust-proxy] or
+  [Express plugin's][express-trust-proxy] `trustProxy` section for the
+  recommended setting.
 - `routes`: A path or glob pattern pointing to files that export route-defining
   functions. These functions receive the `app` object (Fastify or Express) to
   attach handlers and middleware.
@@ -72,7 +74,7 @@ export default makeGasket({
     compression: false,
     routes: 'api/*.js',
     middlewareInclusionRegex: /^(?!\/_next\/)/,
-    trustProxy: true
+    trustProxy: 1 // one load balancer in front
   }
 });
 ```
@@ -91,7 +93,7 @@ export default makeGasket({
     compression: false,
     routes: 'api/*.js',
     middlewareInclusionRegex: /^(?!\/_next\/)/,
-    trustProxy: true
+    trustProxy: 1 // one load balancer in front
   }
 });
 ```
@@ -180,5 +182,7 @@ functions.
 
 <!-- LINKS -->
 
-[Fastify trust proxy documentation]:https://fastify.dev/docs/latest/Reference/Server/#trustproxy
+[fastify-trust-proxy]:../gasket-plugin-fastify/README.md#trustproxy
+[express-trust-proxy]:../gasket-plugin-express/README.md#trustproxy
+[Fastify trust proxy documentation]:https://fastify.dev/docs/v4.29.x/Reference/Server/#trustproxy
 [Express trust proxy documentation]:https://expressjs.com/en/guide/behind-proxies.html
