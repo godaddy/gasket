@@ -12,12 +12,6 @@ npx create-gasket-app@latest my-app --template @gasket/template-nextjs-pages
 
 # With package manager selection
 npx create-gasket-app@latest my-app --template @gasket/template-nextjs-pages --package-manager pnpm
-
-# With configuration
-npx create-gasket-app@latest my-app --template @gasket/template-nextjs-pages --config '{"typescript": true}'
-
-# With config file
-npx create-gasket-app@latest my-app --template @gasket/template-nextjs-pages --config-file ./create-config.json
 ```
 
 ## Templates

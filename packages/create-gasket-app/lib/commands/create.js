@@ -9,9 +9,6 @@ import mkDir from '../scaffold/actions/mkdir.js';
 import printReport from '../scaffold/actions/print-report.js';
 import gitInit from '../scaffold/actions/git-init.js';
 
-/** @type {import('../internal.d.ts').commasToArray} */
-const commasToArray = input => input.split(',').map(name => name.trim());
-
 const createCommand = {
   id: 'create',
   description: 'Create a new Gasket application',
@@ -38,35 +35,6 @@ const createCommand = {
       name: 'package-manager',
       description: `Selects which package manager you would like to use during
       installation. (e.g. --package-manager pnpm)`
-    },
-    {
-      name: 'require',
-      short: 'r',
-      description: 'Require module(s) before Gasket is initialized',
-      parse: commasToArray
-    },
-    {
-      name: 'npm-link',
-      description: `(INTERNAL) Local packages to be linked. Can be set as
-      multiple flags (e.g. --npm-link @gasket/plugin-jest)
-      comma-separated values: --npm-link=@gasket/plugin-jest,some-test-package`,
-      parse: commasToArray,
-      hidden: true
-    },
-    {
-      name: 'config',
-      description: 'JSON object that provides the values for any interactive prompts'
-    },
-    {
-      name: 'config-file',
-      description: 'Path to a JSON file that provides the values for any interactive prompts',
-      conflicts: ['config']
-    },
-    {
-      name: 'no-prompts',
-      description: '(INTERNAL) Disable to skip the prompts',
-      type: 'boolean',
-      hidden: true
     }
   ]
 };

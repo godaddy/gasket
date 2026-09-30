@@ -1,6 +1,5 @@
 import fs from 'fs';
 import path from 'path';
-import { readConfig } from '../scaffold/utils.js';
 
 /**
  * The CreateRuntime represents a shallow proxy to a CreateContext
@@ -52,10 +51,6 @@ function makeCreateRuntime(context, source) {
 }
 
 
-const flatten = (acc, values) => {
-  return acc.concat(values);
-};
-
 export class CreateContext {
   constructor(initContext = {}) {
     Object.assign(this, initContext);
@@ -73,16 +68,9 @@ export function makeCreateContext(argv = [], options = {}) {
   const {
     template,
     templatePath,
-    npmLink = [],
-    packageManager,
-    prompts,
-    config,
-    configFile
+    packageManager
   } = options;
 
-  // Flatten the array of array created by the plugins flag – it
-  // supports both multiple instances as well as comma-separated lists.
-  const pkgLinks = npmLink.reduce(flatten, []);
   const cwd = process.cwd();
   const dest = path.join(cwd, appName);
   const relDest = `.${path.sep}${path.relative(cwd, dest)}`;
@@ -90,7 +78,7 @@ export function makeCreateContext(argv = [], options = {}) {
   const extant = fs.existsSync(dest);
 
   /**
-   * Input context which will be appended by prompts and passed to create hooks
+   * Input context passed through the template scaffold actions
    * @type {import('../index.d.ts').CreateContext}
    */
   // @ts-ignore - some properties not defined in constructor will be added later
@@ -100,18 +88,14 @@ export function makeCreateContext(argv = [], options = {}) {
     dest,
     relDest,
     extant,
-    pkgLinks,
     template,
     templatePath,
     messages: [],
     warnings: [],
     errors: [],
     nextSteps: [],
-    generatedFiles: new Set(),
-    prompts
+    generatedFiles: new Set()
   });
-
-  readConfig(context, { config, configFile });
 
   if (packageManager) {
     context.packageManager = packageManager;

@@ -1,6 +1,0 @@
-{
-  "appDescription": "A basic gasket app",
-  "packageManager": "npm",
-  "unitTestSuite": "jest",
-  "integrationTestSuite": "cypress"
-}

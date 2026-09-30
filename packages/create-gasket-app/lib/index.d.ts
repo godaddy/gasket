@@ -48,11 +48,7 @@ interface CommandOption {
 export interface CreateCommandOptions {
   template?: string;
   templatePath?: string;
-  npmLink?: string[];
   packageManager?: string;
-  prompts?: boolean;
-  config?: string;
-  configFile?: string;
 }
 
 export function createCommandAction(
@@ -268,9 +264,6 @@ export interface CreateContext {
   /** Whether or not target directory already exists */
   extant: boolean;
 
-  /** Local packages that should be linked */
-  pkgLinks: Array<string>;
-
   /** non-error/warning messages to report */
   messages: Array<string>;
 
@@ -285,9 +278,6 @@ export interface CreateContext {
 
   /** any generated files to show in report */
   generatedFiles: Set<string>;
-
-  /** (INTERNAL) false to skip the prompts */
-  prompts: boolean;
 
   /** temporary directory */
   tmpDir: string;
