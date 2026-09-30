@@ -21,6 +21,7 @@ describe('Plugin', function () {
       'apmTransaction',
       'build',
       'configure',
+      'preboot',
       'publicGasketData',
       'init',
       'metadata'
