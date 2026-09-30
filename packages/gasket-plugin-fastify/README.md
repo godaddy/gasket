@@ -40,8 +40,26 @@ The plugin automatically detects your Fastify version and applies the correct co
 
 All the configurations for the plugin are added under `fastify` in the config:
 
-- `trustProxy`: Enable trust proxy option, [see Fastify documentation for possible values](https://fastify.dev/docs/latest/Reference/Server/#trustproxy)
+- `trustProxy`: Enable trust proxy option, [see Fastify documentation for possible values](https://fastify.dev/docs/latest/Reference/Server/#trustproxy).
+  See [trustProxy](#trustproxy) below for the recommended setting.
 - `disableRequestLogging`: Turn off request logging, true by default
+
+#### trustProxy
+
+Set it to the addresses of the proxies in front of the app: an IP or CIDR list
+such as `['10.0.0.0/8']`, a comma-separated string, or a function that
+validates the peer `address`. `true` trusts the whole `X-Forwarded-For` chain,
+so `request.ip` becomes whatever the client sent first — any client can prepend
+its own entry to that header. Leave it unset when nothing sits in front of the
+app — `request.ip` is then the socket peer.
+
+Do not set it to a hop count. Fastify 5 treats a number as "trust no proxy"
+(see the [Fastify server reference]), so `request.ip` is the socket peer as if
+`trustProxy` were unset. Fastify 4 accepts a hop count, but it assumes every
+request passes through the same number of proxies; when paths vary or the app
+is reachable directly — for example, some traffic reaches the load balancer
+without the CDN — a client on the shorter path supplies the entry the count
+selects. An address list behaves the same on both versions.
 
 #### Example configuration
 
@@ -51,7 +69,7 @@ export default makeGasket({
     pluginFastify
   ],
   fastify: {
-    trustProxy: true
+    trustProxy: ['10.0.0.0/8'] // the load balancer's network
   }
 });
 ```
@@ -133,3 +151,4 @@ This plugins hooks the [createServers] lifecycles from [@gasket/plugin-https].
 
 [@gasket/plugin-https]:/packages/gasket-plugin-https/README.md
 [createServers]:/packages/gasket-plugin-https/README.md#createservers
+[Fastify server reference]:https://fastify.dev/docs/latest/Reference/Server/#trustproxy
