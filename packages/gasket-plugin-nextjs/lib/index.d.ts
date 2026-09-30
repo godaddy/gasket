@@ -4,7 +4,7 @@ import type { NextServer } from 'next/dist/server/next';
 import type { Application } from 'express';
 import type { FastifyInstance } from 'fastify';
 import type { Gasket, Plugin } from '@gasket/core';
-import type { CreateContext, CreatePrompt } from 'create-gasket-app';
+import type { CreateContext } from 'create-gasket-app';
 import type { GasketRequest } from '@gasket/request';
 
 export { NextConfig, NextServer };
@@ -90,27 +90,6 @@ export function getNextRoute(
   routeKeys: Record<string, string>;
   namedRegex: RegExp;
 } | null>;
-
-/* Exported prompts */
-export function promptAppRouter(
-  context: CreateContext,
-  prompt: CreatePrompt
-): Promise<undefined>
-
-export function promptNextServerType(
-  context: CreateContext,
-  prompt: CreatePrompt
-): Promise<undefined>
-
-export function promptNextDevProxy(
-  context: CreateContext,
-  prompt: CreatePrompt
-): Promise<undefined>
-
-export function promptSitemap(
-  context: CreateContext,
-  prompt: CreatePrompt
-): Promise<undefined>
 
 /**
  * Small helper function that creates nextjs app from the gasket configuration.
