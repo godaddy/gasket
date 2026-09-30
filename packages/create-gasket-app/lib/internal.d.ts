@@ -12,18 +12,11 @@ import type { Command, Option } from 'commander';
 
 export type PartialCreateContext = Partial<CreateContext>;
 
-export function commasToArray(value: string): string[];
-
 export function validateOptions(context: PartialCreateContext): PartialCreateContext;
 
 export function handleTemplate(context: PartialCreateContext): Promise<void>;
 
 /** scaffold */
-
-export function readConfig(
-  context: PartialCreateContext,
-  configFlags: { config?: string; configFile?: string }
-): void;
 
 export function dumpErrorContext(context: PartialCreateContext, error: Error): Promise<void>;
 

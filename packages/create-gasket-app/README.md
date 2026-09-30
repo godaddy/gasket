@@ -46,9 +46,6 @@ Options:
         or relative to the current working directory.
   --package-manager [package-manager]  Selects which package manager you would like to use during
         installation. (e.g. --package-manager yarn)
-  -r, --require [require]              Require module(s) before Gasket is initialized
-  --config [config]                    JSON object that provides the values for any interactive prompts
-  --config-file [config-file]          Path to a JSON file that provides the values for any interactive prompts
   -h, --help                           display help for command
 ```
 
