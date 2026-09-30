@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { vi, describe, it, expect, beforeEach } from 'vitest';
+import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
 import plugin from '../lib/index.js';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
@@ -34,12 +34,30 @@ describe('@gasket/plugin-logger', () => {
 
   describe('plugin.hooks', () => {
     let gasket;
+    let originalConsole;
 
     beforeEach(() => {
       gasket = {
         execSync: vi.fn(),
-        logger: null
+        logger: null,
+        config: {}
       };
+
+      originalConsole = {
+        error: console.error,
+        warn: console.warn,
+        log: console.log,
+        info: console.info,
+        debug: console.debug
+      };
+    });
+
+    afterEach(() => {
+      console.error = originalConsole.error;
+      console.warn = originalConsole.warn;
+      console.log = originalConsole.log;
+      console.info = originalConsole.info;
+      console.debug = originalConsole.debug;
     });
 
     describe('init', () => {
@@ -88,6 +106,119 @@ describe('@gasket/plugin-logger', () => {
         // eslint-disable-next-line max-nested-callbacks
         expect(() => plugin.hooks.init(gasket)).toThrow(
           'Multiple plugins are hooking createLogger. Only one logger is supported.'
+        );
+      });
+    });
+
+    describe('init - overrideConsole', () => {
+      let fakeLogger;
+
+      beforeEach(() => {
+        fakeLogger = { ...mockLogger };
+        gasket.execSync.mockReturnValue([fakeLogger]);
+      });
+
+      it('should not override console methods when overrideConsole is not set', () => {
+        const originalLog = console.log;
+        gasket.config = {};
+
+        plugin.hooks.init(gasket);
+
+        expect(console.log).toBe(originalLog);
+      });
+
+      it('should not override console methods when overrideConsole is false', () => {
+        const originalLog = console.log;
+        gasket.config = { logger: { overrideConsole: false } };
+
+        plugin.hooks.init(gasket);
+
+        expect(console.log).toBe(originalLog);
+      });
+
+      it('should not override console methods when no custom logger is hooked', () => {
+        const originalLog = console.log;
+        gasket.config = { logger: { overrideConsole: true } };
+        gasket.execSync.mockReturnValue([]);
+
+        plugin.hooks.init(gasket);
+
+        expect(console.log).toBe(originalLog);
+      });
+
+      it('should override console methods when overrideConsole is true and a custom logger is hooked', () => {
+        const originalLog = console.log;
+        gasket.config = { logger: { overrideConsole: true } };
+
+        plugin.hooks.init(gasket);
+
+        expect(console.log).not.toBe(originalLog);
+        expect(console.info).not.toBe(originalConsole.info);
+        expect(console.error).not.toBe(originalConsole.error);
+        expect(console.warn).not.toBe(originalConsole.warn);
+        expect(console.debug).not.toBe(originalConsole.debug);
+      });
+
+      it('should route console.log to logger.info when overrideConsole is true', () => {
+        gasket.config = { logger: { overrideConsole: true } };
+        plugin.hooks.init(gasket);
+
+        console.log('log message', { extra: 1 });
+
+        expect(fakeLogger.info).toHaveBeenCalledWith('log message', { extra: 1 });
+      });
+
+      it('should route console.info to logger.info when overrideConsole is true', () => {
+        gasket.config = { logger: { overrideConsole: true } };
+        plugin.hooks.init(gasket);
+
+        console.info('info message');
+
+        expect(fakeLogger.info).toHaveBeenCalledWith('info message');
+      });
+
+      it('should route console.error to logger.error when overrideConsole is true', () => {
+        gasket.config = { logger: { overrideConsole: true } };
+        plugin.hooks.init(gasket);
+
+        console.error('error message');
+
+        expect(fakeLogger.error).toHaveBeenCalledWith('error message');
+      });
+
+      it('should route console.warn to logger.warn when overrideConsole is true', () => {
+        gasket.config = { logger: { overrideConsole: true } };
+        plugin.hooks.init(gasket);
+
+        console.warn('warn message');
+
+        expect(fakeLogger.warn).toHaveBeenCalledWith('warn message');
+      });
+
+      it('should route console.debug to logger.debug when overrideConsole is true', () => {
+        gasket.config = { logger: { overrideConsole: true } };
+        plugin.hooks.init(gasket);
+
+        console.debug('debug message');
+
+        expect(fakeLogger.debug).toHaveBeenCalledWith('debug message');
+      });
+
+      it('should forward multiple arguments through the overridden console methods', () => {
+        gasket.config = { logger: { overrideConsole: true } };
+        plugin.hooks.init(gasket);
+
+        console.error('msg', 'extra', { key: 'value' });
+
+        expect(fakeLogger.error).toHaveBeenCalledWith('msg', 'extra', { key: 'value' });
+      });
+
+      it('should log a confirmation message after overriding console', () => {
+        gasket.config = { logger: { overrideConsole: true } };
+        plugin.hooks.init(gasket);
+
+        expect(fakeLogger.info).toHaveBeenCalledWith(
+          '[gasket-plugin-logger] console overridden to use gasket.logger'
         );
       });
     });
