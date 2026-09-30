@@ -149,6 +149,50 @@ export default {
 };
 ```
 
+### winstonLevels
+
+To add log levels without restating the whole level map, hook the
+`winstonLevels` lifecycle and return a levels object. Results are merged over
+the base levels — the app's `winston.levels` if set, otherwise the default
+levels — with whichever hook runs last, by plugin order and any `timing`
+constraints, winning when two define the same level. Return a falsy value to
+add nothing.
+
+```js
+// sample-plugin.js
+export default {
+  name: 'sample-plugin',
+  hooks: {
+    winstonLevels(gasket) {
+      return { audit: 3 };
+    }
+  }
+};
+```
+
+You are responsible for calling `winston.addColors` for any level you add.
+
+### winstonFormats
+
+To enrich log entries, hook the `winstonFormats` lifecycle and return a
+[format][Formats]. Contributed formats run before the base format — the app's
+`winston.format` if set, otherwise the default format — so they can add to an
+entry before it is serialized. Return a falsy value to add nothing.
+
+```js
+// sample-plugin.js
+import { format } from 'winston';
+
+export default {
+  name: 'sample-plugin',
+  hooks: {
+    winstonFormats(gasket) {
+      return format((info) => ({ ...info, service: gasket.config.serviceName }))();
+    }
+  }
+};
+```
+
 ## Test
 
 If you are contributing to this plugin, use the following to run the tests:
