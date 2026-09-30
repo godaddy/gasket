@@ -45,7 +45,7 @@
   },
   "devDependencies": {
     "@fastify/swagger": "^9.0.0",
-    "@fastify/swagger-ui": "^5.0.0",
+    "@fastify/swagger-ui": "^6.0.0",
     "@gasket/core": "workspace:^",
     "@gasket/plugin-command": "workspace:^",
     "@gasket/plugin-express": "workspace:^",
@@ -58,7 +58,7 @@
   },
   "peerDependencies": {
     "@fastify/swagger": "^8.15.0 || ^9.0.0",
-    "@fastify/swagger-ui": "^4.2.0 || ^5.0.0"
+    "@fastify/swagger-ui": "^4.2.0 || ^5.0.0 || ^6.0.0"
   },
   "peerDependenciesMeta": {
     "@fastify/swagger": {
