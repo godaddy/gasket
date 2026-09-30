@@ -43,7 +43,7 @@ const plugin = {
         lifecycles: [
           {
             name: 'intlLocale',
-            method: 'execWaterfallSync',
+            method: 'execWaterfall',
             description: 'Set the language for which locale files to load',
             link: 'README.md#intlLocale',
             parent: 'express'

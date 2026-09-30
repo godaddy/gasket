@@ -30,7 +30,7 @@ const plugin = {
         lifecycles: [
           {
             name: 'commands',
-            method: 'exec',
+            method: 'execSync',
             description: 'Add custom commands to the CLI',
             link: 'README.md#commands',
             parent: 'prepare'
