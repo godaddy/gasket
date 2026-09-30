@@ -9,10 +9,7 @@ import mkDir from '../scaffold/actions/mkdir.js';
 import printReport from '../scaffold/actions/print-report.js';
 import gitInit from '../scaffold/actions/git-init.js';
 
-/**
- * Parses comma separated option input to array
- * @type {import('../internal.js').commasToArray}
- */
+/** @type {import('../internal.d.ts').commasToArray} */
 const commasToArray = input => input.split(',').map(name => name.trim());
 
 const createCommand = {
@@ -75,9 +72,8 @@ const createCommand = {
 };
 
 /**
- * validateOption - We require at least one of the options to be provided
- * @param {import('../internal.js').PartialCreateContext} context - Create context
- * @returns {import('../internal.js').PartialCreateContext} Validated context
+ * We require at least one of the options to be provided
+ * @type {import('../internal.d.ts').validateOptions}
  */
 function validateOptions(context) {
   const hasOption = (context) => Boolean(context.template || context.templatePath);
@@ -90,11 +86,7 @@ function validateOptions(context) {
   return context;
 }
 
-/**
- * handleTemplate - Handles the template creation
- * @param {import('../internal.js').PartialCreateContext} context - Create context
- * @returns {Promise<void>} Promise that resolves when template is created
- */
+/** @type {import('../internal.d.ts').handleTemplate} */
 async function handleTemplate(context) {
   await mkDir({ context });
   await loadTemplate({ context });
@@ -106,10 +98,7 @@ async function handleTemplate(context) {
   return;
 }
 
-/**
- * createCommand action
- * @type {import('../index.js').createCommandAction}
- */
+/** @type {import('../index.d.ts').createCommandAction} */
 // eslint-disable-next-line no-unused-vars
 createCommand.action = async function run(appname, options, command) {
   // eslint-disable-next-line no-process-env

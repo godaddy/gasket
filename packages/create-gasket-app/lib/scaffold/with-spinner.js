@@ -1,11 +1,8 @@
 import ora from 'ora';
 
-/**
- * Base function to handle spinner logic
- * @type {import('../internal.js').wrapWithSpinner}
- */
+/** @type {import('../internal.d.ts').wrapWithSpinner} */
 function wrapWithSpinner(label, task, { startSpinner = true } = {}) {
-  /** @type {import('../internal.js').execute} */
+  /** @type {import('../internal.d.ts').execute} */
   async function execute(args) {
     const { context } = args;
     const spinner = ora(label);
@@ -26,10 +23,7 @@ function wrapWithSpinner(label, task, { startSpinner = true } = {}) {
   return execute;
 }
 
-/**
- * Wrap a task with a spinner, including gasket and context.
- * @type {import('../internal.js').withGasketSpinner}
- */
+/** @type {import('../internal.d.ts').withGasketSpinner} */
 export function withGasketSpinner(label, task, options) {
   return wrapWithSpinner(label, ({ gasket, context, spinner }) =>
     task({ gasket, context, spinner }),
@@ -37,10 +31,7 @@ export function withGasketSpinner(label, task, options) {
   );
 }
 
-/**
- * Wrap a task with a spinner, using only context.
- * @type {import('../internal.js').withSpinner}
- */
+/** @type {import('../internal.d.ts').withSpinner} */
 export function withSpinner(label, task, options) {
   return wrapWithSpinner(label, ({ context, spinner }) =>
     task({ context, spinner }),

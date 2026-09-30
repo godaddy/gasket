@@ -1,7 +1,4 @@
-/**
- * isValidArg - Validates the argument configuration
- * @type {import('../internal.js').isValidArg}
- */
+/** @type {import('../internal.d.ts').isValidArg} */
 function isValidArg(arg) {
   const keys = Object.keys(arg);
   if (arg.required && arg.default) return false;
@@ -10,10 +7,7 @@ function isValidArg(arg) {
     !!arg.name && !!arg.description;
 }
 
-/**
- * processArgs - Process the arguments configuration
- * @type {import('../internal.js').processArgs}
- */
+/** @type {import('../internal.d.ts').processArgs} */
 export function processArgs(args) {
   if (!Array.isArray(args) || !args.every(isValidArg)) throw new Error('Invalid argument(s) configuration');
 
