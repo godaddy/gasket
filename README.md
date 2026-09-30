@@ -71,7 +71,6 @@ Available actions
 | Name                                                     | Description                                |
 | -------------------------------------------------------- | ------------------------------------------ |
 | [getApmTransaction]                                      | Get the APM transaction data               |
-| [getFastifyApp (deprecated)][getFastifyApp (deprecated)] | Get the Fastify app instance               |
 | [getGasketData]                                          | Get the Gasket data                        |
 | [getHappyFeet]                                           | Get the Happy Feet instance                |
 | [getIntlLocale]                                          | Get the current locale                     |
@@ -304,7 +303,6 @@ Available configuration options in the `gasket.js`
 [build]:/packages/gasket-plugin-command/README.md#build
 [docs]:/packages/gasket-plugin-docs/README.md#commands
 [getApmTransaction]:/packages/gasket-plugin-elastic-apm/README.md#getApmTransaction
-[getFastifyApp (deprecated)]:/packages/gasket-plugin-fastify/README.md#getFastifyApp
 [getGasketData]:/packages/gasket-plugin-data/README.md#getGasketData
 [getHappyFeet]:/packages/gasket-plugin-happyfeet/README.md#getHappyFeet
 [getIntlLocale]:/packages/gasket-plugin-intl/README.md#getIntlLocale

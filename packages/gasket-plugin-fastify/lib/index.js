@@ -2,7 +2,6 @@
 /// <reference types="@gasket/plugin-metadata" />
 
 import createServers from './create-servers.js';
-import actions from './actions.js';
 import packageJson from '../package.json' with { type: 'json' };
 const { name, version, description } = packageJson;
 
@@ -11,20 +10,11 @@ const plugin = {
   name,
   version,
   description,
-  actions,
   hooks: {
     createServers,
     metadata(gasket, meta) {
       return {
         ...meta,
-        actions: [
-          {
-            name: 'getFastifyApp',
-            description: 'Get the Fastify app instance',
-            link: 'README.md#getFastifyApp',
-            deprecated: true
-          }
-        ],
         lifecycles: [
           {
             name: 'fastify',
