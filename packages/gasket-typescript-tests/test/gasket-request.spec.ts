@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import type { RequestLike } from '@gasket/request';
-import { makeGasketRequest } from '@gasket/request';
+import type { GasketRequest, RequestLike } from '@gasket/request';
+import { getOriginalRequest, makeGasketRequest } from '@gasket/request';
 import type { Request as ExpressRequest } from 'express';
 import type { FastifyRequest } from 'fastify';
 
@@ -39,5 +39,40 @@ describe('@gasket/request types', () => {
     const gasketRequest = makeGasketRequest(fastifyReq);
 
     expect(gasketRequest).toBeDefined();
+  });
+
+  it('asserts the Express Request shape through getOriginalRequest', () => {
+    const req: GasketRequest = {} as GasketRequest;
+
+    const original = getOriginalRequest<ExpressRequest>(req);
+    const ip: string | undefined = original?.ip;
+
+    expect(ip).toBeUndefined();
+  });
+
+  it('asserts the Fastify Request shape through getOriginalRequest', () => {
+    const req: GasketRequest = {} as GasketRequest;
+
+    const original = getOriginalRequest<FastifyRequest>(req);
+    const ip: string | undefined = original?.ip;
+
+    expect(ip).toBeUndefined();
+  });
+
+  it('accepts a possibly absent GasketRequest', () => {
+    // eslint-disable-next-line no-undefined
+    const req: GasketRequest | undefined = undefined;
+
+    const original = getOriginalRequest(req);
+
+    expect(original).toBeUndefined();
+  });
+
+  it('exposes an optional uppercased method on GasketRequest', () => {
+    const req: GasketRequest = {} as GasketRequest;
+
+    const method: string | undefined = req.method;
+
+    expect(method).toBeUndefined();
   });
 });

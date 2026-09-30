@@ -76,6 +76,28 @@ export default async function MyDynamicRoutePage({ params }) {
 }
 ```
 
+#### App Router limitations
+
+The App Router does not expose a request object. `request()` assembles a
+request-like object from `next/headers`, which has two consequences for the
+[GasketRequest] you get back:
+
+- `method` is `undefined`. `next/headers` provides no method, and it is not
+  defaulted to `GET` because a Server Action is a `POST` that re-renders server
+  components within the same request.
+- `getOriginalRequest()` returns the assembled object, not a framework request.
+  It is truthy but carries only headers, cookies, and query — so there is no
+  `ip` on it. Guard the field you need, not the object:
+
+```js
+import { getOriginalRequest } from '@gasket/request';
+
+const ip = getOriginalRequest(req)?.ip;
+if (!ip) {
+  // No client IP available in this environment
+}
+```
+
 ### Layout withGasketData
 
 Injects Gasket Data into Root Layout for use with the [@gasket/data] package.

@@ -57,6 +57,7 @@ export type RequestLike = {
   cookies?: CookieStore | Record<string, string>;
   query?: URLSearchParams | Record<string, string | string[]> | ExpressRequest['query'] | FastifyRequest['query'];
   url?: string;
+  method?: string;
   [key: string]: any;
 };
 
@@ -83,12 +84,18 @@ export class GasketRequest {
     cookies: Record<string, string>;
     query: Record<string, string>;
     path: string;
+    method?: string;
   });
 
   headers: Record<string, string>;
   cookies: Record<string, string>;
   query: Record<string, string>;
   path: string;
+  /**
+   * Uppercased HTTP method, or `undefined` when the source exposes none —
+   * notably the Next.js App Router, where `headers()` provides no method.
+   */
+  method?: string;
 }
 
 /**
@@ -105,6 +112,27 @@ export class WeakPromiseKeeper<Key extends WeakKey = WeakKey, Value = any> {
  * Normalizes a request into a GasketRequest object.
  */
 export function makeGasketRequest(req: RequestLike): MaybeAsync<GasketRequest>;
+
+/**
+ * Returns the request instance a GasketRequest was normalized from, for reading
+ * framework-specific fields such as `ip` that GasketRequest does not normalize.
+ *
+ * Returns `undefined` for a directly constructed GasketRequest, for a
+ * serialized and revived one, and for any absent value.
+ *
+ * Under the Next.js App Router there is no request instance: the returned value
+ * is the assembled request-like, which is truthy but carries only headers,
+ * cookies and query. Guard the field you need, not the object.
+ *
+ * Read-only. Do not mutate the returned request or consume its body — a fetch
+ * `Request` or `IncomingMessage` body is a single-use stream, and draining it
+ * here leaves nothing for the handler that reads it next.
+ *
+ * The type parameter is an unchecked assertion of the framework in use.
+ */
+export function getOriginalRequest<T extends RequestLike = RequestLike>(
+  gasketRequest: GasketRequest | null | undefined
+): T | undefined;
 
 /**
  * Wraps a request action function with a GasketRequest transformation.
