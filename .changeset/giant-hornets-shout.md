@@ -1,13 +1,13 @@
 ---
-"@gasket/plugin-docusaurus": patch
-"@gasket/typescript-tests": patch
-"@gasket/plugin-metadata": patch
-"@gasket/plugin-swagger": patch
-"@gasket/plugin-logger": patch
-"@gasket/plugin-docs": patch
-"create-gasket-app": patch
-"@gasket/request": patch
-"@gasket/core": patch
+"@gasket/plugin-docusaurus": major
+"@gasket/typescript-tests": major
+"@gasket/plugin-metadata": major
+"@gasket/plugin-swagger": major
+"@gasket/plugin-logger": major
+"@gasket/plugin-docs": major
+"create-gasket-app": major
+"@gasket/request": major
+"@gasket/core": major
 ---
 
-remove presets and related docs
+Remove `@gasket/preset-*` packages and preset docs. Presets are gone in Gasket 8: scaffold new apps with `create-gasket-app` and a `@gasket/template-*` package instead, and remove any `presets` entries from existing configs.
