@@ -39,6 +39,16 @@ declare module '@gasket/core' {
      * @todo This should be moved to gasket/engine for next major release
      */
     basePath?: string;
+    /**
+     * Opt into Turbopack support. When true, `@gasket/plugin-nextjs`'s
+     * `nextConfig` hook removes its Webpack callback and adds `@gasket/core`
+     * plus `@gasket/plugin-nextjs` to `serverExternalPackages`. Other Gasket
+     * plugins may hook `nextConfig` to self-register additional server
+     * externals when this flag is set.
+     * @example
+     * turbopack: true
+     */
+    turbopack?: boolean;
   }
 
   export interface HookExecTypes {
