@@ -11,6 +11,7 @@ minimumReleaseAge: 0
 overrides:
   react-json-view-lite: "^2.3.0"
   tmp: "^0.2.6"
+  "swagger-jsdoc>js-yaml": "^3.15.2"
 
 allowBuilds:
   esbuild: true
