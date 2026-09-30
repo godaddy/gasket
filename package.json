@@ -20,7 +20,7 @@
     "lint:fix": "pnpm run lint --fix",
     "lint:fix:all": "pnpm run lint:fix && pnpm run -r lint:fix",
     "postinstall": "pnpm run build",
-    "postpublish": "node scripts/mark-deprecated.mjs",
+    "postpublish": "node scripts/mark-deprecated.js",
     "posttest": "pnpm run lint",
     "preinstall": "npx only-allow pnpm",
     "publish:canary": "pnpm changeset version --snapshot canary && pnpm changeset publish --tag canary",
