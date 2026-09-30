@@ -1,5 +1,5 @@
 name: Publish
-run-name: Publish \(${{ github.event_name == 'repository_dispatch' && github.event.client_payload.branch || github.ref_name }}\)
+run-name: Publish (${{ github.event_name == 'repository_dispatch' && github.event.client_payload.branch || github.ref_name }})
 
 on:
   workflow_dispatch:
