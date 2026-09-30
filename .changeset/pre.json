@@ -25,7 +25,6 @@
     "@gasket/plugin-intl": "8.0.0-next.1",
     "@gasket/plugin-logger": "8.0.0-next.1",
     "@gasket/plugin-metadata": "8.0.0-next.1",
-    "@gasket/plugin-middleware": "8.0.0-next.1",
     "@gasket/plugin-morgan": "8.0.0-next.1",
     "@gasket/plugin-nextjs": "8.0.0-next.1",
     "@gasket/plugin-swagger": "8.0.0-next.1",
