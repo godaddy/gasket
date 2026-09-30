@@ -41,8 +41,8 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-docusaurus",
   "devDependencies": {
-    "@docusaurus/core": "^3.8.1",
-    "@docusaurus/preset-classic": "^3.8.1",
+    "@docusaurus/core": "^3.10.2",
+    "@docusaurus/preset-classic": "^3.10.2",
     "@gasket/core": "workspace:^",
     "@gasket/plugin-docs": "workspace:^",
     "@gasket/plugin-logger": "workspace:^",
