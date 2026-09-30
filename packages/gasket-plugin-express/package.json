@@ -41,7 +41,7 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-express",
   "dependencies": {
     "cookie-parser": "^1.4.7",
-    "http2-express": "^1.0.1"
+    "http2-express": "^1.1.1"
   },
   "devDependencies": {
     "@gasket/core": "workspace:^",
