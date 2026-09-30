@@ -28,7 +28,7 @@
     "release": "changeset publish",
     "replace-ws-aliases": "node scripts/replace-ws-aliases.js",
     "syncpack": "syncpack",
-    "syncpack:fix": "syncpack fix-mismatches && syncpack format",
+    "syncpack:fix": "syncpack fix && syncpack format",
     "template": "node tools/template-manager/src/index.js",
     "templates:validate": "pnpm template clean && pnpm template npm-ci && pnpm template build && pnpm template lint && pnpm template test",
     "templates:validate-dotfiles": "pnpm template validate-dotfiles",
@@ -88,7 +88,7 @@
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "rimraf": "^6.1.2",
-    "syncpack": "^13.0.3",
+    "syncpack": "^14.2.1",
     "typescript": "^5.8.2",
     "vitest": "^3.2.0"
   },
