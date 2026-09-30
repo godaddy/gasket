@@ -758,6 +758,9 @@ importers:
       '@gasket/plugin-elastic-apm':
         specifier: workspace:^
         version: link:../gasket-plugin-elastic-apm
+      '@gasket/plugin-https':
+        specifier: workspace:^
+        version: link:../gasket-plugin-https
       '@gasket/plugin-logger':
         specifier: workspace:^
         version: link:../gasket-plugin-logger

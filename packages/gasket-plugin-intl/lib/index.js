@@ -8,6 +8,7 @@ import apmTransaction from './apm-transaction.js';
 import publicGasketData from './public-gasket-data.js';
 import { getIntlConfig } from './utils/configure-utils.js';
 import build from './build.js';
+import preboot from './preboot.js';
 const { name, version, description } = packageJson;
 
 /** @type {import('@gasket/core').Plugin} */
@@ -19,6 +20,7 @@ const plugin = {
   hooks: {
     init,
     configure,
+    preboot,
     build,
     apmTransaction,
     publicGasketData,
