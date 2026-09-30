@@ -22,9 +22,6 @@ describe('createServers', () => {
     };
 
     gasket = {
-      actions: {
-        getExpressApp: vi.fn().mockReturnValue(mockApp)
-      },
       middleware: {},
       logger: {
         warn: vi.fn()
