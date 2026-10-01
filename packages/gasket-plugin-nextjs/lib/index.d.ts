@@ -29,8 +29,6 @@ declare module '@gasket/core' {
 
   export interface GasketConfig {
     nextConfig?: Partial<NextConfig>;
-    /** @deprecated Use `nextConfig` */
-    next?: Partial<NextConfig>;
     /**
      * Allows users to set a path prefix for the application. Must be set at
      * build time.
