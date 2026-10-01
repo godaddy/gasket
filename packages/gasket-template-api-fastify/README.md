@@ -20,7 +20,7 @@ This template provides a minimal, well-structured starting point for building RE
 - ✅ **Swagger documentation** auto-generated from JSDoc comments
 - ✅ **Structured logging** with Winston
 - ✅ **Testing setup** with Vitest and coverage reporting
-- ✅ **Development server** with hot reloading via tsx
+- ✅ **Development server** with hot reloading via `node --watch server.ts`
 - ✅ **Build pipeline** for production deployment
 - ✅ **ESLint configuration** with GoDaddy style guide
 
