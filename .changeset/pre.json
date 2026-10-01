@@ -6,7 +6,6 @@
     "@gasket/assets": "8.0.0-next.1",
     "@gasket/core": "8.0.0-next.1",
     "@gasket/data": "8.0.0-next.1",
-    "@gasket/fetch": "8.0.0-next.0",
     "@gasket/intl": "8.0.0-next.1",
     "@gasket/nextjs": "8.0.0-next.1",
     "@gasket/plugin-analyze": "8.0.0-next.1",

@@ -3,7 +3,6 @@
 "@gasket/assets": major
 "@gasket/core": major
 "@gasket/data": major
-"@gasket/fetch": major
 "@gasket/intl": major
 "@gasket/nextjs": major
 "@gasket/plugin-analyze": major
