@@ -22,11 +22,6 @@ export type FastifyOptions = FastifyServerOptions & {
 }
 
 declare module '@gasket/core' {
-  export interface GasketActions {
-    /** @deprecated */
-    getFastifyApp(): FastifyInstance<RawServerDefault, IncomingMessage, ServerResponse<IncomingMessage>, FastifyBaseLogger, FastifyTypeProviderDefault>;
-  }
-
   export interface GasketConfig {
     fastify?: FastifyConfig
   }
