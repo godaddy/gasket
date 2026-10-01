@@ -2,7 +2,7 @@ import type { Plugin, Gasket } from '@gasket/core';
 import type { Options } from 'swagger-jsdoc';
 import type { SwaggerUiOptions } from 'swagger-ui-express';
 import type { FastifySwaggerUiOptions } from '@fastify/swagger-ui';
-import type { CreatePrompt, CreateContext } from 'create-gasket-app';
+import type { CreateContext } from 'create-gasket-app';
 
 type SwaggerOptions = {
   /**
@@ -52,12 +52,6 @@ declare module 'create-gasket-app' {
     useSwagger?: boolean;
   }
 }
-
-/* Externalize Swagger prompts for templates */
-export function promptSwagger(
-  context: CreateContext,
-  prompt: CreatePrompt
-): Promise<CreateContext>
 
 declare const plugin: Plugin;
 export default plugin;

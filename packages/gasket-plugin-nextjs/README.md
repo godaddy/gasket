@@ -135,16 +135,6 @@ Also note when using [@gasket/plugin-intl] to determine the locale, that the
 `NEXT_LOCALE` cookie will have no effect. You can, of course, hook the [intlLocale]
 lifecycle in an app to enable that behavior if desired.
 
-## Adding a Sitemap
-
-When creating a new application with this plugin, you will be prompted with a
-question in the CLI asking if you would like to add a [sitemap] to your application.
-
-Answering yes to this question will install `next-sitemap` as a dependency,
-generate a next-sitemap.config.js file, and add a `sitemap` npm script to your
-package.json. `next-sitemap` is an npm package that generates sitemaps and a
-robots.txt file for Next.js applications. Learn more by reading the [next-sitemap docs].
-
 ## Actions
 
 ### getNextConfig
@@ -318,5 +308,3 @@ export default {
 [next.config]: https://nextjs.org/docs#custom-configuration
 [i18n config]: https://nextjs.org/docs/advanced-features/i18n-routing#getting-started
 [named capturing groups]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences
-[sitemap]: https://www.sitemaps.org/
-[next-sitemap docs]: https://github.com/iamvishnusankar/next-sitemap
