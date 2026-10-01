@@ -26,8 +26,6 @@ export const baseConfig = {
   retryWithLegacyPeerDeps: true,
   npmCiArgs: ['ci', '--prefer-offline'],
   cleanDirs: ['dist', 'build', '.next', 'node_modules'],
-  lintEnv: { ESLINT_USE_FLAT_CONFIG: 'false' },
-  testEnv: { ESLINT_USE_FLAT_CONFIG: 'false' },
   validateDotfiles: {
     expectedDotFiles: ['.npmrc', '.gitignore'],
     allowedUnpackedDotFiles: ['.gitignore', '.npmrc']
