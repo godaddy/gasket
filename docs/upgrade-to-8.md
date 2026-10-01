@@ -23,6 +23,13 @@ one breaking change with the migration step for it.
   - [Fastify](#fastify)
   - [Middleware Ordering](#middleware-ordering)
 - [Fastify 5](#fastify-5)
+- [Node 24 and TypeScript at Runtime](#node-24-and-typescript-at-runtime)
+  - [Remove tsx](#remove-tsx)
+  - [Update tsconfig](#update-tsconfig)
+- [React 19 and Next.js 16](#react-19-and-nextjs-16)
+  - [Webpack or Turbopack](#webpack-or-turbopack)
+- [Removed Deprecated APIs](#removed-deprecated-apis)
+- [Remove @gasket/fetch](#remove-gasketfetch)
 
 ## Update Dependency Versions
 
@@ -434,6 +441,188 @@ export default makeGasket({
 See [Fastify Version Support] and [trustProxy] in the `@gasket/plugin-fastify`
 README.
 
+## Node 24 and TypeScript at Runtime
+
+Gasket 8 requires Node 24, and uses its built-in TypeScript support (type
+stripping) instead of a loader. `gasket.ts`, `server.ts` and your plugins run
+directly with `node`; `@gasket/plugin-typescript` and `tsx` are gone from the
+templates. `create-gasket-app` and the templates declare `engines.node >=24`.
+
+```diff
+"engines": {
+-  "node": ">=20"
++  "node": ">=24"
+},
+"scripts": {
+-  "build": "tsx gasket.ts build",
+-  "start": "tsx server.ts",
+-  "local": "tsx watch server.ts",
++  "build": "node gasket.ts build",
++  "start": "node server.ts",
++  "local": "node --watch server.ts",
++  "docs": "node gasket.ts docs"
+}
+```
+
+### Remove tsx
+
+Delete `tsx` (and `ts-node`, `@swc-node/register` or similar) from
+`devDependencies`, the `--import tsx` / `--loader` flags from `NODE_OPTIONS`
+and scripts, and `@gasket/plugin-typescript` from `gasket.ts`. Node needs no
+flags to run `.ts` files on 24.
+
+### Update tsconfig
+
+Node strips types; it does not transform them. Two consequences for your
+`tsconfig.json`:
+
+- Relative imports of TypeScript files must use the real `.ts` extension
+  (`import gasket from './gasket.ts'`). Set `allowImportingTsExtensions: true`
+  (requires `noEmit: true`), and use `module` / `moduleResolution`
+  `NodeNext` (or `bundler` for Next.js apps where Next does the bundling).
+- Syntax that needs code generation is rejected at runtime: `enum`,
+  `namespace`, parameter properties, `import x = require()`. Set
+  `erasableSyntaxOnly: true` (TypeScript 5.8+) so `tsc` flags them, and
+  replace enums with `as const` objects.
+
+```diff
+{
+  "compilerOptions": {
++    "module": "NodeNext",
++    "moduleResolution": "NodeNext",
++    "allowImportingTsExtensions": true,
++    "erasableSyntaxOnly": true,
++    "noEmit": true,
+    "strict": false
+  }
+}
+```
+
+Type checking is a separate `tsc --noEmit` step you run yourself; `node`
+never reports type errors. See the [TypeScript guide] for the full template
+setup.
+
+## React 19 and Next.js 16
+
+`@gasket/plugin-nextjs` and `@gasket/nextjs` require Next.js 16
+(`next >=16.1.6 <17` is a peer dependency of both), and the templates,
+`@gasket/react-intl` and `@gasket/assets` are built against React 19. Next 15
+and React 18 are not supported.
+
+```diff
+"dependencies": {
+-    "next": "^15.1.0",
++    "next": "^16.1.6",
+-    "react": "^18.3.1",
++    "react": "^19.0.0",
+-    "react-dom": "^18.3.1",
++    "react-dom": "^19.0.0"
+}
+```
+
+Follow the [React 19 upgrade guide] and the [Next.js 16 upgrade guide] for the
+framework-level changes (`next/codemod` covers most of them). The Gasket side
+is unchanged: `useGasketData`, `GasketDataProvider`, `withGasketDataProvider`,
+`withLocaleInitialProps` and `injectGasketData` keep their signatures, and
+`next.config.js` still exports the `getNextConfig` action. With TypeScript at
+runtime that file imports `gasket.ts` directly:
+
+```js
+// next.config.js
+const gasket = (await import('./gasket.ts')).default;
+export default gasket.actions.getNextConfig();
+```
+
+### Webpack or Turbopack
+
+Next.js 16 defaults to Turbopack, and Turbopack ignores the Webpack
+configuration that `@gasket/plugin-nextjs` and `@gasket/plugin-webpack`
+inject. Pick one:
+
+- Keep Webpack: add `--webpack` to `next dev` and `next build`. This is what
+  the templates do.
+- Opt into Turbopack: set `turbopack: true` in `makeGasket()`. The plugin then
+  drops its Webpack callback and registers `@gasket/core` and
+  `@gasket/plugin-nextjs` under `serverExternalPackages`; any other plugin
+  that contributed Webpack config needs its own `nextConfig` hook, and
+  app-level aliases move to Next's `turbopack.resolveAlias`.
+
+```diff
+"scripts": {
+-  "local": "next dev",
+-  "build": "next build",
++  "local": "next dev --webpack",
++  "build": "next build --webpack"
+}
+```
+
+See [Next.js 16 bundlers] in the `@gasket/plugin-nextjs` README.
+
+## Removed Deprecated APIs
+
+APIs that were marked `@deprecated` in v7 with a named replacement are
+removed in v8:
+
+| Removed                                              | Package                 | Use instead                                                        |
+| :--------------------------------------------------- | :---------------------- | :----------------------------------------------------------------- |
+| `gasket.actions.getExpressApp()`                     | `@gasket/plugin-express`| The `express(gasket, app)` lifecycle receives the app instance.    |
+| `gasket.actions.getFastifyApp()`                     | `@gasket/plugin-fastify`| The `fastify(gasket, app)` lifecycle receives the app instance.    |
+| `request()` from `@gasket/nextjs/server` (sync)      | `@gasket/nextjs`        | `import { request } from '@gasket/nextjs/request'` (async, returns a `GasketRequest`). |
+| `GasketConfig.next` type                             | `@gasket/plugin-nextjs` | `nextConfig`. The runtime never read `next`; only the type is gone. |
+| `middleware` lifecycle                               | `@gasket/plugin-middleware` | See [Replace the middleware Lifecycle](#replace-the-middleware-lifecycle). |
+| `prompt` / `create` / `postCreate` lifecycles        | `create-gasket-app`     | See [Remove Create-Time Hooks from Plugins](#remove-create-time-hooks-from-plugins). |
+
+```diff
+- import { request } from '@gasket/nextjs/server';
++ import { request } from '@gasket/nextjs/request';
+
+export default async function Page() {
+-  const req = request();
++  const req = await request();
+  const data = await gasket.actions.getPublicGasketData(req);
+  // ...
+}
+```
+
+```diff
+export default {
+  name: 'my-plugin',
+  hooks: {
+-    async someLifecycle(gasket) {
+-      const app = await gasket.actions.getExpressApp();
+-      app.use(myMiddleware());
+-    }
++    express(gasket, app) {
++      app.use(myMiddleware());
++    }
+  }
+};
+```
+
+Still deprecated, not yet removed at the time of writing: the legacy
+`GasketRequest` interface exported from `@gasket/core`. Import the class from
+`@gasket/request` instead (`import type { GasketRequest } from
+'@gasket/request'`); the `@gasket/core` export is scheduled for removal and
+collides with the `@gasket/request` name in TypeScript.
+
+## Remove @gasket/fetch
+
+`@gasket/fetch` was deprecated in v7 and is not published at v8. Node 24 and
+every supported browser provide the Fetch API globally, so drop the import and
+the dependency:
+
+```diff
+- import fetch from '@gasket/fetch';
+
+const res = await fetch('url/to/resource');
+```
+
+```diff
+"dependencies": {
+-    "@gasket/fetch": "^7.0.0"
+}
+```
+
 <!-- Links -->
 [Switch Redux to GasketData]: upgrade-to-7.md#switch-redux-to-gasketdata
 [Initialize Redux with GasketData]: upgrade-to-7.md#initialize-redux-with-gasketdata
@@ -442,6 +631,10 @@ README.
 [Fastify Version Support]: /packages/gasket-plugin-fastify/README.md#fastify-version-support
 [trustProxy]: /packages/gasket-plugin-fastify/README.md#trustproxy
 [Fastify v5 migration guide]: https://fastify.dev/docs/latest/Guides/Migration-Guide-V5/
+[TypeScript guide]: typescript.md
+[React 19 upgrade guide]: https://react.dev/blog/2024/04/25/react-19-upgrade-guide
+[Next.js 16 upgrade guide]: https://nextjs.org/docs/app/guides/upgrading/version-16
+[Next.js 16 bundlers]: /packages/gasket-plugin-nextjs/README.md#nextjs-16-bundlers-webpack--opt-in-turbopack
 
 <!-- Packages -->
 [@gasket/plugin-data]: /packages/gasket-plugin-data/README.md
