@@ -94,7 +94,6 @@ describe('@gasket/template-nextjs-express', () => {
         'eslint',
         'eslint-config-godaddy-react',
         'eslint-config-next',
-        'eslint-plugin-react-hooks',
         'jsdom',
         'search-insights',
         'typescript',
@@ -145,14 +144,18 @@ describe('@gasket/template-nextjs-express', () => {
       const packageJsonPath = join(templateDir, 'package.json');
       const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf8'));
 
-      expect(packageJson.eslintConfig).toBeDefined();
-      expect(packageJson.eslintConfig.extends).toContain('godaddy-react');
-      expect(packageJson.eslintConfig.extends).toContain('plugin:@godaddy/react-intl/recommended');
-      expect(packageJson.eslintConfig.extends).toContain('next');
-      expect(packageJson.eslintConfig.parser).toBe('@typescript-eslint/parser');
-      expect(packageJson.eslintIgnore).toContain('dist');
-      expect(packageJson.eslintIgnore).toContain('coverage/');
-      expect(packageJson.eslintIgnore).toContain('build/');
+      const eslintConfigPath = join(templateDir, 'eslint.config.js');
+
+      expect(existsSync(eslintConfigPath)).toBe(true);
+      const eslintConfig = readFileSync(eslintConfigPath, 'utf8');
+      expect(eslintConfig).toContain("from 'eslint-config-godaddy-react'");
+      expect(eslintConfig).toContain("from 'eslint-config-next'");
+      expect(eslintConfig).toContain("from '@godaddy/eslint-plugin-react-intl'");
+      expect(eslintConfig).toContain("from '@typescript-eslint/parser'");
+      expect(eslintConfig).toContain("localeFiles: ['locales/en-US.json']");
+      expect(eslintConfig).toContain("globalIgnores(['dist/', 'coverage/', 'build/', 'next-env.d.ts'])");
+      expect(packageJson).not.toHaveProperty('eslintConfig');
+      expect(packageJson).not.toHaveProperty('eslintIgnore');
     });
   });
 
