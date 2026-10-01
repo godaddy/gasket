@@ -44,14 +44,6 @@ export default {
   /** Directories to remove during clean operation. */
   cleanDirs: ['dist', 'build', '.next', 'coverage', '.nyc_output', 'node_modules'],
 
-  /**
-   * Environment for lint/test in templates that have no `eslint.config.js` yet.
-   * Keeps ESLint 8 + eslintrc templates from picking up the monorepo root flat
-   * config. Ignored for templates that ship a flat config.
-   */
-  lintEnv: { ESLINT_USE_FLAT_CONFIG: 'false' },
-  testEnv: { ESLINT_USE_FLAT_CONFIG: 'false' },
-
   // ─────────────────────────────────────────────────────────────────────────────
   // Validation Settings
   // ─────────────────────────────────────────────────────────────────────────────
@@ -91,6 +83,7 @@ export default {
     expectedFiles: [
       'package-lock.json',
       'package.json',
+      'eslint.config.js',
       /gasket\.js|gasket\.ts/,
       'test',
       'vitest.config.js',
@@ -129,7 +122,6 @@ export default {
         'README.md'
       ],
       'gasket-template-api-express': [
-        'eslint.config.js',
         'server.ts',
         'plugins',
         'swagger.json',
@@ -137,7 +129,6 @@ export default {
         'README.md'
       ],
       'gasket-template-api-fastify': [
-        'eslint.config.js',
         'server.ts',
         'plugins',
         'swagger.json',
