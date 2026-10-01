@@ -129,6 +129,7 @@ export default {
         'README.md'
       ],
       'gasket-template-api-express': [
+        'eslint.config.js',
         'server.ts',
         'plugins',
         'swagger.json',
@@ -136,6 +137,7 @@ export default {
         'README.md'
       ],
       'gasket-template-api-fastify': [
+        'eslint.config.js',
         'server.ts',
         'plugins',
         'swagger.json',
