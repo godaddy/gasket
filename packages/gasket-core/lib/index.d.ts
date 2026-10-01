@@ -549,21 +549,6 @@ export interface GasketTraceConstructor {
 
 
 /* ----------------------------- *
- *     Legacy / Compatibility   *
- * ----------------------------- */
-
-/**
- * Legacy interface for request-like shape.
- * @deprecated - Use class from `@gasket/request` instead.
- */
-export interface GasketRequest {
-  cookies: Record<string, string>;
-  headers: Record<string, string>;
-  query?: Record<string, string>;
-}
-
-
-/* ----------------------------- *
  *         Factory Function     *
  * ----------------------------- */
 

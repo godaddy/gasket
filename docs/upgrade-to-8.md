@@ -569,6 +569,7 @@ removed in v8:
 | `gasket.actions.getFastifyApp()`                     | `@gasket/plugin-fastify`| The `fastify(gasket, app)` lifecycle receives the app instance.    |
 | `request()` from `@gasket/nextjs/server` (sync)      | `@gasket/nextjs`        | `import { request } from '@gasket/nextjs/request'` (async, returns a `GasketRequest`). |
 | `GasketConfig.next` type                             | `@gasket/plugin-nextjs` | `nextConfig`. The runtime never read `next`; only the type is gone. |
+| `GasketRequest` interface                            | `@gasket/core`          | `import type { GasketRequest } from '@gasket/request'` (the class; same name, no more TS collision). |
 | `middleware` lifecycle                               | `@gasket/plugin-middleware` | See [Replace the middleware Lifecycle](#replace-the-middleware-lifecycle). |
 | `prompt` / `create` / `postCreate` lifecycles        | `create-gasket-app`     | See [Remove Create-Time Hooks from Plugins](#remove-create-time-hooks-from-plugins). |
 
@@ -599,11 +600,10 @@ export default {
 };
 ```
 
-Still deprecated, not yet removed at the time of writing: the legacy
-`GasketRequest` interface exported from `@gasket/core`. Import the class from
-`@gasket/request` instead (`import type { GasketRequest } from
-'@gasket/request'`); the `@gasket/core` export is scheduled for removal and
-collides with the `@gasket/request` name in TypeScript.
+```diff
+- import type { GasketRequest } from '@gasket/core';
++ import type { GasketRequest } from '@gasket/request';
+```
 
 ## Remove @gasket/fetch
 
