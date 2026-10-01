@@ -16,13 +16,16 @@ Plugins hook the `express` lifecycle to add middleware and routes directly to
 the Express app instance:
 
 ```js
+import formIdHandler from './form-id-handler.js';
+import handleFormSubmits from './handle-form-submits.js';
+
 // Sample plugin
 export default {
   name: 'sample-plugin',
   hooks: {
     express(gasket, app) {
-      app.param('id', require('./form-id-handler'));
-      app.post('/submit/:id', require('./handle-form-submits'));
+      app.param('id', formIdHandler);
+      app.post('/submit/:id', handleFormSubmits);
     }
   }
 };

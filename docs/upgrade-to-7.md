@@ -1026,7 +1026,7 @@ register('@gasket/plugin-mocha/node-loader-babel', pathToFileURL('./test'));
 ```
 
 <!-- Links -->
-[middleware paths]:/packages/gasket-plugin-middleware/README.md#middleware-paths
+[middleware paths]:https://github.com/godaddy/gasket/blob/main/packages/gasket-plugin-middleware/README.md#middleware-paths
 [streaming]: https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming
 [App Router]: https://nextjs.org/docs/app/building-your-application/routing
 [Next.js 14]: https://nextjs.org/docs/pages/building-your-application/upgrading/version-14
