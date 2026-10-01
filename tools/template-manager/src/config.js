@@ -44,10 +44,12 @@ export default {
   /** Directories to remove during clean operation. */
   cleanDirs: ['dist', 'build', '.next', 'coverage', '.nyc_output', 'node_modules'],
 
-  /** Environment variables for lint operation. */
+  /**
+   * Environment for lint/test in templates that have no `eslint.config.js` yet.
+   * Keeps ESLint 8 + eslintrc templates from picking up the monorepo root flat
+   * config. Ignored for templates that ship a flat config.
+   */
   lintEnv: { ESLINT_USE_FLAT_CONFIG: 'false' },
-
-  /** Environment variables for test operation. */
   testEnv: { ESLINT_USE_FLAT_CONFIG: 'false' },
 
   // ─────────────────────────────────────────────────────────────────────────────

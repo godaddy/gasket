@@ -1,3 +1,5 @@
+import { eslintEnvFor } from '../utils/eslint-env.js';
+
 export const name = 'lint';
 export const description = 'Lint templates';
 export const emoji = '🔍';
@@ -9,10 +11,8 @@ export const mode = 'per-template';
  */
 export async function handler(template, ctx) {
   const { runner, config } = ctx;
-  await runner.runCommand(
-    'npx',
-    ['eslint', '--ext', '.js,.jsx,.cjs,.ts,.tsx', '.'],
-    template.templateDir,
-    config.lintEnv ?? {}
-  );
+  // Run the template's own lint script so the tool stays agnostic of the
+  // ESLint config format (eslintrc vs flat) each template uses.
+  const { templateDir } = template;
+  await runner.runCommand('npm', ['run', 'lint'], templateDir, eslintEnvFor(templateDir, config.lintEnv));
 }
