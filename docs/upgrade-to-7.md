@@ -1,4 +1,4 @@
-# Upgrade to v7 (Active)
+# Upgrade to v7 (LTS)
 
 This guide will take you through updating `@gasket/*` packages to `7.x`.
 

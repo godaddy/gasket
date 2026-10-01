@@ -11,8 +11,9 @@ Major upgrades usually require special attention as sometimes code changes in
 your apps and plugins may be required. The following guides are sequential and
 will help make the necessary changes when upgrading to latest.
 
-- [Upgrade to v7] - _Active_
-- [Upgrade to v6] - _LTS_
+- [Upgrade to v8] - _Active_
+- [Upgrade to v7] - _LTS_
+- [Upgrade to v6]
 
 ## Minor and Patch Upgrades
 
@@ -52,6 +53,7 @@ yarn upgrade-interactive --latest
 
 <!-- LINKS -->
 
+[upgrade to v8]: upgrade-to-8.md
 [upgrade to v7]: upgrade-to-7.md
 [upgrade to v6]: upgrade-to-6.md
 [npm-check]: https://github.com/dylang/npm-check#npm-check

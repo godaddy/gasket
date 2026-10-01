@@ -1,4 +1,4 @@
-# Upgrade to v6 (LTS)
+# Upgrade to v6
 
 This guide will take you through updating `@gasket/*` packages to `6.x`.
 
