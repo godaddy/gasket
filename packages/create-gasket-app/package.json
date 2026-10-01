@@ -39,6 +39,9 @@
   "license": "MIT",
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/create-gasket-app",
+  "engines": {
+    "node": ">=24"
+  },
   "dependencies": {
     "@gasket/core": "workspace:^",
     "@gasket/plugin-command": "workspace:^",
