@@ -15,6 +15,14 @@ one breaking change with the migration step for it.
   - [Presets and create-only plugins](#presets-and-create-only-plugins)
   - [Manifest, Service Worker and Workbox](#manifest-service-worker-and-workbox)
 - [Switch to ESM](#switch-to-esm)
+- [Presets Are Now Templates](#presets-are-now-templates)
+  - [Update create-gasket-app Scripts](#update-create-gasket-app-scripts)
+  - [Remove Create-Time Hooks from Plugins](#remove-create-time-hooks-from-plugins)
+- [Replace the middleware Lifecycle](#replace-the-middleware-lifecycle)
+  - [Express](#express)
+  - [Fastify](#fastify)
+  - [Middleware Ordering](#middleware-ordering)
+- [Fastify 5](#fastify-5)
 
 ## Update Dependency Versions
 
@@ -213,10 +221,227 @@ Things to check once `"type": "module"` is set:
 The v7 guide's [Switch to ESM (Optional)] section has more detail; in v8 the
 step is no longer optional.
 
+## Presets Are Now Templates
+
+`@gasket/preset-api` and `@gasket/preset-nextjs` are gone, and with them the
+prompt-driven `create-gasket-app` flow. A v8 template is a complete app that
+`create-gasket-app` copies, renames and installs; there are no prompts and
+no plugin-contributed `create` steps.
+
+Official templates:
+
+| Template                           | Scaffolds                                   |
+| :--------------------------------- | :------------------------------------------ |
+| `@gasket/template-nextjs-pages`    | Next.js Pages Router with Gasket HTTPS proxy |
+| `@gasket/template-nextjs-app`      | Next.js App Router with Gasket HTTPS proxy   |
+| `@gasket/template-nextjs-express`  | Next.js Pages Router on a custom Express server |
+| `@gasket/template-api-express`     | Express API                                  |
+| `@gasket/template-api-fastify`     | Fastify 5 API                                |
+
+### Update create-gasket-app Scripts
+
+`--template <package[@version]>` is now required. Replace `--presets` with it
+and drop the other removed flags: `--preset-path`, `--config`,
+`--config-file`, `--no-prompts`, `--require` and `--npm-link`. Only
+`--template`, `--template-path` (a local directory, for template development)
+and `--package-manager` remain.
+
+```diff
+- npx create-gasket-app@latest my-app --presets @gasket/preset-nextjs --no-prompts
++ npx create-gasket-app@latest my-app --template @gasket/template-nextjs-pages
+```
+
+```diff
+- npx create-gasket-app@latest my-api --presets @gasket/preset-api --config '{"server":"fastify"}'
++ npx create-gasket-app@latest my-api --template @gasket/template-api-fastify --package-manager pnpm
+```
+
+Anything a preset used to decide from prompt answers (TypeScript, test runner,
+linting, server flavor) is a choice of template instead. To customize what new
+apps start with, publish your own `template-*` package: the only contract is a
+`template/` directory that `create-gasket-app` copies, with `{{{appName}}}`
+placeholders in `package.json`.
+
+### Remove Create-Time Hooks from Plugins
+
+The `prompt`, `create` and `postCreate` lifecycles no longer exist, and the
+`CreateContext` / `CreatePrompt` types that described them are removed from
+`create-gasket-app`, `@gasket/plugin-nextjs` and `@gasket/plugin-swagger`.
+Plugins that implemented them still load (unknown hooks are ignored), but the
+code is dead; delete it along with any `create-gasket-app` devDependency the
+plugin kept for the types.
+
+```diff
+export default {
+  name: 'my-plugin',
+  hooks: {
+-    prompt(gasket, context, { prompt }) { /* ... */ },
+-    create(gasket, context) { /* ... */ },
+-    postCreate(gasket, context) { /* ... */ },
+    express(gasket, app) { /* ... */ }
+  }
+};
+```
+
+Move whatever those hooks generated (files, `package.json` entries, scripts)
+into a template instead.
+
+## Replace the middleware Lifecycle
+
+`@gasket/plugin-middleware` is removed, and the `middleware` lifecycle with
+it. Plugins register middleware directly on the framework instance in the
+`express` or `fastify` lifecycle, which `@gasket/plugin-express` and
+`@gasket/plugin-fastify` already provided for routes. `@gasket/plugin-nextjs`
+hooks the same lifecycles, so a Next.js app with a custom server needs no
+extra plugin.
+
+Also gone with the plugin:
+
+- The `middleware` config array (plugin-to-path mapping) and the
+  `middlewareInclusionRegex`, `excludedRoutesRegex`, `compression` and
+  `routes` options under `express` / `fastify`. Scope middleware yourself with
+  `app.use('/path', fn)` (Express) or an `onRequest` hook with a URL check
+  (Fastify), and add compression with the `compression` package or
+  `@fastify/compress` in the same hook.
+- `@fastify/express`, which the plugin pulled in to run Express-style
+  middleware on Fastify. Use Fastify hooks and plugins instead.
+- The request-scoped `req.logger` the plugin attached. Use `gasket.logger`
+  in your handlers.
+
+`fastify.trustProxy` is still read by `@gasket/plugin-fastify`; see
+[Fastify 5](#fastify-5) for the value to use. `@gasket/plugin-express` has
+no `trustProxy` option; call `app.set('trust proxy', ...)` in an `express`
+hook.
+
+### Express
+
+```diff
+export default {
+  name: 'my-plugin',
+  hooks: {
+-    middleware(gasket) {
+-      return [xssProtection(), myAuth(gasket)];
+-    }
++    express(gasket, app) {
++      app.use(xssProtection());
++      app.use(myAuth(gasket));
++    }
+  }
+};
+```
+
+```diff
+// gasket.js
+- import pluginMiddleware from '@gasket/plugin-middleware';
+import pluginExpress from '@gasket/plugin-express';
+
+export default makeGasket({
+  plugins: [
+-    pluginMiddleware,
+    pluginExpress
+  ],
+-  express: {
+-    compression: true,
+-    middlewareInclusionRegex: /^(?!\/_next\/)/
+-  }
+});
+```
+
+### Fastify
+
+Express-style `(req, res, next)` middleware does not run on Fastify 5 without
+`@fastify/express`. Convert it to Fastify hooks or plugins:
+
+```diff
+export default {
+  name: 'my-plugin',
+  hooks: {
+-    middleware(gasket) {
+-      return [xssProtection(), myAuth(gasket)];
+-    }
++    async fastify(gasket, app) {
++      await app.register(fastifyHelmet, { xssFilter: true });
++      app.addHook('onRequest', async (request, reply) => {
++        await myAuth(gasket, request, reply);
++      });
++    }
+  }
+};
+```
+
+### Middleware Ordering
+
+The `middleware` lifecycle ran before routes by construction. The `express` /
+`fastify` lifecycles fire in plugin order, so a middleware plugin listed after
+a routes plugin never sees the request. Either list middleware plugins first
+in `gasket.js`, or make the hook independent of ordering with
+`timing: { first: true }`:
+
+```js
+export default {
+  name: 'my-middleware-plugin',
+  hooks: {
+    express: {
+      timing: { first: true },
+      handler(gasket, app) {
+        app.use(myMiddleware());
+      }
+    }
+  }
+};
+```
+
+See [Middleware not intercepting requests due to plugin order] in the
+`@gasket/plugin-express` gotchas for the full discussion.
+
+## Fastify 5
+
+`@gasket/plugin-fastify` targets Fastify 5 and creates the server through a
+version adapter, so `fastify@^4.29.1` keeps working during the transition;
+`@gasket/template-api-fastify` scaffolds Fastify 5. Follow the
+[Fastify v5 migration guide] for Fastify's own breaking changes, and check that
+every `@fastify/*` plugin you install has a Fastify 5 release
+(`@gasket/plugin-swagger` accepts `@fastify/swagger` `^9` and
+`@fastify/swagger-ui` `^6`).
+
+```diff
+"dependencies": {
+-    "fastify": "^4.29.1",
++    "fastify": "^5.0.0",
+-    "@fastify/swagger": "^8.15.0",
++    "@fastify/swagger": "^9.0.0",
+-    "@fastify/swagger-ui": "^4.2.0",
++    "@fastify/swagger-ui": "^6.0.0"
+}
+```
+
+One Gasket-specific change: `fastify.trustProxy` must not be a hop count.
+Fastify 5 treats a number as "trust no proxy", so `request.ip` silently falls
+back to the socket peer. Use the proxy's address list instead, which behaves
+the same on Fastify 4 and 5. `true` is also discouraged: it trusts the whole
+`X-Forwarded-For` chain and lets a client spoof `request.ip`.
+
+```diff
+export default makeGasket({
+  plugins: [pluginFastify],
+  fastify: {
+-    trustProxy: 1
++    trustProxy: ['10.0.0.0/8'] // the load balancer's network
+  }
+});
+```
+
+See [Fastify Version Support] and [trustProxy] in the `@gasket/plugin-fastify`
+README.
+
 <!-- Links -->
 [Switch Redux to GasketData]: upgrade-to-7.md#switch-redux-to-gasketdata
 [Initialize Redux with GasketData]: upgrade-to-7.md#initialize-redux-with-gasketdata
 [Switch to ESM (Optional)]: upgrade-to-7.md#switch-to-esm-optional
+[Middleware not intercepting requests due to plugin order]: /packages/gasket-plugin-express/docs/gotchas.md#middleware-not-intercepting-requests-due-to-plugin-order
+[Fastify Version Support]: /packages/gasket-plugin-fastify/README.md#fastify-version-support
+[trustProxy]: /packages/gasket-plugin-fastify/README.md#trustproxy
+[Fastify v5 migration guide]: https://fastify.dev/docs/latest/Guides/Migration-Guide-V5/
 
 <!-- Packages -->
 [@gasket/plugin-data]: /packages/gasket-plugin-data/README.md
