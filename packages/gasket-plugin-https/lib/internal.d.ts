@@ -38,7 +38,10 @@ export function portInUseError(
   errors: CreateServersError | CreateServersError[]
 ): boolean;
 
-/** Log the create-servers failure, distinguishing port-in-use from other causes. */
+/**
+ * Log the create-servers failure, distinguishing port-in-use from other causes,
+ * and return the user-facing message.
+ */
 export function logServerError(
   /** Errors received from create-servers */
   errors: CreateServersError,
@@ -46,6 +49,15 @@ export function logServerError(
   serverOpts: ServerOptions,
   /** Gasket logger */
   logger: Gasket['logger']
+): string;
+
+/** A created server (or list of them) that can be closed. */
+export type CloseableServer = { close(): void };
+
+/** Close servers that started before a startup failure so they are not left listening. */
+export function closeServers(
+  /** Servers from create-servers, keyed by type */
+  servers?: Record<string, CloseableServer | CloseableServer[]>
 ): void;
 
 /**
