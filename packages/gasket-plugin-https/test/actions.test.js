@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import errs from 'errs';
+import { inspect } from 'node:util';
 
 const mockCreateServersModule = vi.fn().mockImplementation((server, fn) => fn(null, server));
 const mockHealthCheckError = vi.fn();
@@ -35,6 +36,7 @@ describe('actions', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
+    mockCreateServersModule.mockImplementation((server, fn) => fn(null, server));
     gasketAPI = {
       execWaterfall: vi.fn().mockImplementation((arg1, arg2) => Promise.resolve(arg2)),
       exec: mockExec,
@@ -277,7 +279,7 @@ describe('actions', () => {
       );
     });
 
-    await startServer(gasketAPI);
+    await expect(startServer(gasketAPI)).rejects.toThrow('Failed to start the web servers: Cert file not found');
 
     const expected = 'Failed to start the web servers: Cert file not found';
     expect(gasketAPI.logger.error).toHaveBeenCalledWith(expected);
@@ -295,7 +297,7 @@ describe('actions', () => {
     ));
 
 
-    await startServer(gasketAPI);
+    await expect(startServer(gasketAPI)).rejects.toThrow('Port is already in use');
 
     const expected = 'Port is already in use';
     expect(gasketAPI.logger.error).toHaveBeenCalledWith(expect.stringContaining(expected));
@@ -312,7 +314,7 @@ describe('actions', () => {
       })
     ));
 
-    await startServer(gasketAPI);
+    await expect(startServer(gasketAPI)).rejects.toThrow('Port is already in use');
 
     expect(mockDebugStub.mock.calls[0][0].message).toMatch('Port is already in use');
     expect(mockDebugStub.mock.calls[0][1].https.code).toEqual('EADDRINUSE');
@@ -327,10 +329,70 @@ describe('actions', () => {
       })
     ));
 
-    await startServer(gasketAPI);
+    await expect(startServer(gasketAPI)).rejects.toThrow('Port is already in use');
 
     expect(mockDebugStub.mock.calls[0][0].message).toMatch('Port is already in use');
     expect(mockDebugStub.mock.calls[0][1].http2.code).toEqual('EADDRINUSE');
+  });
+
+  it('resolves only after the servers lifecycle completes', async () => {
+    let serversLifecycleDone = false;
+    mockCreateServersModule.mockImplementation((_, fn) => fn(null, { http: {} }));
+    gasketAPI.exec.mockImplementation(async (lifecycle) => {
+      if (lifecycle === 'servers') {
+        await new Promise(resolve => setTimeout(resolve, 10));
+        serversLifecycleDone = true;
+      }
+    });
+
+    await startServer(gasketAPI);
+
+    expect(serversLifecycleDone).toBe(true);
+    expect(gasketAPI.logger.info).toHaveBeenCalledWith(expect.stringContaining('Server started'));
+  });
+
+  it('rejects when the servers lifecycle throws', async () => {
+    mockCreateServersModule.mockImplementation((_, fn) => fn(null, { http: {} }));
+    gasketAPI.exec.mockImplementation(async (lifecycle) => {
+      if (lifecycle === 'servers') throw new Error('servers hook fail');
+    });
+
+    await expect(startServer(gasketAPI)).rejects.toThrow('servers hook fail');
+    expect(gasketAPI.logger.info).not.toHaveBeenCalledWith(expect.stringContaining('Server started'));
+  });
+
+  it('does not expose serverOpts (e.g. TLS keys) on the rejected error', async () => {
+    gasketAPI.config = { https: { port: 8443, key: 'SECRET-KEY', cert: 'SECRET-CERT' } };
+    mockCreateServersModule.mockImplementation((_, fn) => fn(
+      errs.create({ https: { code: 'EADDRINUSE' } })
+    ));
+
+    const err = await startServer(gasketAPI).catch(e => e);
+
+    expect(err).toBeInstanceOf(Error);
+    expect(err.message).toMatch('Port is already in use');
+    expect(err.serverOpts).toBeUndefined();
+    expect(inspect(err, { depth: Infinity })).not.toContain('SECRET');
+    expect(mockDebugStub.mock.calls[0][0].serverOpts.https.key).toEqual('SECRET-KEY');
+  });
+
+  it('closes servers that started when another server fails', async () => {
+    const startedServer = { close: vi.fn() };
+    const failingClose = { close: vi.fn().mockImplementation(() => { throw new Error('close fail'); }) };
+    mockCreateServersModule.mockImplementation((_, fn) => fn(
+      errs.create({ message: 'bad cert', https: { code: 'ERR_OSSL' } }),
+      { http: [failingClose, startedServer] }
+    ));
+
+    await expect(startServer(gasketAPI)).rejects.toThrow('Failed to start the web servers: bad cert');
+    expect(failingClose.close).toHaveBeenCalledTimes(1);
+    expect(startedServer.close).toHaveBeenCalledTimes(1);
+  });
+
+  it('rejects when create-servers rejects without calling back', async () => {
+    mockCreateServersModule.mockImplementation(() => Promise.reject(new TypeError('boom')));
+
+    await expect(startServer(gasketAPI)).rejects.toThrow('boom');
   });
 
   it('calls preboot', async () => {

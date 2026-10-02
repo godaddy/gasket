@@ -8,9 +8,26 @@ import { getPortFallback, portInUseError, startProxy, getRawServerConfig } from 
 const debugLogger = debug('gasket:https');
 
 /**
+ * Close servers that started before a startup failure so they are not left
+ * listening.
+ * @param {object} [servers] Servers from create-servers, keyed by type
+ */
+function closeServers(servers = {}) {
+  Object.values(servers)
+    .reduce((acc, cur) => acc.concat(cur), [])
+    .forEach((server) => {
+      try {
+        server.close();
+      } catch (err) {
+        debugLogger('Failed to close server after startup error', err);
+      }
+    });
+}
+
+/**
  * Gasket action: startServer
  * @param {import('@gasket/core').Gasket} gasket Gasket instance
- * @returns {Promise<void>} promise
+ * @returns {Promise<void>} resolves once the servers are listening; rejects if they fail to start
  * @public
  */
 async function startServer(gasket) {
@@ -84,8 +101,13 @@ async function startServer(gasket) {
     ...terminusDefaults
   };
 
+  /**
+   * Handle the result of create-servers.
+   * @param {any} [errors] Errors from create-servers
+   * @param {object} [servers] Servers that were created
+   */
   // eslint-disable-next-line max-statements
-  create(serverOpts, async function created(errors, servers) {
+  async function created(errors, servers) {
     if (errors) {
       let errorMessage;
 
@@ -104,7 +126,9 @@ async function startServer(gasket) {
 
       debugLogger(errorMessage, errors);
       logger.error(errorMessage.message);
-      return;
+      closeServers(servers);
+      // Not `errorMessage`: it carries serverOpts, which may include TLS key/cert
+      throw new Error(errorMessage.message, { cause: errors });
     }
 
     // Attach terminus before we call the `servers` lifecycle to ensure that
@@ -136,6 +160,13 @@ async function startServer(gasket) {
         `Server started at https://${_hostname}${_port}/`
       );
     }
+  }
+
+  // create-servers can also reject without calling back, so forward that too
+  await new Promise((resolve, reject) => {
+    Promise.resolve(create(serverOpts, (errors, servers) => {
+      created(errors, servers).then(resolve, reject);
+    })).catch(reject);
   });
 }
 
