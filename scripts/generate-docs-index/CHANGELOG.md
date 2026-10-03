@@ -1,5 +1,22 @@
 # generate-docs-index
 
+## 7.4.44
+
+### Patch Changes
+
+- Updated dependencies [89695e3]
+  - @gasket/plugin-https@7.4.3
+  - @gasket/plugin-express@7.5.5
+  - @gasket/plugin-fastify@7.5.7
+  - @gasket/plugin-happyfeet@7.4.1
+  - @gasket/plugin-https-proxy@7.5.2
+  - @gasket/plugin-intl@7.6.11
+  - @gasket/plugin-logger@7.5.1
+  - @gasket/plugin-middleware@7.5.7
+  - @gasket/plugin-nextjs@7.8.1
+  - @gasket/preset-api@7.6.15
+  - @gasket/preset-nextjs@7.6.18
+
 ## 7.4.43
 
 ### Patch Changes

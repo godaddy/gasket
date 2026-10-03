@@ -1,5 +1,15 @@
 # `@gasket/preset-api`
 
+## 7.6.15
+
+### Patch Changes
+
+- Updated dependencies [89695e3]
+  - @gasket/plugin-https@7.4.3
+  - @gasket/plugin-express@7.5.5
+  - @gasket/plugin-fastify@7.5.7
+  - @gasket/plugin-logger@7.5.1
+
 ## 7.6.14
 
 ### Patch Changes
