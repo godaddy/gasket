@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 8.0.0-next.6
+
+### Patch Changes
+
+- 497c201: Regenerate template lockfiles against the current `next` dist-tags (`@gasket/core` 8.0.0-next.3) so a scaffolded app runs the published v8 code instead of the pre-merge `next.2` pins.
+
 ## 8.0.0-next.5
 
 ### Patch Changes
