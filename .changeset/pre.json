@@ -90,6 +90,7 @@
     "v8-13-remove-prompt-lifecycle-types",
     "v8-17-docs-express-setup-esm",
     "v8-17-docs-tsx-to-node-runtime",
+    "v8-27-template-lock-regen",
     "weak-foxes-prove",
     "webpack-config-metadata-method"
   ]
