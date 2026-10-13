@@ -1,5 +1,41 @@
 # `create-gasket-app`
 
+## 8.0.0-next.3
+
+### Major Changes
+
+- 699a189: Drop `inquirer`; bump `commander` to ^15 and `ora` to ^9 (both ESM-only, Node >=22.12).
+- 699a189: Remove the dead `--config`, `--config-file`, `--no-prompts`, `--require` and `--npm-link` flags from `create-gasket-app`; only `--template`, `--template-path` and `--package-manager` remain.
+- 699a189: Remove the preset-era `prompt`, `create` and `postCreate` lifecycle types, `CreatePrompt`, and the `prompt*` declarations from `create-gasket-app`, `@gasket/plugin-nextjs` and `@gasket/plugin-swagger`; templates replace prompts.
+
+### Minor Changes
+
+- 699a189: Declare `engines.node >=24`, matching the Gasket 8 templates.
+
+### Patch Changes
+
+- a0a6713: remove dead exports flagged by fallow
+- 699a189: Resolve fallow unresolved imports: JSDoc type imports use `.d.ts` specifiers; fallow config ignores templates and false positives.
+- 699a189: Bump runtime dependencies to their latest patch/minor releases: debug, glob, http2-express, is-plain-object, js-yaml, morgan, negotiator, rimraf, semver, winston
+- f930b6d: fix spinner error stacks recorded on create context, not wrapper args
+- 699a189: Override transitive `tmp` (via inquirer > external-editor) to ^0.2.6 to clear GHSA-ph9p-34f9-6g65.
+- Updated dependencies [699a189]
+- Updated dependencies [699a189]
+- Updated dependencies [a0a6713]
+- Updated dependencies [699a189]
+- Updated dependencies [699a189]
+- Updated dependencies [699a189]
+- Updated dependencies [699a189]
+- Updated dependencies [699a189]
+- Updated dependencies [699a189]
+  - @gasket/core@8.0.0-next.3
+  - @gasket/plugin-command@8.0.0-next.2
+  - @gasket/request@8.0.0-next.2
+  - @gasket/plugin-logger@8.0.0-next.2
+  - @gasket/plugin-docs@8.0.0-next.2
+  - @gasket/utils@8.0.0-next.3
+  - @gasket/plugin-docusaurus@8.0.0-next.2
+
 ## 8.0.0-next.2
 
 ### Patch Changes

@@ -1,5 +1,17 @@
 # `@gasket/plugin-fastify`
 
+## 8.0.0-next.4
+
+### Major Changes
+
+- 699a189: Removed deprecated `getFastifyApp` action. Use the `fastify` lifecycle to receive the app instance.
+
+### Patch Changes
+
+- a0a6713: remove dead exports flagged by fallow
+- 699a189: Document `trustProxy` as a proxy address list instead of `true` throughout examples, since `true` trusts the whole `X-Forwarded-For` chain and lets a client spoof `request.ip`; Fastify 5 treats a hop count as "trust no proxy".
+- 699a189: Invoke Fastify's request listeners directly
+
 ## 8.0.0-next.3
 
 ### Patch Changes

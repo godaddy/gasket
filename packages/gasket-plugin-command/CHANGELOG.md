@@ -1,5 +1,18 @@
 # `@gasket/plugin-command`
 
+## 8.0.0-next.2
+
+### Patch Changes
+
+- 699a189: Correct `commands` lifecycle metadata method to `execSync` to match the implementation
+- 699a189: Resolve fallow unresolved imports: JSDoc type imports use `.d.ts` specifiers; fallow config ignores templates and false positives.
+- Updated dependencies [699a189]
+- Updated dependencies [a0a6713]
+- Updated dependencies [699a189]
+- Updated dependencies [699a189]
+  - @gasket/core@8.0.0-next.3
+  - @gasket/utils@8.0.0-next.3
+
 ## 8.0.0-next.1
 
 ### Patch Changes

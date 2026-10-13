@@ -1,5 +1,18 @@
 # `@gasket/plugin-swagger`
 
+## 8.0.0-next.4
+
+### Major Changes
+
+- 699a189: Remove the preset-era `prompt`, `create` and `postCreate` lifecycle types, `CreatePrompt`, and the `prompt*` declarations from `create-gasket-app`, `@gasket/plugin-nextjs` and `@gasket/plugin-swagger`; templates replace prompts.
+
+### Patch Changes
+
+- 699a189: Bump runtime dependencies to their latest patch/minor releases: debug, glob, http2-express, is-plain-object, js-yaml, morgan, negotiator, rimraf, semver, winston
+- 699a189: Override `swagger-jsdoc`'s transitive `js-yaml` 3.14.0 pin to ^3.15.2 to clear GHSA-52cp-r559-cp3m, GHSA-5p4m-2wfm-xmqj and GHSA-2883-xcg3-v3hh.
+- 699a189: Bump `@fastify/swagger-ui` devDependency to ^6 and allow ^6 as a peer (pulls patched `@fastify/static` 10.x).
+- 699a189: Docs: replace stale `tsx` references with the Node 24 native TypeScript runtime (`node gasket.ts build`, `node --watch server.ts`).
+
 ## 8.0.0-next.3
 
 ### Patch Changes

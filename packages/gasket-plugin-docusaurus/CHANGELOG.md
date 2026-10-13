@@ -1,5 +1,12 @@
 # `@gasket/plugin-docusaurus`
 
+## 8.0.0-next.2
+
+### Patch Changes
+
+- Updated dependencies [699a189]
+  - @gasket/plugin-logger@8.0.0-next.2
+
 ## 8.0.0-next.1
 
 ### Patch Changes

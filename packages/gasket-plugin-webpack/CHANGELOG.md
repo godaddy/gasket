@@ -1,5 +1,11 @@
 # `@gasket/plugin-webpack`
 
+## 8.0.0-next.3
+
+### Patch Changes
+
+- 699a189: Correct `webpackConfig` lifecycle metadata method to `execWaterfallSync` to match the implementation
+
 ## 8.0.0-next.2
 
 ### Patch Changes

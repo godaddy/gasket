@@ -1,5 +1,28 @@
 # `@gasket/plugin-nextjs`
 
+## 8.0.0-next.5
+
+### Major Changes
+
+- 699a189: Removed deprecated `GasketConfig.next` type. Use `nextConfig`.
+- 699a189: Remove the preset-era `prompt`, `create` and `postCreate` lifecycle types, `CreatePrompt`, and the `prompt*` declarations from `create-gasket-app`, `@gasket/plugin-nextjs` and `@gasket/plugin-swagger`; templates replace prompts.
+
+### Minor Changes
+
+- 699a189: Add opt-in Turbopack support gated on `gasket.config.turbopack` (set via
+  `makeGasket({ turbopack: true })`). When enabled, this plugin's `nextConfig`
+  hook removes its Webpack callback and adds `@gasket/core` and
+  `@gasket/plugin-nextjs` to Next.js `serverExternalPackages`. Other Gasket
+  plugins should hook `nextConfig` to self-register additional server externals
+  under this flag.
+
+### Patch Changes
+
+- a0a6713: remove dead exports flagged by fallow
+- 699a189: Declare `next` as a peer dependency (`>=16.1.6 <17`, matching `@gasket/nextjs`).
+- Updated dependencies [699a189]
+  - @gasket/plugin-webpack@8.0.0-next.3
+
 ## 8.0.0-next.4
 
 ### Patch Changes

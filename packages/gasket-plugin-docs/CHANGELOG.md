@@ -1,5 +1,14 @@
 # `@gasket/plugin-docs`
 
+## 8.0.0-next.2
+
+### Patch Changes
+
+- 699a189: Bump runtime dependencies to their latest patch/minor releases: debug, glob, http2-express, is-plain-object, js-yaml, morgan, negotiator, rimraf, semver, winston
+- Updated dependencies [699a189]
+- Updated dependencies [699a189]
+  - @gasket/plugin-command@8.0.0-next.2
+
 ## 8.0.0-next.1
 
 ### Patch Changes

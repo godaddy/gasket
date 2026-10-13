@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## 8.0.0-next.4
+
+### Patch Changes
+
+- fc2c954: regen lockfiles
+- 699a189: Update template tests for ESLint 9 flat config
+- 699a189: Bump `next` to ^16.3.6 and `react`/`react-dom` to ^19.3.0 in generated apps; regenerate lockfiles.
+- 699a189: Move generated API apps to ESLint 9 flat config (`eslint.config.js`, `eslint-config-godaddy` 8); drop the legacy `eslintConfig`/`eslintIgnore` package.json fields.
+- 699a189: Docs: replace stale `tsx` references with the Node 24 native TypeScript runtime (`node gasket.ts build`, `node --watch server.ts`).
+
 ## 8.0.0-next.3
 
 ### Patch Changes

@@ -1,5 +1,19 @@
 # `@gasket/core`
 
+## 8.0.0-next.3
+
+### Major Changes
+
+- 699a189: Removed deprecated `GasketRequest` interface. Import the class from `@gasket/request`.
+
+### Patch Changes
+
+- 699a189: Adjust types to allow actions-only plugins
+- a0a6713: remove dead exports flagged by fallow
+- 699a189: Bump runtime dependencies to their latest patch/minor releases: debug, glob, http2-express, is-plain-object, js-yaml, morgan, negotiator, rimraf, semver, winston
+- Updated dependencies [699a189]
+  - @gasket/utils@8.0.0-next.3
+
 ## 8.0.0-next.2
 
 ### Patch Changes

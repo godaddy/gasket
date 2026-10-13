@@ -1,5 +1,16 @@
 # `@gasket/plugin-express`
 
+## 8.0.0-next.3
+
+### Major Changes
+
+- 699a189: Removed deprecated `getExpressApp` action. Use the `express` lifecycle to receive the app instance.
+
+### Patch Changes
+
+- 699a189: Bump runtime dependencies to their latest patch/minor releases: debug, glob, http2-express, is-plain-object, js-yaml, morgan, negotiator, rimraf, semver, winston
+- 699a189: Docs: use ESM `import` instead of `require()` in the `express` lifecycle setup example.
+
 ## 8.0.0-next.2
 
 ### Patch Changes
