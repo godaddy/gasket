@@ -1,5 +1,11 @@
 # `@gasket/plugin-https-proxy`
 
+## 8.0.0-next.2
+
+### Patch Changes
+
+- 699a189: Lift RequireAtLeastOne type from optional dependency to ensure it is available
+
 ## 8.0.0-next.1
 
 ### Patch Changes

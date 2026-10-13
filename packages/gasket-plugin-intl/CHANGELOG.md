@@ -1,5 +1,17 @@
 # `@gasket/plugin-intl`
 
+## 8.0.0-next.3
+
+### Patch Changes
+
+- 699a189: Correct `intlLocale` lifecycle metadata method to `execWaterfall` to match the implementation
+- 699a189: add preboot hook to await locale loading before server opens port
+- 699a189: Bump runtime dependencies to their latest patch/minor releases: debug, glob, http2-express, is-plain-object, js-yaml, morgan, negotiator, rimraf, semver, winston
+- Updated dependencies [699a189]
+- Updated dependencies [699a189]
+- Updated dependencies [699a189]
+  - @gasket/request@8.0.0-next.2
+
 ## 8.0.0-next.2
 
 ### Patch Changes

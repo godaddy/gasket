@@ -1,5 +1,25 @@
 # `@gasket/request`
 
+## 8.0.0-next.2
+
+### Minor Changes
+
+- 699a189: Add `getOriginalRequest`, which returns the framework request a `GasketRequest`
+  was normalized from, for reading fields this package does not normalize such as
+  `ip`. The original is stored under a registry-global symbol, non-enumerable, so
+  the serialized shape of `GasketRequest` is unchanged and duplicate installs of
+  the package resolve the same slot. Returns `undefined` when there is no original
+  request.
+
+  Also adds `GasketRequest.method`, the uppercased request method. It is
+  `undefined` when the source exposes none, including in the Next.js App Router,
+  and is deliberately not defaulted to `GET`.
+
+### Patch Changes
+
+- 699a189: Document `trustProxy` as a proxy address list instead of `true` throughout examples, since `true` trusts the whole `X-Forwarded-For` chain and lets a client spoof `request.ip`; Fastify 5 treats a hop count as "trust no proxy".
+- 699a189: Bump runtime dependencies to their latest patch/minor releases: debug, glob, http2-express, is-plain-object, js-yaml, morgan, negotiator, rimraf, semver, winston
+
 ## 8.0.0-next.1
 
 ### Patch Changes

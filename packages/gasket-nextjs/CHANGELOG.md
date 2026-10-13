@@ -1,5 +1,22 @@
 # `@gasket/nextjs`
 
+## 8.0.0-next.4
+
+### Major Changes
+
+- 699a189: Removed `@gasket/nextjs/server`. Use `request` from `@gasket/nextjs/request` (async, returns a `GasketRequest`).
+
+### Patch Changes
+
+- 699a189: Resolve fallow unresolved imports: JSDoc type imports use `.d.ts` specifiers; fallow config ignores templates and false positives.
+- 699a189: Document that a `GasketRequest` from the App Router has no `method`, and that
+  `getOriginalRequest` returns the assembled request-like rather than a framework
+  request.
+- Updated dependencies [699a189]
+- Updated dependencies [699a189]
+- Updated dependencies [699a189]
+  - @gasket/request@8.0.0-next.2
+
 ## 8.0.0-next.3
 
 ### Patch Changes

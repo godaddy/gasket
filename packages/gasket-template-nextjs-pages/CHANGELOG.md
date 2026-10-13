@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## 8.0.0-next.4
+
+### Patch Changes
+
+- fc2c954: regen lockfiles
+- 699a189: Update template tests for ESLint 9 flat config
+- 699a189: Bump `next` to ^16.3.6 and `react`/`react-dom` to ^19.3.0 in generated apps; regenerate lockfiles.
+- 699a189: Move generated Next.js apps to ESLint 9 flat config (`eslint.config.js`, `eslint-config-godaddy-react` 10, `eslint-config-next` 16); drop the legacy `eslintConfig`/`eslintIgnore` fields and the `eslint-plugin-react-hooks` override.
+
 ## 8.0.0-next.3
 
 ### Patch Changes
