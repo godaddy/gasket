@@ -23,14 +23,6 @@ jobs:
           node-version: 24.x
           cache: pnpm
 
-      - name: Cache pnpm store
-        uses: actions/cache@v3
-        with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-pnpm-24-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-24-
-
       - name: Install Dependencies
         run: |
           for i in 1 2 3; do

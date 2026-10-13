@@ -1,5 +1,5 @@
 
-import { makeGasketRequest, GasketRequest } from '../lib/request.js';
+import { makeGasketRequest, GasketRequest, getOriginalRequest } from '../lib/request.js';
 
 const pause = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -286,6 +286,69 @@ describe('makeGasketRequest', () => {
     expect(result.path).toEqual('/path/to/page');
   });
 
+  it('captures the method from the request', async () => {
+    const result = await makeGasketRequest({ headers: { header1: 'value1' }, method: 'POST' });
+
+    expect(result.method).toEqual('POST');
+  });
+
+  it('uppercases the method', async () => {
+    const result = await makeGasketRequest({ headers: { header2: 'value2' }, method: 'get' });
+
+    expect(result.method).toEqual('GET');
+  });
+
+  it('has no method when the source provides none', async () => {
+    const result = await makeGasketRequest({ headers: { header3: 'value3' } });
+
+    expect(result.method).toBeUndefined();
+  });
+
+  it('has no method when the source method is not a string', async () => {
+    const result = await makeGasketRequest({ headers: { header4: 'value4' }, method: 123 });
+
+    expect(result.method).toBeUndefined();
+  });
+
+  it('has no method when the source method is null', async () => {
+    const result = await makeGasketRequest({ headers: { header13: 'value13' }, method: null });
+
+    expect(result.method).toBeUndefined();
+  });
+
+  it('captures the method from a NextRequest style object', async () => {
+    const headers = new Map([['header10', 'value10']]);
+    const nextUrl = new URL('https://example.com/path/to/page?query1=value1');
+
+    const result = await makeGasketRequest({ headers, nextUrl, method: 'DELETE' });
+
+    expect(result.method).toEqual('DELETE');
+    expect(result.path).toEqual('/path/to/page');
+  });
+
+  it('reads method from the prototype, as fetch Request exposes it', async () => {
+    // method and url are prototype getters on Request, not own properties
+    const request = new Request('https://example.com/path/to/page', { method: 'post' });
+
+    const result = await makeGasketRequest(request);
+
+    expect(result.method).toEqual('POST');
+    expect(result.path).toEqual('/path/to/page');
+  });
+
+  it('has no method for an App Router style request-like, and does not assume GET', async () => {
+    // next/headers exposes no method; a GET default would be wrong during a
+    // Server Action, which runs as POST and re-renders RSC in the same request
+    const result = await makeGasketRequest({
+      headers: { header5: 'value5' },
+      cookies: { cookie1: 'value1' },
+      query: { query1: 'value1' }
+    });
+
+    expect(result.method).toBeUndefined();
+    expect(result.method).not.toEqual('GET');
+  });
+
   it('parses cookie header if cookies property is missing', async () => {
     const headers = {
       cookie: 'cookie1=value1; cookie2=value2'
@@ -316,5 +379,152 @@ describe('makeGasketRequest', () => {
     const results2 = await promise2;
 
     expect(results1).toBe(results2);
+  });
+});
+
+describe('getOriginalRequest', () => {
+  it('returns the request the GasketRequest was made from', async () => {
+    const requestLike = { headers: { header1: 'value1' }, ip: '203.0.113.42' };
+
+    const result = await makeGasketRequest(requestLike);
+
+    expect(getOriginalRequest(result)).toBe(requestLike);
+  });
+
+  it('returns the same original across repeated calls', async () => {
+    const requestLike = { headers: { header2: 'value2' } };
+
+    const first = await makeGasketRequest(requestLike);
+    const second = await makeGasketRequest(requestLike);
+
+    expect(first).toBe(second);
+    expect(getOriginalRequest(second)).toBe(requestLike);
+  });
+
+  it('keeps the first original when two request-likes share headers', async () => {
+    const headers = { header3: 'value3' };
+    const first = { headers, ip: '203.0.113.1' };
+    const second = { headers, ip: '203.0.113.2' };
+
+    await makeGasketRequest(first);
+    const result = await makeGasketRequest(second);
+
+    expect(getOriginalRequest(result)).toBe(first);
+  });
+
+  it('returns one original for parallel calls', async () => {
+    const requestLike = { headers: { header4: 'value4' } };
+
+    const [one, two] = await Promise.all([
+      makeGasketRequest(requestLike),
+      makeGasketRequest(requestLike)
+    ]);
+
+    expect(one).toBe(two);
+    expect(getOriginalRequest(one)).toBe(requestLike);
+  });
+
+  it('preserves the original through the passthrough path', async () => {
+    const requestLike = { headers: { header5: 'value5' } };
+
+    const made = await makeGasketRequest(requestLike);
+    const again = await makeGasketRequest(made);
+
+    expect(again).toBe(made);
+    expect(getOriginalRequest(again)).toBe(requestLike);
+  });
+
+  it('returns the assembled request-like for an App Router style request', async () => {
+    // Truthy, but with no ip on it — callers must guard the field, not the object
+    const requestLike = {
+      headers: { header11: 'value11' },
+      cookies: { cookie1: 'value1' },
+      query: { query1: 'value1' }
+    };
+
+    const result = await makeGasketRequest(requestLike);
+    const original = getOriginalRequest(result);
+
+    expect(original).toBe(requestLike);
+    expect(Boolean(original)).toBe(true);
+    expect(original.ip).toBeUndefined();
+  });
+
+  it('has no original for a directly constructed GasketRequest', () => {
+    const request = new GasketRequest({ headers: {}, cookies: {}, query: {}, path: '/' });
+
+    expect(getOriginalRequest(request)).toBeUndefined();
+  });
+
+  it('returns undefined rather than throwing for values that are not requests', () => {
+    expect(getOriginalRequest(null)).toBeUndefined();
+    // eslint-disable-next-line no-undefined
+    expect(getOriginalRequest(undefined)).toBeUndefined();
+    expect(getOriginalRequest({})).toBeUndefined();
+    expect(getOriginalRequest('nope')).toBeUndefined();
+  });
+
+  it('hides the original from enumeration, spread, and serialization', async () => {
+    const requestLike = { headers: { header6: 'value6' }, ip: '203.0.113.42' };
+
+    const result = await makeGasketRequest(requestLike);
+
+    expect(Object.keys(result)).toEqual(['headers', 'cookies', 'query', 'path', 'method']);
+    expect(JSON.stringify(result)).not.toContain('203.0.113.42');
+    expect(getOriginalRequest({ ...result })).toBeUndefined();
+  });
+
+  it('stores the original as a locked-down property', async () => {
+    const requestLike = { headers: { header7: 'value7' } };
+
+    const result = await makeGasketRequest(requestLike);
+    const descriptor = Object.getOwnPropertyDescriptor(
+      result,
+      Symbol.for('gasket.originalRequest')
+    );
+
+    expect(descriptor.enumerable).toBe(false);
+    expect(descriptor.writable).toBe(false);
+    expect(descriptor.configurable).toBe(false);
+  });
+
+  it('reads through the global symbol registry', async () => {
+    // Stands in for a second installed copy of this package resolving its own
+    // Symbol.for reference to the same slot
+    const requestLike = { headers: { header8: 'value8' }, ip: '203.0.113.42' };
+    const standIn = {};
+    Object.defineProperty(standIn, Symbol.for('gasket.originalRequest'), {
+      value: requestLike,
+      enumerable: false
+    });
+
+    expect(getOriginalRequest(standIn)).toBe(requestLike);
+  });
+
+  it('unwraps the original when a second copy of the package re-normalizes', async () => {
+    // A duplicate install means instanceof fails across copies, so the second
+    // copy re-normalizes an already-normalized request rather than passing it
+    // through. The original must stay the framework request, not the
+    // intermediate GasketRequest.
+    const copy2 = await import('../lib/request.js?copy=2');
+    const requestLike = { headers: { header12: 'value12' }, ip: '203.0.113.42' };
+
+    const fromCopy2 = await copy2.makeGasketRequest(requestLike);
+    expect(fromCopy2).not.toBeInstanceOf(GasketRequest);
+
+    const fromCopy1 = await makeGasketRequest(fromCopy2);
+
+    expect(getOriginalRequest(fromCopy1)).toBe(requestLike);
+    expect(getOriginalRequest(fromCopy1).ip).toEqual('203.0.113.42');
+  });
+
+  it('has no original after a serialize and revive round trip', async () => {
+    const requestLike = { headers: { header9: 'value9' } };
+
+    const result = await makeGasketRequest(requestLike);
+    const revived = JSON.parse(JSON.stringify(result));
+
+    expect(revived.headers).toEqual({ header9: 'value9' });
+    expect(getOriginalRequest(revived)).toBeUndefined();
   });
 });

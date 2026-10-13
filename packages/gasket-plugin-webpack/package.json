@@ -45,6 +45,6 @@
     "@gasket/plugin-metadata": "workspace:^",
     "create-gasket-app": "workspace:^",
     "vitest": "^3.2.0",
-    "webpack": "^5.98.0"
+    "webpack": "^5.111.1"
   }
 }

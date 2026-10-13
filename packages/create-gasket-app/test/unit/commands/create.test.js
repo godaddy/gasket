@@ -176,26 +176,6 @@ describe('create', function () {
     }
   });
 
-  it('prints an error if both --config and --config-file are provided', async () => {
-    const writeSpy = vi.spyOn(process.stderr, 'write').mockImplementation((err) => err);
-
-    let commanderError;
-    try {
-      await cmd.parseAsync(
-        ['node', 'gasket', 'create', 'myapp', '--config={}', '--config-file=../../test/unit/commands/test-ci-config.json']
-      );
-    } catch (err) {
-      commanderError = err;
-    }
-
-    // Commander throws when conflicting options are detected with exitOverride()
-    expect(commanderError.code).toBe('commander.conflictingOption');
-
-    expect(writeSpy).toHaveBeenCalledWith(
-      `error: option '--config-file [config-file]' cannot be used with option '--config [config]'\n`
-    );
-  });
-
   describe('template functionality', () => {
     it('uses template path when --template is provided', async () => {
       await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--template', '@gasket/template-nextjs']);

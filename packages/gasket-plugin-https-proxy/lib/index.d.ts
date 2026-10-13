@@ -1,8 +1,13 @@
 import type { Plugin, MaybeAsync } from '@gasket/core';
-import type { RequireAtLeastOne } from '@gasket/plugin-https';
 import type { Url } from 'url';
 import type { Stream } from 'stream';
 import ProxyServer from 'http-proxy';
+
+type RequireAtLeastOne<T, Keys extends keyof T = keyof T> =
+  Pick<T, Exclude<keyof T, Keys>> &
+  {
+    [K in Keys]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<Keys, K>>>;
+  }[Keys];
 
 /**
  * http-proxy does not export types.

@@ -52,7 +52,7 @@ function isValidVersion(v) {
 /**
  * ConfigBuilder is an extensible data structure for **specifically**
  * managing `package.json` data.
- * @type {import('../index.js').ConfigBuilder}
+ * @type {import('../index.d.ts').ConfigBuilder}
  */
 export class ConfigBuilder {
   /**

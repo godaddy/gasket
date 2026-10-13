@@ -50,4 +50,24 @@ describe('@gasket/plugin-winston', () => {
       return fakeTransport;
     };
   });
+
+  it('defines the winstonLevels lifecycle', async () => {
+    const hook: Hook<'winstonLevels'> = (gasket: Gasket) => {
+      return { audit: 3 };
+    };
+    const optOut: Hook<'winstonLevels'> = (gasket: Gasket) => false;
+
+    // @ts-expect-error
+    const bad: Hook<'winstonLevels'> = (gasket: Gasket) => 'audit';
+  });
+
+  it('defines the winstonFormats lifecycle', async () => {
+    const hook: Hook<'winstonFormats'> = (gasket: Gasket) => {
+      return { transform: (info) => info };
+    };
+    const optOut: Hook<'winstonFormats'> = (gasket: Gasket) => null;
+
+    // @ts-expect-error
+    const bad: Hook<'winstonFormats'> = (gasket: Gasket) => 'json';
+  });
 });

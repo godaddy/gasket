@@ -42,4 +42,22 @@ describe('constructor', () => {
     const engine = new GasketEngine([mockPlugin]);
     expect(engine._pluginMap).toHaveProperty('@gasket/plugin-one', mockPlugin);
   });
+
+  it('accepts plugins with only actions', () => {
+    const actionOnlyPlugin = {
+      name: '@gasket/plugin-action-only',
+      actions: {
+        doThing: () => 'done'
+      }
+    };
+
+    const engine = new GasketEngine([actionOnlyPlugin]);
+    expect(engine._pluginMap).toHaveProperty('@gasket/plugin-action-only', actionOnlyPlugin);
+    expect(engine.actions.doThing()).toEqual('done');
+  });
+
+  it('throws when a plugin has neither hooks nor actions', () => {
+    expect(() => new GasketEngine([{ name: 'faulty' }]))
+      .toThrow('Plugin (faulty) must have hooks or actions');
+  });
 });

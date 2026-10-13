@@ -1,6 +1,4 @@
-import type { GasketConfigDefinition, MaybeAsync, Plugin, GasketEngine } from '@gasket/core';
-import type { PromptModule } from 'inquirer';
-import type ora from 'ora';
+import type { GasketConfigDefinition, Plugin } from '@gasket/core';
 import type { Command } from 'commander';
 
 export interface Dependencies {
@@ -48,11 +46,7 @@ interface CommandOption {
 export interface CreateCommandOptions {
   template?: string;
   templatePath?: string;
-  npmLink?: string[];
   packageManager?: string;
-  prompts?: boolean;
-  config?: string;
-  configFile?: string;
 }
 
 export function createCommandAction(
@@ -246,12 +240,6 @@ export interface PackageJsonBuilder extends ConfigBuilder<PackageJson> {
   has(key: keyof PackageJson, value: string): boolean;
 }
 
-type NoopPromptObject = {
-  [key: string]: any;
-};
-type NoopPromptFunction = () => NoopPromptObject;
-export type CreatePrompt = PromptModule | NoopPromptFunction;
-
 export interface CreateContext {
   /** Short name of the app */
   appName: string;
@@ -268,9 +256,6 @@ export interface CreateContext {
   /** Whether or not target directory already exists */
   extant: boolean;
 
-  /** Local packages that should be linked */
-  pkgLinks: Array<string>;
-
   /** non-error/warning messages to report */
   messages: Array<string>;
 
@@ -286,9 +271,6 @@ export interface CreateContext {
   /** any generated files to show in report */
   generatedFiles: Set<string>;
 
-  /** (INTERNAL) false to skip the prompts */
-  prompts: boolean;
-
   /** temporary directory */
   tmpDir: string;
 
@@ -303,8 +285,6 @@ export interface CreateContext {
 
   /** resolved template name for display */
   templateName?: string;
-
-  // Added by `global-prompts`
 
   /** Description of app */
   appDescription: string;
@@ -347,33 +327,6 @@ export interface CreateContext {
   /** Flag indicating if API app is enabled */
   apiApp?: boolean;
   addApiRoutes?: boolean;
-}
-
-export interface ActionWrapperParams {
-  gasket: GasketEngine;
-  context: CreateContext;
-  spinner?: ora.Ora;
-}
-
-declare module '@gasket/core' {
-
-  export interface HookExecTypes {
-    prompt(
-      context: CreateContext,
-      utils: {
-        prompt: CreatePrompt;
-      }
-    ): MaybeAsync<CreateContext>;
-
-    create(context: CreateContext): MaybeAsync<void>;
-
-    postCreate(
-      context: CreateContext,
-      utils: {
-        runScript: (script: string) => Promise<void>;
-      }
-    ): MaybeAsync<void>;
-  }
 }
 
 declare global {

@@ -1,5 +1,5 @@
 name: Publish
-run-name: Publish \(${{ github.event_name == 'repository_dispatch' && github.event.client_payload.branch || github.ref_name }}\)
+run-name: Publish (${{ github.event_name == 'repository_dispatch' && github.event.client_payload.branch || github.ref_name }})
 
 on:
   workflow_dispatch:
@@ -29,14 +29,6 @@ jobs:
           node-version: '24'
           registry-url: 'https://registry.npmjs.org'
           cache: pnpm
-
-      - name: Cache pnpm store
-        uses: actions/cache@v3
-        with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-pnpm-24-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-24-
 
       - name: Install Dependencies
         run: pnpm install --prefer-offline

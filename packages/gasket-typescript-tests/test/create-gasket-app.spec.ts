@@ -1,16 +1,11 @@
 /* eslint-disable vitest/expect-expect, jest/expect-expect */
-import type { Gasket, Hook } from '@gasket/core';
+import type { Gasket } from '@gasket/core';
 import { CreateContext } from 'create-gasket-app';
 import type { PartialCreateContext } from 'create-gasket-app/lib/internal.d.ts';
 
 describe('create-gasket-app', () => {
-  it('defines the create lifecycle', () => {
-    const hook: Hook<'create'> = (gasket: Gasket, context: CreateContext): void => { };
-    const asyncHook: Hook<'create'> = async (gasket: Gasket, context: CreateContext): Promise<void> => { };
-  });
-
   it('describes the create context helpers', () => {
-    const hook: Hook<'create'> = async (gasket: Gasket, context: CreateContext) => {
+    const hook: (gasket: Gasket, context: CreateContext) => Promise<void> = async (gasket: Gasket, context: CreateContext) => {
       const { pkg, gasketConfig, pkgManager } = context;
 
       pkg.add('devDependencies', { 'left-pad': '^1.0.0' });
@@ -25,25 +20,8 @@ describe('create-gasket-app', () => {
     };
   });
 
-  it('defines the prompt hook', () => {
-    const hook: Hook<'prompt'> = async (gasket: Gasket, context: CreateContext, utils: unknown) => {
-      return context;
-    };
-  });
-
-  it('defines the postCreate hook', () => {
-    const hook: Hook<'postCreate'> = async (gasket, context, utils) => {
-      await utils.runScript('echo "hello, world"');
-    };
-  });
-
-  it('validates the return from configure hooks', () => {
-    // @ts-expect-error
-    const hook: Hook<'create'> = async (gasket, config) => 'huh?';
-  });
-
   it('describes template context properties', () => {
-    const hook: Hook<'create'> = async (gasket: Gasket, context: CreateContext) => {
+    const hook: (gasket: Gasket, context: CreateContext) => Promise<void> = async (gasket: Gasket, context: CreateContext) => {
       // Template-related properties should be optional and type-safe
       const template: string | undefined = context.template;
       const templatePath: string | undefined = context.templatePath;

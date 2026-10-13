@@ -2,15 +2,21 @@ import { WeakPromiseKeeper } from './keeper.js';
 import { parse } from 'cookie';
 
 /**
+ * Registry-global so duplicate installs of this package address the same slot.
+ */
+const kOriginalRequest = Symbol.for('gasket.originalRequest');
+
+/**
  * Represents a normalized Gasket request.
  * @type {import('@gasket/request').GasketRequest}
  */
 export class GasketRequest {
-  constructor({ headers, cookies, query, path }) {
+  constructor({ headers, cookies, query, path, method }) {
     this.headers = headers;
     this.cookies = cookies;
     this.query = query;
     this.path = path;
+    this.method = method;
   }
 }
 
@@ -100,15 +106,51 @@ export async function makeGasketRequest(requestLike) {
         cookies = 'cookie' in headers ? parse(headers.cookie) : {};
       }
 
-      return new GasketRequest(Object.seal({
+      // Absent for assembled request-likes such as the App Router's, where
+      // next/headers exposes no method. Never defaulted — a Server Action is a
+      // POST that re-renders RSC in the same request.
+      const method = typeof requestLike.method === 'string'
+        ? requestLike.method.toUpperCase()
+        : void 0;
+
+      const gasketRequest = new GasketRequest(Object.seal({
         headers,
         cookies: 'getAll' in cookies ? await objectFromCookieStore(cookies) : cookies,
         query: query instanceof URLSearchParams ? objectFromSearchParams(query) : query,
-        path
+        path,
+        method
       }));
+
+      // Runs once per headers object, so the first request-like normalized for
+      // a given headers object is the one kept.
+      //
+      // This makes the keeper's value reach its own key, since requestLike owns
+      // rawHeaders. That is not a leak: WeakMap is an ephemeron map, so a value
+      // is live only while the key is live independently of the map, and the
+      // cycle dies with the key.
+      //
+      // Unwrap when the input already carries an original: under duplicate
+      // installs `instanceof` fails across copies, so an already-normalized
+      // request gets normalized again, and nesting it would hand callers a
+      // GasketRequest where they expect the framework request.
+      Object.defineProperty(gasketRequest, kOriginalRequest, {
+        value: kOriginalRequest in requestLike ? requestLike[kOriginalRequest] : requestLike,
+        enumerable: false,
+        writable: false,
+        configurable: false
+      });
+
+      return gasketRequest;
     };
 
     keeper.set(rawHeaders, normalize());
   }
   return keeper.get(rawHeaders);
+}
+
+/**
+ * @type {import('@gasket/request').getOriginalRequest}
+ */
+export function getOriginalRequest(gasketRequest) {
+  return gasketRequest?.[kOriginalRequest];
 }

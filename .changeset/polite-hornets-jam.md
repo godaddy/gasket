@@ -3,7 +3,6 @@
 "@gasket/assets": major
 "@gasket/core": major
 "@gasket/data": major
-"@gasket/fetch": major
 "@gasket/intl": major
 "@gasket/nextjs": major
 "@gasket/plugin-analyze": major
@@ -38,4 +37,4 @@
 "@gasket/utils": major
 ---
 
-bump all package majors to 8
+Gasket 8: Node 24, ESM-only, presets replaced by templates. See docs/upgrade-to-8.md

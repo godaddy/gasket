@@ -1,24 +1,24 @@
 ---
-"@gasket/template-nextjs-express": patch
-"@gasket/template-nextjs-pages": patch
-"@gasket/template-api-express": patch
-"@gasket/template-api-fastify": patch
-"@gasket/template-nextjs-app": patch
-"@gasket/plugin-elastic-apm": patch
-"@gasket/typescript-tests": patch
-"@gasket/plugin-express": patch
-"@gasket/plugin-fastify": patch
-"@gasket/plugin-swagger": patch
-"@gasket/plugin-webpack": patch
-"@gasket/plugin-morgan": patch
-"@gasket/plugin-nextjs": patch
-"@gasket/plugin-data": patch
-"@gasket/plugin-intl": patch
-"@gasket/react-intl": patch
-"@gasket/assets": patch
-"@gasket/nextjs": patch
-"@gasket/core": patch
-"@gasket/data": patch
+"@gasket/template-nextjs-express": major
+"@gasket/template-nextjs-pages": major
+"@gasket/template-api-express": major
+"@gasket/template-api-fastify": major
+"@gasket/template-nextjs-app": major
+"@gasket/plugin-elastic-apm": major
+"@gasket/typescript-tests": major
+"@gasket/plugin-express": major
+"@gasket/plugin-fastify": major
+"@gasket/plugin-swagger": major
+"@gasket/plugin-webpack": major
+"@gasket/plugin-morgan": major
+"@gasket/plugin-nextjs": major
+"@gasket/plugin-data": major
+"@gasket/plugin-intl": major
+"@gasket/react-intl": major
+"@gasket/assets": major
+"@gasket/nextjs": major
+"@gasket/core": major
+"@gasket/data": major
 ---
 
-remove middleware plugin
+Remove `@gasket/plugin-middleware`. Drop it from your plugin list; use the `express` / `fastify` lifecycle hooks from `@gasket/plugin-express` or `@gasket/plugin-fastify` to register middleware.

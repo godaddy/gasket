@@ -67,10 +67,15 @@ describe('@gasket/template-api-fastify', () => {
       const packageJsonPath = join(templateDir, 'package.json');
       const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf8'));
 
-      expect(packageJson.eslintConfig).toHaveProperty('extends');
-      expect(packageJson.eslintConfig.extends).toContain('godaddy');
-      expect(packageJson.eslintConfig).toHaveProperty('parser', '@typescript-eslint/parser');
-      expect(packageJson.eslintIgnore).toContain('dist');
+      const eslintConfigPath = join(templateDir, 'eslint.config.js');
+
+      expect(existsSync(eslintConfigPath)).toBe(true);
+      const eslintConfig = readFileSync(eslintConfigPath, 'utf8');
+      expect(eslintConfig).toContain("from 'eslint-config-godaddy'");
+      expect(eslintConfig).toContain("from '@typescript-eslint/parser'");
+      expect(eslintConfig).toContain("globalIgnores(['dist/'");
+      expect(packageJson).not.toHaveProperty('eslintConfig');
+      expect(packageJson).not.toHaveProperty('eslintIgnore');
     });
 
     it('should have valid vitest.config.js file', () => {

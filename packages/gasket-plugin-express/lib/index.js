@@ -1,7 +1,6 @@
 /// <reference types="@gasket/plugin-metadata" />
 
 import createServers from './create-servers.js';
-import actions from './actions.js';
 import packageJson from '../package.json' with { type: 'json' };
 const { name, version, description } = packageJson;
 
@@ -10,20 +9,11 @@ export default {
   name,
   version,
   description,
-  actions,
   hooks: {
     createServers,
     metadata(gasket, meta) {
       return {
         ...meta,
-        actions: [
-          {
-            name: 'getExpressApp',
-            description: 'Get the Express app instance',
-            link: 'README.md#getExpressApp',
-            deprecated: true
-          }
-        ],
         guides: [
           {
             name: 'Express Setup Guide',

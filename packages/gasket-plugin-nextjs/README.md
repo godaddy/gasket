@@ -61,13 +61,34 @@ import gasket from './gasket.js';
 export default gasket.actions.getNextConfig();
 ```
 
-### Next.js 16 and the Webpack bundler
+### Next.js 16 bundlers (Webpack + opt-in Turbopack)
 
 This plugin requires **Next.js 16** or later and injects Webpack configuration
-into your Next app. In Next.js 16, Turbopack is the default bundler, so Gasket
-apps must use the `--webpack` flag when running the Next CLI. Generated apps
-and scripts use `next build --webpack` and `next dev --webpack` by default.
-Next.js 16 also requires **Node.js 20.9+**.
+into your Next app. Generated apps and scripts use `next build --webpack` and
+`next dev --webpack` by default. Next.js 16 also requires **Node.js 20.9+**.
+
+Apps opt into Turbopack by setting `turbopack: true` on the Gasket config:
+
+```js
+// gasket.js
+export default makeGasket({
+  turbopack: true,
+  plugins: [pluginNextjs]
+});
+```
+
+When `gasket.config.turbopack` is `true`, this plugin's `nextConfig` hook:
+
+- removes its Webpack callback (Turbopack ignores it), and
+- adds `@gasket/core` and `@gasket/plugin-nextjs` to
+  `serverExternalPackages` so Next loads them at runtime from `node_modules`
+  instead of tracing and bundling them.
+
+Other Gasket plugins that need Turbopack support should provide their own
+`nextConfig` hook that self-registers their package (and any server-only
+dependencies) under `gasket.config.turbopack`. App-specific Webpack aliases
+and fallbacks must still be represented in the app's own `turbopack`
+configuration (for example `turbopack.resolveAlias`).
 
 For general Webpack configurations, it is recommended to use features of the
 Gasket [Webpack plugin], which will be merged into the Next.js configuration.
@@ -113,16 +134,6 @@ export default makeGasket({
 Also note when using [@gasket/plugin-intl] to determine the locale, that the
 `NEXT_LOCALE` cookie will have no effect. You can, of course, hook the [intlLocale]
 lifecycle in an app to enable that behavior if desired.
-
-## Adding a Sitemap
-
-When creating a new application with this plugin, you will be prompted with a
-question in the CLI asking if you would like to add a [sitemap] to your application.
-
-Answering yes to this question will install `next-sitemap` as a dependency,
-generate a next-sitemap.config.js file, and add a `sitemap` npm script to your
-package.json. `next-sitemap` is an npm package that generates sitemaps and a
-robots.txt file for Next.js applications. Learn more by reading the [next-sitemap docs].
 
 ## Actions
 
@@ -297,5 +308,3 @@ export default {
 [next.config]: https://nextjs.org/docs#custom-configuration
 [i18n config]: https://nextjs.org/docs/advanced-features/i18n-routing#getting-started
 [named capturing groups]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences
-[sitemap]: https://www.sitemaps.org/
-[next-sitemap docs]: https://github.com/iamvishnusankar/next-sitemap

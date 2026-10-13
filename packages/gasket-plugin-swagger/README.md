@@ -54,15 +54,7 @@ To hook the build lifecycle you can update your npm scripts to include the follo
 ```
 
 ```diff
-// TypeScript apps
-
-+ "scripts": {
-+   "build": "tsx gasket.ts build"
-+ }
-```
-
-```diff
-// Using Node 24+
+// TypeScript apps (Node 24+)
 
 + "scripts": {
 +   "build": "node gasket.ts build"

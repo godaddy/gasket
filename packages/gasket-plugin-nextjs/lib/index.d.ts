@@ -4,7 +4,7 @@ import type { NextServer } from 'next/dist/server/next';
 import type { Application } from 'express';
 import type { FastifyInstance } from 'fastify';
 import type { Gasket, Plugin } from '@gasket/core';
-import type { CreateContext, CreatePrompt } from 'create-gasket-app';
+import type { CreateContext } from 'create-gasket-app';
 import type { GasketRequest } from '@gasket/request';
 
 export { NextConfig, NextServer };
@@ -29,8 +29,6 @@ declare module '@gasket/core' {
 
   export interface GasketConfig {
     nextConfig?: Partial<NextConfig>;
-    /** @deprecated Use `nextConfig` */
-    next?: Partial<NextConfig>;
     /**
      * Allows users to set a path prefix for the application. Must be set at
      * build time.
@@ -39,6 +37,16 @@ declare module '@gasket/core' {
      * @todo This should be moved to gasket/engine for next major release
      */
     basePath?: string;
+    /**
+     * Opt into Turbopack support. When true, `@gasket/plugin-nextjs`'s
+     * `nextConfig` hook removes its Webpack callback and adds `@gasket/core`
+     * plus `@gasket/plugin-nextjs` to `serverExternalPackages`. Other Gasket
+     * plugins may hook `nextConfig` to self-register additional server
+     * externals when this flag is set.
+     * @example
+     * turbopack: true
+     */
+    turbopack?: boolean;
   }
 
   export interface HookExecTypes {
@@ -80,27 +88,6 @@ export function getNextRoute(
   routeKeys: Record<string, string>;
   namedRegex: RegExp;
 } | null>;
-
-/* Exported prompts */
-export function promptAppRouter(
-  context: CreateContext,
-  prompt: CreatePrompt
-): Promise<undefined>
-
-export function promptNextServerType(
-  context: CreateContext,
-  prompt: CreatePrompt
-): Promise<undefined>
-
-export function promptNextDevProxy(
-  context: CreateContext,
-  prompt: CreatePrompt
-): Promise<undefined>
-
-export function promptSitemap(
-  context: CreateContext,
-  prompt: CreatePrompt
-): Promise<undefined>
 
 /**
  * Small helper function that creates nextjs app from the gasket configuration.

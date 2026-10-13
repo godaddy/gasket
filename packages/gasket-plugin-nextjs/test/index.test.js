@@ -56,6 +56,7 @@ describe('Plugin', function () {
       'express',
       'fastify',
       'metadata',
+      'nextConfig',
       'webpackConfig'
     ];
 

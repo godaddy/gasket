@@ -167,14 +167,6 @@ describe('makeCreateContext', () => {
     expect(results.relDest).toEqual(expected);
   });
 
-  it('sets pkgLinks from flags', () => {
-    results = makeCreateContext(argv, {
-      npmLink: ['@gasket/jest', 'gasket-plugin-some-user'],
-      template: '@gasket/template-nextjs-pages'
-    });
-    expect(results.pkgLinks).toEqual(['@gasket/jest', 'gasket-plugin-some-user']);
-  });
-
   it('detects whether the target directory exists', () => {
     results = makeCreateContext(argv, flags);
     expect(results.extant).toEqual(false);
@@ -218,27 +210,5 @@ describe('makeCreateContext', () => {
     }
 
     expect(error).toBeFalsy();
-  });
-
-  it('assigns values from configFile flag to context', () => {
-    flags = { configFile: './test/unit/commands/test-ci-config.json' };
-    results = makeCreateContext(argv, flags);
-    expect(results.unitTestSuite).toEqual('jest');
-    expect(results.integrationTestSuite).toEqual('cypress');
-    expect(results.appDescription).toEqual('A basic gasket app');
-    expect(results.packageManager).toEqual('npm');
-  });
-
-  it('assigns values from config flag to context', () => {
-    flags = { config: '{"description":"A test app","package":"npm","unitTestSuite":"fake"}' };
-    results = makeCreateContext(argv, flags);
-    expect(results.unitTestSuite).toEqual('fake');
-    expect(results.description).toEqual('A test app');
-    expect(results.package).toEqual('npm');
-  });
-
-  it('sets prompts from flags', () => {
-    results = makeCreateContext(argv, { prompts: false });
-    expect(results.prompts).toBeFalsy();
   });
 });

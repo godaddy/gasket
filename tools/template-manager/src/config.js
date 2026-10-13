@@ -44,12 +44,6 @@ export default {
   /** Directories to remove during clean operation. */
   cleanDirs: ['dist', 'build', '.next', 'coverage', '.nyc_output', 'node_modules'],
 
-  /** Environment variables for lint operation. */
-  lintEnv: { ESLINT_USE_FLAT_CONFIG: 'false' },
-
-  /** Environment variables for test operation. */
-  testEnv: { ESLINT_USE_FLAT_CONFIG: 'false' },
-
   // ─────────────────────────────────────────────────────────────────────────────
   // Validation Settings
   // ─────────────────────────────────────────────────────────────────────────────
@@ -89,6 +83,7 @@ export default {
     expectedFiles: [
       'package-lock.json',
       'package.json',
+      'eslint.config.js',
       /gasket\.js|gasket\.ts/,
       'test',
       'vitest.config.js',

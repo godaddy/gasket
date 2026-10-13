@@ -36,7 +36,7 @@ const plugin = {
         lifecycles: [
           {
             name: 'webpackConfig',
-            method: 'execApplySync',
+            method: 'execWaterfallSync',
             description: 'Transform the Webpack config',
             link: 'README.md#webpackConfig',
             parent: 'initWebpack',

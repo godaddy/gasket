@@ -3,7 +3,7 @@ import { runShellCommand } from '@gasket/utils';
 
 /**
  * Initialize git repository, create main branch, and make initial commit
- * @type {import('../../internal.d.js').gitInit}
+ * @type {import('../../internal.d.ts').gitInit}
  */
 async function gitInit({ context }) {
   try {

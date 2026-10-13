@@ -28,7 +28,7 @@ export default makeGasket({
   ],
   fastify: {
     compression: true,
-    trustProxy: true,
+    trustProxy: ['10.0.0.0/8'], // the load balancer's network
     disableRequestLogging: false
   }
 });

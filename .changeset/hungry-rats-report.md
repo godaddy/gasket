@@ -1,12 +1,12 @@
 ---
-"@gasket/template-nextjs-express": patch
-"@gasket/template-nextjs-pages": patch
-"@gasket/template-api-express": patch
-"@gasket/template-api-fastify": patch
-"@gasket/template-nextjs-app": patch
-"@gasket/react-intl": patch
-"@gasket/assets": patch
-"@gasket/nextjs": patch
+"@gasket/template-nextjs-express": major
+"@gasket/template-nextjs-pages": major
+"@gasket/template-api-express": major
+"@gasket/template-api-fastify": major
+"@gasket/template-nextjs-app": major
+"@gasket/react-intl": major
+"@gasket/assets": major
+"@gasket/nextjs": major
 ---
 
-React 19 upgrade
+Upgrade to React 19. Apps must use `react@19` / `react-dom@19`; React 18 is no longer supported.

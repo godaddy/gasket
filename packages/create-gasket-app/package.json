@@ -50,17 +50,19 @@
     "@gasket/request": "workspace:^",
     "@gasket/utils": "workspace:^",
     "chalk": "^5.3.0",
-    "commander": "^12.1.0",
+    "commander": "^15.0.0",
     "deepmerge": "^4.3.1",
     "diagnostics": "^2.0.2",
-    "inquirer": "^6.5.2",
-    "ora": "^3.4.0",
-    "semver": "^7.7.1"
+    "ora": "^9.4.1",
+    "semver": "^7.8.5"
   },
   "devDependencies": {
     "@gasket/request": "workspace:^",
-    "@typescript-eslint/parser": "^8.38.0",
+    "@typescript-eslint/parser": "^8.70.1",
     "@vitest/coverage-v8": "^3.2.0",
     "vitest": "^3.2.0"
+  },
+  "engines": {
+    "node": ">=24"
   }
 }

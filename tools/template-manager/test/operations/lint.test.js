@@ -6,16 +6,19 @@ describe('lint', () => {
     vi.restoreAllMocks();
   });
 
-  it('calls runner.runCommand with npx eslint args', async () => {
+  it("runs the template's npm lint script with no forced env", async () => {
     const { handler } = await import('../../src/operations/lint.js');
     const runner = mockRunner();
     await handler(baseTemplate, { runner, config: baseConfig, flags: {} });
     expect(runner.runCommand).toHaveBeenCalledTimes(1);
-    expect(runner.runCommand).toHaveBeenCalledWith(
-      'npx',
-      ['eslint', '--ext', '.js,.jsx,.cjs,.ts,.tsx', '.'],
-      baseTemplate.templateDir,
-      baseConfig.lintEnv
-    );
+    expect(runner.runCommand).toHaveBeenCalledWith('npm', ['run', 'lint'], baseTemplate.templateDir, {});
+  });
+
+  it('passes config.lintEnv through when set', async () => {
+    const { handler } = await import('../../src/operations/lint.js');
+    const runner = mockRunner();
+    const lintEnv = { FOO: 'bar' };
+    await handler(baseTemplate, { runner, config: { ...baseConfig, lintEnv }, flags: {} });
+    expect(runner.runCommand).toHaveBeenCalledWith('npm', ['run', 'lint'], baseTemplate.templateDir, lintEnv);
   });
 });

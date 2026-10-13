@@ -16,6 +16,8 @@ declare module '@gasket/core' {
 
   export interface HookExecTypes {
     winstonTransports(): MaybeAsync<LoggerOptions['transports']>;
+    winstonLevels(): LoggerOptions['levels'] | null | false;
+    winstonFormats(): LoggerOptions['format'] | null | false;
   }
 }
 

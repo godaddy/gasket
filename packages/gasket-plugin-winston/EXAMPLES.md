@@ -70,6 +70,40 @@ export default {
 };
 ```
 
+### winstonLevels Hook
+
+Add a log level through a plugin, keeping the existing levels:
+
+```js
+// my-logging-plugin.js
+export default {
+  name: 'my-logging-plugin',
+  hooks: {
+    winstonLevels(gasket) {
+      return { audit: 3 };
+    }
+  }
+};
+```
+
+### winstonFormats Hook
+
+Enrich entries before the base format serializes them:
+
+```js
+// my-logging-plugin.js
+import { format } from 'winston';
+
+export default {
+  name: 'my-logging-plugin',
+  hooks: {
+    winstonFormats(gasket) {
+      return format((info) => ({ ...info, service: 'my-service' }))();
+    }
+  }
+};
+```
+
 ## Using the Logger
 
 ### Basic Logger Usage

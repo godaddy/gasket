@@ -56,7 +56,7 @@ export default makeGasket({
 
 ### Registered plugins
 
-A plugin is a module that exports a `name` and `hooks` object (See [Plugins Guide]).
+A plugin is a module that exports a `name` and at least one of `hooks` or `actions` (See [Plugins Guide]).
 In your `gasket.js` file, you can import plugins and add them to the `plugins`
 array of the Gasket configuration.
 
@@ -388,6 +388,6 @@ export default { name, actions, hooks };
 [ready]: #ready 
 [actions]: #actions 
 [registered plugins]: #registered-plugins
-[Plugins Guide]:/packages/gasket-cli/docs/plugins.md
+[Plugins Guide]:/docs/authoring-plugins.md
 
 [debug]:https://github.com/debug-js/debug

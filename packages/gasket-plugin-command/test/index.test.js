@@ -48,7 +48,7 @@ describe('@gasket/plugin-command', () => {
         lifecycles: expect.arrayContaining([
           {
             name: 'commands',
-            method: 'exec',
+            method: 'execSync',
             description: 'Add custom commands to the CLI',
             link: 'README.md#commands',
             parent: 'prepare'

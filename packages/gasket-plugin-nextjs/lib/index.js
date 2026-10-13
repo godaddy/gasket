@@ -4,6 +4,7 @@ import apmTransaction from './apm-transaction.js';
 import metadata from './metadata.js';
 import * as actions from './actions.js';
 import { webpackConfig } from './webpack-config.js';
+import nextConfig from './next-config.js';
 import express from './express.js';
 import fastify from './fastify.js';
 import packageJson from '../package.json' with { type: 'json' };
@@ -18,6 +19,7 @@ const plugin = {
   actions,
   hooks: {
     webpackConfig,
+    nextConfig,
     express,
     fastify,
     apmTransaction,
