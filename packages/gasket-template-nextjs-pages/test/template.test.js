@@ -138,7 +138,7 @@ describe('@gasket/template-nextjs-pages', () => {
       expect(eslintConfig).toContain("from '@godaddy/eslint-plugin-react-intl'");
       expect(eslintConfig).toContain("from '@typescript-eslint/parser'");
       expect(eslintConfig).toContain("localeFiles: ['locales/en-US.json']");
-      expect(eslintConfig).toContain("globalIgnores(['dist/', 'coverage/', 'build/', 'next-env.d.ts'])");
+      expect(eslintConfig).toContain("globalIgnores(['.docs/', 'dist/', 'coverage/', 'build/', 'next-env.d.ts'])");
       expect(packageJson).not.toHaveProperty('eslintConfig');
       expect(packageJson).not.toHaveProperty('eslintIgnore');
     });

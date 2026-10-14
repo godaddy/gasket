@@ -4,7 +4,7 @@ import typescriptParser from '@typescript-eslint/parser';
 
 export default defineConfig([
   ...godaddy,
-  globalIgnores(['dist/', 'coverage/', 'build/']),
+  globalIgnores(['.docs/', 'dist/', 'coverage/', 'build/']),
   {
     files: ['**/*.{ts,tsx}'],
     languageOptions: {

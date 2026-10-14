@@ -19,7 +19,7 @@ const godaddyReactRules = godaddyReact.map(({ plugins, ...config }) => {
 export default defineConfig([
   ...godaddyReactRules,
   ...next,
-  globalIgnores(['dist/', 'coverage/', 'build/', 'next-env.d.ts']),
+  globalIgnores(['.docs/', 'dist/', 'coverage/', 'build/', 'next-env.d.ts']),
   {
     plugins: {
       '@godaddy/react-intl': reactIntl
