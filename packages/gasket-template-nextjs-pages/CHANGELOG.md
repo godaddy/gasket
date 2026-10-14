@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 8.0.0-next.6
+
+### Patch Changes
+
+- 870a00a: Ignore the generated `.docs/` directory in `eslint.config.js` so `npm test` passes after `npm run docs`
+
 ## 8.0.0-next.5
 
 ### Patch Changes
