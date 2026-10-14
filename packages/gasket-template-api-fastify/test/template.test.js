@@ -73,7 +73,7 @@ describe('@gasket/template-api-fastify', () => {
       const eslintConfig = readFileSync(eslintConfigPath, 'utf8');
       expect(eslintConfig).toContain("from 'eslint-config-godaddy'");
       expect(eslintConfig).toContain("from '@typescript-eslint/parser'");
-      expect(eslintConfig).toContain("globalIgnores(['dist/'");
+      expect(eslintConfig).toContain("globalIgnores(['.docs/', 'dist/'");
       expect(packageJson).not.toHaveProperty('eslintConfig');
       expect(packageJson).not.toHaveProperty('eslintIgnore');
     });
