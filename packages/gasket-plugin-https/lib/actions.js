@@ -8,7 +8,8 @@ import { getPortFallback, portInUseError, startProxy, getRawServerConfig } from 
 const debugLogger = debug('gasket:https');
 
 /**
- * Log the create-servers failure, distinguishing port-in-use from other causes.
+ * Log the create-servers failure, distinguishing port-in-use from other causes,
+ * and return the user-facing message.
  * @type {import('./internal.d.ts').logServerError}
  */
 function logServerError(errors, serverOpts, logger) {
@@ -19,6 +20,24 @@ function logServerError(errors, serverOpts, logger) {
 
   debugLogger(errorMessage, errors);
   logger.error(errorMessage.message);
+  return errorMessage.message;
+}
+
+/**
+ * Close servers that started before a startup failure so they are not left
+ * listening.
+ * @type {import('./internal.d.ts').closeServers}
+ */
+function closeServers(servers = {}) {
+  Object.values(servers)
+    .flat()
+    .forEach((server) => {
+      try {
+        server.close();
+      } catch (err) {
+        debugLogger('Failed to close server after startup error', err);
+      }
+    });
 }
 
 /**
@@ -96,8 +115,10 @@ function buildTerminusOptions(gasket, logger, routes, terminusDefaults) {
 
 /**
  * Gasket action: startServer
+ * Resolves once the servers are listening; rejects if they fail to start.
  * @type {import('@gasket/core').ActionHandler<'startServer'>}
  */
+// eslint-disable-next-line max-statements
 async function startServer(gasket) {
   await gasket.isReady;
   await gasket.exec('preboot');
@@ -131,10 +152,17 @@ async function startServer(gasket) {
 
   const terminusOpts = buildTerminusOptions(gasket, logger, routes, terminusDefaults);
 
-  create(serverOpts, async function created(errors, servers) {
+  /**
+   * Handle the result of create-servers.
+   * @param {any} [errors] Errors from create-servers
+   * @param {object} [servers] Servers that were created
+   */
+  async function created(errors, servers) {
     if (errors) {
-      logServerError(errors, serverOpts, logger);
-      return;
+      const message = logServerError(errors, serverOpts, logger);
+      closeServers(servers);
+      // A plain Error, not the errs object: that carries serverOpts, which may include TLS key/cert
+      throw new Error(message, { cause: errors });
     }
 
     // Attach terminus before we call the `servers` lifecycle to ensure that
@@ -145,6 +173,13 @@ async function startServer(gasket) {
 
     await gasket.exec('servers', servers);
     logServersStarted(serverOpts, logger);
+  }
+
+  // create-servers can also reject without calling back, so forward that too
+  await new Promise((resolve, reject) => {
+    Promise.resolve(create(serverOpts, (errors, servers) => {
+      created(errors, servers).then(resolve, reject);
+    })).catch(reject);
   });
 }
 

@@ -113,6 +113,9 @@ gasket.actions.startServer();
 This action will execute several of the lifecycles mentioned next, allowing apps
 and plugins to further set the server up.
 
+The returned promise resolves once the servers are listening, and rejects if
+they fail to start (for example, when the port is already in use).
+
 ## Lifecycles
 
 ### preboot
