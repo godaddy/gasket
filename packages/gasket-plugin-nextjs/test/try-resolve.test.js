@@ -7,9 +7,11 @@ const __dirname = dirname(__filename);
 
 describe('tryResolve', () => {
   it('returns resolved path when module exists', () => {
-    // This test actually calls Node's require.resolve to test the happy path
-    const result = tryResolve('jest', [process.cwd()]);
-    expect(result).toContain('jest');
+    // This test actually calls Node's require.resolve to test the happy path.
+    // vitest is a direct devDependency of this package; jest was only present
+    // as a hoisted peer of eslint-plugin-jest, which the repo no longer uses.
+    const result = tryResolve('vitest', [process.cwd()]);
+    expect(result).toContain('vitest');
     expect(typeof result).toBe('string');
   });
 

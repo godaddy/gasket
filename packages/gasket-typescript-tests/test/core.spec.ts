@@ -1,4 +1,4 @@
-/* eslint-disable vitest/expect-expect, jest/expect-expect */
+/* eslint-disable vitest/expect-expect */
 import { Gasket, makeGasket } from '@gasket/core';
 import type { GasketConfigDefinition, MaybeAsync, Plugin  } from '@gasket/core';
 

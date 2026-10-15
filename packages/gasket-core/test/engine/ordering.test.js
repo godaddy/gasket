@@ -1,4 +1,4 @@
-/* eslint-disable vitest/expect-expect, jest/expect-expect */
+/* eslint-disable vitest/expect-expect */
 const { Gasket }  = await import('../../lib/gasket.js');
 
 function setupLoadedPlugins(withOrderingSpecs) {

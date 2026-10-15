@@ -1,5 +1,4 @@
 import { defineConfig, globalIgnores } from 'eslint/config';
-import jest from 'eslint-plugin-jest';
 import goddaddyTypescript from 'eslint-config-godaddy-typescript';
 import goddaddyReactTypescript from 'eslint-config-godaddy-react-typescript';
 import unicorn from 'eslint-plugin-unicorn';
@@ -36,11 +35,10 @@ export default defineConfig([
     }
   },
   //
-  // Configurations for Jest and Unicorn
+  // Configurations for Vitest and Unicorn
   //
   {
     plugins: {
-      jest,
       unicorn
     },
     linterOptions: {
@@ -48,7 +46,9 @@ export default defineConfig([
     },
     languageOptions: {
       globals: {
-        ...jest.environments.globals.globals,
+        // `jest` stays declared while some packages still run jest as their
+        // test runner; only its lint rules were dropped, not the runner.
+        jest: 'readonly',
         vi: 'readonly',
         expect: 'readonly',
         describe: 'readonly',
@@ -61,7 +61,6 @@ export default defineConfig([
       }
     },
     rules: {
-      ...jest.configs.recommended.rules,
       'unicorn/filename-case': 'error',
       'no-sync': 'warn',
       'vitest/expect-expect': 'warn',
