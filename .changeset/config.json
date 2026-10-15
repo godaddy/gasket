@@ -7,5 +7,10 @@
   "access": "public",
   "baseBranch": "next",
   "updateInternalDependencies": "patch",
-  "ignore": ["template-manager"]
+  "ignore": [
+    "template-manager"
+  ],
+  "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
+    "onlyUpdatePeerDependentsWhenOutOfRange": true
+  }
 }
