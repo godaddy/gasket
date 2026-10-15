@@ -1,5 +1,11 @@
 # `@gasket/plugin-https`
 
+## 8.0.0-next.2
+
+### Patch Changes
+
+- 91c08da: `startServer` now waits for the servers to start and rejects if they fail (e.g. port already in use), instead of resolving immediately and only logging the error.
+
 ## 8.0.0-next.1
 
 ### Patch Changes

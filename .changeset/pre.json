@@ -66,6 +66,7 @@
     "plugin-express-remove-get-express-app",
     "plugin-fastify-remove-get-fastify-app",
     "plugin-fastify-trust-proxy-docs",
+    "plugin-https-start-server-reject",
     "plugin-logger-override-console",
     "plugin-nextjs-next-peer-dep",
     "plugin-nextjs-remove-next-config-type",
