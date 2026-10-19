@@ -68,7 +68,7 @@
   },
   "peerDependencies": {
     "@gasket/plugin-webpack": "^8.0.0-next.3",
-    "fastify": "^4.29.1 || ^5.0.0",
+    "fastify": "^4.29.1 || ^5.12.1",
     "next": ">=16.1.6 <17",
     "react": ">=18",
     "react-dom": ">=18"

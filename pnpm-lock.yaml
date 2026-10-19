@@ -575,7 +575,7 @@ importers:
         specifier: workspace:^
         version: link:../create-gasket-app
       fastify:
-        specifier: ^5.0.0
+        specifier: ^5.12.1
         version: 5.12.5
       vitest:
         specifier: ^3.2.0
@@ -815,7 +815,7 @@ importers:
         specifier: workspace:^
         version: link:../gasket-plugin-webpack
       fastify:
-        specifier: ^4.29.1 || ^5.0.0
+        specifier: ^4.29.1 || ^5.12.1
         version: 5.12.5
     devDependencies:
       '@babel/preset-react':
@@ -922,7 +922,7 @@ importers:
         specifier: workspace:^
         version: link:../create-gasket-app
       fastify:
-        specifier: ^5.0.0
+        specifier: ^5.12.1
         version: 5.12.5
       vitest:
         specifier: ^3.2.0
@@ -1180,7 +1180,7 @@ importers:
         specifier: workspace:^
         version: link:../create-gasket-app
       fastify:
-        specifier: ^5.0.0
+        specifier: ^5.12.1
         version: 5.12.5
       vitest:
         specifier: ^3.2.0

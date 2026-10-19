@@ -63,7 +63,7 @@ rather a sampling of dependencies to demonstrate what to look for:
 -    "next": "^15.0.0",
 +    "next": "^16.0.0",
 -    "fastify": "^4.29.1",
-+    "fastify": "^5.0.0"
++    "fastify": "^5.12.1"
 }
 ```
 
@@ -405,8 +405,9 @@ See [Middleware not intercepting requests due to plugin order] in the
 
 ## Fastify 5
 
-`@gasket/plugin-fastify` targets Fastify 5 and creates the server through a
-version adapter, so `fastify@^4.29.1` keeps working during the transition;
+`@gasket/plugin-fastify` targets Fastify 5.12.1 or later, the release that
+fixes [GHSA-3m5p-2c4r-xxw2], and creates the server through a version adapter,
+so `fastify@^4.29.1` keeps working during the transition;
 `@gasket/template-api-fastify` scaffolds Fastify 5. Follow the
 [Fastify v5 migration guide] for Fastify's own breaking changes, and check that
 every `@fastify/*` plugin you install has a Fastify 5 release
@@ -416,7 +417,7 @@ every `@fastify/*` plugin you install has a Fastify 5 release
 ```diff
 "dependencies": {
 -    "fastify": "^4.29.1",
-+    "fastify": "^5.0.0",
++    "fastify": "^5.12.1",
 -    "@fastify/swagger": "^8.15.0",
 +    "@fastify/swagger": "^9.0.0",
 -    "@fastify/swagger-ui": "^4.2.0",
@@ -636,6 +637,7 @@ const res = await fetch('url/to/resource');
 [Fastify Version Support]: /packages/gasket-plugin-fastify/README.md#fastify-version-support
 [trustProxy]: /packages/gasket-plugin-fastify/README.md#trustproxy
 [Fastify v5 migration guide]: https://fastify.dev/docs/latest/Guides/Migration-Guide-V5/
+[GHSA-3m5p-2c4r-xxw2]: https://github.com/fastify/fastify/security/advisories/GHSA-3m5p-2c4r-xxw2
 [TypeScript guide]: typescript.md
 [React 19 upgrade guide]: https://react.dev/blog/2024/04/25/react-19-upgrade-guide
 [Next.js 16 upgrade guide]: https://nextjs.org/docs/app/guides/upgrading/version-16

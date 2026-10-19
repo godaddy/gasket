@@ -32,7 +32,7 @@ This plugin supports both Fastify v4 and v5 through an internal adapter pattern.
 - **Installation**: `npm install fastify@^4`
 
 ### Fastify v5
-- **Installation**: `npm install fastify@^5`
+- **Installation**: `npm install fastify@^5.12.1`
 
 The plugin automatically detects your Fastify version and applies the correct configuration. No manual configuration is required.
 
