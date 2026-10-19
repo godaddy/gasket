@@ -97,3 +97,6 @@ packages/gasket-core/cjs
 CLAUDE.md
 .claude/*
 .fallow/
+
+# Agent scratch: plans, specs, working notes — never committed
+.tmp/
