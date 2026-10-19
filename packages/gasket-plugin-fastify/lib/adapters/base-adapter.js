@@ -16,7 +16,7 @@ export class FastifyAdapter {
    * Subclasses must implement this method to handle version-specific options.
    * @abstract
    * @param {object} config - Fastify configuration options
-   * @param {boolean} [config.trustProxy] - Trust proxy headers
+   * @param {import('fastify').FastifyServerOptions['trustProxy']} [config.trustProxy] - Trusted proxy addresses or trust function
    * @param {object} [config.https] - HTTPS configuration
    * @param {boolean} [config.http2] - Enable HTTP/2
    * @param {boolean} [config.disableRequestLogging] - Disable request logging

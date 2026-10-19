@@ -53,7 +53,7 @@
     "@gasket/plugin-logger": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",
     "create-gasket-app": "workspace:^",
-    "fastify": "^5.0.0",
+    "fastify": "^5.12.1",
     "vitest": "^3.2.0"
   },
   "peerDependencies": {

@@ -63,7 +63,7 @@ rather a sampling of dependencies to demonstrate what to look for:
 -    "next": "^15.0.0",
 +    "next": "^16.0.0",
 -    "fastify": "^4.29.1",
-+    "fastify": "^5.0.0"
++    "fastify": "^5.12.1"
 }
 ```
 
@@ -318,7 +318,9 @@ Also gone with the plugin:
 `fastify.trustProxy` is still read by `@gasket/plugin-fastify`; see
 [Fastify 5](#fastify-5) for the value to use. `@gasket/plugin-express` has
 no `trustProxy` option; call `app.set('trust proxy', ...)` in an `express`
-hook.
+hook. Pass it the proxy's address list too, such as `['10.0.0.0/8']`: Express
+still accepts a hop count, but a client that bypasses the proxy can then spoof
+`req.ip`.
 
 ### Express
 
@@ -403,8 +405,9 @@ See [Middleware not intercepting requests due to plugin order] in the
 
 ## Fastify 5
 
-`@gasket/plugin-fastify` targets Fastify 5 and creates the server through a
-version adapter, so `fastify@^4.29.1` keeps working during the transition;
+`@gasket/plugin-fastify` targets Fastify 5.12.1 or later, the release that
+fixes [GHSA-3m5p-2c4r-xxw2], and creates the server through a version adapter,
+so `fastify@^4.29.1` keeps working during the transition;
 `@gasket/template-api-fastify` scaffolds Fastify 5. Follow the
 [Fastify v5 migration guide] for Fastify's own breaking changes, and check that
 every `@fastify/*` plugin you install has a Fastify 5 release
@@ -414,7 +417,7 @@ every `@fastify/*` plugin you install has a Fastify 5 release
 ```diff
 "dependencies": {
 -    "fastify": "^4.29.1",
-+    "fastify": "^5.0.0",
++    "fastify": "^5.12.1",
 -    "@fastify/swagger": "^8.15.0",
 +    "@fastify/swagger": "^9.0.0",
 -    "@fastify/swagger-ui": "^4.2.0",
@@ -423,10 +426,13 @@ every `@fastify/*` plugin you install has a Fastify 5 release
 ```
 
 One Gasket-specific change: `fastify.trustProxy` must not be a hop count.
-Fastify 5 treats a number as "trust no proxy", so `request.ip` silently falls
-back to the socket peer. Use the proxy's address list instead, which behaves
-the same on Fastify 4 and 5. `true` is also discouraged: it trusts the whole
-`X-Forwarded-For` chain and lets a client spoof `request.ip`.
+Since Fastify 5.12.1 a number trusts no proxy, with no error or warning:
+`request.ip`, `request.host`, and `request.protocol` silently fall back to the
+socket, and TypeScript rejects the config. Earlier versions honor the count but
+let a client that bypasses a proxy spoof `request.ip`. Use the proxy's address
+list instead, which behaves the same on every Fastify 4 and 5 release. `true` is
+also discouraged: it trusts the whole `X-Forwarded-For` chain and lets a client
+spoof `request.ip`.
 
 ```diff
 export default makeGasket({
@@ -631,6 +637,7 @@ const res = await fetch('url/to/resource');
 [Fastify Version Support]: /packages/gasket-plugin-fastify/README.md#fastify-version-support
 [trustProxy]: /packages/gasket-plugin-fastify/README.md#trustproxy
 [Fastify v5 migration guide]: https://fastify.dev/docs/latest/Guides/Migration-Guide-V5/
+[GHSA-3m5p-2c4r-xxw2]: https://github.com/fastify/fastify/security/advisories/GHSA-3m5p-2c4r-xxw2
 [TypeScript guide]: typescript.md
 [React 19 upgrade guide]: https://react.dev/blog/2024/04/25/react-19-upgrade-guide
 [Next.js 16 upgrade guide]: https://nextjs.org/docs/app/guides/upgrading/version-16

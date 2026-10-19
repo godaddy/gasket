@@ -136,15 +136,15 @@ here leaves nothing for the handler that reads it next.
 Express derives `req.ip` from the `trust proxy` setting, so it is not something
 `GasketRequest` can normalize. Reach it through the original request. See
 [Express behind proxies](https://expressjs.com/en/guide/behind-proxies.html)
-for the `trust proxy` values; a hop count only works when every request passes
-through the same number of proxies:
+for the `trust proxy` values. Set it to the proxies' addresses; a hop count
+lets a client that bypasses the proxy spoof `req.ip`:
 
 ```js
 import express from 'express';
 import { getOriginalRequest } from '@gasket/request';
 
 const app = express();
-app.set('trust proxy', 1); // one load balancer in front
+app.set('trust proxy', ['10.0.0.0/8']); // the load balancer's network
 
 export default {
   name: 'audit-plugin',
@@ -181,7 +181,7 @@ fastify.get('/users', async (request, reply) => {
   const original = getOriginalRequest(gasketRequest);
 
   console.log(original?.ip); // '203.0.113.42'
-  console.log(original?.ips); // ['203.0.113.42', '198.51.100.7']
+  console.log(original?.ips); // ['10.0.0.5', '203.0.113.42'] — socket peer first
 
   return { ok: true };
 });
