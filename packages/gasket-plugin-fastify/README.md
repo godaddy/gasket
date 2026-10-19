@@ -53,13 +53,15 @@ so `request.ip` becomes whatever the client sent first — any client can prepen
 its own entry to that header. Leave it unset when nothing sits in front of the
 app — `request.ip` is then the socket peer.
 
-Do not set it to a hop count. Fastify 5 treats a number as "trust no proxy"
-(see the [Fastify server reference]), so `request.ip` is the socket peer as if
-`trustProxy` were unset. Fastify 4 accepts a hop count, but it assumes every
-request passes through the same number of proxies; when paths vary or the app
-is reachable directly — for example, some traffic reaches the load balancer
-without the CDN — a client on the shorter path supplies the entry the count
-selects. An address list behaves the same on both versions.
+Do not set it to a hop count. Since Fastify 5.12.1 a number trusts no proxy
+(see the [Fastify server reference] and [GHSA-3m5p-2c4r-xxw2]): `request.ip`,
+`request.host`, and `request.protocol` come from the socket as if `trustProxy`
+were unset, and the TypeScript type rejects a number. Fastify 4 and Fastify 5
+before 5.12.1 honor a hop count without checking who sent the headers, so a
+client that reaches the app directly, or over a shorter path than the count
+assumes — for example, some traffic reaches the load balancer without the CDN —
+supplies the entry the count selects. An address list behaves the same on every
+version.
 
 #### Example configuration
 
@@ -152,3 +154,4 @@ This plugins hooks the [createServers] lifecycles from [@gasket/plugin-https].
 [@gasket/plugin-https]:/packages/gasket-plugin-https/README.md
 [createServers]:/packages/gasket-plugin-https/README.md#createservers
 [Fastify server reference]:https://fastify.dev/docs/latest/Reference/Server/#trustproxy
+[GHSA-3m5p-2c4r-xxw2]:https://github.com/fastify/fastify/security/advisories/GHSA-3m5p-2c4r-xxw2

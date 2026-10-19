@@ -318,7 +318,9 @@ Also gone with the plugin:
 `fastify.trustProxy` is still read by `@gasket/plugin-fastify`; see
 [Fastify 5](#fastify-5) for the value to use. `@gasket/plugin-express` has
 no `trustProxy` option; call `app.set('trust proxy', ...)` in an `express`
-hook.
+hook. Pass it the proxy's address list too, such as `['10.0.0.0/8']`: Express
+still accepts a hop count, but a client that bypasses the proxy can then spoof
+`req.ip`.
 
 ### Express
 
@@ -423,10 +425,13 @@ every `@fastify/*` plugin you install has a Fastify 5 release
 ```
 
 One Gasket-specific change: `fastify.trustProxy` must not be a hop count.
-Fastify 5 treats a number as "trust no proxy", so `request.ip` silently falls
-back to the socket peer. Use the proxy's address list instead, which behaves
-the same on Fastify 4 and 5. `true` is also discouraged: it trusts the whole
-`X-Forwarded-For` chain and lets a client spoof `request.ip`.
+Since Fastify 5.12.1 a number trusts no proxy, with no error or warning:
+`request.ip`, `request.host`, and `request.protocol` silently fall back to the
+socket, and TypeScript rejects the config. Earlier versions honor the count but
+let a client that bypasses a proxy spoof `request.ip`. Use the proxy's address
+list instead, which behaves the same on every Fastify 4 and 5 release. `true` is
+also discouraged: it trusts the whole `X-Forwarded-For` chain and lets a client
+spoof `request.ip`.
 
 ```diff
 export default makeGasket({
