@@ -22,6 +22,7 @@ export default defineConfig([
     '**/test/fixtures/**',
     '**/template/dist',
     '**/template/.next',
+    '**/template/next-env.d.ts',
     '**/template/.docs'
   ]),
   //
