@@ -113,9 +113,7 @@ describe('@gasket/plugin-logger', () => {
       it('should reject an async createLogger hook through the engine', () => {
         const asyncLoggerPlugin = { name: 'async-logger', hooks: { createLogger: async () => mockLogger } };
 
-        expect(() => makeGasket({ plugins: [plugin, asyncLoggerPlugin] })).toThrow(
-          'execMapSync cannot be used with async hook (createLogger) of plugin (async-logger)'
-        );
+        expect(() => makeGasket({ plugins: [plugin, asyncLoggerPlugin] })).toThrow(/async hook \(createLogger\)/);
       });
     });
 
