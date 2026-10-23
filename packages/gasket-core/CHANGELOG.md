@@ -1,5 +1,11 @@
 # `@gasket/core`
 
+## 8.0.0-next.4
+
+### Patch Changes
+
+- cffe6aa: Declare `execMap`, `execMapSync`, `execApply` and `execApplySync` on the `Gasket` interface
+
 ## 8.0.0-next.3
 
 ### Major Changes
