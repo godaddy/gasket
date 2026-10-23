@@ -152,6 +152,25 @@ describe('@gasket/core', () => {
     });
   });
 
+  it('types the execMap and execApply methods on the Gasket interface', async () => {
+    const gasket = makeGasket({ plugins: [PluginExample] });
+
+    const byPlugin: Record<string, any> = gasket.execMapSync('example', 'a', 1, true);
+    const asyncByPlugin: Record<string, any> = await gasket.execMap('example', 'a', 1, true);
+
+    const names: string[] = gasket.execApplySync('example', (plugin, handler) => {
+      handler('a', 1, true);
+      return plugin.name;
+    });
+    const asyncNames: string[] = await gasket.execApply('example', async (plugin) => plugin.name);
+
+    // @ts-expect-error execApplySync returns an array, not the applyFn result
+    const notArray: string = gasket.execApplySync('example', (plugin) => plugin.name);
+
+    // @ts-expect-error execMapSync returns a plugin-keyed map, not an array
+    const notMap: any[] = gasket.execMapSync('example', 'a', 1, true);
+  });
+
   it('exposes the running command on the Gasket interface', () => {
     const gasket = makeGasket({
       plugins: [PluginExample],

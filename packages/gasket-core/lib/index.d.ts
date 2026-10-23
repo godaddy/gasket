@@ -488,6 +488,24 @@ export interface Gasket {
   /** Execute a lifecycle event and return final result from waterfall (sync) */
   execWaterfallSync(event: string, input: any, ...args: any[]): any;
 
+  /** Execute a lifecycle event and return results keyed by plugin name (async) */
+  execMap(event: string, ...args: any[]): Promise<Record<string, any>>;
+
+  /** Execute a lifecycle event and return results keyed by plugin name (sync) */
+  execMapSync(event: string, ...args: any[]): Record<string, any>;
+
+  /** Execute a lifecycle event, calling applyFn with each plugin and its hook (async) */
+  execApply<Return = void>(
+    event: string,
+    applyFn: (plugin: Plugin, handler: (...args: any[]) => any) => Promise<Return>
+  ): Promise<Return[]>;
+
+  /** Execute a lifecycle event, calling applyFn with each plugin and its hook (sync) */
+  execApplySync<Return = void>(
+    event: string,
+    applyFn: (plugin: Plugin, handler: (...args: any[]) => any) => Return
+  ): Return[];
+
   [key: string]: any;
 }
 
