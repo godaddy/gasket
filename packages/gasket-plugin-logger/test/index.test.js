@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
 import plugin from '../lib/index.js';
+import { makeGasket } from '@gasket/core';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 const { name, version, description } = require('../package.json');
@@ -109,11 +110,12 @@ describe('@gasket/plugin-logger', () => {
         );
       });
 
-      it('should throw an error if a createLogger hook is async', () => {
-        gasket.execMapSync.mockReturnValue({ 'plugin-a': Promise.resolve(mockLogger) });
+      it('should reject an async createLogger hook through the engine', () => {
+        const asyncLoggerPlugin = { name: 'async-logger', hooks: { createLogger: async () => mockLogger } };
 
-        // eslint-disable-next-line max-nested-callbacks
-        expect(() => plugin.hooks.init(gasket)).toThrow('createLogger hooks must be synchronous');
+        expect(() => makeGasket({ plugins: [plugin, asyncLoggerPlugin] })).toThrow(
+          'execMapSync cannot be used with async hook (createLogger) of plugin (async-logger)'
+        );
       });
     });
 

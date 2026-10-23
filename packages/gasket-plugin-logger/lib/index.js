@@ -17,14 +17,8 @@ const plugin = {
   },
   hooks: {
     init(gasket) {
-      const loggersByPlugin = gasket.execMapSync('createLogger');
-      const pluginNames = Object.keys(loggersByPlugin);
-      const loggers = Object.values(loggersByPlugin);
+      const loggers = Object.entries(gasket.execMapSync('createLogger'));
       let hasCustomLogger = false;
-
-      if (loggers.some((logger) => logger && logger instanceof Promise)) {
-        throw new Error('createLogger hooks must be synchronous');
-      }
 
       if (loggers.length === 0) {
         const defaultLogger = {
@@ -37,11 +31,12 @@ const plugin = {
         gasket.logger = defaultLogger;
       } else if (loggers.length > 1) {
         throw new Error(
-          `Multiple plugins are hooking createLogger: ${pluginNames.join(', ')}. Only one logger is supported.`
+          `Multiple plugins are hooking createLogger: ${loggers.map(([pluginName]) => pluginName).join(', ')}. Only one logger is supported.`
         );
       } else {
-        verifyLoggerLevels(loggers[0]);
-        gasket.logger = loggers[0];
+        const [[, logger]] = loggers;
+        verifyLoggerLevels(logger);
+        gasket.logger = logger;
         hasCustomLogger = true;
       }
 
