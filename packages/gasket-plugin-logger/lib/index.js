@@ -17,17 +17,16 @@ const plugin = {
   },
   hooks: {
     init(gasket) {
-      const loggers = gasket.execSync('createLogger');
+      const loggersByPlugin = gasket.execMapSync('createLogger');
+      const pluginNames = Object.keys(loggersByPlugin);
+      const loggers = Object.values(loggersByPlugin);
       let hasCustomLogger = false;
 
-      if (
-        loggers &&
-        loggers.some((logger) => logger && logger instanceof Promise)
-      ) {
+      if (loggers.some((logger) => logger && logger instanceof Promise)) {
         throw new Error('createLogger hooks must be synchronous');
       }
 
-      if (!loggers || loggers.length === 0) {
+      if (loggers.length === 0) {
         const defaultLogger = {
           debug: console.debug,
           error: console.error,
@@ -38,7 +37,7 @@ const plugin = {
         gasket.logger = defaultLogger;
       } else if (loggers.length > 1) {
         throw new Error(
-          'Multiple plugins are hooking createLogger. Only one logger is supported.'
+          `Multiple plugins are hooking createLogger: ${pluginNames.join(', ')}. Only one logger is supported.`
         );
       } else {
         verifyLoggerLevels(loggers[0]);
@@ -66,7 +65,7 @@ const plugin = {
         lifecycles: [
           {
             name: 'createLogger',
-            method: 'execSync',
+            method: 'execMapSync',
             description: 'Custom logger creation',
             link: 'README.md#createLogger',
             parent: 'init'

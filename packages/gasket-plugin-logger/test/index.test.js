@@ -38,7 +38,7 @@ describe('@gasket/plugin-logger', () => {
 
     beforeEach(() => {
       gasket = {
-        execSync: vi.fn(),
+        execMapSync: vi.fn(),
         logger: null,
         config: {}
       };
@@ -63,7 +63,7 @@ describe('@gasket/plugin-logger', () => {
     describe('init', () => {
       it('should set logger from the first plugin if only one logger is hooked', async () => {
         const fakeLogger = { ...mockLogger };
-        gasket.execSync.mockReturnValue([fakeLogger]);
+        gasket.execMapSync.mockReturnValue({ 'plugin-a': fakeLogger });
 
         plugin.hooks.init(gasket);
 
@@ -71,7 +71,7 @@ describe('@gasket/plugin-logger', () => {
       });
 
       it('should set logger to default if no loggers are hooked', async () => {
-        gasket.execSync.mockReturnValue([]);
+        gasket.execMapSync.mockReturnValue({});
 
         plugin.hooks.init(gasket);
 
@@ -101,12 +101,19 @@ describe('@gasket/plugin-logger', () => {
       it('should throw an error if multiple loggers are hooked', () => {
         const fakeLogger1 = { error: vi.fn() };
         const fakeLogger2 = { error: vi.fn() };
-        gasket.execSync.mockReturnValue([fakeLogger1, fakeLogger2]);
+        gasket.execMapSync.mockReturnValue({ 'plugin-a': fakeLogger1, 'plugin-b': fakeLogger2 });
 
         // eslint-disable-next-line max-nested-callbacks
         expect(() => plugin.hooks.init(gasket)).toThrow(
-          'Multiple plugins are hooking createLogger. Only one logger is supported.'
+          'Multiple plugins are hooking createLogger: plugin-a, plugin-b. Only one logger is supported.'
         );
+      });
+
+      it('should throw an error if a createLogger hook is async', () => {
+        gasket.execMapSync.mockReturnValue({ 'plugin-a': Promise.resolve(mockLogger) });
+
+        // eslint-disable-next-line max-nested-callbacks
+        expect(() => plugin.hooks.init(gasket)).toThrow('createLogger hooks must be synchronous');
       });
     });
 
@@ -115,7 +122,7 @@ describe('@gasket/plugin-logger', () => {
 
       beforeEach(() => {
         fakeLogger = { ...mockLogger };
-        gasket.execSync.mockReturnValue([fakeLogger]);
+        gasket.execMapSync.mockReturnValue({ 'plugin-a': fakeLogger });
       });
 
       it('should not override console methods when overrideConsole is not set', () => {
@@ -139,7 +146,7 @@ describe('@gasket/plugin-logger', () => {
       it('should not override console methods when no custom logger is hooked', () => {
         const originalLog = console.log;
         gasket.config = { logger: { overrideConsole: true } };
-        gasket.execSync.mockReturnValue([]);
+        gasket.execMapSync.mockReturnValue({});
 
         plugin.hooks.init(gasket);
 
@@ -255,7 +262,7 @@ describe('@gasket/plugin-logger', () => {
             lifecycles: expect.arrayContaining([
               expect.objectContaining({
                 name: 'createLogger',
-                method: 'execSync',
+                method: 'execMapSync',
                 description: 'Custom logger creation',
                 link: 'README.md#createLogger',
                 parent: 'init'
