@@ -54,6 +54,10 @@ export class Gasket {
   execSync;
   execWaterfall;
   execWaterfallSync;
+  execMap;
+  execMapSync;
+  execApply;
+  execApplySync;
 
   /**
    * @param {import('@gasket/core').GasketConfigDefinition} configDef - Gasket configuration
