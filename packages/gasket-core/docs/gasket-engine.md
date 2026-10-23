@@ -27,9 +27,12 @@ will contain an `Array` of the hook data stored in the order the hooks were
 executed.
 
 Hooks run concurrently: each one starts as soon as the hooks it is ordered
-`after` have settled, so hooks without ordering constraints overlap. Do not rely
-on one hook seeing changes another hook makes to a shared argument; use
-`execWaterfall` when hooks build on each other's results.
+`after` have resolved, so hooks without ordering constraints overlap. If a hook
+rejects, the hooks ordered after it never run and `exec` rejects with that
+error. Do not rely on one hook seeing changes another hook makes to a shared
+argument; use `execWaterfall` when hooks build on each other's results.
+
+`execMap` and `execApply` schedule hooks the same way.
 
 ### `execSync(event, ...args)`
 
