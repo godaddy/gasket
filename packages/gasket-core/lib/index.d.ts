@@ -494,16 +494,22 @@ export interface Gasket {
   /** Execute a lifecycle event and return results keyed by plugin name (sync) */
   execMapSync(event: string, ...args: any[]): Record<string, any>;
 
-  /** Execute a lifecycle event, calling applyFn with each plugin and its hook (async) */
+  /**
+   * Execute a lifecycle event, calling applyFn with each plugin and its hook (async).
+   * `plugin` is undefined for hooks registered without a plugin.
+   */
   execApply<Return = void>(
     event: string,
-    applyFn: (plugin: Plugin, handler: (...args: any[]) => any) => Promise<Return>
-  ): Promise<Return[]>;
+    applyFn: (plugin: Plugin | undefined, handler: (...args: any[]) => any) => Return | Promise<Return>
+  ): Promise<Awaited<Return>[]>;
 
-  /** Execute a lifecycle event, calling applyFn with each plugin and its hook (sync) */
+  /**
+   * Execute a lifecycle event, calling applyFn with each plugin and its hook (sync).
+   * `plugin` is undefined for hooks registered without a plugin.
+   */
   execApplySync<Return = void>(
     event: string,
-    applyFn: (plugin: Plugin, handler: (...args: any[]) => any) => Return
+    applyFn: (plugin: Plugin | undefined, handler: (...args: any[]) => any) => Return
   ): Return[];
 
   [key: string]: any;
