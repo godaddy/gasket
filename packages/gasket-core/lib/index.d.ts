@@ -101,6 +101,15 @@ export type ApplyHookHandler<Id extends HookId> = (
 ) => ReturnType<HookExecTypes[Id]>;
 
 /**
+ * Callback for execApply and execApplySync, called with each plugin and its hook.
+ * `plugin` is undefined for hooks registered without a plugin.
+ */
+export type ApplyFn<Return = any> = (
+  plugin: Plugin | undefined,
+  handler: (...args: any[]) => any
+) => Return;
+
+/**
  * Hook wrapped with timing configuration.
  */
 type HookWithTimings<Id extends HookId> = {
@@ -244,14 +253,14 @@ export interface GasketEngine {
   execApply<Return = void>(
     gasket: Gasket,
     hook: string,
-    callback: (plugin: Plugin, handler: (...args: any[]) => any) => Promise<Return>
-  ): Promise<Return[]>;
+    callback: ApplyFn<MaybeAsync<Return>>
+  ): Promise<Awaited<Return>[]>;
 
   /** Sync version of execApply */
   execApplySync<Return = void>(
     gasket: Gasket,
     hook: string,
-    callback: (plugin: Plugin, handler: (...args: any[]) => any) => Return
+    callback: ApplyFn<Return>
   ): Return[];
 
   /**
@@ -386,7 +395,7 @@ export function GasketEngine_ExecWaterfallSync(
 export function GasketEngine_ExecApply(
   gasket: Gasket,
   event: string,
-  applyFn: (plugin: Plugin, handler: (...args: any[]) => any) => any
+  applyFn: ApplyFn
 ): Promise<any[]>;
 
 /**
@@ -395,7 +404,7 @@ export function GasketEngine_ExecApply(
 export function GasketEngine_ExecApplySync(
   gasket: Gasket,
   event: string,
-  applyFn: (plugin: Plugin, handler: (...args: any[]) => any) => any
+  applyFn: ApplyFn
 ): any[];
 
 
@@ -494,22 +503,16 @@ export interface Gasket {
   /** Execute a lifecycle event and return results keyed by plugin name (sync) */
   execMapSync(event: string, ...args: any[]): Record<string, any>;
 
-  /**
-   * Execute a lifecycle event, calling applyFn with each plugin and its hook (async).
-   * `plugin` is undefined for hooks registered without a plugin.
-   */
+  /** Execute a lifecycle event, calling applyFn with each plugin and its hook (async) */
   execApply<Return = void>(
     event: string,
-    applyFn: (plugin: Plugin | undefined, handler: (...args: any[]) => any) => Return | Promise<Return>
+    applyFn: ApplyFn<MaybeAsync<Return>>
   ): Promise<Awaited<Return>[]>;
 
-  /**
-   * Execute a lifecycle event, calling applyFn with each plugin and its hook (sync).
-   * `plugin` is undefined for hooks registered without a plugin.
-   */
+  /** Execute a lifecycle event, calling applyFn with each plugin and its hook (sync) */
   execApplySync<Return = void>(
     event: string,
-    applyFn: (plugin: Plugin | undefined, handler: (...args: any[]) => any) => Return
+    applyFn: ApplyFn<Return>
   ): Return[];
 
   [key: string]: any;

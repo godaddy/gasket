@@ -168,6 +168,10 @@ describe('@gasket/core', () => {
     // @ts-expect-error plugin is undefined for hooks registered without a plugin
     gasket.execApplySync('example', (plugin) => plugin.name);
 
+    // @ts-expect-error the engine method types plugin the same way
+    gasket.engine.execApplySync(gasket, 'example', (plugin) => plugin.name);
+    const engineNames: string[] = await gasket.engine.execApply(gasket, 'example', (plugin) => plugin?.name ?? 'app');
+
     // @ts-expect-error execApplySync returns an array, not the applyFn result
     const notArray: string = gasket.execApplySync('example', (plugin) => plugin?.name ?? 'app');
 
