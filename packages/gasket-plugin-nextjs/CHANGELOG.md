@@ -1,5 +1,13 @@
 # `@gasket/plugin-nextjs`
 
+## 8.0.0-next.6
+
+### Patch Changes
+
+- bc738b0: Require `fastify@^5.12.1` for Fastify 5 (peer range `^4.29.1 || ^5.12.1`), the security release that fixes GHSA-3m5p-2c4r-xxw2 and GHSA-w2qp-rph6-63g4. The API template scaffolds `fastify@^5.12.1`.
+- Updated dependencies [eb10cfa]
+  - @gasket/plugin-webpack@8.0.0-next.4
+
 ## 8.0.0-next.5
 
 ### Major Changes
