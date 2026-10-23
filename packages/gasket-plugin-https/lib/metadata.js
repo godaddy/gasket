@@ -57,28 +57,28 @@ export default function metadata(gasket, meta) {
         method: 'exec',
         description: 'Assert the server is healthy',
         link: 'README.md#healthcheck',
-        parent: 'terminus'
+        parent: 'start'
       },
       {
         name: 'onSendFailureDuringShutdown',
         method: 'exec',
         description: 'Handle a healthcheck failure during shutdown',
         link: 'README.md#onSendFailureDuringShutdown',
-        parent: 'terminus'
+        parent: 'start'
       },
       {
         name: 'beforeShutdown',
         method: 'exec',
         description: 'Clean up before the server is stopped',
         link: 'README.md#beforeShutdown',
-        parent: 'terminus'
+        parent: 'start'
       },
       {
         name: 'onSignal',
         method: 'exec',
         description: 'Clean up resources when the server is stopped',
         link: 'README.md#onSignal',
-        parent: 'terminus',
+        parent: 'start',
         after: 'beforeShutdown'
       },
       {
@@ -86,7 +86,7 @@ export default function metadata(gasket, meta) {
         method: 'exec',
         description: 'Executed right before the process exits',
         link: 'README.md#onShutdown',
-        parent: 'terminus',
+        parent: 'start',
         after: 'onSignal'
       }
     ],
