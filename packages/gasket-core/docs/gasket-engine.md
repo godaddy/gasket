@@ -4,7 +4,7 @@ Plugin engine for Gasket.
 
 ## What is a Plugin?
 
-A plugin a a module in the `gasket` ecosystem that provides a unit of
+A plugin is a module in the `gasket` ecosystem that provides a unit of
 functionality. Some plugins are core to the overall application, others
 optional.
 
@@ -26,6 +26,11 @@ plugins to finish. If the lifecycle event is for producing data, the `Promise`
 will contain an `Array` of the hook data stored in the order the hooks were
 executed.
 
+Hooks run concurrently: each one starts as soon as the hooks it is ordered
+`after` have settled, so hooks without ordering constraints overlap. Do not rely
+on one hook seeing changes another hook makes to a shared argument; use
+`execWaterfall` when hooks build on each other's results.
+
 ### `execSync(event, ...args)`
 
 The `execSync` method is like `exec`, only all hooks must execute synchronously.
@@ -42,7 +47,7 @@ map.
 
 ### `execMapSync(event, ...args)`
 
-The `execSyncSync` method is like `execMap`, only all hooks must execute
+The `execMapSync` method is like `execMap`, only all hooks must execute
 synchronously.
 
 ### `execApply(event, async applyFn)`
@@ -62,7 +67,7 @@ await gasket.execApply('someEvent', async (plugin, handler) => {
 
 ### `execApplySync(event, applyFn)`
 
-The `execApply` method is like `execApply`, only all hooks must execute
+The `execApplySync` method is like `execApply`, only all hooks must execute
 synchronously.
 
 ### `execWaterfall(event, value, ...args)`
@@ -78,6 +83,25 @@ The `execWaterfallSync` method is like `execWaterfall`, only each hook must
 execute synchronously. The final value is returned synchronously from this call.
 Using synchronous methods limits flexibility, so it's encouraged to use async
 methods whenever possible.
+
+### Choosing an exec method
+
+Pick the method by what the lifecycle is for:
+
+| Lifecycle intent                                          | Method                               |
+|:----------------------------------------------------------|:-------------------------------------|
+| Transform a value, each hook building on the last result  | `execWaterfall`, `execWaterfallSync` |
+| Collect a value from each hook                            | `exec`, `execSync`                   |
+| Collect values keyed by the plugin that returned them     | `execMap`, `execMapSync`             |
+| Pass each hook arguments derived from its plugin          | `execApply`, `execApplySync`         |
+| Notify hooks or hand them an object to call methods on    | `exec`, `execSync`                   |
+
+A lifecycle whose hooks change an argument in place and return nothing is
+usually a waterfall in disguise. Make it an `execWaterfall` so each hook returns
+the updated value and ordering is explicit.
+
+Use the sync variants only when the caller cannot be async, such as during
+`init` or `configure`.
 
 ### `hook({ event, handler, timing, pluginName })`
 
