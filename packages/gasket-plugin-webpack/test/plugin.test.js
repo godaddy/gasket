@@ -36,7 +36,7 @@ describe('Plugin', () => {
   it('declares webpackConfig as invoked from getWebpackConfig', () => {
     const meta = plugin.hooks.metadata({}, {});
     expect(meta.lifecycles).toEqual([
-      expect.objectContaining({ name: 'webpackConfig', method: 'execWaterfallSync', from: 'getWebpackConfig' })
+      expect.objectContaining({ name: 'webpackConfig', method: 'execWaterfallSync', parent: 'getWebpackConfig' })
     ]);
   });
 });

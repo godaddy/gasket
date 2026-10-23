@@ -39,7 +39,7 @@ const plugin = {
             method: 'execWaterfallSync',
             description: 'Transform the Webpack config',
             link: 'README.md#webpackConfig',
-            from: 'getWebpackConfig'
+            parent: 'getWebpackConfig'
           }
         ]
       };
