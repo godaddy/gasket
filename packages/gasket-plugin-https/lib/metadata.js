@@ -12,6 +12,7 @@ export default function metadata(gasket, meta) {
     lifecycles: [
       {
         name: 'preboot',
+        method: 'exec',
         description: 'Executed before the server is started.',
         link: 'README.md#preboot'
       },
@@ -50,6 +51,43 @@ export default function metadata(gasket, meta) {
         link: 'README.md#servers',
         parent: 'start',
         after: 'terminus'
+      },
+      {
+        name: 'healthcheck',
+        method: 'exec',
+        description: 'Assert the server is healthy',
+        link: 'README.md#healthcheck',
+        parent: 'start'
+      },
+      {
+        name: 'onSendFailureDuringShutdown',
+        method: 'exec',
+        description: 'Handle a healthcheck failure during shutdown',
+        link: 'README.md#onSendFailureDuringShutdown',
+        parent: 'start'
+      },
+      {
+        name: 'beforeShutdown',
+        method: 'exec',
+        description: 'Clean up before the server is stopped',
+        link: 'README.md#beforeShutdown',
+        parent: 'start'
+      },
+      {
+        name: 'onSignal',
+        method: 'exec',
+        description: 'Clean up resources when the server is stopped',
+        link: 'README.md#onSignal',
+        parent: 'start',
+        after: 'beforeShutdown'
+      },
+      {
+        name: 'onShutdown',
+        method: 'exec',
+        description: 'Executed right before the process exits',
+        link: 'README.md#onShutdown',
+        parent: 'start',
+        after: 'onSignal'
       }
     ],
     configurations: [

@@ -88,46 +88,50 @@ Available actions
 
 Available lifecycles
 
-| Name                 | Description                                                   |
-| -------------------- | ------------------------------------------------------------- |
-| [apmTransaction]     | Modify the APM transaction                                    |
-| [build][1]           | Gasket build lifecycle                                        |
-| [commands]           | Add custom commands to the CLI                                |
-| [configure]          | Adjust the Gasket configuration                               |
-| [createLogger]       | Custom logger creation                                        |
-| [createServers]      | Setup the `create-servers` options                            |
-| [devProxy]           | Setup the devProxy options                                    |
-| [docsGenerate]       | Generate graphs for display in documation                     |
-| [docsSetup]          | Set up what docs are captured and how to transform them       |
-| [docsView]           | View the collated documentation                               |
-| [errorMiddleware]    | Add Express style middleware for handling errors with Fastify |
-| [errorMiddleware][2] | Add Express style middleware for handling errors              |
-| [express]            | Modify the Express instance to for adding endpoints           |
-| [fastify]            | Modify the Fastify instance to for adding endpoints           |
-| [gasketData]         | Adjust app level data after merged for the env                |
-| [httpsProxy]         | Setup the httpsProxy options                                  |
-| [init]               | Handle any Initialization before configuration                |
-| [initWebpack]        | Create a webpack config                                       |
-| [intlLocale]         | Set the language for which locale files to load               |
-| [metadata]           | Allows plugins to adjust their metadata                       |
-| [next]               | Update the Next.js app instance before preparing for Express  |
-| [next][3]            | Update the Next.js app instance before preparing for Fastify  |
-| [nextConfig]         | Setup the Next.js config                                      |
-| [nextExpress]        | Access the prepared Next.js app and Express instance          |
-| [nextFastify]        | Access the prepared Next.js app and Fastify instance          |
-| [nextPreHandling]    | Perform tasks just before Next.js request handling            |
-| [preboot]            | Executed before the server is started.                        |
-| [prebootHttpsProxy]  | Executed before the proxy server is started.                  |
-| [prepare]            | Allows async configuration of Gasket                          |
-| [publicGasketData]   | Adjust response level data for each request                   |
-| [ready]              | Configuration is complete and Gasket is ready to start        |
-| [serverConfig]       | Setup the server configuration                                |
-| [servers]            | Access to the server instances                                |
-| [terminus]           | Setup the `terminus` options                                  |
-| [webpackConfig]      | Transform the Webpack config                                  |
-| [winstonFormats]     | Add Winston log formats                                       |
-| [winstonLevels]      | Add Winston log levels                                        |
-| [winstonTransports]  | Setup Winston log transports                                  |
+| Name                          | Description                                                   |
+| ----------------------------- | ------------------------------------------------------------- |
+| [apmTransaction]              | Modify the APM transaction                                    |
+| [beforeShutdown]              | Clean up before the server is stopped                         |
+| [build][1]                    | Gasket build lifecycle                                        |
+| [commands]                    | Add custom commands to the CLI                                |
+| [configure]                   | Adjust the Gasket configuration                               |
+| [createLogger]                | Custom logger creation                                        |
+| [createServers]               | Setup the `create-servers` options                            |
+| [devProxy]                    | Setup the devProxy options                                    |
+| [docsGenerate]                | Generate graphs for display in documation                     |
+| [docsSetup]                   | Set up what docs are captured and how to transform them       |
+| [docsView]                    | View the collated documentation                               |
+| [errorMiddleware]             | Add Express style middleware for handling errors with Fastify |
+| [errorMiddleware][2]          | Add Express style middleware for handling errors              |
+| [express]                     | Modify the Express instance to for adding endpoints           |
+| [fastify]                     | Modify the Fastify instance to for adding endpoints           |
+| [gasketData]                  | Adjust app level data after merged for the env                |
+| [healthcheck]                 | Assert the server is healthy                                  |
+| [httpsProxy]                  | Setup the httpsProxy options                                  |
+| [init]                        | Handle any Initialization before configuration                |
+| [intlLocale]                  | Set the language for which locale files to load               |
+| [metadata]                    | Allows plugins to adjust their metadata                       |
+| [next]                        | Update the Next.js app instance before preparing for Express  |
+| [next][3]                     | Update the Next.js app instance before preparing for Fastify  |
+| [nextConfig]                  | Setup the Next.js config                                      |
+| [nextExpress]                 | Access the prepared Next.js app and Express instance          |
+| [nextFastify]                 | Access the prepared Next.js app and Fastify instance          |
+| [nextPreHandling]             | Perform tasks just before Next.js request handling            |
+| [onSendFailureDuringShutdown] | Handle a healthcheck failure during shutdown                  |
+| [onShutdown]                  | Executed right before the process exits                       |
+| [onSignal]                    | Clean up resources when the server is stopped                 |
+| [preboot]                     | Executed before the server is started.                        |
+| [prebootHttpsProxy]           | Executed before the proxy server is started.                  |
+| [prepare]                     | Allows async configuration of Gasket                          |
+| [publicGasketData]            | Adjust response level data for each request                   |
+| [ready]                       | Configuration is complete and Gasket is ready to start        |
+| [serverConfig]                | Setup the server configuration                                |
+| [servers]                     | Access to the server instances                                |
+| [terminus]                    | Setup the `terminus` options                                  |
+| [webpackConfig]               | Transform the Webpack config                                  |
+| [winstonFormats]              | Add Winston log formats                                       |
+| [winstonLevels]               | Add Winston log levels                                        |
+| [winstonTransports]           | Setup Winston log transports                                  |
 
 ## Structures
 
@@ -267,6 +271,7 @@ Available configuration options in the `gasket.js`
 [startProxyServer]:/packages/gasket-plugin-https-proxy/README.md#startProxyServer
 [startServer]:/packages/gasket-plugin-https/README.md#startServer
 [apmTransaction]:/packages/gasket-plugin-elastic-apm/README.md#apmtransaction
+[beforeShutdown]:/packages/gasket-plugin-https/README.md#beforeShutdown
 [1]:/packages/gasket-plugin-command/README.md#build
 [commands]:/packages/gasket-plugin-command/README.md#commands
 [configure]:/packages/gasket-core/README.md#configure
@@ -281,9 +286,9 @@ Available configuration options in the `gasket.js`
 [express]:/packages/gasket-plugin-express/README.md#express
 [fastify]:/packages/gasket-plugin-fastify/README.md#express
 [gasketData]:/packages/gasket-plugin-data/README.md#gasketData
+[healthcheck]:/packages/gasket-plugin-https/README.md#healthcheck
 [httpsProxy]:/packages/gasket-plugin-https-proxy/README.md#httpsProxy
 [init]:/packages/gasket-core/README.md#init
-[initWebpack]:/packages/gasket-plugin-webpack/README.md#initwebpack
 [intlLocale]:/packages/gasket-plugin-intl/README.md#intlLocale
 [metadata]:/packages/gasket-plugin-metadata/README.md#metadata
 [next]:/packages/gasket-plugin-nextjs/README.md#next
@@ -292,6 +297,9 @@ Available configuration options in the `gasket.js`
 [nextExpress]:/packages/gasket-plugin-nextjs/README.md#nextExpress
 [nextFastify]:/packages/gasket-plugin-nextjs/README.md#nextFastify
 [nextPreHandling]:/packages/gasket-plugin-nextjs/README.md#nextPreHandling
+[onSendFailureDuringShutdown]:/packages/gasket-plugin-https/README.md#onSendFailureDuringShutdown
+[onShutdown]:/packages/gasket-plugin-https/README.md#onShutdown
+[onSignal]:/packages/gasket-plugin-https/README.md#onSignal
 [preboot]:/packages/gasket-plugin-https/README.md#preboot
 [prebootHttpsProxy]:/packages/gasket-plugin-https-proxy/README.md#prebootHttpsProxy
 [prepare]:/packages/gasket-core/README.md#prepare

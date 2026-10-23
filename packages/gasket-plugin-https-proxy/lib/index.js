@@ -24,6 +24,7 @@ export default {
         lifecycles: [
           {
             name: 'prebootHttpsProxy',
+            method: 'exec',
             description: 'Executed before the proxy server is started.',
             link: 'README.md#prebootHttpsProxy'
           },

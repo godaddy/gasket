@@ -63,4 +63,13 @@ describe('Plugin', function () {
     expect(keys).toEqual(expected);
     expect(keys).toHaveLength(expected.length);
   });
+
+  it('declares an exec method for every lifecycle', async () => {
+    const meta = await plugin.hooks.metadata(gasket, {});
+    const methods = Object.fromEntries(meta.lifecycles.map((lifecycle) => [lifecycle.name, lifecycle.method]));
+    expect(methods).toEqual({
+      prebootHttpsProxy: 'exec',
+      httpsProxy: 'execWaterfall'
+    });
+  });
 });
