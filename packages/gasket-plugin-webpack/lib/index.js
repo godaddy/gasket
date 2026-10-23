@@ -39,14 +39,7 @@ const plugin = {
             method: 'execWaterfallSync',
             description: 'Transform the Webpack config',
             link: 'README.md#webpackConfig',
-            parent: 'initWebpack',
-            after: 'webpack'
-          },
-          {
-            name: 'initWebpack',
-            description: 'Create a webpack config',
-            command: 'build',
-            link: 'README.md#initwebpack'
+            from: 'getWebpackConfig'
           }
         ]
       };

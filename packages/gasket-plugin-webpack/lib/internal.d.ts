@@ -1,5 +1,4 @@
-import type { Compiler, Configuration } from 'webpack';
-import type { Gasket } from '@gasket/core';
+import type { Compiler } from 'webpack';
 import type { WebpackMetrics } from './index';
 
 export function handleMetrics(
@@ -17,12 +16,3 @@ export function apply(compiler: Compiler): void;
 export function setupContext(
   context: object
 ): object & { webpack: any };
-
-/** Sets up the initial webpack configuration */
-export function initWebpack(
-  gasket: Gasket,
-  /** Initial webpack config */
-  initConfig: Configuration,
-  /** Additional context-specific information */
-  context: object
-): Configuration;

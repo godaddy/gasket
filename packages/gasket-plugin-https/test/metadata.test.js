@@ -16,6 +16,24 @@ describe('metadata', () => {
     expect(data.lifecycles.length).toBeGreaterThan(0);
   });
 
+  it('declares an exec method for every lifecycle', () => {
+    const data = metadata({}, {});
+    const methods = Object.fromEntries(data.lifecycles.map((lifecycle) => [lifecycle.name, lifecycle.method]));
+    expect(methods).toEqual({
+      preboot: 'exec',
+      devProxy: 'execWaterfall',
+      serverConfig: 'execWaterfall',
+      createServers: 'execWaterfall',
+      terminus: 'execWaterfall',
+      servers: 'exec',
+      healthcheck: 'exec',
+      onSendFailureDuringShutdown: 'exec',
+      beforeShutdown: 'exec',
+      onSignal: 'exec',
+      onShutdown: 'exec'
+    });
+  });
+
   it('has configurations metadata', () => {
     const data = metadata({}, {});
     expect(data).toHaveProperty('configurations');
