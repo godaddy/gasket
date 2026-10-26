@@ -1,5 +1,15 @@
 # `@gasket/plugin-https`
 
+## 8.0.0-next.3
+
+### Patch Changes
+
+- eb10cfa: Correct lifecycle metadata to match how each lifecycle is executed
+
+  - `@gasket/plugin-https`: declare `method` for `preboot` and add the `healthcheck`, `onSendFailureDuringShutdown`, `beforeShutdown`, `onSignal` and `onShutdown` lifecycles
+  - `@gasket/plugin-https-proxy`: declare `method` for `prebootHttpsProxy`
+  - `@gasket/plugin-webpack`: remove the nonexistent `initWebpack` lifecycle; `webpackConfig` is invoked from the `getWebpackConfig` action
+
 ## 8.0.0-next.2
 
 ### Patch Changes

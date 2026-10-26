@@ -1,5 +1,11 @@
 # `@gasket/request`
 
+## 8.0.0-next.3
+
+### Patch Changes
+
+- bc738b0: Correct the `trustProxy` guidance for Fastify 5.12.1, which makes a hop count trust no proxy and drops `number` from the type, and recommend an address list for Express `trust proxy` too.
+
 ## 8.0.0-next.2
 
 ### Minor Changes
