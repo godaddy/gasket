@@ -1,5 +1,11 @@
 # `@gasket/plugin-express`
 
+## 8.0.0-next.4
+
+### Minor Changes
+
+- 61f6144: Support Express 5 through version adapters; Express 4 still supported
+
 ## 8.0.0-next.3
 
 ### Major Changes

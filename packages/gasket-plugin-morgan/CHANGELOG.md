@@ -1,5 +1,11 @@
 # `@gasket/plugin-morgan`
 
+## 8.0.0-next.4
+
+### Patch Changes
+
+- 906b75d: Support Express 5
+
 ## 8.0.0-next.3
 
 ### Patch Changes
