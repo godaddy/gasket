@@ -413,12 +413,14 @@ for Express's own breaking changes. The ones most likely to affect a Gasket app:
 
 - Path syntax: a bare `*` needs a name or a regular expression. `/*splat`
   matches one or more segments; `/{*splat}` also matches `/`. Optional
-  parameters use braces (`/:id{.:ext}`). This applies to app routes and to any
-  path-valued config.
-- `req.query` is a getter: assigning to it or to its properties does not
-  persist.
+  parameters use braces (`/users{/:id}` instead of `/users/:id?`). This applies
+  to app routes and to any path-valued config.
+- `req.query` is a getter: assigning to it throws, and changes to its
+  properties are lost on the next read. Copy it (`{ ...req.query }`) or keep
+  derived values on `res.locals`.
 - `express.json()` leaves `req.body` `undefined` for non-JSON bodies.
-- The default query parser no longer nests `a[b]=c`.
+- The default query parser no longer nests `a[b]=c`. Call
+  `app.set('query parser', 'extended')` in an `express` hook to restore it.
 
 ```diff
 -app.get('*', handler);
