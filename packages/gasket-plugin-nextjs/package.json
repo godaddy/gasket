@@ -57,7 +57,7 @@
     "@gasket/plugin-metadata": "workspace:^",
     "@gasket/plugin-nextjs": "workspace:^",
     "@gasket/request": "workspace:^",
-    "@types/express": "^4.17.23",
+    "@types/express": "^5.0.6",
     "@types/node": "^20.17.19",
     "create-gasket-app": "workspace:^",
     "next": "^16.3.6",

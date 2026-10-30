@@ -1,6 +1,4 @@
-import express from 'express';
-import http2Express from 'http2-express';
-import cookieParser from 'cookie-parser';
+import { createExpressAdapter } from './adapters/index.js';
 
 let instance = null;
 
@@ -12,8 +10,7 @@ let instance = null;
 export function getAppInstance(gasket) {
   if (!instance) {
     const { http2 } = gasket.config;
-    instance = http2 ? http2Express(express) : express();
-    instance.use(cookieParser());
+    instance = createExpressAdapter().createInstance({ http2: Boolean(http2) });
   }
 
   return instance;
