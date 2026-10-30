@@ -22,6 +22,7 @@ one breaking change with the migration step for it.
   - [Express](#express)
   - [Fastify](#fastify)
   - [Middleware Ordering](#middleware-ordering)
+- [Express 5](#express-5)
 - [Fastify 5](#fastify-5)
 - [Node 24 and TypeScript at Runtime](#node-24-and-typescript-at-runtime)
   - [Remove tsx](#remove-tsx)
@@ -75,7 +76,7 @@ Framework versions supported by the v8 plugins:
 | `@gasket/nextjs`        | `next` 16, `react` / `react-dom` 19   |
 | `@gasket/react-intl`    | `react` 19                            |
 | `@gasket/plugin-fastify`| `fastify` `^4.29.1 \|\| ^5`           |
-| `@gasket/plugin-express`| `express` 4                           |
+| `@gasket/plugin-express`| `express` `^4.21.2 \|\| ^5`           |
 
 Once the dependency list is updated, remove every package listed in
 [Removed Packages](#removed-packages) before running `npm install`; several of
@@ -403,6 +404,26 @@ export default {
 See [Middleware not intercepting requests due to plugin order] in the
 `@gasket/plugin-express` gotchas for the full discussion.
 
+## Express 5
+
+`@gasket/plugin-express` supports `express` `^4.21.2 || ^5` through a version
+adapter, so Express 4 keeps working. `@gasket/plugin-nextjs` and
+`@gasket/plugin-morgan` accept both. Follow the [Express 5 migration guide]
+for Express's own breaking changes. The ones most likely to affect a Gasket app:
+
+- Path syntax: a bare `*` needs a name (`/*splat`) or a regular expression, and
+  optional parameters use braces (`/:id{.:ext}`). This applies to app routes and
+  to any path-valued config.
+- `req.query` is a getter: assigning to it or to its properties does not
+  persist.
+- `express.json()` leaves `req.body` `undefined` for non-JSON bodies.
+- The default query parser no longer nests `a[b]=c`.
+
+```diff
+-app.get('*', handler);
++app.get('/*splat', handler);
+```
+
 ## Fastify 5
 
 `@gasket/plugin-fastify` targets Fastify 5.12.1 or later, the release that
@@ -636,6 +657,7 @@ const res = await fetch('url/to/resource');
 [Middleware not intercepting requests due to plugin order]: /packages/gasket-plugin-express/docs/gotchas.md#middleware-not-intercepting-requests-due-to-plugin-order
 [Fastify Version Support]: /packages/gasket-plugin-fastify/README.md#fastify-version-support
 [trustProxy]: /packages/gasket-plugin-fastify/README.md#trustproxy
+[Express 5 migration guide]: https://expressjs.com/en/guide/migrating-5.html
 [Fastify v5 migration guide]: https://fastify.dev/docs/latest/Guides/Migration-Guide-V5/
 [GHSA-3m5p-2c4r-xxw2]: https://github.com/fastify/fastify/security/advisories/GHSA-3m5p-2c4r-xxw2
 [TypeScript guide]: typescript.md
