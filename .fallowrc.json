@@ -70,5 +70,8 @@
     "react",
     "react-intl",
     "regenerator-runtime"
+  ],
+  "usedClassMembers": [
+    "createInstance"
   ]
 }

@@ -13,6 +13,8 @@ Adds Express to your application.
 npm i @gasket/plugin-express
 ```
 
+This plugin supports `express` `^4.21.2 || ^5`. It selects a version adapter for the installed Express at startup.
+
 Update your `gasket` file plugin configuration:
 
 ```diff
