@@ -418,7 +418,9 @@ for Express's own breaking changes. The ones most likely to affect a Gasket app:
 - `req.query` is a getter: assigning to it throws, and changes to its
   properties are lost on the next read. Copy it (`{ ...req.query }`) or keep
   derived values on `res.locals`.
-- `express.json()` leaves `req.body` `undefined` for non-JSON bodies.
+- [`req.body`] is `undefined` when no body-parsing middleware parsed the
+  request (Express 4 set `{}`). Default it where you read it:
+  `const { id } = req.body ?? {};`.
 - The default query parser no longer nests `a[b]=c`. Call
   `app.set('query parser', 'extended')` in an `express` hook to restore it.
 
@@ -661,6 +663,7 @@ const res = await fetch('url/to/resource');
 [Fastify Version Support]: /packages/gasket-plugin-fastify/README.md#fastify-version-support
 [trustProxy]: /packages/gasket-plugin-fastify/README.md#trustproxy
 [Express 5 migration guide]: https://expressjs.com/en/guide/migrating-5.html
+[`req.body`]: https://expressjs.com/en/guide/migrating-5/#reqbody
 [Fastify v5 migration guide]: https://fastify.dev/docs/latest/Guides/Migration-Guide-V5/
 [GHSA-3m5p-2c4r-xxw2]: https://github.com/fastify/fastify/security/advisories/GHSA-3m5p-2c4r-xxw2
 [TypeScript guide]: typescript.md
