@@ -411,9 +411,10 @@ adapter, so Express 4 keeps working. `@gasket/plugin-nextjs` and
 `@gasket/plugin-morgan` accept both. Follow the [Express 5 migration guide]
 for Express's own breaking changes. The ones most likely to affect a Gasket app:
 
-- Path syntax: a bare `*` needs a name (`/*splat`) or a regular expression, and
-  optional parameters use braces (`/:id{.:ext}`). This applies to app routes and
-  to any path-valued config.
+- Path syntax: a bare `*` needs a name or a regular expression. `/*splat`
+  matches one or more segments; `/{*splat}` also matches `/`. Optional
+  parameters use braces (`/:id{.:ext}`). This applies to app routes and to any
+  path-valued config.
 - `req.query` is a getter: assigning to it or to its properties does not
   persist.
 - `express.json()` leaves `req.body` `undefined` for non-JSON bodies.
@@ -421,7 +422,7 @@ for Express's own breaking changes. The ones most likely to affect a Gasket app:
 
 ```diff
 -app.get('*', handler);
-+app.get('/*splat', handler);
++app.get('/{*splat}', handler);
 ```
 
 ## Fastify 5
