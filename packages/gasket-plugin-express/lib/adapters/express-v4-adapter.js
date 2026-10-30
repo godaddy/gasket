@@ -8,6 +8,14 @@ import { ExpressAdapter } from './base-adapter.js';
  */
 export class ExpressV4Adapter extends ExpressAdapter {
   /**
+   * @param {typeof import('express')} [expressModule] - Express module to wrap; tests pass a specific major
+   */
+  constructor(expressModule = express) {
+    super();
+    this.express = expressModule;
+  }
+
+  /**
    * Create an Express v4 instance.
    * @param {object} config - Express configuration
    * @param {boolean} [config.http2] - Enable HTTP/2 via http2-express
@@ -15,7 +23,7 @@ export class ExpressV4Adapter extends ExpressAdapter {
    */
   createInstance(config) {
     const { http2 } = config;
-    const app = http2 ? http2Express(express) : express();
+    const app = http2 ? http2Express(this.express) : this.express();
     app.use(cookieParser());
     return app;
   }
