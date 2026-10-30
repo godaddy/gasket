@@ -129,6 +129,16 @@ describe('setupNextHandling', () => {
     expect(pattern.test('/a/b')).toBe(true);
   });
 
+  it('captures the path so Express sets req.params[0]', () => {
+    const expressApp = makeExpressApp();
+
+    setupNextHandling(nextServer, expressApp, gasket);
+
+    const pattern = expressApp.all.mock.calls[0][0];
+    expect(pattern.exec('/')[1]).toBe('/');
+    expect(pattern.exec('/a/b')[1]).toBe('/a/b');
+  });
+
   it('Express catch-all calls the Next handler', async () => {
     const expressApp = makeExpressApp();
 

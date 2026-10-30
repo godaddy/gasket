@@ -100,8 +100,9 @@ function setupNextHandling(nextServer, serverApp, gasket) {
   const gasketRoot = gasket.traceRoot();
 
   if (isExpressApp(serverApp)) {
-    // A regex matches every path on both Express 4 and 5.
-    serverApp.all(/.*/, async (req, res, next) => {
+    // A regex matches every path on both Express 4 and 5; the capture group
+    // sets req.params[0] to the path, as Express 4's '*' did.
+    serverApp.all(/(.*)/, async (req, res, next) => {
       try {
         await gasketRoot.exec('nextPreHandling', { req, res, nextServer });
 
