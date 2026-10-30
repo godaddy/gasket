@@ -102,6 +102,10 @@ describe('setupNextHandling', () => {
     getRequestHandler: () => mockNextHandler
   };
 
+  beforeEach(() => {
+    mockNextHandler.mockClear();
+  });
+
   const gasket = {
     traceRoot: () => ({
       exec: vi.fn()
