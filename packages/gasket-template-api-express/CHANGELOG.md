@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 8.0.0-next.7
+
+### Patch Changes
+
+- f07fd0e: Scaffold Express 5
+
 ## 8.0.0-next.6
 
 ### Patch Changes
