@@ -108,6 +108,38 @@ describe('setupNextHandling', () => {
     })
   };
 
+  const makeExpressApp = () => Object.assign(vi.fn(), {
+    all: vi.fn(),
+    use: vi.fn(),
+    set: vi.fn()
+  });
+
+  it('registers an Express catch-all that matches every path', () => {
+    const expressApp = makeExpressApp();
+
+    setupNextHandling(nextServer, expressApp, gasket);
+
+    const pattern = expressApp.all.mock.calls[0][0];
+    expect(pattern).toBeInstanceOf(RegExp);
+    expect(pattern.test('/')).toBe(true);
+    expect(pattern.test('/a/b')).toBe(true);
+  });
+
+  it('Express catch-all calls the Next handler', async () => {
+    const expressApp = makeExpressApp();
+
+    setupNextHandling(nextServer, expressApp, gasket);
+
+    const handler = expressApp.all.mock.calls[0][1];
+    const req = {};
+    const res = { headersSent: false };
+    const next = vi.fn();
+    await handler(req, res, next);
+
+    expect(mockNextHandler).toHaveBeenCalledWith(req, res);
+    expect(next).not.toHaveBeenCalled();
+  });
+
   it('route handler calls nextHandler for Fastify', async () => {
     const fastifyApp = {
       route: vi.fn(),
