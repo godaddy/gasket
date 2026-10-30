@@ -1,5 +1,11 @@
 # `@gasket/plugin-nextjs`
 
+## 8.0.0-next.7
+
+### Patch Changes
+
+- 906b75d: Support Express 5
+
 ## 8.0.0-next.6
 
 ### Patch Changes
