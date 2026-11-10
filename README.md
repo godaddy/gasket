@@ -17,6 +17,18 @@ Framework Maker for JavaScript Applications
 
 </section>
 
+> [!IMPORTANT]
+> **Gasket is in maintenance mode. v7 is the last public major.**
+>
+> - `main` (v7) gets security fixes only, published to npm, until Q2 2027. Then this repo
+>   is archived.
+> - v8 is not released publicly. The `8.0.0-next.*` prereleases on npm will be deprecated.
+> - Development continues inside GoDaddy. GoDaddy teams: `npm create @gasket/app`.
+> - Every published version stays on npm. The code stays MIT-licensed, and you can fork it.
+> - Report security issues as described in [SECURITY.md](./SECURITY.md).
+>
+> Background: [the announcement][maintenance-announcement].
+
 ## Version 7
 
 _If you are looking for Version 6 docs, see the [LTS branch]._
@@ -511,3 +523,4 @@ Gasket is [MIT licensed](./LICENSE.md).
 [tweet-badge]: https://img.shields.io/twitter/url?url=https%3A%2F%2Ftwitter.com%2Fgasketjs?style=flat-square
 [tweet]: https://twitter.com/intent/tweet?text=Check%20out%20gasket!%20https://github.com/godaddy/gasket%20%F0%9F%91%8D
 [LTS branch]: https://github.com/godaddy/gasket/blob/lts/README.md
+[maintenance-announcement]: https://github.com/godaddy/gasket/discussions/1608
