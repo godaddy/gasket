@@ -7,7 +7,7 @@ import type {
 import type { HealthCheckError, TerminusOptions } from '@godaddy/terminus';
 import type { Server as HttpServer } from 'http';
 import type { Server as HttpsServer } from 'https';
-import type { ServerOptions as ProxyServerOptions } from 'http-proxy';
+import type { ProxyTarget, ServerOptions as ProxyServerOptions } from 'http-proxy-3';
 import type { SecureContextOptions } from 'tls';
 import type { Http2Server, SecureServerOptions } from 'http2';
 import type { Logger } from '@gasket/plugin-logger';
@@ -18,7 +18,7 @@ export type RequireAtLeastOne<T, Keys extends keyof T = keyof T> =
     [K in Keys]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<Keys, K>>>;
   }[Keys];
 
-export function startProxy(opts: DevProxyConfig, logger: Logger): void;
+export function startProxy(opts: DevProxyConfig, logger: Logger): HttpServer | HttpsServer;
 
 declare module '@gasket/core' {
   type BaseListenerConfig = {
@@ -52,7 +52,22 @@ declare module '@gasket/core' {
       keyof CustomHttpsSettings | 'secureProtocol' | 'secureOptions'
     >;
 
-  interface BaseDevProxyConfig extends ProxyServerOptions {
+  /** Object target in the shape http-proxy accepted: every field optional, `port` may be a string. */
+  type DevProxyTargetDetailed = Partial<Omit<Exclude<ProxyTarget, string | URL>, 'port'>> & {
+    port?: number | string;
+    /** Prepended to the request path. */
+    path?: string;
+    pathname?: string;
+    search?: string;
+    /** Ignored by http-proxy-3; use the top-level `auth` option. */
+    auth?: string;
+  };
+
+  type DevProxyTarget = string | URL | DevProxyTargetDetailed;
+
+  interface BaseDevProxyConfig extends Omit<ProxyServerOptions, 'target' | 'forward'> {
+    target?: DevProxyTarget | ProxyServerOptions['target'];
+    forward?: DevProxyTarget;
     protocol?: string;
     /** defaults to 'localhost' */
     hostname?: string;

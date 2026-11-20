@@ -7,10 +7,9 @@ const mockHealthCheckError = vi.fn();
 const mockCreateTerminus = vi.fn();
 const mockDebugStub = vi.fn();
 const mockProxyCreateServer = vi.fn().mockReturnValue({
-  on: vi.fn().mockReturnValue({
-    listen: vi.fn()
-  })
+  on: vi.fn().mockReturnThis()
 });
+const mockProxyListener = { on: vi.fn(), listen: vi.fn() };
 const mockExec = vi.fn();
 
 vi.mock('create-servers', () => ({
@@ -23,11 +22,13 @@ vi.mock('@godaddy/terminus', () => ({
   createTerminus: mockCreateTerminus,
   HealthCheckError: mockHealthCheckError
 }));
-vi.mock('http-proxy', () => ({
-  default: {
-    createServer: mockProxyCreateServer
-  }
+vi.mock('http-proxy-3', () => ({
+  createServer: mockProxyCreateServer
 }));
+vi.mock('node:http', async (importOriginal) => {
+  const actual = await importOriginal();
+  return { ...actual, default: { ...actual.default, createServer: () => mockProxyListener } };
+});
 
 const { startServer } = await import('../lib/actions.js');
 
@@ -75,7 +76,7 @@ describe('actions', () => {
 
     it('creates proxy server when configured', async () => {
       await startServer(gasketAPI);
-      expect(mockProxyCreateServer).toHaveBeenCalledWith(gasketAPI.config.devProxy);
+      expect(mockProxyCreateServer).toHaveBeenCalledWith({ ...gasketAPI.config.devProxy, proxyTimeout: 120000 });
     });
 
     it('sets default values for proxy server', async () => {
@@ -84,7 +85,8 @@ describe('actions', () => {
         target: {
           host: 'localhost',
           port: 5000
-        }
+        },
+        proxyTimeout: 120000
       });
     });
 

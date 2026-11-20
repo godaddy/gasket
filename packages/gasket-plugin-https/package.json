@@ -50,7 +50,7 @@
     "create-servers": "^3.3.0",
     "diagnostics": "^2.0.2",
     "errs": "^0.3.2",
-    "http-proxy": "^1.18.1",
+    "http-proxy-3": "^1.23.3",
     "one-time": "^1.0.0"
   },
   "devDependencies": {
@@ -58,9 +58,9 @@
     "@gasket/core": "workspace:^",
     "@gasket/plugin-logger": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",
-    "@types/http-proxy": "^1.17.17",
     "@vitest/coverage-v8": "^3.2.0",
     "create-gasket-app": "workspace:^",
+    "selfsigned": "^5.5.0",
     "vitest": "^3.2.0"
   }
 }
