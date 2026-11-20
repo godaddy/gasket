@@ -33,6 +33,15 @@ vi.mock('util', () => {
   };
 });
 
+const mockSwaggerUiServe = vi.fn();
+const mockSwaggerUiSetup = vi.fn().mockReturnValue(vi.fn());
+vi.mock('swagger-ui-express', () => ({
+  default: {
+    serve: mockSwaggerUiServe,
+    setup: mockSwaggerUiSetup
+  }
+}));
+
 vi.mock('/path/to/app/swagger.json', () => ({ data: true }), {
   virtual: true
 });
@@ -121,10 +130,21 @@ describe('Swagger Plugin', function () {
     let mockGasket;
 
     beforeEach(function () {
-      mockGasket = {};
+      mockGasket = { config: { swagger: {} } };
     });
 
     it('sets up swagger spec', async function () {
+      await plugin.hooks.build(mockGasket);
+      expect(mockBuildSwaggerDefinition).toHaveBeenCalled();
+    });
+
+    it('skips buildSwaggerDefinition when introspect is set', async function () {
+      mockGasket.config.swagger.introspect = { info: { title: 'Test', version: '1.0.0' } };
+      await plugin.hooks.build(mockGasket);
+      expect(mockBuildSwaggerDefinition).not.toHaveBeenCalled();
+    });
+
+    it('runs buildSwaggerDefinition when introspect is not set', async function () {
       await plugin.hooks.build(mockGasket);
       expect(mockBuildSwaggerDefinition).toHaveBeenCalled();
     });
@@ -137,7 +157,8 @@ describe('Swagger Plugin', function () {
       mockGasket = {
         logger: {
           info: vi.fn(),
-          error: vi.fn()
+          error: vi.fn(),
+          warn: vi.fn()
         },
         config: {
           root: '/path/to/app',
@@ -196,8 +217,19 @@ describe('Swagger Plugin', function () {
       await plugin.hooks.express.handler(mockGasket, mockApp);
       expect(mockApp.use.mock.calls[0][0]).toEqual('/api-docs');
     });
+
+    it('logs warning and skips when introspect is set', async function () {
+      mockGasket.config.swagger.introspect = { info: { title: 'Test', version: '1.0.0' } };
+      await plugin.hooks.express.handler(mockGasket, mockApp);
+      expect(mockGasket.logger.warn).toHaveBeenCalledWith(
+        'swagger.introspect is only supported with Fastify. ' +
+        'Skipping Swagger UI for Express. To use Swagger with Express, remove swagger.introspect.'
+      );
+      expect(mockApp.use).not.toHaveBeenCalled();
+    });
   });
 
+  // eslint-disable-next-line max-statements
   describe('fastify hook', function () {
     let mockGasket, mockApp;
 
@@ -205,7 +237,8 @@ describe('Swagger Plugin', function () {
       mockGasket = {
         logger: {
           info: vi.fn(),
-          error: vi.fn()
+          error: vi.fn(),
+          warn: vi.fn()
         },
         config: {
           root: '/path/to/app',
@@ -265,6 +298,201 @@ describe('Swagger Plugin', function () {
       });
       expect(mockApp.register).toHaveBeenCalledWith(expect.any(Function), {
         swagger: undefined
+      });
+    });
+
+    it('introspect: registers @fastify/swagger with openapi key when no swagger version in object', async function () {
+      const introspect = { info: { title: 'Test API', version: '1.0.0' } };
+      mockGasket.config.swagger.introspect = introspect;
+      await plugin.hooks.fastify.handler(mockGasket, mockApp);
+      expect(mockApp.register).toHaveBeenCalledWith(expect.any(Function), { openapi: introspect });
+    });
+
+    it('introspect: uses swagger key when introspect.swagger is set (Swagger 2.0)', async function () {
+      const introspect = { swagger: '2.0', info: { title: 'Test API', version: '1.0.0' } };
+      mockGasket.config.swagger.introspect = introspect;
+      await plugin.hooks.fastify.handler(mockGasket, mockApp);
+      expect(mockApp.register).toHaveBeenCalledWith(expect.any(Function), { swagger: introspect });
+    });
+
+    it('introspect: does not load swagger spec file', async function () {
+      mockGasket.config.swagger.introspect = { info: { title: 'Test API', version: '1.0.0' } };
+      await plugin.hooks.fastify.handler(mockGasket, mockApp);
+      expect(mockAccessStub).not.toHaveBeenCalled();
+      expect(mockReadFileStub).not.toHaveBeenCalled();
+    });
+
+    it('introspect: still registers @fastify/swagger-ui with apiDocsRoute', async function () {
+      mockGasket.config.swagger.introspect = { info: { title: 'Test API', version: '1.0.0' } };
+      await plugin.hooks.fastify.handler(mockGasket, mockApp);
+      expect(mockApp.register).toHaveBeenCalledWith(expect.any(Function), {
+        routePrefix: '/api-docs'
+      });
+    });
+
+    it('introspect: warns when jsdoc is also set', async function () {
+      mockGasket.config.swagger.introspect = { info: { title: 'Test API', version: '1.0.0' } };
+      mockGasket.config.swagger.jsdoc = { definition: { info: { title: 'Test', version: '1.0.0' } } };
+      await plugin.hooks.fastify.handler(mockGasket, mockApp);
+      expect(mockGasket.logger.warn).toHaveBeenCalledWith(
+        'swagger.jsdoc is ignored when swagger.introspect is set. ' +
+        'Route introspection discovers routes automatically.'
+      );
+    });
+
+    it('introspect: throws when introspect is not a plain object', async function () {
+      mockGasket.config.swagger.introspect = true;
+      await expect(plugin.hooks.fastify.handler(mockGasket, mockApp)).rejects.toThrow(
+        'swagger.introspect must be a plain object'
+      );
+    });
+
+    it('introspect: throws when introspect is an array', async function () {
+      mockGasket.config.swagger.introspect = [];
+      await expect(plugin.hooks.fastify.handler(mockGasket, mockApp)).rejects.toThrow(
+        'swagger.introspect must be a plain object'
+      );
+    });
+
+    it('introspect: strips routes from introspectMeta before passing to @fastify/swagger', async function () {
+      const info = { title: 'Test API', version: '1.0.0' };
+      mockGasket.config.swagger.introspect = { routes: { include: ['/api/v1'] }, info };
+      await plugin.hooks.fastify.handler(mockGasket, mockApp);
+      expect(mockApp.register).toHaveBeenCalledWith(
+        expect.any(Function),
+        expect.objectContaining({ openapi: { info } })
+      );
+      const [, opts] = mockApp.register.mock.calls[0];
+      expect(opts.openapi).not.toHaveProperty('routes');
+    });
+
+    it('introspect: adds transform when routes.include is set', async function () {
+      mockGasket.config.swagger.introspect = {
+        routes: { include: ['/api/v1'] },
+        info: { title: 'Test API', version: '1.0.0' }
+      };
+      await plugin.hooks.fastify.handler(mockGasket, mockApp);
+      const [, opts] = mockApp.register.mock.calls[0];
+      expect(typeof opts.transform).toBe('function');
+    });
+
+    it('introspect: adds transform when routes.exclude is set', async function () {
+      mockGasket.config.swagger.introspect = {
+        routes: { exclude: ['/internal'] },
+        info: { title: 'Test API', version: '1.0.0' }
+      };
+      await plugin.hooks.fastify.handler(mockGasket, mockApp);
+      const [, opts] = mockApp.register.mock.calls[0];
+      expect(typeof opts.transform).toBe('function');
+    });
+
+    it('introspect: does not add transform when no routes config', async function () {
+      mockGasket.config.swagger.introspect = { info: { title: 'Test API', version: '1.0.0' } };
+      await plugin.hooks.fastify.handler(mockGasket, mockApp);
+      const [, opts] = mockApp.register.mock.calls[0];
+      expect(opts.transform).toBeUndefined();
+    });
+
+    it('introspect: transform passes through routes matching include prefix', async function () {
+      mockGasket.config.swagger.introspect = {
+        routes: { include: ['/api/v1'] },
+        info: { title: 'Test API', version: '1.0.0' }
+      };
+      await plugin.hooks.fastify.handler(mockGasket, mockApp);
+      const [, opts] = mockApp.register.mock.calls[0];
+      const schema = { description: 'test' };
+      expect(opts.transform({ schema, url: '/api/v1/users' })).toEqual({ schema, url: '/api/v1/users' });
+    });
+
+    it('introspect: transform hides routes not matching include prefix', async function () {
+      mockGasket.config.swagger.introspect = {
+        routes: { include: ['/api/v1'] },
+        info: { title: 'Test API', version: '1.0.0' }
+      };
+      await plugin.hooks.fastify.handler(mockGasket, mockApp);
+      const [, opts] = mockApp.register.mock.calls[0];
+      const schema = { description: 'test' };
+      expect(opts.transform({ schema, url: '/api/auth/validate' })).toEqual({
+        schema: { hide: true },
+        url: '/api/auth/validate'
+      });
+    });
+
+    it('introspect: transform hides routes matching exclude prefix', async function () {
+      mockGasket.config.swagger.introspect = {
+        routes: { exclude: ['/internal'] },
+        info: { title: 'Test API', version: '1.0.0' }
+      };
+      await plugin.hooks.fastify.handler(mockGasket, mockApp);
+      const [, opts] = mockApp.register.mock.calls[0];
+      const schema = { description: 'test' };
+      expect(opts.transform({ schema, url: '/internal/health' })).toEqual({
+        schema: { hide: true },
+        url: '/internal/health'
+      });
+    });
+
+    it('introspect: transform passes through routes not matching exclude prefix', async function () {
+      mockGasket.config.swagger.introspect = {
+        routes: { exclude: ['/internal'] },
+        info: { title: 'Test API', version: '1.0.0' }
+      };
+      await plugin.hooks.fastify.handler(mockGasket, mockApp);
+      const [, opts] = mockApp.register.mock.calls[0];
+      const schema = { description: 'test' };
+      expect(opts.transform({ schema, url: '/api/v1/users' })).toEqual({ schema, url: '/api/v1/users' });
+    });
+
+    it('introspect: transform applies both include and exclude', async function () {
+      mockGasket.config.swagger.introspect = {
+        routes: { include: ['/api/v1'], exclude: ['/api/v1/internal'] },
+        info: { title: 'Test API', version: '1.0.0' }
+      };
+      await plugin.hooks.fastify.handler(mockGasket, mockApp);
+      const [, opts] = mockApp.register.mock.calls[0];
+      const schema = { description: 'test' };
+      expect(opts.transform({ schema, url: '/api/v1/users' })).toEqual({ schema, url: '/api/v1/users' });
+      expect(opts.transform({ schema, url: '/api/v1/internal/secret' })).toEqual({
+        schema: { hide: true },
+        url: '/api/v1/internal/secret'
+      });
+      expect(opts.transform({ schema, url: '/api/auth/validate' })).toEqual({
+        schema: { hide: true },
+        url: '/api/auth/validate'
+      });
+    });
+
+    it('introspect: warns when include prefix is missing leading slash', async function () {
+      mockGasket.config.swagger.introspect = {
+        routes: { include: ['api/v1'] },
+        info: { title: 'Test API', version: '1.0.0' }
+      };
+      await plugin.hooks.fastify.handler(mockGasket, mockApp);
+      expect(mockGasket.logger.warn).toHaveBeenCalledWith(
+        'swagger.introspect.routes.include entry "api/v1" does not start with "/" ' +
+        'and will never match a Fastify route URL.'
+      );
+    });
+
+    it('introspect: warns when exclude prefix is missing leading slash', async function () {
+      mockGasket.config.swagger.introspect = {
+        routes: { exclude: ['internal'] },
+        info: { title: 'Test API', version: '1.0.0' }
+      };
+      await plugin.hooks.fastify.handler(mockGasket, mockApp);
+      expect(mockGasket.logger.warn).toHaveBeenCalledWith(
+        'swagger.introspect.routes.exclude entry "internal" does not start with "/" ' +
+        'and will never match a Fastify route URL.'
+      );
+    });
+
+    it('static mode: uses openapi key when loaded file has openapi property (OpenAPI 3.x)', async function () {
+      const openapiSpec = { openapi: '3.0.0', info: { title: 'Test', version: '1.0.0' } };
+      mockYamlSafeLoadStub.mockReturnValueOnce(openapiSpec);
+      mockGasket.config.swagger.definitionFile = 'swagger.yaml';
+      await plugin.hooks.fastify.handler(mockGasket, mockApp);
+      expect(mockApp.register).toHaveBeenCalledWith(expect.any(Function), {
+        openapi: openapiSpec
       });
     });
   });
