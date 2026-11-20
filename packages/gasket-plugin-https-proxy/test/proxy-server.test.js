@@ -201,6 +201,34 @@ describe('proxy server', () => {
     });
   });
 
+  describe('target failures', () => {
+    it('responds 502 when the target never answers', async () => {
+      // Read and discard the request without answering, so the socket can close after the timeout.
+      const silent = net.createServer((socket) => socket.resume());
+      await new Promise((resolve) => silent.listen(0, resolve));
+      const { port } = await startProxy({ proxyTimeout: 200 }, { target: { host: 'localhost', port: silent.address().port } });
+
+      expect(await rawRequest(port, CONTROL)).toBe('HTTP/1.1 502 Bad Gateway');
+      await new Promise((resolve) => silent.close(resolve));
+    });
+
+    it('responds 502 when the target is down', async () => {
+      const deadPort = await freePort();
+      const { port } = await startProxy({}, { target: { host: 'localhost', port: deadPort } });
+
+      expect(await rawRequest(port, CONTROL)).toBe('HTTP/1.1 502 Bad Gateway');
+    });
+
+    it('closes the socket when a websocket target is down', async () => {
+      const deadPort = await freePort();
+      const { port } = await startProxy({ ws: true }, { target: { host: 'localhost', port: deadPort } });
+      const upgrade = 'GET / HTTP/1.1\r\nHost: localhost\r\nUpgrade: websocket\r\nConnection: Upgrade\r\n' +
+        'Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==\r\nSec-WebSocket-Version: 13\r\n\r\n';
+
+      expect(await rawRequest(port, upgrade)).toBe('EMPTY');
+    });
+  });
+
   describe('target config', () => {
     const getX = 'GET /x HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n';
 

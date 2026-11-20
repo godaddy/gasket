@@ -108,6 +108,11 @@ The complete flow is:
 2. Executes the `prebootHttpsProxy` lifecycle (one-time initialization)
 3. Executes the `httpsProxy` lifecycle for dynamic configuration
 4. Creates and starts the proxy server
+
+When a request fails to reach the target, the proxy logs the error and responds with `502 Bad Gateway`.
+A target that does not respond within `proxyTimeout` (default 2 minutes) also gets a 502.
+If the response has already started, or the request is a WebSocket upgrade, it closes the connection instead.
+
 ## Lifecycles
 
 ### prebootHttpsProxy

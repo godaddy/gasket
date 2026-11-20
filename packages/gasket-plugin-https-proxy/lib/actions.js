@@ -1,4 +1,4 @@
-import http from 'node:http';
+import http, { ServerResponse } from 'node:http';
 import https from 'node:https';
 import { createServer } from 'http-proxy-3';
 
@@ -74,11 +74,20 @@ export async function startProxyServer(gasket) {
   const opts = await gasket.execWaterfall('httpsProxy', httpsProxy);
 
   const { protocol = 'http', hostname = 'localhost', port = 8080, ssl, ...proxyOpts } = opts;
+  // The documented 2-minute default, which http-proxy-3 does not apply; without it a silent target holds the client open.
+  proxyOpts.proxyTimeout ??= 120000;
   if (proxyOpts.target) proxyOpts.target = withPathname(proxyOpts.target);
   if (proxyOpts.forward) proxyOpts.forward = withPathname(proxyOpts.forward);
 
-  const proxy = createServer(proxyOpts).on('error', (err) => {
+  const proxy = createServer(proxyOpts).on('error', (err, req, res) => {
     logger.error('Request failed to proxy:', err);
+    // Answer the client so a failing target does not leave its connection open.
+    if (res instanceof ServerResponse && !res.headersSent) {
+      res.writeHead(502, { 'content-type': 'text/plain' });
+      res.end('Bad Gateway');
+    } else {
+      res?.destroy();
+    }
   });
   listen(proxy, { ssl, ws: proxyOpts.ws, port, logger });
 
