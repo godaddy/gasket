@@ -39,7 +39,8 @@ async function startServer(gasket) {
 
   if (devProxy) {
     const opts = await gasket.execWaterfall('devProxy', devProxy);
-    return startProxy(Object.assign(devProxy, opts), logger);
+    startProxy(Object.assign(devProxy, opts), logger);
+    return;
   }
 
   const serverConfig = await gasket.execWaterfall('serverConfig', getRawServerConfig(gasket));

@@ -78,7 +78,8 @@ export default makeGasket({
 
 ### Local Proxy Server
 
-Create a proxy server for local development. See full `http-proxy` options [here](https://www.npmjs.com/package/http-proxy#options).
+Create a proxy server for local development. See the full [http-proxy-3 options](https://www.npmjs.com/package/http-proxy-3#options).
+A failed request or one that exceeds `proxyTimeout` (default 2 minutes) gets a `502 Bad Gateway`.
 
 ```diff
 // gasket.js
@@ -138,7 +139,7 @@ preboot: async function preboot(gasket) {
 
 Adjust and configure `devProxy` options for a proxy server during local development.
 This is useful if `https` is needed in local development.
-The options for `http-proxy` can be found [here](https://www.npmjs.com/package/http-proxy#options).
+The options for `http-proxy-3` can be found [here](https://www.npmjs.com/package/http-proxy-3#options).
 The `devProxy` configuration must be defined in some capacity on the gasket config for this lifecycle to execute.
 
 ```js

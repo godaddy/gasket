@@ -137,4 +137,19 @@ describe('@gasket/plugin-https', () => {
       // await cleanupStuff();
     };
   });
+
+  it('accepts devProxy targets in the shapes http-proxy accepted', () => {
+    const configs: GasketConfigDefinition['devProxy'][] = [
+      { target: 'http://localhost:3000' },
+      { target: { host: 'localhost' } },
+      { target: { host: 'localhost', port: '8080' } },
+      { target: { host: 'localhost', port: 3000, path: '/base?a=1' } },
+      { forward: { host: 'localhost' } }
+    ];
+
+    const badTarget: GasketConfigDefinition['devProxy'] = {
+      // @ts-expect-error - must be string, URL or object
+      target: 12345
+    };
+  });
 });
