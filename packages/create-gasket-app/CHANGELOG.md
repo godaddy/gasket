@@ -1,5 +1,18 @@
 # `create-gasket-app`
 
+## 7.4.29
+
+### Patch Changes
+
+- e144069: Bump handlebars to 4.7.10, scaffold Next.js 16.4.6, and lock follow-redirects to 1.16.2 in the Fastify template.
+  - @gasket/plugin-command@7.6.8
+  - @gasket/plugin-docs@7.5.8
+  - @gasket/plugin-docusaurus@7.5.3
+  - @gasket/plugin-dynamic-plugins@7.5.3
+  - @gasket/plugin-git@7.4.12
+  - @gasket/plugin-logger@7.5.1
+  - @gasket/plugin-metadata@7.5.14
+
 ## 7.4.28
 
 ### Patch Changes

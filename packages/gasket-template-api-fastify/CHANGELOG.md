@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 7.0.10
+
+### Patch Changes
+
+- e144069: Bump handlebars to 4.7.10, scaffold Next.js 16.4.6, and lock follow-redirects to 1.16.2 in the Fastify template.
+
 ## 7.0.9
 
 ### Patch Changes

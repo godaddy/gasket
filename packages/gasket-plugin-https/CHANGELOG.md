@@ -1,5 +1,11 @@
 # `@gasket/plugin-https`
 
+## 7.5.0
+
+### Minor Changes
+
+- f078240: Replace http-proxy with http-proxy-3 in the dev proxy so a Trailer header no longer crashes it, and respond 502 when the target fails or times out
+
 ## 7.4.3
 
 ### Patch Changes

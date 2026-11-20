@@ -1,5 +1,15 @@
 # `@gasket/plugin-https-proxy`
 
+## 7.6.0
+
+### Minor Changes
+
+- 24e76e5: Replace http-proxy with http-proxy-3 so a request with a Trailer header no longer crashes the proxy
+
+### Patch Changes
+
+- f5fb431: Respond with 502 Bad Gateway when the proxy target fails or exceeds a 2-minute default proxyTimeout instead of leaving the client open
+
 ## 7.5.2
 
 ### Patch Changes
