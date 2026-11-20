@@ -1,9 +1,13 @@
 import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
-import proxy from 'http-proxy';
+import { createServer } from 'http-proxy-3';
+import http from 'node:http';
+import https from 'node:https';
 import { startProxyServer } from '../lib/actions.js';
 
+vi.mock('http-proxy-3', () => ({ createServer: vi.fn() }));
+
 describe('actions', () => {
-  let mockGasket, mockExecWaterfall, mockLogger, mockCreateServer;
+  let mockGasket, mockExecWaterfall, mockLogger, mockCreateServer, mockListener;
 
   beforeEach(() => {
     mockExecWaterfall = vi.fn().mockResolvedValue({
@@ -19,7 +23,10 @@ describe('actions', () => {
       on: vi.fn().mockReturnThis(),
       listen: vi.fn()
     };
-    vi.spyOn(proxy, 'createServer').mockReturnValue(mockCreateServer);
+    vi.mocked(createServer).mockReturnValue(mockCreateServer);
+    mockListener = { on: vi.fn().mockReturnThis(), listen: vi.fn(), address: vi.fn(), close: vi.fn() };
+    vi.spyOn(http, 'createServer').mockReturnValue(mockListener);
+    vi.spyOn(https, 'createServer').mockReturnValue(mockListener);
 
     mockGasket = {
       config: { httpsProxy: {} },
@@ -31,6 +38,7 @@ describe('actions', () => {
   });
 
   afterEach(() => {
+    vi.restoreAllMocks();
     vi.clearAllMocks();
   });
 
@@ -77,10 +85,30 @@ describe('actions', () => {
       await startProxyServer(mockGasket);
 
       expect(mockExecWaterfall).toHaveBeenCalledWith('httpsProxy', {});
-      expect(proxy.createServer).toHaveBeenCalledWith({});
+      expect(createServer).toHaveBeenCalledWith({});
       expect(mockCreateServer.on).toHaveBeenCalledWith('error', expect.any(Function));
-      expect(mockCreateServer.listen).toHaveBeenCalledWith(8080);
+      expect(mockListener.listen).toHaveBeenCalledWith(8080);
       expect(mockLogger.info).toHaveBeenCalledWith('Proxy server started: http://localhost:8080');
+    });
+
+    it('serves over https without passing ssl to http-proxy-3', async () => {
+      const ssl = { key: 'k', cert: 'c' };
+      mockExecWaterfall.mockResolvedValue({ port: 8443, ssl, target: 'http://localhost:3000' });
+
+      await startProxyServer(mockGasket);
+
+      expect(https.createServer).toHaveBeenCalledWith(ssl, expect.any(Function));
+      expect(http.createServer).not.toHaveBeenCalled();
+      expect(createServer).toHaveBeenCalledWith({ target: 'http://localhost:3000' });
+    });
+
+    it('listens for upgrades only when ws is set', async () => {
+      await startProxyServer(mockGasket);
+      expect(mockListener.on).not.toHaveBeenCalledWith('upgrade', expect.any(Function));
+
+      mockExecWaterfall.mockResolvedValue({ ws: true, target: 'http://localhost:3000' });
+      await startProxyServer(mockGasket);
+      expect(mockListener.on).toHaveBeenCalledWith('upgrade', expect.any(Function));
     });
 
     it('logs an error if the proxy server fails to start', async () => {
@@ -105,8 +133,8 @@ describe('actions', () => {
 
       await startProxyServer(mockGasket);
 
-      expect(proxy.createServer).toHaveBeenCalledWith({ customOption: 'value' });
-      expect(mockCreateServer.listen).toHaveBeenCalledWith(9090);
+      expect(createServer).toHaveBeenCalledWith({ customOption: 'value' });
+      expect(mockListener.listen).toHaveBeenCalledWith(9090);
       expect(mockLogger.info).toHaveBeenCalledWith('Proxy server started: https://example.com:9090');
     });
 
@@ -115,8 +143,8 @@ describe('actions', () => {
 
       await startProxyServer(mockGasket);
 
-      expect(proxy.createServer).toHaveBeenCalledWith({ customOption: 'value' });
-      expect(mockCreateServer.listen).toHaveBeenCalledWith(8080);
+      expect(createServer).toHaveBeenCalledWith({ customOption: 'value' });
+      expect(mockListener.listen).toHaveBeenCalledWith(8080);
       expect(mockLogger.info).toHaveBeenCalledWith('Proxy server started: http://localhost:8080');
     });
   });

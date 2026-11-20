@@ -41,7 +41,7 @@ export default {
           {
             name: 'httpsProxy',
             link: 'README.md#configuration',
-            description: 'http-proxy config object',
+            description: 'http-proxy-3 config object',
             type: 'object'
           }
         ]

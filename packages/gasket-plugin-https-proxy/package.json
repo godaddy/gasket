@@ -45,7 +45,7 @@
   "bugs": "https://github.com/godaddy/gasket/issues",
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-https-proxy",
   "dependencies": {
-    "http-proxy": "^1.18.1"
+    "http-proxy-3": "^1.23.3"
   },
   "devDependencies": {
     "@gasket/cjs": "workspace:^",
@@ -54,6 +54,7 @@
     "@gasket/plugin-logger": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",
     "create-gasket-app": "workspace:^",
+    "selfsigned": "^5.5.0",
     "vitest": "^3.2.0"
   }
 }

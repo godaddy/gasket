@@ -158,6 +158,16 @@ describe('@gasket/plugin-https-proxy', () => {
     };
   });
 
+  it('accepts partial object targets', () => {
+    const configs: GasketConfigDefinition['httpsProxy'][] = [
+      { target: { host: 'localhost' } },
+      { target: { protocol: 'https:', hostname: 'example.com' } },
+      { target: { host: 'localhost', port: '8080' } },
+      { forward: { host: 'localhost' } },
+      { target: { host: 'localhost', port: 3000, path: '/base?a=1' } }
+    ];
+  });
+
   it('adds the prebootHttpsProxy lifecycle', () => {
     const handler: Hook<'prebootHttpsProxy'> = async (gasket) => {
       log('Preparing to start HTTPS proxy server');

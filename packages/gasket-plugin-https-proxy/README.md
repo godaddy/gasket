@@ -31,7 +31,7 @@ export default makeGasket({
 
 To be set under `httpsProxy` in the `gasket.js` file.
 
-This uses the [http-proxy] package and its complete set of available [options].
+This uses the [http-proxy-3] package and its complete set of available [options].
 
 ```diff
 // gasket.js
@@ -58,8 +58,7 @@ are used for the actual destination server.
 
 ### Example SNI Config
 
-While not specifically called out in the [http-proxy] documentation, the
-`ssl` settings are what get passed to node's `createServer` method.
+The `ssl` settings are passed to node's `https.createServer`, which serves HTTP/1.1.
 As such, you can use `SNICallback` from the [createServer options].
 
 ```diff
@@ -169,6 +168,6 @@ export default {
 
 [MIT](./LICENSE.md)
 
-[http-proxy]: https://www.npmjs.com/package/http-proxy
-[options]: https://www.npmjs.com/package/http-proxy#options
+[http-proxy-3]: https://www.npmjs.com/package/http-proxy-3
+[options]: https://www.npmjs.com/package/http-proxy-3#options
 [createServer options]: https://nodejs.org/docs/latest-v22.x/api/tls.html#tlscreateserveroptions-secureconnectionlistener
